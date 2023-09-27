@@ -1,0 +1,17 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace eSyaEnterprise_UI.Controllers
+{
+    public class eSyaAccountController : Controller
+    {
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult CreateLogin()
+        {
+            return View();
+        }
+
+    }
+}

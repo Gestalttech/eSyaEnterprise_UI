@@ -1,0 +1,115 @@
+﻿@*@{
+    Layout = null;
+}*@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <title>@ViewData["Title"] - eSyaPatientPortal</title>
+
+    <script src="~/lib/bootstrap/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/Common/material.min.js"></script>
+    <script src="~/js/Common/all.min.js"></script>
+    <script src="~/js/Common/jquery-ui.min.js"></script>
+    <script src="~/js/Common/i18n/grid.locale-en.js"></script>
+    <script src="~/js/Common/jquery.jqGrid.min.js"></script>
+    <script src="~/js/Common/bootstrap-select.js"></script>
+    <script src="~/js/Common/bootbox.min.js"></script>
+    <script src="~/js/jquery.inputmask/inputmask.js"></script>
+    <script src="~/js/jquery.inputmask/jquery.inputmask.min.js"></script>
+    <script src="~/js/jquery.inputmask/bindings/inputmask.binding.js"></script>
+    <script src="~/js/utility/cf-input-validation.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/Common/material.min.css" rel="stylesheet" />
+    <link href="~/css/Common/all.min.css" rel="stylesheet" />
+    <link href="~/css/Common/animate.css" rel="stylesheet" />
+    <link href="~/css/Common/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/css/Common/ui.jqgrid.css" rel="stylesheet" />
+    <link href="~/css/Common/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/css/Common/jqgridcustomstyle.css" rel="stylesheet" />
+    <link href="~/css/Common/site.css" rel="stylesheet" />
+    <link href="~/css/Common/master.css" rel="stylesheet" />
+    <link href="~/css/Common/esyafonts.css" rel="stylesheet" />
+    <link href="~/css/Common/esyaTheme.css" rel="stylesheet" />
+    
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light p-0" id="header_navbar">
+        <button id="btn-menuBar" aria-label="Menu"><i class="fa fa-bars c-blue"></i></button>
+        <div class="navbar-brand-container">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive MasterPage-Logo" />
+            </a>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid body-content">
+        <div class="renderBody">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <p>&copy; @System.DateTime.Now.Year - esyaEnterprise</p>
+    </footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
+    <script src="~/js/utility/cf-input-validation.js"></script>
+
+    <script src="~/js/Inputmask/inputmask-userdefined.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>
+
+<script>
+    var errorMsgCS = {};
+
+    $(document).ready(function () {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "preventDuplicates": true,
+            "preventOpenDuplicates": true
+        };
+        CustomMessage();
+        $("[id^='jqgh'][id$='_rn']").text("S.No").css("text-align", 'center');
+    });
+
+    function CustomMessage() {
+        $.getJSON(getBaseURL() + "/json/errormessage.json", function (data) {
+            errorMsgCS = data;
+        });
+    }
+
+
+    function getBaseURL() {
+        var url = window.location.href.split('/');
+
+        var baseUrl = url[0] + '//' + url[2] + '@Url.Content("~")';
+        return baseUrl;
+    }
+</script>

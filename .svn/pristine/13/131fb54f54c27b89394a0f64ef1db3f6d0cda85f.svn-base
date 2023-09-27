@@ -1,0 +1,905 @@
+﻿
+using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.Areas.ProductSetup.Data;
+using eSyaEnterprise_UI.Areas.ProductSetup.Models;
+using eSyaEnterprise_UI.DataServices;
+using eSyaEnterprise_UI.Extension;
+using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
+{
+    [SessionTimeout]
+    public class LicenseController : Controller
+    {
+        private readonly IeSyaProductSetupAPIServices _configAPIServices;
+        private readonly ILogger<LicenseController> _logger;
+
+        public LicenseController(IeSyaProductSetupAPIServices configAPIServices, ILogger<LicenseController> logger)
+        {
+            _configAPIServices = configAPIServices;
+            _logger = logger;
+        }
+
+        #region Business Entity
+        /// <summary>
+        /// Business Entity
+        /// </summary>
+        /// <returns></returns>
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult EPS_16_00()
+        {
+            return View();
+        }
+
+        /// <summary>
+        ///Get Business Entities for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessEntities()
+        {
+            try
+            {
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("BusinessStructure/GetBusinessEntities");
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessEntities");
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessEntities");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessEntities");
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        ///Get Business Entities for Tree View
+        /// </summary>
+        [Produces("application/json")]
+        [HttpGet]
+        public async Task<JsonResult> GetBusinessEntitiesforTreeView()
+        {
+            try
+            {
+                List<jsTreeObject> jsTree = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "MM",
+                    parent = "#",
+                    text = "Business Entity",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                jsTree.Add(jsObj);
+
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("BusinessStructure/GetBusinessEntities");
+                if (serviceResponse.Status)
+                {
+                    var BusinessEntities = serviceResponse.Data;
+                    if (BusinessEntities != null)
+                    {
+                        foreach (var f in BusinessEntities.OrderBy(o => o.BusinessId))
+                        {
+                            jsObj = new jsTreeObject
+                            {
+                                id = "FM" + f.BusinessId.ToString() + "_" + f.BusinessId.ToString(),
+                                text = f.BusinessDesc,
+                                //GroupIndex = f.BusinessId.ToString() + "_" + f.ActiveStatus.ToString() + "_" + f.IsMultiSegmentApplicable.ToString(),
+                                GroupIndex = f.BusinessId.ToString() + "_" + f.ActiveStatus.ToString(),
+                                parent = "MM",
+                                state = new stateObject { opened = true, selected = false }
+                            };
+                            jsTree.Add(jsObj);
+                        }
+                    }
+                    return Json(jsTree);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessEntitiesforTreeView");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessEntitiesforTreeView");
+                throw;
+                //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        ///Get Business Entity Info
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessEntityInfo(int BusinessId)
+        {
+            try
+            {
+                var parameter = "?BusinessId=" + BusinessId;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_BusinessEntity>("BusinessStructure/GetBusinessEntityInfo" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessEntityInfo:For BusinessId {0}", BusinessId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessEntityInfo:For BusinessId {0}", BusinessId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessEntityInfo:For BusinessId {0}", BusinessId);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Business Entity
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateBusinessEntity(DO_BusinessEntity businessentity)
+        {
+            try
+            {
+                if (businessentity.BusinessUnitType == 'S'.ToString())
+                {
+                    businessentity.NoOfUnits = 1;
+                }
+                if (businessentity.BusinessUnitType == 'S'.ToString())
+                {
+                    businessentity.IsMultiSegmentApplicable = false;
+                }
+                if (businessentity.BusinessUnitType == 'M'.ToString())
+                {
+                    businessentity.IsMultiSegmentApplicable = true;
+                }
+                if (string.IsNullOrEmpty(businessentity.BusinessDesc))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Entity Description" });
+                }
+                else
+                {
+                    businessentity.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    businessentity.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    businessentity.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    if (businessentity.BusinessId == 0)
+                    {
+                        var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/InsertBusinessEntity", businessentity);
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessEntity:params:" + JsonConvert.SerializeObject(businessentity));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                    else
+                    {
+                        var serviceResponse = _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/UpdateBusinessEntity", businessentity).Result;
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessEntity:params:" + JsonConvert.SerializeObject(businessentity));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinessEntity:params:" + JsonConvert.SerializeObject(businessentity));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        ///DELETE Business Entity
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> DeleteBusinessEntity(int BusinessEntityId)
+        {
+            try
+            {
+                var parameter = "?BusinessEntityId=" + BusinessEntityId;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("BusinessStructure/DeleteBusinessEntity" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteBusinessEntity:For BusinessEntityId {0}}", BusinessEntityId);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:DeleteBusinessEntity:For BusinessEntityId {0}", BusinessEntityId);
+                return Json(new { Status = false, Message = ex.ToString() });
+                //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        #endregion Business Entity 
+
+        #region New Business Location
+        /// <summary>
+        /// Business Location
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_17_00()
+        {
+            try
+            {
+                ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };
+
+                /// Tax Identification for Dropdown
+                var IsdcodeResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetISDCodes");
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("BusinessStructure/GetActiveBusinessEntities");
+
+                if (serviceResponse.Status && IsdcodeResponse.Status)
+                {
+                    if (IsdcodeResponse.Data != null)
+                    {
+                        ViewBag.IsdCodes = IsdcodeResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.Isdcode.ToString(),
+                            Text = b.CountryName,
+                        }).ToList();
+
+                        ViewBag.entity_list = serviceResponse.Data;
+                    }
+                    if (serviceResponse.Data != null)
+                    {
+                        ViewBag.entity_list = serviceResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.BusinessId.ToString(),
+                            Text = b.BusinessDesc,
+                        }).ToList();
+
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:BusinessLocation");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:BusinessLocation");
+                throw;
+            }
+        }
+        /// <summary>
+        ///Get Tax Idendification for drop down by Isd code
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetTaxIdentificationListByIsdCode(int IsdCode)
+        {
+            try
+            {
+                var parameter = "?IsdCode=" + IsdCode;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_TaxIdentification>>("BusinessStructure/GetTaxIdentificationByISDCode" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For BusinessId {0}", IsdCode);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For BusinessId {0}", IsdCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessSegmentByBusinessId:For BusinessId {0}", IsdCode);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Currencies for drop down by Isd code 
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetCurrencyListbyIsdCode(int IsdCode)
+        {
+            try
+            {
+                var parameter = "?IsdCode=" + IsdCode;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("BusinessStructure/GetCurrencyListbyIsdCode" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCurrencyListbyIsdCode:For IsdCode {0}", IsdCode);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCurrencyListbyIsdCode:For IsdCode {0}", IsdCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCurrencyListbyIsdCode:For IsdCode {0}", IsdCode);
+                throw;
+            }
+        }
+        /// <summary>
+        /// Get City List by isdCode and stateCode.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetCityListbyISDCode(int isdCode)
+        {
+            try
+            {
+                var parameter = "?isdCode=" + isdCode;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_Cities>>("BusinessStructure/GetCityListbyISDCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCityListbyISDCode:For isdCode {0} ", isdCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCityListbyISDCode:For isdCode {0} ", isdCode);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Business Locations  for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessLocationByBusinessId(int BusinessId)
+        {
+
+            try
+            {
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("BusinessStructure/GetBusinessLocationByBusinessId?BusinessId=" + BusinessId);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessLocationByBusinessId");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessLocationByBusinessId");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        /// <summary>
+        /// Insert or Update Business Locations
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateBusinessLocation(bool isInsert, DO_BusinessLocation obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                if (isInsert)
+                {
+                    var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/InsertBusinessLocation", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/UpdateBusinessLocation", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinessLocation:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Activate or De Activate Business Location
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> ActiveOrDeActiveBusinessLocation(bool status, int BusinessId, int locationId)
+        {
+
+            try
+            {
+
+                var parameter = "?status=" + status + "&BusinessId=" + BusinessId + "&locationId=" + locationId;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("BusinessStructure/ActiveOrDeActiveBusinessLocation" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ActiveOrDeActiveBusinessLocation:For BusinessId {0} ", BusinessId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get Existing Locations as Segment if IsBookofAccount is checked.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetActiveLocationsAsSegments()
+        {
+            try
+            {
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("BusinessStructure/GetActiveLocationsAsSegments");
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveLocationsAsSegments");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActiveLocationsAsSegments");
+                throw;
+            }
+        }
+        /// <summary>
+        ///Get State Code by Tax Idendification
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetStateCodeByISDCode(int isdCode, int TaxIdentificationId)
+        {
+            try
+            {
+                var parameter = "?isdCode=" + isdCode + "&TaxIdentificationId=" + TaxIdentificationId;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_TaxIdentification>("BusinessStructure/GetStateCodeByISDCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetStateCodeByISDCode:For TaxIdentificationId {0}", TaxIdentificationId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetStateCodeByISDCode:For TaxIdentificationId {0}", TaxIdentificationId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetStateCodeByISDCode:For TaxIdentificationId {0}", TaxIdentificationId);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Business Location Currency for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetCurrencybyBusinessKey(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusienssSegmentCurrency>>("BusinessStructure/GetCurrencybyBusinessKey?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCurrencybyBusinessKey:For BusinessKey {0}", BusinessKey);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCurrencybyBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCurrencybyBusinessKey:For BusinessId {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Business Unit Type by Entity Id
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessUnitType(int businessId)
+        {
+            try
+            {
+
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_BusinessEntity>("BusinessStructure/GetBusinessUnitType?businessId=" + businessId);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessUnitType:For businessId {0}", businessId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessUnitType:For BusinessId {0}", businessId);
+                throw;
+            }
+        }
+        #endregion
+
+        #region Business Subscription
+        /// <summary>
+        /// Business Subscription
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_18_00()
+        {
+            try
+            {
+                ///Getting Business Key
+                var Bk_response = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
+
+                if (Bk_response.Status)
+                {
+                    if (Bk_response.Data != null)
+                    {
+                        ViewBag.BusinessKeyList = Bk_response.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.BusinessKey.ToString(),
+                            Text = b.LocationDescription.ToString(),
+                        }).ToList();
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:BusinessSubscription");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Business Subscription by Business Key for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessSubscription(int BusinessKey)
+        {
+            try
+            {
+                var parameter = "?BusinessKey=" + BusinessKey;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_BusinessSubscription>>("BusinessStructure/GetBusinessSubscription" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessSubscription:For BusinessKey {0}", BusinessKey);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessSubscription:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessSubscription:For BusinessKey {0}", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Business Subscription
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateBusinessSubscription(DO_BusinessSubscription busssubs)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(busssubs.BusinessKey.ToString()) || busssubs.BusinessKey == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Business Key" });
+                }
+                else if (busssubs.SubscribedFrom > busssubs.SubscribedTill)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Subscribed Till Date can't Less Than Subscribed From." });
+                }
+
+                else if (busssubs.SubscribedTill < System.DateTime.Now)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Subscribed Till Date can't Less Than Current Date." });
+                }
+                else
+                {
+                    busssubs.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    busssubs.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    busssubs.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
+                    var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/InsertOrUpdateBusinessSubscription", busssubs);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(busssubs));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(busssubs));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        #endregion
+
+        #region Tax Identification
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_19_00()
+        {
+            try
+            {
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetIndiaISDCodes");
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        ViewBag.ISDCodeList = serviceResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.Isdcode.ToString(),
+                            Text = b.Isdcode.ToString() + '-' + b.CountryName,
+                        }).ToList();
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:TaxIdentification");
+                throw;
+            }
+        }
+        /// <summary>
+        ///Get Tax Identification by Country Code for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetTaxIdentificationByISDCode(int ISDCode)
+        {
+            try
+            {
+                var parameter = "?ISDCode=" + ISDCode;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_TaxIdentification>>("TaxIdentification/GetTaxIdentificationByISDCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+                throw;
+                //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+
+        /// <summary>
+        /// Insert Tax Identification 
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateTaxIdentification(DO_TaxIdentification tax_Ident)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationId.ToString()) || tax_Ident.TaxIdentificationId == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification" });
+                }
+                if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationDesc))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification Description" });
+                }
+                //else if (string.IsNullOrEmpty(tax_Ident.TaxCode.ToString()) || tax_Ident.TaxCode == 0)
+                //{
+                //    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Tax Description" });
+                //}
+                else
+                {
+                    tax_Ident.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    tax_Ident.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    tax_Ident.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    if (tax_Ident.InsertStatus == 0)
+                    {
+                        var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/InsertIntoTaxIdentiFication", tax_Ident);
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                    else
+                    {
+                        var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/UpdateTaxIdentiFication", tax_Ident);
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+                return Json(new { Status = false, Message = ex.ToString() });
+                //return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
+            }
+        }
+        /// <summary>
+        /// Activate or De Activate Tax Identification
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> ActiveOrDeActiveTaxIdentification(bool status, int Isd_code, int TaxIdentificationId)
+        {
+
+            try
+            {
+
+                var parameter = "?status=" + status + "&Isd_code=" + Isd_code + "&TaxIdentificationId=" + TaxIdentificationId;
+                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("TaxIdentification/ActiveOrDeActiveTaxIdentification" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ActiveOrDeActiveTaxIdentification:For TaxIdentificationId {0} ", TaxIdentificationId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
+    }
+}

@@ -1,0 +1,175 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://doxy.me/mohideen">
+    <meta name="viewport" content="width=device-width" />
+    <title>DoctorWaitingRoom</title>
+
+    <script src="~/lib/bootstrap/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <input type="button" onclick="StartCall()" />
+
+    <iframe id='telehealth' onload="onframeload()" src="https://doxy.me/mohideen" allow="camera; microphone" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:50px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe>
+
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        //  #('.patient - modal__input').val('Mohideen');
+        //  document.getElementsByClassName(".patient-modal__input")[0].value = "Mohideen";
+        //  document.forms[0].querySelector(".username").value = "Mohideen";
+
+        // $('input[name=username]').val("s")
+        //var els = document.getElementsByName("username");
+        //var name = $('iframe[name=telehealth]').contents().find('#username').val();
+        //alert(name);
+        //alert(els.length);
+        //for (var i = 0; i < els.length; i++) {
+        //    alert(1);
+        //    els[i].value = "yourDesiredValueHere";
+        //}
+    });
+
+    function onframeload() {
+        // setTimeout("onframeload();", 200);
+        //// alert(e);
+        // var els = document.getElementsByName("username");
+        // for (var i = 0; i < els.length; i++) {
+        //     alert(1);
+        //     els[i].value = "yourDesiredValueHere";
+        // }
+        //     alert(alert($('#telehealth').contents().find('.form-field').html()));
+
+    }
+
+    function StartCall() {
+        iFrameReady(document.getElementById("telehealth"), function () {
+            alert(this);
+            // var target = this.getElementById("target");
+            //  target.innerHTML = "Found It!";
+        });
+
+        var els = document.getElementsByName("username");
+        $('input[name=username]').val("s")
+
+        var username = document.getElementsByClassName("patient-modal__input")[0];
+        alert(username);
+
+        var iframe = document.getElementById("telehealth");
+        var elmnt = iframe.contentWindow.document.getElementsByTagName("input")[0];
+        alert(elmnt);
+        //   var iFrameBody = targetIFrame.getElementsByTagName('body');
+        //  var iFrameHeader = iFrameBody.getElementById('event-details-wrapper');
+
+        var nodeList = document.querySelectorAll('input');
+        console.log({}.toString.call(nodeList).slice(8, -1));
+        var array = [].slice.call(nodeList, 0);
+        console.log({}.toString.call(array).slice(8, -1)); //Array
+
+        var result = array.filter(function (item) { return item.value.length > 5 });
+
+        for (var i in result)
+            console.log(result[i].value);
+
+        //    alert(els);
+        for (var i = 0; i < els.length; i++) {
+            alert(1);
+            els[i].value = "yourDesiredValueHere";
+        }
+    }
+
+    $("#telehealth").ready(function () {
+
+
+
+        //   alert(1);
+        // do something once the iframe is loaded
+    });
+</script>
+
+<script>
+    // This function ONLY works for iFrames of the same origin as their parent
+    function iFrameReady(iFrame, fn) {
+        var timer;
+        var fired = false;
+
+        function ready() {
+            if (!fired) {
+                fired = true;
+                clearTimeout(timer);
+                fn.call(this);
+            }
+        }
+
+        function readyState() {
+            if (this.readyState === "complete") {
+                ready.call(this);
+            }
+        }
+
+        // cross platform event handler for compatibility with older IE versions
+        function addEvent(elem, event, fn) {
+            if (elem.addEventListener) {
+                return elem.addEventListener(event, fn);
+            } else {
+                return elem.attachEvent("on" + event, function () {
+                    return fn.call(elem, window.event);
+                });
+            }
+        }
+
+        // use iFrame load as a backup - though the other events should occur first
+        addEvent(iFrame, "load", function () {
+            ready.call(iFrame.contentDocument || iFrame.contentWindow.document);
+        });
+
+        function checkLoaded() {
+            var doc = iFrame.contentDocument || iFrame.contentWindow.document;
+            // We can tell if there is a dummy document installed because the dummy document
+            // will have an URL that starts with "about:".  The real document will not have that URL
+            if (doc.URL.indexOf("about:") !== 0) {
+                if (doc.readyState === "complete") {
+                    ready.call(doc);
+                } else {
+                    // set event listener for DOMContentLoaded on the new document
+                    addEvent(doc, "DOMContentLoaded", ready);
+                    addEvent(doc, "readystatechange", readyState);
+                }
+            } else {
+                // still same old original document, so keep looking for content or new document
+                timer = setTimeout(checkLoaded, 1);
+            }
+        }
+        checkLoaded();
+    }
+</script>
+
+@*<script language="javascript">
+   var iframe = document.getElementById("telehealth");
+
+    WaitForIFrame();
+
+    function WaitForIFrame() {
+        if (iframe.readyState != "complete") {
+         //   alert(iframe.readyState);
+            setTimeout("WaitForIFrame();", 200);
+        } else {
+            done();
+        }
+    }
+
+    function done() {
+        alert('d')
+        //some code after iframe has been loaded
+    }
+</script>*@  

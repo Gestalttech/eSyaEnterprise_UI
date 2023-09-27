@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "EPS_04_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+  @section scripts{
+                      <script src="~/js/ProductSetup/CodeTypes.js"></script>
+                       <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+  }
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        CodeType: '@Localizer["CodeType"]',
+        Description: '@Localizer["Description"]',
+        Control: '@Localizer["Control"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        AddCodeType: '@Localizer["AddCodeType"]',
+        Save: '@Localizer[" Save "]',
+        UpdateCodeType: '@Localizer["UpdateCodeType"]',
+        Update: '@Localizer[" Update "]',
+        ViewCodeType: '@Localizer["ViewCodeType"]',
+        Delete: '@Localizer[" Delete "]',
+        Activate: '@Localizer[" Activate "]',
+        DActivate: '@Localizer[" DActivate "]',
+    };
+
+</script>
+
+<style>
+    .bootstrap-select {
+        width: 100% !important;
+    }
+
+    .err_div_mar {
+        margin-top: -36px;
+    }
+
+    .errorMsg_p {
+        background: #dc3545;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 10px;
+        position: initial;
+        z-index: 1;
+        left: 2%;
+        bottom: 0px;
+        font-size: 16px;
+        margin-bottom: 0px;
+        height: 36px;
+        border-top-left-radius: 12px !important;
+        border-top-right-radius: 12px !important;
+    }
+
+    .succMsg_p {
+        background: #28a745;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 10px;
+        position: initial;
+        z-index: 1;
+        left: 2%;
+        bottom: 0px;
+        font-size: 16px;
+        margin-bottom: 0px;
+        height: 36px;
+        border-top-left-radius: 12px !important;
+        border-top-right-radius: 12px !important;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 codetypecontainer">
+        <table id="jqgCodeType"></table>
+        <div id="jqpCodeType"></div>
+    </div>
+</div>
+
+<div class="modal fade in" id="PopupCodeTypes" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddCodeType"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCodeType">@Localizer["CodeType"] </label>
+                            <input class="form-control" type="text" maxlength="8" id="txtCodeType" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row padbot4">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="txtCodeDescription"> @Localizer["Description"]</label>
+                            <input id="txtCodeDescription" class="form-control" maxlength="50" type="text" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div>
+                                <label class="lable-color">@Localizer["Control"] </label>
+                                <select class="selectpicker" data-live-search="false" id="cboCodeTypeControl" title="">
+                                    <option value="S">@Localizer["SystemDefined"]</option>
+                                    <option value="U">@Localizer["UserDefined"]</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveCodeType" onclick="fnSaveCodeType();">
+                            <i class="fa fa-save"></i> @Localizer[" Save "]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="btnCancelCodeType"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveCodeType" onclick="fnDeleteCodeType();"><i class="fa fa-times"></i> @Localizer["DeActivate"] </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

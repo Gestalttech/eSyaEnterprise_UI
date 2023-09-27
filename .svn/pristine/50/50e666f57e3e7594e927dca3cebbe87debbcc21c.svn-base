@@ -1,0 +1,10 @@
+﻿using eSyaEssentials_UI;
+
+namespace eSyaEnterprise_UI.Areas.ProductSetup.Data
+{
+    public interface IeSyaConfigAPIServices
+    {
+        IHttpClientServices HttpClientServices { get; set; }
+
+    }
+}

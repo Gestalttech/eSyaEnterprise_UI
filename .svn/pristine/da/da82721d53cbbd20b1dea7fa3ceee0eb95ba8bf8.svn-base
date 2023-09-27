@@ -1,0 +1,17 @@
+{
+  "UI0001": "Form Code Required",
+  "UI0002": "Form Description is Required",
+  "UI0003": "Please Select Controller",
+  "UI0004": "Please Select any action",
+  "UI0005": "Please enter a Area Name",
+  "UI0006": "Please enter a Controller Name",
+  "UI0007": "Please enter the Menu Name",
+
+  "UIC01": "You are not Authorized to Add",
+  "UIC02": "You are not Authorized to Edit",
+  "UIC03": "You are not Authorized to View",
+  "UIC04": "You are not Authorized to Delete",
+  "UIC05": "Activate/De Activate"
+
+
+}

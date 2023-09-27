@@ -1,0 +1,183 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.ico">
+    <title>Mobile Login</title>
+    
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/css/Common/material.min.css" rel="stylesheet" />
+        <link href="~/css/Common/all.min.css" rel="stylesheet" />
+        <link href="~/css/Common/animate.css" rel="stylesheet" />
+        <link href="~/css/login/login.css" rel="stylesheet" />
+        <link href="~/css/Common/esyafonts.css" rel="stylesheet" media="all" />
+        <link href="~/css/Common/esyaTheme.css" rel="stylesheet" media="all" />
+    
+</head>
+<body>
+    <div class="loginContainer">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <img src="~/images/logo/esya-logo-black.png" class="smallDeviceLogo" alt="eSya Logo" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-sm-none d-md-block padright0 animated fadeIn">
+                <img src="~/images/esya-products-yellow-with-footer.jpg" class="leftImage" alt="eSya Products" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-auto col-sm-12 col-xs-12 login-form">
+                <div class="row h-100 position-relative section-form">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 pad0">
+                        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs h-100">
+                            <header class="mdl-layout__header">
+                                <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active" onclick="fnHideMobileDiv()"><i class="fas fa-key f-18"></i> Login Using Your Mobile Number</a>
+                                </div>
+                            </header>
+                    @*<div class="socialIconsaligment">
+                    <span><img src="~/images/google.svg" class="imgSocialIcons" style="padding-left:10px;" /></span>
+                    <span><img src="~/images/facebook.svg" class="imgSocialIcons" style="padding-left:10px;" /></span>
+                    <span><img src="~/images/mobile.svg" class="imgSocialIcons" style="padding-left:10px;" /></span>
+                    </div>*@
+
+                   
+                            <main class="mdl-layout__content h-100">
+                                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                                    <div class="page-content pb-3 px-3">
+                                         <form action="#">
+                        @*<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                        <input type="text" value="" class="mdl-textfield__input" id="sample3" readonly>
+                        <input type="hidden" value="" name="sample3">
+                        <label for="sample3" class="mdl-textfield__label"> Select  Location</label>
+                        <ul for="sample3" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                        <li class="mdl-menu__item" data-val="DEU">Bengaluru</li>
+                        <li class="mdl-menu__item" data-val="BLR">Kolkata</li>
+
+                        </ul>
+                        </div>*@
+                        <div class="row py-2">
+                            <div class="col-lg-12" id="userMobileNum">
+                                <div class="form-group">
+                                        <label class="" for="txtUsername">  Register Mobile Number</label>
+                                       <input class="form-control" type="text" id="txtUsername" maxlength="40" pattern="^[a-z]+">
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="display:none" id="entotp">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                                    <input class="mdl-textfield__input" type="number" id="txtPassword" maxlength="50">
+                                    <label class="mdl-textfield__label" for="txtPassword">Enter OTP</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 animated slideInUp" style="display:none" id="textscf">
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    @*<div>
+                                    <strong>User ID</strong>
+                                    </div>*@
+                                    <div style="font-size:12px;">
+                                        You have successfully generated User ID . User ID is  sent to your mobile number
+                                    </div>
+
+                                </div>
+                                <div style="font-size:12px;font-weight:500">
+                                    To login with your newly generated  User ID
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class=" col-lg-12 animated  slideInUp" style="display:none ; padding:0px" id="creNewPasswordbtn">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  f-r mar-savebtn">Resend OTP</button>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  f-r mar-savebtn">
+                                    <a href="@Url.Action("login","Login")" style="color:#fff"> GO</a>
+                                </button>
+
+                            </div>
+                            <div class="col-lg-12" style="display:none" id="loginsucf">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  f-r mar-savebtn"></button>
+                            </div>
+                            <div class="col-lg-12 " id="otpBtn">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  fullwidth " onclick="getOPT();  return false;">
+                                                        Go   <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="col-lg-12 col-md-12 text-center py-3">
+                                <p class="mb-0" style="font-size:11px;"> Already have account? Login</p>
+                                <div class="socialIconsaligment">
+                                    <span><a asp-controller="Login" asp-action="GmailLogin"><img src="~/images/g_icon.png" class="imgSocialIcons" style="padding-left:0px;" /></a></span>
+                                    <span><a asp-controller="Login" asp-action="FacebookLogin"><img src="~/images/f_icon.png" class="imgSocialIcons" style="padding-left:20px;" /></a></span>
+                                    <span><a href="@Url.Action("MobileLogin","Login")"><img src="~/images/mobile.svg" class="imgSocialIcons" style="padding-left:20px;" /></a></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                                    </div>
+                                </section>
+                            </main>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+        </div>
+    </div>
+
+
+
+    <environment>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/js/Common/material.min.js"></script>
+        <script src="~/js/Common/all.min.js"></script>
+    </environment>
+    <script>
+        $(function () {
+            $('.mdl-menu__item').click(function () {
+                $("#sample3").val($(this).text());
+                $('div').find('.getmdl-select').addClass('is-dirty');
+            });
+        });
+
+        function getOPT() {
+            $("#entotp").show();
+            $("#creNewPasswordbtn").show();
+            $("#otpBtn").hide();
+            $("#userMobileNum").hide();
+
+        };
+
+
+
+        function cancelUserIDBTN() {
+            $("#otpBtn").show();
+            $("#userMobileNum").show();
+            $("#entotp").hide();
+            $("#creNewPasswordbtn").hide();
+            $("#inputtextdisable").val('');
+        };
+
+        function createNewPassword() {
+            $("#getPassword").modal('show');
+            $("#getUserID").modal('toggle');
+            cancelUserIDBTN();
+        }
+
+        function textscfbtn() {
+            $("#textscf").show();
+            $("#loginsucf").show();
+            $("#creNewPasswordbtn").hide();
+            $("#otpBtn").hide();
+            $("#entotp").hide();
+            $("#userMobileNum").hide();
+        }
+    </script>
+</body>
+</html>

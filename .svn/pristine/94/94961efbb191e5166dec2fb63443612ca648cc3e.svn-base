@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+
+
+  "eSyaProductSetup_API": "http://92.205.18.29/shrfConfig_WebAPI/api/"
+
+}

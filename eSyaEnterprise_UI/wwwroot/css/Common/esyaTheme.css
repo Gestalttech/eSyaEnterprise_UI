@@ -1,0 +1,180 @@
+﻿:root {
+    --banner-bg: #EFDF8D;
+    --primary-color: #555555; /*black*/
+    --entry-color: #787887;
+    --secondary-color: #f0e08e; /*yellow*/
+    --button-forecolor: #fcd727; /*gold*/
+    --light-orange: #FEFBEB; /*light orange*/
+    --light-yellow: #fffff3; /*Light Yellow*/
+    --menu-hover: #FFF4BF;
+    --white:#fff;
+}
+.header nav, #navbarSupportedContent{
+    background-color: var(--primary-color);
+}
+.banner{
+    color:var(--primary-color);
+    background-color: var(--banner-bg);
+}
+.jquery-accordion-menu ul li a {
+    background-color: var(--primary-color);
+}
+.jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a {
+    background: var(--light-yellow) !important;
+}
+.primary-button, .cancel-button, .ui-button, .loginButton, .mdl-button--raised.mdl-button--colored,
+button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised{
+  background-color: var(--primary-color);
+    color: var(--button-forecolor);
+    border-color: transparent;
+}
+    .btn-primary:hover, .mdl-button:hover, .mdl-button:active, .mdl-button:focus:not(:active), .mdl-button--raised.mdl-button--colored:focus:not(:active),
+    .mdl-button--raised.mdl-button--colored:hover, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+        color: #ffd700;
+        background-color: #505050;
+        border-color: #797172;
+    }
+    .btn-primary.focus, .btn-primary:focus {
+        box-shadow: 0 0 0 0.1rem rgba(38,143,255,.5) !important;
+    }
+.btn-delete{
+    background:white;
+    color:red;
+    border:1px solid transparent;
+}
+    .btn-delete:hover{
+        border-color: red;
+        color:red;
+    }
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.show > .btn-outline-primary.dropdown-toggle {
+    color: var(--secondary-color) !important;
+    background-color: var(--primary-color);
+    border-color:var(--primary-color)
+}
+.btn-outline-primary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+    .btn-outline-primary:hover {
+        color: var(--white) !important;
+        background-color: #878787;
+        border-color: var(--primary-color);
+        }
+    .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+    .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+    .show > .btn-outline-primary.dropdown-toggle:focus,
+    .btn-outline-primary.focus, .btn-outline-primary:focus {
+        box-shadow: none !important;
+    }
+    [data-repeater-delete] {
+        background-color: transparent;
+        color: red;
+        font-size: 22px;
+    }
+.ui-pg-table{
+    color:var(--primary-color) !important;
+}
+#btn-menuBar {
+    background: var(--white) !important;
+}
+.navbar-brand-container,.navbar-brand {
+    background: var(--white) !important;
+}
+.jquery-accordion-menu .jquery-accordion-menu-header{
+    background: var(--white) !important;
+    font-weight: 300 !important;
+    color: #555;
+}
+#eSyaMenuName {
+    background: var(--secondary-color) !important;
+    font-weight: 300 !important;
+    color: #555;
+}
+.jquery-accordion-menu > ul > li.active > a, .jquery-accordion-menu > ul > li:hover > a{
+    color:var(--primary-color);
+}
+ 
+#divSignOutBox a:hover {
+    background: var(--secondary-color) !important;
+}
+.jquery-accordion-menu ul ul.submenu li:hover > a, .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
+    border-left-color: var(--secondary-color);
+    background: var(--menu-hover);
+}
+label {
+    color: var(--primary-color) !important;
+}
+.ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    background: var(--primary-color) !important;
+    color: var(--banner-bg) !important;
+}
+.ui-pg-button{
+    color:var(--primary-color) !important;
+}
+.ui-th-column {
+    background: var(--primary-color) !important;
+    color: var(--banner-bg) !important;
+}
+.ui-jqgrid-hdiv{
+    background: var(--primary-color) !important;
+    color: var(--entry-color) !important;
+}
+.EditButton .fm-button .ui-state-default .ui-corner-all .fm-button-icon-left {
+    color: var(--button-forecolor) !important;
+}
+.loading.ui-state-default.ui-state-active {
+    color: var(--button-forecolor) !important;
+    background: var(--primary-color) !important;
+}
+
+.ui-state-default .ui-th-column .ui-th-ltr .ui-state-hover{
+    background:transparent !important;
+}
+.ui-state-hover:not(th) {
+    background: var(--secondary-color) !important;
+}
+.ui-state-hover.ui-datepicker-next-hover, .ui-state-hover.ui-datepicker-prev-hover {
+    background: #736601 !important;
+}
+.ui-widget-header, .mdl-card__title-text {
+    background: var(--primary-color);
+}
+.modal-title {
+    color: var(--button-forecolor);
+}
+#header_navbar {
+    background-color:var(--primary-color);
+}
+/*Jqgrid record selection*/
+.ui-state-hover:not(th) {
+    background: var(--secondary-color);
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    background: var(--secondary-color) !important;
+}
+.modal-header {
+    background: var(--primary-color);
+    color: var(--button-forecolor);
+}
+.modal-footer{
+    background:var(--secondary-color);
+}
+
+.modal-footer button{
+    background:var(--primary-color) !important;
+    color:var(--button-forecolor) !important;
+}
+    .modal-footer button .svg-inline--fa, button.close .svg-inline--fa{
+        color:var(--button-forecolor) !important;
+    }
+.fc-time-grid .fc-event {
+    /*background-color: var(--light-orange) !important;*/
+    border-color: #D8D8D8 !important;
+}
+.ui-datepicker-calendar .ui-widget-content .ui-state-default, .ui-datepicker-calendar .ui-state-default {
+    background: var(--white) !important;
+    color: var(--primary-color) !important;
+}

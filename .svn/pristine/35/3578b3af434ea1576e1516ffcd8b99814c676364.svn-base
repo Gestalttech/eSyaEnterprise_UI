@@ -1,0 +1,252 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "EPS_12_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@section Scripts{
+    <script src="~/js/ProductSetup/CountryCode.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        AddCountry: '@Localizer["AddCountry"]',
+        ISDCode: '@Localizer["ISDCode"]',
+        CountryCode: '@Localizer["CountryCode"]',
+        CountryFlag: '@Localizer["CountryFlag"]',
+        CountryName: '@Localizer["CountryName"]',
+        CurrencyCode: '@Localizer["CurrencyCode"]',
+        ChooseCurrency: '@Localizer["ChooseCurrency"]',
+        MobileNoPattern: '@Localizer["MobileNoPattern"]',
+        UIDlabel: '@Localizer["UIDlabel"]',
+        UIDPattern: '@Localizer["UIDPattern"]',
+        Nationality: '@Localizer["Nationality"]',
+        IsPOBoxApplicable: '@Localizer["IsPOBoxApplicable"]',
+        POBoxPattern: '@Localizer["POBoxPattern"]',
+        Active: '@Localizer["Active"]',
+        IsPinApplicable: '@Localizer["IsPinApplicable"]',
+        ZipCodeApplicable: '@Localizer["ZipCodeApplicable"]',
+        Active: '@Localizer["Active"]',
+        PincodePattern: '@Localizer["PincodePattern"]',
+        ZipcodePattern: '@Localizer["ZipcodePattern"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        CurrencyName: '@Localizer["CurrencyName"]',
+        Flag: '@Localizer["Flag"]',
+        AddCountry: '@Localizer["AddCountry"]',
+        UpdateCountry: '@Localizer["UpdateCountry"]',
+        Update: '@Localizer["Update"]',
+        ViewCountry: '@Localizer["ViewCountry"]',
+        DeActivate: '@Localizer["DeActivate"]',
+        Activate: '@Localizer["Activate"]',
+        Delete: '@Localizer["Delete"]',
+        UIDPattern: '@Localizer["UIDPattern"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        ISDCode_E6: '@Localizer["UI0034"]',
+        CountryCode_E7: '@Localizer["UI0035"]',
+        CountryFlag_E8: '@Localizer["UI0036"]',
+        CountryName_E9: '@Localizer["UI0037"]',
+        Currency_E10: '@Localizer["UI0038"]',
+    }
+    
+</script>
+<style>
+    #imgPreview {
+        width: 50px;
+        height: 50px;
+    }
+
+    #imgFlag {
+        display: none;
+    }
+</style>
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgCountryCode"></table>
+        <div id="jqpCountryCode"></div>
+    </div>
+</div>
+
+<div class="modal fullscreen fade in" id="PopupCountryCode" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddCountry"]</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row padbot4">
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtIsdcode">@Localizer["ISDCode"]</label>
+                            <input id="txtIsdcode" class="form-control numberonly" maxlength="8" type="text" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCountrycode">@Localizer["CountryCode"]</label>
+                            <input id="txtCountrycode" class="form-control" maxlength="4" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+
+                        @if (ViewBag.Images != null)
+                        {
+
+                            <div class="form-group">
+                                <label>@Localizer["CountryFlag"]</label>
+                                <select id="cboflagImage" class="selectpicker" data-size="5">
+                                    <option value='0'>Select Flag</option>
+                                    @foreach (var f in ViewBag.Images)
+                                    {
+                                        if (f.DomainName == "")
+                                        {
+                                            <option value=@f.Name title="
+                    <span><img src=&quot;/@f.localDomainwithPath/@f.Name &quot;> @f.Name</span>
+                    " data-content="<span><img src=&quot;/@f.localDomainwithPath/@f.Name &quot;>
+                                </span> @f.Name">
+                                 </option>
+                                        }
+                                        else
+                                        {
+                                            <option value=@f.Name title="
+                    <span><img src=&quot;@f.ServerDomainwithPath/@f.Name &quot;> @f.Name</span>
+                    " data-content="<span><img src=&quot;@f.ServerDomainwithPath/@f.Name &quot;>
+                                </span> @f.Name">
+                                 </option>
+                                        }
+                                    }
+
+                                </select>
+
+                            </div>
+                        }
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCountryName">@Localizer["CountryName"]</label>
+                            <input id="txtCountryName" class="form-control" maxlength="50" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="">@Localizer["CurrencyCode"]</label>
+                            <select class="selectpicker" data-live-search="true" title="" data-size="8" id="cboCurrencycode">
+                                <option value="0">@Localizer["ChooseCurrency"] </option>
+                                @if (ViewBag.currencyList != null)
+                                {
+                                    foreach (var currency in ViewBag.currencyList)
+                                    {
+
+                                        <option value="@currency.CurrencyCode">@currency.CurrencyName</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtMobileNumberPattern">@Localizer["MobileNoPattern"]</label>
+                            <input id="txtMobileNumberPattern" class="form-control" maxlength="25" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtNationality">@Localizer["Nationality"]</label>
+                            <input id="txtNationality" class="form-control" maxlength="50" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="default-checkbox padbot20">
+
+                            <label class="mdl-checkbox mdl-js-checkbox" for="chkIsPOBoxAppllicable">
+                                <input type="checkbox" id="chkIsPOBoxAppllicable"
+                                       class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["IsPOBoxApplicable"] </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtPOBoxPattern">@Localizer["POBoxPattern"]</label>
+                            <input id="txtPOBoxPattern" class="form-control" maxlength="25" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="default-checkbox padbot20">
+
+
+                            <label class="mdl-checkbox mdl-js-checkbox" for="chkIsPinApplicable">
+                                <input type="checkbox" id="chkIsPinApplicable"
+                                       class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["IsPinApplicable"] </span>
+                            </label>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtPincodePattern">@Localizer["PincodePattern"]</label>
+                            <input id="txtPincodePattern" class="form-control" maxlength="25" type="text" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-12 col-md-6">
+                        <table id="jqgUIDPattern"></table>
+                        <div id="jqpUIDPattern"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveCountryCode" onclick="fnSaveCountryCode()">
+                            @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateCountryCode" onclick="fnDeleteCountryCodes()"><i class="fas fa-ban"></i>  @Localizer["Deactivate"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelCountryCode" data-bs-dismiss="modal" id="#" onclick="fnClearFields()"> @Localizer["Cancel"]  </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

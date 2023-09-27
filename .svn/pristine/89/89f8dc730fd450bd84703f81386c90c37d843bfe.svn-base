@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <title>diaDoctorProfile_en</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0px;
+        }
+
+        section {
+            padding: 20px;
+            background: #fff;
+        }
+
+        ul li {
+            text-align: justify;
+            line-height: 1.5;
+            margin: 0px 0px;
+            background: #fff;
+            padding: 15px 0px;
+            font-size: 14px;
+        }
+
+        .heading {
+            color: #003f67;
+            font-weight: 600;
+            margin: 20px 0px 0px 0px;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #fff;
+            position: relative;
+            bottom: 29px;
+            margin: auto;
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+        }
+
+        .doctorDiv img {
+            display: flex;
+            flex: 0 0 100%;
+            border-radius: 5px;
+            padding: 4px;
+            margin: auto;
+            height: 270px;
+            transform: scale(1.35);
+        }
+
+        .div-img img {
+            margin: 0px auto;
+            display: inline;
+            height: 150px;
+            box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+            background: #fff;
+            border-radius: 20px;
+        }
+
+        figure {
+            display: inline-block;
+            margin: 0 auto;
+            width: 48%;
+        }
+
+            figure img {
+                max-width: 100%;
+                border-radius: 10%;
+            }
+
+        figcaption {
+            font-size: 11px;
+        }
+
+        .div-img {
+            position: relative;
+            width: 49.1%;
+            display: inline-block;
+            margin: auto;
+        }
+
+            .div-img p {
+                font-size: 12px;
+                display: block;
+                padding: 5px 0px 5px 15px;
+                margin: 4px 0px;
+            }
+
+        .doctorDiv {
+            background: #1e4a49;
+            margin: -20px -20px auto;
+            border-bottom-right-radius: 39%;
+            overflow: hidden;
+        }
+
+        .h1 {
+            padding-top: 30px;
+            margin: 0px;
+            color: #003f68;
+            text-transform: capitalize;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .m-0 {
+            margin: 0px;
+        }
+
+        .small-text {
+            color: #2b2b2b;
+            font-size: 13px;
+            background: transparent;
+            padding: 8px 0px 0px 0px;
+            margin: 0px;
+            letter-spacing: 0.2px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .short-message {
+            text-align: center;
+            background: transparent;
+            padding: 20px 0px;
+            margin: 0px;
+            font-size: 14px;
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .box {
+            width: 30%;
+            padding: 10px 2px;
+            box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
+            /*display: inline-block;*/
+            display: none;
+            margin: 30px 0px;
+            background: #f0fffe;
+            border-radius: 10px;
+        }
+
+            .box h2 {
+                text-align: center;
+                font-weight: bold;
+                margin: 5px;
+                color: #2daba3;
+            }
+
+            .box p {
+                padding: 0px;
+                font-size: 12px;
+                color: grey;
+            }
+
+        h3 {
+            color: #003f68;
+        }
+            .m-b-0{margin-bottom: 0px;margin-top:5px;}
+        ul {
+            list-style-type: circle;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="doctorDiv">
+            <img src="../images/diaClinic/doctorDIAPhoto.JPG" alt="Dr.Dia's Photo" />
+        </div>
+        <h1 class="h1">Dr.Mohamed Diaa </h1>
+        <p class="small-text">&#9829; Bariatric Surgeon </p>
+        <div class="box-container">
+            <div class="box">
+                <h2>1.5k </h2><p class="small-text">Patients</p>
+            </div>
+            <div class="box">
+                <h2>10 yr</h2><p class="small-text">Experience</p>
+            </div>
+            <div class="box">
+                <h2>4.9</h2><p class="small-text">Rating</p>
+            </div>
+
+        </div>
+        <h3 class="h3">About Doctor</h3>
+        <ul>
+            <li>Professor Mohamed Diaa Sarhan is recognized for his reputation which ranks him among the best bariatric surgeons in Egypt. </li>
+            <li>Professor of bariatric and respiratory system surgeries at the faculty of medicine El Kasr El Ainy. </li>
+            <li>Fellowship of the royal surgeon’s faculty in the United Kingdom. </li>
+            <li>Member of the international federation of bariatric surgeons.</li>
+            <li>Member of the scientific committee of the Baralink organization that is specialized in surgical supervision.</li>
+            <li>Certified as a master surgeon from the SRC organization in the United States after passing various quality standards and measures.</li>
+            <li> Dr Mohamed Diaa Sarhan has done more than 17,000 surgeries with a 0.001% as a maximum of percentage of setbacks.</li>
+            <li> He’s the first and only bariatric surgeon in Egypt that uses Local anesthesia.</li> 
+            <li>He’s also the first and only bariatric surgeon in Egypt that does Robotic surgeries.</li>
+            <li> There’s an ongoing partnership with ABC hospital that is considered to be an international certified independent hospital specializing in bariatric and plastic surgeries in Egypt, Africa and the Middle East.</li>
+        </ul>
+        <h3>Our address:</h3>
+        <h3>Mohandesen branch: </h3>
+        <address>ABC hospital the 1st floor: 15 Amr Street, Syria Street</address><br>
+        <h3 class="m-b-0">Our schedule:</h3>
+        <p class="m-b-0">Sunday</p>
+        <p class="m-b-0">Follow up from 1 pm</p>
+        <p class="m-b-0">Checking up from 5 pm to 9 pm </p>
+        <p class="m-b-0">Our contact: 01007517840 – 01022595054</p>
+        <h3>Zayed branch: </h3>
+        <address>111 Downtown Zayed, Entrance two, El Sheikh Zayed</address><br>
+        <h3 class="m-b-0">Our schedule:</h3>
+        <p class="m-b-0">Tuesday </p>
+        <p class="m-b-0">Nutritional follow up from 3 pm to 5 pm </p>
+        <p class="m-b-0">Surgical follow up from 4 pm to 6 pm </p>
+        <p class="m-b-0">Checking up from 6 pm to 10 pm </p>
+        <p>Our contact: 01020666833</p><br>
+
+       
+    </section>
+</body>
+</html>

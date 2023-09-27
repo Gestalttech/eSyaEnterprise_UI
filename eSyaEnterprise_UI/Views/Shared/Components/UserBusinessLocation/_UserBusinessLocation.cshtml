@@ -1,0 +1,22 @@
+﻿@model Dictionary<int, string>
+
+<div>
+
+    <select id="cboBusinessLocation" class="selectpicker" data-live-search="false" title=""  asp-items="@ViewBag.BusinessLocation"
+        onchange="fnBusinessLocation_onChange()"></select>
+    @*<select id="cboBusinessLocation" class="selectpicker" data-live-search="false" title="Select" onchange="fnBusinessLocation_onChange()">
+
+        @foreach (var item in @ViewBag.BusinessLocation)
+        {
+            if (@item.Value == @ViewBag.SelectedBusinessKey.ToString())
+            {
+                <option selected val="@item.Value">@item.Text</option>
+            }
+            else
+            {
+                <option val="@item.Value">@item.Text</option>
+            }
+        }
+    </select>*@
+</div>
+

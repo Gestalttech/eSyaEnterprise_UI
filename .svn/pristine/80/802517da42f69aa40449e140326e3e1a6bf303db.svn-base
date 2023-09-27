@@ -1,0 +1,262 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@using System.Globalization
+
+@model DO_PasswordPolicy
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <title>Get Password</title>
+    <script src="~/lib/bootstrap/dist/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/material.min.js"></script>
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/i18n/grid.locale-en.js"></script>
+    <script src="~/js/jquery.jqGrid.min.js"></script>
+    <script src="~/js/bootstrap-select.js"></script>
+    <script src="~/js/bootbox.min.js"></script>
+
+    <script src="~/js/Inputmask/inputmask.js"></script>
+    <script src="~/js/Inputmask/jquery.inputmask.js"></script>
+    <script src="~/js/Inputmask/bindings/inputmask.binding.js"></script>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="all" />
+    <link href="~/css/animate.css" rel="stylesheet" media="all" />
+    <link href="~/css/material.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" media="all" />
+    <link href="~/css/esyafonts.css" rel="stylesheet" media="all" />
+    <link href="~/css/esyaTheme.css" rel="stylesheet" media="all" />
+    <link href="~/css/all.min.css" rel="stylesheet" />
+
+    @if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+    {
+        <link rel="stylesheet" type="text/css" href="~/css/rtl.css">
+    }
+
+</head>
+<body>
+    <div class="loginContainer">
+        <div class="row">
+            <div class="hidden-xs  col-lg-12 col-md-12 col-sm-12  text-center">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <img src="~/images/logo/esya-logo-black.png" class="smallDeviceLogo" alt="eSya Logo" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 padright0">
+                <img src="~/images/esya-products-yellow-with-footer.jpg" class="leftImage" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 login-form pad0">
+                <div class="col-lg-12 col-md-12 col-sm-12 pad0 h-100 mb-0">
+                    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+                        <header class="mdl-layout__header">
+                            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                                <a href="#scroll-tab-1" class="getPassword mdl-layout__tab is-active" onclick="fnHideMobileDiv()">
+                                    <i class="fas fa-key f-18"></i>  @Localizer["GetPassword"]
+                                </a>
+
+                            </div>
+                        </header>
+
+                        <main class="mdl-layout__content">
+                            <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                                <div class="col-lg-12">
+
+                                    <form id="ValidateOTP" method="post" asp-controller="Account" asp-action="Index"
+                                          autocomplete="off">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <div class="text-danger validation-summary-errors" data-valmsg-summary="true">
+                                            <div id="dvOTPError"></div>
+                                        </div>
+                                        <div class="row padbot10">
+                                            <div class="col-lg-12" id="dvMobileNumber">
+                                                <div class="form-group" style="width:100%">
+                                                    <label class="lable-color" id="lblMobileNumber">@Localizer["MobileNumber"]</label>
+                                                    @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobile" })
+                                                </div>
+                                                <div class="marbot15 form-group">
+                                                    <p class="OTPStatement"> @Localizer["SendOTPToMobileNumber"]</p>
+                                                </div>
+                                                <div class="d-none">
+                                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
+                                                        <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" checked value="1" onchange="fnCheckradioMobile()">
+                                                        <span class="mdl-radio__label rad-btn">@Localizer["SendOTPToMobileNumber"] </span>
+                                                    </label>
+                                                </div>
+                                                <div class="row" id="dvbtnSendOTP">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                                        <button type="button" class="mdl-button loginButton" tabindex="3" id="btnBackToLogin"><i class="fa fa-chevron-left c-grey"></i> @Localizer["Back"]</button>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                                        <button class="mdl-button loginButton f-right" onclick="fnSendCreatePasswordOTP();return false;">
+                                                            @Localizer["SendOTP"] <i class="fas fa-chevron-right"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12" id="dvOTP" style="display:none">
+                                                <div class="form-group">
+                                                    <p class="OTPStatement">@Localizer["OTPGeneratedStatementForForgetPassword"]</p>
+                                                </div>
+                                                <label class="lable-color" style="">@Localizer["OTP"]</label>
+                                                <div id="divOuter">
+                                                    <div id="divInner">
+                                                        <input id="txtOTP" type="text" autocomplete="off" autoCompleteType="disable" maxlength="6" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="padbot10 padtop30">
+                                            <div class="row m-0" style="display:none;padding:0px;" id="dvCreatePassword">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0">
+                                                    <a href="#" class="getUserId" onclick="fnSendCreatePasswordOTP()">@Localizer["ResendOTP"]</a>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0">
+                                                    <button type="button" class="mdl-button loginButton" tabindex="3" id="btnBackToLogin"><i class="fa fa-chevron-left c-grey"></i> Back</button>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0">
+                                                    <button class="mdl-button loginButton  f-right mar-savebtn" onclick="fnValidateOTP();return false;">
+                                                        @Localizer["GO"] <i class="fas fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </main>
+                    </div>
+                </div>
+                <div class="col-lg-12  alert alert-danger" id="errormsg" role="alert" style=" background:red;display:none; color:#fff; text-align:center;">
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <p class="footer">
+                        <span class="lblPowered">@Localizer["PoweredBy"]</span>
+                        <span class="lblLicensed">@Localizer["LicensedTo"]</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var _cnfISDCode = @Configuration.GetSection("cnf").GetSection("ISDCode").Value;
+
+        $(document).ready(function () {
+
+            $('#ValidateOTP').submit(function () {
+                if ($('#txtOTP').val() == "") {
+                    $("#dvOTPError").html("<ul><li>please enter OTP</li></ul>");
+                    return false;
+                }
+                return fnValidateOTP();
+            });
+        });
+
+        $('#btnBackToLogin').click(function () {
+            $("#dvOTP").css('display', 'none');
+            $("#dvMobileNumber").css('display', 'block');
+            window.location.href = history.back();
+        });
+        function getBaseURL() {
+            var url = window.location.href.split('/');
+            var baseUrl = url[0] + '//' + url[2] + '@Url.Content("~")';
+            return baseUrl;
+        }
+
+        function fnSendCreatePasswordOTP() {
+
+            $("#dvOTPError").html("");
+            $.ajax({
+                url: getBaseURL() + '/Account/SendCreatePasswordOTP?mobileNumber=' + $("#txtUserMobile").val(),
+                type: 'POST',
+                datatype: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    if (result.Status) {
+
+                        $("#dvOTP").show();
+                        $("#dvCreatePassword").show();
+                        $("#dvSendOTP").hide();
+                        $("#dvMobileNumber").hide();
+                    }
+                    else {
+                        if (result.StatusCode === "404") {
+                            $("#dvOTPError").html("<ul><li>Mobile does not exists</li></ul>");
+                        }
+                        if (result.StatusCode === "500") {
+                            $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
+                        }
+                    }
+                },
+                error: function (error) {
+                    $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
+                }
+            });
+
+        }
+
+        function fnValidateOTP() {
+            var Status = false;
+            $.ajax({
+                url: getBaseURL() + '/Account/ValidateOTPForCreatePassword',
+                type: 'POST',
+                datatype: 'json',
+                data: { mobileNumber: $("#txtUserMobile").val(), OTP: $("#txtOTP").val() },
+                async: false,
+                success: function (result) {
+
+                    if (result.Status === false) {
+                        $("#dvOTPError").html("<ul><li>" + result.Message + "</li></ul>");
+                    }
+                    else {
+                        var url = '@(Html.Raw( Url.Action("CreatePassword", "Account")))';
+
+                        window.location.href = getBaseURL() + '/Account/CreatePassword';
+                        return true;
+                    }
+                    Status = result.Status;
+                },
+                error: function (error) {
+                    $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
+                    Status = false;
+                }
+            });
+            return Status;
+        }
+
+
+
+        function fnSendOTP() {
+            if ($("#txtUsername").val() == "" || $("#txtUsername").val() == null) {
+                $("#errormsg").show('slow').html("<i class='fas fa-info-circle'></i> User Id is Required");
+                setTimeout(function () { $("#errormsg").hide('slow') }, 4000)
+                return false;
+            }
+
+        };
+
+
+    </script>
+</body>
+</html>

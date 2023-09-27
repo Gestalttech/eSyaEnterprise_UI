@@ -1,0 +1,209 @@
+﻿body {
+    direction: rtl;
+    text-align: right !important;
+}
+
+.padright0 {
+    padding-left: 0px !important;
+    padding-right: unset !important;
+}
+.login-form {
+    border-right: none !important;
+    border-left: 1px solid #dad9d9 !important;
+}
+.mdl-layout__tab {
+    padding: 7px 15px 7px 40px !important
+}
+    .mdl-layout__tab svg {
+        position: absolute;
+         left:12px !important;
+    }
+.upArrowForDropdown::before{
+    left: 12px;
+    right: auto;
+}
+.header  .form-name{
+padding:0px 15px 0px 0px !important;
+}
+.loginButton > .fa-chevron-right {
+    position: relative;
+    left:-7px;
+}
+.loginButton > .fa-chevron-left {
+    position: relative;
+    left: 0px;
+    right: -7px;
+    transform: rotate(180deg);
+}
+.loginButton .f-right{
+    float:left !important;
+}
+.f-right{
+    float:left !important;
+}
+.filter-option-inner {
+    padding-left: 0px !important;
+    padding-right: 5px !important;
+}
+.f-right{
+    float:left !important;
+}
+.login-form {
+    margin-right: -15px !important;
+    margin-left: 0px !important;
+}
+.getUserId{
+    text-align:right !important;
+}
+.dropdown-menu-right {
+    right: auto !important;
+    left: 0 !important;
+}
+#btnCloseMenu {
+    position: absolute;
+    top: 23px;
+    left: 20px;
+    right:auto !important;
+    font-size: 20px;
+    cursor: pointer;
+}
+#divSignOutBox::before {
+    border-color: transparent transparent #ffffff transparent;
+    border-style: solid;
+    border-width: 0 12px 16px 13px;
+    top: -12px;
+    content: '';
+    height: 0;
+    left: 0px;
+    right:auto;
+    margin-left: 1px;
+    position: absolute;
+    width: 0;
+    z-index: 1000041;
+}
+.jquery-accordion-menu {
+    min-width: 260px;
+    width: 300px;
+    position: absolute;
+    right: 0px;
+    overflow-y: auto;
+    z-index: 1999;
+    background: #fff;
+    border-right: 0px solid rgba(0, 0, 0, 0.23);
+    border-top: 0px solid #e2e2e2;
+    margin-right: -318px;
+    transition: margin-right .25s cubic-bezier(0.4,0.0,0.2,1),visibility 0s linear 0s;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.14);
+}
+ 
+    .jquery-accordion-menu.active {
+        transition: margin-left .25s cubic-bezier(0.4,0.0,0.2,1),visibility 0s linear 0s;
+        margin-right: 0px;
+    }
+    .ml-auto{
+        margin-right:auto !important;
+        margin-left:unset !important;
+    }
+.message-notification{
+    float:left !important;
+}
+.p-r-15{
+    padding-left:15px !important;
+}
+.m-r-30{
+    margin-left: 15px !important;
+    margin-right:auto !important;
+}
+.ui-jqgrid, .ui-jqgrid-hdiv, .ui-jqgrid-view, .ui-jqgrid-bdiv, .ui-jqgrid-htable, .ui-jqgrid-btable, .ui-jqgrid .ui-jqgrid-pager {
+    direction: rtl;
+}
+.ui-jqgrid .ui-pg-table{
+        float:right !important;
+        background:#fff;
+    }
+.ui-jqgrid .ui-paging-info {
+        height: 23px;
+        margin-top: 0px !important;
+        margin-left: 10px;
+        font-size: 13px;
+        text-align: left !important;
+ }
+.modal-title {
+    float: right !important;
+    line-height: 32px !important;
+    color: #fcd727 !important;
+    font-weight: 700;
+}
+.modal-header .close {
+    float: left !important;
+    padding: 0px 0px;
+    margin: 0rem 0rem 0rem auto;
+    line-height: 32px !important;
+    color: #ff000e !important;
+}
+.bootstrap-select .dropdown-toggle .filter-option{
+    text-align:right !important;
+}
+[data-id="cboUserMobile"] .filter-option{
+direction:ltr;
+}
+.jquery-accordion-menu .jquery-accordion-menu-footer, .jquery-accordion-menu .jquery-accordion-menu-header {
+    padding-right: 22px;
+}
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+    text-align: right !important;
+}
+.ui-jqgrid tr.ui-row-ltr td {
+    line-height: 24px !important;
+    text-align: right !important;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border-left: 0px solid gold !important;
+}
+.modal-footer button:nth-of-type(1) {
+    margin-left: 10px;
+}
+.btn_wdth {
+    width: 100%;
+    margin-bottom: 7px;
+    text-align: right;
+    height: 35px !important;
+}
+.dropdown-item{
+    text-align:right;
+}
+.footer {
+    color: #000000;
+    font-size: 0.75rem;
+    padding: 0px;
+    position: absolute;
+    bottom: 0px;
+    background: #f9f9f9;
+    width: 100%;
+    letter-spacing: 0.75px;
+    border-top: 1px solid #ebebeb;
+    padding: 0px 15px 0px 0px;
+    margin:0px -15px 0px 0px;
+    text-align:right;
+}
+.navbar-brand-container {
+    clip-path: polygon(37.75% 0%, 119.66% 0%, 118.78% 104.75%, 52.61% 104.35%);
+}
+.modal-footer button .svg-inline--fa {
+    margin-left:5px !important;
+    margin-right:auto;
+}
+#btnBackToMobileNo{
+    direction:ltr;
+}
+@media screen and (max-width:500px) and (min-width:300px) {
+    .login-form {
+            border-right: 1px solid #dad9d9 !important
+        }
+    }
+
+    @media screen and (max-width:767px) and (min-width:501px) {
+        .login-form {
+            border-right: 1px solid #dad9d9 !important
+        }
+    }

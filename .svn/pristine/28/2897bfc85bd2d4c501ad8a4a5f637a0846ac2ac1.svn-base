@@ -1,0 +1,173 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "EPS_10_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="~/js/Productsetup/Currency.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+
+        CurrencyCode: '@Localizer["CurrencyCode"]',
+        CurrencyName: '@Localizer["CurrencyName"]',
+        Symbol: '@Localizer["Symbol"]',
+        DecimalPlaces: '@Localizer["DecimalPlaces"]',
+        ShowInMillions: '@Localizer["ShowInMillions"]',
+        SymbolSuffix: '@Localizer["SymbolSuffix"]',
+        DecimalPortionWord: '@Localizer["DecimalPortionWord"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Add: '@Localizer["Add"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        DeActivate: '@Localizer["DeActivate"]',
+        Activate: '@Localizer["Activate"]',
+        AddCurrencyDetails: '@Localizer["AddCurrencyDetails"]',
+        ViewCurrencyDetails: '@Localizer["ViewCurrencyDetails"]',
+        UpdateCurrencyDetails: '@Localizer["UpdateCurrencyDetails"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        CurrencyCode_E6: '@Localizer["UI0022"]',
+        CurrencyName_E7: '@Localizer["UI0023"]',
+        CurrencySymbol_E8: '@Localizer["UI0024"]',
+        DecimalPlaces_E9: '@Localizer["UI0025"]',
+        DecimalPortionWord_E10: '@Localizer["UI0026"]',
+    }
+</script>
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="UserCreationcontainer">
+            <table id="jqgCurrencyMaster"></table>
+            <div id="jqpCurrencyMaster"></div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade in" id="PopupCurrencyMaster" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog  modal-md  " style="box-shadow:none">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header popupHeader">
+                <h4 class="modal-title">@Localizer["AddCurrencyDetails"]</h4>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+            </div>
+            <div class="err_div_mar animated fadeInUp" id="errpopUP" style="display:none">
+                <p class="errorMsg_p" id="errmsg"></p>
+                <p class="succMsg_p" id="succmsg"></p>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtCurrencyCode">@Localizer["CurrencyCode"] </label>
+                                <select id="cboCurrencyCode" class="selectpicker" data-live-search="true" onchange="fnCurrency_onChange()" data-size="5"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtCurrencyName">@Localizer["CurrencyName"] </label>
+                                <input id="txtCurrencyName" class="form-control" maxlength="25" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtSymbol">@Localizer["CurrencySymbol"] </label>
+                                <select id="cboSymbol" class="selectpicker" disabled></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtDecimalPlaces">@Localizer["DecimalPlaces"] </label>
+                                <input id="txtDecimalPlaces" class="form-control decimal" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" maxlength="2" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkShowInMilions">
+                            <input type="checkbox" id="chkShowInMilions" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["ShowInMillions"]</span>
+                        </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSymbolSuffixToAmount">
+                            <input type="checkbox" id="chkSymbolSuffixToAmount" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["SymbolPrefixToAmount"]</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtDecimalPortionWord">@Localizer["DecimalPortionWord"] </label>
+                                <input id="txtDecimalPortionWord" class="form-control" maxlength="50" type="text" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSaveCurrencyMaster" onclick="fnSaveCurrencyMaster();">
+                    @Localizer["Save"]
+                </button>
+                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateCurrencyMaster" onclick="fnDeleteCurrencyMaster()"><i class="fas fa-ban"></i>  @Localizer["DeActivate"] </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised cancel-button" id="btnCancelCurrencyMaster" data-bs-dismiss="modal">
+                    @Localizer["Cancel"]
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

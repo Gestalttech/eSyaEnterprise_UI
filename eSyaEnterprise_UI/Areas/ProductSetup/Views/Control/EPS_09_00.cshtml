@@ -1,0 +1,149 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_09_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/js/ProductSetup/FormDocumentLink.js"></script>
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        FormID: '@Localizer["formID"]',
+        FormName: '@Localizer["FormName"]',
+        DocID: '@Localizer["DocumentID"]',
+        DocName: '@Localizer["DocumentName"]',
+        Edit: '@Localizer["Edit"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        AddFormDocumentLink: '@Localizer["AddFormDocumentLink"]',
+        ViewFormDocumentLink: '@Localizer["ViewFormDocumentLink"]',
+    };
+      var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+}
+</script>
+
+<div class="row row-bottom-pad">
+    <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 pr-lg-0 pr-md-0">
+        <div id="jstFormMaster">
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12" id="dvDocumentControl" style="display:none">
+        <div class="row m-0">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                <label class="form-group" id="lblSelectedFormName"></label>
+                <table id="jqgFormtoDocumentLink"></table>
+                <div id="jqpFormtoDocumentLink"></div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                <button class="btn btn-primary mdl-button mr-10" id="btnSave" onclick="fnSaveFormDocumentLink()"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-primary mdl-button" onclick="fnCancel()"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade in" id="PopupFormDocumentLink" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddFormDocumentLink"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-6">
+                        <div class="form-group">
+                            <label for="txtCodeType">@Localizer["FormName"]</label>
+
+                            <select class="selectpicker" data-live-search="true" id="cboFormId" title="Select" data-size="4" data-container="body" asp-items="@ViewBag.Forms">
+                                <option value="0">@Localizer["Select"]  </option>
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="txtCodeDescription">@Localizer["DocumentName"] </label>
+
+                            <select class="selectpicker" data-live-search="true" id="cbodocumentId" title="Select" data-size="4" data-container="body" asp-items="@ViewBag.Documents">
+                                <option value="0">@Localizer["Select"]  </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveFormDocumentLink" onclick="fnSaveFormDocumentLink()">
+                            <i class="fa fa-save"></i> @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelFormDocumentLink"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveFormDocumentLink" onclick="fnDeleteFormDocumentLink()"><i class="fa fa-times"></i> @Localizer["Delete"] </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/Common/jquery.listswap.js"></script>
+
+}
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+
+<script>
+    //$(function () {
+
+    //    fnLoadFormsTree();
+
+    //});
+
+    //function fnLoadFormsTree() {
+    //    $('#jstFormMaster').jstree({
+    //        'core': {
+    //            'data': [
+    //                { "id": "ajson2", "parent": "#", "text": "eSya Forms" },
+    //                { "id": "ajson3", "parent": "ajson2", "text": "ECA_01.Form Names" }
+    //            ]
+    //        }
+    //    });
+
+
+    //}
+
+</script>
+

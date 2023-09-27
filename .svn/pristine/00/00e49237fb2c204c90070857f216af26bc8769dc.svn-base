@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <title>CreatePassword</title>
+    <environment include="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/css/Common/material.min.css" rel="stylesheet" />
+        <link href="~/css/Common/all.min.css" rel="stylesheet" />
+        <link href="~/css/Common/animate.css" rel="stylesheet" />
+        <link href="~/css/login/login.css" rel="stylesheet" />
+        <link href="~/css/Common/esyafonts.css" rel="stylesheet" media="all" />
+        <link href="~/css/Common/esyaTheme.css" rel="stylesheet" media="all" />
+    </environment>
+</head>
+<body>
+    <div class="loginContainer">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12  text-center">
+                <img src="~/images/logo/esya-logo-black.png" class="smallDeviceLogo" alt="eSya Logo" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-sm-none d-md-block padright0 animated fadeIn">
+                <img src="~/images/esya-products-yellow-with-footer.jpg" class="leftImage" alt="eSya Products" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 padright0">
+                <img src="~/images/esya-products-yellow.jpg" class="leftImage" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 login-form pad0 ">
+                <div class="row h-100 position-relative section-form">
+                    <div class="col-lg-12 col-md-12 col-sm-12 pad0 pdngContent " style="margin-bottom:10px">
+                        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs h-100">
+                            <header class="mdl-layout__header">
+                                <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active" onclick="fnHideMobileDiv()"><i class="fas fa-key f-18"></i> Get <br />User ID</a>
+                                </div>
+                                </header>
+                            <main class="mdl-layout__content h-100">
+                                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+                                    <div class="page-content px-3 pb-3">
+                                        <form action="#">
+                        <div class="row p-y-20 animated slideInUp" id="texthide">
+                            <div class="col-lg-12 ">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                                    <input class="mdl-textfield__input" type="text" id="txtUsername" maxlength="40" pattern="^[a-z]+">
+                                    <label class="mdl-textfield__label" for="txtUsername">New Password</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 ">
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:100%">
+                                    <input class="mdl-textfield__input" type="number" id="txtPassword" maxlength="50">
+                                    <label class="mdl-textfield__label" for="txtPassword">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row p-y-20" style="display:none" id="textscf">
+                            <div class="col-lg-12 animated fadeInUp">
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <div>
+                                        <strong>Congratulations</strong>
+                                    </div>
+                                    <div style="font-size:12px;">
+                                        You have  generated New Password
+                                    </div>
+
+                                </div>
+                                <div style="font-size:12px;font-weight:500">
+                                    To login with your newly generated  Password
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-y-20" style="padding-top:0px;">
+
+                            <div class="col-lg-12" id="goCreatePasswor">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  f-r " onclick="goCreatePasswordbtn(); return false;">
+                                    Go
+                                </button>
+                            </div>
+
+                            <div class="col-lg-12" style="display:none" id="gologinpage">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton  f-r ">
+                                    <a href="@Url.Action("login","Login")" style="color:#fff"> Login Now</a>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                                    </div>
+                                </section>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<environment include="Development">
+        <script src="~/lib/bootstrap/dist/js/jquery-3.2.1.slim.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/js/Common/material.min.js"></script>
+        <script src="~/js/Common/all.min.js"></script>
+    </environment>
+
+
+   <script>
+        function goCreatePasswordbtn() {
+            $("#textscf").show();
+            $("#goCreatePasswor").hide();
+            $("#gologinpage").show();
+            $("#texthide").hide();
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "UI0001": "Form Code Required",
+  "UI0002": "Form Description is Required",
+  "UI0003": "Please Select Controller",
+  "UI0004": "Please Select any action",
+  "UI0005": "Please enter a Area Name",
+  "UI0006": "Please enter a Controller Name",
+  "UI0007": "Please enter the Menu Name",
+  "UI0008": "Please enter the version",
+  "UI0009": "Please select the internal form",
+  "UI0010": "Please enter the form name",
+  "UI0011": "Please select any code type to add",
+  "UI0012": "Please Enter Application Code Description",
+  "UI0013": "Please Enter Parameter Description",
+  "UI0014": "Please Enter Parameter Type Id",
+  "UI0015": "Parameter Type Id should not be 0",
+  "UI0016": "Please Enter Parameter Type Description",
+
+
+  "UIC01": "You are not Authorized to Add",
+  "UIC02": "You are not Authorized to Edit",
+  "UIC03": "You are not Authorized to View",
+  "UIC04": "You are not Authorized to Delete",
+  "UIC05": "Activate/De Activate",
+  "UIC06": "Please select any one node",
+  "UIC07": "Saved Successfully",
+  "UIC08": "Please enter the Main Menu Name",
+  "UIC09": "Please enter the Sub Menu Name",
+  "UIC10": "Please select any one node to move"
+
+
+
+}

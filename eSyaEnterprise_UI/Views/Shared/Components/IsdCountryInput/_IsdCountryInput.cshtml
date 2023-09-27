@@ -1,0 +1,25 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="row" id="mobileform">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <select name="cboISDCodes" class="selectpicker" data-container="body" data-live-search="true" id="@ViewBag.cboID" title="" data-size="8" onchange="fnISDCountryCode_onChange()">
+            <option value="0">select</option>
+            @if (ViewBag.ISDCodes != null)
+            {
+                foreach (var c in ViewBag.ISDCodes)
+                {
+            <option value=@c.Isdcode
+                    title="<span class='text' style='padding-left:5px'><img src='@ViewBag.DomainName/@c.CountryFlag' alt=@c.CountryCode /> @c.CountryName (+@c.Isdcode) </span>&#x200E;"
+                    data-content="<span><img src='@ViewBag.DomainName/@c.CountryFlag' alt=''></span> @c.CountryName (+@c.Isdcode) &#x200E;">
+                
+            </option>
+                }
+            }
+        </select>
+    </div>
+</div>
+
+

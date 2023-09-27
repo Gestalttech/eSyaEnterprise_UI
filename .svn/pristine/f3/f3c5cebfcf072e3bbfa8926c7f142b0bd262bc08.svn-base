@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<eSyaEnterprise_UI.Models.DO_UserMenu.DO_MainMenu>
+
+<ul class="submenu">
+    @if (Model != null)
+    {
+        @foreach (var mn in Model)
+        {
+            <li>
+                <a href="#"><i class="fas fa-plus-circle"></i> @mn.MainMenu </a>
+                <ul class="submenu">
+
+                    @foreach (var sm1 in mn.l_FormMenu)
+                    {
+                        @if (sm1.MenuItemId > 0)
+                        {
+                            <li>
+                                <a href="#"><i class="fas fa-plus-circle"></i> @sm1.MenuItemName </a>
+                                <ul class="submenu">
+
+                                    @foreach (var sm2 in sm1.l_FormMenu)
+                                    {
+                                        @if (sm2.MenuItemId > 0)
+                                        {
+                                            <li>
+                                                <a href="#"><i class="fas fa-plus-circle"></i> @sm2.MenuItemName </a>
+                                                <ul class="submenu">
+                                                    @foreach (var sm3 in sm2.l_FormMenu)
+                                                    {
+                                                        @if (sm3.MenuItemId > 0)
+                                                        {
+                                                            <li>
+                                                                <a href="#"><i class="fas fa-plus-circle"></i> @sm3.MenuItemName </a>
+                                                                <ul class="submenu">
+                                                                    @foreach (var sm4 in sm3.l_FormMenu)
+                                                                    {
+                                                                        @if (sm4.MenuItemId > 0)
+                                                                        {
+                                                                            <li>
+                                                                                <a href="#"><i class="fas fa-plus-circle"></i> @sm4.MenuItemName </a>
+                                                                                <ul class="submenu"></ul>
+                                                                            </li>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <li><a asp-area=@sm4.Area asp-controller=@sm4.Controller asp-action=@sm4.View><i class="far fa-file-alt"></i> @sm4.FormNameClient </a></li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li><a asp-area=@sm3.Area asp-controller=@sm3.Controller asp-action=@sm3.View><i class="far fa-file-alt"></i> @sm3.FormNameClient </a></li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li><a asp-area=@sm2.Area asp-controller=@sm2.Controller asp-action=@sm2.View><i class="far fa-file-alt"></i>@sm2.FormNameClient </a></li>
+                                        }
+                                    }
+
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a asp-area=@sm1.Area asp-controller=@sm1.Controller asp-action=@sm1.View><i class="far fa-file-alt"></i> @sm1.FormNameClient </a></li>
+                        }
+                    }
+
+                    @*@foreach (var sm in mn.l_SubMenu)
+                        {
+                            <li>
+                                <a href="#"><i class="fas fa-plus-circle"></i> @sm.MenuItemName </a>
+                                <ul class="submenu">
+                                    @foreach (var fm in sm.l_FormMenu)
+                                    {
+                                        <li><a asp-area=@fm.Area asp-controller=@fm.Controller asp-action=@fm.View data-module=@sm.MenuSubGroupName data-submodule=@sm.MenuItemName><i class="far fa-file-alt"></i> @fm.FormNameClient </a></li>
+                                    }
+                                    @if (sm.l_SubMenu != null)
+                                    {
+                                        @foreach (var sb in sm.l_SubMenu)
+                                        {
+                                            <li>
+                                                <a href="#"><i class="fas fa-plus-circle"></i> @sb.MenuItemName </a>
+                                                <ul class="submenu">
+                                                    @foreach (var f in sb.l_FormMenu)
+                                                    {
+                                                        <li><a asp-area=@f.Area asp-controller=@f.Controller asp-action=@f.View data-module=@sb.MenuSubGroupName data-submodule=@sb.MenuItemName><i class="far fa-file-alt"></i> @f.FormNameClient </a></li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }*@
+
+                    @*@if (mn.l_FormMenu != null)
+                        {
+                            @foreach (var fm in mn.l_FormMenu)
+                            {
+                                <li><a asp-area=@fm.Area asp-controller=@fm.Controller asp-action=@fm.View data-module=@mn.MainMenu data-submodule=@mn.MainMenu><i class="far fa-file-alt"></i> @fm.FormNameClient </a></li>
+                            }
+                        }*@
+                </ul>
+            </li>
+        }
+    }
+
+</ul>

@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <title>diaFAQ_en</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0px;
+        }
+
+        section {
+            padding: 20px;
+            background: #f4f9ff;
+        }
+
+        button.accordion::before {
+            content: '\002B';
+            color: #000;
+            font-weight: bold;
+            float: none;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        button.accordion.active::before {
+            content: "\2212";
+            color: #fff;
+        }
+
+        button.accordion:hover::before {
+            color: #fff;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.5;
+            margin: 20px 0px;
+            background: #fff;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .heading {
+            color: #003f67;
+            font-weight: 600;
+            margin: 0px 0px 0px 0px;
+        }
+        /* Style the buttons that are used to open and close the accordion panel */
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-weight: bold;
+        }
+
+            /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+            .active, .accordion:hover {
+                background-color: #003f68;
+                color: #fff;
+            }
+
+        /* Style the accordion panel. Note: hidden by default */
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            display: none;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100%;
+            margin: 20px 0px;
+            border-radius: 5px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h1 class="heading">Bariatric Surgery FAQs</h1>
+        <img src="../images/diaClinic/FAQ.jpg" />
+        <button class="accordion"> How long is the sleeve gastrectomy-gastric bypass surgery? </button>
+        <div class="panel">
+            <p>The duration of the operation ranges between 45 to 60 minutes.</p>
+        </div>
+
+        <button class="accordion">What is the appropriate age for the operation? </button>
+        <div class="panel">
+            <p>There is no specific age for performing obesity surgeries, provided that the requirements for performing the surgery are available in terms of body mass index (weight) and medical problems in a manner that does not pose a threat to the patient's health, with full understanding of the details of the operation and the diet followed before and after surgery and approval of it, and this includes children and the elderly.</p>
+        </div>
+
+        <button class="accordion">What is the difference between local “regional” anesthesia and general anesthesia? </button>
+        <div class="panel">
+            <p> In local anesthesia, the patient is awake during the surgery, only the intended part of the surgery is anesthetized. In general anesthesia, the patient is in a state of anesthesia for the entire body, similar to deep sleep, with the help of a device to regulate breathing “mechanical ventilation”. </p>
+        </div>
+        <button class="accordion">What is the difference between Regional and spinal anesthesia?  </button>
+        <div class="panel">
+            <p>In Regional anesthesia for bariatric surgery, the entire abdominal area is anesthetized, including the upper abdomen (the intended area for obesity surgery). As for spinal anesthesia, it can be used for surgeries of the lower part of the abdominal area only, such as caesarean section and inguinal hernia repair. </p>
+        </div>
+        <button class="accordion">What determines the type of operation? </button>
+        <div class="panel">
+            <p>A comprehensive assessment of the patient’s medical condition is performed by visiting the clinic before surgery, and based on that, the appropriate surgery for the patient can be chosen, which differs from one person to another. Among the factors on which the appropriate type of surgery is selected are: Does the patient suffer from GERD or not? Does the patient have a craving for sugars and sweets? Does the patient suffer from diabetes or not? How long? What is its response to blood sugar lowering drugs? </p>
+        </div>
+        <button class="accordion">Does the operation have side effects?  </button>
+        <div class="panel">
+            <p>Several factors have led to considering bariatric surgeries relatively safe, such as the wide spread of bariatric surgeries and the development of surgical instruments, starting from the laparoscope to robotic interventions. Also, the risks of obesity and its associated diseases outweighs the possible side effects of bariatric surgery</p>
+        </div>
+        <button class="accordion">Several factors have led to considering bariatric surgeries relatively safe, such as the wide spread of bariatric surgeries and the development of surgical instruments, starting from the laparoscope to robotic interventions. Also, the risks of obesity and its associated diseases outweighs the possible side effects of bariatric surgery</button>
+        <div class="panel">
+            <p>Robotic intervention allows a three-dimensional view with a magnified image of about 15 times and offers movements that mimic the movements of the surgeon's hand, which allows the surgeon to have better control and perform procedures that were not possible with a traditional laparoscope. </p>
+        </div>
+        <button class="accordion">Does the robot can also be used for gastric bypass or just for sleeve gastrectomy?  </button>
+        <div class="panel">
+            <p>The robotic approach is a surgical tool and can be used to perform many surgeries. </p>
+        </div>
+        <button class="accordion">What is the appropriate time for surgery after childbirth?  </button>
+        <div class="panel">
+            <p>There is nothing to prevent obesity surgery after childbirth, provided that full recovery from childbirth is achieved after an appropriate time interval.</p>
+        </div>
+        <button class="accordion">What is the appropriate time to get pregnant after bariatric surgery? </button>
+        <div class="panel">
+            <p>It is preferable to wait at least 6 months after bariatric surgery. </p>
+        </div>
+        <button class="accordion">Is it possible to regain weight after the operation?</button>
+        <div class="panel">
+            <p>Bariatric surgery help the patient to lose weight, meaning that the patient has an important role in reaching that goal, which is the ideal weight and maintaining it after the operation, and the best way to avoid any Weight regain is to adhere to the prescribed instructions and regular follow-up. One of the most common reasons for the weight regain is binging sweets and with high calories containing foods. </p>
+        </div>
+        <button class="accordion">Do medications and vitamins last for life and what happens if they are not taken? </button>
+        <div class="panel">
+            <p>Vitamins are prescribed continuously after gastric bypass surgery only. In the case of gastric sleeve surgery, vitamins are prescribed for at least one year. As for the effect of not taking the vitamins, it depends on the duration of cessation. If the patient just skipped few days unintentionally, mostly no problems will occur. But if the patient neglected his vitamins, then all the body organs will be affected such as skin, hair, bones, muscles and so on</p>
+        </div>
+        <button class="accordion">How many kilos will be lost after the operation, and over how long?</button>
+        <div class="panel">
+            <p>On average, bariatric surgery helps to lose 60 to 80% of excess body weight over a period of 12 months. </p>
+        </div>
+        <button class="accordion">Does the operation improve infertility? </button>
+        <div class="panel">
+            <p>One of the most common causes of infertility is the presence of polycystic ovary in some women, this can be treated by weight loss. Therefore, losing weight through the obesity surgeries may help to increase the chances of conception, in addition bariatric surgery improves the hormone levels in the body. </p>
+        </div>
+        <button class="accordion">Do I need a diet after the operation?</button>
+        <div class="panel">
+            <p>A 3 phases nutritional plan that lasts for 6 weeks after surgery is followed, this plan ensures that food is gradually introduced to facilitate wound healing and recovery from surgery without compromising the body's daily need of various elements.</p>
+        </div>
+        <button class="accordion">When can I eat ordinary food after the operation? </button>
+        <div class="panel">
+            <p> After 6 weeks from the operation you can eat freely with few precautions to be kept in mind </p>
+        </div>
+        <button class="accordion">What is the difference between sleeve gastrectomy and gastric bypass?</button>
+        <div class="panel">
+            <p>The gastric sleeve operation acts by reducing the size of the stomach, thus eating much less quantities than before and so, fewer calories are gained, in addition to reducing the hunger hormone in order to reduce appetite and the feeling of hunger.</p>
+            <p>
+                While the gastric bypass surgery, reducing the absorption of food and drink consumed inside the intestine is added to reducing the size of stomach as a result of diverting food from the calculated portion of the intestine.
+            </p>
+            <p>
+                The two operations share the need of the patient to adhere to a healthy lifestyle after recovery to maintain the desired result mainly by reducing the calories gained and exercising. But the need to take vitamins is at least a year after the gastric sleeve and continuously after gastric bypass.
+            </p>
+            <p>
+                It is usually preferable to avoid performing a gastric sleeve operation for those who suffer from stomach-related diseases, such as: esophageal reflux or hiatal hernia.
+            </p>
+            <p>Diabetics or people who are sweet eaters benefit from gastric bypass surgery better. Also it is considered the best choice for correcting previous bariatric surgeries. </p>
+        </div>
+        <button class="accordion">What are the types of gastric bypass?</button>
+        <div class="panel">
+            <p>
+                There are many types of gastric bypass, and each of them has a function and few types have been approved  by the International Federation for the Surgery of Obesity and Metabolic Disorders “IFSO” due to the presence of sustained and positive results of these surgeries on the short and long terms, with negligible side effects and they include the classic gastric bypass and the mini gastric bypass
+            </p>
+            <p>There are other types that are still in the process of experimenting, and their results are still not completely clear, such as: SADI and SASI.</p>
+        </div>
+
+        <button class="accordion">Does the operation of mesh hernioplasty contraindicate the operation? </button>
+        <div class="panel">
+            <p>This is not a contraindication to obesity surgery, and the operation is performed laparoscopically through very small incisions in the skin between 0.5-1.5 centimetres.</p>
+        </div>
+        <button class="accordion">does smoking cause weight regain after the operation?</button>
+        <div class="panel">
+            <p>Smoking does not cause weight regain after the operation, but smoking has many negative effects, as it may cause gastritis, increase the incidence of GERD, or delayed wound healing after surgery. </p>
+        </div>
+        <button class="accordion">What is the revisional bariatric surgery?</button>
+        <div class="panel"><p>revisional bariatric surgery is an operation that is carried out to correct the results of a previous bariatric operation that may have resulted in failure to lose weight, or weight regain, or a complication such as esophageal reflux or failure to improve or treat one of the obesity related chronic diseases such as hypertension, Diabetes and bone problems. </p></div>
+
+        <button class="accordion">What are the diseases that disallow the operation?</button>
+        <div class="panel">we must first conduct a thorough assessment at the clinic to identify the medical condition and fitness for surgery. Generally, there is no contraindication to obesity surgery, except in very rare cases, for example, the presence of active addiction or the presence of a critical medical condition in the heart or lung, Also the needed workup before surgery is done to make sure it is within normal and that there is no contraindication for surgery</div>
+
+        <button class="accordion">What is banded sleeve gastrectomy and what is its benefit?</button>
+        <div class="panel">In the modified sleeve gastrectomy, between 75-80% of the stomach is removed with the insertion of a silicone band (minimizer) around the stomach. The banded sleeve gastrectomy helps to reduce the dilatation of the stomach after the operation and thus maintaining the portions of food eaten after the operation, which leads to more maintenance of weight after reaching the ideal weight.</div>
+
+        <button class="accordion">Does the activity of the thyroid gland or its insufficiency affect the weight after the operation? </button>
+        <div class="panel">Thyroid hormones are very important to the human body as they have a key role in the metabolic process, so hormone replacement therapy is important in the case of insufficiency to normalize hormone levels, restore metabolic rate and achieve better weight loss.</div>
+
+        <button class="accordion">When can I resume my daily activities after the operation?</button>
+        <div class="panel">
+            <p> going out of home or driving a car is allowed 3 days after the surgery.</p>
+            <p> Mild activities can be returned after 5 days, such as office work.</p>
+            <p> It is possible to return to moderate activities after two weeks, such as cardio exercises</p>
+            <p> A full recovery from surgery is expected within a month to a month and a half, according to the patient's response, after which he can practice all activities, such as going to the gym. </p>
+        </div>
+
+        <button class="accordion">What are the preoperative preparations?  </button>
+        <div class="panel">
+            <p>The patient is assessed first to know his medical history and chronic diseases that he suffers from and to deal with them accordingly. routine laboratory tests include complete blood count, liver and kidney functions, coagulation profile, blood sugar, thyroid functions, and virology screening. Also, the imaging studies include abdominal ultrasound, ECHO, ECG and Chest X-ray. </p>
+        </div>
+
+        <button class="accordion">Why don’t we recommend SASI operation?</button>
+        <div class="panel">
+            <p>because there are no sufficient data to support the benefits or reveal the drawbacks on either the mid or long-term after the operation, so it is still under research and experimentation, but patient preference is of outmost importance in deciding the type of operation, So we perform the operation as long as the patient is informed and Agree with all of the above.</p>
+        </div>
+
+        <button class="accordion">Can I play sports after the operation?</button>
+        <div class="panel">
+            <p>it is advised to exercise gradually after a week from the date of the operation and in regular manner so that it helps you lose weight in a healthy and sound manner</p>
+        </div>
+
+        <button class="accordion">When is it possible to travel aboard by the plane after the operation?  </button>
+        <div class="panel"><p>It is preferable after at least a week from the surgery, but if it is necessary then, it is advisable to drink  sufficient amount of fluids "at least 2-2.5 liters per day, mobilize regularly and to stick to post-surgical regulations and follow-up </p></div>
+
+        <button class="accordion">What type of staplers do you use?</button>
+        <div class="panel"><p>American-made "Covidian and Johnson" staplers. </p></div>
+
+        <button class="accordion">What is forbidden after the operation?</button>
+        <div class="panel">
+            <p>Smoking and coffee are prohibited during the first month after the operation
+            </p>
+            <p>Sugars and sweets "except in very small quantities” should be prohibited after the operation</p>
+            <p>It is forbidden to take some medications such as steroids and some analgesics, such as cataflam and voltarene, except when strictly necessary and not on regular basis</p>
+            <p>Everything will be explained on time in details in due time.</p>
+        </div>
+        <button class="accordion">How many days do I need to stay in the hospital after the operation?  </button>
+        <div class="panel">
+            <p>
+                Classically overnight monitoring in the hospital is recommended, and you are discharged in the next morning, unless there is a need for prolonged hospital stay, such as in the presence of heart disease or the need to receive further treatment.
+            </p>
+        </div>
+    </section>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    /* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+    this.classList.toggle("active");
+
+    /* Toggle between hiding and showing the active panel */
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+    </script>
+</body>
+</html>

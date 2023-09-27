@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "UnauthorizedAccess";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <meta name="description" content="eSya Enterprise" />
+    <title>Unauthorized Access</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/common/animate.css" rel="stylesheet" />
+    <link href="~/css/common/all.min.css" rel="stylesheet" />
+    <link href="~/css/common/material.min.css" rel="stylesheet" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/login/login.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyafonts.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyatheme.css" />
+    <link asp-append-version="true" href="~/css/common/sessionTimeout.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <div class="row sessionTimeout-outercontainer">
+        <div class="sessionTimeout-innercontainer">
+            <div align="center" style=" margin-bottom:35px;padding-bottom:30px;"><img src="~/images/logo/esya-logo-black.png" class="MasterPage-Logo" style="width:140px;margin:auto;"></div>
+            <div class="text-center unauthorizedAccess">
+
+                <i class="fas fa-exclamation-triangle c-lightred fa-4x"></i>
+
+                <h3 class="animated zoom-in blink" style="text-align:center; padding-left: 15px; text-transform:capitalize; font-weight: 800; border-bottom: 0px dotted rgb(75, 167, 230); color: #ff6d6d; font-weight: 100; -webkit-margin-before: 0em;"><i class="fa fa-frown-o" style="background-color:#cef; -webkit-text-fill-color:initial; border-radius:49%"></i> Unauthorized Access </h3>
+
+            </div>
+
+            <div class="d-block" style="padding: 40px 10px 20px 10px;">
+                <p align="center" class="connectionErrorMsg ">Sorry, You do not have the required permissions to view this page. Please contact your system administrator. </p>
+            </div>
+
+            <div align="center" style="padding:5px 0px 20px 0px;">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton blink m-auto" type="button" value="Login" onclick="location.href = '@Url.Action("Index", "Account")'">
+                    <i class="fa fa-sign-in" style="color:#FFF;"></i>  Sign In
+                </button>
+            </div>
+            <hr style="margin-bottom: 0px; border-top: 1px solid #037a86" />
+
+            <footer>
+                <div class="row padleft0 padright0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 text-center "><p style="font-size:11px;"> © Gestalt Technologies Pvt. Ltd.</p></div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>
+
+

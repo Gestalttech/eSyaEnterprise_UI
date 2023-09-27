@@ -1,0 +1,13 @@
+﻿@model Dictionary<int, string>
+@{
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+<form id="selectBusinessLocation" asp-controller="Account"
+      asp-action="SetBusinessLocation" asp-route-returnUrl="@returnUrl">
+    <div class="dropdown-menu dropdown-menu-right animated upArrowForDropdown" aria-labelledby="navbarDropdown1" id="chkLoc">
+        @foreach (var bk in Model)
+        {
+            <label class="dropdown-item"> @bk.Value <input type="radio" value=@bk.Key name="Businesskey"  onchange="this.form.submit();"  /></label>
+        }
+    </div>
+</form>

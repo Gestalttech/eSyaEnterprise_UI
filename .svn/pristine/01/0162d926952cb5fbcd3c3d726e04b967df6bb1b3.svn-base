@@ -1,0 +1,10 @@
+{
+  "UI0001": "Code Type Required",
+  "UI0002": "Code Type Description is Required",
+  "UI0003": "Please Select Controller",
+  "UICommon01": "You are not Authorized to Edit",
+  "UICommon02": "You are not Authorized to View",
+  "UICommon03": "You are not Authorized to Delete",
+  "UICommon04": "Activate/De Activate"
+
+}

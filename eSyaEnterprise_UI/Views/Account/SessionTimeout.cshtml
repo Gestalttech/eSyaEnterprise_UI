@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="google" content="notranslate">
+    <meta name="description" content="eSya Enterprise" />
+    <title>SessionTimeout</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/common/animate.css" rel="stylesheet" />
+    <link href="~/css/common/all.min.css" rel="stylesheet" />
+    <link href="~/css/common/material.min.css" rel="stylesheet" />
+    <link asp-append-version="true" href="~/css/login/login.css" rel="stylesheet" />
+    <link asp-append-version="true" href="~/css/common/esyafonts.css" rel="stylesheet" />
+    <link asp-append-version="true" href="~/css/common/esyatheme.css" rel="stylesheet" />
+    <link asp-append-version="true" href="~/css/common/sessionTimeout.css" rel="stylesheet" />
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="row sessionTimeout-outercontainer">
+        <div class="sessionTimeout-innercontainer">
+            <div align="center" style=" margin-bottom:35px;"><img src="~/images/logo/esya-logo-black.png" class="MasterPage-Logo" style="width:140px;margin:auto;"></div>
+            <div align="center" style="margin-top:10px; margin-bottom:10px;">
+                <div class="circle">
+                    <div class="up">
+                        <div class="innera"></div>
+                    </div>
+                    <div class="down">
+                        <div class="innerb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row d-block" style="padding: 20px 10px 0px 10px;">
+                <h3 class="animated zoom-in blink" style="text-align:center; padding-left: 15px; text-transform:capitalize; font-weight: 800; border-bottom: 0px dotted rgb(75, 167, 230); color: #797172; font-weight: 100; -webkit-margin-before: 0em;"><i class="fa fa-frown-o" style="background-color:#cef; -webkit-text-fill-color:initial; border-radius:49%"></i> Session Timed-Out </h3>
+            </div>
+            <div class="d-block" style="margin-bottom:20px;">
+                <p align="center" class="blink"> Please Click Login to Sign-in again</p>
+            </div>
+
+            <div align="center" style="padding:5px 0px 20px 0px;">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored loginButton blink m-auto" type="button" value="Login" onclick="location.href = '@Url.Action("Index", "Account")'">
+                    <i class="fa fa-sign-in" style="color:#FFF;"></i>  Sign In
+                </button>
+            </div>
+            <hr style="margin-bottom: 0px; border-top: 1px solid #037a86" />
+
+            <footer>
+                <div class="row padleft0 padright0">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 text-center "><p style="font-size:11px;"> © Gestalt Technologies Pvt. Ltd.</p></div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>
