@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\ConfigFacilities\Models\DO_BusinessLocation.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
@@ -99,7 +99,6 @@
 	</ItemGroup>
 	
   <ItemGroup>
-    <Folder Include="Areas\ConfigFacilities\Views\" />
     <Folder Include="Extension\" />
     <Folder Include="ResourcesExtention\" />
     <Folder Include="wwwroot\css\Login\" />

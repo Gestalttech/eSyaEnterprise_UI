@@ -3449,6 +3449,22 @@
       "PackagePath": "staticwebassets\\js\\Common\\toastr.min.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js",
+      "PackagePath": "staticwebassets\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\MapSpecialtiesToBusiness.js",
+      "PackagePath": "staticwebassets\\js\\ConfigFacilities\\MapSpecialtiesToBusiness.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\SpecialtyCodes.js",
+      "PackagePath": "staticwebassets\\js\\ConfigFacilities\\SpecialtyCodes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\SpecialtyUnits.js",
+      "PackagePath": "staticwebassets\\js\\ConfigFacilities\\SpecialtyUnits.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\ServiceClass.js",
       "PackagePath": "staticwebassets\\js\\ConfigProduct\\ServiceClass.js"
     },

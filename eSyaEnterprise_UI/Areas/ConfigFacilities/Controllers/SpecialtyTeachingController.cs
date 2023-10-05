@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static eSyaEnterprise_UI.Areas.ConfigFacilities.Models.DO_CommonData;
 
 namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
 {
@@ -28,7 +27,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
         }
 
         #region Specialty Units
-        [Area("Facilities")]
+        [Area("ConfigFacilities")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ECP_06_00()
         {
@@ -226,5 +225,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
             }
         }
         #endregion
+
+
+
     }
 }

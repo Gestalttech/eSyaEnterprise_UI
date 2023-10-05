@@ -8,7 +8,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Models
     {
         public int BusinessKey { get; set; }
         public int SpecialtyID { get; set; }
-        public string SpecialtyDesc { get; set; }
+        public string? SpecialtyDesc { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public int NoOfUnits { get; set; }
 
