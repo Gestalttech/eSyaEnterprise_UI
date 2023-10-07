@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "_UserDeactivation";
+    Layout = "";
+}
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+@section scripts{
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/EndUser/UserDeactivation.js"></script>
+}
+
+<style>
+    .mdl-tabs__tab-bar {
+        justify-content: flex-start !important;
+    }
+
+    .mdl-tabs__tab {
+        width: 220px;
+    }
+
+    .mdl-tabs__panel {
+        padding: 24px 15px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 collapse">
+        <div class="form-group">
+            <label> @Localizer["UserID"]  </label>
+            <input type="text" id="txtUserId" name="UserId" class="form-control" onchange="fnFillUserMasterOnEdit(this);" />
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-12">
+        <div class="form-group">
+            <label> @Localizer["LoginID"] </label>
+            <input type="text" id="txtLoginId" name="LoginID" value="" class="form-control" maxlength="20" />
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+            <label> @Localizer["LoginDescription"] </label>
+            <input type="text" id="txtLoginDescription" name="LoginDescription" value="" class="form-control" maxlength="50" />
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="form-group">
+            <label> @Localizer["Reason"] </label>
+            <input type="text" id="txtReason" name="Reason" value="" class="form-control" maxlength="500" />
+        </div>
+    </div>
+</div>
+
+<div class="row padbot10">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10" onclick="fnCancelUserMaster();">
+            <i class="fas fa-chevron-left"></i>  @Localizer["Back"]
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveUserMaster" onclick="fnSaveUserMaster();">
+            <i class="fas fa-save"></i>  @Localizer["Save"]
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" id="btnCancelUserMaster" onclick="fnClearUserMaster();"><i class="fas fa-redo"></i> @Localizer["Clear"]</button>
+
+    </div>
+</div>

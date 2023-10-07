@@ -1,0 +1,12 @@
+﻿using eSyaEssentials_UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+namespace eSyaEnterprise_UI.Areas.Admin.Data
+{
+    public interface IeSyaAdminAPIServices
+    {
+        IHttpClientServices HttpClientServices { get; set; }
+    }
+}

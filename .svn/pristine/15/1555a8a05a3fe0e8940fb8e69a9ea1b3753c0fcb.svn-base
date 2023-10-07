@@ -1,0 +1,158 @@
+﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.Areas.Admin.Data;
+using eSyaEnterprise_UI.Areas.Admin.Models;
+using eSyaEnterprise_UI.DataServices;
+using eSyaEnterprise_UI.Extension;
+using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace eSyaEnterprise_UI.Areas.Admin.Controllers
+{
+    [SessionTimeout]
+    public class LicenseController : Controller
+    {
+        private readonly IeSyaAdminAPIServices _eSyaAdminAPIServices;
+        private readonly ILogger<LicenseController> _logger;
+
+        public LicenseController(IeSyaAdminAPIServices eSyaAdminAPIServices, ILogger<LicenseController> logger)
+        {
+            _eSyaAdminAPIServices = eSyaAdminAPIServices;
+            _logger = logger;
+        }
+
+        #region Business Statutory
+        [Area("Admin")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EBM_01_00()
+        {
+            try
+            {
+                ///Getting Business Key
+                var Bk_response = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("BusinessStructure/GetBusinessKey");
+
+                if (Bk_response.Status)
+                {
+                    if (Bk_response.Data != null)
+                    {
+                        ViewBag.BusinessKeyList = Bk_response.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.BusinessKey.ToString(),
+                            Text = b.LocationDescription.ToString(),
+                        }).ToList();
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:BusinessSubscription");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get ISD Codel By BusinessKey
+        /// </summary>
+        [Area("Admin")]
+        [HttpPost]
+        public async Task<JsonResult> GetISDCodeByBusinessKey(int BusinessKey)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<DO_BusinessStatutoryDetails>("BusinessStructure/GetISDCodeByBusinessKey?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodeByBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetISDCodeByBusinessKey:For BusinessKey {0}", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Business Statutory Detail By BusinessKey and IsdCode
+        /// </summary>
+        [Area("Admin")]
+        [HttpPost]
+        public async Task<JsonResult> GetStatutoryInformation(int BusinessKey, int isdCode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_BusinessStatutoryDetails>>("BusinessStructure/GetStatutoryInformation?BusinessKey=" + BusinessKey + "&isdCode=" + isdCode);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetStatutoryInformation:For BusinessKey {0} and ISDCode {1}", BusinessKey, isdCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetStatutoryInformation:For BusinessKey {0} and ISDCode {1}", BusinessKey, isdCode);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert Into Business Statutory
+        /// </summary>
+        [Area("Admin")]
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateBusinessStatutory(List<DO_BusinessStatutoryDetails> bu_bd)
+        {
+            try
+            {
+                bu_bd.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessStructure/InsertOrUpdateBusinessStatutory", bu_bd);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessStatutory:params:" + JsonConvert.SerializeObject(bu_bd));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinessStatutory:params:" + JsonConvert.SerializeObject(bu_bd));
+                throw;
+            }
+        }
+
+        #endregion Business Statutory Details
+    }
+}

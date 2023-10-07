@@ -2509,6 +2509,30 @@
       "PackagePath": "staticwebassets\\images\\smiley\\smile.png"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\ApplicationCodes.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\ApplicationCodes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\BusinessStatutory.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\BusinessStatutory.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\CountryArea.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\CountryArea.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\HolidayMaster.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\HolidayMaster.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\InventoryRules.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\InventoryRules.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\UnitofMeasure.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\UnitofMeasure.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\all.min.js",
       "PackagePath": "staticwebassets\\js\\Common\\all.min.js"
     },
@@ -3493,6 +3517,18 @@
       "PackagePath": "staticwebassets\\js\\ConfigureSMS\\SMSVariable.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserCreation.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UserCreation.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserDeactivation.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UserDeactivation.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserGroup.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UserGroup.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Localize\\CultureKeys.js",
       "PackagePath": "staticwebassets\\js\\Localize\\CultureKeys.js"
     },
@@ -3515,6 +3551,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Localize\\LocalizationUser.js",
       "PackagePath": "staticwebassets\\js\\Localize\\LocalizationUser.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageInventory\\ItemMaster.js",
+      "PackagePath": "staticwebassets\\js\\ManageInventory\\ItemMaster.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\ApplicationCodes.js",

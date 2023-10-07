@@ -1,0 +1,128 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EAD_04_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<script src="~/js/Admin/InventoryRules.js"></script>
+<script src="~/js/Common/jquery.contextMenu.min.js"></script>
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        InventoryRuleID: '@Localizer["InventoryRuleID"]',
+        RuleDescription: '@Localizer["RuleDescription"]',
+        RuleinDays: '@Localizer["RuleinDays"]',
+        ApplyToSRN: '@Localizer["ApplyToSRN"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        AddInventoryRules: '@Localizer["AddInventoryRules"]',
+        Save: '@Localizer["Save"]',
+        UpdateInventoryRules: '@Localizer["UpdateInventoryRules"]',
+        Update: '@Localizer["Update"]',
+        ViewInventoryRules: '@Localizer["ViewInventoryRules"]',
+        Delete: '@Localizer["Delete"]',
+        DeActivate: '@Localizer["DeActivate"]',
+        Activate: '@Localizer["Activate"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        InventoryRule_E6: '@Localizer["UI0167"]',
+        RuleDesc_E7: '@Localizer["UI0168"]',
+        RuleInDays_E8: '@Localizer["UI0169"]',
+    }
+</script>
+
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgInventoryRules"></table>
+        <div id="jqpInventoryRules"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="PopupInventoryRules" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["InventoryRules"] </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row padbot4">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtInventoryRules" style="display:none">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["InventoryRule"] </label>
+                            <select class="selectpicker" id="cboInventoryRule">
+                                <option value="0">@Localizer["SelectRule"] </option>
+                                <option value="F">@Localizer["F"] </option>
+                                <option value="S">@Localizer["S"] </option>
+                                <option value="N">@Localizer["N"] </option>
+                                <option value="E">@Localizer["E"] </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["Description"] </label>
+                            <input id="txtRuleDescription" class="form-control" type="text" autocomplete="off" maxlength="25" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["RuleinDays"] </label>
+                            <input id="txtRuleInDays" class="form-control" type="text" autocomplete="off" maxlength="8" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkApplyToSRN">
+                                <input type="checkbox" id="chkApplyToSRN" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["ApplyToSRN"]  </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveInventoryRules" onclick="fnSaveInventoryRules()">
+                            <i class="fa fa-save"></i>  @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateInventoryRules" onclick="fnDeleteInventoryRules()"><i class="fas fa-ban"></i>  @Localizer["DeActivate"] </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal" onclick="fnClearFields()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
