@@ -3489,6 +3489,22 @@
       "PackagePath": "staticwebassets\\js\\ConfigFacilities\\SpecialtyUnits.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemCategory.js",
+      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemCategory.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemGroup.js",
+      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemGroup.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemGroupCategoryMapping.js",
+      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemGroupCategoryMapping.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemSubCategory.js",
+      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemSubCategory.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\ServiceClass.js",
       "PackagePath": "staticwebassets\\js\\ConfigProduct\\ServiceClass.js"
     },
@@ -3557,6 +3573,42 @@
       "PackagePath": "staticwebassets\\js\\ManageInventory\\ItemMaster.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageRates\\OPCDoctorWise.js",
+      "PackagePath": "staticwebassets\\js\\ManageRates\\OPCDoctorWise.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageRates\\OPCServiceWise.js",
+      "PackagePath": "staticwebassets\\js\\ManageRates\\OPCServiceWise.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageRates\\OPCSpecialtyWise.js",
+      "PackagePath": "staticwebassets\\js\\ManageRates\\OPCSpecialtyWise.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageRates\\ScheduleOfServices.js",
+      "PackagePath": "staticwebassets\\js\\ManageRates\\ScheduleOfServices.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageServices\\MapBusinessLinkService.js",
+      "PackagePath": "staticwebassets\\js\\ManageServices\\MapBusinessLinkService.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageServices\\MapServicesBusiness.js",
+      "PackagePath": "staticwebassets\\js\\ManageServices\\MapServicesBusiness.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageServices\\ScheduleOfClinicServices.js",
+      "PackagePath": "staticwebassets\\js\\ManageServices\\ScheduleOfClinicServices.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageServices\\ServiceCode.js",
+      "PackagePath": "staticwebassets\\js\\ManageServices\\ServiceCode.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Actions.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\Actions.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\ApplicationCodes.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\ApplicationCodes.js"
     },
@@ -3623,6 +3675,14 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\TaxIdentification.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\TaxIdentification.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",
+      "PackagePath": "staticwebassets\\js\\Stores\\MapStoresBusiness.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\StoreMaster.js",
+      "PackagePath": "staticwebassets\\js\\Stores\\StoreMaster.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\charts\\helpers.esm.js",

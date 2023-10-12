@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EMR_02_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        ClinicType: '@Localizer["ClinicType"]',
+        ConsultationType: '@Localizer["ConsultationType"]',
+        ServiceDescription: '@Localizer["ServiceDescription"]',
+        EffectiveDate: '@Localizer["EffectiveDate"]',
+        Tariff: '@Localizer["Tariff"]',
+        Active: '@Localizer["Active"]',
+
+    }
+    var errorMsg = {
+        SelectLocation_E1: '@Localizer["UI0064"]',
+        SelectRateType_E2: '@Localizer["UI0198"]',
+        CurrencyCode_E3: '@Localizer["UI0199"]',
+    }
+</script>
+
+@section scripts{
+    <script src="~/js/Common/jsTree.js"></script>
+    <link href="~/css/Common/jsTree.css" rel="stylesheet" />
+    <script src="~/js/ManageRates/OPCServiceWise.js"></script>
+}
+   
+<div class="row padbot10">
+
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["BusinessLocation"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadGrid()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["ClinicType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+
+            @*<select class="selectpicker" data-live-search="true" id="cboClinicType" title="" data-size="8" onchange="fnLoadGrid()">
+                    <option value="0" selected> @Localizer["Select"]</option>
+                    @if (ViewBag.ClinicType != null)
+                    {
+                        foreach (var c in ViewBag.ClinicType)
+                        {
+                            <option value="@c.Value">@c.Text</option>
+                        }
+
+                    }
+                </select>*@
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["RateType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboRateType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.RateType" onchange="fnLoadGrid()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["CurrencyCode"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboCurrencyCode" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.CurrencyCode" onchange="fnLoadGrid()"></select>
+
+        </div>
+    </div>
+
+</div>
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgClinicVisitRate"></table>
+        <div id="jqpClinicVisitRate"></div>
+    </div>
+</div>
+
+<div class="mdl-card__actions text-center pad0 itemblur">
+    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect marbot15" id="btnSave" onclick="fnSaveClinicVisitRate()" style="display:none;"><i class="fa fa-save"></i> @Localizer["Save"]  </button>
+</div>
+
+
