@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_25_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var errorMsg = {
+        BusinessLocation_E1: '@Localizer["UI0064"]',
+      
+    }
+</script>
+
+@section Scripts
+    {
+
+    <link rel="stylesheet" href="~/css/Common/jsTree.css" />
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/Productsetup/locationwisemenu.js"></script>
+
+}
+
+<div class="row">
+    <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["BusinessLocation"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadLocationwiseMenu()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-2  col-md-2 col-sm-8 col-xs-12 vertical-center-end">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSave" onclick="fnSaveLocationwiseMenuLink()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+
+    </div>
+</div>
+   <div class="row">
+    <div class="col-lg-4 col-md-12 col-sm-10 col-10">
+        <div id="jstLocationMenuLinkList"></div>
+    </div>
+  
+</div>

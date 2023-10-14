@@ -3665,6 +3665,10 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\FormsMenu.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LocationwiseMenu.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\LocationwiseMenu.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Parameters.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\Parameters.js"
     },
@@ -3675,6 +3679,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\TaxIdentification.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\TaxIdentification.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\UserRoleActionLink.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\UserRoleActionLink.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",

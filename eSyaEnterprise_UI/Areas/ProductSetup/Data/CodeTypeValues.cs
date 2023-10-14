@@ -10,5 +10,6 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup
         public const int PaymentMode = 80;
         public const int PaymentCategory = 82;
         public const int IsdocumentnoRequired = 2;
+        public const int UserRole = 1;
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pui9o1HQpM+wYsF1iPMPEjdmxQ6XW4eq+s/7kGm0B6U=",
+  "Hash": "225uTpVS2/3zRkO47J2105DnTbPiQoOIJrz4ABzIWZA=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -17187,6 +17187,23 @@
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\FormsMenu.js"
     },
     {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LocationwiseMenu.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/LocationwiseMenu.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\LocationwiseMenu.js"
+    },
+    {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Parameters.js",
       "SourceId": "eSyaEnterprise_UI",
       "SourceType": "Discovered",
@@ -17236,6 +17253,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\TaxIdentification.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\UserRoleActionLink.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/UserRoleActionLink.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\UserRoleActionLink.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",
