@@ -198,7 +198,16 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 }
                 else
                 {
-                    //businessentity.FormId= string.IsNullOrEmpty(businessentity.FormId) ? string.Empty : businessentity.FormId;
+                    if (businessentity.l_Preferredlang != null)
+                    {
+                        businessentity.l_Preferredlang.All(c =>
+                        {
+                            c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                            c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                            c.FormID= AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                            return true;
+                        });
+                    }
                     businessentity.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                     businessentity.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                     businessentity.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
@@ -258,7 +267,40 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-
+        /// <summary>
+        ///Get Business Entity Preferred Language
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetPreferredLanguagebyBusinessKey(int BusinessId)
+        {
+            try
+            {
+                var parameter = "?BusinessId=" + BusinessId;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_EntityPreferredLanguage>>("License/GetPreferredLanguagebyBusinessKey" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPreferredLanguagebyBusinessKey:For BusinessId {0}", BusinessId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPreferredLanguagebyBusinessKey:For BusinessId {0}", BusinessId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPreferredLanguagebyBusinessKey:For BusinessId {0}", BusinessId);
+                throw;
+            }
+        }
         #endregion Business Entity 
 
         #region New Business Location

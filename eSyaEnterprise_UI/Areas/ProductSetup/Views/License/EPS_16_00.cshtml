@@ -31,6 +31,7 @@
         NoOfUnitsGreater_E8: '@Localizer["UI0048"]',
         BusinessEntity_E9: '@Localizer["UI0049"]',
         Entity_E10: '@Localizer["UI0050"]',
+        Description_E11: '@Localizer["UI0203"]',
     }
 </script>
 
@@ -103,6 +104,13 @@
                                     </label>
                                 </div>
                             </div>
+
+
+                    <div class="col-lg-12  col-12 padbot10">
+                        <table id="jqgUserRoleActionLink"></table>
+                        <div id="jqpUserRoleActionLink"></div>
+                    </div>
+
 
                         </div>
                     </div>
@@ -235,7 +243,10 @@
                                         $('#txtNoofUnits').val('1');
                                         $("#btnSaveBusinessEntity").html('<i class="fa fa-save"></i> ' + localization.Save);
                                         $("#divChkActiveStatus").css('display', 'none');
+                                fnGridLoadPreferredLanguage();
                                     });
+                           
+
                                 }
                                 else if (data.node.id.startsWith("FM")) {
 
@@ -260,7 +271,7 @@
                                         $('#txtBusinessEntityId').val(NodeID);
 
                                         fnFillBusinessEntityInfo();
-
+                                        fnGridLoadPreferredLanguage();
                                         $("#btnSaveBusinessEntity").hide();
                                         $("input,textarea").attr('readonly', true);
                                         $("input[type=checkbox]").attr('disabled', true);
@@ -286,6 +297,7 @@
                                         $("input[type=checkbox]").attr('disabled', false);
                                         $("#chkActiveStatus").attr('disabled', true);
                                         fnFillBusinessEntityInfo();
+                                        fnGridLoadPreferredLanguage();
                                         $("#divChkActiveStatus").css('display', 'none');
                                         $("#txtNoActiveofUnits").attr('readonly', true);
                                         $("#btnSaveBusinessEntity").html('<i class="fa fa-sync"></i> ' + localization.Update);
@@ -337,67 +349,106 @@
                         }
                     });
                 }
+
+        //fnGridLoadUserRoleActionLink();
             }
 
             function fnSaveBusinessEntity() {
-
-                if (fnValidationBusinessEntity() === false) {
-                    return;
-                }
-
-
-                $("#btnSaveBusinessEntity").attr('disabled', true);
-                var EntityID = $("#txtBusinessEntityId").val();
-                var businessentity;
-                if (EntityID == null || EntityID == "") {
-                    businessentity = {
-                        BusinessId: 0,
-                        BusinessDesc: $("#txtEntityDescription").val(),
-                        //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
-                        BusinessUnitType: $('#cboUnitType').val(),
-                        NoOfUnits: $('#txtNoofUnits').val(),
-                        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
-                        ActiveNoOfUnits: $('#txtNoActiveofUnits').val()
-                    };
-
-                }
-                else {
-                    businessentity = {
-                        BusinessId: $("#txtBusinessEntityId").val(),
-                        BusinessDesc: $("#txtEntityDescription").val(),
-                        //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
-                        BusinessUnitType: $('#cboUnitType').val(),
-                        NoOfUnits: $('#txtNoofUnits').val(),
-                        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
-                        ActiveNoOfUnits: $('#txtNoActiveofUnits').val()
-                    };
-                }
-                $.ajax({
-                    url: getBaseURL() + '/License/InsertOrUpdateBusinessEntity',
-                    type: 'POST',
-                    datatype: 'json',
-                    data: { businessentity },
-                    success: function (response) {
-                        if (response.Status) {
-                            fnAlert("s", "", response.StatusCode, response.Message);
-                            location.reload();
-
-                            return true;
+                      
+                        if (fnValidationBusinessEntity() === false) {
+                            return;
                         }
-                        else {
-                            fnAlert("e", "", response.StatusCode, response.Message);
-                            $("#btnSaveBusinessEntity").attr('disabled', false);
-                            return false;
-                        }
+                         $("#jqgUserRoleActionLink").jqGrid('editCell', 0, 0, false).attr("value");
 
-                    },
-                    error: function (error) {
-                        fnAlert("e", "", error.StatusCode, error.statusText);
-                        $("#btnSaveBusinessEntity").attr('disabled', false);
+                        $("#btnSaveBusinessEntity").attr('disabled', true);
+                        var EntityID = $("#txtBusinessEntityId").val();
+                        var businessentity;
+                        if (EntityID == null || EntityID == "") {
+
+                                var obj = [];
+                                var gvT = $('#jqgUserRoleActionLink').jqGrid('getRowData');
+                                for (var i = 0; i < gvT.length; ++i) {
+                                  if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
+                                  var objact = {
+                                    BusinessId: 0,
+                                    CultureCode: gvT[i]['CultureCode'],
+                                    CultureDesc: gvT[i]['CultureDesc'],
+                                    Pldesc: gvT[i]['Pldesc'],
+                                    ActiveStatus: gvT[i]['ActiveStatus']
+                                }
+                                obj.push(objact);
+                                }
+                                }
+                            
+            
+
+                            businessentity = {
+                                BusinessId: 0,
+                                BusinessDesc: $("#txtEntityDescription").val(),
+                                //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
+                                BusinessUnitType: $('#cboUnitType').val(),
+                                NoOfUnits: $('#txtNoofUnits').val(),
+                                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+                                ActiveNoOfUnits: $('#txtNoActiveofUnits').val(),
+                                l_Preferredlang:obj
+                            };
                     }
-                });
-            }
+                        
+                        else {
 
+                           var obj = [];
+                           var gvT = $('#jqgUserRoleActionLink').jqGrid('getRowData');
+                         for (var i = 0; i < gvT.length; ++i) {
+                          if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
+               
+                        var objact = {
+                            BusinessId: $("#txtBusinessEntityId").val(),
+                            CultureCode: gvT[i]['CultureCode'],
+                            CultureDesc: gvT[i]['CultureDesc'],
+                            Pldesc: gvT[i]['Pldesc'],
+                            ActiveStatus: gvT[i]['ActiveStatus']
+                        }
+                              obj.push(objact);
+                           
+                         }
+                         }
+                            businessentity = {
+                                BusinessId: $("#txtBusinessEntityId").val(),
+                                BusinessDesc: $("#txtEntityDescription").val(),
+                                //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
+                                BusinessUnitType: $('#cboUnitType').val(),
+                                NoOfUnits: $('#txtNoofUnits').val(),
+                                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+                                ActiveNoOfUnits: $('#txtNoActiveofUnits').val(),
+                            l_Preferredlang: obj
+                            };
+                        }
+                        $.ajax({
+                            url: getBaseURL() + '/License/InsertOrUpdateBusinessEntity',
+                            type: 'POST',
+                            datatype: 'json',
+                            data: { businessentity },
+                            success: function (response) {
+                                if (response.Status) {
+                                    fnAlert("s", "", response.StatusCode, response.Message);
+                                    location.reload();
+
+                                    return true;
+                                }
+                                else {
+                                    fnAlert("e", "", response.StatusCode, response.Message);
+                                    $("#btnSaveBusinessEntity").attr('disabled', false);
+                                    return false;
+                                }
+
+                            },
+                            error: function (error) {
+                                fnAlert("e", "", error.StatusCode, error.statusText);
+                                $("#btnSaveBusinessEntity").attr('disabled', false);
+                            }
+                        });
+            }
+            
             function fnValidationBusinessEntity() {
 
                 if (IsStringNullorEmpty($("#txtEntityDescription").val())) {
@@ -485,5 +536,52 @@
                     'overflow': 'auto'
                 });
             }
+
+
+
+    function fnGridLoadPreferredLanguage() {
+        $("#jqgUserRoleActionLink").jqGrid('GridUnload');
+        $("#jqgUserRoleActionLink").jqGrid({
+            url: getBaseURL() + '/License/GetPreferredLanguagebyBusinessKey?BusinessId=' + $("#txtBusinessEntityId").val(),
+            datatype: 'json',
+            mtype: 'POST',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            colNames: ["BusinessId", "Culture Code", "Culture Description","Preferred Language", "Active"],
+            colModel: [
+                { name: "BusinessId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+                { name: "CultureCode", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
+                { name: "CultureDesc", width: 200, editable: false, editoptions: { disabled: true }, align: 'left' },
+                { name: "Pldesc", width: 250, editable: true, editoptions: { disabled: false }, align: 'left' },
+                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+
+            ],
+            rowNum: 10,
+            rowList: [10, 20, 50, 100],
+            loadonce: true,
+            pager: "#jqpUserRoleActionLink",
+            viewrecords: true,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            align: "left",
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            scrollOffset: 0,
+            cellEdit: true,
+            cellsubmit: 'clientArray',
+            onSelectRow: function (id) {
+                if (id) { $('#jqgUserRoleActionLink').jqGrid('editRow', id, true); }
+            },
+            caption: 'User Role Action Link',
+            loadComplete: function () {
+                fnJqgridSmallScreen("jqgUserRoleActionLink");
+            },
+        }).jqGrid('navGrid', '#jqpUserRoleActionLink', { add: false, edit: false, search: false, del: false, refresh: false });
+    }
+
+
+   
         </script>
 
