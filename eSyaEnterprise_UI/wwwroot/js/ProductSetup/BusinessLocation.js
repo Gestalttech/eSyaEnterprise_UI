@@ -51,7 +51,7 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.TaxIdentification, localization.eSyaLicenseType, localization.EUserLicenses, localization.ENoOfBeds, localization.BusinessSegmentId, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.ManageBOA,localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.TaxIdentification, localization.eSyaLicenseType, localization.EUserLicenses, localization.ENoOfBeds, localization.BusinessSegmentId, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.ManageBOA,localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -126,11 +126,11 @@ function fnAddBusinessLocation() {
 
     fnClearFields();
     var id = $("#cboBusinessEntity").val();
-    if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
-        fnAlert("w", "EPS_17_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
-    }
-    else
-    {
+    //if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
+    //    fnAlert("w", "EPS_17_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
+    //}
+    //else
+    //{
         _isInsert = true;
         fnClearFields();
         BindCities();
@@ -150,7 +150,7 @@ function fnAddBusinessLocation() {
         $("#btnSaveBusinessLocation").html('Save');
         $("#btnDeactivateBusinessLocation").hide();
         fnGetBusinessUnitType();
-    }
+  // }
 }
 
 function fnEditBusinessLocation(e, actiontype) {

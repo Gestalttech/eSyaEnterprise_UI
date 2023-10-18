@@ -1457,6 +1457,10 @@
       "PackagePath": "staticwebassets\\css\\Common\\master.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Common\\masterCodes.css",
+      "PackagePath": "staticwebassets\\css\\Common\\masterCodes.css"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Common\\material.min.css",
       "PackagePath": "staticwebassets\\css\\Common\\material.min.css"
     },
@@ -3683,6 +3687,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\UserRoleActionLink.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\UserRoleActionLink.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\eSyaCulture.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\eSyaCulture.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",

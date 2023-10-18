@@ -8,6 +8,7 @@
 }
 
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<link href="~/css/Common/masterCodes.css" rel="stylesheet" />
 
 @section scripts{
     <script src="~/js/ProductSetup/BusinessLocation.js"></script>
@@ -21,6 +22,11 @@
     <style>
         .BSCurrencyContainer [class*="ui-jqgrid"] {
             width: 100% !important;
+        }
+        label > input[type="checkbox"]{
+        display: inline-block;
+        vertical-align: text-top;
+        margin-right: 3px;
         }
     </style>
 
@@ -68,6 +74,7 @@
         BusinessKey: '@Localizer["BusinessKey"]',
         LocationCode: '@Localizer["LocationCode"]',
         LocationDescription: '@Localizer["LocationDescription"]',
+        ShortDescription: '@Localizer["ShortDescription"]',
         BusinessName: '@Localizer["BusinessName"]',
         ISDCode: '@Localizer["ISDCode"]',
         CityCode: '@Localizer["CityCode"]',
@@ -77,6 +84,10 @@
         UpdateBusinessLocation: '@Localizer["UpdateBusinessLocation"]',
         ViewBusienssLocation: '@Localizer["ViewBusienssLocation"]',
         LocationId: '@Localizer["LocationId"]',
+        LocationInfo: '@Localizer["LocationInfo"]',
+        FinancialInfo: '@Localizer["FinancialInfo"]',
+        LicenseInfo: '@Localizer["LicenseInfo"]',
+        TaxInfo: '@Localizer["TaxInfo"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -100,7 +111,7 @@
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-12 form-group">
         <label> @Localizer["BusinessEntity"]</label>
-        <select class="selectpicker" data-live-search="true" id="cboBusinessEntity" title="" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnGridLoadBusinessLocation()"></select>
+        <select class="selectpicker" data-live-search="true" id="cboBusinessEntity" data-container="body" title="" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnGridLoadBusinessLocation()"></select>
     </div>
 </div>
 <div class="row">
@@ -120,179 +131,235 @@
 
             <div class="modal-body">
 
-                <div class="row">
-                    <input type="text" id="txtBusinesskey" style="display:none" />
-                    <input type="text" id="txtlocationId" style="display:none" />
+                      <div class="row">
 
-                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label class="lable-color" for="txtLocationDescription">@Localizer["LocationDescription"]</label>
-                            <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 col-xl-1  animated slideInLeft sidebarSmall">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="locationInfo-tab" data-bs-toggle="pill" href="#locationInfo" role="tab" aria-controls="locationInfo" aria-selected="true">@Localizer["locationInfo"]  </a>
+                            <a class="nav-link" id="financialInfo-tab" data-bs-toggle="pill" href="#financialInfo" role="tab" aria-controls="financialInfo" aria-selected="false">@Localizer["financialInfo"]  </a>
+                            <a class="nav-link" id="licenseInfo-tab" data-bs-toggle="pill" href="#licenseInfo" role="tab" aria-controls="licenseInfo" aria-selected="false">@Localizer["licenseInfo"]  </a>
+                            <a class="nav-link" id="taxInfo-tab" data-bs-toggle="pill" href="#taxInfo" role="tab" aria-controls="taxInfo" aria-selected="false">@Localizer["taxInfo"]  </a>
+                         </div>
+                     </div>
+                    <div class="col-lg-11 col-md-10 col-sm-10 col-xl-11 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="locationInfo" role="tabpanel" aria-labelledby="locationInfo-tab">
+                            <div class="row">
+                                <input type="text" id="txtBusinesskey" style="display:none" />
+                                <input type="text" id="txtlocationId" style="display:none" />
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="lable-color" for="txtLocationDescription">@Localizer["LocationDescription"]</label>
+                                        <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="lable-color" for="txtBusinessName">@Localizer["BusinessName"]</label>
+                                        <input id="txtBusinessName" class="form-control" maxlength="100" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label> @Localizer["ISDCode"] </label>
+                                        <div>
+
+                                            <select class="selectpicker" data-live-search="true" id="cboISDCode" title="" data-size="8" data-container="body" asp-items="@ViewBag.IsdCodes" onchange="fnOnChangeIsdCode()">
+                                                <option value="0">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label> @Localizer["City"] </label>
+                                        <div>
+                                            <select class="selectpicker" data-live-search="true" data-container="body" id="cboCityCode" title="Select">
+                                                <option value="0">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label> @Localizer["Currrency"] </label>
+                                        <div>
+                                                <select class="selectpicker" data-live-search="true" data-container="body" id="cboCurrrencyCode" title="Select">
+                                                <option value="0">Select</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="card w-100">
+                                        <div class="card-header">
+                                            Parameter
+                                        </div>
+                                            <div class="row m-0">
+                                                <label class="col-4 py-2"> <input type="checkbox" /> Karnataka </label>
+                                                <label class="col-4 py-2"> <input type="checkbox" /> Tamil Nadu </label>
+                                                <label class="col-4 py-2"> <input type="checkbox" /> Andhra Pradesh </label>
+                                                <label class="col-4 py-2"> <input type="checkbox" /> Kerala </label>
+
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="card w-100">
+                                        <div class="card-header">
+                                            Preferred Language
+                                        </div>
+                                        <div class="row m-0">
+                                            <label class="col-4 py-2"> <input type="checkbox" /> English </label>
+                                            <label class="col-4 py-2"> <input type="checkbox" /> Hindi </label>
+                                            <label class="col-4 py-2"> <input type="checkbox" /> Tamil </label>
+                                            <label class="col-4 py-2"> <input type="checkbox" /> Telugu </label>
+                                          
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                </div>
+
                         </div>
-                    </div>
-                </div>
+                            <div class="tab-pane fade" id="financialInfo" role="tabpanel" aria-labelledby="financialInfo-tab">
+                            <div class="row">
 
-                <div class="row">
+                                <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
 
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label class="lable-color" for="txtBusinessName">@Localizer["BusinessName"]</label>
-                            <input id="txtBusinessName" class="form-control" maxlength="100" type="text" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-
-                        <label>
-                            <input type="radio" name="rdoSegmentLinkAccount" id="rdoIsBookofAccounts" value="RBA" />&nbsp;<span>@Localizer["IsBookofAccounts"] </span>
-                        </label>
+                                    <label>
+                                        <input type="radio" name="rdoSegmentLinkAccount" id="rdoIsBookofAccounts" value="RBA" />&nbsp;<span>@Localizer["IsBookofAccounts"] </span>
+                                    </label>
 
 
 
-                        <label id="lblRdoSegmentLinkAccount">
-                            <input type="radio" name="rdoSegmentLinkAccount" id="rdoIsCostCenter" value="RCC" />&nbsp;<span>@Localizer["IsCostCenter"] </span>
-                        </label>
-                    </div>
+                                    <label id="lblRdoSegmentLinkAccount">
+                                        <input type="radio" name="rdoSegmentLinkAccount" id="rdoIsCostCenter" value="RCC" />&nbsp;<span>@Localizer["IsCostCenter"] </span>
+                                    </label>
+                                </div>
 
 
-                    <div class="col-lg-8  col-md-8 col-sm-12 col-xs-12" id="divsegment">
-                        <div class="form-group">
-                            <label> @Localizer["LinkBusinessSegmentforCostCenter"] </label>
-                            <select class="selectpicker" data-live-search="true" id="cboBusinessSegment" title="">
-                                <option value="0">@Localizer["Select"]</option>
+                                <div class="col-lg-8  col-md-8 col-sm-12 col-xs-12" id="divsegment">
+                                    <div class="form-group">
+                                        <label> @Localizer["LinkBusinessSegmentforCostCenter"] </label>
+                                        <select class="selectpicker" data-live-search="true" data-container="body" id="cboBusinessSegment" title="">
+                                            <option value="0">@Localizer["Select"]</option>
 
-                            </select>
-                        </div>
-                    </div>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                    <div class="default-checkbox checkbox-group">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToLocalCurrency">
+                                            <input type="checkbox" id="chkToLocalCurrency" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">@Localizer["ToLocalCurrency"]</span>
+                                        </label>
+                                    </div>
+                                </div>
 
-                </div>
+                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                    <div class="default-checkbox checkbox-group">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToCurrCurrency">
+                                            <input type="checkbox" id="chkToCurrCurrency" class="mdl-checkbox__input">
+                                            <span class="mdl-checkbox__label">@Localizer["ToCurrencyConversion"]</span>
+                                        </label>
+                                    </div>
+                                </div>
 
-                <div class="row">
-                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label> @Localizer["ISDCode"] </label>
-                            <div>
+                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                    <div class="default-checkbox checkbox-group">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToRealCurrency">
+                                            <input type="checkbox" id="chkToRealCurrency" class="mdl-checkbox__input" onchange="fnToRealCurrency(this)">
+                                            <span class="mdl-checkbox__label">@Localizer["ToRealCurrency"]</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <select class="selectpicker" data-live-search="true" id="cboISDCode" title="" data-size="8" asp-items="@ViewBag.IsdCodes" onchange="fnOnChangeIsdCode()">
-                                    <option value="0">Select</option>
-                                </select>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
+                                        <div class="BSCurrencyContainer">
+                                            <table id="jqgBSCurrency"></table>
+                                            <div id="jqpBSCurrency"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="licenseInfo" role="tabpanel" aria-labelledby="licenseInfo-tab">
+                                <div class="row">
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label> @Localizer["LicenseType"] </label>
+                                            <div>
+                                                <select class="selectpicker" data-live-search="false" data-container="body" id="cboLicenseType" title="Select">
+                                                    <option value="0">Select</option>
+                                                    <option value="P">Perpetual</option>
+                                                    <option value="S">Subscription</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group lbl-right">
+                                            <label> @Localizer["UserLicenses"] </label>
+                                            <input type="text" id="txtUserLicenses" name="name" value="" class="form-control integerFormat" maxlength="5" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                        <div class="form-group lbl-right">
+                                            <label> @Localizer["LicensedToNoofBeds"] </label>
+                                            <input type="text" id="txtNoOfBeds" name="name" value="" class="form-control integerFormat" maxlength="5" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="taxInfo" role="tabpanel" aria-labelledby="taxInfo-tab">
+                                <div class="row">@*  id="divTaxIdentification"> *@
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label> @Localizer["TaxIdentification"] </label>
+                                            <div>
+                                                <select class="selectpicker" data-live-search="true" data-container="body" id="cboTaxIdentification" title="" data-size="8" onchange="fnGetStateNamebyTaxCode()">
+                                                    <option value="0">Select</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="lable-color" for="txtTin">@Localizer["Tin"]</label>
+                                            <input id="txtTin" class="form-control" maxlength="2" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="lable-color" for="txtStateCode">@Localizer["StateCode"]</label>
+                                            <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label> @Localizer["City"] </label>
-                            <div>
-                                <select class="selectpicker" data-live-search="true" id="cboCityCode" title="Select">
-                                    <option value="0">Select</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label> @Localizer["Currrency"] </label>
-                            <div>
-                                <select class="selectpicker" data-live-search="true" id="cboCurrrencyCode" title="Select">
-                                    <option value="0">Select</option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-                <div class="row">
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="default-checkbox checkbox-group">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToLocalCurrency">
-                                <input type="checkbox" id="chkToLocalCurrency" class="mdl-checkbox__input">
-                                <span class="mdl-checkbox__label">@Localizer["ToLocalCurrency"]</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12 ">
-                        <div class="default-checkbox checkbox-group">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToCurrCurrency">
-                                <input type="checkbox" id="chkToCurrCurrency" class="mdl-checkbox__input">
-                                <span class="mdl-checkbox__label">@Localizer["ToCurrencyConversion"]</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="default-checkbox checkbox-group">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToRealCurrency">
-                                <input type="checkbox" id="chkToRealCurrency" class="mdl-checkbox__input" onchange="fnToRealCurrency(this)">
-                                <span class="mdl-checkbox__label">@Localizer["ToRealCurrency"]</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label> @Localizer["LicenseType"] </label>
-                            <div>
-                                <select class="selectpicker" data-live-search="false" id="cboLicenseType" title="Select">
-                                    <option value="0">Select</option>
-                                    <option value="P">Perpetual</option>
-                                    <option value="S">Subscription</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group lbl-right">
-                            <label> @Localizer["UserLicenses"] </label>
-                            <input type="text" id="txtUserLicenses" name="name" value="" class="form-control integerFormat" maxlength="5" />
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                        <div class="form-group lbl-right">
-                            <label> @Localizer["LicensedToNoofBeds"] </label>
-                            <input type="text" id="txtNoOfBeds" name="name" value="" class="form-control integerFormat" maxlength="5" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="divTaxIdentification">
-                     <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label> @Localizer["TaxIdentification"] </label>
-                            <div>
-                                <select class="selectpicker" data-live-search="true" id="cboTaxIdentification" title="" data-size="8" onchange="fnGetStateNamebyTaxCode()">
-                                    <option value="0">Select</option>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label class="lable-color" for="txtTin">@Localizer["Tin"]</label>
-                            <input id="txtTin" class="form-control" maxlength="2" type="text" />
-                        </div>
-                    </div>
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <label class="lable-color" for="txtStateCode">@Localizer["StateCode"]</label>
-                            <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
-                        </div>
-                    </div>
-                </div>
+                    @* Old code starts *@
+               
+               
+               
+              
                 <div class="row"  id="divChkActiveStatus">
                     <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
                         <div class="default-checkbox checkbox-group">
@@ -303,16 +370,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
-                        <div class="BSCurrencyContainer">
-                            <table id="jqgBSCurrency"></table>
-                            <div id="jqpBSCurrency"></div>
-                        </div>
-                    </div>
-
+             
                 </div>
-
             </div>
                 <div class="modal-footer">
                     <div class="row">
