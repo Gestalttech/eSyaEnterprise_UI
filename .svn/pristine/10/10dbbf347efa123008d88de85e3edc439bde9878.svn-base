@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "EPS_24_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@section Scripts{
+    <script src="~/js/ProductSetup/MapRuleswithLocation.js"></script>
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+
+</script>
+

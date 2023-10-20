@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MkzP2QF6aatz05f//0ptuf+r715SR++Uw4YOUyAvPpw=",
+  "Hash": "EeG2h62KWxBytqq/xitF73/0HlU9inkwWgRbxJSEGOc=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -17236,6 +17236,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\LocationwiseMenu.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\MapRuleswithLocation.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/MapRuleswithLocation.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\MapRuleswithLocation.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Parameters.js",

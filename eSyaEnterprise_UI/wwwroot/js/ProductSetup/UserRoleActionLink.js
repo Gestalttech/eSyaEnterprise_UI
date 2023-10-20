@@ -54,11 +54,10 @@ $(document).on('focusout', '[role="gridcell"] *', function () {
 });
 
 function fnSaveUserRoleActionLink() {
-    debugger;
     if (IsStringNullorEmpty($("#cboUserRole").val()) || $("#cboUserRole").val() === 0 || $("#cboUserRole").val() === '0') {
        
         fnAlert("w", "EPS_26_00", "UI0202", errorMsg.SelectUserRole_E1);
-        return false;
+        return;
     }
     var obj = [];
     var gvT = $('#jqgUserRoleActionLink').jqGrid('getRowData');

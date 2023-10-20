@@ -276,6 +276,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXFJ1bGVzXEVQU18yMF8wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Rules/EPS_24_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXFJ1bGVzXEVQU18yNF8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Stores/Views/ConfigStores/ECS_01_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVzXFZpZXdzXENvbmZpZ1N0b3Jlc1xFQ1NfMDFfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
