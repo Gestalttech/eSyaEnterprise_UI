@@ -69,6 +69,8 @@
         eSyaLicenseType: '@Localizer["eSyaLicenseType"]',
         CurrencyName: '@Localizer["CurrencyName"]',
         CurrencyCode: '@Localizer["CurrencyCode"]',
+        CultureCode: '@Localizer["CultureCode"]',
+        CultureDesc: '@Localizer["CultureDesc"]',
         BusinessId: '@Localizer["BusinessId"]',
         SegmentId: '@Localizer["SegmentId"]',
         BusinessKey: '@Localizer["BusinessKey"]',
@@ -88,6 +90,9 @@
         FinancialInfo: '@Localizer["FinancialInfo"]',
         LicenseInfo: '@Localizer["LicenseInfo"]',
         TaxInfo: '@Localizer["TaxInfo"]',
+        PreferredLanguage: '@Localizer["PreferredLanguage"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
+        ShortDesc: '@Localizer["ShortDescription"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -106,6 +111,7 @@
         TaxIdentification_E14: '@Localizer["UI0059"]',
         LicenseType_E15: '@Localizer["UI0060"]',
         UserLicenses_E16: '@Localizer["UI0061"]',
+        ShortDesc_E16: '@Localizer["UI0206"]',
     }
 </script>
 <div class="row">
@@ -147,7 +153,13 @@
                             <div class="row">
                                 <input type="text" id="txtBusinesskey" style="display:none" />
                                 <input type="text" id="txtlocationId" style="display:none" />
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="lable-color" for="txtShortDescription">@Localizer["ShortDescription"]</label>
+                                            <input id="txtShortDescription" class="form-control" type="text" autocomplete="off" maxlength="10" />
+                                        </div>
+                                    </div>
+                                <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
                                     <div class="form-group">
                                         <label class="lable-color" for="txtLocationDescription">@Localizer["LocationDescription"]</label>
                                         <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
@@ -164,7 +176,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label> @Localizer["ISDCode"] </label>
                                         <div>
@@ -176,7 +188,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label> @Localizer["City"] </label>
                                         <div>
@@ -187,7 +199,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
+                                <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label> @Localizer["Currrency"] </label>
                                         <div>
@@ -198,34 +210,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="card w-100">
-                                        <div class="card-header">
-                                            Parameter
-                                        </div>
-                                            <div class="row m-0">
-                                                <label class="col-4 py-2"> <input type="checkbox" /> Karnataka </label>
-                                                <label class="col-4 py-2"> <input type="checkbox" /> Tamil Nadu </label>
-                                                <label class="col-4 py-2"> <input type="checkbox" /> Andhra Pradesh </label>
-                                                <label class="col-4 py-2"> <input type="checkbox" /> Kerala </label>
-
-                                            </div>
-                                    </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                                    <div class="card w-100">
-                                        <div class="card-header">
-                                            Preferred Language
-                                        </div>
-                                        <div class="row m-0">
-                                            <label class="col-4 py-2"> <input type="checkbox" /> English </label>
-                                            <label class="col-4 py-2"> <input type="checkbox" /> Hindi </label>
-                                            <label class="col-4 py-2"> <input type="checkbox" /> Tamil </label>
-                                            <label class="col-4 py-2"> <input type="checkbox" /> Telugu </label>
-                                          
-                                        </div>
-                                      
-                                    </div>
+                                <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-12">
+                                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "2" })
+                                    
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-7 col-12">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-12">
+                                            <table id="jqgPreferredLanguage"></table>
+                                            <div id="jqpPreferredLanguage"></div>
+                                       </div>
+                                  </div>
                                 </div>
                                 </div>
 
@@ -327,7 +324,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="taxInfo" role="tabpanel" aria-labelledby="taxInfo-tab">
-                                <div class="row">@*  id="divTaxIdentification"> *@
+                                <div class="row"   id="divTaxIdentification"> 
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label> @Localizer["TaxIdentification"] </label>

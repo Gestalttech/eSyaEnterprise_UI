@@ -515,7 +515,17 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                         return true;
                     });
                 }
-
+                
+                if (obj.l_Preferredlanguage != null)
+                {
+                    obj.l_Preferredlanguage.All(c =>
+                    {
+                        c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                        c.TerminalId = AppSessionVariables.GetIPAddress(HttpContext);
+                        c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                        return true;
+                    });
+                }
                 if (isInsert)
                 {
                     var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertBusinessLocation", obj);
@@ -684,6 +694,77 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetBusinessUnitType:For BusinessId {0}", businessId);
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        ///Get Business Location Parameters by Business Key for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationParametersbyBusinessKey(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("License/GetLocationParametersbyBusinessKey?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0}", BusinessKey);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get State Code by Tax Idendification
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationPreferredLanguagebyBusinessKey(int businessId, int BusinessKey)
+        {
+            try
+            {
+                var parameter = "?BusinessID=" + businessId + "&BusinessKey=" + BusinessKey;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_LocationPreferredLanguage>>("License/GetLocationPreferredLanguagebyBusinessKey" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationPreferredLanguagebyBusinessKey:For BusinessKey {0}", BusinessKey);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationPreferredLanguagebyBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationPreferredLanguagebyBusinessKey:For BusinessKey {0}", BusinessKey);
                 throw;
             }
         }

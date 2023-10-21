@@ -15,6 +15,7 @@ $(document).ready(function () {
     });
 
     fnGridLoadBusinessLocation();
+    
     $.contextMenu({
         // define which elements trigger this menu
         selector: "#btnLocation",
@@ -51,14 +52,15 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.TaxIdentification, localization.eSyaLicenseType, localization.EUserLicenses, localization.ENoOfBeds, localization.BusinessSegmentId, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.ManageBOA,localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.TaxIdentification, localization.eSyaLicenseType, localization.EUserLicenses, localization.ENoOfBeds, localization.BusinessSegmentId, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.ManageBOA,localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             //{ name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden:true },
             { name: "LocationDescription", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "BusinessName", width:220, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "BusinessName", width: 220, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "ShortDesc", width: 100, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false }, 
             { name: "Isdcode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "CityCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "StateCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -126,11 +128,11 @@ function fnAddBusinessLocation() {
 
     fnClearFields();
     var id = $("#cboBusinessEntity").val();
-    //if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
-    //    fnAlert("w", "EPS_17_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
-    //}
-    //else
-    //{
+    if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
+        fnAlert("w", "EPS_17_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
+    }
+    else
+    {
         _isInsert = true;
         fnClearFields();
         BindCities();
@@ -150,7 +152,9 @@ function fnAddBusinessLocation() {
         $("#btnSaveBusinessLocation").html('Save');
         $("#btnDeactivateBusinessLocation").hide();
         fnGetBusinessUnitType();
-  // }
+        fnLoadGridPreferredLanguage();
+        
+   }
 }
 
 function fnEditBusinessLocation(e, actiontype) {
@@ -164,6 +168,7 @@ function fnEditBusinessLocation(e, actiontype) {
 
     $('#txtLocationDescription').val(rowData.LocationDescription);
     $('#txtBusinessName').val(rowData.BusinessName);
+    $('#txtShortDescription').val(rowData.ShortDesc); 
     $('#txtBusinesskey').val(rowData.BusinessKey);
     $("#txtlocationId").val(rowData.LocationId)
     if (rowData.IsBookOfAccounts == 'true') {
@@ -188,6 +193,9 @@ function fnEditBusinessLocation(e, actiontype) {
     $('#cboCurrrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
     $('#cboTaxIdentification').val(rowData.TaxIdentification).selectpicker('refresh');
     fnGetStateNamebyTaxCode();
+    fnLoadGridPreferredLanguage();
+
+   
     //$('#txtTin').val(rowData.TaxIdentification);
     //$('#txtStateCode').val(rowData.StateCode);
     $('#cboLicenseType').val(rowData.ESyaLicenseType).selectpicker('refresh');
@@ -289,6 +297,25 @@ function fnEditBusinessLocation(e, actiontype) {
             $("select").next().attr('disabled', false);
         });
     }
+
+
+    eSyaParams.ClearValue();
+
+    $.ajax({
+        async: false,
+        url: getBaseURL() + "/License/GetLocationParametersbyBusinessKey?BusinessKey=" + $('#txtBusinesskey').val(),
+        type: 'POST',
+        datatype: 'json',
+        success: function (result) {
+            if (result != null) {
+                eSyaParams.SetJSONValue(result);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", response.StatusCode, response.Message);
+
+        }
+    });
 }
 
 var _isInsert = true;
@@ -305,6 +332,7 @@ function fnClearFields() {
     //$("#txtLocationcode").val('');
     $("#txtLocationDescription").val('');
     $("#txtBusinessName").val('');
+    $('#txtShortDescription').val(''); 
     $("#cboISDCode").val('0').selectpicker('refresh');
     $("#cboCityCode").selectpicker('refresh');
     $("#cboCurrrencyCode").selectpicker('refresh');
@@ -325,6 +353,8 @@ function fnClearFields() {
     $("#btnDeactivateBusinessLocation").attr("disabled", false);
     fnRdoSegmentLinkEmpty();
     $("#divChkActiveStatus").css('display', 'none');
+    eSyaParams.ClearValue();
+
 }
 
 $("#btnCancelBusinessLocation").click(function () {
@@ -351,7 +381,11 @@ function fnSaveBusinessLocation()
         fnAlert("w", "EPS_17_00", "UI0052", errorMsg.SelectBusinessEntity_E7);
         return;
     }
-    
+   
+    if (IsStringNullorEmpty($("#txtShortDescription").val())) {
+        fnAlert("w", "EPS_17_00", "UI0206", errorMsg.ShortDesc_E16);
+        return;
+    }
     if (IsStringNullorEmpty($("#txtLocationDescription").val())) {
         fnAlert("w", "EPS_17_00", "UI0053", errorMsg.LocationDesc_E8);
         return;
@@ -406,6 +440,7 @@ function fnSaveBusinessLocation()
         //LocationCode: $("#txtLocationcode").val(),
         LocationDescription: $("#txtLocationDescription").val(),
         BusinessName: $("#txtBusinessName").val(),
+        ShortDesc: $('#txtShortDescription').val(),
         Isdcode: $("#cboISDCode").val(),
         CityCode: $("#cboCityCode").val(),
         StateCode: $("#txtStateCode").val(),
@@ -424,6 +459,8 @@ function fnSaveBusinessLocation()
         BusinessSegmentId: $("#cboBusinessSegment").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
+
+    //
     var bsCurrency = [];
     var jqgBSCurrency = jQuery("#jqgBSCurrency").jqGrid('getRowData');
     
@@ -437,7 +474,26 @@ function fnSaveBusinessLocation()
     }
 
     objloc.l_BSCurrency = bsCurrency;
+    //
 
+    var preferredlanguage = [];
+    var jqgPreferredLanguage = jQuery("#jqgPreferredLanguage").jqGrid('getRowData');
+
+    for (var i = 0; i < jqgPreferredLanguage.length; ++i) {
+      
+        preferredlanguage.push({
+                BusinessKey: $("#txtBusinesskey").val() === '' ? 0 : $("#txtBusinesskey").val(),
+                PreferredLanguage: jqgPreferredLanguage[i]["PreferredLanguage"],
+                ActiveStatus: jqgPreferredLanguage[i]["ActiveStatus"]
+            });
+    
+    }
+
+    objloc.l_Preferredlanguage = preferredlanguage;
+
+    //
+    var locParams = eSyaParams.GetJSONValue();
+    objloc.l_FormParameter = locParams;
 
     $("#btnSaveBusinessLocation").attr("disabled", true);
 
@@ -789,4 +845,56 @@ function fnGetBusinessUnitType() {
         error: function (response) {
         }
     });
+}
+
+
+
+function fnLoadGridPreferredLanguage() {
+    
+
+    $("#jqgPreferredLanguage").jqGrid('GridUnload');
+
+    $("#jqgPreferredLanguage").jqGrid({
+        url: getBaseURL() + '/License/GetLocationPreferredLanguagebyBusinessKey?BusinessID=' + $("#cboBusinessEntity").val() + '&BusinessKey=' + $("#txtBusinesskey").val(),
+            datatype: 'json',
+            mtype: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            colNames: [localization.BusinessKey, localization.CultureCode, localization.CultureDesc,localization.PreferredLanguage, localization.ActiveStatus],
+            colModel: [
+                { name: "BusinessKey", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+                { name: "PreferredLanguage", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
+                { name: "CultureDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
+                { name: "Pldescription", width: 100, editable: false, editoptions: { disabled: false }, align: 'left' },
+                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+
+            ],
+            pager: "#jqpPreferredLanguage",
+            rowNum: 10,
+            rowList: [10, 20, 50, 100],
+            rownumWidth: '55',
+            loadonce: true,
+            viewrecords: true,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            scroll: false,
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            caption: 'Business Location',
+            loadComplete: function (data) {
+                SetGridControlByAction();
+                fnJqgridSmallScreen("jqgPreferredLanguage");
+            },
+        loadBeforeSend: function () {
+            $("[id*='_edit']").css('text-align', 'center');
+        },
+        onSelectRow: function (id) {
+            if (id) { $('#jqgPreferredLanguage').jqGrid('editRow', id, true); }
+        },
+            //onSelectRow: function (rowid, status, e) {
+            //},
+    }).jqGrid('navGrid', '#jqpPreferredLanguage', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' });
 }
