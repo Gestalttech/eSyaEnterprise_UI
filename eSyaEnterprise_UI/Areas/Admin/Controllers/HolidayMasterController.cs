@@ -31,22 +31,42 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
             _eSyaAdminAPIServices = eSyaAdminAPIServices;
             _logger = logger;
         }
+        
         [Area("Admin")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EAD_03_00()
+        public async Task<IActionResult> EAD_03_00()
         {
             try
             {
-                return View();
+                ///Getting Business Key
+                var Bk_response = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("BusinessStructure/GetBusinessKey");
 
+                if (Bk_response.Status)
+                {
+                    if (Bk_response.Data != null)
+                    {
+                        ViewBag.BusinessKeyList = Bk_response.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.BusinessKey.ToString(),
+                            Text = b.LocationDescription.ToString(),
+                        }).ToList();
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(Bk_response.Message), "UD:GetBusinessKey");
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(Bk_response.Message), "UD:GetBusinessKey");
+                }
+                return View();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:ECA_22_00");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                _logger.LogError(ex, "UD:GetBusinessKey");
+                throw;
             }
-
-
         }
 
         [HttpPost]

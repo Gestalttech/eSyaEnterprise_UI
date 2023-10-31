@@ -21,7 +21,7 @@
 var _isInsert = true;
 
 
-function fnBusinessLocation_onChange() {
+function fnBusinessKeyChange() {
 
     fnGridLoadHolidayMaster();
 }

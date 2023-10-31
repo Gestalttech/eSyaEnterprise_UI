@@ -54,12 +54,22 @@
 
 <div class="row">
 
-    <div class="col-lg-3 col-md-4 col-sm-6">
+  @*  <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
 
             <label>@Localizer["BusinessLocation"]</label>
             @await Component.InvokeAsync("UserBusinessLocation")
 
+        </div>
+    </div>*@
+    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label class="lable-color"> @Localizer["BusinessLocation"]</label>
+            <div>
+                <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
+                    <option value="0">Select</option>
+                </select>
+            </div>
         </div>
     </div>
 

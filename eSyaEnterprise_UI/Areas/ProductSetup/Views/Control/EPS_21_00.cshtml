@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-
 @inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "ECA_08_00";
@@ -39,13 +39,15 @@
     }
 </script>
 
+
 <div class="row">
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            @await Component.InvokeAsync("UserBusinessLocation")
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="Choose Business Location" data-size="8" asp-items="@ViewBag.BusinessKeys" onchange="fnBusinessLocation_onChange()"></select>
         </div>
     </div>
+    
 </div>
 
 <div class="row padbot10">

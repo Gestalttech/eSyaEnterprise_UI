@@ -274,13 +274,39 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #endregion FORM LINK TO DOCUMENT
 
         #region Calendar Definition
+        /// <summary>
+        /// Calendar Control
+        /// </summary>
+        /// <returns></returns>
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_21_00()
+        public async Task<IActionResult> EPS_21_00()
         {
-            return View();
-        }
+            try
+            {
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
+                if (serviceResponse.Status)
+                {
+                    ViewBag.BusinessKeys = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.BusinessKey.ToString(),
+                        Text = b.LocationDescription,
+                    }).ToList();
 
+                    return View();
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessKey");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
         /// <summary>
         /// Getting Calendar Headers by Business key for Grid
         /// UI-Param--Business Key
