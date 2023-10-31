@@ -1,0 +1,122 @@
+﻿$(function () {
+    fnLoadGridEmailConnect();
+      
+});
+
+function fnLoadGridEmailConnect() {
+    $("#jqgEmailConnect").jqGrid('GridUnload');
+    $("#jqgEmailConnect").jqGrid({
+        url: getBaseURL() + '',
+        mtype: 'Post',
+        datatype: 'json',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+        colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port,localization.Active, localization.Actions],
+        colModel: [
+            { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: false },
+            { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "OutgoingMailServer", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "Port", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            {
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline btn-sm" style="" id="btnApplicationCodes"><i class="fa fa-ellipsis-v"></i> </button>'
+                }
+            }
+
+        ],
+        pager: "#jqpEmailConnect",
+        rowNum: 10000,
+        rownumWidth: '55',
+        pgtext: null,
+        pgbuttons: null,
+        loadonce: true,
+        viewrecords: true,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        align: "left",
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        scrollOffset: 0,
+        caption: localization.EmailConnect,
+        loadComplete: function (data) {
+            SetGridControlByAction();
+            fnJqgridSmallScreen("jqgEmailConnect");
+        },
+    }).jqGrid('navGrid', '#jqpEmailConnect', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpEmailConnect', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshEmailConnect
+    }).jqGrid('navButtonAdd', '#jqpEmailConnect', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddEmailConnect
+    });
+    fnAddGridSerialNoHeading();
+}
+
+function fnAddEmailConnect() {
+    //if ($("#cboBusinessEntity").val() === "0" || $("#cboBusinessEntity").val() === "") {
+    //    fnAlert("w", "EPS_29_00", "UI0049", errorMsg.BusinessEntity_E15);
+    //    return false;
+    //}
+    fnClearFields();
+    $('#PopupEmailConnect').modal('show');
+    $('#PopupEmailConnect').modal({ backdrop: 'static', keyboard: false });
+    $('#PopupEmailConnect').find('.modal-title').text(localization.AddEmailConnect);
+    $("#chkActiveStatus").parent().addClass("is-checked");
+    $("#chkActiveStatus").prop('disabled', true);
+    $("#btnSaveEmailConnect").html('<i class="fa fa-save"></i> ' + localization.Save);
+}
+
+function fnEditEmailConnect(e, actiontype) {
+    debugger;
+    var rowid = $("#jqgEmailConnect").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgEmailConnect').jqGrid('getRowData', rowid);
+    var _selectedRow = $("#" + rowid).offset();
+    var firstRow = $("tr.ui-widget-content:first").offset();
+    $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
+
+    $('#txtOutgoingMailServer').val(rowData.OutgoingMailServer);
+    $('#txtPort').val(rowData.Port);
+   
+}
+
+function fnSaveEmailConnect() {
+
+    if (fnValidateEmailConnect() === false) {
+        return;
+    }
+    else {
+
+    }
+}
+function fnValidateEmailConnect() {
+
+    if ($("#cboBusinessLocation").val() === "0" || $("#cboBusinessLocation").val() === "") {
+        fnAlert("w", "EPS_29_00", "UI0064", errorMsg.BusinessLocation_E6);
+        return false;
+    }
+    if (($("#cboISDCodes").val() == 0) || ($("#cboISDCodes").val() == '')) {
+        fnAlert("w", "EPS_29_00", "UI0034", errorMsg.ISDCode_E14);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtOutgoingMailServer").val())) {
+        fnAlert("w", "EPS_29_00", "UI0211", errorMsg.OutgoingMailServer_E16);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtPort").val())) {
+        fnAlert("w", "EPS_29_00", "UI0212", errorMsg.Port_E17);
+        return false;
+    }
+    
+    
+
+}
+function fnGridRefreshEmailConnect() {
+    $("#jqgEmailConnect").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
+function fnClearFields() {
+    $('#txtOutgoingMailServer').val('');
+    $('#txtPort').val('');
+}

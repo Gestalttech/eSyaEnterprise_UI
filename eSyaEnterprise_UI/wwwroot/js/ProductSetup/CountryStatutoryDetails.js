@@ -47,7 +47,7 @@ function fnGridLoadStatutoryCode() {
             {
                 name: "StatPattern", width: 150, editable: true, editoptions: { size: "40", maxlength: "15" }, edittype: "text"
             },
-            { name: "ActiveStatus", editable: false, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", editable: true, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,

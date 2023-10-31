@@ -62,7 +62,7 @@ function fnGridLoadTaxIdentification() {
             { name: "TaxIdentificationId", width: 70, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "TaxIdentificationDesc", editable: true, width: 120, align: 'left', resizable: false },
             { name: "StateCode", editable: true, width: 60, align: 'left', resizable: false },
-            { name: "ActiveStatus", editable: false, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

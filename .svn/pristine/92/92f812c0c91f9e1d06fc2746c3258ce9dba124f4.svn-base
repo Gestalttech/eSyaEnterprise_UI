@@ -1,0 +1,27 @@
+﻿namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
+{
+    public class DO_EmailConnectHeader
+    {
+        public int BusinessKey { get; set; }
+        public int FormId { get; set; }
+        public string SenderEmailId { get; set; }
+        public string UserName { get; set; }
+        public string PassCode { get; set; }
+        public bool ActiveStatus { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+    }
+    public class DO_EmailConnectBody
+    {
+        public int BusinessKey { get; set; }
+        public int FormId { get; set; }
+        public int SerialNumber { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public string Footer { get; set; }
+        public bool IsAttachment { get; set; }
+        public bool ActiveStatus { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+    }
+}

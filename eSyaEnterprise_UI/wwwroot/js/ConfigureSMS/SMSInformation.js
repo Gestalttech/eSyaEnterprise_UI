@@ -65,10 +65,10 @@ function fnGridLoadSMSEmptyParameter() {
         colModel: [
             { name: "Smsid", width: 70, editable: true, align: 'left' },
             { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true },
-            { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
             { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
-            { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             //{
             //    name: 'Actions', search: false, align: 'left', width: 54, sortable: false, resizable: false,
             //    formatter: function (cellValue, options, rowdata, action) {

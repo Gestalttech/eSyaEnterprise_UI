@@ -32,7 +32,7 @@ function fnGridLoadTriggerEvent() {
         colModel: [
             { name: "TEventID", width: 45, editable: true, align: 'left', editoptions: { maxlength: 8 } },
             { name: "TEventDesc", width: 108, editable: true, align: 'left', editoptions: { maxlength: 150 } },
-            { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

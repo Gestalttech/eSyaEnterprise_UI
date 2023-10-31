@@ -40,7 +40,7 @@ function fnGridLoadCalendarDefinition() {
                 name: 'TillDate', index: 'TillDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
-            { name: "Status", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "Status", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         rowNum: 10,
         rowList: [10, 20, 50, 100],

@@ -34,7 +34,7 @@ function fnGridLoadCityList() {
             { name: "CityCode", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "StateDesc", width: 120, editable: true, align: 'left', resizable: false, hidden: true, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "CityDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

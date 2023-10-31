@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EeG2h62KWxBytqq/xitF73/0HlU9inkwWgRbxJSEGOc=",
+  "Hash": "sW8YGLWFAobqD34zoBz2/i5CQ7Ge8L/0K90GhWnZexg=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -17170,6 +17170,23 @@
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\DocumentControl.js"
     },
     {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\EmailConnect.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/EmailConnect.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\EmailConnect.js"
+    },
+    {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\eSyaCulture.js",
       "SourceId": "eSyaEnterprise_UI",
       "SourceType": "Discovered",
@@ -17270,6 +17287,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\Parameters.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\SMSConnect.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/SMSConnect.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\SMSConnect.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\StateList.js",

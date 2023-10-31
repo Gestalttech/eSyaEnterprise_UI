@@ -205,6 +205,13 @@
   "UI0204": "Please Enter Culture Code",
   "UI0205": "Please Enter Culture Description",
   "UI0206": "Please Enter Short Description",
+  "UI0207": "Please Enter the Api",
+  "UI0208": "Please Enter the User Id",
+  "UI0209": "Please Enter the Sender Id",
+  "UI0210": "Please Enter the Service Provider",
+  "UI0211": "Please Enter the Outgoing Mail Server",
+  "UI0212": "Please Enter the Port",
+  "UI0213": "Please Select Entity to add SMS",
 
 
 

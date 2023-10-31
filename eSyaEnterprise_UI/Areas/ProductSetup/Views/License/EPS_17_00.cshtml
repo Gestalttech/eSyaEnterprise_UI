@@ -50,6 +50,7 @@
         Cancel: '@Localizer["Cancel"]',
         Delete: '@Localizer["Delete"]',
         City: '@Localizer["City"]',
+        Close: '@Localizer["Close"]',
         Currrency: '@Localizer["Currrency"]',
         TaxIdentification: '@Localizer["TaxIdentification"]',
         StateCode: '@Localizer["StateCode"]',
@@ -85,6 +86,7 @@
         AddBusinessLocation: '@Localizer["AddBusinessLocation"]',
         UpdateBusinessLocation: '@Localizer["UpdateBusinessLocation"]',
         ViewBusienssLocation: '@Localizer["ViewBusienssLocation"]',
+        ActiveBusienssLocation: '@Localizer["Active/DActiveBusienssLocation"]',
         LocationId: '@Localizer["LocationId"]',
         LocationInfo: '@Localizer["LocationInfo"]',
         FinancialInfo: '@Localizer["FinancialInfo"]',
@@ -93,6 +95,8 @@
         PreferredLanguage: '@Localizer["PreferredLanguage"]',
         ActiveStatus: '@Localizer["ActiveStatus"]',
         ShortDesc: '@Localizer["ShortDescription"]',
+        Activate: '@Localizer["Activate"]',
+        DActivate: '@Localizer["DActivate"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -141,10 +145,10 @@
 
                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 col-xl-1  animated slideInLeft sidebarSmall">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active" id="locationInfo-tab" data-bs-toggle="pill" href="#locationInfo" role="tab" aria-controls="locationInfo" aria-selected="true">@Localizer["locationInfo"]  </a>
-                            <a class="nav-link" id="financialInfo-tab" data-bs-toggle="pill" href="#financialInfo" role="tab" aria-controls="financialInfo" aria-selected="false">@Localizer["financialInfo"]  </a>
-                            <a class="nav-link" id="licenseInfo-tab" data-bs-toggle="pill" href="#licenseInfo" role="tab" aria-controls="licenseInfo" aria-selected="false">@Localizer["licenseInfo"]  </a>
-                            <a class="nav-link" id="taxInfo-tab" data-bs-toggle="pill" href="#taxInfo" role="tab" aria-controls="taxInfo" aria-selected="false">@Localizer["taxInfo"]  </a>
+                            <a class="nav-link active" id="locationInfo-tab" data-bs-toggle="pill" href="#locationInfo" role="tab" aria-controls="locationInfo" aria-selected="true">@Localizer["LocationInfo"]  </a>
+                            <a class="nav-link" id="financialInfo-tab" data-bs-toggle="pill" href="#financialInfo" role="tab" aria-controls="financialInfo" aria-selected="false" onclick="fnGetFinancialInfoDetails()">@Localizer["FinancialInfo"]  </a>
+                            <a class="nav-link" id="licenseInfo-tab" data-bs-toggle="pill" href="#licenseInfo" role="tab" aria-controls="licenseInfo" aria-selected="false" onclick="fnGetLicenseInfoDetails()">@Localizer["LicenseInfo"]  </a>
+                            <a class="nav-link" id="taxInfo-tab" data-bs-toggle="pill" href="#taxInfo" role="tab" aria-controls="taxInfo" aria-selected="false" onclick="fnGetTaxInfoDetails()">@Localizer["TaxInfo"]  </a>
                          </div>
                      </div>
                     <div class="col-lg-11 col-md-10 col-sm-10 col-xl-11 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
@@ -179,12 +183,13 @@
                                 <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label> @Localizer["ISDCode"] </label>
-                                        <div>
+                                            @await Component.InvokeAsync("IsdCountryInput",new{id="locISD"})
+                                       @*  <div>
 
                                             <select class="selectpicker" data-live-search="true" id="cboISDCode" title="" data-size="8" data-container="body" asp-items="@ViewBag.IsdCodes" onchange="fnOnChangeIsdCode()">
                                                 <option value="0">Select</option>
                                             </select>
-                                        </div>
+                                        </div> *@
                                     </div>
                                 </div>
 
@@ -210,6 +215,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkLocinfoActiveStatus">
+                                                <input type="checkbox" id="chkLocinfoActiveStatus" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ActiveStatus"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                 <div class="col-lg-5 col-md-5 col-sm-5 col-12">
@@ -225,8 +239,56 @@
                                   </div>
                                 </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="default-checkbox checkbox-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToLocalCurrency">
+                                                <input type="checkbox" id="chkToLocalCurrency" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ToLocalCurrency"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="default-checkbox checkbox-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToCurrCurrency">
+                                                <input type="checkbox" id="chkToCurrCurrency" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ToCurrencyConversion"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                        <div class="default-checkbox checkbox-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToRealCurrency">
+                                                <input type="checkbox" id="chkToRealCurrency" class="mdl-checkbox__input" onchange="fnToRealCurrency(this)">
+                                                <span class="mdl-checkbox__label">@Localizer["ToRealCurrency"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
+                                        <div class="BSCurrencyContainer">
+                                            <table id="jqgBSCurrency"></table>
+                                            <div id="jqpBSCurrency"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <hr />  
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mr-10 primary-button" id="btnSaveLocationInfo" onclick="fnSaveLocationInfo()">
+                                            <i class="fa fa-save"></i> @Localizer["Save"]
+                                        </button>
+
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelLocationInfo" data-bs-dismiss="modal"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateBusinessLocation" onclick="fnDeleteLocationInfo();"><i class="fa fa-times"></i> @Localizer["DeActivate"] </button>
+
+
+                                    </div>
+                                </div>
                         </div>
+
                             <div class="tab-pane fade" id="financialInfo" role="tabpanel" aria-labelledby="financialInfo-tab">
                             <div class="row">
 
@@ -253,46 +315,28 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
-                                    <div class="default-checkbox checkbox-group">
-                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToLocalCurrency">
-                                            <input type="checkbox" id="chkToLocalCurrency" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">@Localizer["ToLocalCurrency"]</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
-                                    <div class="default-checkbox checkbox-group">
-                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToCurrCurrency">
-                                            <input type="checkbox" id="chkToCurrCurrency" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">@Localizer["ToCurrencyConversion"]</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
-                                    <div class="default-checkbox checkbox-group">
-                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToRealCurrency">
-                                            <input type="checkbox" id="chkToRealCurrency" class="mdl-checkbox__input" onchange="fnToRealCurrency(this)">
-                                            <span class="mdl-checkbox__label">@Localizer["ToRealCurrency"]</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
-                                        <div class="BSCurrencyContainer">
-                                            <table id="jqgBSCurrency"></table>
-                                            <div id="jqpBSCurrency"></div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkFininfoActiveStatus">
+                                                <input type="checkbox" id="chkFininfoActiveStatus" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ActiveStatus"]</span>
+                                            </label>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-lg-12 text-center">
+                                        <hr />
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mr-10 primary-button" id="btnSaveFinancialInfo" onclick="fnSaveFinancialInfo();">
+                                            <i class="fa fa-save"></i> @Localizer["Save"]
+                                        </button>
+
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelFinancialInfo"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
+
+                                    </div>
                             </div>
+
+                           
+                            </div>
+
                             <div class="tab-pane fade" id="licenseInfo" role="tabpanel" aria-labelledby="licenseInfo-tab">
                                 <div class="row">
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
@@ -311,18 +355,36 @@
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group lbl-right">
                                             <label> @Localizer["UserLicenses"] </label>
-                                            <input type="text" id="txtUserLicenses" name="name" value="" class="form-control integerFormat" maxlength="5" />
+                                            <input type="text" id="txtUserLicenses" name="name" value="" class="form-control numberonly" maxlength="5" />
                                         </div>
                                     </div>
 
                                     <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
                                         <div class="form-group lbl-right">
                                             <label> @Localizer["LicensedToNoofBeds"] </label>
-                                            <input type="text" id="txtNoOfBeds" name="name" value="" class="form-control integerFormat" maxlength="5" />
+                                            <input type="text" id="txtNoOfBeds" name="name" value="" class="form-control numberonly" maxlength="5" />
                                         </div>
+                                    </div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkLicinfoActiveStatus">
+                                                <input type="checkbox" id="chkLicinfoActiveStatus" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ActiveStatus"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <hr />
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mr-10 primary-button" id="btnSaveLicenseInfo" onclick="fnSaveLicenseInfo()">
+                                            <i class="fa fa-save"></i> @Localizer["Save"]
+                                        </button>
+
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelLicenseInfo"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
+
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane fade" id="taxInfo" role="tabpanel" aria-labelledby="taxInfo-tab">
                                 <div class="row"   id="divTaxIdentification"> 
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
@@ -348,40 +410,33 @@
                                             <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
                                         </div>
                                     </div>
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chktaxinfoActiveStatus">
+                                                <input type="checkbox" id="chktaxinfoActiveStatus" class="mdl-checkbox__input">
+                                                <span class="mdl-checkbox__label">@Localizer["ActiveStatus"]</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <hr />
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mr-10 primary-button" id="btnSaveTaxInfo" onclick="fnSaveTaxInfo()">
+                                            <i class="fa fa-save"></i> @Localizer["Save"]
+                                        </button>
+
+                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelTaxInfo"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
+
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    @* Old code starts *@
-               
-               
-               
-              
-                <div class="row"  id="divChkActiveStatus">
-                    <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
-                        <div class="default-checkbox checkbox-group">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
-                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-             
-                </div>
-            </div>
-                <div class="modal-footer">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveBusinessLocation" onclick="fnSaveBusinessLocation()">
-                                <i class="fa fa-save"></i> @Localizer["Save"]
-                            </button>
-                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateBusinessLocation" onclick="fnDeleteBusinessLocation()"><i class="fas fa-ban"></i>  @Localizer["Deactivate"] </button>
-                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal" id="btnCancelBusinessLocation"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
 
                         </div>
                     </div>
+                   
                 </div>
+            </div>
+                 
             </div>
     </div>
 </div>

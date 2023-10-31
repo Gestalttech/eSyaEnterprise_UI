@@ -31,7 +31,7 @@ function fnGridLoadEmptyGridSMSToWhom() {
             { name: "Smsid", width: 70, editable: true, align: 'left' },
             { name: "Smsdescription", width: 270, editable: false, align: 'left', resizable: true },
             { name: "Smsstatement", width: 105, align: 'left', resizable: true, editoption: { 'text-align': 'left', maxlength: 250 } },
-            { name: "ActiveStatus", editable: true, width: 38, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", editable: true, width: 38, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             //{
             //    name: 'Actions', search: false, align: 'left', width: 74, sortable: false, resizable: false,
             //    formatter: function (cellValue, options, rowdata, action) {

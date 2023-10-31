@@ -35,7 +35,7 @@ function fnGridLoadLanguageController() {
             { name: "Key", width: 70, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left' } },
             { name: "Value", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left' } },
 
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

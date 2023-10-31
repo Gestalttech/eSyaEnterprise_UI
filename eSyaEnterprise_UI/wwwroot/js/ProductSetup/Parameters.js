@@ -35,7 +35,7 @@ function fnGridLoadParameterHeader() {
         colModel: [
             { name: "ParameterType", width: 45, align: 'left', editable: false, editoptions: { maxlength: 4 } },
             { name: "ParameterHeaderDesc", width: 155, editable: false, align: 'left', editoptions: { maxlength: 50 } },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
             //{
             //    name: 'edit', search: false, align: 'left', width: 180, sortable: false, resizable: false,

@@ -13,12 +13,12 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
     [SessionTimeout]
     public class ControlController : Controller
     {
-        private readonly IeSyaProductSetupAPIServices _configAPIServices;
+        private readonly IeSyaProductSetupAPIServices _eSyaProductSetupAPIServices;
         private readonly ILogger<ControlController> _logger;
 
-        public ControlController(IeSyaProductSetupAPIServices configAPIServices, ILogger<ControlController> logger)
+        public ControlController(IeSyaProductSetupAPIServices eSyaProductSetupAPIServices, ILogger<ControlController> logger)
         {
-            _configAPIServices = configAPIServices;
+            _eSyaProductSetupAPIServices = eSyaProductSetupAPIServices;
             _logger = logger;
         }
 
@@ -48,7 +48,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("Control/GetDocumentControlMaster");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("Control/GetDocumentControlMaster");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -77,7 +77,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Control/GetDocumentParametersByID?documentID=" + documentID);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Control/GetDocumentParametersByID?documentID=" + documentID);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -109,7 +109,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/AddOrUpdateDocumentControl", obj);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/AddOrUpdateDocumentControl", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -135,7 +135,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
 
                 var parameter = "?status=" + status + "&documentId=" + documentId;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Control/ActiveOrDeActiveDocumentControlMaster" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Control/ActiveOrDeActiveDocumentControlMaster" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -167,7 +167,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
             try
             {
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetFormDocumentlink?formID="+formID);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetFormDocumentlink?formID="+formID);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -207,7 +207,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Control/GetFormsForDocumentControl");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Control/GetFormsForDocumentControl");
                 
                 if (serviceResponse.Status)
                 {
@@ -254,7 +254,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                     return true;
                 });
 
-                var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateFormDocumentLinks", obj);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateFormDocumentLinks", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -292,7 +292,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var parameter = "?Businesskey=" + Businesskey;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeadersbyBusinessKey" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeadersbyBusinessKey" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -320,7 +320,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeaders");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeaders");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -351,7 +351,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 calendarheader.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 calendarheader.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 calendarheader.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarHeaderAndDetails", calendarheader);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarHeaderAndDetails", calendarheader);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

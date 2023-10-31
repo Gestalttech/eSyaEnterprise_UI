@@ -493,14 +493,14 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
             try
             {
-                if (obj.EBusinessKey == null)
-                {
-                    obj.EBusinessKey = Encoding.ASCII.GetBytes("0");
-                }
-                if (obj.EActiveUsers == null)
-                {
-                    obj.EActiveUsers = Encoding.ASCII.GetBytes("0");
-                }
+                //if (obj.EBusinessKey == null)
+                //{
+                //    obj.EBusinessKey = Encoding.ASCII.GetBytes("0");
+                //}
+                //if (obj.EActiveUsers == null)
+                //{
+                //    obj.EActiveUsers = Encoding.ASCII.GetBytes("0");
+                //}
 
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
@@ -575,35 +575,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
 
-        /// <summary>
-        /// Get Existing Locations as Segment if IsBookofAccount is checked.
-        /// </summary>
-        [HttpGet]
-        public async Task<JsonResult> GetActiveLocationsAsSegments()
-        {
-            try
-            {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("License/GetActiveLocationsAsSegments");
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveLocationsAsSegments");
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetActiveLocationsAsSegments");
-                throw;
-            }
-        }
-        /// <summary>
-        ///Get State Code by Tax Idendification
-        /// </summary>
+       
         [HttpPost]
         public async Task<JsonResult> GetStateCodeByISDCode(int isdCode, int TaxIdentificationId)
         {
@@ -766,6 +738,219 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
                 _logger.LogError(ex, "UD:GetLocationPreferredLanguagebyBusinessKey:For BusinessKey {0}", BusinessKey);
                 throw;
+            }
+        }
+
+
+        #endregion
+
+        #region Location Financial Info
+        /// <summary>
+        /// Get Existing Locations as Segment if IsBookofAccount is checked.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetActiveLocationsAsSegments()
+        {
+            try
+            {
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("License/GetActiveLocationsAsSegments");
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveLocationsAsSegments");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActiveLocationsAsSegments");
+                throw;
+            }
+        }
+
+        /// <summary>
+        ///Get Location Financial Info by BusinessKey
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationFinancialInfo(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationFinancialInfo>("License/GetLocationFinancialInfo?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                   return Json(serviceResponse.Data);
+                    
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationFinancialInfo:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationFinancialInfo:For BusinessKey {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Location Financial Info
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateLocationFinancialInfo(DO_LocationFinancialInfo obj)
+        {
+            try
+            {
+
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalId = AppSessionVariables.GetIPAddress(HttpContext);
+                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateLocationFinancialInfo", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        #endregion
+
+        #region Location License Info
+        /// <summary>
+        ///Get Location License Info by BusinessKey
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationLicenseInfo(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationLicenseInfo>("License/GetLocationLicenseInfo?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                  return Json(serviceResponse.Data);
+                   
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationLicenseInfo:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationLicenseInfo:For BusinessKey {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Location License Info
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateLocationLicenseInfo(DO_LocationLicenseInfo obj)
+        {
+            try
+            {
+                if (obj.EBusinessKey == null)
+                {
+                    obj.EBusinessKey = Encoding.ASCII.GetBytes("0");
+                }
+                if (obj.EActiveUsers == null)
+                {
+                    obj.EActiveUsers = Encoding.ASCII.GetBytes("0");
+                }
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalId = AppSessionVariables.GetIPAddress(HttpContext);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateLocationLicenseInfo", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateLocationLicenseInfo:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateLocationLicenseInfo:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        #endregion
+
+        #region Location Tax Info
+        /// <summary>
+        ///Get Location Tax Info by BusinessKey
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationLocationTaxInfo(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationTaxInfo>("License/GetLocationLocationTaxInfo?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                   return Json(serviceResponse.Data);
+                    
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationLocationTaxInfo:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationLocationTaxInfo:For BusinessKey {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Location Tax Info
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateLocationTaxInfo(DO_LocationTaxInfo obj)
+        {
+            try
+            {
+
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalId = AppSessionVariables.GetIPAddress(HttpContext);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateLocationTaxInfo", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateLocationTaxInfo:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateLocationTaxInfo:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
             }
         }
         #endregion

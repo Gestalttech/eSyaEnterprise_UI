@@ -81,7 +81,7 @@ function fnGridLoadCountryCode() {
             { name: "PoboxPattern", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "IsPinapplicable", editable: true, hidden: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "PincodePattern", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
            
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,

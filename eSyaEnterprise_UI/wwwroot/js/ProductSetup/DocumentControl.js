@@ -73,7 +73,7 @@ function fnLoadDocumentCtrlGrid() {
             { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "SchemeId", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "ActiveStatus", width: 30, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 30, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

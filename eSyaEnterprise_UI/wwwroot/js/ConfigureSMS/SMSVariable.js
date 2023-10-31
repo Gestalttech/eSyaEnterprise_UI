@@ -31,7 +31,7 @@ function fnGridLoadSMSVariable() {
         colModel: [
             { name: "Smsvariable", width: 45, editable: true, align: 'left', editoptions: { maxlength: 4 } },
             { name: "Smscomponent", width: 108, editable: true, align: 'left', editoptions: { maxlength: 4 } },
-            { name: "ActiveStatus", editable: true, width: 35, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", editable: true, width: 35, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

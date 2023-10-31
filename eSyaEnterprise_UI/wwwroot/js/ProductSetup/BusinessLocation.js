@@ -25,6 +25,7 @@ $(document).ready(function () {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditBusinessLocation(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditBusinessLocation(event, 'view') } },
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditBusinessLocation(event, 'delete') } },
+
         }
         // there's more, have a look at the demos and docs...
     });
@@ -52,12 +53,11 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.TaxIdentification, localization.eSyaLicenseType, localization.EUserLicenses, localization.ENoOfBeds, localization.BusinessSegmentId, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.ManageBOA,localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName,  localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            //{ name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden:true },
             { name: "LocationDescription", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "BusinessName", width: 220, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "ShortDesc", width: 100, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false }, 
@@ -66,16 +66,9 @@ function fnGridLoadBusinessLocation() {
             { name: "StateCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyName", width: 80, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "TaxIdentification", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "ESyaLicenseType", editable: true, align: 'left', width: 80, edittype: "select", resizable: false, formatter: 'select', editoptions: { value: "P: Perpetual;S: Subscription" }, hidden: false},
-
-            { name: "EUserLicenses", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "ENoOfBeds", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "BusinessSegmentId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "TolocalCurrency", hidden: true, width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "TocurrConversion", hidden: true, width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "TorealCurrency", hidden: true,width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "IsBookOfAccounts", width: 80, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
            
             {
@@ -144,12 +137,32 @@ function fnAddBusinessLocation() {
         $('#chkToRealCurrency').parent().removeClass("is-checked");
         $('.BSCurrencyContainer').hide();
         LoadCurrencybyBusinessKey();
-        $("#chkActiveStatus").parent().addClass("is-checked");
         $('#PopupBusienssLocation').find('.modal-title').text(localization.AddBusinessLocation);
-        $("#btnSaveBusinessLocation").html('<i class="fa fa-save"></i>' + localization.Save);
-        $("#chkActiveStatus").prop('disabled', true);
-        $("#btnSaveBusinessLocation").show();
-        $("#btnSaveBusinessLocation").html('Save');
+
+        $("#btnSaveLocationInfo").show();
+        $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLocationInfo").attr("disabled", false);
+        $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
+        $("#chkLocinfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveFinancialInfo").show();
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveFinancialInfo").attr("disabled", false);
+        $("#chkFininfoActiveStatus").parent().addClass("is-checked");
+        $("#chkFininfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveLicenseInfo").show();
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLicenseInfo").attr("disabled", false);
+        $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
+        $("#chkLicinfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveTaxInfo").show();
+        $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveTaxInfo").attr("disabled", false);
+        $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
+        $("#chktaxinfoActiveStatus").prop('disabled', true);
+
         $("#btnDeactivateBusinessLocation").hide();
         fnGetBusinessUnitType();
         fnLoadGridPreferredLanguage();
@@ -162,45 +175,20 @@ function fnEditBusinessLocation(e, actiontype) {
     var rowData = $('#jqgBusienssLocation').jqGrid('getRowData', rowid);
     $("#divChkActiveStatus").css('display', 'none');
     $('#cboBusinessEntity').val(rowData.BusinessId).selectpicker('refresh');
-    //$('#txtLocationcode').val(rowData.LocationCode);
-
-    
-
     $('#txtLocationDescription').val(rowData.LocationDescription);
     $('#txtBusinessName').val(rowData.BusinessName);
     $('#txtShortDescription').val(rowData.ShortDesc); 
     $('#txtBusinesskey').val(rowData.BusinessKey);
     $("#txtlocationId").val(rowData.LocationId)
-    if (rowData.IsBookOfAccounts == 'true') {
-        fnRdoSegmentLinkEmpty();
-        $('#rdoIsBookofAccounts').prop('checked', true);
-
-        fnGetBusinessUnitType();
-    }
-    else
-    {
-        fnBindExistingLocationsasSegments();
-        $('#cboBusinessSegment').val(rowData.BusinessSegmentId).selectpicker('refresh');
-        $('#rdoIsBookofAccounts').prop('checked', false);
-        $('#rdoIsCostCenter').prop('checked', true);
-        $("#divsegment").show();
-    }
-    $('#cboISDCode').val(rowData.Isdcode).selectpicker('refresh');
+    $('#cbolocISD').val(rowData.Isdcode).selectpicker('refresh');
     BindCities();
     BindTaxIdentification();
     BindCurrrencies();
     $('#cboCityCode').val(rowData.CityCode).selectpicker('refresh');
     $('#cboCurrrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
-    $('#cboTaxIdentification').val(rowData.TaxIdentification).selectpicker('refresh');
-    fnGetStateNamebyTaxCode();
+    
     fnLoadGridPreferredLanguage();
 
-   
-    //$('#txtTin').val(rowData.TaxIdentification);
-    //$('#txtStateCode').val(rowData.StateCode);
-    $('#cboLicenseType').val(rowData.ESyaLicenseType).selectpicker('refresh');
-    $('#txtUserLicenses').val(rowData.EUserLicenses);
-    $('#txtNoOfBeds').val(rowData.ENoOfBeds);
     if (rowData.TolocalCurrency == 'true') {
         $("#chkToLocalCurrency").parent().addClass("is-checked");
     }
@@ -224,12 +212,12 @@ function fnEditBusinessLocation(e, actiontype) {
         $('.BSCurrencyContainer').hide();
     }
     if (rowData.ActiveStatus == 'true') {
-        $("#chkActiveStatus").parent().addClass("is-checked");
+        $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkActiveStatus").parent().removeClass("is-checked");
+        $("#chkLocinfoActiveStatus").parent().removeClass("is-checked");
     }
-    $("#btnSaveBusinessLocation").attr("disabled", false);
+    $("#btnSaveLocationInfo").attr("disabled", false);
     _isInsert = false;
 
     
@@ -242,10 +230,30 @@ function fnEditBusinessLocation(e, actiontype) {
         
         $('#PopupBusienssLocation').modal('show');
         $('#PopupBusienssLocation').find('.modal-title').text(localization.UpdateBusinessLocation);
-        $("#btnSaveBusinessLocation").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
         $("#btnDeactivateBusinessLocation").hide();
-        $("#chkActiveStatus").prop('disabled', true);
-        $("#btnSaveBusinessLocation").attr("disabled", false);
+        
+        
+        $("#btnSaveLocationInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLocationInfo").attr("disabled", false);
+        $("#btnSaveLocationInfo").show();
+        $("#chkLocinfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveFinancialInfo").attr("disabled", false);
+        $("#btnSaveFinancialInfo").show();
+        $("#chkFininfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLicenseInfo").attr("disabled", false);
+        $("#btnSaveLicenseInfo").show();
+        $("#chkLicinfoActiveStatus").prop('disabled', true);
+
+        $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveTaxInfo").attr("disabled", false);
+        $("#btnSaveTaxInfo").show();
+        $("#chktaxinfoActiveStatus").prop('disabled', true);
+
+       
     }
   
     if (actiontype.trim() == "view") {
@@ -256,49 +264,89 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#divChkActiveStatus").css('display', 'flex');
         $('#PopupBusienssLocation').modal('show');
         $('#PopupBusienssLocation').find('.modal-title').text(localization.ViewBusienssLocation);
-        $("#btnSaveBusinessLocation").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
-        $("#btnSaveBusinessLocation").hide();
         $("#btnDeactivateBusinessLocation").hide();
-        $("#chkActiveStatus").prop('disabled', true);
+        $("#btnSaveLocationInfo").attr("disabled", false);
+        $("#btnSaveLocationInfo").hide();
+        $("#btnSaveFinancialInfo").attr("disabled", false);
+        $("#btnSaveFinancialInfo").hide();
+        $("#btnSaveLicenseInfo").attr("disabled", false);
+        $("#btnSaveLicenseInfo").hide();
+        $("#btnSaveTaxInfo").attr("disabled", false);
+        $("#btnSaveTaxInfo").hide();
+        $("#chkLocinfoActiveStatus").prop('disabled', true);
+        $("#chkFininfoActiveStatus").prop('disabled', true);
+        $("#chkLicinfoActiveStatus").prop('disabled', true);
+        $("#chktaxinfoActiveStatus").prop('disabled', true);
+        
+        
+        
         $("#PopupBusienssLocation").on('hidden.bs.modal', function () {
-            $("#btnSaveBusinessLocation").show();
+           
+            $("#btnSaveLocationInfo").attr("disabled", false);
+            $("#btnSaveLocationInfo").show();
+            $("#btnSaveFinancialInfo").attr("disabled", false);
+            $("#btnSaveFinancialInfo").show();
+            $("#btnSaveLicenseInfo").attr("disabled", false);
+            $("#btnSaveLicenseInfo").show();
+            $("#btnSaveTaxInfo").attr("disabled", false);
+            $("#btnSaveTaxInfo").show();
+
             $("input,textarea").attr('readonly', false);
             $("select").next().attr('disabled', false);
         });
     }
+
     if (actiontype.trim() == "delete") {
-        if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_17_00", "UIC04", errorMsg.deleteauth_E4);
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "EPS_17_00", "UIC03", errorMsg.deleteauth_E4);
             return;
         }
-        $("#divChkActiveStatus").css('display', 'none');
+        $("#divChkActiveStatus").css('display', 'flex');
         $('#PopupBusienssLocation').modal('show');
-        $('#PopupBusienssLocation').find('.modal-title').text("Activate/De Activate Busienss Location");
-        $("#btnSaveBusinessLocation").attr("disabled", false);
+        $('#PopupBusienssLocation').find('.modal-title').text(localization.ActiveBusienssLocation);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
-        $("#btnSaveBusinessLocation").hide();
+        $("#btnDeactivateBusinessLocation").show();
+        $("#btnSaveLocationInfo").attr("disabled", false);
+        $("#btnSaveLocationInfo").hide();
+        $("#btnSaveFinancialInfo").attr("disabled", false);
+        $("#btnSaveFinancialInfo").hide();
+        $("#btnSaveLicenseInfo").attr("disabled", false);
+        $("#btnSaveLicenseInfo").hide();
+        $("#btnSaveTaxInfo").attr("disabled", false);
+        $("#btnSaveTaxInfo").hide();
+        $("#chkLocinfoActiveStatus").prop('disabled', true);
+        $("#chkFininfoActiveStatus").prop('disabled', true);
+        $("#chkLicinfoActiveStatus").prop('disabled', true);
+        $("#chktaxinfoActiveStatus").prop('disabled', true);
 
-        if (rowData.ActiveStatus == 'true') {
-            $("#btnDeactivateBusinessLocation").html(localization.DActivate);
+        $("#btnDeactivateBusinessLocation").attr("disabled", false);
+
+            if (rowData.ActiveStatus == 'true') {
+                $("#btnDeactivateBusinessLocation").html(localization.DActivate);
         }
         else {
-            $("#btnDeactivateBusinessLocation").html(localization.Activate);
+                $("#btnDeactivateBusinessLocation").html(localization.Activate);
         }
-        
-
-        $("#btnDeactivateBusinessLocation").show();
-        $("#chkActiveStatus").prop('disabled', true);
         $("#PopupBusienssLocation").on('hidden.bs.modal', function () {
-            $("#btnSaveBusinessLocation").show();
+
+            $("#btnSaveLocationInfo").attr("disabled", false);
+            $("#btnSaveLocationInfo").show();
+            $("#btnSaveFinancialInfo").attr("disabled", false);
+            $("#btnSaveFinancialInfo").show();
+            $("#btnSaveLicenseInfo").attr("disabled", false);
+            $("#btnSaveLicenseInfo").show();
+            $("#btnSaveTaxInfo").attr("disabled", false);
+            $("#btnSaveTaxInfo").show();
+
             $("input,textarea").attr('readonly', false);
             $("select").next().attr('disabled', false);
+            $("#btnDeactivateBusinessLocation").hide();
         });
     }
-
-
+     
     eSyaParams.ClearValue();
 
     $.ajax({
@@ -324,7 +372,13 @@ var _isInsert = true;
 function fnGridRefreshBusinessLocation() {
     $("#jqgBusienssLocation").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
-
+$("#btnCancelLocationInfo").click(function () {
+    fnClearFields();
+    $("#txtBusinesskey").val('');
+    //$("#jqgSMSConnect").jqGrid('resetSelection');
+    //$('#PopupSMSConnect').modal('hide');
+    //$("#cboBusinessEntity").next().attr('disabled', false);
+});
 function fnClearFields() {
     $("#cboBusinessSegment").val('0').selectpicker('refresh');
     $("#txtBusinesskey").val('');
@@ -333,7 +387,7 @@ function fnClearFields() {
     $("#txtLocationDescription").val('');
     $("#txtBusinessName").val('');
     $('#txtShortDescription').val(''); 
-    $("#cboISDCode").val('0').selectpicker('refresh');
+    $("#cbolocISD").val('0').selectpicker('refresh');
     $("#cboCityCode").selectpicker('refresh');
     $("#cboCurrrencyCode").selectpicker('refresh');
     $("#cboTaxIdentification").selectpicker('refresh');
@@ -348,16 +402,19 @@ function fnClearFields() {
     $("#chkToCurrCurrency").parent().removeClass("is-checked");
     $("#chkToRealCurrency").prop('disabled', false);
     $("#chkToRealCurrency").parent().removeClass("is-checked");
-    $("#chkActiveStatus").parent().addClass("is-checked");
-    $("#btnSaveBusinessLocation").attr("disabled", false);
+    $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
+    $("#btnSaveLocationInfo").attr("disabled", false);
     $("#btnDeactivateBusinessLocation").attr("disabled", false);
     fnRdoSegmentLinkEmpty();
     $("#divChkActiveStatus").css('display', 'none');
     eSyaParams.ClearValue();
-
+    $(".nav-link").removeClass("active");
+    $("#locationInfo-tab").addClass('active');
+    $('[role = "tabpanel"]').removeClass('show active');
+    $("#locationInfo").addClass('show active');
 }
 
-$("#btnCancelBusinessLocation").click(function () {
+$("#btnCancelLocationInfo").click(function () {
     $("#jqgBusienssLocation").jqGrid('resetSelection');
     $('#PopupBusienssLocation').modal('hide');
     fnClearFields();
@@ -373,9 +430,9 @@ function SetGridControlByAction() {
 
 }
 
-function fnSaveBusinessLocation()
+function fnSaveLocationInfo()
 {
-    var isbookofaccount = true;
+    /*var isbookofaccount = true;*/
 
     if ($("#cboBusinessEntity").val() === '0' || $("#cboBusinessEntity").val() === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
         fnAlert("w", "EPS_17_00", "UI0052", errorMsg.SelectBusinessEntity_E7);
@@ -394,21 +451,7 @@ function fnSaveBusinessLocation()
         fnAlert("w", "EPS_17_00", "UI0054", errorMsg.BusinessName_E9);
         return;
     }
-  
-    if ($('input[name="rdoSegmentLinkAccount"]:checked').val() == 'RCC') {
-
-        if ($("#cboBusinessSegment").val() === '0' || $("#cboBusinessSegment").val() === "0" || IsStringNullorEmpty($("#cboBusinessSegment").val())) {
-            fnAlert("w", "EPS_17_00", "UI0055", errorMsg.BusinessSegmentcostCenter_E10);
-            return;
-        }
-        isbookofaccount = false;
-    }
-    if ($('input[name="rdoSegmentLinkAccount"]:checked').val() == 'RBA') {
-
-        isbookofaccount = true;
-        $("#cboBusinessSegment").val('0').selectpicker('refresh');
-    }
-    if ($("#cboISDCode").val() === '0' || $("#cboISDCode").val() === "0" || IsStringNullorEmpty($("#cboISDCode").val())) {
+    if ($("#cbolocISD").val() === '0' || $("#cbolocISD").val() === "0" || IsStringNullorEmpty($("#cbolocISD").val())) {
         fnAlert("w", "EPS_17_00", "UI0056",errorMsg.ISDCode_E11);
         return;
     }
@@ -420,44 +463,22 @@ function fnSaveBusinessLocation()
         fnAlert("w", "EPS_17_00", "UI0058", errorMsg.CurrencyCode_E13);
         return;
     }
-    if ($("#cboTaxIdentification").val() === '0' || $("#cboTaxIdentification").val() === "0" || IsStringNullorEmpty($("#cboTaxIdentification").val())) {
-        fnAlert("w", "EPS_17_00", "UI0059", errorMsg.TaxIdentification_E14);
-        return;
-    }
    
-    if ($("#cboLicenseType").val() === '0' || $("#cboLicenseType").val() === "0" || IsStringNullorEmpty($("#cboLicenseType").val())) {
-        fnAlert("w", "EPS_17_00", "UI0060", errorMsg.LicenseType_E15);
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtUserLicenses").val())) {
-        fnAlert("w", "EPS_17_00", "UI0061", errorMsg.UserLicenses_E16);
-        return;
-    }
     objloc = {
         BusinessId: $("#cboBusinessEntity").val(),
         LocationId: $("#txtlocationId").val() === '' ? 0 : $("#txtlocationId").val(),
         BusinessKey: $("#txtBusinesskey").val() === '' ? 0 : $("#txtBusinesskey").val(),
-        //LocationCode: $("#txtLocationcode").val(),
         LocationDescription: $("#txtLocationDescription").val(),
         BusinessName: $("#txtBusinessName").val(),
         ShortDesc: $('#txtShortDescription').val(),
-        Isdcode: $("#cboISDCode").val(),
+        Isdcode: $("#cbolocISD").val(),
         CityCode: $("#cboCityCode").val(),
         StateCode: $("#txtStateCode").val(),
         CurrencyCode: $("#cboCurrrencyCode").val(),
-        TaxIdentification: $("#cboTaxIdentification").val(),
-        ESyaLicenseType: $("#cboLicenseType").val(),
-        EUserLicenses: $("#txtUserLicenses").val(),
-        //EBusinessKey:,
-        //EActiveUsers: ,
-        ENoOfBeds: $("#txtNoOfBeds").val(),
         TolocalCurrency: $("#chkToLocalCurrency").parent().hasClass("is-checked"),
         TocurrConversion: $("#chkToCurrCurrency").parent().hasClass("is-checked"),
         TorealCurrency: $("#chkToRealCurrency").parent().hasClass("is-checked"),
-        //IsBookOfAccounts: $("#chkIsBookofAccounts").parent().hasClass("is-checked"),
-        IsBookOfAccounts: isbookofaccount,
-        BusinessSegmentId: $("#cboBusinessSegment").val(),
-        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+        ActiveStatus: $("#chkLocinfoActiveStatus").parent().hasClass("is-checked")
     };
 
     //
@@ -495,7 +516,7 @@ function fnSaveBusinessLocation()
     var locParams = eSyaParams.GetJSONValue();
     objloc.l_FormParameter = locParams;
 
-    $("#btnSaveBusinessLocation").attr("disabled", true);
+    $("#btnSaveLocationInfo").attr("disabled", true);
 
     $.ajax({
         url: getBaseURL() + '/License/InsertOrUpdateBusinessLocation',
@@ -505,29 +526,29 @@ function fnSaveBusinessLocation()
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveBusinessLocation").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#txtBusinesskey").val(response.Key);
+                $("#btnSaveLocationInfo").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#PopupBusienssLocation").modal('hide');
                 fnClearFields();
                 fnGridRefreshBusinessLocation();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveBusinessLocation").attr("disabled", false);
+                $("#btnSaveLocationInfo").attr("disabled", false);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveBusinessLocation").attr("disabled", false);
+            $("#btnSaveLocationInfo").attr("disabled", false);
         }
     });
 }
 
-
-function fnDeleteBusinessLocation() {
+function fnDeleteLocationInfo() {
 
     var a_status;
     //Activate or De Activate the status
-    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
+    if ($("#chkLocinfoActiveStatus").parent().hasClass("is-checked") === true) {
         a_status = false
     }
     else {
@@ -561,26 +582,11 @@ function fnDeleteBusinessLocation() {
     });
 }
 
-
-function fnOnChangeIsdCode()
-{
-    var _cboISDCode = $("#cboISDCode").val();
-    if (_cboISDCode == 91) {
-        $("#divTaxIdentification").css('display', 'flex');
-    }
-    else {
-        $("#divTaxIdentification").css('display', 'none');
-    }
-    BindCities();
-    BindTaxIdentification();
-    BindCurrrencies();
-}
-
 function BindCities() {
 
     $("#cboCityCode").empty();
     $.ajax({
-        url: getBaseURL() + '/License/GetCityListbyISDCode?isdCode=' + $("#cboISDCode").val(),
+        url: getBaseURL() + '/License/GetCityListbyISDCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -616,7 +622,7 @@ function BindTaxIdentification() {
 
     $("#cboTaxIdentification").empty();
     $.ajax({
-        url: getBaseURL() + '/License/GetTaxIdentificationListByIsdCode?isdCode=' + $("#cboISDCode").val(),
+        url: getBaseURL() + '/License/GetTaxIdentificationListByIsdCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -652,7 +658,7 @@ function BindCurrrencies() {
 
     $("#cboCurrrencyCode").empty();
     $.ajax({
-        url: getBaseURL() + '/License/GetCurrencyListbyIsdCode?isdCode=' + $("#cboISDCode").val(),
+        url: getBaseURL() + '/License/GetCurrencyListbyIsdCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -734,7 +740,7 @@ function fnGetStateNamebyTaxCode() {
     
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/License/GetStateCodeByISDCode?isdCode=' + $("#cboISDCode").val() + '&TaxIdentificationId=' + $("#cboTaxIdentification").val(),
+        url: getBaseURL() + '/License/GetStateCodeByISDCode?isdCode=' + $("#cbolocISD").val() + '&TaxIdentificationId=' + $("#cboTaxIdentification").val(),
         success: function (response) {
             if (response !== null) {
                 $("#txtTin").val('');
@@ -898,3 +904,328 @@ function fnLoadGridPreferredLanguage() {
             //},
     }).jqGrid('navGrid', '#jqpPreferredLanguage', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' });
 }
+
+function fnISDCountryCode_onChange() {
+    var _cboISDCode = $("#cbolocISD").val();
+    if (_cboISDCode == 91) {
+        $("#divTaxIdentification").css('display', 'flex');
+    }
+    else {
+        $("#divTaxIdentification").css('display', 'none');
+    }
+    BindCities();
+    BindTaxIdentification();
+    BindCurrrencies();
+}
+
+
+/* Save Finance Info*/
+
+function fnGetFinancialInfoDetails() {
+    fnFinanceInfo();
+}
+function fnSaveFinancialInfo() {
+    var isbookofaccount = true;
+
+    if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
+        fnAlert("w", "EPS_17_00", "UI0052", "Add the Location Info First");
+        return;
+    }
+
+
+    if ($('input[name="rdoSegmentLinkAccount"]:checked').val() == 'RCC') {
+
+        if ($("#cboBusinessSegment").val() === '0' || $("#cboBusinessSegment").val() === "0" || IsStringNullorEmpty($("#cboBusinessSegment").val())) {
+            fnAlert("w", "EPS_17_00", "UI0055", errorMsg.BusinessSegmentcostCenter_E10);
+            return;
+        }
+        isbookofaccount = false;
+    }
+    if ($('input[name="rdoSegmentLinkAccount"]:checked').val() == 'RBA') {
+
+        isbookofaccount = true;
+        $("#cboBusinessSegment").val('0').selectpicker('refresh');
+    }
+
+    objfin = {
+        BusinessKey: $("#txtBusinesskey").val(),
+        IsBookOfAccounts: $("#chkIsBookofAccounts").parent().hasClass("is-checked"),
+        IsBookOfAccounts: isbookofaccount,
+        BusinessSegmentId: $("#cboBusinessSegment").val(),
+        ActiveStatus: $("#chkFininfoActiveStatus").parent().hasClass("is-checked")
+        //IsBookOfAccounts: isbookofaccount,
+        //BusinessSegmentId: $("#cboBusinessSegment").val(),
+        
+    };
+
+
+    $("#btnSaveFinancialInfo").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/License/InsertOrUpdateLocationFinancialInfo',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: objfin },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+            //    $("#btnSaveFinancialInfo").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveFinancialInfo").attr("disabled", false); 
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveFinancialInfo").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveFinancialInfo").attr("disabled", false);
+        }
+    });
+}
+
+function fnFinanceInfo() {
+
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + '/License/GetLocationFinancialInfo?BusinessKey=' + $("#txtBusinesskey").val(),
+        success: function (response) {
+           
+            if (response !== null) {
+                if (response.IsBookOfAccounts == 'true' || response.IsBookOfAccounts == true ) {
+                    fnRdoSegmentLinkEmpty();
+                    $('#rdoIsBookofAccounts').prop('checked', true);
+
+                    fnGetBusinessUnitType();
+
+                    if (response.ActiveStatus == 'true' || response.ActiveStatus == true) {
+                        $("#chkFininfoActiveStatus").parent().addClass("is-checked");
+                    }
+                    else {
+                        $("#chkFininfoActiveStatus").parent().removeClass("is-checked");
+                    }
+
+                   
+                }
+                else {
+                    fnBindExistingLocationsasSegments();
+                    $('#cboBusinessSegment').val(response.BusinessSegmentId).selectpicker('refresh');
+                    $('#rdoIsBookofAccounts').prop('checked', false);
+                    $('#rdoIsCostCenter').prop('checked', true);
+                    $("#divsegment").show();
+                    if (response.ActiveStatus == 'true' || response.ActiveStatus == true) {
+                        $("#chkFininfoActiveStatus").parent().addClass("is-checked");
+                        $('#chkFininfoActiveStatus').attr('disabled', true);
+                    }
+                    else {
+                        $("#chkFininfoActiveStatus").parent().removeClass("is-checked");
+                        $('#chkFininfoActiveStatus').attr('disabled', true);
+                    }
+                }
+            }
+            else {
+                fnRdoSegmentLinkEmpty();
+                $('#rdoIsBookofAccounts').prop('checked', true);
+                fnGetBusinessUnitType();
+                $('#chkFininfoActiveStatus').parent().addClass("is-checked");
+                $('#chkFininfoActiveStatus').attr('disabled',true);
+            }
+        },
+        error: function (response) {
+        }
+    });
+}
+
+$("#btnCancelFinancialInfo").click(function () {
+    $("#jqgBusienssLocation").jqGrid('resetSelection');
+    $('#PopupBusienssLocation').modal('hide');
+    fnClearFields();
+});
+/* End*/
+
+/* Save License Info*/
+
+function fnGetLicenseInfoDetails(){
+    fnLicensesInfo();
+}
+function fnSaveLicenseInfo() {
+
+    if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
+        fnAlert("w", "EPS_17_00", "UI0052", "First Add the Location");
+        return;
+    }
+      if ($("#cboLicenseType").val() === '0' || $("#cboLicenseType").val() === "0" || IsStringNullorEmpty($("#cboLicenseType").val())) {
+        fnAlert("w", "EPS_17_00", "UI0060", errorMsg.LicenseType_E15);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtUserLicenses").val())) {
+        fnAlert("w", "EPS_17_00", "UI0061", errorMsg.UserLicenses_E16);
+        return;
+    }
+
+
+    objlic = {
+        BusinessKey: $("#txtBusinesskey").val(),
+        //TaxIdentification: $("#cboTaxIdentification").val(),
+        ESyaLicenseType: $("#cboLicenseType").val(),
+        EUserLicenses: $("#txtUserLicenses").val(),
+        ENoOfBeds: $("#txtNoOfBeds").val(),
+        ActiveStatus: $("#chkLicinfoActiveStatus").parent().hasClass("is-checked")
+    };
+
+
+    $("#btnSaveLicenseInfo").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/License/InsertOrUpdateLocationLicenseInfo',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: objlic },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+            //    $("#btnSaveLicenseInfo").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveLicenseInfo").attr("disabled", false);
+
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveLicenseInfo").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveLicenseInfo").attr("disabled", false);
+        }
+    });
+}
+
+function fnLicensesInfo() {
+
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + '/License/GetLocationLicenseInfo?BusinessKey=' + $("#txtBusinesskey").val(),
+        success: function (response) {
+            if (response !== null) {
+                $('#cboLicenseType').val(response.ESyaLicenseType).selectpicker('refresh');
+                $('#txtUserLicenses').val(response.EUserLicenses);
+                $('#txtNoOfBeds').val(response.ENoOfBeds);
+                if (response.ActiveStatus == 'true' || response.ActiveStatus == true) {
+                    $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
+                    $('#chkLicinfoActiveStatus').attr('disabled', true);
+                }
+                else {
+                    $("#chkLicinfoActiveStatus").parent().removeClass("is-checked");
+                    $('#chkLicinfoActiveStatus').attr('disabled', true);
+                }
+            }
+            else {
+                $('#cboLicenseType').val('0').selectpicker('refresh');
+                $('#txtUserLicenses').val('');
+                $('#txtNoOfBeds').val('');
+                $('#chkLicinfoActiveStatus').parent().addClass("is-checked");
+                $('#chkLicinfoActiveStatus').attr('disabled', true);
+            }
+           
+        },
+        error: function (response) {
+        }
+    });
+}
+
+$("#btnCancelLicenseInfo").click(function () {
+    $("#jqgBusienssLocation").jqGrid('resetSelection');
+    $('#PopupBusienssLocation').modal('hide');
+    fnClearFields();
+});
+/* End*/
+
+/* Save Tax Info*/
+function fnSaveTaxInfo() {
+
+    if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
+        fnAlert("w", "EPS_17_00", "UI0052", "First Add the Location");
+        return;
+    }
+     if ($("#cboTaxIdentification").val() === '0' || $("#cboTaxIdentification").val() === "0" || IsStringNullorEmpty($("#cboTaxIdentification").val())) {
+        fnAlert("w", "EPS_17_00", "UI0059", errorMsg.TaxIdentification_E14);
+        return;
+    }
+
+  
+
+
+    objtax = {
+        BusinessKey: $("#txtBusinesskey").val(),
+        TaxIdentificationId: $("#cboTaxIdentification").val(),
+        ActiveStatus: $("#chktaxinfoActiveStatus").parent().hasClass("is-checked")
+    };
+
+
+    $("#btnSaveTaxInfo").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/License/InsertOrUpdateLocationTaxInfo',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: objtax },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+            //    $("#btnSaveTaxInfo").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveTaxInfo").attr("disabled", false);
+
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveTaxInfo").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveTaxInfo").attr("disabled", false);
+        }
+    });
+}
+function fnGetTaxInfoDetails() {
+    fnISDCountryCode_onChange();
+    fnTaxInfo();
+}
+
+function fnTaxInfo() {
+
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + '/License/GetLocationLocationTaxInfo?BusinessKey=' + $("#txtBusinesskey").val(),
+        success: function (response) {
+            if (response !== null) {
+                debugger;
+                BindTaxIdentification();
+                $('#cboTaxIdentification').val(response.TaxIdentificationId).selectpicker('refresh');
+                fnGetStateNamebyTaxCode();
+                if (response.ActiveStatus == 'true' || response.ActiveStatus == true) {
+                    $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
+                    $('#chktaxinfoActiveStatus').attr('disabled', true);
+                }
+                else {
+                    $("#chktaxinfoActiveStatus").parent().removeClass("is-checked");
+                    $('#chktaxinfoActiveStatus').attr('disabled', true);
+                }
+            }
+            else {
+                $('#cboTaxIdentification').val('0').selectpicker('refresh');
+                $('#chktaxinfoActiveStatus').parent().addClass("is-checked");
+                $('#chktaxinfoActiveStatus').attr('disabled', true);
+            }
+        },
+        error: function (response) {
+        }
+    });
+}
+
+$("#btnCancelTaxInfo").click(function () {
+    $("#jqgBusienssLocation").jqGrid('resetSelection');
+    $('#PopupBusienssLocation').modal('hide');
+    fnClearFields();
+});
+/* End*/

@@ -31,7 +31,7 @@ function fnGridLoadCodeTypes() {
             { name: "CodeType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "CodeTypeDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "CodeTypeControl", editable: true, align: 'left', width: 120, edittype: "select", resizable: false, formatter: 'select', editoptions: { value: "S: System Defined;U: User Defined" } },
-            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: false }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             //{
             //    name: 'edit', search: false, align: 'left', width:88 , sortable: false, resizable: false,
             //    formatter: function (cellValue, options, rowdata, action) {

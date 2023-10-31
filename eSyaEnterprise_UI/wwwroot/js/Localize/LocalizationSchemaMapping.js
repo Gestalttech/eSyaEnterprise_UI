@@ -36,7 +36,7 @@ function fnLoadLocalizationTableMappingGrid() {
             { name: "TableCode", width: 30, editable: true, align: 'left', hidden: false },
             { name: "SchemaName", editable: true, width: 95, align: 'left', resizable: false },
             { name: "TableName", editable: true, width: 95, align: 'left', resizable: false },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

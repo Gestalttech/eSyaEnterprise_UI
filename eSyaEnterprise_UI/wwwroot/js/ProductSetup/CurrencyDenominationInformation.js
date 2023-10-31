@@ -40,7 +40,7 @@ function fnGridLoadCurrencyDenomination() {
             {
                 name: 'EffectiveDate', index: 'EffectiveDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }            },
-            { name: "ActiveStatus", width: 45, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 45, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,

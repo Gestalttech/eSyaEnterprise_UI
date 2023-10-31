@@ -37,7 +37,7 @@ function fnGridLoadApplicationCodes() {
             { name: "CodeDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "ShortCode", width: 50, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 15 } },
             { name: "DefaultStatus", width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: false }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             //{
             //    name: 'edit', search: false, align: 'left', width: 78, sortable: false, resizable: false,
             //    formatter: function (cellValue, options, rowdata, action) {

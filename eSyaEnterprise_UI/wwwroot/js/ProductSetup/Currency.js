@@ -52,7 +52,7 @@ function fnGridLoadCurrencyMaster() {
             { name: "ShowInMillions", editable: true, width: 45, hidden: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "SymbolSuffixToAmount", editable: true, width: 75, hidden: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "DecimalPortionWord", width: 55, editable: true, align: 'left', editoptions: { maxlength: 25 }, hidden: true },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
             //{
             //    name: 'edit', search: false, align: 'left', width: 120, sortable: false, resizable: false,

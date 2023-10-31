@@ -41,7 +41,7 @@ function fnGridLoadBusinessSubscription() {
                 name: 'SubscribedTill', index: 'SubscribedTill', width: 90, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
             },
-            { name: "ActiveStatus", editable: false, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             //{
             //    name: 'Action', search: false, align: 'left', width: 54, sortable: false, resizable: false,
             //    formatter: function (cellValue, options, rowdata, action) {
