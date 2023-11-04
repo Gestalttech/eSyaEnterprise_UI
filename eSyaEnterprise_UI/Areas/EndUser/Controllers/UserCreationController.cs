@@ -1343,5 +1343,101 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
 
         #endregion User De-activation
+
+        //#region Define User Role Action Link 
+        //[Area("EndUser")]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        //public async Task<IActionResult> EEU_02_00()
+        //{
+        //    try
+        //    {
+        //        ///Getting User Role
+        //        var serviceresponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("License/GetUserRoleByCodeType?codeType=" + CodeTypeValues.UserRole);
+
+        //        if (serviceresponse.Status)
+        //        {
+        //            if (serviceresponse.Data != null)
+        //            {
+        //                ViewBag.UserRole = serviceresponse.Data.Select(b => new SelectListItem
+        //                {
+        //                    Value = b.ApplicationCode.ToString(),
+        //                    Text = b.CodeDesc.ToString(),
+        //                }).ToList();
+        //            }
+        //            else
+        //            {
+        //                _logger.LogError(new Exception(serviceresponse.Message), "UD:GetUserRoleByCodeType");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceresponse.Message), "UD:GetUserRoleByCodeType");
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetUserRoleByCodeType");
+        //        throw;
+        //    }
+        //}
+        ///// <summary>
+        ///// Getting User Role Action Link by User Role
+        ///// </summary>
+
+        //[HttpPost]
+        //public async Task<JsonResult> GetUserRoleActionLink(int userRole)
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_UserRoleActionLink>>("License/GetUserRoleActionLink?userRole=" + userRole);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUserRoleActionLink:For BusinessKey {0}", userRole);
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetUserRoleActionLink:For BusinessKey {0}", userRole);
+        //        throw;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Insert Into User Role Action Link 
+        ///// </summary>
+
+        //[HttpPost]
+        //public async Task<JsonResult> InsertOrUpdateUpdateUserRoleActionLink(List<DO_UserRoleActionLink> obj)
+        //{
+        //    try
+        //    {
+        //        obj.All(c =>
+        //        {
+        //            c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //            c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //            c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+        //            return true;
+        //        });
+
+        //        var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateUpdateUserRoleActionLink", obj);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateUpdateUserRoleActionLink:params:" + JsonConvert.SerializeObject(obj));
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:InsertOrUpdateUpdateUserRoleActionLink:params:" + JsonConvert.SerializeObject(obj));
+        //        throw;
+        //    }
+        //}
+        //#endregion
     }
 }

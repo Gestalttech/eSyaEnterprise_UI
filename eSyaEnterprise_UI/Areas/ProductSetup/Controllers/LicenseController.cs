@@ -204,7 +204,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                         {
                             c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                             c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                            c.FormID= AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                            c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                             return true;
                         });
                     }
@@ -515,7 +515,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                         return true;
                     });
                 }
-                
+
                 if (obj.l_Preferredlanguage != null)
                 {
                     obj.l_Preferredlanguage.All(c =>
@@ -575,7 +575,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
 
-       
+
         [HttpPost]
         public async Task<JsonResult> GetStateCodeByISDCode(int isdCode, int TaxIdentificationId)
         {
@@ -784,8 +784,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationFinancialInfo>("License/GetLocationFinancialInfo?BusinessKey=" + BusinessKey);
                 if (serviceResponse.Status)
                 {
-                   return Json(serviceResponse.Data);
-                    
+                    return Json(serviceResponse.Data);
+
                 }
                 else
                 {
@@ -812,15 +812,15 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalId = AppSessionVariables.GetIPAddress(HttpContext);
-                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateLocationFinancialInfo", obj);
-                    if (serviceResponse.Status)
-                        return Json(serviceResponse.Data);
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(obj));
-                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                    }
-                
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateLocationFinancialInfo", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateBusinessSubscription:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
             }
             catch (Exception ex)
             {
@@ -843,8 +843,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationLicenseInfo>("License/GetLocationLicenseInfo?BusinessKey=" + BusinessKey);
                 if (serviceResponse.Status)
                 {
-                  return Json(serviceResponse.Data);
-                   
+                    return Json(serviceResponse.Data);
+
                 }
                 else
                 {
@@ -909,8 +909,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_LocationTaxInfo>("License/GetLocationLocationTaxInfo?BusinessKey=" + BusinessKey);
                 if (serviceResponse.Status)
                 {
-                   return Json(serviceResponse.Data);
-                    
+                    return Json(serviceResponse.Data);
+
                 }
                 else
                 {
@@ -1278,7 +1278,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                     text = eSyaMenuData.MenuName,
                     icon = baseURL + "/images/jsTree/foldergroupicon.png",
                     state = new stateObject { opened = true, selected = false, checkbox_disabled = false }
-            };
+                };
                 jsTree.Add(jsObj1);
 
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ConfigureMenu>("License/GetLocationMenuLinkbyBusinessKey?businesskey=" + businesskey);
@@ -1307,7 +1307,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                             var sb = GetMenuFormItems(m.MainMenuId, 0, configureMenu.l_SubMenu, configureMenu.l_FormMenu);
                             l_menu.AddRange(sb);
 
-                           
+
 
                         }
 
@@ -1346,7 +1346,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                             }
                         }
 
-                      
+
 
                     }
 
@@ -1431,100 +1431,90 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
         #endregion
 
-        #region Define User Role Action Link
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_26_00()
+        public IActionResult EPS_26_00()
         {
-            try
-            {
-                ///Getting User Role
-                var serviceresponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("License/GetUserRoleByCodeType?codeType=" + CodeTypeValues.UserRole);
+            return View();
+        }
 
-                if (serviceresponse.Status)
-                {
-                    if (serviceresponse.Data != null)
-                    {
-                        ViewBag.UserRole = serviceresponse.Data.Select(b => new SelectListItem
-                        {
-                            Value = b.ApplicationCode.ToString(),
-                            Text = b.CodeDesc.ToString(),
-                        }).ToList();
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceresponse.Message), "UD:GetUserRoleByCodeType");
-                    }
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetUserRoleByCodeType");
-                }
-                return View();
-            }
-            catch (Exception ex)
+        #region Calendar Details
+
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_30_00()
+        {
+            var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
+            if (serviceResponse.Status)
             {
-                _logger.LogError(ex, "UD:GetUserRoleByCodeType");
-                throw;
+                if (serviceResponse.Data != null)
+                {
+                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.BusinessKey.ToString(),
+                        Text = b.LocationDescription,
+                    }).ToList();
+                }
             }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1511_00:GetBusinessKey");
+            }
+            return View();
         }
         /// <summary>
-        /// Getting User Role Action Link by User Role
+        /// Getting Calendar Header for Grid
         /// </summary>
 
         [HttpPost]
-        public async Task<JsonResult> GetUserRoleActionLink(int userRole)
+        public async Task<JsonResult> GetCalendarHeaders()
         {
             try
             {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_UserRoleActionLink>>("License/GetUserRoleActionLink?userRole=" + userRole);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("Control/GetCalendarHeaders");
                 if (serviceResponse.Status)
+                {
                     return Json(serviceResponse.Data);
+
+                }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUserRoleActionLink:For BusinessKey {0}", userRole);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCalendarHeaders");
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetUserRoleActionLink:For BusinessKey {0}", userRole);
-                throw;
+                _logger.LogError(ex, "UD:GetCalendarHeaders");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
         /// <summary>
-        /// Insert Into User Role Action Link 
+        /// Insert Calendar Header 
         /// </summary>
-
         [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateUpdateUserRoleActionLink(List<DO_UserRoleActionLink> obj)
+        public async Task<JsonResult> InsertCalendarDetails(DO_CalendarHeader obj)
         {
+
             try
             {
-                obj.All(c =>
-                {
-                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
-                    return true;
-                });
-
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdateUpdateUserRoleActionLink", obj);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarDetails", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateUpdateUserRoleActionLink:params:" + JsonConvert.SerializeObject(obj));
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:InsertOrUpdateUpdateUserRoleActionLink:params:" + JsonConvert.SerializeObject(obj));
-                throw;
+                _logger.LogError(ex, "UD:InsertCalendarDetails:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }
-        #endregion
+        #endregion Calendar detail
     }
 }

@@ -3,12 +3,12 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "ECA_08_00";
+    ViewData["Title"] = "ECA_21_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section scripts{
-    <script src="~/js/ProductSetup/CalendarDefinition.js"></script>
+    <script src="~/js/ProductSetup/CalendarHeader.js"></script>
 }
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
@@ -17,14 +17,16 @@
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
     var localization = {
-        FinancialYear: '@Localizer["FinancialYear"]',
+        Year: '@Localizer["Year"]',
+        Year: '@Localizer["Year"]',
         FromDate: '@Localizer["FromDate"]',
         TillDate: '@Localizer["TillDate"]',
         Active: '@Localizer["Active"]',
-        AddCalendarDefinition: '@Localizer["AddCalendarDefinition"]',
-        ViewCalendarDefinition: '@Localizer["ViewCalendarDefinition"]',
+        AddCalendarHeader: '@Localizer["AddCalendarHeader"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
+        CalenderType: '@Localizer["CalenderType"]',
+        YearEndStatus: '@Localizer["YearEndStatus"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -32,53 +34,52 @@
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
-        BusinessLocation_E6: '@Localizer["UI0064"]',
-        FinancialYear_E7: '@Localizer["UI0068"]',
+        Calendar_E6: '@Localizer["UI0214"]',
+        Year_E7: '@Localizer["UI0068"]',
         FromDate_E8: '@Localizer["UI0069"]',
         ToDate_E9: '@Localizer["UI0070"]',
     }
 </script>
 
 
-<div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="form-group">
-            <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="Choose Business Location" data-size="8" asp-items="@ViewBag.BusinessKeys" onchange="fnBusinessLocation_onChange()"></select>
-        </div>
-    </div>
-    
-</div>
 
 <div class="row padbot10">
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <table id="jqgCalendarDefinition"></table>
-        <div id="jqpCalendarDefinition"></div>
+        <table id="jqgCalendarHeader"></table>
+        <div id="jqpCalendarHeader"></div>
     </div>
 </div>
 
 
-<div class="modal fade in" id="PopupCalendarDefinition" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fade in" id="PopupCalendarHeader" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title">@Localizer["AddCalendarDefinition"]</h4>
+                <h4 class="modal-title">@Localizer["AddCalendarHeader"]</h4>
             </div>
 
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" id="txtCodeType" style="display:none">
-                    </div>
-                </div>
+               
                 <div class="row padbot4">
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["Financialyear"]</label>
-                            <input class="form-control decimal" type="text" maxlength="4" id="txtfinancialyear" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <label>@Localizer["Year"]</label>
+                            <input class="form-control decimal" type="text" maxlength="4" id="txtyear" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
 
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["CalendarType"]</label>
+                            <select class="selectpicker" id="cboCalendarType">
+                                <option value="0">Choose Calendar Type </option>
+                                <option value="FY">Financial Year</option>
+                                <option value="CY">Calendar Year</option>
+                            </select>
                         </div>
                     </div>
 
@@ -95,18 +96,19 @@
                             <input id="txtCalDefTillDate" class="form-control" type="date" autocomplete="off" disabled />
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                         </label>
                     </div>
+                     
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button class="mdl-button  primary-button" id="btnSaveCalendarDefinition" onclick="fnSaveCalendarDefinition()">
+                        <button class="mdl-button  primary-button" id="btnSaveCalendarHeader" onclick="fnSaveCalendarHeader()">
                             <i class="fa fa-save"></i>   @Localizer["Save"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>

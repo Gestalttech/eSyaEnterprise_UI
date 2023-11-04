@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sW8YGLWFAobqD34zoBz2/i5CQ7Ge8L/0K90GhWnZexg=",
+  "Hash": "d7CVwlT1FGa1pXAyIdDO+Q1R7N9M/dDYXWqk7J78xmg=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -10285,6 +10285,23 @@
       "OriginalItemSpec": "wwwroot\\js\\EndUser\\UserGroup.js"
     },
     {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserRoleActionLink.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/EndUser/UserRoleActionLink.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\EndUser\\UserRoleActionLink.js"
+    },
+    {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\fullcalendar\\bootstrap\\main.css",
       "SourceId": "eSyaEnterprise_UI",
       "SourceType": "Discovered",
@@ -17034,12 +17051,12 @@
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\BusinessSubscription.js"
     },
     {
-      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarDefinition.js",
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarDetails.js",
       "SourceId": "eSyaEnterprise_UI",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
       "BasePath": "_content/eSyaEnterprise_UI",
-      "RelativePath": "js/ProductSetup/CalendarDefinition.js",
+      "RelativePath": "js/ProductSetup/CalendarDetails.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -17048,7 +17065,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\CalendarDefinition.js"
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\CalendarDetails.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarHeader.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/CalendarHeader.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\CalendarHeader.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CityList.js",
@@ -17238,6 +17272,23 @@
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\FormsMenu.js"
     },
     {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LinkParameterSchema.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/ProductSetup/LinkParameterSchema.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\LinkParameterSchema.js"
+    },
+    {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LocationwiseMenu.js",
       "SourceId": "eSyaEnterprise_UI",
       "SourceType": "Discovered",
@@ -17338,23 +17389,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\TaxIdentification.js"
-    },
-    {
-      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\UserRoleActionLink.js",
-      "SourceId": "eSyaEnterprise_UI",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
-      "BasePath": "_content/eSyaEnterprise_UI",
-      "RelativePath": "js/ProductSetup/UserRoleActionLink.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\ProductSetup\\UserRoleActionLink.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",

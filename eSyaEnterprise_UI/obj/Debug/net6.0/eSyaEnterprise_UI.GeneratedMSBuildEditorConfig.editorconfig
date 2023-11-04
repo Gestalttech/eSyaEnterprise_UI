@@ -92,6 +92,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW5kVXNlclxWaWV3c1xVc2VyQ3JlYXRpb25cRUVVXzAxXzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/EndUser/Views/UserCreation/EEU_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW5kVXNlclxWaWV3c1xVc2VyQ3JlYXRpb25cRUVVXzAyXzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/EndUser/Views/UserCreation/EEU_03_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW5kVXNlclxWaWV3c1xVc2VyQ3JlYXRpb25cRUVVXzAzXzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -268,12 +272,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXExpY2Vuc2VcRVBTXzI2XzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/License/EPS_30_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXExpY2Vuc2VcRVBTXzMwXzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Menu/EPS_03_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXE1lbnVcRVBTXzAzXzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Parameters/EPS_06_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXFBhcmFtZXRlcnNcRVBTXzA2XzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Parameters/EPS_31_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXFBhcmFtZXRlcnNcRVBTXzMxXzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Rules/EPS_07_00.cshtml]

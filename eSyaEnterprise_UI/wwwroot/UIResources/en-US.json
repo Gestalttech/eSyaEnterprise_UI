@@ -66,7 +66,7 @@
   "UI0065": "Please Enter the Tax Identification",
   "UI0066": "Please Enter the Tax Identification Description",
   "UI0067": "Please Enter the State Code",
-  "UI0068": "Please Enter the Financial year",
+  "UI0068": "Please Enter the year",
   "UI0069": "Please Enter the From Date",
   "UI0070": "Please Enter the To Date",
   "UI0071": "Please Select another process description",
@@ -212,9 +212,9 @@
   "UI0211": "Please Enter the Outgoing Mail Server",
   "UI0212": "Please Enter the Port",
   "UI0213": "Please Select Entity to add SMS",
-
-
-
+  "UI0214": "Please Select Calendar Type",
+  "UI0215": "Please Select Nationality",
+  "UI0216": "Please Select Parameter Type",
 
 
 

@@ -273,70 +273,20 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
         #endregion FORM LINK TO DOCUMENT
 
-        #region Calendar Definition
+        #region Calendar Header
         /// <summary>
         /// Calendar Control
         /// </summary>
         /// <returns></returns>
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_21_00()
+        public IActionResult EPS_21_00()
         {
-            try
-            {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
-                if (serviceResponse.Status)
-                {
-                    ViewBag.BusinessKeys = serviceResponse.Data.Select(b => new SelectListItem
-                    {
-                        Value = b.BusinessKey.ToString(),
-                        Text = b.LocationDescription,
-                    }).ToList();
-
-                    return View();
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetBusinessKey");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
+            return View();
+               
+          
         }
-        /// <summary>
-        /// Getting Calendar Headers by Business key for Grid
-        /// UI-Param--Business Key
-        /// </summary>
-
-        [HttpPost]
-        public async Task<JsonResult> GetCalendarHeadersbyBusinessKey(int Businesskey)
-        {
-            try
-            {
-                var parameter = "?Businesskey=" + Businesskey;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeadersbyBusinessKey" + parameter);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCalendarHeadersbyBusinessKey:For Businesskey {0}", Businesskey);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetFinancialYearbyBusinessKey:For Businesskey {0}", Businesskey);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-
+       
         /// <summary>
         /// Getting Calendar Header for Grid
         /// </summary>
@@ -346,7 +296,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarDefinition>>("Control/GetCalendarHeaders");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("Control/GetCalendarHeaders");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -366,18 +316,18 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
 
         /// <summary>
-        /// Insert Calendar Header & Details
+        /// Insert Calendar Header 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertCalendarHeaderAndDetails([FromBody] DO_CalendarDefinition calendarheader)
+        public async Task<JsonResult> InsertCalendarHeader([FromBody] DO_CalendarHeader obj )
         {
 
             try
             {
-                calendarheader.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                calendarheader.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                calendarheader.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarHeaderAndDetails", calendarheader);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarHeader", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -386,7 +336,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:InsertCalendarHeaderAndDetails:params:" + JsonConvert.SerializeObject(calendarheader));
+                _logger.LogError(ex, "UD:InsertCalendarHeader:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }

@@ -15,7 +15,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string? MobileNumberPattern { get; set; }
         //public string Uidlabel { get; set; }
         //public string Uidpattern { get; set; }
-        public string? Nationality { get; set; }
+        public int Nationality { get; set; }
         public bool IsPoboxApplicable { get; set; }
         public string? PoboxPattern { get; set; }
         public bool IsPinapplicable { get; set; }
@@ -29,6 +29,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string? imgName { get; set; }
         public string? CurrencyName { get; set; }
         public List<DO_UIDPattern>? _lstUIDpattern { get; set; }
+        public string? DateFormat { get; set; }
+        public string? ShortDateFormat { get; set; }
     }
 
     public class IMGCountryFlag

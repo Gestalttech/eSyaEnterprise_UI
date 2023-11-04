@@ -3549,6 +3549,10 @@
       "PackagePath": "staticwebassets\\js\\EndUser\\UserGroup.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserRoleActionLink.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UserRoleActionLink.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Localize\\CultureKeys.js",
       "PackagePath": "staticwebassets\\js\\Localize\\CultureKeys.js"
     },
@@ -3629,8 +3633,12 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\BusinessSubscription.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarDefinition.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarDefinition.js"
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarDetails.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarDetails.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarHeader.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarHeader.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CityList.js",
@@ -3673,6 +3681,10 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\FormsMenu.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LinkParameterSchema.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\LinkParameterSchema.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LocationwiseMenu.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\LocationwiseMenu.js"
     },
@@ -3695,10 +3707,6 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\TaxIdentification.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\TaxIdentification.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\UserRoleActionLink.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\UserRoleActionLink.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\eSyaCulture.js",

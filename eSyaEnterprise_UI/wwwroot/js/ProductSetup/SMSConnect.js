@@ -230,7 +230,7 @@ function fnEditSMSConnect(e, actiontype) {
    
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_05_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_28_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupSMSConnect').modal('show').css({ top: firstRow.top + 31 });
@@ -247,7 +247,7 @@ function fnEditSMSConnect(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_05_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_28_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupSMSConnect').modal('show');
@@ -259,7 +259,7 @@ function fnEditSMSConnect(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_05_00", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EPS_28_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupSMSConnect').modal('show');
@@ -335,7 +335,7 @@ function fnGridRefreshSMSConnect() {
 function fnValidateSMSConnect() {
     
     if ($("#cboBusinessKey").val() === "0" || $("#cboBusinessKey").val() === "") {
-        fnAlert("w", "EPS_21_00", "UI0064", errorMsg.BusinessLocation_E6);
+        fnAlert("w", "EPS_28_00", "UI0064", errorMsg.BusinessLocation_E6);
         return false;
     }
     

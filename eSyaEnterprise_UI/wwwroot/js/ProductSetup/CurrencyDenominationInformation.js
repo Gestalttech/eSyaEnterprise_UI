@@ -108,7 +108,7 @@ function fnAddCurrencyDenomination() {
 }
 
 function fnEditCurrencyDenomination(e, actiontype) {
-    debugger;
+  
     var rowid = $("#jqgCurrencyDenomination").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgCurrencyDenomination').jqGrid('getRowData', rowid);
    

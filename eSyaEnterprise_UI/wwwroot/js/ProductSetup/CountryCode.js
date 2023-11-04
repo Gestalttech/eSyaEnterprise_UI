@@ -34,7 +34,7 @@ function fnGridLoadCountryCode() {
 
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, localization.CountryCode, localization.CountryName, "", localization.CurrencyName, "", localization.Flag, "", /*"", "",*/ "", "", "", "", "", localization.Active, localization.Actions],
+        colNames: [localization.ISDCode, localization.CountryCode, localization.CountryName, "", localization.CurrencyName, "", localization.Flag, "", /*"", "",*/ "", "", "", "", "","","", localization.Active, localization.Actions],
         colModel: [
             { name: "Isdcode", width: 40, editable: true, align: 'left', hidden: false },
             { name: "CountryCode", width: 50, editable: false, hidden: false, align: 'left', resizable: true },
@@ -77,6 +77,8 @@ function fnGridLoadCountryCode() {
             //{ name: "Uidlabel", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             //{ name: "Uidpattern", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "Nationality", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "DateFormat", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "ShortDateFormat", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "IsPoboxApplicable", editable: true, hidden: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "PoboxPattern", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "IsPinapplicable", editable: true, hidden: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
@@ -172,7 +174,9 @@ function fnEditCountryCode(e,actiontype) {
     $('#txtMobileNumberPattern').val(rowData.MobileNumberPattern);
     //$('#txtUIDlabel').val(rowData.Uidlabel);
     //$('#txtUIDPattern').val(rowData.Uidpattern);
-    $('#txtNationality').val(rowData.Nationality);
+    $('#cboNationality').val(rowData.Nationality).selectpicker('refresh');
+    $('#txtDateFormat').val(rowData.DateFormat);
+    $('#txtShortDateFormat').val(rowData.ShortDateFormat);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -303,7 +307,9 @@ function fnSaveCountryCode() {
             MobileNumberPattern: $("#txtMobileNumberPattern").val().trim(),
             //Uidlabel: $("#txtUIDlabel").val(),
             //Uidpattern: $("#txtUIDPattern").val(),
-            Nationality: $("#txtNationality").val(),
+            Nationality: $("#cboNationality").val(),
+            DateFormat: $("#txtDateFormat").val(),
+            ShortDateFormat: $("#txtShortDateFormat").val(),
             IsPoboxApplicable: $("#chkIsPinApplicable").parent().hasClass("is-checked"),
             PoboxPattern: $("#txtPOBoxPattern").val(),
             IsPinapplicable: $("#chkIsPOBoxAppllicable").parent().hasClass("is-checked"),
@@ -324,7 +330,9 @@ function fnSaveCountryCode() {
             MobileNumberPattern: $("#txtMobileNumberPattern").val().trim(),
             //Uidlabel: $("#txtUIDlabel").val(),
             //Uidpattern: $("#txtUIDPattern").val(),
-            Nationality: $("#txtNationality").val(),
+            Nationality: $("#cboNationality").val(),
+            DateFormat: $("#txtDateFormat").val(),
+            ShortDateFormat: $("#txtShortDateFormat").val(),
             IsPoboxApplicable: $("#chkIsPinApplicable").parent().hasClass("is-checked"),
             PoboxPattern: $("#txtPOBoxPattern").val(),
             IsPinapplicable: $("#chkIsPOBoxAppllicable").parent().hasClass("is-checked"),
@@ -381,11 +389,14 @@ function fnValidateCountryCode() {
         return false;
     }
    
-    if ($("#cboCurrencycode").val() === "0" || $("#cboCurrencycode").val() === '0') {
+    if ($("#cboCurrencycode").val() === "0" || $("#cboCurrencycode").val() === '0' || IsStringNullorEmpty($("#cboCurrencycode").val())) {
         fnAlert("w", "EPS_12_00", "UI0038", errorMsg.Currency_E10);
         return false;
     }
-
+    if ($("#cboNationality").val() === "0" || $("#cboNationality").val() === '0' || IsStringNullorEmpty($("#cboNationality").val())) {
+        fnAlert("w", "EPS_12_00", "UI0215", errorMsg.Country_E11);
+        return false;
+    }
 }
 
 function fnGridRefreshCountryCode() {
@@ -412,7 +423,9 @@ function fnViewCountryCode(e) {
     $('#txtMobileNumberPattern').val(rowData.MobileNumberPattern);
     //$('#txtUIDlabel').val(rowData.Uidlabel);
     //$('#txtUIDPattern').val(rowData.Uidpattern);
-    $('#txtNationality').val(rowData.Nationality);
+    $('#cboNationality').val(rowData.Nationality).selectpicker('refresh');
+    $('#txtDateFormat').val(rowData.DateFormat);
+    $('#txtShortDateFormat').val(rowData.ShortDateFormat);
     $('#cboActiveStatus').val(rowData.ActiveStatus);
     $('#cboActiveStatus').selectpicker('refresh');
     if (rowData.IsPoboxApplicable == 'true') {
@@ -447,7 +460,9 @@ function fnClearFields() {
     $("#txtMobileNumberPattern").val('');
     //$("#txtUIDlabel").val('');
     //$("#txtUIDPattern").val('');
-    $("#txtNationality").val('');
+    $("#cboNationality").val('0').selectpicker('refresh');
+    $("#txtDateFormat").val('');
+    $("#txtShortDateFormat").val('');
     $("#chkActiveStatus").prop('disabled', false);
     $("#chkIsPOBoxAppllicable").parent().removeClass("is-checked");
     $("#txtPOBoxPattern").val('');

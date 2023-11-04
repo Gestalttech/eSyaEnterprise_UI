@@ -24,6 +24,7 @@
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnectHeader.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
     <Compile Remove="DataServices\IPasswordPolicy.cs" />
   </ItemGroup>
@@ -73,6 +74,7 @@
     <Content Remove="wwwroot\images\ui-icons_ff0084_256x240.png" />
     <Content Remove="wwwroot\images\ui-icons_ffffff_256x240.png" />
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
+    <Content Remove="wwwroot\js\ProductSetup\UserRoleActionLink.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,6 @@
+﻿namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
+{
+    public class DO_LinkParameterSchema
+    {
+    }
+}

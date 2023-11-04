@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.Areas.Localize.Models;
 using eSyaEnterprise_UI.Areas.ProductSetup.Data;
 using eSyaEnterprise_UI.Areas.ProductSetup.Models;
 using eSyaEnterprise_UI.Models;
@@ -201,6 +202,101 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
 
+        #endregion
+
+        #region Link Parameter Schema
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_31_00()
+        {
+
+            try
+            {
+
+                var servicetableResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Parameters>>("Parameters/GetActiveParameterTypes");
+
+                if (servicetableResponse.Status)
+                {
+
+                    ViewBag.Paratypes = servicetableResponse.Data;
+                    return View();
+
+                }
+                else
+                {
+
+                    _logger.LogError(new Exception(servicetableResponse.Message), "UD:GetActiveParameterTypes");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActiveParameterTypes");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get Parameter Link Schema for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetParameterLinkSchema(int parametertype)
+        {
+            try
+            {
+
+                var parameter = "?parametertype=" + parametertype ;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_LinkParameterSchema>>("Parameters/GetParameterLinkSchema" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetParameterLinkSchema:For parametertype {0} ", parametertype);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetParameterLinkSchema:For parametertype", parametertype);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Link Parameter Schema
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateLinkParameterSchema(List<DO_LinkParameterSchema> obj)
+        {
+
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Parameters/InsertOrUpdateLinkParameterSchema", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateLinkParameterSchema:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
+            }
+        }
         #endregion
     }
 }

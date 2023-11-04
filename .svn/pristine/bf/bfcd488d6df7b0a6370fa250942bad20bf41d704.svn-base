@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_31_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="~/js/ProductSetup/LinkParameterSchema.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        DActivate: '@Localizer["Deactivate"]',
+      
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+       
+    }
+</script>
+

@@ -54,6 +54,8 @@
         Activate: '@Localizer["Activate"]',
         Delete: '@Localizer["Delete"]',
         UIDPattern: '@Localizer["UIDPattern"]',
+        DateFormat: '@Localizer["DateFormat"]',
+        ShortDateFormat: '@Localizer["ShortDateFormat"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -66,6 +68,7 @@
         CountryFlag_E8: '@Localizer["UI0036"]',
         CountryName_E9: '@Localizer["UI0037"]',
         Currency_E10: '@Localizer["UI0038"]',
+        Country_E11: '@Localizer["UI0215"]',
     }
     
 </script>
@@ -179,7 +182,17 @@
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtNationality">@Localizer["Nationality"]</label>
-                            <input id="txtNationality" class="form-control" maxlength="50" type="text" />
+                            <select class="selectpicker" id="cboNationality">
+                                <option>Choose Nationality</option>
+                                @if (ViewBag.Nationality != null)
+                                {
+                                    foreach (var n in ViewBag.Nationality)
+                                    {
+
+                                        <option value="@n.ApplicationCode">@n.CodeDesc</option>
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-12">
@@ -223,6 +236,18 @@
                         <div class="form-group">
                             <label for="txtPincodePattern">@Localizer["PincodePattern"]</label>
                             <input id="txtPincodePattern" class="form-control" maxlength="25" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtDateFormat">@Localizer["DateFormat"]</label>
+                            <input id="txtDateFormat" class="form-control" maxlength="15" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtShortDateFormat">@Localizer["ShortDateFormat"]</label>
+                            <input id="txtShortDateFormat" class="form-control" maxlength="15" type="text" />
                         </div>
                     </div>
                 </div>

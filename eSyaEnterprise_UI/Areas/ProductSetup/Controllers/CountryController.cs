@@ -22,12 +22,12 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
     [SessionTimeout]
     public class CountryController : Controller
     {
-        private readonly IeSyaProductSetupAPIServices _configAPIServices;
+        private readonly IeSyaProductSetupAPIServices _eSyaProductSetupAPIServices;
         private readonly ILogger<CountryController> _logger;
         private readonly IWebHostEnvironment _env;
-        public CountryController(IeSyaProductSetupAPIServices configAPIServices, IWebHostEnvironment env, ILogger<CountryController> logger)
+        public CountryController(IeSyaProductSetupAPIServices eSyaProductSetupAPIServices, IWebHostEnvironment env, ILogger<CountryController> logger)
         {
-            _configAPIServices = configAPIServices;
+            _eSyaProductSetupAPIServices = eSyaProductSetupAPIServices;
             _env = env;
             _logger = logger;
         }
@@ -66,12 +66,15 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 }
                 ViewBag.Images = ImageList;
                 /// Getting Currency List
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyMaster>>("Currencies/GetActiveCurrencyList");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyMaster>>("Currencies/GetActiveCurrencyList");
 
-                if (serviceResponse.Status)
+                var serviceNationality = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeType?codeType="+ CodeTypeValues.Nationality);
+                if (serviceResponse.Status && serviceNationality.Status)
                 {
+                    ViewBag.Nationality = serviceNationality.Data;
                     ViewBag.currencyList = serviceResponse.Data;
                     return View();
+
 
                 }
                 else
@@ -115,7 +118,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 }
                 if (country.Isadd == 1)
                 {
-                    var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/InsertIntoCountryCode", country);
+                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/InsertIntoCountryCode", country);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
@@ -124,7 +127,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
                 else
                 {
-                    var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/UpdateCountryCode", country);
+                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/UpdateCountryCode", country);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
@@ -147,7 +150,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var domainname = this.Request.PathBase;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("Country/GetAllCountryCodes");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("Country/GetAllCountryCodes");
 
                 if (serviceResponse.Status)
                 {
@@ -174,7 +177,9 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                             ActiveStatus = item.ActiveStatus,
                             postedfile = item.postedfile,
                             imgName = item.imgName,
-                            CurrencyName = item.CurrencyName
+                            CurrencyName = item.CurrencyName,
+                            DateFormat=item.DateFormat,
+                            ShortDateFormat=item.ShortDateFormat
                         };
                         countries.Add(country);
                     }
@@ -204,7 +209,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
 
                 var parameter = "?status=" + status + "&Isd_code=" + Isd_code;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Country/ActiveOrDeActiveCountryCode" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Country/ActiveOrDeActiveCountryCode" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -227,7 +232,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var parameter = "?Isdcode=" + Isdcode;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_UIDPattern>>("Country/GetUIDPatternbyIsdcode" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_UIDPattern>>("Country/GetUIDPatternbyIsdcode" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -268,7 +273,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetISDCodes");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetISDCodes");
                 if (serviceResponse.Status)
                 {
                     ViewBag.Isdcodes = serviceResponse.Data;
@@ -298,7 +303,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var parameter = "?IsdCode=" + IsdCode + "&StatutoryCode=" + StatutoryCode;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Country/GetStatutoryCodesParameterList" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Country/GetStatutoryCodesParameterList" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -333,7 +338,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var parameter = "?Isdcode=" + Isdcode;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<List<DO_CountryStatutoryDetails>>("Country/GetStatutoryCodesbyIsdcode" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CountryStatutoryDetails>>("Country/GetStatutoryCodesbyIsdcode" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -367,7 +372,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _configAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/InsertOrUpdateStatutoryCodes", obj);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Country/InsertOrUpdateStatutoryCodes", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -391,7 +396,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
 
                 var parameter = "?status=" + status + "&Isd_code=" + Isd_code + "&statutorycode=" + statutorycode;
-                var serviceResponse = await _configAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Country/ActiveOrDeActiveStatutoryCode" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Country/ActiveOrDeActiveStatutoryCode" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
