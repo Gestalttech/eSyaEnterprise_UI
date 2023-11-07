@@ -60,6 +60,10 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string MonthDescription { get; set; }
+        public string? MonthDescription { get; set; }
+        public int EditMonthId { get; set; }
+        public DateTime Fromdate { get; set; }
+        public DateTime Tilldate { get; set; }
+        public decimal Year { get; set; }
     }
 }

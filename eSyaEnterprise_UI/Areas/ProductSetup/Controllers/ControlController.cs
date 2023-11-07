@@ -151,7 +151,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #endregion
 
         #region FORM LINK TO DOCUMENT
-        
+
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EPS_09_00()
@@ -167,7 +167,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
             try
             {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetFormDocumentlink?formID="+formID);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetFormDocumentlink?formID=" + formID);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -208,7 +208,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 treeView.Add(jsObj);
 
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Control/GetFormsForDocumentControl");
-                
+
                 if (serviceResponse.Status)
                 {
                     foreach (var fm in serviceResponse.Data)
@@ -269,7 +269,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
 
-       
+
 
         #endregion FORM LINK TO DOCUMENT
 
@@ -283,10 +283,10 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         public IActionResult EPS_21_00()
         {
             return View();
-               
-          
+
+
         }
-       
+
         /// <summary>
         /// Getting Calendar Header for Grid
         /// </summary>
@@ -319,7 +319,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         /// Insert Calendar Header 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertCalendarHeader([FromBody] DO_CalendarHeader obj )
+        public async Task<JsonResult> InsertCalendarHeader([FromBody] DO_CalendarHeader obj)
         {
 
             try
@@ -342,5 +342,128 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
 
         #endregion
+
+        #region DOCUMENT LINK TO FORM
+
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_23_00()
+        {
+            return View();
+        }
+
+        /// <summary>
+        ///Get Linked forms with documents for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDocumentFormlink(int documentID)
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetDocumentFormlink?documentID=" + documentID);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDocumentFormlink");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDocumentFormlink");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+        /// <summary>
+        ///Get Linked forms with documents for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetActiveDocumentControls()
+        {
+
+            try
+            {
+                string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "FM",
+                    parent = "#",
+                    text = "eSya Documents",
+                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                treeView.Add(jsObj);
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetActiveDocumentControls");
+
+                if (serviceResponse.Status)
+                {
+                    foreach (var fm in serviceResponse.Data)
+                    {
+                        jsObj = new jsTreeObject
+                        {
+                            id = fm.DocumentId.ToString(),
+                            text = fm.DocumentName.ToString() + '.' + fm.FormName,
+                            icon = baseURL + "/images/jsTree/openfolder.png",
+                            parent = "FM"
+                        };
+                        treeView.Add(jsObj);
+                    }
+                    return Json(treeView);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveDocumentControls");
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActiveDocumentControls");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        /// <summary>
+        /// Insert Form Link with documents
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> UpdateDocumentFormlink(List<DO_FormDocumentLink> obj)
+        {
+
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateDocumentFormlink", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:UpdateDocumentFormlink:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+
+        #endregion 
     }
 }

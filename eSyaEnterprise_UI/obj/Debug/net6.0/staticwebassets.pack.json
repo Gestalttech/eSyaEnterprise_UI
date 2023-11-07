@@ -3641,6 +3641,10 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarHeader.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarPatientID.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarPatientID.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CityList.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\CityList.js"
     },
@@ -3667,6 +3671,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\DocumentControl.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\DocumentControl.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\DocumentFormLink.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\DocumentFormLink.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\EmailConnect.js",

@@ -1431,13 +1431,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
         #endregion
 
-        [Area("ProductSetup")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_26_00()
-        {
-            return View();
-        }
-
+        
         #region Calendar Details
 
         [Area("ProductSetup")]
@@ -1516,5 +1510,114 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
         #endregion Calendar detail
+
+        #region Calendar Patient ID Generation
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPS_26_00()
+        {
+            var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
+            if (serviceResponse.Status)
+            {
+                if (serviceResponse.Data != null)
+                {
+                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.BusinessKey.ToString(),
+                        Text = b.LocationDescription,
+                    }).ToList();
+                }
+            }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1511_00:GetBusinessKey");
+            }
+            return View();
+        }
+        /// <summary>
+        /// Getting Calender Key by Business key
+        /// </summary>
+
+        [HttpPost]
+        public async Task<JsonResult> GetCalenderKeybyBusinessKey(int Businesskey)
+        {
+            try
+            {
+                var parameter = "?Businesskey=" + Businesskey;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("Control/GetCalenderKeybyBusinessKey" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCalenderKeybyBusinessKey:For Businesskey {0}", Businesskey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCalenderKeybyBusinessKey:For Businesskey {0}", Businesskey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        /// <summary>
+        /// Getting Calendar Patient Generation by Business Key && CalenderKey for Grid
+        /// </summary>
+
+        [HttpPost]
+        public async Task<JsonResult> GetCalendarPatientGenerationbyBusinessKeyAndCalenderKey(int BusinessKey, string CalenderKey)
+        {
+            try
+            {
+                var parameter = "?BusinessKey=" + BusinessKey + "&CalenderKey=" + CalenderKey;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CalendarPatientIdGeneration>>("Control/GetCalendarPatientGenerationbyBusinessKeyAndCalenderKey" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCalendarPatientGenerationbyBusinessKeyAndCalenderKey:For BusinessKey {0} with CalenderKey entered {1}", BusinessKey, CalenderKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCalendarPatientGenerationbyBusinessKeyAndCalenderKey:For Businesskey {0} with CalenderKey entered {1}", BusinessKey, CalenderKey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        /// <summary>
+        /// Update Calendar Details
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> UpdateCalendarGeneration(DO_CalendarPatientIdGeneration postData)
+        {
+
+            try
+            {
+                postData.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                postData.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                postData.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateCalendarGeneration", postData);
+
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:UpdateCalendarGeneration:params:" + JsonConvert.SerializeObject(postData));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
     }
 }

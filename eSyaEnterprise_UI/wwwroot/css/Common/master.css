@@ -302,7 +302,8 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
 #jqgh_gvProcessRule_ActiveStatus{
     text-align:left !important;
 }
-#gview_jqgTableFieldLanguageMapping .ui-jqgrid-bdiv {
+#gview_jqgTableFieldLanguageMapping .ui-jqgrid-bdiv ,
+    #gview_jqgCalendarPatientGeneration .ui-jqgrid-bdiv {
     max-height: Calc(100vh - 62vh) !important;
     overflow-y: auto !important;
 }
@@ -572,9 +573,7 @@ ul#menu-v, #menu-v ul {
         border:1px solid #efefef !important;
     }
     #imgPhoto {
-        width: 180px;
-        margin: auto;
-        display:flex;
+        
     }
 
 #imgPhotoimage {

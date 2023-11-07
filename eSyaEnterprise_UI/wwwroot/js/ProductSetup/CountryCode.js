@@ -524,7 +524,7 @@ function fnUIDPatternGrid() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, localization.UIDlabel, localization.UIDPattern, localization.Active],
+        colNames: [localization.ISDCode, "UIDlabel", "UIDPattern", localization.Active],
         colModel: [
             { name: "Isdcode", width: 40, editable: false, align: 'left', hidden: true },
             { name: "Uidlabel", width: 200, editable: true, hidden: false, align: 'left', resizable: true, editoptions: { maxlength: 50 } },
@@ -549,7 +549,7 @@ function fnUIDPatternGrid() {
         autowidth: true,
         shrinkToFit: true,
         forceFit: true,
-        caption: localization.UIDPattern,
+        caption:"UID Pattern",
         scrollOffset: 0, 
         editurl: getBaseURL() + '',
         beforeSubmit: function (postdata, formid) {
