@@ -32,6 +32,17 @@
     margin: 0px 0px 0px -11px;
     text-align: left;
 }
+.footer-logout {
+    color: #000000;
+    font-size: 0.75rem;
+    padding: 0px;
+    letter-spacing: 0.75px;
+    padding: 0px 0px 0px 15px;
+    text-align: left;
+}
+.bg-footer {
+    background: linear-gradient(to top,#ededed,#fffdfd);
+}
 section.mdl-layout__tab-panel{
     height:89.5%;
 }

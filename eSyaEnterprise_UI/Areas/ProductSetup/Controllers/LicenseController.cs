@@ -207,6 +207,14 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                             c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                             return true;
                         });
+
+                        int defaultlang = businessentity.l_Preferredlang.Where(x=>x.DefaultLanguage).Count();
+
+                        if(defaultlang > 1)
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Defalt Language should not be more than one Language" });
+                        }
+
                     }
                     businessentity.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                     businessentity.UserID = AppSessionVariables.GetSessionUserID(HttpContext);

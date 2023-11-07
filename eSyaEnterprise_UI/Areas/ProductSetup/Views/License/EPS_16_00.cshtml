@@ -406,6 +406,7 @@
                             CultureCode: gvT[i]['CultureCode'],
                             CultureDesc: gvT[i]['CultureDesc'],
                             Pldesc: gvT[i]['Pldesc'],
+                            DefaultLanguage: gvT[i]['DefaultLanguage'],
                             ActiveStatus: gvT[i]['ActiveStatus']
                         }
                               obj.push(objact);
@@ -546,12 +547,13 @@
             datatype: 'json',
             mtype: 'POST',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-            colNames: ["BusinessId", "Culture Code", "Culture Description","Preferred Language", "Active"],
+            colNames: ["BusinessId", "Culture Code", "Culture Description", "Preferred Language", "Default Language", "Active"],
             colModel: [
                 { name: "BusinessId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
                 { name: "CultureCode", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "CultureDesc", width: 200, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "Pldesc", width: 250, editable: true, editoptions: { disabled: false }, align: 'left' },
+                { name: "DefaultLanguage", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
                 { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             ],

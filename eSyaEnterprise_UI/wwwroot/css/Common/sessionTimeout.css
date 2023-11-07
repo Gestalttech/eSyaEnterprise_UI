@@ -121,9 +121,9 @@
 }
 .sessionTimeout-innercontainer {
     box-shadow: 10px 20px 28px 1px #ccc;
-    padding: 30px;
+    padding: 30px 0px 0px;
     border-radius: 10px;
-    width:100%;
+    width: 100%;
 }
     .sessionTimeout-innercontainer h3 {
         padding-left: 15px;
