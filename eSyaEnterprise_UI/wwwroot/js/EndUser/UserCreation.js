@@ -188,7 +188,8 @@ function fnGridAddUserCreation() {
     UserID = 0;
     
     //location.href = getBaseURL() + "/eSyaUser/UserCreation/_UserCreation?UserID=" + UserID;
-    $("#divUserCreationForm").css('display', 'block');
+    //$("#divUserCreationForm").css('display', 'block');
+    $("#PopupUserCreation").modal('show');
     $("#divUserCreationGrid").hide();
     $("#txtPassword").attr('disabled', false);
     $("#txtLoginId").attr('disabled', false);

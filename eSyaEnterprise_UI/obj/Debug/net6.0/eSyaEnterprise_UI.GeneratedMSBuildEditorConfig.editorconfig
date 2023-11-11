@@ -316,6 +316,42 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVzXFZpZXdzXFN0b3Jlc1xFQ1NfMDNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/EVN_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxFVk5fMDFfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_BankDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfQmFua0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_ItemLink.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfSXRlbUxpbmsuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_PartNumber.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfUGFydE51bWJlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_StatutoryDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfU3RhdHV0b3J5RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_SupplyGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfU3VwcGx5R3JvdXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_VendorBusinessLink.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfVmVuZG9yQnVzaW5lc3NMaW5rLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_VendorDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfVmVuZG9yRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/CreateVendor/_VendorLocations.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVmVuZG9yXFZpZXdzXENyZWF0ZVZlbmRvclxfVmVuZG9yTG9jYXRpb25zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/Account/BusinessLocation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxCdXNpbmVzc0xvY2F0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

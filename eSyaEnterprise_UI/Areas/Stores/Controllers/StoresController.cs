@@ -24,9 +24,9 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
     public class StoresController : Controller
     {
         private readonly IeSyaStoreAPIServices _eSyaStoreAPIServices;
-        private readonly ILogger<ConfigStoresController> _logger;
+        private readonly ILogger<StoresController> _logger;
 
-        public StoresController(IeSyaStoreAPIServices eSyaStoreAPIServices, ILogger<ConfigStoresController> logger)
+        public StoresController(IeSyaStoreAPIServices eSyaStoreAPIServices, ILogger<StoresController> logger)
         {
             _eSyaStoreAPIServices = eSyaStoreAPIServices;
             _logger = logger;

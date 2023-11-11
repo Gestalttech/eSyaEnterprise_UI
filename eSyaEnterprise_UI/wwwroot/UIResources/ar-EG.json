@@ -66,7 +66,7 @@
   "UI0065": "Please Enter the Tax Identification",
   "UI0066": "Please Enter the Tax Identification Description",
   "UI0067": "Please Enter the State Code",
-  "UI0068": "Please Enter the Financial year",
+  "UI0068": "Please Enter the year",
   "UI0069": "Please Enter the From Date",
   "UI0070": "Please Enter the To Date",
   "UI0071": "Please Select another process description",
@@ -214,8 +214,20 @@
   "UI0213": "Please Select Entity to add SMS",
   "UI0214": "Please Select Calendar Type",
   "UI0215": "Please Select Nationality",
-
-
+  "UI0216": "Please Select Parameter Type",
+  "UI0217": "Please Create the Vendor Details",
+  "UI0218": "Please Enter the Beneficiary Name",
+  "UI0219": "Please Enter the Bank Name",
+  "UI0220": "Please Enter the Account Number",
+  "UI0221": "Please Enter the Swift Code",
+  "UI0222": "Please Enter the IFSC Code",
+  "UI0223": "Please Create the Vendor Location",
+  "UI0224": "Please Enter the Statutory Description",
+  "UI0225": "Please Enter the Vendor Name",
+  "UI0226": "Please Enter the Credit Period days",
+  "UI0227": "Credit Period should not be Zero",
+  "UI0228": "Please Enter the Contact Person",
+  "UI0229": "Please Enter the Address",
 
 
 

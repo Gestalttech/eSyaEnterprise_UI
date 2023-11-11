@@ -43,18 +43,7 @@
             <input type="text" id="txtUserId" name="UserId" value=@ViewBag.UserID class="form-control" onchange="fnFillUserMasterOnEdit(this);" />
         </div>
     </div>
-    <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="form-group">
-            <label> @Localizer["LoginID"] </label>
-            <input type="text" id="txtLoginId" name="LoginID" value="" class="form-control" maxlength="20" pattern="^[a-zA-Z0-9]+$" />
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="form-group">
-            <label> @Localizer["LoginDescription"] </label>
-            <input type="text" id="txtLoginDescription" name="LoginDescription" value="" class="form-control" maxlength="50" />
-        </div>
-    </div>
+     
     <div class="col-lg-3 col-md-4 col-sm-12">
         <div class="form-group">
             <label> @Localizer["Password"] </label>
@@ -71,12 +60,7 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="form-group">
-            <label> @Localizer["EmailID"] </label>
-            <input type="text" id="txtemailid" name="emailid" value="" class="form-control" maxlength="50" />
-        </div>
-    </div>
+    
 
     <div class="col-lg-2 col-md-2 col-sm-4 d-flex align-items-end">
         <div class="form-group">
@@ -120,15 +104,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="form-group">
-            <label> @Localizer["Photo"] <span class="lblInfo"> (Only Jpg & png format)</span></label>
-            <div class="imagedig" style="border:thin; padding-bottom:5px;" id="imgPhoto">
-                <img id="imgPhotoimageblah" src="">
-                <input class="mdl-textfield__input fullwidth FileUpload" id="Photoimage" type="file" name="file" onchange="readPhotoimage(this);" accept='image/*' enctype="multipart/form-data" style="border-bottom:none !important" />
-            </div>
-        </div>
-    </div>
+  
     <div class="col-lg-2 col-md-2 col-sm-2">
     </div>
     <div class="col-lg-4 col-md-4 col-sm-4">
@@ -345,6 +321,8 @@
 
 
 </div>
+
+
 
 <script>
 

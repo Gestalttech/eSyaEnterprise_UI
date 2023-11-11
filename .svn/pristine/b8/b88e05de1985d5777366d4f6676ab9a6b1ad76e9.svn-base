@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="row padbot10">
+    <div class="col-lg-5 col-sm-6 col-md-5">
+        <div class="form-group">
+            <label>@Localizer["Itemdescription"] </label>
+            <input id="txtItemDescriptionforPartNumber" class="form-control" type="text" autocomplete="off" maxlength="75" />
+
+
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-md-2">
+        <div class="form-group">
+            <label>@Localizer["PartNumber"] </label>
+            <input id="txtPartNumber" class="form-control" type="text" autocomplete="off" maxlength="15" />
+
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-4 col-md-3">
+        <div class="form-group">
+            <label>@Localizer["PartDescription"] </label>
+            <input id="txtPartDescription" class="form-control" type="text" autocomplete="off" maxlength="100" />
+
+        </div>
+    </div>
+    <div class="col-lg-2 col-sm-4 col-md-3">
+        <div class="form-group">
+            <label class="lable-color"> @Localizer["Active"] </label>
+            <select class="selectpicker" id="cbostatusforPartNumber">
+                <option value="true">Active </option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnPartNumberDisabled" onclick="fnPartNumberSavebtn()">@Localizer["Save"] </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnCloseVendorDetails()">@Localizer["Cancel"] </button>
+    </div>
+</div>
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgVendorPartNumber"></table>
+        <div id="jqpVendorPartNumber"></div>
+    </div>
+</div>

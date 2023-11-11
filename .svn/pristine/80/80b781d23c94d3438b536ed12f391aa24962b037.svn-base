@@ -1,0 +1,18 @@
+﻿namespace eSyaEnterprise_UI.Areas.Vendor.Models
+{
+    public class DO_VendorBankdetails
+    {
+        public int VendorId { get; set; }
+        public string BenificiaryBankAccountNo { get; set; }
+        public string BenificiaryName { get; set; }
+        public string BenificiaryBankName { get; set; }
+        public string BankIfsccode { get; set; }
+        public string BankSwiftcode { get; set; }
+        public bool ActiveStatus { get; set; }
+        public string FormID { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+        //public int VendorCode { get; set; }
+        public int IsEdit { get; set; }
+    }
+}

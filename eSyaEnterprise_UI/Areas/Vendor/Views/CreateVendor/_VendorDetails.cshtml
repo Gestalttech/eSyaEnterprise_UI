@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="row padbot10 padtop15">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label>@Localizer["VendorName"] </label>
+                    <input id="txtVendorName" class="form-control" type="text" autocomplete="off" maxlength="100" pattern="^[a-zA-Z _]+$" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                    <label>@Localizer["CreditType"] </label>
+                    <select class="selectpicker" id="cboCreditType">
+                        <option value="P">@Localizer["PO"]</option>
+                        <option value="V">@Localizer["Vendor"]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group lbl-right">
+                    <label>@Localizer["CreditPeriod(indays)"] </label>
+                    <input id="txtCreditPeriod" class="form-control text-right" type="text" autocomplete="off" maxlength="2" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label>@Localizer["PreferredPaymentMode"] </label>
+                  
+                    <select class="selectpicker" data-live-search="true" id="cboPayMode" title="" data-size="8"
+                            asp-items="@ViewBag.PaymentPreferredMode">
+                        <option value="0">Select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                    <label>@Localizer["VendorClass"] </label>
+                  
+                    <select class="selectpicker" data-live-search="true" id="cboVendorClass" title="" data-size="8"
+                            asp-items="@ViewBag.VendorClass">
+                        <option value="0">Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="default-checkbox padtop20 form-group">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsBlockList">
+                        <input type="checkbox" id="chkIsBlockList" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">@Localizer["IsBlackListed"] </span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="default-checkbox padtop20 form-group">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                        <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="row m-0">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <p class="subheading">@Localizer["VendorParameters"] </p>
+            <hr class="left" />
+            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "2" })
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row padbot10">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveVendorDetails" onclick="fnSaveVendor()"> @Localizer["Save"] </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnCloseVendorDetails()">@Localizer["Cancel"] </button>
+    </div>
+</div>

@@ -162,7 +162,7 @@
                                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveUserMaster" onclick="">
                                                     <i class="fas fa-save"></i>  @Localizer["Save"]
                                                 </button>
-                                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="">
+                                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="" data-bs-dismiss="modal">
                                                     <i class="fa fa-times"></i>  @Localizer["Cancel"]
                                                 </button>
                                      </div>
@@ -181,7 +181,7 @@
                                               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveUserMaster" onclick="">
                                                     <i class="fas fa-save"></i>  @Localizer["Save"]
                                                 </button>
-                                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="">
+                                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-bs-dismiss="modal">
                                                     <i class="fa fa-times"></i>  @Localizer["Cancel"]
                                                 </button>
                                      </div>
@@ -197,7 +197,7 @@
 
 <script>
     $(function () {
-        $("#PopupUserCreation").modal('show');
+         
         if($(window).height() > '500px'){
             
             $('.modal-body').css({'height':'90vh'});

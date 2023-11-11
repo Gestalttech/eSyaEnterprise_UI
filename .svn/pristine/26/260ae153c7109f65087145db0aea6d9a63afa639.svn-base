@@ -1,0 +1,411 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "_UserCreation";
+    Layout = "";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
+@section scripts{
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/EndUser/UserCreation.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+<style>
+    .mdl-tabs__tab-bar {
+        justify-content: flex-start !important;
+    }
+
+    .mdl-tabs__tab {
+        width: 220px;
+    }
+
+    .mdl-tabs__panel {
+        padding: 24px 15px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-lg-12 collapse">
+        <div class="form-group">
+            <label> @Localizer["UserAuthentication"] </label>
+            <input type="text" id="txtUserAuthetication" name="UserId" value=@ViewBag.UserAuthentication class="form-control" />
+        </div>
+    </div>
+
+    <div class="col-lg-12 collapse">
+        <div class="form-group">
+            <label>@Localizer["UserID"]</label>
+            <input type="text" id="txtUserId" name="UserId" value=@ViewBag.UserID class="form-control" onchange="fnFillUserMasterOnEdit(this);" />
+        </div>
+    </div>
+     
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="form-group">
+            <label> @Localizer["Password"] </label>
+            <input type="password" id="txtPassword" name="Password" value="" class="form-control" maxlength="2000" />
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-2 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label> @Localizer["MobileNumber"] </label>
+            @await Component.InvokeAsync("IsdMobileInput", new { id = "MobileNo" })
+        </div>
+    </div>
+
+    
+
+    <div class="col-lg-2 col-md-2 col-sm-4 d-flex align-items-end">
+        <div class="form-group">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsApprover">
+                <input type="checkbox" id="chkIsApprover" class="mdl-checkbox__input">
+                <span class="mdl-checkbox__label">@Localizer["IsApprover"]</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-4 d-flex align-items-end">
+        <div class="form-group">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAllowMobileLogin">
+                <input type="checkbox" id="chkAllowMobileLogin" class="mdl-checkbox__input">
+                <span class="mdl-checkbox__label">@Localizer["AllowMobileLogin"]</span>
+            </label>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-4 d-flex align-items-end">
+        <div class="form-group">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsDoctor" id="lblIsDoctor" onchange="fncheckIsDoctor()">
+                <input type="checkbox" id="chkIsDoctor" class="mdl-checkbox__input">
+                <span class="mdl-checkbox__label">@Localizer["IsDoctor"]?</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4" id="divcboDoctors">
+        <div class="form-group">
+            <label> @Localizer["Doctor"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboDoctor" data-container="body" title="Select" asp-items="@ViewBag.Doctors">
+                <option value="0">Select</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+  
+    <div class="col-lg-2 col-md-2 col-sm-2">
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+        <div class="form-group">
+            <label> @Localizer["DigitalSignature"] <span class="lblInfo"> (Only Jpg & png format)</span></label>
+            <div class="imagedig" style="border:thin; padding-bottom:5px;" id="imgDS">
+                <img id="imgDSimageblah" src="">
+                <input class="mdl-textfield__input fullwidth FileUpload" id="DSimage" type="file" name="file" onchange="readDSimage(this);" enctype="multipart/form-data" style="border-bottom:none !important" />
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row padbot10">
+
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10" onclick="fnCancelUserMaster();">
+            <i class="fas fa-chevron-left"></i>  @Localizer["Back"]
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveUserMaster" onclick="fnSaveUserMaster();">
+            <i class="fas fa-save"></i>  @Localizer["Save"]
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" id="btnCancelUserMaster" onclick="fnClearUserMaster();"><i class="fas fa-redo"></i> @Localizer["Clear"]</button>
+
+    </div>
+</div>
+
+<div class="row" id="jqBusinessSegmentDiv">
+    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 form-group">
+        <table id="jqgUserBusinessSegment"></table>
+        <div id="jqpUserBusinessSegment"></div>
+    </div>
+</div>
+
+
+<div class="modal fade in" id="PopupBusinessSegment" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["EditBusinessSegment"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtCodeType" style="display:none">
+                    </div>
+                </div>
+                <div class="row padbot4">
+                    <div class="col-lg-12 collapse">
+                        <div class="form-group">
+                            <label>@Localizer["IUStatus"]  </label>
+                            <input type="text" id="txtIUStatus" name="IUStatus" value="" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 collapse">
+                        <div class="form-group">
+                            <label>@Localizer["BusinessKey"]  </label>
+                            <input type="text" id="txtBusinessKey" name="BusinessKey" value="" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label> @Localizer["LocationDescription"] </label>
+                            <input id="txtLocationDescription" class="form-control" maxlength="50" type="text" />
+
+                        </div>
+                    </div>
+                    @*<div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                    <label> @Localizer["UserGroup"] </label>
+                    <select class="selectpicker" data-live-search="false" id="cboUserGroup" data-container="body" title="Select" asp-items="@ViewBag.UserGroupList">
+                    <option value="0">Select</option>
+                    </select>
+                    </div>
+                    </div>*@
+                    @*<div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                    <div>
+                    <label> @Localizer["UserType"] </label>
+                    <select class="selectpicker" data-live-search="false" data-container="body" id="cboUserType" title="Select" asp-items="@ViewBag.UserTypeList">
+                    <option value="0">Select</option>
+                    </select>
+                    </div>
+                    </div>
+                    </div>*@
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="default-checkbox single">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsMultiSegmentApplicable">
+                                <input type="checkbox" id="chkIsMultiSegmentApplicable" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["AllowMultipleFinancialYear?"]</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="default-checkbox single">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveBusinessSegment" onclick="fnSaveUserBusinessLocation();">
+                            @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#"> @Localizer["Cancel"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="PopupUserRoleMenuLink" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["UserRoleMenuLink"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtUserRoleSegmentbusinesskey" style="display:none">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                        <table id="jqgUserRoleMenuLink"></table>
+                        <div id="jpgUserRoleMenuLink"></div>
+                    </div>
+                </div>
+
+                <div class="row padbot4">
+
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label> @Localizer["UserGroup"] </label>
+                            <select class="selectpicker" data-live-search="false" id="cboUserGroup" data-container="body" title="Select" asp-items="@ViewBag.UserGroupList" onchange="fncboUserGroup_change()">
+                                <option value="0">Select</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div>
+                                <label> @Localizer["UserType"] </label>
+                                <select class="selectpicker" data-live-search="false" data-container="body" id="cboUserType" title="Select" onchange="fncboUserType_change()"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div>
+                                <label> @Localizer["UserRole"] </label>
+                                <select class="selectpicker" data-live-search="false" data-container="body" title="Select" id="cboUserRole"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label> @Localizer["EffectiveFrom"]</label>
+                            <input id="dtEffectiveFrom" class="form-control" type="text" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label> @Localizer["EffectiveTill"]</label>
+                            <input id="dtEffectiveTill" class="form-control" type="text" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                        <div class="default-checkbox single">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkUserRoleActiveStatus">
+                                <input type="checkbox" id="chkUserRoleActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-center form-group">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveUserRoleMenuLink" onclick="fnSaveUserRoleMenuLink();">
+                            @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelUserRoleMenuLink"> @Localizer["Cancel"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    var sizeLimit = 1024 * 2;
+
+    function readPhotoimage(input) {
+        if (input.files && input.files[0]) {
+
+            var sizeInMb = input.files[0].size / 1024;
+
+            if (!(input.files[0].type.match(/image.*/))) {
+                toastr.warning("Invalid file format uploaded");
+                input.value = null;
+                return;
+            }
+            if (sizeInMb > sizeLimit) {
+                toastr.warning("User Photo file size should be smaller than 2 MB");
+                input.value = null;
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgPhotoimageblah').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readDSimage(input) {
+        if (input.files && input.files[0]) {
+
+            var sizeInMb = input.files[0].size / 1024;
+
+            if (!(input.files[0].type.match(/image.*/))) {
+                toastr.warning("Invalid file format uploaded");
+                input.value = null;
+                return;
+            }
+            if (sizeInMb > sizeLimit) {
+                toastr.warning("User Signature file size should be smaller than 2 MB");
+                input.value = null;
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgDSimageblah').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    $(function () {
+        if ($('#lblIsDoctor').is('.is-checked')) {
+            $("#divcboDoctors").show();
+        }
+        else {
+            $("#divcboDoctors").hide();
+        }
+
+        var isDoctorAvailable = $("#chkIsDoctor").parent().hasClass('is-checked');
+
+        if (isDoctorAvailable == "false" || isDoctorAvailable == false) {
+            $("#divcboDoctors").hide();
+        }
+        if (isDoctorAvailable == "true" || isDoctorAvailable == true) {
+            $("#divcboDoctors").show();
+        }
+    });
+
+    function fncheckIsDoctor() {
+        var resultisDoctorAvailable = $("#chkIsDoctor").parent().hasClass('is-checked');
+
+        if (resultisDoctorAvailable == "false" || resultisDoctorAvailable == false) {
+            $("#divcboDoctors").hide();
+            $("#cboDoctors").val('0');
+            $('#cboDoctors').selectpicker('refresh');
+        }
+        if (resultisDoctorAvailable == "true" || resultisDoctorAvailable == true) {
+            $("#divcboDoctors").show();
+        }
+    }
+</script>
+
