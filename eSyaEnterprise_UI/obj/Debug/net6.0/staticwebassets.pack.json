@@ -3621,12 +3621,20 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\Actions.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\AgeRange.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\AgeRange.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\ApplicationCodes.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\ApplicationCodes.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\AreaController.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\AreaController.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\BusinessCalendar.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\BusinessCalendar.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\BusinessLocation.js",

@@ -228,7 +228,17 @@
   "UI0227": "Credit Period should not be Zero",
   "UI0228": "Please Enter the Contact Person",
   "UI0229": "Please Enter the Address",
-  
+  "UI0230": "Please Enter the Range Description",
+  "UI0231": "Please Enter the Age Range From",
+  "UI0232": "Please Select the Range From Period",
+  "UI0233": "Please Enter the Age Range To",
+  "UI0234": "Please Enter the Range To Period",
+  "UI0235": "Please Enter the Effective from",
+  "UI0236": "Please Enter Item Description",
+  "UI0237": "Please Enter the part number",
+  "UI0238": "Please Enter the part description",
+  "UI0239": "Please Enter Patient ID Generation",
+
 
 
 

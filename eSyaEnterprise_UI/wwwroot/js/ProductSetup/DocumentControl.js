@@ -266,10 +266,6 @@ function fnSaveDocumentControl() {
 
 function fnValidateDocumentControl() {
     
-    //if ($("#cboformId").val() === "0" || $("#cboformId").val() === '0') {
-    //    toastr.warning("Please Select Form");
-    //    return false;
-    //}
     if (IsStringNullorEmpty($("#txtDocumentId").val())) {
         fnAlert("w", "EPS_08_00", "UI0017", errorMsg.DocumentID_E1);
         return false;

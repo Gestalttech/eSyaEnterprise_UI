@@ -7,9 +7,9 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup
 {
     public class CodeTypeValues
     {
-        public const int PaymentMode = 80;
-        public const int PaymentCategory = 82;
-        public const int IsdocumentnoRequired = 2;
+        //public const int PaymentMode = 80;
+        //public const int PaymentCategory = 82;
+        //public const int IsdocumentnoRequired = 2;
         public const int Nationality = 19;
     }
 }

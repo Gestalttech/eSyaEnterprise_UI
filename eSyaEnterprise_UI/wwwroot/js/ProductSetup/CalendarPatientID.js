@@ -138,12 +138,12 @@ function fnGridLoadCalendarPatientGeneration() {
                 successfunc: function (result) {
                     var resp = JSON.parse(result.responseText);
                     if (resp.Status) {
-                        toastr.success(resp.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                         RefreshCalendarDetailsGrid();
                         return true;
                     }
                     else {
-                        toastr.error(resp.Message);
+                        fnAlert("e", "", response.StatusCode, response.Message);
                         RefreshCalendarDetailsGrid();
                         return false;
                     }
@@ -183,8 +183,8 @@ function fnGridLoadCalendarPatientGeneration() {
 //}
 function ValidatePatientIdGeneration(value, PatientIdgen) {
     if (value == "" || value == null || value =="-") {
-        fnAlert("w", "EPS_26_00", "UI0053", "Please Enter Patient ID Generation");
-        return [false, "Please Enter Patient serial Id"];
+        fnAlert("w", "EPS_26_00", "UI0239", errorMsg.PatientID_E1);
+        return [false, ""];
     }
     else {
         return [true, ""];

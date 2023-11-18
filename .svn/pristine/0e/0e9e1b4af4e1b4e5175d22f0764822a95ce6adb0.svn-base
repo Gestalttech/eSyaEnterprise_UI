@@ -1,0 +1,115 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_32_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@section Scripts{
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+    <script src="~/js/ProductSetup/BusinessCalendar.js"></script>
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        BusinessKey: '@Localizer["BusinessKey"]',
+        DocumentId: '@Localizer["DocumentId"]',
+        EffectiveFrom: '@Localizer["EffectiveFrom"]',
+        CalendarType: '@Localizer["CalendarType"]',
+        EffectiveTill: '@Localizer["EffectiveTill"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
+        DocumentDesc: '@Localizer["DocumentDesc"]',
+        CalendarTypeDesc: '@Localizer["CalendarTypeDesc"]',
+        EditBusinessCalendar: '@Localizer["EditBusinessCalendar"]',
+        BusinessCalendar: '@Localizer["BusinessCalendar"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        View: '@Localizer["View"]',
+        Edit: '@Localizer["Edit"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Update: '@Localizer["Update"]',
+    }
+    var errorMsg = {
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]'
+    }
+ </script>
+
+    <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 form-group">
+            <label>@Localizer["BusinessKey"]</label>
+        <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="ChooseBusinessKey" data-size="8" asp-items="@ViewBag.BusinessKeys" onchange="fnBusinessKeyOnchange()"></select>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <table id="jqgBusinessCalendar"></table>
+            <div id="jqpBusinessCalendar"></div>
+        </div>
+    </div>
+
+<div class="modal fade in" id="PopupBusinessCalendar" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["EditBusinessCalendar"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["DocumentId"]</label>
+                            <input type="text" class="form-control" id="txtDocumentId" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["DocumentDesc"]</label>
+                            <input type="text" class="form-control" id="txtDocumentDesc" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["EffectiveFrom"]</label>
+                            <input type="text" class="form-control" id="txtEffectiveFrom"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["CalendarType"]</label>
+                            <select class="selectpicker" id="cboCalendarType" data-container="body" data-size="5">
+                                <option value="0">Choose Calendar Type </option>
+                                <option value="FY">Financial Year</option>
+                                <option value="CY">Calendar Year</option>
+                                <option value="NA">Not Applicable</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveBusinessCalendar" onclick="fnSaveBusinessCalendar()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelBusinessCalendar"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
