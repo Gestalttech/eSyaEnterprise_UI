@@ -45,6 +45,10 @@ function fnLoadVendorItemLink() {
         autowidth: 'auto',
         shrinkToFit: true,
         forceFit: true,
+        caption: localization.VendorItemLink,
+        loadComplete: function (data) {
+            fnJqgridSmallScreen("jqgVendorItemLink");
+        },
     }).jqGrid('navGrid', '#jqpVendorItemLink', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpVendorItemLink', {
         caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: toRefresh
     });

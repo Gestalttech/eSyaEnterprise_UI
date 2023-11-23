@@ -43,6 +43,9 @@
             Update: '@Localizer["Update"]',
             ZipSerialNumber: '@Localizer["ZipSerialNumber"]',
             ZipcodeList: '@Localizer["ZipcodeList"]',
+            CountryArea: '@Localizer["CountryArea"]',
+            SelectState: '@Localizer["SelectState"]',
+            SelectCity: '@Localizer["SelectCity"]',
         }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -59,6 +62,7 @@
         ZipDesc_E12: '@Localizer["UI0164"]',
         ClickAdd_E13: '@Localizer["UI0165"]',
         AreaDesc_E14: '@Localizer["UI0166"]',
+        CityAdd_E8: '@Localizer["UI0162"]',
     }
 </script>
 <style>
@@ -74,15 +78,15 @@
    
     <div class="col-lg-3 col-md-3 col-sm-12 form-group">
         <label>State</label>
-        <select class="selectpicker" data-live-search="true" id="cboStateCode" title="Select" onchange="fnBindCitiesCodes();">
-            <option value="0">Select</option>
+        <select class="selectpicker" data-live-search="true" id="cboStateCode" title="SelectState" onchange="fnBindCitiesCodes();">
+            <option value="0">Select State</option>
         </select>
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-12 form-group">
         <label>City</label>
-        <select class="selectpicker" data-live-search="true" id="cboCityCode" title="Select" onchange="fnGridLoadZipcodeHeader();">
-            <option value="0">Select</option>
+        <select class="selectpicker" data-live-search="true" id="cboCityCode" title="SelectCity" onchange="fnGridLoadZipcodeHeader();">
+            <option value="0">Select </option>
         </select>
     </div>
 </div>

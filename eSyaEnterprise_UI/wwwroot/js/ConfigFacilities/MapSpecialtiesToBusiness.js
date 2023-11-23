@@ -160,8 +160,8 @@ function fnFillSpecialtyDetail(specialtyId) {
                 $('#cboGender').selectpicker('refresh');
                 $('#cboSpecialtyType').val(response.SpecialtyType);
                 $('#cboSpecialtyType').selectpicker('refresh');
-                $('#cboAliedServices').val(response.AlliedServices);
-                $('#cboAliedServices').selectpicker('refresh');
+                $('#cboSpecialtyGroup').val(response.SpecialtyGroup); 
+                $('#cboSpecialtyGroup').selectpicker('refresh');
                 if (response.ActiveStatus === true)
                     $('#chkActiveStatus').parent().addClass("is-checked");
                 else

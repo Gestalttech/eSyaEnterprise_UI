@@ -20,13 +20,13 @@ function fnLoadBankDetails() {
         colModel: [
         { name: 'VendorId', width: '40', resizable: false, hidden: true },
         { name: 'BenificiaryName', width: '170', resizable: false },
-        { name: 'BenificiaryBankName', width: '100', resizable: false },
+        { name: 'BenificiaryBankName', width: '170', resizable: false },
         { name: 'BenificiaryBankAccountNo', width: '150', resizable: false },
         { name: 'BankSwiftcode', width: '80', resizable: false },
         { name: 'BankIfsccode', width: '80', resizable: false },
         { name: "ActiveStatus", width: '50', editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
         {
-            name: '', width: '60', resizable: false, align: 'left',
+            name: 'edit', width: '100', resizable: false, align: 'left',
             formatter: function (cellValue, options, rowObject) {
                 var ret = '<button class="btn-xs ui-button ui- widget ui-corner-all btn-jqgrid" title="Edit" onclick="fnEditBankDetails(event)\"><i class="fas fa-pen"></i>' + localization.Edit+' </button>'
                 return ret;
@@ -48,6 +48,7 @@ function fnLoadBankDetails() {
         autowidth: 'auto',
         shrinkToFit: true,
         forceFit: true,
+        caption: localization.VendorBank,
      }).jqGrid('navGrid', '#jqpVendorBankDetails', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpVendorBankDetails', {
         caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: fnRefreshBankGrid
     });
@@ -71,7 +72,7 @@ function fnEditBankDetails(e) {
     else {
         $("#chkbanktatus").parent().removeClass("is-checked");
     }
-    $("#btnSaveBankDetails").html(localization.Update);
+    $("#btnSaveBankDetails").html("<i class='fa fa-sync'></i> " +localization.Update);
 }
 
 function fnSaveBankDetails() {
@@ -158,6 +159,6 @@ function fnClearBankDetails() {
     $("#txtswiftcode").val('');
     $("#txtifsccode").val('');
     $("#chkbanktatus").parent().addClass("is-checked");
-    $("#btnSaveBankDetails").html(localization.Save);
+    $("#btnSaveBankDetails").html("<i class='fa fa-save'></i> " +localization.Save);
     
 }

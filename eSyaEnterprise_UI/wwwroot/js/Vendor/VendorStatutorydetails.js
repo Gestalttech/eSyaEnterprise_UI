@@ -34,6 +34,10 @@
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
+        caption: localization.VendorStatutoryDetails,
+        loadComplete: function (data) {
+            fnJqgridSmallScreen("jqgLocationDetails");
+        },
         onSelectRow: function (rowid) {
           
            var locId = $("#jqgLocationDetails").jqGrid('getCell', rowid, 'VendorLocationId');
@@ -54,7 +58,7 @@ function fnGetStatutorydetails(vcode,locId) {
     $("#chkstatutorystatus").parent().addClass("is-checked");
     $("#divstatutorydetailsform").show();
     $("#lbllocationId").text(locId);
-    $("#btnsavestatutory").html("Save");
+    $("#btnsavestatutory").html('<i class="fa fa-save"></i>  Save');
 }
 
 function fnloadVendorStatutorydetails() {
@@ -162,11 +166,11 @@ function fnEditStatutoryDetails(e) {
     else {
         $("#chkstatutorystatus").parent().removeClass("is-checked");
     }
-    $("#btnsavestatutory").html(localization.Update);
+    $("#btnsavestatutory").html('<i class="fa fa-sync"></i> ' +localization.Update);
 }
 
 function fnClearStatutoryDetails() {
     $("#txtstatutorycode").val('');
     $("#txtstatdetailsDesc").val('');
-    $("#btnsavestatutory").html(localization.Save);
+    $("#btnsavestatutory").html('<i class="fa fa-save"></i> '+localization.Save);
 }

@@ -88,15 +88,21 @@ function fnGetUnitsValidity(spid) {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.FromDate, localization.NoOfUnints],
+        colNames: [localization.FromDate, localization.EffectiveTill, localization.NoOfUnints, localization.Active],
 
         colModel: [
             //{ name: "EffectiveFrom", width: 100, editable: false, align: 'left', formatter: 'date', formatoptions: { srcformat: 'Y/m/d H:i:s', newformat: 'd/m/Y' } },
             {
-                name: 'EffectiveFrom', index: 'EffectiveFrom', width: 100, sorttype: "date", formatter: "date", formatoptions:
+                name: 'EffectiveFrom', index: 'EffectiveFrom', width: 140, sorttype: "date", formatter: "date", formatoptions:
+                    { newformat: _cnfjqgDateFormat }
+            },
+            {
+                name: 'EffectiveTill', index: 'EffectiveTill', width: 140, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
             { name: "NoOfUnits", width: 100, editable: false, align: 'left' },
+            { name: "ActiveStatus", width: 50, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+
         ],
         rowNum: 10,
         rowList: [10, 20, 30, 50],

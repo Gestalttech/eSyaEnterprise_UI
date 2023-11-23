@@ -1,6 +1,7 @@
 ﻿var businesslocation = false;
+var activeTabName = "";
 $(document).ready(function () {
-
+    $("#lblDisplayNames").val('');
 
     $.contextMenu({
         // define which elements trigger this menu
@@ -45,7 +46,7 @@ $(document).ready(function () {
             { name: "SupplierScore", editable: true, width: 90, align: 'left', },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
-                name: 'edit', search: false, align: 'left', width: 120, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return "<a href='javascript:fnDelete_TaxStructure()' class='ui-icon ui-icon-closethick'></a>";
                 }
@@ -91,11 +92,11 @@ function fnloadVendorGrid(alphabet) {
             { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
             { name: "PreferredPaymentMode", width: 10, editable: true, align: 'left', hidden: true },
             { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "CreditType", width: 40, editable: true, align: 'center' },
-            { name: "CreditPeriod", width: 40, editable: true,  align: 'center', resizable: true },
-            { name: "ApprovalStatus", editable: true, width: 45, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
-            { name: "IsBlackListed", editable: true, width: 45, align: 'center', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
-            { name: "SupplierScore", editable: true, width: 40, align: 'left',  },
+            { name: "CreditType", width: 50, editable: true, align: 'center' },
+            { name: "CreditPeriod", width: 100, editable: true,  align: 'left', resizable: true },
+            { name: "ApprovalStatus", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
+            { name: "IsBlackListed", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
+            { name: "SupplierScore", editable: true, width: 90, align: 'left',  },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             
             {
@@ -119,6 +120,7 @@ function fnloadVendorGrid(alphabet) {
         autowidth: true,
         shrinkToFit: true,
         scrollOffset: 0,
+        caption: localization.VendorRegister,
         loadComplete: function (data) {
             SetGridControlByAction();
             fnJqgridSmallScreen("jqgVendorRegister");
@@ -158,34 +160,38 @@ function fnloadVendorGrid(alphabet) {
         });
     fnAddGridSerialNoHeading();
 }
-$('#v-pills-tab a').on('click', function (e) {
-    var activeTabName = "";
+$('#v-pills-tab button').on('click', function (e) {
+    
     e.preventDefault()
     $(".tab-pane").removeClass('show active');
-    activeTabName = $(this).attr("href");
-    $(activeTabName).addClass("show");
+    activeTabName = $(this).attr("data-bs-target");
+    $(activeTabName).addClass("show active");
     //if (activeTabName == "#statutorydetails") {
     //    fnGridLoadCustomerLocation();
     //}
+   
+    $("#lblDisplayNames").text('');
+    $("#lblDisplayNames").text(e.currentTarget.innerHTML);
 })
 
 function fnAddVendor() {
     fnEnableVendorRegister(false);
     $('#txtVendorCode').val('');
-    $("#vendordetails-tab").addClass("active");
-    $("#vendordetails").addClass("show active");
+    
     $("#divForm").css("display", "block");
     $("#divGrid").hide();
     $("#chkActiveStatus").parent().addClass("is-checked");
     businesslocation = false;
-    $("#btnSaveVendorDetails").html(localization.Save);
+    $("#btnSaveVendorDetails").html('<i class="fa fa-save"></i> ' + localization.Save);
+    fnSetSidebar();
+    $("#lblDisplayNames").text("VendorDetails");
 }
 
 function fnEditVendor(e,actiontype) {
     
     var rowid = $("#jqgVendorRegister").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgVendorRegister').jqGrid('getRowData', rowid);
-
+    
     $("#txtVendorCode").val(rowData.VendorId);
     $("#txtVendorName").val(rowData.VendorName);
     $('#cboCreditType').val(rowData.CreditType);
@@ -194,7 +200,7 @@ function fnEditVendor(e,actiontype) {
     $('#cboPayMode').val(rowData.PreferredPaymentMode);
     $('#cboPayMode').selectpicker('refresh');
     $('#cboVendorClass').val(rowData.VendorClass);
-    $('#cboVendorClass').selectpicker('refresh');
+    $('#cboVendorClass').selectpicker('refresh'); $("#lblDisplayNames").text("VendorDetails");
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -212,6 +218,7 @@ function fnEditVendor(e,actiontype) {
     $("#divGrid").hide();
     $("#vendorDetails-tab").addClass("active");
     $("#vendorDetails").addClass("show active");
+    
     if ($("#txtVendorCode").val() > 0) {
         $("#divForm").css("display", "block");
         $("#divGrid").hide();
@@ -219,7 +226,8 @@ function fnEditVendor(e,actiontype) {
         $("#vendorDetails-tab").addClass("active");
         $("#vendorDetails").addClass("show active");
     }
-
+    fnSetSidebar();  //Setting the sidebar - UI
+    
     eSyaParams.ClearValue();
 
     $.ajax({
@@ -247,8 +255,8 @@ function fnEditVendor(e,actiontype) {
         }
         $("#btnSaveUnitofMeasure").show();
         fnEnableVendorRegister(false);
-        $("#btnSaveVendorDetails").html(localization.Update);
-        $("#btnSaveSMSInformation").html('Update');
+        $("#btnSaveVendorDetails").html('<i class="fa fa-sync"></i> ' +localization.Update);
+        $("#btnSaveSMSInformation").html('<i class="fa fa-sync"></i> Update');
         $("#btnSaveBankDetails,#btnPartNumberDisabled,#btnsavestatutory,#btnSaveBusinessLink,#btnSaveVendorDetails,#btnlocationsave,#btnSaveSupplyGroup").show();
         businesslocation = false;
     }
@@ -370,6 +378,7 @@ function fnClearVendorReg() {
     $("#btnSaveBankDetails,#btnPartNumberDisabled,#btnsavestatutory,#btnSaveBusinessLink,#btnSaveVendorDetails,#btnlocationsave,#btnSaveSupplyGroup").show();
     //location.reload();
     businesslocation = false;
+    $("#lblDisplayNames").text("VendorDetails");
     eSyaParams.ClearValue();
 }
 
@@ -377,10 +386,8 @@ function fnClearVendorReg() {
 function fnCloseVendorDetails() {
     $("#divGrid").show();
     $("#divForm").css("display", "none");
-    $(".tab-pane").removeClass('show active');
-    $("#v-pills-tab a").removeClass("active");
-    $("#vendorDetails-tab").addClass("active");
-    $("#vendorDetails").addClass("show active");
+    $(".tab-pane").removeClass('active show');
+    $("#v-pills-tab button").removeClass("active");
     $('#txtVendorCode').val("0");
     fnClearVendorReg();
     fnClearStatutoryDetails();
@@ -405,7 +412,7 @@ function fnEnableVendorRegister(val) {
 }
 
 function fnDeActivateVendor(e) {
-
+    fnSetSidebar();
     if (_userFormRole.IsDelete === false) {
         fnAlert("w", "EPS_02_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
         return;
@@ -471,4 +478,17 @@ function fnDeActivateVendor(e) {
             }
         }
     });
+}
+
+function fnSetSidebar() {
+    var _tabcontent = $(".tab-content").offset();
+    var _fullH = $(window).height();
+    var _newTabH = (_fullH - _tabcontent.top - 15);
+    var windW = $(window).width();
+    if (windW > 1099) {
+        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
+    }
+    else {
+        $(".tab-content").css({ "height": _newTabH, "overflow-y": "auto" });
+    }
 }

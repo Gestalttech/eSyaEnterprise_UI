@@ -45,6 +45,7 @@ $(document).ready(function () {
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
+        caption:localization.VendorApprovalList,
         onSelectRow: function (rowid, status, e) {
             SelectedVndrCode = $("#jqvApprovalList").jqGrid('getCell', rowid, 'VendorCode');
             SelectedVndrNam = $("#jqvApprovalList").jqGrid('getCell', rowid, 'VendorName');

@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ManageRates.Data;
 using eSyaEnterprise_UI.Areas.ManageRates.Models;
 using eSyaEnterprise_UI.Models;
@@ -67,7 +68,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
                 _logger.LogError(new Exception(serviceResponse1.Message), "UD:EFM_10_00:GetServicesPerformedByDoctor");
             }
 
-            var serviceResponse2 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=62");
+            var serviceResponse2 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.RateType);
             if (serviceResponse2.Status)
             {
                 if (serviceResponse2.Data != null)
@@ -230,7 +231,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
                 _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1517_00:GetServicesPerformedByDoctor");
             }
 
-            var serviceResponse2 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=62");
+            var serviceResponse2 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.RateType);
             if (serviceResponse2.Status)
             {
                 if (serviceResponse2.Data != null)

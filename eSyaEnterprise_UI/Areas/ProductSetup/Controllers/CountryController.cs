@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ProductSetup.Data;
 using eSyaEnterprise_UI.Areas.ProductSetup.Models;
 using eSyaEnterprise_UI.Extension;
@@ -68,7 +69,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 /// Getting Currency List
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyMaster>>("Currencies/GetActiveCurrencyList");
 
-                var serviceNationality = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeType?codeType="+ CodeTypeValues.Nationality);
+                var serviceNationality = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.Nationality);
                 if (serviceResponse.Status && serviceNationality.Status)
                 {
                     ViewBag.Nationality = serviceNationality.Data;

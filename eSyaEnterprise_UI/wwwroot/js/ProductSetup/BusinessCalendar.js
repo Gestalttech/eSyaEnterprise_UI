@@ -40,7 +40,7 @@ function fnLoadGridBusinessCalendar() {
                 { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
                 { name: "DocumentId", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
                 { name: "DocumentDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
-                { name: "CalendarType", width: 40, editable: false, hidden: false, align: 'left', resizable: true, formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year; NA:Not Applicable" } },
+                { name: "CalendarType", width: 40, editable: false, hidden: false, align: 'left', resizable: true, formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year;NA:Not Applicable" } },
                 {
                     name: "EffectiveFrom", width: 40, editable: false, hidden: false, align: 'left', resizable: true, sorttype: "date", formatter: "date", formatoptions:
                         { newformat: _cnfjqgDateFormat }

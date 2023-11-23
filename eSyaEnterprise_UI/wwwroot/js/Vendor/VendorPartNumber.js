@@ -54,6 +54,7 @@ function fnLoadPartNumber() {
         autowidth: 'auto',
         shrinkToFit: true,
         forceFit: true,
+        caption:localization.VendorPartNumber,
         onSelectRow: function (rowid) {
             Selected = 1;
             selectedPRTNUMVC = $("#jqgVendorPartNumber").jqGrid('getCell', rowid, 'VendorCode');
@@ -61,6 +62,9 @@ function fnLoadPartNumber() {
             SelectedPRTNUMNumber = $("#jqgVendorPartNumber").jqGrid('getCell', rowid, 'PartNumber');
             SelectedPRTNUMDSC = $("#jqgVendorPartNumber").jqGrid('getCell', rowid, 'PartDesc');
             SelectedPRTNUMActiveStatus = $("#jqgVendorPartNumber").jqGrid('getCell', rowid, 'ActiveStatus');
+        },
+        loadComplete: function () {
+            fnJqgridSmallScreen("jqgVendorPartNumber");
         },
     }).jqGrid('navGrid', '#jqpVendorPartNumber', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpVendorPartNumber', {
         caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: toRefresh
@@ -110,13 +114,13 @@ function fnPartNumberSavebtn() {
 
             var MSGKey = JSON.parse(res);
             if (MSGKey.Status === false) {
-                fnAlert(MSGKey.Message, "e");
+                fnAlert("w","","", MSGKey.Message);
                 $("#btnPartNumberDisabled").attr("disabled", false);
                 return false;
             }
 
             if (MSGKey.Status == true) {
-                fnAlert(MSGKey.Message, "s");
+                fnAlert("s","","",MSGKey.Message);
                 $("#btnPartNumberDisabled").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 _fnClearPartNumber();
                 $("#jqgVendorPartNumber").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -184,12 +188,12 @@ function _fnDeletePartNumber(e) {
 
                         var MSGPartDel = JSON.parse(res);
                         if (MSGPartDel.Status == false) {
-                            fnAlert(MSGPartDel.Message, "e");
+                            fnAlert("w","","",MSGPartDel.Message);
                             return false;
                         }
 
                         if (MSGPartDel.Status == true) {
-                            fnAlert(MSGPartDel.Message, "s");
+                            fnAlert("s", "", "", MSGPartDel.Message);
                             fnLoadPartNumber();
                             _fnClearPartNumber();
                             return true;
@@ -210,17 +214,17 @@ function _fnvalidationpartNumber() {
     var PartDescription = $("#txtPartDescription").val();
 
     if (ItemDescription == null || ItemDescription == "") {
-        fnAlert("Please Enter Item Description" , "e");
+       fnAlert("w", "EVN_01_00", "UI0229", errorMsg.ItemDesc_E22);
         return false;
     }
 
     if (PartNumber == null || PartNumber == "") {
-        fnAlert("Please Enter  Part Number" , "e");
+        fnAlert("w", "EVN_01_00", "UI0237", errorMsg.Partnumber_E23);
         return false;
     }
 
     if (PartDescription == null || PartDescription == "") {
-        fnAlert("Please Enter Part Description" , "e");
+        fnAlert("w", "EVN_01_00", "UI0238", errorMsg.PartDesc_E24);
         return false;
     }
 }

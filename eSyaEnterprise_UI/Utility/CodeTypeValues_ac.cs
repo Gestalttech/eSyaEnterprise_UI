@@ -15,5 +15,6 @@ namespace eSyaEnterprise_UI.Utility
 
 
         public const int UserGroup = 1;
+        
     }
 }

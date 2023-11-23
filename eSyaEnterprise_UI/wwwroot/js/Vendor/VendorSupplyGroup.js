@@ -38,6 +38,10 @@
             shrinkToFit: true,
             forceFit: true,
             scroll: false, scrollOffset: 0,
+            caption: localization.VendorSupplyGroup,
+            loadComplete: function () {
+                fnJqgridSmallScreen("jqgSupplyGroup");
+            },
             onSelectRow: function (rowid) {
                 ParameterId = $("#jqgSupplyGroup").jqGrid('getCell', rowid, 'ParameterId');
 

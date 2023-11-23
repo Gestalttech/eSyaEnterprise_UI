@@ -74,7 +74,6 @@ $(document).on('focusout', '[role="gridcell"] *', function () {
 
 function fnSaveBusinessStatutory() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() === 0) {
-        toastr.warning("Please Select a Business Location");
         fnAlert("w", "EBM_01_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         return false;
     }

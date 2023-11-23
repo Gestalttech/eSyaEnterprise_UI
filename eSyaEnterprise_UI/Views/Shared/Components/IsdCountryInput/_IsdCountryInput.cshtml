@@ -6,7 +6,7 @@
 <div class="row" id="mobileform">
     <div class="col-12 col-lg-12 col-md-12 col-sm-12">
         <select name="cboISDCodes" class="selectpicker" data-container="body" data-live-search="true" id="@ViewBag.cboID" title="" data-size="8" onchange="fnISDCountryCode_onChange()">
-            <option value="0">select</option>
+            <option value="0">Select Country</option>
             @if (ViewBag.ISDCodes != null)
             {
                 foreach (var c in ViewBag.ISDCodes)

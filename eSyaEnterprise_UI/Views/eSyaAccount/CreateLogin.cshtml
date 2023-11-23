@@ -1,8 +1,20 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "User Creation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+  <script>
+         var errorMsg = {
+            LoginID_E1: '@Localizer["UI0094"]',
+            LoginDesc_E2: '@Localizer["UI0095"]',
+            Password_E3: '@Localizer["UI0096"]',
+            UserGroup_E4: '@Localizer["UI0130"]',
+            UserType_E5: '@Localizer["UI0131"]',
+         }
+  </script>
 <section id="divUser">
     <div class="row padbot10">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -90,12 +102,8 @@
 <script>
 
     $(function () {
-
-
-
         fnLoadeSyaUserGrid();
-
-    });
+     });
 
     function fnLoadeSyaUserGrid() {
 
@@ -153,7 +161,7 @@
         $('#PopupCreateUser').find('.modal-title').text("Add eSya User");
         fnClearFields();
         _userID = 0;
-        $("#btnSave").html('Save');
+        $("#btnSave").html('<i class="fa fa-save"></i> Save');
     }
 
     var _userID = 0;
@@ -217,27 +225,27 @@
     function fnSaveUserCreation() {
 
         if (IsStringNullorEmpty($("#txtLoginID").val())) {
-            toastr.warning("Please enter the Login ID");
+            fnAlert("w", "", "UI0094", errorMsg.LoginID_E1);
             return false;
         }
         if (IsStringNullorEmpty($("#txtLoginDesc").val())) {
-            toastr.warning("Please enter the Login Desc");
+            fnAlert("w", "", "UI0095", errorMsg.LoginDesc_E2);
             return false;
         }
 
         if (_userID <= 0) {
             if (IsStringNullorEmpty($("#txtPassword").val())) {
-                toastr.warning("Please enter the password");
+                fnAlert("w", "", "UI0096", errorMsg.Password_E3);
                 return false;
             }
         }
 
         if (IsStringNullorEmpty($("#cboUserGroup").val())) {
-            toastr.warning("Please select the user group");
+            fnAlert("w", "", "UI0130", errorMsg.UserGroup_E4);
             return false;
         }
         if (IsStringNullorEmpty($("#cboUserType").val())) {
-            toastr.warning("Please select the user type");
+            fnAlert("w", "", "UI0130", errorMsg.UserType_E5);
             return false;
         }
 
@@ -266,15 +274,15 @@
                 if (response.Status === true) {
                     $('#PopupCreateUser').modal('hide');
                     $("#jqgUser").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
-                    toastr.success("Saved");
+                    fnAlert("s", "", response.StatusCode, response.Message);
                 }
                 else {
-                    toastr.error(response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSave").attr("disabled", false);
             },
             error: function (error) {
-                toastr.error(error.statusText);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnSave").attr("disabled", false);
             }
         });

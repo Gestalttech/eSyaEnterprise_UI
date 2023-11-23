@@ -12,7 +12,7 @@
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["", "", "", "", localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.WhatsappNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
+        colNames: ["", "", "", "", localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.WhatsAppNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorLocationId", width: 70, editable: true, align: 'left', hidden: true },
@@ -47,11 +47,16 @@
         autowidth: true,
         shrinkToFit: true,
         forceFit: true,
+        caption: localization.VendorLocation,
+        loadComplete: function () {
+            fnJqgridSmallScreen("jqgVendorLocation");
+        },
     }).jqGrid('navGrid', '#jqpVendorLocation', { add: false, edit: false, search: false, del: false, refresh: false })
         .jqGrid('navButtonAdd', '#jqpVendorLocation', {
             caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshlocationGrid
         });
     fnAddGridSerialNoHeading();
+    
 }
 
 function fnSaveLocation() {
@@ -83,7 +88,7 @@ function fnSaveLocation() {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 fnRefreshlocationGrid();
-                $("#btnlocationsave").html("Save");
+                $("#btnlocationsave").html("<i class='fa fa-save'></i> Save");
                 fnClearLocationfields();
                 return true;
             }
@@ -128,7 +133,7 @@ function fnEditLocation(e) {
         $("#chkDefaulultloc").parent().removeClass("is-checked");
     }
 
-    $("#btnlocationsave").html(localization.Update);
+    $("#btnlocationsave").html("<i class='fa fa-sync'></i> "+localization.Update);
 }
 
 function IsValidLocation() {
@@ -194,7 +199,7 @@ function fnClearLocationfields () {
     $("#txtwhatsappnumber").val('');
     $("#txtvendoremailid").val('');
     $("#chklocationstatus").parent().addClass("is-checked");
-    $("#btnlocationsave").html(localization.Save);
+    $("#btnlocationsave").html("<i class='fa fa-save'></i> " +localization.Save);
 }
 
 

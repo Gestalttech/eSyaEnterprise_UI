@@ -36,7 +36,7 @@ function fnBindStatesCodes() {
                 //refresh each time
                 $("#cboStateCode").empty();
 
-                $("#cboStateCode").append($("<option value='0'> Select </option>"));
+                $("#cboStateCode").append($("<option value='0'> Select State </option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboStateCode").append($("<option></option>").val(response[i]["StateCode"]).html(response[i]["StateDesc"]));
@@ -46,7 +46,7 @@ function fnBindStatesCodes() {
             }
             else {
                 $("#cboStateCode").empty();
-                $("#cboStateCode").append($("<option value='0'> Select </option>"));
+                $("#cboStateCode").append($("<option value='0'> Select State </option>"));
                 $('#cboStateCode').selectpicker('refresh');
             }
 
@@ -75,7 +75,7 @@ function fnBindCitiesCodes() {
                 //refresh each time
                 $("#cboCityCode").empty();
 
-                $("#cboCityCode").append($("<option value='0'> Select </option>"));
+                $("#cboCityCode").append($("<option value='0'> Select City</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboCityCode").append($("<option></option>").val(response[i]["CityCode"]).html(response[i]["CityDesc"]));
@@ -84,7 +84,7 @@ function fnBindCitiesCodes() {
             }
             else {
                 $("#cboCityCode").empty();
-                $("#cboCityCode").append($("<option value='0'> Select </option>"));
+                $("#cboCityCode").append($("<option value='0'> Select City</option>"));
                 $('#cboCityCode').selectpicker('refresh');
             }
 
@@ -170,7 +170,7 @@ function fnAddZipcode() {
         fnAlert("w", "EAD_01_00", "UI0159", errorMsg.StateAdd_E7);
     }
     else if (cid === 0 || cid === "0" || IsStringNullorEmpty($("#cboCityCode").val())) {
-        fnAlert("w", "EAD_01_00", "UI0158", errorMsg.CityAdd_E8); 
+        fnAlert("w", "EAD_01_00", "UI0162", errorMsg.CityAdd_E8); 
     }
     else {
         fnClearAreaHeaderFields();
@@ -298,7 +298,7 @@ function fnGridLoadCountryAreaDetails() {
         autowidth: true,
         shrinkToFit: true,
         forceFit: true,
-        scrollOffset: 0, caption: 'Country Area',
+        scrollOffset: 0, caption: localization.CountryArea,
         editurl: 'clientArray', jqModal: false,
 
         onSelectRow: function (rowid, status, e) {

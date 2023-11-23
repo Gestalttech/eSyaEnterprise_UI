@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ManageInventory.Data;
 using eSyaEnterprise_UI.Areas.ManageInventory.Models;
 using eSyaEnterprise_UI.DataServices;
@@ -43,8 +44,8 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
         {
             try
             {
-                int pu_ctype = CodeTypeValues.PackUnit;
-                var pu_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Common/GetApplicationCodesByCodeType?codeType=" + pu_ctype);
+                
+                var pu_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Common/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.PackUnit);
                 var Um_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_UnitofMeasure>>("Common/GetUnitofMeasure");
                 var Ig_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemGroup>>("Common/GetItemGroup");
                 var Im_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemCodes>>("ItemCodes/GetItemList");

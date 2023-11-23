@@ -100,8 +100,13 @@ function fnShowSpecialtyDetail(specialtyId) {
                 $('#cboGender').selectpicker('refresh');
                 $('#cboSpecialtyType').val(response.SpecialtyType);
                 $('#cboSpecialtyType').selectpicker('refresh');
-                $('#cboAliedServices').val(response.AlliedServices);
-                $('#cboAliedServices').selectpicker('refresh');
+                $('#cboSpecialtyGroup').val(response.SpecialtyGroup);
+                $('#cboSpecialtyGroup').selectpicker('refresh');
+                $('#txtFocusArea').val(response.FocusArea);
+                $('#txtAgeRangeFrom').val(response.AgeRangeFrom);
+                $('#cboRangeFromPeriod').val(response.RangePeriodFrom).selectpicker('refresh');
+                $('#txtAgeRangeTo').val(response.AgeRangeTo);
+                $('#cboRangeToPeriod').val(response.RangePeriodTo).selectpicker('refresh');
                 if (response.ActiveStatus === true)
                     $('#chkActiveStatus').parent().addClass("is-checked");
                 else
@@ -197,7 +202,12 @@ function fnSaveSpecialtyCodes() {
         SpecialtyDesc: $('#txtSpecialtyDesc').val(),
         Gender: $('#cboGender').val(),
         SpecialtyType: $('#cboSpecialtyType').val(),
-        AlliedServices: $('#cboAliedServices').val(),
+        SpecialtyGroup: $('#cboSpecialtyGroup').val(),
+        FocusArea: $('#txtFocusArea').val(),
+        AgeRangeFrom: $('#txtAgeRangeFrom').val(),
+        RangePeriodFrom: $('#cboRangeFromPeriod').val(),
+        AgeRangeTo: $('#txtAgeRangeTo').val(),
+        RangePeriodTo: $('#cboRangeToPeriod').val(),
         ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked")
     };
 
@@ -249,6 +259,14 @@ function fnSaveSpecialtyCodes() {
 function fnClearFields() {
     $('#txtSpecialtyId').val('');
     $('#txtSpecialtyDesc').val('');
+    $('#txtFocusArea').val('');
+    $('#txtAgeRangeFrom').val('');
+    $('#txtAgeRangeTo').val('');
+    $("#cboGender").val('M').selectpicker('refresh');
+    $("#cboSpecialtyType").val('G').selectpicker('refresh');
+    $("#cboSpecialtyGroup").val('0').selectpicker('refresh');
+    $("#cboRangeFromPeriod").val('0').selectpicker('refresh');
+    $("#cboRangeToPeriod").val('0').selectpicker('refresh');
     $('#chkActiveStatus').parent().addClass("is-checked");
 }
 
@@ -258,9 +276,15 @@ function fnSetControlStatus(isdisabled) {
     $('#cboGender').selectpicker('refresh');
     $("#cboSpecialtyType").prop("disabled", isdisabled);
     $('#cboSpecialtyType').selectpicker('refresh');
-    $("#cboAliedServices").prop("disabled", isdisabled);
-    $('#cboAliedServices').selectpicker('refresh');
+    $("#cboSpecialtyGroup").prop("disabled", isdisabled);
+    $('#cboSpecialtyGroup').selectpicker('refresh');
+    $("#cboRangeFromPeriod").prop("disabled", isdisabled).selectpicker('refresh');
+    $("#cboRangeToPeriod").prop("disabled", isdisabled).selectpicker('refresh');
+    $("#txtFocusArea").prop("disabled", isdisabled);
+    $("#txtAgeRangeFrom").prop("disabled", isdisabled);
+    $("#txtAgeRangeTo").prop("disabled", isdisabled);
     $("#chkActiveStatus").prop("disabled", isdisabled);
+
 }
 
 function fnValidateBeforeSave() {
@@ -275,14 +299,35 @@ function fnValidateBeforeSave() {
         $('#cboGender').focus();
         return false;
     }
+
     if (IsStringNullorEmpty($('#cboSpecialtyType').val())) {
         fnAlert("w", "ECP_04_00", "UI0116", errorMsg.ServiceType_E10);
         $('#cboSpecialtyType').focus();
         return false;
     }
-    if (IsStringNullorEmpty($('#cboAliedServices').val())) {
-        fnAlert("w", "ECP_04_00", "UI0126", errorMsg.AlliedServices_E11);
-        $('#cboAliedServices').focus();
+    if (IsStringNullorEmpty($('#cboSpecialtyGroup').val()) || $('#cboSpecialtyGroup').val() == '0' || $('#cboSpecialtyGroup').val() == "0") {
+        fnAlert("w", "ECP_04_00", "UI0126", errorMsg.SpecialtyGroup_E11);
+        $('#cboSpecialtyGroup').focus();
+        return false;
+    }
+    if (IsStringNullorEmpty($('#txtAgeRangeFrom').val())) {
+        fnAlert("w", "ECP_04_00", "UI0240", errorMsg.AgeRangeFrom_E13);
+        $('#txtAgeRangeFrom').focus();
+        return false;
+    }
+    if (IsStringNullorEmpty($('#cboRangeFromPeriod').val()) || $('#cboRangeFromPeriod').val() == '0' || $('#cboRangeFromPeriod').val()=="0") {
+        fnAlert("w", "ECP_04_00", "UI0241", errorMsg.SelectRangeFromPeriod_E14);
+        $('#cboRangeFromPeriod').focus();
+        return false;
+    }
+    if (IsStringNullorEmpty($('#txtAgeRangeTo').val())) {
+        fnAlert("w", "ECP_04_00", "UI0242", errorMsg.AgeRangeTo_E15);
+        $('#txtAgeRangeTo').focus();
+        return false;
+    }
+    if (IsStringNullorEmpty($('#cboRangeToPeriod').val()) || $('#cboRangeToPeriod').val() == '0' || $('#cboRangeToPeriod').val() == "0") {
+        fnAlert("w", "ECP_04_00", "UI0243", errorMsg.SelectRangeToPeriod_E16);
+        $('#cboRangeToPeriod').focus();
         return false;
     }
     if ($('#txtSpecialtyId').val() === "" && $('#chkActiveStatus').parent().hasClass("is-checked") === false) {

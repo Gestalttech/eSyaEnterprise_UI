@@ -1735,7 +1735,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             overflow-y:auto !important;
         }
         #btnActivities, tr.jqgrow td:last-child button {
-            font-size: 16px !important;
+            font-size: 10px !important;
             background: #555;
             color: gold !important;
         }
@@ -1979,6 +1979,9 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             width: 16em !important;
             min-width: auto !important;
         }
+        .btn-xs .ui-button {
+            font-size: 10px;
+        }
     }
 
 @media screen and (min-width:300px) and (max-width:349px) {
@@ -2205,7 +2208,9 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
         transition: right .15s linear;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     }
-       
+    .btn-xs .ui-button{
+        font-size:10px;
+    }   
 }
 /*.fc-toolbar {
     justify-content: unset !important;
@@ -2946,11 +2951,11 @@ h5 {
     border-bottom-style:dotted;
 }
 
-        .displayNames span {
-            display: inline-block;
-            position: absolute;
-            right: 2px;
-        }
+    .displayNames .lblClosebtn {
+        display: inline-block;
+        position: absolute;
+        right: 2px;
+    }
 
             .displayNames span svg[data-icon="times"] {
                 color: #e50505;

@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigInventory\Data\eSyaInventoryAPIServices.cs" />
@@ -21,11 +22,14 @@
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
+    <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ProductSetup\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnectHeader.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
+    <Compile Remove="Areas\Vendor\Data\CodeTypeValues.cs" />
     <Compile Remove="DataServices\IPasswordPolicy.cs" />
   </ItemGroup>
 

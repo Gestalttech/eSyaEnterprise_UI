@@ -37,14 +37,14 @@
             shrinkToFit: true,
             forceFit: true,
             scroll: false, scrollOffset: 0,
+            caption: localization.VendorBusinessLink,
             onSelectRow: function (rowid) {
                 BusinessKey = $("#jqgBusinessLink").jqGrid('getCell', rowid, 'BusinessKey');
 
             },
             loadComplete: function (data) {
                 fnDisableActivecheckboxs();
-                $(this).find(">tbody>tr.jqgrow:odd").addClass("myAltRowClassEven");
-                $(this).find(">tbody>tr.jqgrow:even").addClass("myAltRowClassOdd");
+                fnJqgridSmallScreen("jqgBusinessLink");
             },
         })
 

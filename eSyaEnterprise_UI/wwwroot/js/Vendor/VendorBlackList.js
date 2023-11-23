@@ -47,6 +47,7 @@ function LoadBlockListGrid() {
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
+        caption:localization.VendorBlackList,
         onSelectRow: function (rowid, status, e) {
             SelectedVndrCode = $("#jqvBlackListed").jqGrid('getCell', rowid, 'VendorCode');
             SelectedVndrNam = $("#jqvBlackListed").jqGrid('getCell', rowid, 'VendorName');

@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ManageRates.Data;
 using eSyaEnterprise_UI.Areas.ManageRates.Models;
 using eSyaEnterprise_UI.Models;
@@ -51,7 +52,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1518_00:GetBusinessKey");
             }
-            var serviceResponse1 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=61");
+            var serviceResponse1 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype="+ ApplicationCodeTypeValues.Clinic);
             if (serviceResponse1.Status)
             {
                 if (serviceResponse1.Data != null)
@@ -83,7 +84,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse2.Message), "UD:V_1518_00:GetCurrencyCodes");
             }
-            var serviceResponse3 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=62");
+            var serviceResponse3 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.RateType);
             if (serviceResponse3.Status)
             {
                 if (serviceResponse3.Data != null)

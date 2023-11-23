@@ -31,6 +31,7 @@ function fnLoadBusinessServiceTree() {
 function fnSaveBusinessServiceLink() {
 
     if ($('#cboBusinessKey').val() == '') {
+        fnAlert("w", "EBM_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         toastr.warning("Please Select a Business Location");
         $('#cboBusinessKey').focus();
         return;
@@ -61,10 +62,10 @@ function fnSaveBusinessServiceLink() {
         },
         success: function (response) {
             if (response.Status == true) {
-                fnAlert("s", "EBM_03_00", response.StatusCode, response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
             }
             else {
-                fnAlert("e", "EBM_03_00", response.StatusCode, response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
             }
             $("#btnSave").attr("disabled", false);
         },

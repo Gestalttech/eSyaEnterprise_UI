@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ProductSetup.Data;
 using eSyaEnterprise_UI.Areas.Vendor.Data;
 using eSyaEnterprise_UI.Areas.Vendor.Models;
@@ -39,8 +40,8 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Vendor/GetApplicationCodesByCodeType?codeType=" + CodeTypeValues.VendorClass);
-                var servicepayment = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Vendor/GetApplicationCodesByCodeType?codeType=" + CodeTypeValues.PaymentPreferredMode);
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Vendor/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.VendorClass);
+                var servicepayment = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Vendor/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.PaymentPreferredMode);
 
                 if (serviceResponse.Status && servicepayment.Status)
                 {

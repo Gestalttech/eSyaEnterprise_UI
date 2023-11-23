@@ -124,7 +124,7 @@
   "UI0123": "Please select Specialty Code to Delete",
   "UI0124": "Please Enter the Specialty Description",
   "UI0125": "Please select a gender",
-  "UI0126": "Please select a  Allied Services Type",
+  "UI0126": "Please select a  Specialty Group",
   "UI0127": "Please select a Status",
   "UI0128": "Please enter the no. of units",
   "UI0129": "Please Link User Group from Edit Option",
@@ -238,7 +238,10 @@
   "UI0237": "Please Enter the part number",
   "UI0238": "Please Enter the part description",
   "UI0239": "Please Enter Patient ID Generation",
-
+  "UI0240": "Please Enter Age Range From",
+  "UI0241": "Please Select Range From Period",
+  "UI0242": "Please Enter Age Range To",
+  "UI0243": "Please Select Range To Period",
 
 
 

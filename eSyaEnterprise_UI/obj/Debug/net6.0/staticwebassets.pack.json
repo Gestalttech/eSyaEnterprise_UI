@@ -3717,6 +3717,10 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\Parameters.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\PaymentMethod.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\PaymentMethod.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\SMSConnect.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\SMSConnect.js"
     },

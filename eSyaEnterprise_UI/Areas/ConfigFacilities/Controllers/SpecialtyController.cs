@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
 {
     [SessionTimeout]
@@ -411,7 +411,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
         {
             try
             {
-                var response = _eSyafacilityAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codeType=" + CodeTypeValues.Clinic).Result;
+                var response = _eSyafacilityAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.Clinic).Result;
 
                 return Json(response.Data);
 
