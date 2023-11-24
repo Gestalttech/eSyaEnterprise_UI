@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "EPS_34_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ @section scripts{
+    <script src="~/js/ProductSetup/PaymentMethod.js"></script>
+ }
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        ISDCode: '@Localizer["ISDCode"]',
+        PaymentMethod: '@Localizer["PaymentMethod"]',
+        PaymentDesc: '@Localizer["PaymentDescription"]',
+        InstrumentType: '@Localizer["InstrumentType"]',
+        Active: '@Localizer["Active"]',
+        AddPaymentMethod: '@Localizer["AddPaymentMethod"]',
+        InstrumentTypeDesc: '@Localizer["InstrumentTypeDesc"]',
+        Actions: '@Localizer["Actions"]',
+    };
+    var errorMsg = {
+        CountrySelect_E1: '@Localizer["UI0041"]',
+        
+    };
+</script>
+
+<div class="row">
+    <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label>@Localizer["ISDCodes"] </label>
+             @await Component.InvokeAsync("IsdCountryInput", new { id = "PaymentMethodCountry" })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <table id="jqgPaymentMethod"></table>
+        <div id="jqpPaymentMethod"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <button type="button" class="mdl-button primary-button mr-10" id="btnSavePaymentMethod" onclick="fnSavePaymentMethod()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+        <button type="button" class="mdl-button primary-button" id="btnClearPaymentMethod" onclick="fnGridRefreshPaymentMethod()"><i class="fa fa-times"></i> @Localizer["Clear"]</button>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade in" id="PopupPaymentMethod" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog  modal-md  " style="box-shadow:none">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header popupHeader">
+                <h4 class="modal-title">@Localizer["AddPaymentMethod"]</h4>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+            </div>
+            <div class="err_div_mar animated fadeInUp" id="errpopUP" style="display:none">
+                <p class="errorMsg_p" id="errmsg"></p>
+                <p class="succMsg_p" id="succmsg"></p>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="cboPaymentMethod">@Localizer["PaymentMethod"] </label>
+                                <select id="cboPaymentMethod" class="selectpicker" data-live-search="true" asp-items="" onchange="fnPayment_onChange()" data-size="5">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="cboInstrumentType">@Localizer["InstrumentType"] </label>
+                                <select id="cboInstrumentType" class="selectpicker" data-live-search="true" asp-items="" onchange="fnInstrumentType_onChange()" data-size="5">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtPaymentMethodDesc">@Localizer["PaymentMethodDesc"] </label>
+                                <input id="txtPaymentMethodDesc" class="form-control" maxlength="25" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtInstrumentTypeDesc">@Localizer["InstrumentTypeDesc"] </label>
+                                <input id="txtInstrumentTypeDesc" class="form-control" maxlength="25" type="text" />
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSavePaymentMethod" onclick="fnSavePaymentMethod();">
+                    @Localizer["Save"]
+                </button>
+                
+                <button class="mdl-button mdl-js-button mdl-button--raised cancel-button" id="btnCancelPaymentMethod" data-bs-dismiss="modal">
+                    @Localizer["Cancel"]
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

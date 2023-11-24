@@ -1,10 +1,13 @@
-﻿namespace eSyaEnterprise_UI.ApplicationCodeTypes
+﻿using System.Diagnostics.Metrics;
+
+namespace eSyaEnterprise_UI.ApplicationCodeTypes
 {
     public  class ApplicationCodeTypeValues
     {
         #region Product SetUp
         public const int Nationality = 19;
         public const int PaymentMethod = 80;
+        public const int InstrumentType = 84;
         #endregion
 
         #region Config Facalities

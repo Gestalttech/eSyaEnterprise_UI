@@ -242,6 +242,9 @@
   "UI0241": "Please Select Range From Period",
   "UI0242": "Please Enter Age Range To",
   "UI0243": "Please Select Range To Period",
+  "UI0244": "Please Select a Payment Method",
+  "UI0245": "Please Select a Instrument Type",
+
 
   "UIC01": "You are not Authorized to Add",
   "UIC02": "You are not Authorized to Edit",
