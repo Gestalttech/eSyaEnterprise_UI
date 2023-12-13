@@ -5,14 +5,14 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
     public  class ApplicationCodeTypeValues
     {
         #region Product SetUp
-        public const int Nationality = 19;
-        public const int PaymentMethod = 80;
-        public const int InstrumentType = 84;
+        public const int Nationality = 51;
+        public const int PaymentMethod = 87;
+        public const int InstrumentType = 88;
         #endregion
 
         #region Config Facalities
-        public const int Clinic = 61;
-        public const int ConsultationType = 63;
+        public const int Clinic = 83;
+        public const int ConsultationType = 84;
         #endregion
 
         #region Manage Inventory
@@ -20,7 +20,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Manage ManageRates
-        public const int RateType = 62;
+        public const int RateType = 85;
         #endregion
 
         #region Vendor
@@ -31,8 +31,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #region End User
         public const int PreferredLanguage = 8;
         public const int UserGroup = 1;
-        public const int UserType = 2;
-        public const int UserRole = 3;
+        public const int UserRole = 2;
         #endregion
 
     }

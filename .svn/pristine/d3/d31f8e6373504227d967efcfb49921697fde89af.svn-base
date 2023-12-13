@@ -1,0 +1,174 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+
+@{
+    ViewData["Title"] = "EPS_08_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@section Scripts
+    {
+    <script src="~/js/ProductSetup/DocumentControl.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+      var localization = {
+          ShortDesc: '@Localizer["ShortDescription"]',
+          DocumentDescription: '@Localizer["DocumentDescription"]',
+          DocumentId: '@Localizer["DocumentId"]',
+          Scheme: '@Localizer["Schema"]',
+          UsageStatus:'@Localizer["UsageStatus"]',
+          Active: '@Localizer["Active"]',
+          Actions: '@Localizer["Actions"]',
+          Edit: '@Localizer["Edit"]',
+          View: '@Localizer["View"]',
+          DocumentType: '@Localizer["DocumentType"]',
+          DocumentCode: '@Localizer["DocumentCode"]',
+          DocumentCategory: '@Localizer["DocumentCategory"]',
+          IsFinancialYearApplicable: '@Localizer["IsFinancialYearApplicable"]',
+          IsStoreLinkApplicable: '@Localizer["IsStoreLinkApplicable"]',
+          IsTransactionModeApplicable: '@Localizer["IsTransactionModeApplicable"]',
+          IsCustomerGroupApplicable: '@Localizer["IsCustomerGroupApplicable"]',
+          IsLinkToDashboard: '@Localizer["IsLinkToDashboard"]',
+          AddDocumentControl: '@Localizer["AddDocumentControl"]',
+          Save: '@Localizer["Save"]',
+          UpdateDocumentControl: '@Localizer["UpdateDocumentControl"]',
+          Update: '@Localizer["Update"]',
+          ViewDocumentControl: '@Localizer["ViewDocumentControl"]',
+          DeActivate: '@Localizer["DeActivate"]',
+          Activate: '@Localizer["Activate"]',
+          Delete: '@Localizer["Delete"]',
+          IsVoucherTypeApplicable: '@Localizer["IsVoucherTypeApplicable"]',
+          IsPaymentAndVoucherType: '@Localizer["IsPaymentAndVoucherType"]',
+          VoucherTypeAppl: '@Localizer["IsVoucherTypeApplicable"]',
+          PaymentandVoucherType:'@Localizer["IsPaymentandVoucherType"]'
+      };
+    var errorMsg = {
+        DocumentID_E1: '@Localizer["UI0017"]',
+        DocumenType_E2: '@Localizer["UI0018"]',
+        editauth_E3: '@Localizer["UIC02"]',
+        vieweauth_E4: '@Localizer["UIC03"]',
+        deleteauth_E5: '@Localizer["UIC04"]',
+        ShortDesc_E6: '@Localizer["UI0019"]',
+        SelectScheme_E7: '@Localizer["UI0020"]',
+        DocumentDesc_E8: '@Localizer["UI0021"]'
+    };
+</script>
+<style>
+    #gbox_jqvDocContManagement th.ui-th-column div {
+        white-space: normal !important;
+        height: auto !important;
+        padding: 2px;
+    }
+</style>
+
+<!--Document Grid-->
+<div class="row">
+    <div class="col-lg-12">
+        <table id="jqvDocContManagement"></table>
+        <div id="jqpDocContManagement"></div>
+    </div>
+</div>
+
+
+<!--Document PopUp-->
+<div class="modal fade in" id="PopupDocContrManagement" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddDocumentControl"]</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row form-group">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["DocumentID"]</label>
+                            <input id="txtDocumentId" class="form-control numberonly" type="text" autocomplete="off" maxlength="9" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["DocumentType"] </label>
+                            <input id="txtDocumentType" class="form-control" type="text" autocomplete="off" maxlength="1" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["ShortDescription"] </label>
+                            <input id="txtShortDesc" class="form-control" type="text" autocomplete="off" maxlength="4" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["Schema"] </label>
+                            <select id="cboSchemeName" class="selectpicker" title="Select" data-size="10" data-live-search="true" data-container="body">
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>@Localizer["DocumentDescription"] </label>
+                            <input id="txtDocumentDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                        </div>
+                    </div>
+                    <div id="dvParameters" class="col-lg-12 col-md-12 col-sm-12">
+                        <p class="subheading">
+                            @Localizer["DocumentParameters"]
+                        </p>
+                        <hr class="left" />
+                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "21" })
+                    </div>
+                </div>
+               
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnsaveDocContrManagement" onclick="fnSaveDocumentControl()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateDocumentControl" onclick="fnDeleteDocumentControl()"><i class="fa-solid fa-ban"></i>  @Localizer["DeActivate"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
