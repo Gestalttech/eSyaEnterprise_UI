@@ -2726,13 +2726,13 @@ D:\Projects\eSyaJsonworking\eSyaEnterprise_UIworking\eSyaEnterprise_UI\obj\Debug
 D:\Projects\eSyaJsonworking\eSyaEnterprise_UIworking\eSyaEnterprise_UI\obj\Debug\net6.0\eSyaEnterprise_UI.genruntimeconfig.cache
 D:\Projects\eSyaJsonworking\eSyaEnterprise_UIworking\eSyaEnterprise_UI\obj\Debug\net6.0\ref\eSyaEnterprise_UI.dll
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\NLog.config
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\appsettings.Development.json
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\appsettings.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\App_Data\menuitem.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\libman.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\localization.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\localization1.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\ResourcesExtention\cultureConfigSettings.json
-D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\appsettings.Development.json
-D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\appsettings.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\eSyaEnterprise_UI.staticwebassets.runtime.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\eSyaEnterprise_UI.exe
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\bin\Debug\net6.0\eSyaEnterprise_UI.deps.json

@@ -1,0 +1,18 @@
+﻿using eSyaEnterprise_UI.ActionFilter;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
+{
+    [SessionTimeout]
+    public class eSignatureController : Controller
+    {
+        #region eSignature
+        [Area("EndUser")]
+        public IActionResult EEU_08_00()
+        {
+            return View();
+        }
+        #endregion
+    }
+}

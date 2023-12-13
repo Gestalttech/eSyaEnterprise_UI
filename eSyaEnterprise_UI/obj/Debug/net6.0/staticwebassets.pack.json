@@ -1469,6 +1469,10 @@
       "PackagePath": "staticwebassets\\css\\Common\\material.min.css.map"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Common\\password.css",
+      "PackagePath": "staticwebassets\\css\\Common\\password.css"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Common\\rtl.css",
       "PackagePath": "staticwebassets\\css\\Common\\rtl.css"
     },
@@ -3481,6 +3485,10 @@
       "PackagePath": "staticwebassets\\js\\Common\\toastr.min.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\webcam-easy.min.js",
+      "PackagePath": "staticwebassets\\js\\Common\\webcam-easy.min.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js",
       "PackagePath": "staticwebassets\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js"
     },
@@ -3541,12 +3549,28 @@
       "PackagePath": "staticwebassets\\js\\ConfigureSMS\\SMSVariable.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\MapUserToUserGroup.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\MapUserToUserGroup.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UnlockBlockedUser.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UnlockBlockedUser.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UploadUserPhoto.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UploadUserPhoto.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserCreation.js",
       "PackagePath": "staticwebassets\\js\\EndUser\\UserCreation.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserDeactivation.js",
       "PackagePath": "staticwebassets\\js\\EndUser\\UserDeactivation.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserESignature.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\UserESignature.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\UserGroup.js",
@@ -3667,6 +3691,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CountryCode.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\CountryCode.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CountryMobileCarrier.js",
+      "PackagePath": "staticwebassets\\js\\ProductSetup\\CountryMobileCarrier.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CountryStatutoryDetails.js",
@@ -5283,6 +5311,22 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\htmleditor\\tinymce.min.js",
       "PackagePath": "staticwebassets\\js\\htmleditor\\tinymce.min.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\jSignature\\flashcanvas.swf",
+      "PackagePath": "staticwebassets\\js\\jSignature\\flashcanvas.swf"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\jSignature\\jSignature.min.js",
+      "PackagePath": "staticwebassets\\js\\jSignature\\jSignature.min.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\jSignature\\jSignature.min.noconflict.js",
+      "PackagePath": "staticwebassets\\js\\jSignature\\jSignature.min.noconflict.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\jSignature\\jquery.js",
+      "PackagePath": "staticwebassets\\js\\jSignature\\jquery.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\jquery.inputmask\\bindings\\inputmask.binding.js",

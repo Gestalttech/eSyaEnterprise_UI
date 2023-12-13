@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EEU_10_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/Common/password.css" />
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        CurrentPassword: '@Localizer["CurrentPassword"]',
+        NewPassword: '@Localizer["NewPassword"]',
+        ConfirmPassword: '@Localizer["ConfirmPassword"]',
+     };
+    var errorMsg = {
+        LoginID_E1: '@Localizer["UI0133"]',
+        LoginDesc_E2: '@Localizer["UI0134"]',
+        ReasonForDeactivation_E3: '@Localizer["UI0135"]',
+    }
+    
+</script>
+
+
+<section class="resetPasswordSection">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <label for="txtCurrentPassword">@Localizer["CurrentPassword"]</label>
+            <div class="form-group">
+                <input type="password" id="txtCurrentPassword" value="" class="form-control">
+            </div>
+            <div class="form-group ">
+                <label for="txtNewPassword">@Localizer["NewPassword"]</label>
+                <div class="form-group pass_show position-relative">
+                    <input type="password" id="txtNewPassword" class="form-control" data-toggle="popover" autocomplete="off">
+                    <a href="#" id="viewPassword"><i class="fa fa-eye-slash"></i></a>
+                </div>
+            </div>
+            <label for="txtConfirmPassword">@Localizer["ConfirmPassword"]</label>
+            <div class="form-group">
+                <input type="password" id="txtConfirmPassword" class="form-control">
+            </div>
+
+        </div>
+        <div class="col-lg-12 " style="display:none;">
+            <span>Password must meet the following requirement </span>
+
+            @* @* <ul>
+                <li>At least @Model.RequiredLength character in length</li>
+                <li>Minimum @Model.RequireUppercase upper case letter(s)</li>
+                <li>Minimum @Model.RequireLowercase lower case letter(s)</li>
+                <li>Minimum @Model.RequireNumeric number(s)</li>
+                <li>Minimum @Model.RequireSpecialChar Special Character(s)</li>
+            </ul> *@
+            
+        </div>
+        <div class="col-sm-12" style="text-align:center">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-r-15" id="btnSave" onclick="fnSave()"><i class="fas fa-sync"></i> Update </button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnClear" onclick="fnClear()"><i class="fa fa-trash"></i> Clear</button>
+        </div>
+    </div>
+</section>
+
+ <script>
+     
+    $(document).on("click", ".popover .close", function () {
+        $(this).parents(".popover").popover('hide');
+    });
+
+    $(document).on('click', '#viewPassword', function () {
+        //$(this).text($(this).text() == "Show" ? "Hide" : "Show");
+        $("#viewPassword svg").toggleClass("fa-eye-slash fa-eye");
+        $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+     });
+
+    $("#txtNewPassword").blur(function () {
+        $(".popover").popover('hide');
+    });
+
+    function fnSave() {
+        $("#btnSave").attr("disabled", true);
+        $.ajax({
+            url: getBaseURL() + '/UserProfile/ResetUserPassword',
+            type: 'POST',
+            datatype: 'json',
+            data: {
+                currentPassword: $("#txtCurrentPassword").val(),
+                newPassword: $("#txtNewPassword").val(),
+                confirmPassword: $("#txtConfirmPassword").val()
+            },
+            async: false,
+            success: function (response) {
+
+                if (response.Status == true) {
+                    fnAlert("s", "", response.StatusCode, response.Message);
+                    fnClear();
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+                $("#btnSave").attr("disabled", false);
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+                $("#btnSave").attr("disabled", false);
+            }
+        });
+    }
+
+    function fnClear() {
+        $("#txtCurrentPassword").val("");
+        $("#txtNewPassword").val("")
+        $("#txtConfirmPassword").val("")
+    }
+ </script>

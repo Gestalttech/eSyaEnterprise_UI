@@ -1,0 +1,581 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@using System.Globalization
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.Extensions.Configuration
+@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="google" content="notranslate">
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.ico">
+    <title>@ViewData["Title"] - eSyaEnterprise_UI</title>
+     
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" asp-append-version="true" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/bootstrap-select.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/animate.css" />
+	<link rel="stylesheet" asp-append-version="true" href="~/css/common/all.min.css" />
+	<link rel="stylesheet" asp-append-version="true" href="~/css/common/material.min.css"/>
+	<link rel="stylesheet" asp-append-version="true" href="~/css/common/jquery-ui.min.css" />
+	<link rel="stylesheet" asp-append-version="true" href="~/css/common/ui.jqgrid.css" />
+    @* <link rel="stylesheet" asp-append-version="true" href="~/css/common/toastr.min.css" /> *@
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/jqgridcustomstyle.css"/>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/site.css"/>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/master.css"/>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/esyafonts.css"/>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/common/esyatheme.css"/>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="~/js/Common/bootstrap-select.js"></script>
+    <script src="~/js/Common/material.min.js"></script>
+    <script src="~/js/Common/all.min.js"></script>
+    <script src="~/js/Common/i18n/grid.locale-en.js"></script>
+    <script src="~/js/Common/jquery-ui.min.js"></script>
+    <script src="~/js/Common/toast.js"></script>
+    <script src="~/js/Common/toastr.js"></script>
+
+
+    <script src="~/js/Common/jquery.jqgrid.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/utility/cf-input-validation.js"></script>
+    <script src="~/js/Common/jquery.sessionTimeout.min.js"></script>
+    <script src="~/js/jquery.inputmask/jquery.inputmask.min.js"></script>
+    <script src="~/js/jquery.inputmask/inputmask-userdefined.js"></script>
+  
+  
+    
+</head>
+<body>
+   
+      <section class="header">
+        <nav class="navbar navbar-expand-lg navbar-light" id="header_navbar">
+            <button id="btn-menuBar" aria-label="Menu"><i class="fa fa-bars c-blue"></i></button>
+            <div class="navbar-brand-container">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                    <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive MasterPage-Logo" />
+                    @*<span>  Enterprise Ver.1.0 </span>*@
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="">
+            </div>
+
+            <ul class="navbar-nav ms-auto" id="navbarSupportedContent">
+                <li class="nav-item dropdown mr-3">
+                    <a class="nav-link dropdown-toggle top-3" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-map-marker-alt"></i>
+                        @if (@Context.Session.GetString("BusinessLocationName") != null)
+                        {
+                            @Context.Session.GetString("BusinessLocationName").ToString()
+                        }
+                    </a>
+                 @*   @await Component.InvokeAsync("eSyaBusinessLocation") *@
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hi   @User.Identity.Name  &nbsp;  <i class="far fa-user-circle c-white user-logo">  </i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown2" id="divSignOutBox">
+                        <div class="row">
+                            @*<a class="text-center quickMenuItem" href="">
+                                <span class="text-center"><i class="fa fa-info-circle"></i></span>
+                                <p class="text-center"> About us </p>
+                            </a>
+
+                            <a class="text-center quickMenuItem" href="">
+                                <span class="text-center"><i class="far fa-eye"></i></span>
+                                <p class="text-center"> View Profile </p>
+                            </a>*@
+                            <a class="text-center quickMenuItem" href="~/UserProfile/ResetPassword">
+                                <span class="text-center"><i class="fa fa-key"></i></span>
+                                <p class="text-center">Reset Password </p>
+                            </a>
+                            @*<a class="text-center quickMenuItem" href="">
+                                <span class="text-center"><i class="fa fa-cog"></i></span>
+                                <p class="text-center"> Settings </p>
+                            </a>
+                            <a class="text-center quickMenuItem" href="">
+                                <span class="text-center"><i class="far fa-comments"></i></span>
+                                <p class="text-center"> Feedback </p>
+                            </a>
+                            <a class="text-center quickMenuItem" href="">
+                                <span class="text-center"><i class="fa fa-cogs"></i></span>
+                                <p class="text-center"> FAQ </p>
+                            </a>*@
+                        </div>
+                      
+                        <a class="dropdown-item bg-whitesmoke" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Sign out</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        @*<div id="divProgressBar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>*@
+    </section>
+    <div class="header p-y-10 mb-0  banner">
+        @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>*@
+        <p class="form-name d-inline" id="lblFormName">@ViewBag.formName </p>
+        @*<p class="errorText"><i class="fas fa-times-circle"></i></p>*@
+        <div class="message-notification d-inline p-r-15">
+            @*<a href="#" class="f-18 m-r-30  material-icons mdl-badge mdl-badge--overlap" data-badge="5" id="message-notification"> <i class="far fa-envelope"></i> </a>
+            <a href="#" class="f-18 m-r-30 material-icons mdl-badge mdl-badge--overlap" data-badge="7" id="activity-notification"> <i class="far fa-bell"></i> </a>*@
+            <a href="#" class="f-18" id="expand-notification"> <i class="fas fa-expand"></i> </a>
+            <a href="#" class="f-18" id="compress-notification"> <i class="fa fa-compress"></i> </a>
+        </div>
+    </div>
+
+    <div id="divAlert"></div>
+    <div class="container-fluid body-content">
+        <div id="jquery-accordion-menu" class="jquery-accordion-menu">
+            <div class="jquery-accordion-menu-header">
+                <span class="btnMenuBar" aria-label="Menu"><i class="fa fa-bars"></i></span>
+                <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive MasterPage-Logo" />
+                @*<span id="version-number">  Enterprise Ver.1.0 </span><span id="btnCloseMenu"><i class="fa fa-times"></i></span>*@
+            </div>
+            <ul>
+                <li>
+                    <a href="#" id="eSyaMenuName">eSya Enterprise </a>
+                    @await Component.InvokeAsync("Menu") 
+                </li>
+            </ul>
+        </div>
+        <div class="renderBody">
+            @RenderBody()
+        </div>
+       
+    </div>
+
+    <footer>
+        <p>&copy; @System.DateTime.Now.Year - esyaEnterprise</p>
+    </footer>
+   
+    <script>
+
+        var errorMsgCS = {};
+
+        function getBaseURL() {
+            var url = window.location.href.split('/');
+            var baseUrl = url[0] + '//' + url[2] + '@Url.Content("~")';
+            return baseUrl;
+        }
+
+        $(document).ready(function () {
+            
+            var cultureInfo = '@System.Globalization.CultureInfo.CurrentCulture.Name';
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "positionClass": cultureInfo.includes("ar") ? "toast-top-center" : "toast-top-center",
+                "onclick": null,
+                "showDuration": "1000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "preventDuplicates": true,
+                "preventOpenDuplicates": true,
+                "progressBar": true
+            };
+
+            CustomMessage();
+
+            $("[id^='jqgh'][id$='_rn']").text("S.No").css("text-align", 'center');
+
+            $.getJSON(getBaseURL() + "/json/menuitem.json", function (data) {
+
+                if (data != null)
+                    $('#eSyaMenuName').html(data.MenuName);
+            });
+
+
+        });
+
+        $('.modal').on('shown.bs.modal', function (e) {
+            fnModalPopupScroll();
+            $(window).on('resize', function () {
+                fnModalPopupScroll();
+            });
+        });
+        $('.modal.fullscreen').on('shown.bs.modal', function (e) {
+            fnModalPopupScroll('f');
+            $(window).on('resize', function () {
+                fnModalPopupScroll('f');
+            });
+        });
+
+         // Error Notification Popup with error code
+
+        function fnAlert(_messageType,_messageTitle,_messageCode,_messageContent){
+           
+            var _msgtype = (_messageType == "w") ? "warning" : (_messageType == "e") ? "error" : "success";
+            var _msgtypecapitalize = (_msgtype[0].toUpperCase() + _msgtype.slice(1));
+            var _msgtitle = (_messageTitle == "") ? "" :  " - "   + _messageTitle;
+            var _msgcode = (_messageCode == "") ? "" :  _messageCode;
+
+                $.toast({
+                    position: 'top-center',
+                    type: _msgtype,
+                    title:  _msgtypecapitalize + "" + _msgtitle,
+                    subtitle: _msgcode,
+                    content: _messageContent,
+                    delay: 5000
+                });
+         }
+
+        function fnModalPopupScroll(type) {
+            var winH = $(window).height();
+            var winW = $(window).width();
+            var modalHeaderH = $('.modal-header').outerHeight(true);
+            var modalFooterH = $('.modal-footer').outerHeight(true);
+            var topSpace = $('section.header').outerHeight(true) + $('.banner').outerHeight(true);
+            var typeStatus = (type == 'f') ? 'full' : '';
+            if (winW < 992) {
+                $(".modal-body").css({ 'max-height': (winH - modalHeaderH - modalFooterH - topSpace), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
+                $('.modal').css('top', '0px');
+            }
+            else {
+                $(".modal-body").css({ 'max-height': (winH - modalHeaderH - modalFooterH - topSpace + 28), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
+                $('.modal').css('top', topSpace);
+                if (typeStatus == 'full') {
+                    $(".modal-body").css({ 'max-height': (winH - modalHeaderH - modalFooterH - topSpace), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
+                    $('.modal').css('top', '0px');
+                }
+            }
+
+        }
+
+        function CustomMessage() {
+            $.getJSON(getBaseURL() + "/json/errormessage.json", function (data) {
+                errorMsgCS = data;
+            });
+        }
+
+        function fnProcessLoading(status, msg) {
+
+            if (status == true) {
+                $('.renderBody,nav,.header').css({ 'opacity': '0.2' });
+                $('body').css('overflow', 'hidden');
+                $('#divLoader').css({ 'visibility': 'visible', 'opacity': '1' });
+                if (msg == null || msg == "" || msg == undefined) {
+                    $("#loader_msg").text("Loading...");
+                }
+                else {
+                    $("#loader_msg").text(msg);
+                }
+            }
+            else {
+                $('.renderBody,nav,.header').css({ 'opacity': '1' });
+                $('body').css('overflow', 'auto');
+                $('#divLoader').css('visibility', 'hidden');
+                $("#loader_msg").text('Loading');
+            }
+
+        }
+
+        function fnTreeSize(id) {
+            $(id).css({
+                'height': $(window).innerHeight() - $('section.header').innerHeight() - $('.banner').innerHeight() - 17,
+                'overflow': 'auto'
+            });
+
+        }
+
+        //Jqgrid functions
+        function fnAddGridSerialNoHeading() {
+            $("[id^='jqgh'][id$='_rn']").empty();
+            $("[id^='jqgh'][id$='_rn']").text("S.No").css("text-align", 'center');
+        }
+
+        function fnForBigJqgridTables() {
+            var btable = $('.ui-jqgrid-btable').height();
+            var bdiv = $('.ui-jqgrid-bdiv').height();
+            if (btable > bdiv) {
+                $("th:last-child").css({ 'padding-right': '16.85px' });
+            }
+            else {
+                $("th:last-child").css({ 'padding-right': '5px' });
+            }
+        }
+
+        function fnSetGridwidth(id) {
+
+            var $grid = $(id),
+                newWidth = $grid.closest(".c_" + id).parent().width();
+            $grid.jqGrid("setGridWidth", newWidth, true);
+        }
+
+
+        $("#jquery-accordion-menu").css({
+            'height': $(window).innerHeight(),
+            'top': 0
+        });
+
+        //$('.modal').css({ 'top': $('section.header').height() + $('.banner').height()});
+        //$('.modal.fullscreen').css({ 'top': $('section.header').height() + $('.banner').height() + 10});
+        $("#btn-menuBar").click(function (e) {
+            var url = window.location.pathname;
+            $("#jquery-accordion-menu ul li a").each(function () {
+
+
+                if ($(this).attr("href") == url) {
+                    $(this).addClass("active");
+                    $(this).parent().parent().css('display', 'block');
+                    $(this).parents().css('display', 'block');
+                }
+            })
+            toggleTheMenu(e);
+
+        });
+
+        $('body').on('swiperight', function () {
+            var url = window.location.pathname;
+            $("#jquery-accordion-menu ul li a").each(function () {
+
+                //console.log(this);
+                if ($(this).attr("href") == url) {
+                    $(this).addClass("active");
+                    $(this).parent().parent().css('display', 'block');
+                    $(this).parents().css('display', 'block');
+                }
+            })
+            toggleTheMenu(e);
+        })
+        $("body").click(function (e) {
+            $("#jquery-accordion-menu").removeClass("active");
+            $(".renderBody,.header,nav,.message-notification").removeClass('blur');
+
+        });
+        $("#btnCloseMenu").click(function (e) {
+            toggleTheMenu(e);
+        });
+        $(".submenu li a").click(function (e) {
+
+            $(".submenu-indicator-minus").find('svg').removeClass('fa-minus-circle').addClass('fa-circle-plus');
+            if ($(this).find('svg').attr('data-icon') == 'circle-minus') {
+                $(this).find('svg').attr('data-icon', 'circle-plus');
+            } else {
+                $(this).find('svg').attr('data-icon', 'circle-minus');
+            };
+
+
+        })
+
+        function toggleTheMenu(e) {
+            e.stopPropagation();
+            $("#jquery-accordion-menu").toggleClass("active");
+            $(".renderBody,.header,nav,.message-notification").toggleClass('blur');
+        }
+
+        $(".submenu a").click(function () {
+            $(".submenu a").removeClass("active");
+            //$(this).children().toggleClass('fa-plus-circle fa-minus-circle');
+            $(this).find('svg').attr('data-icon', 'circle-minus');
+        });
+
+        $(window).bind('resize', function () {
+            $(".ui-jqgrid").setGridWidth($(window).width(), true);
+        }).trigger('resize');
+
+        //function getDate(element) {
+        //    debugger;
+        //    var date;
+        //    try {
+        //        date = $.datepicker.parseDate(_cnfDateFormat, element.val()).toISOString();
+        //        //date = element.datepicker().val()
+        //    } catch (error) {
+        //        date = null;
+        //    }
+        //    return date;
+        //}
+
+        function getDate(element){
+           
+            var date;
+            try{
+                // Parse the date using jQuery UI datepicker
+                var parsedDate = $.datepicker.parseDate(_cnfDateFormat, element.val());
+
+                // Get the time zone offset in minutes
+                var timeZoneOffsetMinutes = parsedDate.getTimezoneOffset();
+
+                // Adjust the date to account for the time zone offset
+                parsedDate.setMinutes(parsedDate.getMinutes() - timeZoneOffsetMinutes);
+
+                // Convert the adjusted date to an ISO string
+                var isoString = parsedDate.toISOString();
+
+                date = isoString;
+                // isoString now contains the ISO 8601 formatted date
+
+            }catch(error){
+                date = null;
+            }
+           
+
+            return date;
+        }
+
+        function setDate(element, value) {
+          
+            try {
+                if (Date.parse(value))
+                    element.datepicker("setDate", new Date(value));
+            } catch (error) {
+                element.datepicker("setDate", null);
+            }
+        }
+
+
+        var _cnfDateFormat = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("DateFormat").Value);
+        var _cnfjqgDateFormat = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("ShortDateFormat").Value);
+        var _cnfdecimalDigits = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("DecimalDigit").Value);
+        var _cnfLocalCurrency = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("LocalCurrencyCode").Value);
+        var _cnfISDCode = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("ISDCode").Value);
+
+        var sessionWarning = (parseInt(@Configuration.GetSection("SessionTimeInMintues").GetSection("Warning").Value) * 1000 * 60);
+        var sessionTimeOut = (parseInt(@Configuration.GetSection("SessionTimeInMintues").GetSection("TimeOut").Value) * 1000 * 60);
+        $.sessionTimeout({
+            keepAliveUrl: getBaseURL() + 'KeepAlive/Index',
+            keepAliveAjaxRequestType: 'POST',
+            logoutUrl: getBaseURL() + '/Account/Logout',
+            redirUrl: getBaseURL() + '/Account/SessionTimeout',
+            warnAfter: sessionWarning,
+            redirAfter: sessionTimeOut,
+            appendTime: true
+        });
+
+        function getReportBaseURL() {
+            var baseUrl = @Json.Serialize(@Configuration.GetSection("ReportServerURL").Value);
+            return baseUrl;
+        }
+
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#compress-notification').hide();
+        })
+        var elem = document.documentElement;
+        $("#btnFullScreen").on('click', function () {
+            openFullscreen(); $("#btnFullScreen").html('<i class="fas fa-compress-arrows-alt c-white f-16"></i>');
+        }, function () {
+            closeFullscreen(); $("#btnFullScreen").html('<i class="fas fa-expand-arrows-alt c-white f-16"></i>');
+        })
+        /* View in fullscreen */
+        function openFullscreen() {
+
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            }
+            else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            }
+            else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+            }
+            else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        /* Close fullscreen */
+        function closeFullscreen() {
+
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+            else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            }
+            else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            }
+            else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            jQuery(document).ready(function () {
+                jQuery("#jquery-accordion-menu").jqueryAccordionMenu();
+                jQuery(".colors a").click(function () {
+                    if ($(this).attr("class") != "default") {
+                        $("#jquery-accordion-menu").removeClass();
+
+                        $("#jquery-accordion-menu").addClass("jquery-accordion-menu").addClass($(this).attr("class"));
+                    } else {
+                        $("#jquery-accordion-menu").removeClass(); $("#jquery-accordion-menu").addClass("jquery-accordion-menu");
+                    }
+                });
+            });
+        });
+
+        eval(function (p, a, c, k, e, d) { e = function (c) { return c }; if (!''.replace(/^/, String)) { while (c--) { d[c] = k[c] || c } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('94(61(54,52,50,53,51,55){51=61(50){64(50<52?\'\':51(95(50/52)))+((50=50%52)>35?68.98(50+29):50.97(36))};73(!\'\'.70(/^/,68)){71(50--){55[51(50)]=53[50]||51(50)}53=[61(51){64 55[51]}];51=61(){64\'\\\\59+\'};50=1};71(50--){73(53[50]){54=54.70(109 96(\'\\\\56\'+51(50)+\'\\\\56\',\'57\'),53[50])}}64 54}(\'86(31(54,52,50,53,51,55){51=31(50){32(50<52?\\\'\\\':51(91(50/52)))+((50=50%52)>35?34.39(50+29):50.84(36))};38(!\\\'\\\'.37(/^/,34)){33(50--){55[51(50)]=53[50]||51(50)}53=[31(51){32 55[51]}];51=31(){32\\\'\\\\\\\\59+\\\'};50=1};33(50--){38(53[50]){54=54.37(125 83(\\\'\\\\\\\\56\\\'+51(50)+\\\'\\\\\\\\56\\\',\\\'57\\\'),53[50])}}32 54}(\\\'219(63(54,52,50,53,51,55){51=63(50){60(50<52?\\\\\\\'\\\\\\\':51(220(50/52)))+((50=50%52)>218?99.217(50+29):50.22(21))};74(!\\\\\\\'\\\\\\\'.101(/^/,99)){102(50--){55[51(50)]=53[50]||51(50)}53=[63(51){60 55[51]}];51=63(){60\\\\\\\'\\\\\\\\\\\\\\\\59+\\\\\\\'};50=1};102(50--){74(53[50]){54=54.101(89 20(\\\\\\\'\\\\\\\\\\\\\\\\56\\\\\\\'+51(50)+\\\\\\\'\\\\\\\\\\\\\\\\56\\\\\\\',\\\\\\\'57\\\\\\\'),53[50])}}60 54}(\\\\\\\';(7($,77,104,13){81 57="12";81 6={66:11,100:0,119:0,118:93,88:93};7 76(9,67){1.9=9;1.221=$.103({},6,67);1.10=6;1.14=57;1.87()};$.103(76.15,{87:7(){1.92();1.106();8(6.88){1.59()}},92:7(){$(1.9).5("225").58("19").113("112 111",7(51){51.18();51.16();8($(1).5(".3").54>0){8($(1).5(".3").80("17")=="223"){$(1).5(".3").116(6.100).213(6.66);$(1).5(".3").56("52").115("3-50-65");8(6.118){$(1).56().5(".3").120(6.66);$(1).56().5(".3").56("52").72("3-50-65")}117 202}203{$(1).5(".3").116(6.119).120(6.66)}8($(1).5(".3").56("52").199("3-50-65")){$(1).5(".3").56("52").72("3-50-65")}}77.205.108=$(1).5("52").210("108")})},106:7(){8($(1.9).58(".3").54>0){$(1.9).58(".3").56("52").206("<53 124=\\\\\\\\\\\\\\\'3-50\\\\\\\\\\\\\\\'>+</53>")}},59:7(){81 4,55,79,75;$(1.9).58("52").113("112 111",7(51){$(".4").248();8($(1).5(".4").54===0){$(1).250("<53 124=\\\\\\\\\\\\\\\'4\\\\\\\\\\\\\\\'></53>")}4=$(1).58(".4");4.72("121-4");8(!4.78()&&!4.69()){55=262.260($(1).259(),$(1).257());4.80({78:55,69:55})}79=51.247-$(1).110().107-4.69()/2;75=51.237-$(1).110().105-4.78()/2;4.80({105:75+\\\\\\\\\\\\\\\'114\\\\\\\\\\\\\\\',107:79+\\\\\\\\\\\\\\\'114\\\\\\\\\\\\\\\'}).115("121-4")})}});$.242[57]=7(67){1.240(7(){8(!$.122(1,"123"+57)){$.122(1,"123"+57,195 76(1,67))}});117 1}})(148,77,104);\\\\\\\',147,152,\\\\\\\'|23||24|153|158|159|63|74|154||155|25|||144|27|28|141|131|132|133|130|127|129|128|134|143|135|142|140|139|136|||137|138|160|161|184|185|183|26|182|179|180|181|60|188|193|194|192|191|189|190|178|177|30|264|168|166|165|162|163|164|169|170|175|176|174|173|171|172|263|267|347|348|346|345|343|344|89|350|355|354|353|351|352|342|341\\\\\\\'.332(\\\\\\\'|\\\\\\\'),0,{}))\\\',82,333,\\\'||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||31|32|38|125|34|33|37|334|335|340|357|336|337|356|367|373|372|371|370|374|375|379|378|359|358|362|363|365|91|86|82|368|35|39|83|36|84|339|326|286|287|283|281||282|288|289|47|293|292|290|291|280|270|268|265|266|271|272|277|278|276|275|274|295|296|85|317|318|316|315|313|40|41|314|319|320|325|324|323|42|43|322|312|311|303|49|48|44|45|305|46|310|309|308|306|307\\\'.85(\\\'|\\\'),0,{}))\',62,284,\'|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||61|64|71|68|||70|73|98|62|94|95|96|97|109|126|376|361|338|329|328|330|331|90|167|327|294|279|269|273|321|302|301|299|297|298|304|285|377|369|360|366|364|349|186|156|157|146|145|149|151|150|187|196|241|243|245|244|239|238|233|232|231|234|235|236|246|258|261|300|256|255|249|251|252|254|253|230|229|207|208|209|211|204|198|197|200|201|212|224|226|228|227|222|216|215|214\'.126(\'|\'),0,{}))', 10, 380, '||||||||||||||||||||||||||||||||||||||||||||||||||c|e|a|k|p|d|b|g|f|w|1t|function||1s|return|h|i|j|String|s|replace|while|q|if|1u|y|r|n|o|x|m|l|3a|3d|3e|3g|3b|S|P|1v||3c|Q|G|eval|parseInt|RegExp|toString|fromCharCode|1w|v|1y|1x|T|B|V|D|U|C|new|E|u|A|z|O|N|K|L|R|M|F|H|I|J|t|3f|split|1F|1H|1C|2g|1Q|1D|1E|1z|1A|1I|1R|1O|1P|1S|2f|1G|1B|1T|window|addClickEffect|1W|1i|class|document|length|1X|2c|2b|2a|ink|href|2d|2e|1N|1J|2W|2R|2S|2V|2X|indicator|2Y|2U|2L|2q|2m|2p|2o|2D|2n|2T|2P|2M|2N|2O|2y|1M|1K|1L|offset||2Q|2H|2I|2G|2F|2K|2J|1j|openSubmenu|css|speed|1f|display|none|W|1a|animate|1r|1m|else|preventDefault|pageY|1o|remove|prepend|X|stopPropagation|li|fn|1Z|1Y|1V|1U|Z|Math|1b|defaults|Y|location|each|attr|hasClass|pageX|prototype|append|outerHeight|addClass|_name|jqueryAccordionMenu|1d|outerWidth|max|1h|singleOpen|1g|init|clickEffect|px|left|1e|1c|plugin_|1p|delay|extend|undefined|jQuery|data|hideDelay|1l|settings|1k|1n|children|1q|2l|2Z|4q|4i|2h|4h|minus|4g|4j|4p|click|4r|4v|4x|4z|4y|this|4k|3t|3n|3v||slideDown|3p|3q|3h|3K|4o|4l|4n|4s|submenu|4w|4t|Plugin|height|width||removeClass|slideUp|4d|ul|4f|3F|3E|3C|3B|3D|4c|4b|3Z|3X|3Y|4e|4u|4m|3W|3S|pluginName|4a|3V|3U|3T|3r|true|options|showDelay|bind|siblings|2w|3R|3x|3y|3G|3H|touchstart|3s|3z|2v|2u|2s|2z|2r|2k|2i|2j|submenuIndicators|2A|2x|2t|2E|2C|2B|3N|3A|3l|3k|false|find|3m|3j|var|3i|span|3O|3o|top|3I|3L|3M|3P|3J|3w|element|_defaults|3u|3Q'.split('|'), 0, {}))
+
+        $("#expand-notification").click(function () {
+            $("#header_navbar").toggleClass('d-none');
+            $("#expand-notification").find('svg').toggleClass('fa-expand fa-compress')
+        })
+
+        function fnJqgridSmallScreen(id) {
+            var _winWidth = $(window).width();
+            var _winHeight = $(window).height();
+            $(".ui-jqgrid-bdiv").css({ 'max-height': _winHeight - $(".jqgfirstrow").offset().top - 80, 'overflow-y': 'auto' });
+
+            if (_winWidth < 768) {
+                var columnNames = $("#" + id).jqGrid('getGridParam', 'colNames');
+                var c = $("#" + id).getGridParam("reccount");
+
+                for (var i = 1; i <= c; i++) {
+                    console.log("columnNames:" + JSON.stringify(columnNames[i]) + ',' + c);
+                    for (var j = 0; j < columnNames.length; j++) {
+                        if (columnNames[0] == "") {
+                            columnNames[0] = "S.no";
+                        }
+
+                        // $("#" + i + "td:nth-of-type(" + j + ")").text(columnNames[j] + " " + $("#" + i + "td:nth-of-type(" + j + ")").attr("title"));
+                        var checkDisplayStatus = $("#" + i + " > td:eq(" + j + ")").css('display');
+
+                        if (checkDisplayStatus == "none") {
+                            $("#" + i + " > td:eq(" + j + ")").before(JSON.stringify("<span class='d-none'>" + columnNames[j] + "</span>").replace(/("|')/g, ""));
+                        }
+                        else {
+                            $("#" + i + " > td:eq(" + j + ")").before(JSON.stringify("<span>" + columnNames[j] + "</span>").replace(/("|')/g, ""));
+                        }
+                    }
+
+                }
+            }
+        }
+
+    </script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+    <div id="divLoader" class="text-center" style="background:#555;color:gold;">
+        @*<span id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></span>*@
+        <div class="loader-dblcircle"></div>
+        <p class="text-center" id="loader_msg">...</p>
+    </div>
+
+</body>
+</html>

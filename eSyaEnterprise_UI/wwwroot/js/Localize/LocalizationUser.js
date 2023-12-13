@@ -34,7 +34,7 @@ function fnGridLoadUser() {
             { name: "LoginId", width: 150, editable: true, align: 'left', hidden: false },
             { name: "LoginDesc", width: 200, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "Password", width: 200, editable: false, hidden: true, align: 'left', resizable: true },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
