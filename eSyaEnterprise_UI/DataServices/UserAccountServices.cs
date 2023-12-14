@@ -74,7 +74,7 @@ namespace eSyaEnterprise_UI.DataServices
             try
             {
                 //var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("eSyaUser/GetBusinessLocation");
-                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("eSyaUserAccount/GetBusinessLocation");
+                var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<DO_UserAccount>("eSyaUserAccount/GetBusinessLocation");
                 return serviceResponse.Data;
             }
             catch (Exception ex)

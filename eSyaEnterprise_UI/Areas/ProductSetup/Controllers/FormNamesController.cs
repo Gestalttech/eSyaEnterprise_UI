@@ -34,7 +34,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
         #region Forms
         [Area("ProductSetup")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EPS_01_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole
