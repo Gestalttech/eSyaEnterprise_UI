@@ -1,0 +1,142 @@
+﻿body {
+}
+:root {
+    --payment-primary-1: rgb(117, 195, 253);
+    --payment-primary-2: #5974cd;
+    --payment-primary: #28328c;
+    --light-grey:rgba(190,190,190,0.1);
+}
+.title-bar {
+    padding: 15px;
+    background: var(--payment-primary);
+    margin:0px -15px;
+}
+.payment-bg-lightgrey {
+    background: var(--light-grey);
+}
+.btn-secondary {
+    background: transparent;
+    border: none;
+    padding:3px !important;
+    margin:0px 5px;
+}
+    button.btn-secondary:focus{
+        outline:none !important;
+        box-shadow: none !important;
+    }
+.btn-secondary:hover, .btn-secondary.active {
+    background: rgb(40, 50, 140) !important;
+}
+   
+    button.btn-secondary .svg-inline--fa {
+        color: #28328c !important;
+    }
+.btn-secondary:hover .svg-inline--fa, .btn-secondary.active .svg-inline--fa {
+    color: #fff !important;
+}
+.payment-userdetails {
+    background: rgb(234, 234, 234);
+    margin: 0px -15px;
+    padding: 7px 0px;
+}
+        .payment-userdetails label {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px !important;
+         }
+.logo-section{
+    width:70px;
+    height:70px;
+    margin:0px 0px 0px;
+    background:white;
+   }
+h4{
+    color:#fff;
+}
+.fnz-logo{
+
+}
+.logo-section p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    margin: auto !important;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-weight: bold;
+}
+.container-payment {
+    max-width: 600px;
+    min-width: 300px;
+    margin: auto;
+    border: 0px solid #969292;
+    border-radius: 5px;
+    box-shadow: 0 3px 8px rgba(9, 32, 77, 0.12), 0 0 2px rgba(29, 17, 51, 0.12);
+    padding: 0px 15px 30px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    min-height:450px;
+}
+.container-payment .svg-inline--fa{color:#fff;}
+.txtboxPadding{
+    padding:12px 16px !important;
+    cursor:pointer;
+}
+.txtboxPadding:hover {
+    border-bottom: 1px solid inherit;
+    border-color: var(--payment-primary) !important;
+}
+.payment-heading {
+    text-transform: uppercase;
+    color: rgba(13, 13, 13, 0.6);
+    margin: 12px 0px 12px;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+.txtboxPadding .svg-inline--fa {
+    color: var(--payment-primary) !important;
+}
+#payment-btn-back {
+    cursor: pointer;
+    color: #28328c;
+}
+    #payment-btn-back .svg-inline--fa {
+        color: #28328c;
+        margin-right: 2px;
+        margin-top: 3px;
+    }
+[id^="payment-mode"] {
+    cursor: pointer;
+    margin: 15px 0px 30px;
+}
+[id^="payment-mode"] img {
+    width: 90px;
+    height:90px;
+    margin: 10px auto;
+}
+
+[id^="payment-mode"] p {
+    margin-bottom: 5px;
+    font-size:12px;
+}
+.payment-btn {
+    width: 100%;
+    background: var(--payment-primary);
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    border-radius: 0 0 3px 3px;
+    height: 55px;
+    bottom: -70px;
+    margin: 0px -30px;
+    border: none;
+    min-width: 600px;
+    font-size:20px;
+}

@@ -1,0 +1,14 @@
+{
+  "en-US": {
+    "DateFormat": "mm/dd/yy",
+    "ShortDateFormat": "m/d/Y"
+  },
+  "en-IN": {
+    "DateFormat": "dd/mm/yy",
+    "ShortDateFormat": "d/m/Y"
+  },
+  "ar-EG": {
+    "DateFormat": "dd/mm/yy",
+    "ShortDateFormat": "d/m/Y"
+  }
+}
