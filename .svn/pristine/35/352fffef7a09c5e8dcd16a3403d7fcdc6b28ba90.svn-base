@@ -1,0 +1,717 @@
+﻿body {
+}
+
+.modal-footer {
+    justify-content: center !important;
+}
+
+hr {
+    border-top: 1px solid #e0e0e5 !important;
+}
+
+.doctorname {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #000 !important;
+    letter-spacing: 0.95px;
+}
+
+.AppointmentSectionBox {
+    border-left: 0px solid #1094f8;
+    box-shadow: 0 1px 2px 1px hsla(0,0%,43%,.14);
+    background: #fff !important;
+    border-radius: 3px !important;
+    padding: 1px 15px !important;
+}
+
+.rowBox {
+    margin: 0px !important;
+}
+
+.padtop10 {
+    padding-top: 10px !important;
+}
+
+.padbot15 {
+    padding-bottom: 15px !important;
+}
+
+.padbot20 {
+    padding-bottom: 20px !important;
+}
+
+#PopupAppointmentScheduler.modal {
+    padding-right: 20px !important
+}
+
+.c-grey {
+    color: #9e9e9e !important;
+    letter-spacing: 0.75px;
+}
+
+.m10 {
+    margin: 10px !important;
+}
+
+.mar0 {
+    margin: 0px !important
+}
+
+.padleft30 {
+    padding-left: 30px !important;
+}
+
+.headingText {
+    position: relative;
+}
+
+#btnMove, #btnPullUp {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border: 0px solid #badef9;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+
+    #btnPullUp svg {
+        font-size: 14px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid gray;
+        border-radius: 50%;
+        padding: 2px;
+        background: ghostwhite;
+    }
+
+#divDoctorList .headingText {
+    cursor: pointer;
+}
+
+.pullUp {
+    position: absolute;
+    top: 0px;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    transition: ease-in-out;
+}
+
+#DoctorIcon {
+    display: block;
+    text-align: center;
+}
+
+#btnMove .svg-inline--fa {
+    color: #797172 !important;
+    font-size: 14px;
+}
+
+
+.doctorCol input[type=checkbox] {
+    vertical-align: text-bottom;
+}
+
+.doctorCol label {
+    cursor: pointer;
+    color: #1b1b1b !important;
+    padding: 5px 5px 5px 1px;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+    .doctorCol label:hover {
+        background: #fffcec;
+        color: #000 !important;
+    }
+
+.appointmentSidebar {
+    border: 1px solid #e8edf1;
+    border-radius: 4px;
+    background: #fff !important;
+    /*width: 210px;*/
+    position: relative;
+    z-index: 2;
+    padding: 0px;
+    top: 0px;
+}
+
+    .appointmentSidebar.active {
+        margin-left: -240px !important;
+    }
+
+    .appointmentSidebar input, .appointmentSidebar .selectpicker + .btn {
+        background: transparent !important;
+    }
+
+    .appointmentSidebar .form-group.padright27 {
+        padding: 0px 27px 0px 15px !important;
+    }
+
+.fc-button-primary {
+    font-size: 12px !important;
+    font-style: normal !important;
+    color: #fbd828 !important;
+    background-color: #555 !important;
+    border-color: #555 !important;
+    /*font-weight: bold !important;*/
+    letter-spacing: 1.2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    font-weight: 300 !important;
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.calendarTimeline {
+    width: 77% !important;
+    padding-left: 5px;
+}
+
+    .calendarTimeline.active {
+        width: 94% !important;
+    }
+
+footer {
+    display: none
+}
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0.15em !important;
+    height: 35px;
+}
+
+.btn .dropdown-toggle {
+    padding: 0px !important;
+}
+
+.btn {
+    padding: 0px !important;
+}
+/*.form-group .bootstrap-select {
+    height: 30px !important;
+    padding: 4px 0px !important;
+}*/
+.appointmentSidebar .headingText, .waitlist .headingText {
+    height: 28px;
+    line-height: 28px !important;
+    margin: 0px 0px 10px !important;
+    margin-bottom: 0px;
+    background: linear-gradient(95deg,#FFE996,#fff);
+    padding-left: 15px !important;
+    font-weight:normal;
+    color: #555;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #e3e3e3;
+    font-size: 13px;
+    font-family:helvetica-Bold !important;
+}
+
+.appointmentSidebar .form-group {
+    padding: 0px 8px 0px 15px !important;
+    margin-bottom: 5px !important;
+}
+
+.AppointmentSectionBox .svg-inline--fa {
+    color: #414146 !important
+}
+
+.AppointmentSectionBox button .svg-inline--fa {
+    color: #fff !important;
+}
+
+.bigButton {
+    height: 42px !important;
+    font-size: 14px;
+}
+
+.svg-inline--fa.fa-user-md {
+    font-size: 30px !important;
+    color: #e4e4e4 !important;
+}
+
+.bg-lightgrey {
+    background: #f0f0f5 !important;
+}
+
+.w-600 {
+    width: 600px;
+}
+
+.blur.active {
+    filter: blur(1px);
+    opacity: 0.44;
+}
+
+.fc-license-message {
+    display: none !important;
+}
+
+#divAppointmentFilter > .form-group > .bootstrap-select .dropdown-menu.show {
+    transform: translate3d(0px, 0px, 0px) !important;
+    width: 100%;
+}
+
+#lblClinicType, #lblAppointmentDate, #lblAppointmentTime {
+    color: #414146 !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.5px;
+}
+
+hr {
+    border-top: 1px solid #ececec !important;
+}
+
+.doctorname {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #5d5d5d !important;
+    letter-spacing: 0.55px;
+}
+
+.AppointmentSectionBox {
+    padding: 15px;
+    border-left: 0px solid #1094f8;
+    box-shadow: 0 1px 2px 1px hsla(0,0%,43%,.14);
+}
+
+
+.m10 {
+    margin: 10px !important;
+}
+
+.mar0 {
+    margin: 0px !important
+}
+
+.padleft30 {
+    padding-left: 30px !important;
+}
+
+#btnMove {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border: 0px solid #badef9;
+    padding: 6px 6px;
+    cursor: pointer;
+}
+
+    #btnMove .svg-inline--fa {
+        color: #797172 !important;
+        font-size: 18px;
+    }
+
+
+.doctorCol input[type=checkbox] {
+    vertical-align: text-bottom;
+}
+
+.doctorCol label {
+    cursor: pointer;
+    color: #1b1b1b !important;
+    padding: 5px;
+    border-bottom: 1px solid #f3f3f3;
+}
+
+    .doctorCol label:hover {
+        background: aliceblue;
+        color: #0c4ec6 !important;
+    }
+
+.appointmentSidebar {
+    border: 1px solid #e8edf1;
+    border-radius: 4px;
+    background: #fff !important;
+    width: 210px;
+    position: relative;
+    z-index: 2;
+    padding: 0px;
+}
+
+    .appointmentSidebar.active {
+        margin-left: -180px !important;
+    }
+
+    .appointmentSidebar input, .appointmentSidebar .selectpicker + .btn {
+        background: transparent !important;
+    }
+
+.fc-button-primary {
+    color: #003179 !important;
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    font-weight: bold !important;
+    letter-spacing: 1.2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
+.calendarTimeline {
+    width: 83% !important;
+    padding-left: 5px;
+}
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: 0.15em !important;
+    height: 35px;
+}
+
+.appointmentSidebar .form-group {
+    padding: 0px 15px 0px 15px !important;
+    margin-bottom: 15px !important;
+}
+
+.fa-user-md {
+    font-size: 30px !important;
+    color: #b0b0b0 !important
+}
+
+#divEnterLocation {
+    display: none;
+}
+
+@media screen and (max-width:499px) and (min-width:300px) {
+    .appointmentSidebar {
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .calendarTimeline {
+        width: 100% !important;
+        padding-left: 5px;
+        margin-top: 10px;
+    }
+
+    .svg-inline--fa.fa-user-md {
+        font-size: 20px !important;
+        color: #e4e4e4 !important;
+    }
+}
+
+@media screen and (max-width:650px) and (min-width:500px) {
+    .doctorname {
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        color: #000 !important;
+        letter-spacing: 0.95px;
+    }
+
+    .appointmentSidebar {
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .calendarTimeline {
+        width: 100% !important;
+        padding-left: 5px;
+        margin-top: 10px;
+    }
+
+    .svg-inline--fa.fa-user-md {
+        font-size: 20px !important;
+        color: #e4e4e4 !important;
+    }
+}
+
+@media screen and (max-width:768px) and (min-width:651px) {
+    .doctorname {
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        color: #000 !important;
+        letter-spacing: 0.95px;
+    }
+
+    .appointmentSidebar {
+        width: 20%;
+    }
+
+    .calendarTimeline {
+        width: 79% !important;
+        padding-left: 5px;
+        display: inline;
+    }
+
+    .waitlist {
+        width: 18%;
+        height: 10px;
+        display: none;
+        border: 1px solid #e0e0e5;
+        position: absolute;
+        right: 0px;
+    }
+
+    #btnSlide {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        background: #1094f8 !important;
+        z-index: 4;
+        border-radius: 50%;
+    }
+
+    .waitlist.active {
+        display: inline;
+    }
+
+    .appointmentSidebar.active {
+        margin-left: -18% !important;
+    }
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+    .calendarTimeline.slightright {
+        width: 61% !important;
+    }
+
+    .calendarTimeline.active.slightright {
+        width: 79% !important;
+    }
+
+    .pullWaitlist {
+        width: 30px;
+    }
+
+    .svg-inline--fa.fa-user-md {
+        font-size: 24px !important;
+        color: #e4e4e4 !important;
+    }
+}
+
+
+@media screen and (max-width:991px) and (min-width:769px) {
+    .doctorname {
+        font-size: 13px !important;
+        font-weight: 400 !important;
+        color: #000 !important;
+        letter-spacing: 0.95px;
+    }
+
+    .appointmentSidebar {
+        width: 29%;
+    }
+
+    .calendarTimeline {
+        width: 71% !important;
+        padding-left: 5px;
+        display: inline;
+    }
+
+    .waitlist {
+        width: 18%;
+        height: 10px;
+        display: none;
+        border: 1px solid #e0e0e5;
+        position: absolute;
+        right: 0px;
+    }
+
+    #btnSlide {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        background: #1094f8 !important;
+        z-index: 4;
+        border-radius: 50%;
+    }
+
+    .waitlist.active {
+        display: inline;
+    }
+
+    .appointmentSidebar.active {
+        margin-left: -18% !important;
+    }
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+    .calendarTimeline.slightright {
+        width: 61% !important;
+    }
+
+    .calendarTimeline.active.slightright {
+        width: 79% !important;
+    }
+
+    .pullWaitlist {
+        width: 30px;
+    }
+}
+
+
+@media screen and (max-width:1024px) and (min-width:992px) {
+    .appointmentSidebar {
+        width: 23%;
+    }
+
+    .calendarTimeline {
+        width: 76% !important;
+        padding-left: 5px;
+        display: inline;
+    }
+
+    .waitlist {
+        width: 18%;
+        height: 10px;
+        display: none;
+        border: 1px solid #e0e0e5;
+        position: absolute;
+        right: 0px;
+    }
+
+    #btnSlide {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        background: #1094f8 !important;
+        z-index: 4;
+        border-radius: 50%;
+    }
+
+    .waitlist.active {
+        display: inline;
+    }
+
+    .appointmentSidebar.active {
+        margin-left: -18% !important;
+    }
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+    .calendarTimeline.slightright {
+        width: 61% !important;
+    }
+
+    .calendarTimeline.active.slightright {
+        width: 79% !important;
+    }
+
+    .pullWaitlist {
+        width: 30px;
+    }
+}
+
+@media screen and (max-width:1199px) and (min-width:1025px) {
+    .appointmentSidebar {
+        width: 20%;
+    }
+
+    .calendarTimeline {
+        width: 79% !important;
+        padding-left: 5px;
+        display: inline;
+    }
+
+    .waitlist {
+        width: 18%;
+        height: 10px;
+        display: none;
+        border: 1px solid #e0e0e5;
+        position: absolute;
+        right: 0px;
+    }
+
+    #btnSlide {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        background: #1094f8 !important;
+        z-index: 4;
+        border-radius: 50%;
+    }
+
+    .waitlist.active {
+        display: inline;
+    }
+
+    .appointmentSidebar.active {
+        margin-left: -18% !important;
+    }
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+    .calendarTimeline.slightright {
+        width: 61% !important;
+    }
+
+    .calendarTimeline.active.slightright {
+        width: 79% !important;
+    }
+
+    .pullWaitlist {
+        width: 30px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .appointmentSidebar {
+        width: 20%;
+    }
+
+    .calendarTimeline {
+        width: 79% !important;
+        padding-left: 5px;
+        display: inline;
+    }
+
+    .waitlist {
+        width: 19%;
+        height: 100%;
+        display: none;
+        border: 1px solid #e0e0e5;
+        position: absolute;
+        right: 0px;
+        padding:0;
+    }
+
+    #btnSlide {
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        background: #1094f8 !important;
+        z-index: 4;
+        border-radius: 50%;
+    }
+
+    .waitlist.active {
+        display: inline;
+    }
+
+    .appointmentSidebar.active {
+        margin-left: -18% !important;
+    }
+
+    .calendarTimeline.active {
+        width: 97% !important;
+    }
+
+    .calendarTimeline.slightright {
+        width: 62% !important;
+    }
+
+    .calendarTimeline.active.slightright {
+        width: 79% !important;
+    }
+
+    .pullWaitlist {
+        width: 30px;
+    }
+}

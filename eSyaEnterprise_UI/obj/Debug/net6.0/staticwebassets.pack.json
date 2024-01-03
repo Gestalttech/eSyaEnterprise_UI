@@ -1229,6 +1229,10 @@
       "PackagePath": "staticwebassets\\anydesk00000.png"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Appointment\\ClinicConsultation.css",
+      "PackagePath": "staticwebassets\\css\\Appointment\\ClinicConsultation.css"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Common\\PaymentScreen.css",
       "PackagePath": "staticwebassets\\css\\Common\\PaymentScreen.css"
     },
@@ -1503,6 +1507,22 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\Masters\\VendorMaster.css",
       "PackagePath": "staticwebassets\\css\\Masters\\VendorMaster.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\TokenSystem\\tokensystem.css",
+      "PackagePath": "staticwebassets\\css\\TokenSystem\\tokensystem.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\css\\vendor.bundle.base.css",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\vendors\\css\\vendor.bundle.base.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\mdi\\css\\materialdesignicons.min.css",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\vendors\\mdi\\css\\materialdesignicons.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\webfonts\\fa-brands-400.ttf",

@@ -34,5 +34,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int UserRole = 2;
         #endregion
 
+        #region Token System
+        public const int FloorId = 301;
+        #endregion
+
     }
 }

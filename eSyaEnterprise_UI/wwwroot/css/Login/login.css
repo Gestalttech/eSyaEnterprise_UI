@@ -82,6 +82,12 @@ h3 {font-size: 28px !important;font-weight: 600;text-transform: uppercase;text-a
     .popover-body ul{
         padding-left:10px;margin:0px;
     }
+.center_div_ver_hor {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 #closepopover .svg-inline--fa {
     font-size: 12px !important;
     color: black;

@@ -524,7 +524,7 @@ function fnUIDPatternGrid() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, "UIDlabel", "UIDPattern", localization.Active],
+        colNames: [localization.ISDCode, "UID label", "UID Pattern", localization.Active],
         colModel: [
             { name: "Isdcode", width: 40, editable: false, align: 'left', hidden: true },
             { name: "Uidlabel", width: 200, editable: true, hidden: false, align: 'left', resizable: true, editoptions: { maxlength: 50 } },

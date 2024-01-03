@@ -3283,3 +3283,4 @@ D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Debug\net6.
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Debug\net6.0\eSyaEnterprise_UI.pdb
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Debug\net6.0\eSyaEnterprise_UI.genruntimeconfig.cache
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Debug\net6.0\ref\eSyaEnterprise_UI.dll
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Debug\net6.0\eSyaEnterprise_UI.sourcelink.json

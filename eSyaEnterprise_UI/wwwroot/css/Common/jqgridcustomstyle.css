@@ -75,10 +75,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
     border-color: none !important;
    
 }
-.ui-widget.ui-widget-content {
-    padding:0px !important;
-    border: 0px solid #797172 !important
-}
+ 
 /*Jqgrid header*/
 .ui-jqgrid .ui-jqgrid-pager {
     font-size: 12px !important;
@@ -98,10 +95,21 @@ td:first-child.ui-state-default.jqgrid-rownum {
     margin-left: 8px;
     background-image: none;
 }
-
-    .ui-pg-div.svg-inline--fa.ui-icon, .ui-widget-content.svg-inline--fa .ui-icon {
-        background-image: none !important;
-    }
+.ui-widget-header .ui-icon {
+    background-image: url(images/ui-icons_gold_256x240.png);
+}
+.ui-widget.ui-widget-content {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 0px !important;
+    border: 0px solid #797172 !important;
+    border-radius:0px;
+}
+.ui-widget-header{
+    border-radius:0px;
+}
+.ui-pg-div.svg-inline--fa.ui-icon, .ui-widget-content.svg-inline--fa .ui-icon {
+    background-image: none !important;
+}
 .ui-jqgrid {
     box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)
     /*box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);*/

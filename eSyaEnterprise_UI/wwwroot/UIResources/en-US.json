@@ -246,6 +246,21 @@
   "UI0245": "Please Enter WhatsApp Number",
   "UI0246": "Please Enter Budget Amount",
   "UI0247": "Please Enter Commitment Amount",
+  "UI0248": "Please Enter the Token Type",
+  "UI0249": "Please Enter the Token Description",
+  "UI0250": "Please Enter the Token Prefix",
+  "UI0251": "Please Enter the Token Number",
+  "UI0252": "Please select a Counter Number",
+  "UI0253": "Please select a Floor",
+  "UI0254": "Please select a Counter",
+  "UI0255": "Please select a Token",
+  "UI0256": "Please call the patient",
+  "UI0257": "Please call the token",
+  "UI0258": "Calling the Token",
+
+
+
+
 
   "UIC01": "You are not Authorized to Add",
   "UIC02": "You are not Authorized to Edit",
