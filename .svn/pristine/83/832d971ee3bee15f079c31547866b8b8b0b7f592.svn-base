@@ -1,8 +1,0 @@
-﻿
-@{
-    ViewData["Title"] = "EPS_33_00";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>EPS_33_00</h1>
-
