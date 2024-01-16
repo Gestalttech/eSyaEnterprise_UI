@@ -262,7 +262,7 @@ function fnClearFields() {
     $('#txtFocusArea').val('');
     $('#txtAgeRangeFrom').val('');
     $('#txtAgeRangeTo').val('');
-    $("#cboGender").val('M').selectpicker('refresh');
+    $("#cboGender").val('A').selectpicker('refresh');
     $("#cboSpecialtyType").val('G').selectpicker('refresh');
     $("#cboSpecialtyGroup").val('0').selectpicker('refresh');
     $("#cboRangeFromPeriod").val('0').selectpicker('refresh');
