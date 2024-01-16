@@ -35,10 +35,17 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         /// </summary>
         /// <returns></returns>
         [Area("ProductSetup")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
 
         public IActionResult EPS_03_00()
         {
+            ViewBag.UserFormRole = new DO_UserFormRole
+            {
+                IsInsert = true,
+                IsEdit = true,
+                IsDelete = true,
+                IsView = true
+            };
             var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Forms/GetFormDetails").Result;
             if (serviceResponse.Status)
             {
