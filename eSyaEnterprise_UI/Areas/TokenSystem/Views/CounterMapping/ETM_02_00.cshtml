@@ -7,10 +7,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ETM_02_00</h1>
+ 
 
 
-<link href="~/css/jquery.contextMenu.min.css" rel="stylesheet" />
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts{
     <script src="~/js/common/jquery.contextMenu.min.js"></script>
     <script src="~/js/TokenSystem/TokenCounter.js"></script>
@@ -47,7 +47,9 @@
         actDeact_E5: '@Localizer["UIC05"]',
         Businesskey_E6: '@Localizer["UI0175"]',
         TokenType_E7: '@Localizer["UI0248"]',
+       
         CounterNumber_E8: '@Localizer["UI0252"]',
+        Floor_E9: '@Localizer["UI0253"]',
         }
 </script>
 
@@ -66,11 +68,11 @@
     </div>
 </div>
 
-<div class="modal fade in" id="PopupTokenCounter" data-keyboard="false" data-backdrop="static">
+<div class="modal fade in" id="PopupTokenCounter" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
-                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
                 <h4 class="modal-title">@Localizer["AddTokenCounter"] </h4>
             </div>
 
@@ -89,7 +91,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="txtCounterNumber">@Localizer["CounterNumber"] </label>
-                            <input type="text" id="txtCounterNumber" class="form-control" maxlength="20" />
+                            <input type="text" id="txtCounterNumber" class="form-control " maxlength="20" />
                         </div>
                     </div>
                 </div>
@@ -108,7 +110,7 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveTokenCounter" onclick="fnSaveTokenCounter()">
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="btnCancelTokenCounter"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelTokenCounter"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveTokenCounter" onclick="fnDeleteTokenCounter()"><i class="fa fa-times"></i>@Localizer["Deactivate"]   </button>
 
                     </div>

@@ -180,7 +180,9 @@ $("#btnCancelToken").click(function () {
 function fnClearFields() {
     $("#txtTokenType").val('');
     $("#txtTokenType").attr('readonly', false);
+    $("#txtDisplaySequence").attr('readonly', false);
     $("#txtTokenDescription").val('');
+    $("#txtDisplaySequence").val('');
     $("#txtTokenDescription").attr('readonly', false);
     $("#txtConfirmationURL").val('');
     $("#txtConfirmationURL").attr('readonly', false);
@@ -210,6 +212,11 @@ function fnSaveToken() {
     }
     if (IsStringNullorEmpty($("#txtTokenNumber").val())) {
         fnAlert("w", "ETM_01_00", "UI0251", errorMsg.TokenNumber_E9);
+        return;
+    }
+
+    if (IsStringNullorEmpty($("#txtDisplaySequence").val())) {
+        fnAlert("w", "ETM_01_00", "UI0265", errorMsg.DisplaySequence_E10);
         return;
     }
     objtoken = {

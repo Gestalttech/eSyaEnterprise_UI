@@ -43,6 +43,9 @@
 .ml-n15 {
     margin-left: -15px;
 }
+.mb-10{
+    margin-bottom:0.625rem;
+}
 .languageDiv {
     position: relative;
     top: 44px;

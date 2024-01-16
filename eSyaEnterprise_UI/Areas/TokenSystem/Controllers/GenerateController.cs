@@ -36,6 +36,8 @@ namespace eSyaEnterprise_UI.Areas.TokenSystem.Controllers
         public IActionResult ETM_05_00(int businessKey)
         {
             ViewBag.businessKey = businessKey;
+            //ViewBag.businessKey = 11;
+
             return View();
         }
         [Area("TokenSystem")]
@@ -77,6 +79,15 @@ namespace eSyaEnterprise_UI.Areas.TokenSystem.Controllers
                 obj.FormID = "0";
                 obj.UserID = 0;
                 obj.TerminalID = "0";
+                obj.TokenType = string.IsNullOrEmpty(obj.TokenType) ? string.Empty : obj.TokenType;
+                obj.TokenKey = string.IsNullOrEmpty(obj.TokenKey) ? string.Empty : obj.TokenKey;
+                obj.MobileNumber = string.IsNullOrEmpty(obj.MobileNumber) ? string.Empty : obj.MobileNumber;
+                obj.CallingCounter = string.IsNullOrEmpty(obj.CallingCounter) ? string.Empty : obj.CallingCounter;
+                obj.TokenStatus = string.IsNullOrEmpty(obj.TokenStatus) ? string.Empty : obj.TokenStatus;
+                obj.ConfirmedTokenType = string.IsNullOrEmpty(obj.ConfirmedTokenType) ? string.Empty : obj.ConfirmedTokenType;
+                obj.ConfirmationUrl = string.IsNullOrEmpty(obj.ConfirmationUrl) ? string.Empty : obj.ConfirmationUrl;
+                obj.FormID = string.IsNullOrEmpty(obj.FormID) ? string.Empty : obj.FormID;
+                obj.TerminalID = string.IsNullOrEmpty(obj.TerminalID) ? string.Empty : obj.TerminalID;
 
                 var serviceResponse = await _eSyaTokenSystemAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TokenGeneration/GenerateToken", obj);
                 if (serviceResponse.Status)
@@ -101,11 +112,15 @@ namespace eSyaEnterprise_UI.Areas.TokenSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> GenerateOTP(DO_OTP obj)
+        public async Task<JsonResult> GenerateOTP(string Otptype, string MobileNumber)
         {
+            DO_OTP obj = new DO_OTP();
             try
             {
-                var serviceResponse = await _eSyaTokenSystemAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TokenGeneration/GenerateOTP", obj);
+                obj.Otptype = Otptype;
+                obj.MobileNumber = MobileNumber;
+                obj.GeneratedOn= DateTime.Now;
+                var serviceResponse = await _eSyaTokenSystemAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TokenGeneration/GenerateOTP",obj);
                 if (serviceResponse.Status)
                 {
 

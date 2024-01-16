@@ -148,18 +148,21 @@
     });
 
     function fnGenerateOTP() {
-        var obj = {
-            Otptype: "TK",
-            MobileNumber: $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim()
-        };
-
-        var URL = getBaseURL() + '/Generate/GenerateOTP';
+        
+        // var obj = {
+            
+        //     Otptype: "TK",
+        //     MobileNumber: $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim()
+        // };
+        var Otptype= "TK";
+        var MobileNumber= $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim();
+        var URL = getBaseURL() + '/Generate/GenerateOTP?Otptype=' + Otptype + '&MobileNumber=' + MobileNumber;
         $.ajax({
             url: URL,
             type: 'POST',
             datatype: 'json',
             contenttype: 'application/json; charset=utf-8',
-            data: obj,
+            // data: JSON.stringify(obj),
             success: function (response) {
                 if (response.Status) {
                     //fnSendOTPSMS(response.key)

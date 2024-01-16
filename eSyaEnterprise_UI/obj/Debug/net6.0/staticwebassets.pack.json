@@ -1509,6 +1509,10 @@
       "PackagePath": "staticwebassets\\css\\Masters\\VendorMaster.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\TokenSystem\\displaySystem.css",
+      "PackagePath": "staticwebassets\\css\\TokenSystem\\displaySystem.css"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\TokenSystem\\tokensystem.css",
       "PackagePath": "staticwebassets\\css\\TokenSystem\\tokensystem.css"
     },
@@ -1517,8 +1521,184 @@
       "PackagePath": "staticwebassets\\css\\dashboardAssets\\css\\style.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\dashboard\\img_1.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\dashboard\\img_1.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\dashboard\\img_2.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\dashboard\\img_2.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\dashboard\\img_3.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\dashboard\\img_3.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\dashboard\\img_4.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\dashboard\\img_4.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces-clipart\\pic-10.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces-clipart\\pic-10.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces-clipart\\pic-5.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces-clipart\\pic-5.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face1.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face1.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face10.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face10.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face11.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face11.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face12.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face12.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face13.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face13.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face14.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face14.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face15.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face15.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face16.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face16.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face17.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face17.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face18.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face18.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face19.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face19.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face2.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face2.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face20.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face20.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face21.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face21.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face22.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face22.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face23.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face23.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face24.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face24.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face25.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face25.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face26.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face26.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face27.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face27.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face3.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face3.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face4.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face4.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face5.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face5.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face6.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face6.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face7.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face7.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face8.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face8.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\images\\faces\\face9.jpg",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\images\\faces\\face9.jpg"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\chart.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\chart.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\dashboard.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\dashboard.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\file-upload.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\file-upload.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\hoverable-collapse.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\hoverable-collapse.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\jquery.cookie.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\jquery.cookie.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\misc.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\misc.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\off-canvas.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\off-canvas.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\todo.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\todo.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\js\\todolist.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\js\\todolist.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\chart.js\\Chart.min.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\vendors\\chart.js\\Chart.min.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\css\\vendor.bundle.base.css",
       "PackagePath": "staticwebassets\\css\\dashboardAssets\\vendors\\css\\vendor.bundle.base.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\js\\vendor.bundle.base.js",
+      "PackagePath": "staticwebassets\\css\\dashboardAssets\\vendors\\js\\vendor.bundle.base.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\css\\dashboardAssets\\vendors\\mdi\\css\\materialdesignicons.min.css",
@@ -2565,6 +2745,10 @@
       "PackagePath": "staticwebassets\\js\\Admin\\UnitofMeasure.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Appointment\\ClinicConsultation.js",
+      "PackagePath": "staticwebassets\\js\\Appointment\\ClinicConsultation.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\all.min.js",
       "PackagePath": "staticwebassets\\js\\Common\\all.min.js"
     },
@@ -2761,8 +2945,16 @@
       "PackagePath": "staticwebassets\\js\\Common\\i18n\\grid.locale-vi.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\jQuery.print.min.js",
+      "PackagePath": "staticwebassets\\js\\Common\\jQuery.print.min.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\jquery-ui.min.js",
       "PackagePath": "staticwebassets\\js\\Common\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\jquery.PrintArea.js",
+      "PackagePath": "staticwebassets\\js\\Common\\jquery.PrintArea.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\jquery.contextMenu.min.js",
@@ -3791,6 +3983,26 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\StoreMaster.js",
       "PackagePath": "staticwebassets\\js\\Stores\\StoreMaster.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\CounterMapping.js",
+      "PackagePath": "staticwebassets\\js\\TokenSystem\\CounterMapping.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\TokenConfigure.js",
+      "PackagePath": "staticwebassets\\js\\TokenSystem\\TokenConfigure.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\TokenCounter.js",
+      "PackagePath": "staticwebassets\\js\\TokenSystem\\TokenCounter.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\TokenManagement.js",
+      "PackagePath": "staticwebassets\\js\\TokenSystem\\TokenManagement.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Vendor\\ApprovalListInVendorRegister.js",
+      "PackagePath": "staticwebassets\\js\\Vendor\\ApprovalListInVendorRegister.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Vendor\\VendorApprovalList.js",
@@ -6741,12 +6953,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\dark\\content.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\dark\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\dark\\content.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\dark\\content.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\dark\\content.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\default\\content.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\default\\content.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\default\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\default\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\default\\content.min.css",
@@ -6757,12 +6977,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\document\\content.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\document\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\document\\content.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\document\\content.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\document\\content.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\tinymce-5-dark\\content.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\tinymce-5-dark\\content.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\tinymce-5-dark\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\tinymce-5-dark\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\tinymce-5-dark\\content.min.css",
@@ -6773,12 +7001,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\tinymce-5\\content.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\tinymce-5\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\tinymce-5\\content.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\tinymce-5\\content.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\tinymce-5\\content.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\writer\\content.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\writer\\content.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\writer\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\content\\writer\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\content\\writer\\content.min.css",
@@ -6793,8 +7029,16 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.inline.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.inline.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.inline.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.inline.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.inline.min.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\content.min.css",
@@ -6805,12 +7049,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.shadowdom.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.shadowdom.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.shadowdom.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.shadowdom.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide-dark\\skin.shadowdom.min.css",
@@ -6825,8 +7077,16 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\content.inline.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\content.inline.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\content.inline.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\content.inline.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\content.inline.min.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\content.min.css",
@@ -6837,12 +7097,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\skin.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\skin.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\skin.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\skin.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\skin.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\skin.shadowdom.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\skin.shadowdom.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\skin.shadowdom.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\oxide\\skin.shadowdom.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\oxide\\skin.shadowdom.min.css",
@@ -6857,8 +7125,16 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.inline.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.inline.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.inline.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.inline.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.inline.min.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\content.min.css",
@@ -6869,12 +7145,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.shadowdom.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.shadowdom.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.shadowdom.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.shadowdom.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5-dark\\skin.shadowdom.min.css",
@@ -6889,8 +7173,16 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.inline.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.inline.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.inline.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.inline.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.inline.min.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\content.min.css",
@@ -6901,12 +7193,20 @@
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.css"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.min.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.min.css"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.shadowdom.css",
       "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.shadowdom.css"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.shadowdom.js",
+      "PackagePath": "staticwebassets\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.shadowdom.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\lib\\tinymce\\skins\\ui\\tinymce-5\\skin.shadowdom.min.css",

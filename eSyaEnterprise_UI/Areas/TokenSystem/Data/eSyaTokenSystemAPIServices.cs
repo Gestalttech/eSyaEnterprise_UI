@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eSyaEnterprise_UI.Areas.TokenSystem.Data
 {
-    public class eSyaTokenSystemAPIServices
+    public class eSyaTokenSystemAPIServices: IeSyaTokenSystemAPIServices
     {
         public IHttpClientServices HttpClientServices { get; set; }
         public eSyaTokenSystemAPIServices(HttpClient httpClient, IHttpClientServices clientServices)

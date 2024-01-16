@@ -7,7 +7,7 @@
 }
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts {
-    <script src="~/js/jquery.contextMenu.min.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
     <script src="~/js/TokenSystem/TokenConfigure.js"></script>
 }
 
@@ -47,6 +47,7 @@
         TokenDesc_E7: '@Localizer["UI0249"]',
         TokenPrefix_E8: '@Localizer["UI0250"]',
         TokenNumber_E9: '@Localizer["UI0251"]',
+        DisplaySequence_E10: '@Localizer["UI0265"]',
      }
 </script>
 
@@ -58,11 +59,11 @@
     </div>
 </div>
 
-<div class="modal fade in" id="PopupToken" data-keyboard="false" data-backdrop="static">
+<div class="modal fade in" id="PopupToken" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
-                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
                 <h4 class="modal-title">@Localizer["AddToken"] </h4>
             </div>
 
@@ -98,14 +99,14 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="txtTokenNumber">@Localizer["TokenNumberLength"] </label>
-                            <input type="text" id="txtTokenNumber" class="form-control" pattern="^[0-9]*$" maxlength="15" />
+                            <input type="text" id="txtTokenNumber" class="form-control numberonly"  maxlength="15" />
 
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="txtDisplaySequence">@Localizer["DisplaySequence"] </label>
-                            <input type="text" id="txtDisplaySequence" class="form-control" pattern="^[0-9]*$" maxlength="3" />
+                            <input type="text" id="txtDisplaySequence" class="form-control numberonly"  maxlength="3" />
 
                         </div>
                     </div>
@@ -124,7 +125,7 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveToken" onclick="fnSaveToken()">
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="btnCancelToken"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelToken"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveToken" onclick="fnDeleteToken()"><i class="fa fa-times"></i>@Localizer["Deactivate"]   </button>
 
                     </div>

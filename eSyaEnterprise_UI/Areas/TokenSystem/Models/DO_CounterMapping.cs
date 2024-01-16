@@ -14,8 +14,8 @@ namespace eSyaEnterprise_UI.Areas.TokenSystem.Models
         public string FormId { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string TokenDesc { get; set; }
-        public string FloorName { get; set; }
-        public string CounterNumberdesc { get; set; }
+        public string? TokenDesc { get; set; }
+        public string? FloorName { get; set; }
+        public string? CounterNumberdesc { get; set; }
     }
 }

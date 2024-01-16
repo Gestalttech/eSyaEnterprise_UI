@@ -31,6 +31,8 @@ namespace eSyaEnterprise_UI.Areas.TokenSystem.Controllers
             _logger = logger;
        }
         #region Token Configure
+        [Area("TokenSystem")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ETM_01_00()
         {
             try
