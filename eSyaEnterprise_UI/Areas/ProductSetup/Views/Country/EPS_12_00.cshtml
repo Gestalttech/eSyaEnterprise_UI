@@ -70,6 +70,11 @@
         CountryName_E9: '@Localizer["UI0037"]',
         Currency_E10: '@Localizer["UI0038"]',
         Country_E11: '@Localizer["UI0215"]',
+        MobileNumberPattern_E12: '@Localizer["UI0266"]',
+        POBoxApplicable_E13: '@Localizer["UI0267"]',
+        Pincode_E14: '@Localizer["UI0268"]',
+        DateFormat_E15: '@Localizer["UI0269"]',
+        ShortDateFormat_E16: '@Localizer["UI0270"]',
     }
     
 </script>
@@ -196,18 +201,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-4 col-sm-12">
-                        <div class="default-checkbox">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
-                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                            </label>
-                        </div>
-                    </div>
+                   
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="default-checkbox padbot20">
 
-                            <label class="mdl-checkbox mdl-js-checkbox" for="chkIsPOBoxAppllicable">
+                            <label class="mdl-checkbox mdl-js-checkbox" id="lblchkIsPOBoxAppllicable" for="chkIsPOBoxAppllicable" >
                                 <input type="checkbox" id="chkIsPOBoxAppllicable"
                                        class="mdl-checkbox__input">
                                 <span class="mdl-checkbox__label">@Localizer["IsPOBoxApplicable"] </span>
@@ -217,14 +215,14 @@
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtPOBoxPattern">@Localizer["POBoxPattern"]</label>
-                            <input id="txtPOBoxPattern" class="form-control" maxlength="25" type="text" />
+                            <input id="txtPOBoxPattern" class="form-control" maxlength="25" type="text" disabled="disabled" />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="default-checkbox padbot20">
 
 
-                            <label class="mdl-checkbox mdl-js-checkbox" for="chkIsPinApplicable">
+                            <label class="mdl-checkbox mdl-js-checkbox" id="lblchkIsPinApplicable" for="chkIsPinApplicable" >
                                 <input type="checkbox" id="chkIsPinApplicable"
                                        class="mdl-checkbox__input">
                                 <span class="mdl-checkbox__label">@Localizer["IsPinApplicable"] </span>
@@ -236,22 +234,33 @@
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtPincodePattern">@Localizer["PincodePattern"]</label>
-                            <input id="txtPincodePattern" class="form-control" maxlength="25" type="text" />
+                            <input id="txtPincodePattern" class="form-control" maxlength="25" type="text" disabled="disabled" />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-12">
                         <div class="form-group">
                             <label for="txtDateFormat">@Localizer["DateFormat"]</label>
                             <input id="txtDateFormat" class="form-control" maxlength="15" type="text" />
+                            <span class="text-muted">(eg. YYYY-MM-DDThh:mm:ssZ)</span>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-12">
                         <div class="form-group">
                             <label for="txtShortDateFormat">@Localizer["ShortDateFormat"]</label>
                             <input id="txtShortDateFormat" class="form-control" maxlength="15" type="text" />
+                            <span class="text-muted">(eg. YYYY-MM-DD)</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-12">
+                        <div class="default-checkbox">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
                         </div>
                     </div>
                 </div>
+               
                 <div class="row">
                     <div class="col-lg-6 col-12 col-md-6">
                         <table id="jqgUIDPattern"></table>

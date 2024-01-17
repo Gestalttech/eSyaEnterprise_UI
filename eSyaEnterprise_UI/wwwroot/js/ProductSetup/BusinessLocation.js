@@ -510,6 +510,8 @@ function fnSaveLocationInfo()
     
     }
 
+    //$("#jqgPreferredLanguage").jqGrid('editCell', 0, 0, false).attr("value");
+
     objloc.l_Preferredlanguage = preferredlanguage;
 
     //
@@ -872,7 +874,7 @@ function fnLoadGridPreferredLanguage() {
                 { name: "PreferredLanguage", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "CultureDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "Pldescription", width: 100, editable: false, editoptions: { disabled: false }, align: 'left' },
-                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
             ],
             pager: "#jqpPreferredLanguage",
@@ -946,6 +948,7 @@ function fnSaveFinancialInfo() {
         isbookofaccount = true;
         $("#cboBusinessSegment").val('0').selectpicker('refresh');
     }
+    $("#jqgPreferredLanguage").jqGrid('editCell', 0, 0, false);
 
     objfin = {
         BusinessKey: $("#txtBusinesskey").val(),

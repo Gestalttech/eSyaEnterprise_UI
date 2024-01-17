@@ -12,7 +12,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string CountryName { get; set; }
         public string CountryFlag { get; set; }
         public string CurrencyCode { get; set; }
-        public string? MobileNumberPattern { get; set; }
+        public string MobileNumberPattern { get; set; }
         //public string Uidlabel { get; set; }
         //public string Uidpattern { get; set; }
         public int Nationality { get; set; }
@@ -29,8 +29,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string? imgName { get; set; }
         public string? CurrencyName { get; set; }
         public List<DO_UIDPattern>? _lstUIDpattern { get; set; }
-        public string? DateFormat { get; set; }
-        public string? ShortDateFormat { get; set; }
+        public string DateFormat { get; set; }
+        public string ShortDateFormat { get; set; }
     }
 
     public class IMGCountryFlag

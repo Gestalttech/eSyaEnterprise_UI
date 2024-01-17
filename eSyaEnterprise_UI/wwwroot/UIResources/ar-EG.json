@@ -264,7 +264,11 @@
   "UI0263": "Display IP Added",
   "UI0264": "Display IP Updated",
   "UI0265": "Please enter the Display Sequence",
-
+  "UI0266": "Please Enter a Mobile No pattern",
+  "UI0267": "Please enter a PO Box pattern",
+  "UI0268": "Please enter a Pincode pattern",
+  "UI0269": "Please enter the date format",
+  "UI0270": "Please enter the short date format",
 
 
 

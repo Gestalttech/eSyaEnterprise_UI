@@ -23,8 +23,44 @@ $(document).ready(function () {
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+
+    $("#lblchkIsPOBoxAppllicable").on('click',function () {
+        var _lblchkPOBox = $("#lblchkIsPOBoxAppllicable").hasClass('is-checked');
+        if (!_lblchkPOBox) {
+            $("#txtPOBoxPattern").prop('disabled', false);
+        }
+        else {
+            $("#txtPOBoxPattern").prop('disabled', true).val('');
+        }  
+    })
+
+    $("#lblchkIsPinApplicable").on('click', function () {
+        var _lblchkPin = $("#lblchkIsPinApplicable").hasClass('is-checked');
+        if (!_lblchkPin) {
+            $("#txtPincodePattern").prop('disabled', false);
+        }
+        else {
+            $("#txtPincodePattern").prop('disabled', true).val('');
+        }
+    })
 });
 
+
+$("#PopupCountryCode").on('show.bs.modal', function () {
+    if (IsStringNullorEmpty($("#txtPincodePattern").val())) {
+        $("#chkIsPinApplicable").parent().removeClass("is-checked"); $("#txtPincodePattern").prop('disabled', true);
+    }
+    else {
+        $("#chkIsPinApplicable").parent().addClass("is-checked"); $("#txtPincodePattern").prop('disabled', false);
+    }
+
+    if (IsStringNullorEmpty($("#txtPOBoxPattern").val())) {
+        $("#chkIsPOBoxAppllicable").parent().removeClass("is-checked"); $("#txtPOBoxPattern").prop('disabled', true);
+    }
+    else {
+        $("#chkIsPOBoxAppllicable").parent().addClass("is-checked"); $("#txtPOBoxPattern").prop('disabled', false);
+    }
+})
 function fnGridLoadCountryCode() {
     $("#jqgCountryCode").jqGrid('GridUnload');
     $("#jqgCountryCode").jqGrid({
@@ -203,14 +239,31 @@ function fnEditCountryCode(e,actiontype) {
     $('#divstatutorycode').show();
     fnUIDPatternGrid();
     if (actiontype.trim() == "edit") {
-
+        debugger;
         if (_userFormRole.IsEdit === false) {
             fnAlert("w", "EPS_12_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
+      
+
+        
+        if (IsStringNullorEmpty($("#txtPincodePattern").val())) {
+            $("#chkIsPinApplicable").parent().removeClass("is-checked"); $("#txtPincodePattern").prop('disabled', true);
+        }
+        else {
+            $("#chkIsPinApplicable").parent().addClass("is-checked"); $("#txtPincodePattern").prop('disabled', false);
+        }
+
+        if (IsStringNullorEmpty($("#txtPOBoxPattern").val())) {
+            $("#chkIsPOBoxAppllicable").parent().removeClass("is-checked"); $("#txtPOBoxPattern").prop('disabled', true);
+        }
+        else {
+            $("#chkIsPOBoxAppllicable").parent().addClass("is-checked"); $("#txtPOBoxPattern").prop('disabled', false);
+        }
+       
 
         $('#PopupCountryCode').modal('show');
-
+       
         $("#chkActiveStatus").prop('disabled', true);
         $('#PopupCountryCode').find('.modal-title').text(localization.UpdateCountry);
         $("#btnSaveCountryCode").html('<i class="fa fa-sync"></i>' + localization.Update);
@@ -270,7 +323,18 @@ function fnEditCountryCode(e,actiontype) {
         })
     }
 }
-
+//function fnValidateCheckbox(chkid, txtid) {
+//debugger;
+//    var _POBoxApplicable = $("#" + chkid).parent().hasClass("is-checked");
+//    var _txtPOBoxPattern = $("#"+txtid).val();
+//    if (!_POBoxApplicable) {
+//        $("#" + txtid).prop('disabled', false);
+//    }
+//    else {
+//        $("#" + txtid).prop('disabled', true);
+         
+//    }
+//}
 function fnSaveCountryCode() {
    
     if (fnValidateCountryCode() === false) {
@@ -393,10 +457,39 @@ function fnValidateCountryCode() {
         fnAlert("w", "EPS_12_00", "UI0038", errorMsg.Currency_E10);
         return false;
     }
+    if (IsStringNullorEmpty($("#txtMobileNumberPattern").val())) {
+        fnAlert("w", "EPS_12_00", "UI0266", errorMsg.MobileNumberPattern_E12);
+        return false;
+    }
     if ($("#cboNationality").val() === "0" || $("#cboNationality").val() === '0' || IsStringNullorEmpty($("#cboNationality").val())) {
         fnAlert("w", "EPS_12_00", "UI0215", errorMsg.Country_E11);
         return false;
     }
+    var _POBoxApplicable = $("#chkIsPOBoxAppllicable").parent().hasClass("is-checked");
+    if (_POBoxApplicable == true) {
+        if (IsStringNullorEmpty($("#txtPOBoxPattern").val())) {
+            fnAlert("w", "EPS_12_00", "UI0267", errorMsg.POBoxApplicable_E13);
+            return false;
+        }
+    }
+
+
+    var _PinOBoxApplicable = $("#chkIsPinApplicable").parent().hasClass("is-checked");
+    if (_PinOBoxApplicable == true) {
+        if (IsStringNullorEmpty($("#txtPincodePattern").val())) {
+            fnAlert("w", "EPS_12_00", "UI0268", errorMsg.Pincode_E14);
+            return false;
+        }
+    }
+    if (IsStringNullorEmpty($("#txtDateFormat").val())) {
+        fnAlert("w", "EPS_12_00", "UI0269", errorMsg.DateFormat_E15);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtShortDateFormat").val())) {
+        fnAlert("w", "EPS_12_00", "UI0270", errorMsg.ShortDateFormat_E16);
+        return false;
+    }
+    
 }
 
 function fnGridRefreshCountryCode() {
@@ -469,6 +562,8 @@ function fnClearFields() {
     $("#chkIsPinApplicable").parent().removeClass("is-checked");
     $("#txtPincodePattern").val('');
     $("#btnSaveCountryCode").attr('disabled', false);
+    $("#txtPOBoxPattern").prop('disabled', true);
+    $("#txtPincodePattern").prop('disabled', true);
 }
 function fnDeleteCountryCodes() {
 

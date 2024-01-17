@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EPS_19_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        TaxDescription: '@Localizer["TaxDescription"]',
+        TaxIdentificationID: '@Localizer["TaxIdentificationID"]',
+        TaxIdentificationDescription: '@Localizer["TaxIdentificationDescription"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        AddTaxIdentification: '@Localizer["AddTaxIdentification"]',
+        EditTaxIdentification: '@Localizer["EditTaxIdentification"]',
+        ViewTaxIdentification: '@Localizer["ViewTaxIdentification"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        DeActivate: '@Localizer["DeActivate"]',
+        Activate: '@Localizer["Activate"]',
+        StateCode: '@Localizer["StateCode"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        ISDCode_E6: '@Localizer["UI0056"]',
+        TaxIdentification_E7: '@Localizer["UI0065"]',
+        TaxIdentificationDesc_E8: '@Localizer["UI0066"]',
+        StateCode_E9: '@Localizer["UI0067"]',
+    }
+</script>
+
+
+@section scripts{
+    <script src="~/js/ProductSetup/TaxIdentification.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+
+}
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-4">
+        <div class="form-group">
+            <label> @Localizer["ISDCode"] </label>
+            @await Component.InvokeAsync("IsdCountryInput", new { id = "CountryCode" })
+            @* <select class="selectpicker" id="cboCountryCode" data-live-search="true" title="Select" data-size="8" asp-items="@ViewBag.ISDCodeList" onchange="fnCountryCodeChanges()">
+                <option value="0">Select</option>
+            </select> *@
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
+        <div class="taxIdentificationContainer">
+            <table id="jqgTaxIdentification"></table>
+            <div id="jqpTaxIdentification"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="PopupTaxIdentification" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddTaxIdentification"] </h4>
+            </div>
+
+            <div class="modal-body">
+                @*<div class="row">
+                <div class="col-sm-12">
+                <input type="text" class="form-control" id="txtTaxIdentificationID" style="display:none">
+                </div>
+                </div>*@
+                <div class="row padbot4">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label> @Localizer["TaxIdentificationID"] </label>
+                            <input id="txtTaxIdentificationID" class="form-control numberonly" maxlength="4" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label> @Localizer["TaxIdentificationDescription"] </label>
+                            <input id="txtTaxDescription" class="form-control" maxlength="25" type="text" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="form-group">
+                            <label> @Localizer["StateCode"] </label>
+                            <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="default-checkbox single">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveTaxIdentification" onclick="fnSaveTaxIdentification();">
+                            @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateTaxIdentification" onclick="fnDeleteTaxIdentification()"><i class="fas fa-ban"></i>  @Localizer["Deactivate"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

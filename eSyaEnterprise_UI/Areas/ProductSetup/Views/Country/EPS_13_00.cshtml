@@ -55,18 +55,7 @@
     <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
         <div class="form-group">
             <label class="lable-color">@Localizer["ISDCodes"] </label>
-            <div>
-                <select class="selectpicker" data-live-search="true" id="cboIsdcode" title="" data-size="8" onchange="fnGridLoadStatutoryCode()">
-                    <option value="0"> @Localizer["ChooseISDCode"]</option>
-                    @if (ViewBag.Isdcodes != null)
-                    {
-                        foreach (var code in ViewBag.Isdcodes)
-                        {
-                            <option value="@code.Isdcode">@code.Isdcode-@code.CountryName</option>
-                        }
-                    }
-                </select>
-            </div>
+            @await Component.InvokeAsync("IsdCountryInput", new { id = "Isdcode" })
         </div>
     </div>
 </div>
