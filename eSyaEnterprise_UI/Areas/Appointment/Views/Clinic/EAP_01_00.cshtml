@@ -8,6 +8,7 @@
 }
 
 <link href="~/css/common/bottom-sheets.css" rel="stylesheet" />
+<link href="~/css/common/jquery.contextMenu.min.css" rel="stylesheet" />
 <link href="~/css/Appointment/ClinicConsultation.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
 
@@ -36,6 +37,7 @@
     <script src='~/js/fullcalendar/pm/resource-timegrid/main.js'></script>
     <script src='~/js/fullcalendar/pm/timeline/main.js'></script>
     <script src="~/js/Common/bottom-sheets.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
     <script src="~/js/Appointment/ClinicConsultation.js"></script>
 }
 @{
@@ -66,9 +68,16 @@
         RequestorEmailID: '@Localizer["RequestorEmailID"]',
         RequestorName: '@Localizer["RequestorName"]',
         RelationshipToPatient: '@Localizer["RelationshipToPatient"]',
+        AppointmentSummary: '@Localizer["AppointmentSummary"]',
+        ServiceID: '@Localizer["ServiceID"]',
+        ServiceDescription: '@Localizer["ServiceDescription"]',
+        Currency: '@Localizer["Currency"]',
+        Amount: '@Localizer["Amount"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
     }
 </script>
-
+    
 <div class="row">
     <div class="appointmentSidebar d-inline-block">
         <div id="divAppointmentFilter">
@@ -77,16 +86,7 @@
                 <label>@Localizer["Date"]</label>
                 <input type="text" name="name" value="" id="txtAppointmentDate" data-date-format="DD-MM-YYYY" onchange="" class="form-control padleft0" />
             </div>
-            <div class="form-group">
-                <label>@Localizer["For"]</label>
-                <select id="cboBusinessKey" class="selectpicker" data-live-search="false" title="" onchange="">
-                    <option>Select</option>
-                    <option value="c">Clinic </option>
-                    <option class="h">Home Visit </option>
-                    <option class="v">Video Consultation</option>
-                    <option class="t">Tele-consultation</option>
-                </select>
-            </div>
+            
             <div class="form-group">
                 <label>@Localizer["Location"] </label>
                 <select id="cboClinicType" class="selectpicker" onchange="">
@@ -97,13 +97,15 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>@Localizer["Clinic"] </label>
-                <select id="cboClinicType" class="selectpicker" onchange="">
-                    <option value="0">Select</option>
-                    <option value="o">OPD Clinic</option>
+                <label>@Localizer["AppointmentFor"]</label>
+                <select id="cboBusinessKey" class="selectpicker" data-live-search="false" title="" onchange="">
+                    <option>Select</option>
+                    <option value="c">Clinic </option>
+                    <option class="h">Home Visit </option>
+                    <option class="v">Video Consultation</option>
+                    <option class="t">Tele-consultation</option>
                 </select>
             </div>
-           
             <div class="form-group">
                 <label>@Localizer["Specialty"]</label>
                 <select id="cboSpecialty" class="selectpicker" onchange="fnLoadDoctorScheduleList()">
@@ -116,6 +118,15 @@
                     <option value="p">Pediatrics</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label>@Localizer["Clinic"] </label>
+                <select id="cboClinicType" class="selectpicker" onchange="">
+                    <option value="0">Select</option>
+                    <option value="o">OPD Clinic</option>
+                </select>
+            </div>
+           
+            
         </div>
         <div id="divDoctorList">
             <p class="headingText">@Localizer["ChooseDoctors"]  <span id="btnPullUp" title="Collapse"><i class="fas fa-chevron-up c-black"></i></span></p>
@@ -194,7 +205,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title blur">@Localizer["AppointmentScheduler"] <span id="txtDateAndTime"></span> </h4>
+                <h4 class="modal-title blur">@Localizer["AppointmentScheduler"] </h4>
             </div>
             <div class="modal-body">
                 @await Html.PartialAsync("~/Areas/Appointment/Views/Clinic/_Confirmation.cshtml")

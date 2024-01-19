@@ -44,7 +44,19 @@
     // fnProcessLoading(true);
     //onFormLoad();
     fnInitializerCalendar();
-    
+    $.contextMenu({
+        // define which elements trigger this menu
+        selector: "#btnServiceDetails",
+        trigger: 'left',
+        // define the elements of the menu
+        items: {
+            jqgEdit: { name: "Edit", icon: "edit", callback: function (key, opt) { fnEditServiceDetails(event, 'edit') } },
+            jqgView: { name: "View", icon: "view", callback: function (key, opt) { fnEditServiceDetails(event, 'view') } },
+        }
+        // there's more, have a look at the demos and docs...
+    });
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + "Edit" + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + "View" + " </span>");
 });
 $(window).resize(function () {
     $(".appointmentSidebar,.waitlist ,.pullWaitlist").css({
@@ -68,7 +80,8 @@ function pullthewaitlist() {
 }
 $('#PopupAppointmentScheduler').on('show.bs.modal', function () {
 
-    $(".modal-body").addClass('bg-lightgrey')
+    $(".modal-body").addClass('bg-lightgrey');
+    fnGridServiceDetails();
 });
 $('#PopupPatientSearch').on('show.bs.modal', function () {
 
@@ -157,8 +170,7 @@ function fnInitializerCalendar() {
              var _datearr = [], _d='';
             _datearr = start.startStr.slice(0, 10).split('-');
             _d = _datearr[2] + '/' + _datearr[1] + '/'+ _datearr[0];
-            $("#txtDateAndTime").html(" - <i class='fa fa-calendar'></i> " + _d +" - <i class='fa fa-clock'></i> " + new Date(start.startStr).toLocaleTimeString() + ' to ' +new Date(start.endStr).toLocaleTimeString());
-        },
+            },
          
     });
 
@@ -227,3 +239,56 @@ $("#btnCancelBusinessKey,.close").click(function () {
     $("#PopupAppointmentScheduler").modal('hide');
 });
 
+function fnGridServiceDetails() {
+    $("#jqgServiceDetails").jqGrid({
+        datatype: 'local',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+        colNames: [localization.ServiceID, localization.ServiceDescription, localization.Currency, localization.Amount,  localization.Active, localization.Actions],
+        colModel: [
+            { name: "ServiceID", width: 70, editable: true, align: 'left',hidden:true },
+            { name: "Servicedescription", width: 250, editable: false, align: 'left', resizable: true },
+            { name: "Currency", width: 105, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "Amount", width: 100, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
+            { name: "ActiveStatus", editable: true, width: 100, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            {
+                name: 'edit', search: false, align: 'left', width: 55, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnServiceDetails"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
+        ],
+        pager: "#jqpServiceDetails",
+        rowNum: 10,
+        rowList: [10, 20, 50, 100],
+        rownumWidth: '55',
+        loadonce: true,
+        viewrecords: true,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        align: "left",
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        scrollOffset: 0, caption: localization.ServiceDetails,
+        loadComplete: function (data) {
+            fnAddGridSerialNoHeading();
+            fnJqgridSmallScreen("jqgServiceDetails");
+        },
+
+    }).jqGrid('navGrid', '#jqpServiceDetails', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpServiceDetails', {
+        caption: '<span class="fa fa-sync btn-pager"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshSMSinformation
+    }).jqGrid('navButtonAdd', '#jqpServiceDetails', {
+        caption: '<span class="fa fa-plus btn-pager"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddSMSInformation
+    });
+}
+
+function fnGridRefreshSMSinformation() {
+
+}
+
+function fnAddSMSInformation() {
+
+}

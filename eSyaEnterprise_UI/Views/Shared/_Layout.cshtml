@@ -213,12 +213,11 @@
             });
         });
         $('.modal.fullscreen').on('shown.bs.modal', function (e) {
-            fnModalPopupScroll('f');
-            $(window).on('resize', function () {
-                fnModalPopupScroll('f');
-            });
+            fnModalPopupScrollFull();
         });
-
+        $(window).on('resize', function () {
+            fnModalPopupScrollFull();
+        });
          // Error Notification Popup with error code
 
         function fnAlert(_messageType,_messageTitle,_messageCode,_messageContent){
@@ -239,6 +238,7 @@
          }
 
         function fnModalPopupScroll(type) {
+            debugger;
             var winH = $(window).height();
             var winW = $(window).width();
             var modalHeaderH = $('.modal-header').outerHeight(true);
@@ -252,12 +252,18 @@
             else {
                 $(".modal-body").css({ 'max-height': (winH - modalHeaderH - modalFooterH - topSpace + 28), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
                 $('.modal').css('top', topSpace);
-                if (typeStatus == 'full') {
-                    $(".modal-body").css({ 'max-height': 'unset', 'height': (winH - modalHeaderH - modalFooterH - 15), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
-                    $('.modal').css('top', '0px');
-                }
+                 
             }
 
+        }
+        function fnModalPopupScrollFull() {
+            var winH = $(window).height();
+            var winW = $(window).width();
+            var modalHeaderH = $('.modal-header').outerHeight(true);
+            var modalFooterH = $('.modal-footer').outerHeight(true);
+            var topSpace = $('section.header').outerHeight(true) + $('.banner').outerHeight(true);
+            $(".modal-body").css({ 'max-height': 'unset',  'overflow-y': 'auto', 'overflow-x': 'hidden' });
+            $('.modal').css('top', '0px');
         }
 
         function CustomMessage() {

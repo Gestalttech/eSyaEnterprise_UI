@@ -176,13 +176,13 @@ p.subheading {
     font-family: 'helvetica-bold';
 }
 .fixedText {
-    color: #191919 !important;
-    font-weight: 600 !important;
+    color: var(--color-primary);
     font-size: 13px;
     background: linear-gradient(to bottom,var(--color-white),#ffecaa);
     border: 1px dotted #fff3b3;
     padding: 4px 6px;
     letter-spacing: 0.75px;
+    font-family:helvetica-Bold;
 }
 .lblInfo {
     color: rgba(0, 0, 0, 0.33) !important;
@@ -2489,7 +2489,7 @@ header.blur, .banner.blur {
 
         .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a {
             padding: 1px 27px;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--color-primary);
             /*background: #fbfbfb;*/
             font-weight: 300;

@@ -140,25 +140,25 @@ function fnAddBusinessLocation() {
         $('#PopupBusienssLocation').find('.modal-title').text(localization.AddBusinessLocation);
 
         $("#btnSaveLocationInfo").show();
-        $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveLocationInfo").attr("disabled", false);
         $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLocinfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveFinancialInfo").show();
-        $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#chkFininfoActiveStatus").parent().addClass("is-checked");
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveLicenseInfo").show();
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveLicenseInfo").attr("disabled", false);
         $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveTaxInfo").show();
-        $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
         $("#chktaxinfoActiveStatus").prop('disabled', true);
@@ -233,22 +233,22 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#btnDeactivateBusinessLocation").hide();
         
         
-        $("#btnSaveLocationInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLocationInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveLocationInfo").attr("disabled", false);
         $("#btnSaveLocationInfo").show();
         $("#chkLocinfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveFinancialInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#btnSaveFinancialInfo").show();
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveLicenseInfo").attr("disabled", false);
         $("#btnSaveLicenseInfo").show();
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#btnSaveTaxInfo").show();
         $("#chktaxinfoActiveStatus").prop('disabled', true);

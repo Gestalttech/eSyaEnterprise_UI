@@ -1,0 +1,223 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EAP_01_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/common/bottom-sheets.css" rel="stylesheet" />
+<link href="~/css/common/jquery.contextMenu.min.css" rel="stylesheet" />
+<link href="~/css/Appointment/ClinicConsultation.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+
+@section Scripts {
+    <link href="~/js/fullcalendar/core/main.css" rel="stylesheet" />
+    <link href="~/js/fullcalendar/daygrid/main.css" rel="stylesheet" />
+    <link href="~/js/fullcalendar/timegrid/main.css" rel="stylesheet" />
+    <link href="~/js/fullcalendar/list/main.css" rel="stylesheet" />
+
+    <link href="~/js/fullcalendar/pm/timeline/main.css" rel="stylesheet" />
+    <link href="~/js/fullcalendar/pm/resource-timeline/main.css" rel="stylesheet" />
+
+    <link href="~/js/fullcalendar/bootstrap/main.css" rel="stylesheet" />
+
+    <script src="~/js/fullcalendar/core/main.js"></script>
+    <script src="~/js/fullcalendar/core/locales-all.min.js"></script>
+    <script src="~/js/fullcalendar/daygrid/main.js"></script>
+    <script src="~/js/fullcalendar/timegrid/main.js"></script>
+    <script src="~/js/fullcalendar/interaction/main.js"></script>
+    <script src="~/js/fullcalendar/bootstrap/main.js"></script>
+    <script src="~/js/fullcalendar/list/main.js"></script>
+    <script src="~/js/fullcalendar/moment/main.js"></script>
+
+    <script src='~/js/fullcalendar/pm/resource-common/main.js'></script>
+    <script src='~/js/fullcalendar/pm/resource-daygrid/main.js'></script>
+    <script src='~/js/fullcalendar/pm/resource-timegrid/main.js'></script>
+    <script src='~/js/fullcalendar/pm/timeline/main.js'></script>
+    <script src="~/js/Common/bottom-sheets.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+    <script src="~/js/Appointment/ClinicConsultation.js"></script>
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        Appointment: '@Localizer["Appointment"]',
+        AppointmentFor: '@Localizer["AppointmentFor"]',
+        ClinicType: '@Localizer["ClinicType"]',
+        Date: '@Localizer["Date"]',
+        Specialty: '@Localizer["Specialty"]',
+        ChooseDoctors: '@Localizer["ChooseDoctors"]',
+        RescheduleWaitlist: '@Localizer["RescheduleWaitlist"]',
+        BookAppointment: '@Localizer["BookAppointment"]',
+        AppointmentScheduler: '@Localizer["AppointmentScheduler"]',
+        MobileNumber: '@Localizer["MobileNumber"]',
+        PatientClass: '@Localizer["PatientClass"]',
+        RequestingFor: '@Localizer["RequestingFor"]',
+        SourceOfReference: '@Localizer["SourceOfReference"]',
+        EmailID: '@Localizer["EmailID"]',
+        SubSource: '@Localizer["SubSource"]',
+        RequestorDetails: '@Localizer["RequestorDetails"]',
+        RequestorMobileNumber: '@Localizer["RequestorMobileNumber"]',
+        PatientInformation: '@Localizer["PatientInformation"]',
+        RequestorEmailID: '@Localizer["RequestorEmailID"]',
+        RequestorName: '@Localizer["RequestorName"]',
+        RelationshipToPatient: '@Localizer["RelationshipToPatient"]',
+        AppointmentSummary: '@Localizer["AppointmentSummary"]',
+        ServiceID: '@Localizer["ServiceID"]',
+        ServiceDescription: '@Localizer["ServiceDescription"]',
+        Currency: '@Localizer["Currency"]',
+        Amount: '@Localizer["Amount"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+    }
+</script>
+    
+<div class="row">
+    <div class="appointmentSidebar d-inline-block">
+        <div id="divAppointmentFilter">
+            <p class="headingText">@Localizer["Appointment"] <span id="btnMove" title="Collapse"><i class="fas fa-bars c-black"></i></span></p>
+            <div class="form-group">
+                <label>@Localizer["Date"]</label>
+                <input type="text" name="name" value="" id="txtAppointmentDate" data-date-format="DD-MM-YYYY" onchange="" class="form-control padleft0" />
+            </div>
+            
+            <div class="form-group">
+                <label>@Localizer["Location"] </label>
+                <select id="cboClinicType" class="selectpicker" onchange="">
+                    <option value="0">Select</option>
+                    <option value="be">Bengaluru</option>
+                    <option value="my">Mysuru</option>
+                    <option value="ma">Mangaluru</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>@Localizer["AppointmentFor"]</label>
+                <select id="cboBusinessKey" class="selectpicker" data-live-search="false" title="" onchange="">
+                    <option>Select</option>
+                    <option value="c">Clinic </option>
+                    <option class="h">Home Visit </option>
+                    <option class="v">Video Consultation</option>
+                    <option class="t">Tele-consultation</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>@Localizer["Specialty"]</label>
+                <select id="cboSpecialty" class="selectpicker" onchange="fnLoadDoctorScheduleList()">
+                    <option value="0">Select</option>
+                    <option value="g">General Medicine</option>
+                    <option value="a">Anesthesiology</option>
+                    <option value="c">Cardiology</option>
+                    <option value="d">Dermatology</option>
+                    <option value="s">Surgery</option>
+                    <option value="p">Pediatrics</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>@Localizer["Clinic"] </label>
+                <select id="cboClinicType" class="selectpicker" onchange="">
+                    <option value="0">Select</option>
+                    <option value="o">OPD Clinic</option>
+                </select>
+            </div>
+           
+            
+        </div>
+        <div id="divDoctorList">
+            <p class="headingText">@Localizer["ChooseDoctors"]  <span id="btnPullUp" title="Collapse"><i class="fas fa-chevron-up c-black"></i></span></p>
+            <div class="form-group">
+                <div class="ph-item" style="display:none">
+                    <div class="ph-col-12 p-0">
+                        <div class="ph-row p-0"></div>
+                    </div>
+                </div>
+                
+                <div id="dvDoctorGM" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox"/> Dr.Venkataramana</label>
+                    <label><input type="checkbox"/> Dr.Anusha N D</label>
+                </div> 
+                <div id="dvDoctorAN" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox"/> Dr.Ranjan Kumar</label>
+                    <label><input type="checkbox"  /> Dr.Sanjay</label>
+                </div>   
+                <div id="dvDoctorCA" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox"/> Dr.Rajesh kumar</label>
+                    <label><input type="checkbox"/> Dr.Ragavendra</label>
+                </div>
+                <div id="dvDoctorDE" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox"/> Dr.Ravikant chauhan</label>
+                    <label><input type="checkbox" /> Dr.Varsha Patil</label>
+                </div>
+                <div id="dvDoctorSU" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox"  /> Dr.Naveen</label>
+                    <label><input type="checkbox"/> Dr.Sateesha</label>
+                </div>
+                <div id="dvDoctorPA" class="lsDoctor" style="display:none">
+                    <label><input type="checkbox" /> Dr.Poonam</label>
+                    <label><input type="checkbox"/> Dr.Tejaswini</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-inline-block padleft5 calendarTimeline">
+        <div id='calendar'></div>
+    </div>
+
+    <div class="waitlist">
+        <p class="headingText">@Localizer["RescheduleWaitlist"] </p>
+        <div id='external-events'></div>
+    </div>
+
+</div>
+
+<div id="dvsheet" class="sheet column items-center justify-end" aria-hidden="true">
+    <!-- Dark background for the sheet -->
+    <div class="overlay"></div>
+
+    <!-- The sheet itself -->
+    <div class="contents column border">
+        <!-- Sheet controls -->
+        <header class="controls border-bottom mb-3">
+            <!-- The thing to drag if you want to resize the sheet -->
+            <div class="draggable-area">
+                <div class="draggable-thumb"></div>
+            </div>
+            <div class=" d-block">
+                <h4 class="m-0">
+                    @Localizer["AppointmentScheduler"]
+                </h4>
+                <button class="close-sheet" type="button" title="Close the sheet"><i class="fa fa-times"></i></button>
+            </div>
+        </header>
+        <div class="container-fluid bg-lightgrey py-3">
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fullscreen fade in " id="PopupAppointmentScheduler" tabindex="-1" role="dialog" aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title blur">@Localizer["AppointmentScheduler"] </h4>
+            </div>
+            <div class="modal-body">
+                @await Html.PartialAsync("~/Areas/Appointment/Views/Clinic/_Confirmation.cshtml")
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveAppointment" onclick="fnSaveAppointmentConfirmation()"><i class="fa fa-calendar-check"></i> @Localizer["BookAppointment"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelBusinessKey" data-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

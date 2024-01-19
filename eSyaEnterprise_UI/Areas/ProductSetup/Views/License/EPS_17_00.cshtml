@@ -28,6 +28,40 @@
         vertical-align: text-top;
         margin-right: 3px;
         }
+
+    div[role=tablist] {
+        width: 100%;
+        padding: 0px 0px 15px;
+    }
+
+    #v-pills-tab .nav-item .nav-link {
+        font-size: 12px;
+        padding: 8px 12px;
+        font-family: 'helvetica-bold';
+        color: #4a4a4a;
+        /* border: 1px dashed #cccccc; */
+        width: 100%;
+        border-radius: 0px !important;
+        background: #fff;
+        border-bottom: 1px solid #f1f1f1;
+        text-align: left;
+    }
+
+        #v-pills-tab .nav-item .nav-link.active, #v-pills-tab .nav-item .show > .nav-link {
+            color: #000000;
+            background-color: #fff9d6;
+            font-family: 'helvetica-bold';
+            border-right: 3px solid #797172;
+        }
+
+    #v-pills-tab li.nav-item {
+        border-bottom: 1px solid #ffffff
+    }
+
+    #v-pills-tab li button {
+        font-size: 12px;
+        border-color: transparent;
+    }
     </style>
 
 <script>
@@ -143,16 +177,32 @@
 
                       <div class="row">
 
-                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 col-xl-1  animated slideInLeft sidebarSmall">
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 col-xl-2 animated slideInLeft sidebarSmall">
+                        @* <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="locationInfo-tab" data-bs-toggle="pill" href="#locationInfo" role="tab" aria-controls="locationInfo" aria-selected="true">@Localizer["LocationInfo"]  </a>
                             <a class="nav-link" id="financialInfo-tab" data-bs-toggle="pill" href="#financialInfo" role="tab" aria-controls="financialInfo" aria-selected="false" onclick="fnGetFinancialInfoDetails()">@Localizer["FinancialInfo"]  </a>
                             <a class="nav-link" id="licenseInfo-tab" data-bs-toggle="pill" href="#licenseInfo" role="tab" aria-controls="licenseInfo" aria-selected="false" onclick="fnGetLicenseInfoDetails()">@Localizer["LicenseInfo"]  </a>
                             <a class="nav-link" id="taxInfo-tab" data-bs-toggle="pill" href="#taxInfo" role="tab" aria-controls="taxInfo" aria-selected="false" onclick="fnGetTaxInfoDetails()">@Localizer["TaxInfo"]  </a>
-                         </div>
+                         </div> *@
+                        <ul class="nav flex-column nav-tabs shadowLite" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active position-relative" id="locationInfo-tab" data-bs-toggle="pill" data-bs-target="#locationInfo" type="button" role="tab" aria-controls="pills-locationInfo" aria-selected="true">@Localizer["LocationInfo"]</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link position-relative" id="financialInfo-tab" data-bs-toggle="pill" data-bs-target="#financialInfo" type="button" role="tab" aria-controls="pills-financialInfo" aria-selected="true" onclick="fnGetFinancialInfoDetails()">@Localizer["FinancialInfo"]</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link position-relative" id="licenseInfo-tab" data-bs-toggle="pill" data-bs-target="#licenseInfo" type="button" role="tab" aria-controls="pills-licenseInfo" aria-selected="true" onclick="fnGetLicenseInfoDetails()">@Localizer["LicenseInfo"]</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link position-relative" id="taxInfo-tab" data-bs-toggle="pill" data-bs-target="#taxInfo" type="button" role="tab" aria-controls="pills-taxInfo" aria-selected="true" onclick="fnGetTaxInfoDetails()">@Localizer["TaxInfo"]</button>
+                            </li>
+                            
+                        </ul>
+
                      </div>
-                    <div class="col-lg-11 col-md-10 col-sm-10 col-xl-11 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
-                        <div class="tab-content" id="v-pills-tabContent">
+                    <div class="col-lg-8 col-md-8 col-sm-9 col-xl-10 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
+                        <div class="tab-content shadowLite px-4 pb-4 pt-4" id="v-pills-tabContent">
                             <div class="tab-pane fade show active" id="locationInfo" role="tabpanel" aria-labelledby="locationInfo-tab">
                             <div class="row">
                                 <input type="text" id="txtBusinesskey" style="display:none" />

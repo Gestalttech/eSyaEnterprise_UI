@@ -7,22 +7,33 @@
 <div class="row blur">
 
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <section class="AppointmentSectionBox" style="display:none">
-            <div class="row rowBox p-y-10">
-                <div class="col-lg-1 col-md-2 col-sm-1">
-                    <span id="DoctorIcon"><i class="fas fa-user-md"></i></span>
-
+        <section class="AppointmentSectionBox">
+            <div class="row p-y-10">
+                <div class="col-12 form-group">
+                    <p class="subheading">@Localizer["AppointmentSummary"]</p>
+                    <hr class="left" />
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-5">
-                    <label class="c-black doctorname" id="lblDoctorName">Dr.</label>
-                    <label class="c-grey specialty" id="lblSpecialty"></label>
-                    <label class="c-grey specialty" id="lblDoctorQualification"></label>
-                </div>
-                <div class="col-lg-5 col-md-4 col-sm-6 border-left">
-                    <span class="d-block f-11"><i class="far fa-hospital"></i> <label class="d-inline-block"> </label> <label id="lblClinicType" class="d-inline-block f-11"></label></span>
-                    <span class="d-block f-11"><i class="far fa-calendar-alt"></i> On <label id="lblAppointmentDate" class="d-inline-block f-11"></label></span>
-                    <span class="d-block f-11"><i class="far fa-clock"></i> At <label id="lblAppointmentTime" class="d-inline-block f-11"></label> </span>
-                </div>
+                 <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-user-md"></i></span>
+                    <div class="appointmentSummary_details">
+                         <p class="doctorname m-0">Dr. Ram Prasad</p>
+                         <p class="specialty  m-0">Cardiology</p>
+                     </div>
+                 </div>
+                 <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-location-dot"></i></span>
+                    <div class="appointmentSummary_details">
+                        <p class="doctorname m-0">Gestalt Specialty Hospital</p>
+                        <p class="specialty  m-0">Pai layout, Bengaluru</p>
+                    </div>
+                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-calendar-alt"></i></span>
+                    <div class="appointmentSummary_details">
+                        <p class="doctorname m-0">20/01/2024</p>
+                        <p class="specialty  m-0">10:00AM - 10:05AM [05 mins]</p>
+                    </div>
+                 </div>
             </div>
 
 
@@ -30,16 +41,21 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
         <section class="AppointmentSectionBox">
-            <div class="row padtop10">
+            <div class="row padtop10  pt-4 border-top">
                 <div class="col-12">
                     <p class="subheading">@Localizer["PatientInformation"]</p>
                     <hr class="left" />
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="form-group">
-                        <label>@Localizer["MobileNumber"] </label>
-                        @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobileNumber" })
-                    </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["AppointmentFor"]</label>
+                    <select id="cboRequestingFor" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Clinic Consultation</option>
+                        <option>Home Visit Consultation</option>
+                        <option>Mother</option>
+                        <option>Brother</option>
+                        <option>Sister</option>
+                    </select>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
                     <label>@Localizer["PatientClass"]</label>
@@ -49,6 +65,13 @@
                         <option value="E">Established</option>
                     </select>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label>@Localizer["MobileNumber"] </label>
+                        @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobileNumber" })
+                    </div>
+                </div>
+                
             
             </div>
             <div class="row">
@@ -121,6 +144,10 @@
                         <option>Geriatric</option>
                     </select>
                 </div> 
+                <div class="col-12  pt-4 border-top">
+                    <p class="subheading">@Localizer["SourceOfReference"]</p>
+                    <hr class="left" />
+                </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 form-group">
                     <label>@Localizer["SourceOfReference"]</label>
                     <select id="cboSourceOfReference" class="selectpicker" data-live-search="false" title="" onchange="">
@@ -168,7 +195,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div class="col-12">
+                <div class="col-12 pt-4 border-top">
                     <p class="subheading">@Localizer["RequestorDetails"]</p>
                     <hr class="left"/>
                 </div>
@@ -196,6 +223,10 @@
                         <option>Newpaper</option>
                         <option>Others</option>
                     </select>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12  pt-4 border-top form-group">
+                    <table id="jqgServiceDetails"></table>
+                    <div id="jqpServiceDetails"></div>
                 </div>
             </div>
 

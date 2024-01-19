@@ -9,12 +9,7 @@ hr {
     border-top: 1px solid #e0e0e5 !important;
 }
 
-.doctorname {
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    color: #000 !important;
-    letter-spacing: 0.95px;
-}
+ 
 
 .AppointmentSectionBox {
     border-left: 0px solid #1094f8;
@@ -262,12 +257,40 @@ footer {
 hr {
     border-top: 1px solid #ececec !important;
 }
+.appointmentSummary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
 
+.appointmentSummary_icon {
+    padding: 12px 14px;
+    background: linear-gradient(to top,#ffffff,#efefef);
+    border-radius: 0%;
+    color: #656464 !important;
+    border: 1px solid #efefef;
+}
+    .appointmentSummary_icon .svg-inline--fa{
+        font-size:25px;
+    }
+    .appointmentSummary_details {
+        padding: 6px 14px;
+        border: 1px solid #ccc;
+        border-left:0px;
+    }
+
+    .appointmentSummary_details p.specialty {
+        font-family: 'helvetica';
+        font-size: 12px;
+        color: #555555;
+    }
 .doctorname {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #5d5d5d !important;
-    letter-spacing: 0.55px;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+    color: #555555 !important;
+    font-family:helvetica-Bold;
+    letter-spacing:normal;
 }
 
 .AppointmentSectionBox {
