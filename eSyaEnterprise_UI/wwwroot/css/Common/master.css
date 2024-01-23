@@ -184,7 +184,7 @@ p.subheading {
     letter-spacing: 0.75px;
     font-family:helvetica-Bold;
     width:auto;
-    display:inlne-block;
+    display:inline-block;
 }
 .lblInfo {
     color: rgba(0, 0, 0, 0.33) !important;
