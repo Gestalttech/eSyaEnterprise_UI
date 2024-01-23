@@ -40,7 +40,7 @@
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label class="lable-color">@Localizer["BusinessKey"]</label>
-            <select class="selectpicker" data-live-search="false" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
+            <select class="selectpicker" data-live-search="false" data-mobile="true" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
         </div>
         <label>@Localizer["Specialty"] </label>
         <div id="jstSpecialtyClinicLink"></div>

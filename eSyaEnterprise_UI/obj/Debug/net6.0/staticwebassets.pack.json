@@ -3733,6 +3733,14 @@
       "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemSubCategory.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugManufacturers.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugManufacturers.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\MapManufacturerToVendor.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPharma\\MapManufacturerToVendor.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\ServiceClass.js",
       "PackagePath": "staticwebassets\\js\\ConfigProduct\\ServiceClass.js"
     },

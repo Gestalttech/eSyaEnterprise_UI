@@ -39,7 +39,7 @@ function fnGridLoadUnlockBlockedUser() {
         onSelectRow: function (id) {
             if (id) { $('#jqgUnlockBlockedUser').jqGrid('editRow', id, true); }
         },
-        caption: 'User Role Action Link',
+        caption: localization.UnlockBlockedUser,
         loadComplete: function () {
             fnJqgridSmallScreen("jqgUnlockBlockedUser");
         },

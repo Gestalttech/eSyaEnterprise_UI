@@ -1,0 +1,235 @@
+﻿   @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="row blur">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <section class="AppointmentSectionBox">
+            <div class="row p-y-10">
+                <div class="col-12 form-group">
+                    <p class="subheading">@Localizer["AppointmentSummary"]</p>
+                    <hr class="left" />
+                </div>
+                 <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-user-md"></i></span>
+                    <div class="appointmentSummary_details">
+                         <p class="doctorname m-0">Dr. Ram Prasad</p>
+                         <p class="specialty  m-0">Cardiology</p>
+                     </div>
+                 </div>
+                 <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-location-dot"></i></span>
+                    <div class="appointmentSummary_details">
+                        <p class="doctorname m-0">Gestalt Specialty Hospital</p>
+                        <p class="specialty  m-0">Pai layout, Bengaluru</p>
+                    </div>
+                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 appointmentSummary">
+                    <span class="appointmentSummary_icon"><i class="fa fa-calendar-alt"></i></span>
+                    <div class="appointmentSummary_details">
+                        <p class="doctorname m-0">20/01/2024</p>
+                        <p class="specialty  m-0">10:00AM - 10:05AM [05 mins]</p>
+                    </div>
+                 </div>
+            </div>
+
+
+        </section>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <section class="AppointmentSectionBox">
+            <div class="row padtop10  pt-4 border-top">
+                <div class="col-12">
+                    <p class="subheading">@Localizer["PatientInformation"]</p>
+                    <hr class="left" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["AppointmentFor"]</label>
+                    <select id="cboRequestingFor" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Clinic Consultation</option>
+                        <option>Home Visit Consultation</option>
+                        <option>Mother</option>
+                        <option>Brother</option>
+                        <option>Sister</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+                    <label>@Localizer["PatientClass"]</label>
+                    <select class="selectpicker" id="cboEpisodeType">
+                        <option disabled>Choose Episode</option>
+                        <option value="N" selected>New</option>
+                        <option value="E">Established</option>
+                    </select>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label>@Localizer["MobileNumber"] </label>
+                        @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobileNumber" })
+                    </div>
+                </div>
+                
+            
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                    <label>First Name</label>
+                    <input type="text" name="text" id="txtFirstName" value="" class="form-control" autocomplete="on" />
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                    <label>Middle Name</label>
+                    <input type="text" name="text" id="txtMiddleName" value="" class="form-control" autocomplete="on" />
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                    <label>Last Name</label>
+                    <input type="text" name="text" id="txtLastName" value="" class="form-control" autocomplete="on" />
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-3 form-group">
+                    <label>Gender</label>
+                    <select class="form-control" id="cboGender">
+                        <option>Choose gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        @*<option value="T">Transgender</option>*@
+                    </select>
+                </div>
+
+
+                <div class="col-lg-2 col-md-3 col-sm-3 form-group">
+                    <label>Date of Birth<span class="text-muted">(Optional)</span> </label>
+                    <input type="text" name="text" id="txtDateOfBirth" value="" class="form-control" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["Age"]</label>
+                    <div class="row m-0">
+                        <input type="text" class="form-control col-3 d-inline" maxlength="3" style="width:25px;"/>
+                        <span class="col-1 d-inline w-auto ps-0">Y</span>
+                        <input type="text" class="form-control col-3 d-inline" maxlength="2" style="width:20px;" />
+                        <span class="col-1 d-inline w-auto ps-0">M</span>
+                        <input type="text" class="form-control col-3 d-inline" maxlength="2" style="width:20px;" />
+                        <span class="col-1 d-inline w-auto ps-0">D</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                    <label>@Localizer["EmailID"]</label>
+                    <input type="text" name="text" id="txtEmailID" value="" class="form-control email" autocomplete="on" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["WhatsAppNumber"]</label>
+                    @await Component.InvokeAsync("IsdMobileInput", new { id = "WhatsAppNumber" })
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["RequestingFor"]</label>
+                    <select id="cboRequestingFor" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Self</option>
+                        <option>Father</option>
+                        <option>Mother</option>
+                        <option>Brother</option>
+                        <option>Sister</option>
+                    </select>
+                </div> 
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["PatientIs"]</label>
+                    <select id="cboPatientIs" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Infant</option>
+                        <option>Child</option>
+                        <option>Mother</option>
+                        <option>Adult</option>
+                        <option>Geriatric</option>
+                    </select>
+                </div> 
+                <div class="col-12  pt-4 border-top">
+                    <p class="subheading">@Localizer["SourceOfReference"]</p>
+                    <hr class="left" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["SourceOfReference"]</label>
+                    <select id="cboSourceOfReference" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Advertisement</option>
+                        <option>Social media</option>
+                        <option>Newpaper</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["SubSource"]</label>
+                    <select id="cboSourceOfReference" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Advertisement</option>
+                        <option>Social media</option>
+                        <option>Newpaper</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+               
+
+                <div class="col-lg-6 col-md-6 col-sm-6 form-group" hidden>
+                    <label class="col-md-6 d-inline v-bottom" style="padding-left: 0px;"> <input type="checkbox" name="IsSponsored" value="S" onchange="fnIsSponsored_changed()" /> Is Sponsored</label>
+                    <div style="margin-top: -5px;">
+                        <select class="selectpicker" data-live-search="true" id="cboCustomer" title="" disabled>
+                            <option value="" selected>Choose a Insurance</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-3 col-sm-12 form-group">
+                    <label> @Localizer["RequestChannel"]</label>
+                    <select class="selectpicker" id="cboRequestChannel">
+                        <option value=null>Select</option>
+                        <option value="1">Clinic</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+                <hr/>
+                <div class="col-12 pt-4 border-top">
+                    <p class="subheading">@Localizer["RequestorDetails"]</p>
+                    <hr class="left"/>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label>@Localizer["RequestorMobileNumber"] </label>
+                        @await Component.InvokeAsync("IsdMobileInput", new { id = "RequestorMobileNumber" })
+                    </div>
+                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 form-group">
+                    <label>@Localizer["RequestorEmailID"]</label>
+                    <input type="text" name="text" id="txtEmailID" value="" class="form-control email" autocomplete="on" />
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                    <label>@Localizer["RequestorName"]</label>
+                    <input type="text" name="text" id="txtRequestorName" value="" class="form-control" autocomplete="on" />
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 form-group">
+                    <label>@Localizer["RelationshipToPatient"]</label>
+                    <select id="cboSourceOfReference" class="selectpicker" data-live-search="false" title="" onchange="">
+                        <option>Select</option>
+                        <option>Advertisement</option>
+                        <option>Social media</option>
+                        <option>Newpaper</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12  pt-4 border-top form-group">
+                    <table id="jqgServiceDetails"></table>
+                    <div id="jqpServiceDetails"></div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+</div>

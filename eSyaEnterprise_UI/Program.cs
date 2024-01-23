@@ -37,6 +37,7 @@ using eSyaEnterprise_UI.Areas.ManageRates.Data;
 using eSyaEnterprise_UI.Areas.Vendor.Data;
 using eSyaEnterprise_UI.GestaltUserDataServices;
 using eSyaEnterprise_UI.Areas.TokenSystem.Data;
+using eSyaEnterprise_UI.Areas.ConfigPharma.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -212,6 +213,15 @@ builder.Services.AddHttpClient<IeSyaTokenSystemAPIServices, eSyaTokenSystemAPISe
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+builder.Services.AddHttpClient<IeSyaConfigPharmaAPIServices, eSyaConfigPharmaAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigPharma_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
 builder.Services.AddSingleton<ISmsServices, SmsServices>();

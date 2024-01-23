@@ -183,6 +183,7 @@ p.subheading {
     padding: 4px 6px;
     letter-spacing: 0.75px;
     font-family:helvetica-Bold;
+    width:auto;
 }
 .lblInfo {
     color: rgba(0, 0, 0, 0.33) !important;

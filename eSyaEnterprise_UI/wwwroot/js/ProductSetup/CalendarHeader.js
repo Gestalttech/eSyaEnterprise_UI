@@ -9,7 +9,7 @@
 
 $('#txtCalDefFRMDate').change(function () {
     var date = this.valueAsDate;
-    date.setDate(date.getDate() + 364);
+    date.setDate(date.getDate() + 365);
     $('#txtCalDefTillDate')[0].valueAsDate = date;
 });
 

@@ -53,7 +53,7 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName,  localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName,  localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },

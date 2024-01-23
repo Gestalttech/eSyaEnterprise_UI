@@ -1,0 +1,151 @@
+﻿using eSyaEnterprise_UI.Areas.ConfigPharma.Data;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using eSyaEnterprise_UI.Areas.ConfigPharma.Models;
+
+namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
+{
+    public class VendorController : Controller
+    {
+        private readonly IeSyaConfigPharmaAPIServices _eSyapharmaAPIServices;
+        private readonly ILogger<ManufacturerController> _logger;
+
+        public VendorController(IeSyaConfigPharmaAPIServices pharmacyAPIServices, ILogger<ManufacturerController> logger)
+        {
+            _eSyapharmaAPIServices = pharmacyAPIServices;
+            _logger = logger;
+        }
+
+        [Area("ConfigPharma")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPH_02_00()
+        {
+            return View();
+        }
+        /// <summary>
+        ///Get Linked forms with documents for Grid
+        /// </summary>
+        /// 
+
+        [Area("ConfigPharma")]
+        [HttpPost]
+        public async Task<JsonResult> GetFormDocumentlink(int formID)
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_ManufacturerVendorLink>>("Control/GetFormDocumentlink?formID=" + formID);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFormLinkedDocuments");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetFormLinkedDocuments");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+        /// <summary>
+        ///Get Linked forms with documents for Grid
+        /// </summary>
+        ///  [Area("ConfigPharma")]
+        [Area("ConfigPharma")]
+        [HttpPost]
+        public async Task<JsonResult> GetFormsForDocumentControl()
+        {
+
+            try
+            {
+                string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "FM",
+                    parent = "#",
+                    text = "eSya Forms",
+                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                treeView.Add(jsObj);
+
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_ManufacturerVendorLink>>("Control/GetFormsForDocumentControl");
+
+                if (serviceResponse.Status)
+                {
+                    foreach (var fm in serviceResponse.Data)
+                    {
+                        jsObj = new jsTreeObject
+                        {
+                            id = fm.ManufacturerId.ToString(),
+                            text = fm.ManufacturerId.ToString() + '.' + fm.ManufacturerName,
+                            icon = baseURL + "/images/jsTree/openfolder.png",
+                            parent = "FM"
+                        };
+                        treeView.Add(jsObj);
+                    }
+                    return Json(treeView);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFormsForDocumentControl");
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetFormLinkedDocuments");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        /// <summary>
+        /// Insert Form Link with documents
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> UpdateFormDocumentLinks(List<DO_ManufacturerVendorLink> obj)
+        {
+
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    return true;
+                });
+
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateFormDocumentLinks", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:UpdateFormDocumentLinks:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+    }
+}

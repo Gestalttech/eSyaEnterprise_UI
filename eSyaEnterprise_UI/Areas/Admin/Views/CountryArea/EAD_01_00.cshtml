@@ -72,19 +72,19 @@
 </style>
 <div class="row">
     <div class="col-lg-2 col-md-3 col-sm-6 col-12 form-group">
-        <label>Country</label>
+        <label>@Localizer["Country"]</label>
         @await Component.InvokeAsync("IsdCountryInput", new { id = "ZipCountry" })
     </div>
    
     <div class="col-lg-3 col-md-3 col-sm-12 form-group">
-        <label>State</label>
+        <label>@Localizer["State"]</label>
         <select class="selectpicker" data-live-search="true" id="cboStateCode" title="SelectState" onchange="fnBindCitiesCodes();">
             <option value="0">Select State</option>
         </select>
     </div>
 
     <div class="col-lg-3 col-md-3 col-sm-12 form-group">
-        <label>City</label>
+        <label>@Localizer["City"]</label>
         <select class="selectpicker" data-live-search="true" id="cboCityCode" title="SelectCity" onchange="fnGridLoadZipcodeHeader();">
             <option value="0">Select </option>
         </select>

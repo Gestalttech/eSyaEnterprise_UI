@@ -82,6 +82,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnSW52ZW50b3J5XFZpZXdzXEdyb3VwaW5nXEVDU18wN18wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Manufacturer/EPH_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXE1hbnVmYWN0dXJlclxFUEhfMDFfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Vendor/EPH_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXFZlbmRvclxFUEhfMDJfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigureSMS/Views/Engine/ESE_01_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlndXJlU01TXFZpZXdzXEVuZ2luZVxFU0VfMDFfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
