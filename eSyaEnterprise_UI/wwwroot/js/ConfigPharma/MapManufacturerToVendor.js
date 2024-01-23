@@ -99,34 +99,41 @@ function fnLoadVendorGrid(_manufId) {
 }
 
 function fnSaveManufacturerVendorLink() {
-
+    debugger;
+    if (manufId == "" || manufId == "0") {
+        fnAlert("w", "EPH_02_00", "UI0273", errorMsg.nodeadd_E6);
+        return;
+    }
     $("#jqgManufacturerToVendorLink").jqGrid('editCell', 0, 0, false);
-    var Doc_Links = [];
+    var vendor_Links = [];
     var id_list = jQuery("#jqgManufacturerToVendorLink").jqGrid('getDataIDs');
+    
     for (var i = 0; i < id_list.length; i++) {
         var rowId = id_list[i];
         var rowData = jQuery('#jqgManufacturerToVendorLink').jqGrid('getRowData', rowId);
 
-        Doc_Links.push({
-            FormId: rowData.FormId,
-            DocumentId: rowData.DocumentId,
+        vendor_Links.push({
+            ManufacturerId: rowData.ManufacturerId,
+            VendorId: rowData.VendorId,
             ActiveStatus: rowData.ActiveStatus
         });
 
     }
-
+    objdata = {
+        ManufacturerId: manufId,
+        vendorlist: vendor_Links
+    };
     $("#btnSave").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Control/UpdateManufacturerVendorLinks',
+        url: getBaseURL() + '/ConfigPharma/Vendor/InsertOrUpdateManufacturer',
         type: 'POST',
         datatype: 'json',
-        data: { obj: Doc_Links },
+        data: { obj: objdata },
         success: function (response) {
             if (response.Status === true) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#jqgManufacturerToVendorLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
-                $("#jstFormMaster").jstree("destroy");
-                fnLoadFormsTree();
+                manufId = "0";
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
@@ -145,4 +152,5 @@ function fnCancel() {
     $("#dvMapVendorManufacturer").css('display', 'none');
     $("#jstManufacturer").jstree("deselect_all");
     $('#jstManufacturer').jstree().select_node('FM');
+    
 }

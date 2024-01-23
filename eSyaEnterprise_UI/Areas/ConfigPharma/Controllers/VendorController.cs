@@ -126,12 +126,16 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 
             try
             {
-                //obj.All(c =>
-                //{
-                //    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                //    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                //    return true;
-                //});
+              
+                    obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                foreach (var vlink in obj.vendorlist)
+                {
+                    vlink.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    vlink.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    vlink.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                }
 
                 var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Vendor/InsertOrUpdateManufacturer", obj);
                 if (serviceResponse.Status)
