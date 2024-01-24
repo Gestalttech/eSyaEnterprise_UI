@@ -18,6 +18,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
+        public bool Alreadylinked { get; set; }
+
 
     }
     public class DO_CalendarDetails

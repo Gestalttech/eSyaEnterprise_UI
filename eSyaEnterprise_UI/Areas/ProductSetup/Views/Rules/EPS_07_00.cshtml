@@ -92,7 +92,7 @@
                             }
                         }
                     },
-                    { name: "ProcessDesc", editable: true, width: "300px" },
+                    { name: "ProcessDesc", editable: true, width: '100%' },
                     { name: "IsSegmentSpecific", editable: true, width: "70px", align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
                     { name: "SystemControl", editable: true, width: "70px", align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
                     { name: "ProcessControl", editable: true, width: "70px", edittype: "select", formatter: 'select', editoptions: { value: "A: All;S: Specific" } },
@@ -411,7 +411,7 @@
                             return [false]
                         }
                     }
-                });
+                }); ;
         }
 
         function fnGridProcessRule() {
@@ -423,6 +423,7 @@
                 success: function (result) {
                     //console.log(result);
                     data = result;
+                    $("#ProcessId,#ProcessDesc").css('width', $("#TblGrid_gvProcessRule").width())
                 },
                 error: function (error) { 
                     fnAlert("e", "EPS_07_00", "", error.status);
@@ -471,6 +472,7 @@
 
             return val;
         }
+        $('td.DataTD').html($('td.DataTD').html().split('&nbsp').join(''));
     });
 
     function SetGridControlByAction(jqg) {
@@ -499,6 +501,10 @@
             $('#edit_' + jqg).addClass('ui-state-disabled');
         }
     }
+
+   
+
+  
 </script>
 
 

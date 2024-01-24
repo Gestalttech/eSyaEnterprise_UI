@@ -26,27 +26,28 @@ function fnGridLoadCalendarDetails() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CalenderType, localization.Year, localization.CalendarKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Active, localization.Save],
+        colNames: [localization.CalenderType, localization.Year, localization.CalendarKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Alreadylinked, localization.Active, localization.Actions],
         colModel: [
-            { name: "CalenderType", width: 70, editable: true, align: 'left', hidden: false },
-
-            { name: "Year", width: 70, editable: true, align: 'left', hidden: false },
-            { name: "CalenderKey", width: 70, editable: true, align: 'left', hidden: false }, 
+            { name: "CalenderType", width: 30, editable: true, align: 'left', hidden: false },
+           
+            { name: "Year", width: 30, editable: true, align: 'left', hidden: false },
+            { name: "CalenderKey", width: 30, editable: true, align: 'left', hidden: false }, 
             {
-                name: 'FromDate', index: 'FromDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
+                name: 'FromDate', index: 'FromDate', width: 30, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
             {
-                name: 'TillDate', index: 'TillDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
+                name: 'TillDate', index: 'TillDate', width: 30, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
             { name: "YearEndStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "Alreadylinked", width: 30, editable: true, align: 'center', hidden: true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline btn-sm" style="" id="btnCalendarDetails"><i class="fa fa-ellipsis-v"></i> </button>'
+                      return rowdata.Alreadylinked ? '<i class="fa fa-ban"></i>':'<button class="mr-1 btn btn-outline btn-sm btnCalendarDetails" style="" id="btnCalendarDetails"><i class="fa fa-ellipsis-v"></i> </button>'
                 }
             },
         ],
@@ -70,6 +71,7 @@ function fnGridLoadCalendarDetails() {
             SetGridControlByAction();
             //fnSetGridWidth("jqpCalendarHeader");
             fnJqgridSmallScreen("jqgCalendarDetails");
+            
         },
     }).jqGrid('navGrid', '#jqpCalendarDetails', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpCalendarDetails', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: RefreshCalendarDetailsGrid
@@ -132,3 +134,4 @@ function SetGridControlByAction(jqg) {
     }
 
 }
+ 

@@ -296,23 +296,27 @@ td:first-child.ui-state-default.jqgrid-rownum {
     vertical-align: text-top;
     margin-left: 8px;
 }
+.FormGrid, .EditTable, .EditTable tbody, .EditTable tr{
+    width:100% !important;
+}
 .fm-button.ui-state-default {
-    background: #797172 !important;
+    background: #555 !important;
     color: gold !important;
     border-radius: 2px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     border: none;
     font-weight: 300;
     font-size: 12px;
-    padding-left: 15px !important;
-
+    padding: 0px 16px !important;
+    height: 32px;
+    line-height: 32px;
 }
 .fm-button .ui-icon{
     display:none !important;
 }
 .fm-button:nth-child(2) {
-    color: #fff !important;
-    background: #e9555d !important;
+    color: gold !important;
+    background: #555 !important;
     margin-left:10px !important;
 }
 .ui-jqdialog-content td.navButton {
@@ -335,21 +339,71 @@ td:first-child.ui-state-default.jqgrid-rownum {
     padding:0em !important;
 }
 .ui-jqdialog-title {
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 300;
     color: gold !important;
+    font-family: helvetica-Bold;
+    line-height:30px !important;
+}
+.ui-jqdialog-content .CaptionTD {
+    line-height: 20px;
+    font-size: 12px;
+    font-family: 'helvetica',sans-serif;
+    padding:0px;
 }
 .EditTable td input, .EditTable td select, .EditTable td textarea {
-   font-size:14px !important;
-    border:none !important;
-    border-bottom:1px solid #ccc !important;
-    padding-left:0px !important;
-    border-radius:0px !important;
+    font-size: 14px !important;
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
+    padding-left: 0px !important;
+    border-radius: 0px !important;
+    height: 20px;
+    width:100%;
 }
-    .EditTable td input:focus, .EditTable td select:focus, .EditTable td textarea:focus {
-        outline: none !important;
-        border-bottom-color: gold !important;
+    .ui-jqdialog-content .DataTD{
+       padding:0px;
     }
+#ProcessControl, .DataTD #ActiveStatus{
+    width: 50%;
+}
+#editcntgvProcessRule{
+    padding:0px !important;
+}
+#FrmGrid_gvProcessRule {
+    padding: 15px !important;
+}
+#TblGrid_gvProcessRule_2 tbody tr:nth-of-type(1){
+    display:none;
+}
+#TblGrid_gvProcessRule_2 tbody tr td.EditButton {
+    padding: 3px 0px;
+    background: #f0e08e;
+    height:48px;
+}
+#IsSegmentSpecific, #SystemControl {
+    height: 15px;
+    position: relative;
+    bottom: 36px;
+}
+#editmodgvProcessRule .jqResize {
+    display: none
+}
+.ui-jqdialog-content .DataTD br {
+    display: none;
+}
+#ProcessId, #RuleId {
+    position: relative;
+    bottom: 20px;
+}
+#ProcessDesc {
+    width: 100% !important;
+    position: relative;
+    bottom: 20px;
+}
+.EditTable td input:focus, .EditTable td select:focus, .EditTable td textarea:focus {
+    outline: none !important;
+    border-bottom-color: gold !important;
+}
 .ui-jqdialog-content .CaptionTD, .ui-jqdialog-content .DataTD {
     display: block !important;
 }
@@ -362,9 +416,10 @@ tr.FormData{
 .ui-jqdialog .ui-jqdialog-titlebar{
     padding:4px 14px !important;
 }
-#editmodgvProcessRule{
-    top:0px !important;
-
+#editmodgvProcessRule {
+    top: 109px !important;
+    max-width:500px;
+    margin:auto;
 }
 .ui-jqdialog-content, hr.ui-jqdialog-content {
     border-left: none !important;
