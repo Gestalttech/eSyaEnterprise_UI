@@ -2737,14 +2737,6 @@
       "PackagePath": "staticwebassets\\js\\Admin\\HolidayMaster.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\InventoryRules.js",
-      "PackagePath": "staticwebassets\\js\\Admin\\InventoryRules.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Admin\\UnitofMeasure.js",
-      "PackagePath": "staticwebassets\\js\\Admin\\UnitofMeasure.js"
-    },
-    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Appointment\\ClinicConsultation.js",
       "PackagePath": "staticwebassets\\js\\Appointment\\ClinicConsultation.js"
     },
@@ -3717,20 +3709,8 @@
       "PackagePath": "staticwebassets\\js\\ConfigFacilities\\SpecialtyUnits.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemCategory.js",
-      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemCategory.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemGroup.js",
-      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemGroup.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemGroupCategoryMapping.js",
-      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemGroupCategoryMapping.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigInventory\\ItemSubCategory.js",
-      "PackagePath": "staticwebassets\\js\\ConfigInventory\\ItemSubCategory.js"
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugComposition.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugComposition.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugManufacturers.js",
@@ -3739,6 +3719,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\MapManufacturerToVendor.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\MapManufacturerToVendor.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\AgeRange.js",
+      "PackagePath": "staticwebassets\\js\\ConfigProduct\\AgeRange.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\ServiceClass.js",
@@ -3751,6 +3735,22 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\ServiceType.js",
       "PackagePath": "staticwebassets\\js\\ConfigProduct\\ServiceType.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigSKU\\ItemCategory.js",
+      "PackagePath": "staticwebassets\\js\\ConfigSKU\\ItemCategory.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigSKU\\ItemGroup.js",
+      "PackagePath": "staticwebassets\\js\\ConfigSKU\\ItemGroup.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigSKU\\ItemGroupCategoryMapping.js",
+      "PackagePath": "staticwebassets\\js\\ConfigSKU\\ItemGroupCategoryMapping.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigSKU\\ItemSubCategory.js",
+      "PackagePath": "staticwebassets\\js\\ConfigSKU\\ItemSubCategory.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigureSMS\\SMSInformation.js",
@@ -3829,6 +3829,10 @@
       "PackagePath": "staticwebassets\\js\\ManageInventory\\ItemMaster.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageInventory\\UnitofMeasure.js",
+      "PackagePath": "staticwebassets\\js\\ManageInventory\\UnitofMeasure.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageRates\\OPCDoctorWise.js",
       "PackagePath": "staticwebassets\\js\\ManageRates\\OPCDoctorWise.js"
     },
@@ -3863,10 +3867,6 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Actions.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\Actions.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\AgeRange.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\AgeRange.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\ApplicationCodes.js",
@@ -3983,6 +3983,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\eSyaCulture.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\eSyaCulture.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\InventoryRules.js",
+      "PackagePath": "staticwebassets\\js\\Stores\\InventoryRules.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\MapStoresBusiness.js",
