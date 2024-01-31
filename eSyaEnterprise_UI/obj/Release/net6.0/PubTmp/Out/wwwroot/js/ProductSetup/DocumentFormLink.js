@@ -73,7 +73,7 @@ function fnLoadDocumentGrid(_documentID) {
             { name: "DocumentId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "FormId", width: 150, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "FormName", width: 450, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "ActiveStatus", width: 50, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 50, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
         ],
         pager: "#jqpFormtoDocumentLink",

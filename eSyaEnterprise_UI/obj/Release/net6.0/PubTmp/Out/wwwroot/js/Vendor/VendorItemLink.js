@@ -14,7 +14,7 @@ function fnLoadVendorItemLink() {
             return JSON.stringify(postdata.Vendorcode);
         },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["","Item Description", "Business share (in %)", "Min. Supply Qty.", "Rate Plan", "Effective From", "Effective Till", "Active Status", ""],
+        colNames: [localization.VendorCode, localization.ItemDescription, localization.BusinessShare(inPercentage), localization.MinimumSupplyQuantity, localization.RatePlan, localization.EffectiveFrom, localization.EffectiveTill, localization.ActiveStatus, ""],
         colModel: [{ name: 'VendorCode', width: '40', resizable: false, hidden: true },
             { name: 'ItemDesc', width: '200', resizable: false, hidden: false },
             { name: 'BusinessShare', width: '170', resizable: false, align: 'right'},
@@ -27,7 +27,7 @@ function fnLoadVendorItemLink() {
         {
             name: '', width: '100', resizable: false,
             formatter: function (cellValue, option, rowObject) {
-                var ret = '<button class="btn-xs ui-button ui- widget ui-corner-all" style="padding:2px 4px;background:#0b76bc !important;color:#fff !important; margin:3px;" title="Edit"> Edit </button>'
+                var ret = '<button class="btn-xs ui-button ui- widget ui-corner-all" style="padding:2px 4px;background:#0b76bc !important;color:#fff !important; margin:3px;" title="Edit">'+localization.Edit '</button>'
                 return ret;
             },
         }],

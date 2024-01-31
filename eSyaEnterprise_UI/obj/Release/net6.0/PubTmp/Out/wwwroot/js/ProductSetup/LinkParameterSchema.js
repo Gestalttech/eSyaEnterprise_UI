@@ -17,7 +17,7 @@ function fnLoadLinkParameterSChemaGrid() {
             mtype: 'POST',
             colNames: [localization.LinkParameterType, localization.LinkParameterId, localization.ParameterDesc, localization.Schema, localization.ActiveStatus],
             colModel: [
-                { name: "LinkParameterType", width: 50, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text' },
+                { name: "LinkParameterType", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text' },
                 { name: "LinkParameterId", width: 50, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text' },
                 { name: "ParameterDesc", width: 160, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text' },
                 { name: "SchemaId", width: 150, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 10 } },
@@ -30,7 +30,7 @@ function fnLoadLinkParameterSChemaGrid() {
             pgtext: null,
             caption: "Table Field Language Mapping",
             pgbuttons: null,
-            viewrecords: false,
+            viewrecords: true,
             gridview: true,
             rownumbers: true,
             height: 'auto',

@@ -1,4 +1,20 @@
-﻿function fnloadvendorLocationGrid() {
+﻿$(document).ready(function () {
+    $.contextMenu({
+        selector: "#btnVendorLocation",
+        trigger: 'left',
+         items: {
+             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditLocation(event, 'edit') } },
+             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditLocation(event, 'view') } },
+            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor(event, 'delete') } },
+        }
+    });
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+})
+
+
+function fnloadvendorLocationGrid() {
    
     fnClearLocationfields();
     BindStatesCodes();

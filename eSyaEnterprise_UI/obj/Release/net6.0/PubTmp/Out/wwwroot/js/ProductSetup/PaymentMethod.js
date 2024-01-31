@@ -151,7 +151,7 @@ function fnEditPaymentMethod(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPS_34_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupPaymentMethod').modal('show');

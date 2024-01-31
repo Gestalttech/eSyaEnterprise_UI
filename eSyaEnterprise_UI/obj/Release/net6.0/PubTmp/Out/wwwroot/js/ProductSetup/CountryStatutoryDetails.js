@@ -1,4 +1,7 @@
 ﻿var actiontype = "";
+function fnISDCountryCode_onChange(){
+    fnGridLoadStatutoryCode();
+}
 $(document).ready(function () {
     fnGridLoadStatutoryCode();
 

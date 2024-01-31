@@ -10,6 +10,8 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = eSyaEnterprise_UI
 build_property.RootNamespace = eSyaEnterprise_UI
 build_property.ProjectDir = D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
@@ -32,12 +34,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTGljZW5zZVxFQURfMDNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Admin/Views/Rules/EAD_05_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUnVsZXNcRUFEXzA1XzAwLmNzaHRtbA==
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Appointment/Views/Clinic/EAP_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXBwb2ludG1lbnRcVmlld3NcQ2xpbmljXEVBUF8wMV8wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Admin/Views/Rules/EAD_06_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUnVsZXNcRUFEXzA2XzAwLmNzaHRtbA==
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Appointment/Views/Clinic/_Confirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXBwb2ludG1lbnRcVmlld3NcQ2xpbmljXF9Db25maXJtYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigFacilities/Views/ConsultationClinics/ECP_06_00.cshtml]
@@ -56,20 +58,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnRmFjaWxpdGllc1xWaWV3c1xTcGVjaWFsdHlcRUNQXzA1XzAwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigInventory/Views/Grouping/ECS_04_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnSW52ZW50b3J5XFZpZXdzXEdyb3VwaW5nXEVDU18wNF8wMC5jc2h0bWw=
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Composition/EPH_03_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXENvbXBvc2l0aW9uXEVQSF8wM18wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigInventory/Views/Grouping/ECS_05_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnSW52ZW50b3J5XFZpZXdzXEdyb3VwaW5nXEVDU18wNV8wMC5jc2h0bWw=
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Manufacturer/EPH_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXE1hbnVmYWN0dXJlclxFUEhfMDFfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigInventory/Views/Grouping/ECS_06_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnSW52ZW50b3J5XFZpZXdzXEdyb3VwaW5nXEVDU18wNl8wMC5jc2h0bWw=
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Vendor/EPH_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXFZlbmRvclxFUEhfMDJfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigInventory/Views/Grouping/ECS_07_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnSW52ZW50b3J5XFZpZXdzXEdyb3VwaW5nXEVDU18wN18wMC5jc2h0bWw=
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigSKU/Views/Grouping/ECS_04_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnU0tVXFZpZXdzXEdyb3VwaW5nXEVDU18wNF8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigSKU/Views/Grouping/ECS_05_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnU0tVXFZpZXdzXEdyb3VwaW5nXEVDU18wNV8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigSKU/Views/Grouping/ECS_06_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnU0tVXFZpZXdzXEdyb3VwaW5nXEVDU18wNl8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigSKU/Views/Grouping/ECS_07_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnU0tVXFZpZXdzXEdyb3VwaW5nXEVDU18wN18wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigureSMS/Views/Engine/ESE_01_00.cshtml]
@@ -160,6 +174,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTG9jYWxpemVcVmlld3NcVXNlckNyZWF0aW9uXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ManageInventory/Views/Rules/EAD_06_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlSW52ZW50b3J5XFZpZXdzXFJ1bGVzXEVBRF8wNl8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ManageInventory/Views/SKU/EMI_01_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTWFuYWdlSW52ZW50b3J5XFZpZXdzXFNLVVxFTUlfMDFfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -206,10 +224,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/Address/EPS_15_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXEFkZHJlc3NcRVBTXzE1XzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/AgeRange/EPS_33_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHVjdFNldHVwXFZpZXdzXEFnZVJhbmdlXEVQU18zM18wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ProductSetup/Views/ApplicationCodes/EPS_04_00.cshtml]
@@ -344,8 +358,56 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVzXFZpZXdzXENvbmZpZ1N0b3Jlc1xFQ1NfMDJfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Stores/Views/Rules/EAD_05_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVzXFZpZXdzXFJ1bGVzXEVBRF8wNV8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Stores/Views/Stores/ECS_03_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVzXFZpZXdzXFN0b3Jlc1xFQ1NfMDNfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Configure/ETM_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcQ29uZmlndXJlXEVUTV8wMV8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/CounterMapping/ETM_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcQ291bnRlck1hcHBpbmdcRVRNXzAyXzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/CounterMapping/ETM_03_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcQ291bnRlck1hcHBpbmdcRVRNXzAzXzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_100_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTAwXzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_10_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTBfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_11_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTFfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_12_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTJfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_05_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA1XzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_06_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA2XzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_07_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA3XzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/TokenManagement/ETM_08_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcVG9rZW5NYW5hZ2VtZW50XEVUTV8wOF8wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/Approve/EVN_02_00.cshtml]
@@ -610,6 +672,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigProduct/Views/Services/ECP_01_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUHJvZHVjdFxWaWV3c1xTZXJ2aWNlc1xFQ1BfMDFfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigProduct/Views/Services/ECP_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUHJvZHVjdFxWaWV3c1xTZXJ2aWNlc1xFQ1BfMDJfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigProduct/Views/Services/ECP_03_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUHJvZHVjdFxWaWV3c1xTZXJ2aWNlc1xFQ1BfMDNfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigProduct/Views/AgeRange/EPS_33_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUHJvZHVjdFxWaWV3c1xBZ2VSYW5nZVxFUFNfMzNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/Shared/_Layout.cshtml]

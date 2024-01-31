@@ -110,6 +110,7 @@ function fnGridLoadCalendarPatientGeneration() {
         },
         beforeSubmit: function (postdata, formid) {
             return [success, message];
+            
         },
         ondblClickRow: function (rowid) {
             $("#jqgCalendarPatientGeneration").trigger('click');
@@ -138,12 +139,12 @@ function fnGridLoadCalendarPatientGeneration() {
                 successfunc: function (result) {
                     var resp = JSON.parse(result.responseText);
                     if (resp.Status) {
-                        fnAlert("s", "", response.StatusCode, response.Message);
+                        fnAlert("s", "", resp.StatusCode, resp.Message);
                         RefreshCalendarDetailsGrid();
                         return true;
                     }
                     else {
-                        fnAlert("e", "", response.StatusCode, response.Message);
+                        fnAlert("e", "", resp.StatusCode, resp.Message);
                         RefreshCalendarDetailsGrid();
                         return false;
                     }
@@ -184,6 +185,8 @@ function fnGridLoadCalendarPatientGeneration() {
 function ValidatePatientIdGeneration(value, PatientIdgen) {
     if (value == "" || value == null || value =="-") {
         fnAlert("w", "EPS_26_00", "UI0239", errorMsg.PatientID_E1);
+
+
         return [false, ""];
     }
     else {

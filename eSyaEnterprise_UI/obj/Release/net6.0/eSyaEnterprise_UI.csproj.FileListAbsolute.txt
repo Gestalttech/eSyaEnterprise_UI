@@ -540,13 +540,14 @@ D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\eSyaEnterprise_UI.MvcApplicationPartsAssemblyInfo.cache
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\eSyaEnterprise_UI.RazorAssemblyInfo.cache
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\eSyaEnterprise_UI.RazorAssemblyInfo.cs
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\eSyaEnterprise_UI.sourcelink.json
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets.build.json
+D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets.development.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets\msbuild.eSyaEnterprise_UI.Microsoft.AspNetCore.StaticWebAssets.props
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets\msbuild.build.eSyaEnterprise_UI.props
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets\msbuild.buildMultiTargeting.eSyaEnterprise_UI.props
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets\msbuild.buildTransitive.eSyaEnterprise_UI.props
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets.pack.json
-D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets.build.json
-D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\staticwebassets.development.json
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\scopedcss\bundle\eSyaEnterprise_UI.styles.css
 D:\Projects\eSyaProjects2022\eSyaEnterprise_UI\eSyaEnterprise_UI\obj\Release\net6.0\scopedcss\projectbundle\eSyaEnterprise_UI.bundle.scp.css

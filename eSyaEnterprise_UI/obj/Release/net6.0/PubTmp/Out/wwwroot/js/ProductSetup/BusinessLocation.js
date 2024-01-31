@@ -53,7 +53,7 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.ShortDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName,  localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc,localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName,  localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -140,25 +140,25 @@ function fnAddBusinessLocation() {
         $('#PopupBusienssLocation').find('.modal-title').text(localization.AddBusinessLocation);
 
         $("#btnSaveLocationInfo").show();
-        $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveLocationInfo").attr("disabled", false);
         $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLocinfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveFinancialInfo").show();
-        $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#chkFininfoActiveStatus").parent().addClass("is-checked");
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveLicenseInfo").show();
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveLicenseInfo").attr("disabled", false);
         $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveTaxInfo").show();
-        $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i>' + localization.Save);
+        $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
         $("#chktaxinfoActiveStatus").prop('disabled', true);
@@ -233,22 +233,22 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#btnDeactivateBusinessLocation").hide();
         
         
-        $("#btnSaveLocationInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLocationInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveLocationInfo").attr("disabled", false);
         $("#btnSaveLocationInfo").show();
         $("#chkLocinfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveFinancialInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveFinancialInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#btnSaveFinancialInfo").show();
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveLicenseInfo").attr("disabled", false);
         $("#btnSaveLicenseInfo").show();
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#btnSaveTaxInfo").show();
         $("#chktaxinfoActiveStatus").prop('disabled', true);
@@ -509,6 +509,8 @@ function fnSaveLocationInfo()
             });
     
     }
+
+    //$("#jqgPreferredLanguage").jqGrid('editCell', 0, 0, false).attr("value");
 
     objloc.l_Preferredlanguage = preferredlanguage;
 
@@ -872,7 +874,7 @@ function fnLoadGridPreferredLanguage() {
                 { name: "PreferredLanguage", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "CultureDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
                 { name: "Pldescription", width: 100, editable: false, editoptions: { disabled: false }, align: 'left' },
-                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+                { name: "ActiveStatus", editable: true, width: 60, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
             ],
             pager: "#jqpPreferredLanguage",
@@ -946,6 +948,7 @@ function fnSaveFinancialInfo() {
         isbookofaccount = true;
         $("#cboBusinessSegment").val('0').selectpicker('refresh');
     }
+    $("#jqgPreferredLanguage").jqGrid('editCell', 0, 0, false);
 
     objfin = {
         BusinessKey: $("#txtBusinesskey").val(),

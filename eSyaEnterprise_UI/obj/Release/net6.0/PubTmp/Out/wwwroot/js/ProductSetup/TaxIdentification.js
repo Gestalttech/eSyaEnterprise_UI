@@ -19,33 +19,10 @@ $(document).ready(function () {
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
 
-function fnCountryCodeChanges() {
 
-    //$('#cboTaxDescription').selectpicker('refresh');
-
-    //$.ajax({
-    //    url: getBaseURL() + '/Country/GetTaxCode?ISDCode=' + $('#cboCountryCode').val(),
-    //    datatype: 'json',
-    //    type: 'POST',
-    //    async: false,
-    //    contentType: 'application/json; charset=utf-8',
-    //    success: function (result) {
-    //        $('#cboTaxDescription').empty();
-    //        $("#cboTaxDescription").append($("<option value='0'>Select</option>"));
-    //        if (result != null) {
-    //            for (var i = 0; i < result.length; i++) {
-
-    //                $("#cboTaxDescription").append($("<option></option>").val(result[i]["TaxCode"]).html(result[i]["TaxDescription"]));
-    //            }
-    //        }
-    //        $('#cboTaxDescription').val($("#cboTaxDescription option:first").val());
-    //        $('#cboTaxDescription').selectpicker('refresh');
-
-            fnGridLoadTaxIdentification();
-    //    }
-    //});
+function fnISDCountryCode_onChange() {
+    fnGridLoadTaxIdentification();
 }
-
 function fnGridLoadTaxIdentification() {
     var ISDCode = $("#cboCountryCode").val();
     var URL = getBaseURL() + '/License/GetTaxIdentificationByISDCode?ISDCode=' + ISDCode;
@@ -209,6 +186,7 @@ function fnEnableControl(val) {
     $("input,textarea").attr('readonly', val);
     $("#chkActiveStatus").attr('disabled', val);
     $("#chkIsSplitApplicable").attr('disabled', val);
+    $("select").next().attr('disabled', val);
 }
 
 function fnSaveTaxIdentification() {
