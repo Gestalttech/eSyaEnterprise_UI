@@ -33,7 +33,8 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
         }
 
         #region Store Master
-        //Store Master
+        //Store Master 
+        //Resolved bin issue
         [Area("Stores")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECS_01_00()

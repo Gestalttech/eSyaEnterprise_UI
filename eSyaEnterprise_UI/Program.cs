@@ -328,6 +328,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 else
 {
+    //app.UseDeveloperExceptionPage();
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
@@ -343,6 +344,6 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Index}/{id?}");
+    pattern: "{controller=esyaaccount}/{action=login}/{id?}");
 
 app.Run();
