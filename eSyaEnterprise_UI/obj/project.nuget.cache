@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mWqWeUzavUwWMlNWRiRrtVM2Sawpg0sTI2KWAo7gFessl9VQQv2tOCBv2VHiGRgpfUcVqEv71ysYRZxljzByCA==",
+  "dgSpecHash": "jA7E7P6VnzjrRnjx3ghj9dvL8BRAoBkwRWlnrmcgW9YJx6NVnJrg1AHmLV+vbxYtxrWZ024VenMqNS60AfFehQ==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+  "projectFilePath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI - Copy\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lenovo\\.nuget\\packages\\closedxml\\0.102.1\\closedxml.0.102.1.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
