@@ -39,6 +39,7 @@ using eSyaEnterprise_UI.GestaltUserDataServices;
 using eSyaEnterprise_UI.Areas.TokenSystem.Data;
 using eSyaEnterprise_UI.Areas.ConfigPharma.Data;
 using eSyaEnterprise_UI.Areas.ConfigSKU.Data;
+using eSyaEnterprise_UI.Areas.ConfigPatient.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -230,6 +231,14 @@ builder.Services.AddHttpClient<IeSyaConfigSKUAPIServices, eSyaConfigSKUAPIServic
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+builder.Services.AddHttpClient<IeSyaConfigPatientAPIServices, eSyaConfigPatientAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigPatient_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
 
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
@@ -344,6 +353,6 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=esyaaccount}/{action=login}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();

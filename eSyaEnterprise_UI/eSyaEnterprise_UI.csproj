@@ -43,6 +43,7 @@
     <Compile Remove="Areas\ConfigInventory\Models\DO_ItemGroupCategory.cs" />
     <Compile Remove="Areas\ConfigInventory\Models\DO_ItemSParameter.cs" />
     <Compile Remove="Areas\ConfigInventory\Models\DO_ItemSubCategory.cs" />
+    <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
@@ -162,8 +163,6 @@
     <Folder Include="Areas\ConfigInventory\Views\" />
     <Folder Include="Areas\ConfigPatient\Controllers\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
-    <Folder Include="Areas\ConfigPatient\Models\" />
-    <Folder Include="Areas\ConfigPatient\Views\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />

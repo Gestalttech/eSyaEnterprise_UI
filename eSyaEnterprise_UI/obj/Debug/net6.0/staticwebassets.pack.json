@@ -3709,6 +3709,34 @@
       "PackagePath": "staticwebassets\\js\\ConfigFacilities\\SpecialtyUnits.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\Dependent.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\Dependent.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\DocumentSubmission.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\DocumentSubmission.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\PatientCategoryAttribute.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\PatientCategoryAttribute.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\PatientCategoryTypeBusinessLink.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\PatientCategoryTypeBusinessLink.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\PatientTypes.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\PatientTypes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\RateTypes.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\RateTypes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPatient\\Specialty.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPatient\\Specialty.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugComposition.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugComposition.js"
     },
@@ -3863,6 +3891,34 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ManageServices\\ServiceCode.js",
       "PackagePath": "staticwebassets\\js\\ManageServices\\ServiceCode.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\Dependent.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\Dependent.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\DocumentSubmission.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\DocumentSubmission.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\PatientCategoryAttribute.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\PatientCategoryAttribute.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\PatientCategoryTypeBusinessLink.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\PatientCategoryTypeBusinessLink.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\PatientTypes.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\PatientTypes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\RateTypes.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\RateTypes.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\PatientManagement\\Specialty.js",
+      "PackagePath": "staticwebassets\\js\\PatientManagement\\Specialty.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Actions.js",

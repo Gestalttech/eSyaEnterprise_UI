@@ -27,19 +27,19 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         }
 
         #region Patient Types
-        [Area("PatientManagement")]
+        [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_01_00()
+        public IActionResult EPT_01_00()
         {
             try
             {
 
                 List<int> l_ac = new List<int>();
                 l_ac.Add(ApplicationCodeTypeValues.PatientCategory);
-                l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
+                //l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
 
             
-                var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeTypeList", l_ac).Result;
+                var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
                 if (response.Status)
                 {
                     List<DO_ApplicationCodes> pcat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.PatientCategory).ToList();
@@ -49,12 +49,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                         Value = a.ApplicationCode.ToString()
                     });
 
-                    List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.ConfigPatientRateType).ToList();
-                    ViewBag.RateType = prat.Select(a => new SelectListItem
-                    {
-                        Text = a.CodeDesc,
-                        Value = a.ApplicationCode.ToString()
-                    });
+                    //List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.ConfigPatientRateType).ToList();
+                    //ViewBag.RateType = prat.Select(a => new SelectListItem
+                    //{
+                    //    Text = a.CodeDesc,
+                    //    Value = a.ApplicationCode.ToString()
+                    //});
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
-                return Json(new DO_ResponseParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
@@ -89,7 +89,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 };
                 jsTree.Add(jsObj);
                 var parameter = "?CodeType=" + ApplicationCodeTypeValues.PatientType;
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientAttributes>("PatientType/GetAllPatientTypeforTreeView" + parameter);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientAttributes>("PatientTypes/GetAllPatientTypesforTreeView" + parameter);
                 if (serviceResponse.Status)
                 {
                     var PatientTypes = serviceResponse.Data;
@@ -145,7 +145,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             try
             {
                 var parameter = "?PatientTypeId=" + PatientTypeId + "&PatientCategoryId=" + PatientCategoryId;
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientTypCategoryAttribute>("PatientType/GetPatientCategoryInfo" + parameter);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientTypCategoryAttribute>("PatientTypes/GetPatientCategoryInfo" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -183,7 +183,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                     if (isinsert)
                     {
-                        var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("PatientType/InsertPatientCategory", obj);
+                        var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("PatientTypes/InsertPatientCategory", obj);
                         if (serviceResponse.Status)
                             return Json(serviceResponse.Data);
                         else
@@ -194,7 +194,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     }
                     else
                     {
-                        var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("PatientType/UpdatePatientCategory", obj);
+                        var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("PatientTypes/UpdatePatientCategory", obj);
                         if (serviceResponse.Status)
                             return Json(serviceResponse.Data);
                         else
@@ -215,11 +215,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
 
         #endregion Patient Types
 
-
         #region Patient Type & Category Business Link
         //Map Business to Patient types
-        [Area("PatientManagement")]
-        public IActionResult EPS_02_00()
+        [Area("ConfigPatient")]
+        public IActionResult EPT_02_00()
         {
             try
             {
@@ -243,7 +242,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
-                return Json(new DO_ResponseParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
         /// <summary>
@@ -307,14 +306,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         }
         #endregion
 
-
-
         #region Care Card Details
 
         //Patient Category Attribute
-        [Area("PatientManagement")]
+        [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_03_00()
+        public IActionResult EPT_03_00()
         {
             try
             {
@@ -338,7 +335,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
-                return Json(new DO_ResponseParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
@@ -609,7 +606,6 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         }
 
         #endregion
-
 
         #region Patient Type + Category – Dependent
         /// <summary>

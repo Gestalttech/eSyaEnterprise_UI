@@ -272,6 +272,9 @@
   "UI0271": "Please enter the Manufacturer Name",
   "UI0272": "Please Enter the Manufacturer Short Name",
   "UI0273": "Please Select the Manufacturer",
+  "UI0274": "Please select row to select Patient Type",
+  "UI0275": "Please select a row to select Patient Category",
+  "UI0276": "Please Enter the Card Pattern",
 
 
 
@@ -286,5 +289,6 @@
   "UIC09": "Please enter the Sub Menu Name",
   "UIC10": "Please select any one node to move",
   "UIC11": "Please enter the Description",
-  "UIC12": "Please enter the Pattern"
+  "UIC12": "Please enter the Pattern",
+  "UIC13": "Please select a row from the grid"
 }

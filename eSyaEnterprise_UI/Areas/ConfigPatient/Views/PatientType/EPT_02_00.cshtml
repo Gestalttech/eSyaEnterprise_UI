@@ -1,0 +1,61 @@
+﻿  
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+
+@{
+    ViewData["Title"] = "EPT_02_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+   var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        BusinessLocation: '@Localizer["BusinessLocation"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        PatientType: '@Localizer["PatientType"]',
+        PatientCategory: '@Localizer["PatientCategory"]',
+        Select: '@Localizer["Select"]',
+        Actions: '@Localizer["Actions"]',
+        PatientTypeId: '@Localizer["PatientTypeId"]',
+        PatientCategoryId: '@Localizer["PatientCategoryId"]',
+        RateType: '@Localizer["RateType"]',
+
+    }
+    var errorMsg ={
+        BusinessLocation = '@Localizer["UI0064"]';
+    }
+</script>
+@section scripts{
+    <script src="~/js/ConfigPatient/PatientCategoryTypeBusinessLink.js"></script>
+}
+
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label>@Localizer["BusinessLocation"]</label>
+            @await Component.InvokeAsync("UserBusinessLocation")
+        </div>
+    </div>
+    <div class="col-lg-12 col-12 col-md-12 form-group">
+        <table id="jqgMapBusiness"></table>
+        <div id="jqpMapBusiness"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button btn btn-primary mr-10" id="btnSavePatientCategoryBusinessLink" onclick="fnSavePatientCategoryBusinessLink()"> <i class="fa fa-save"></i> Save</button>
+        <button type="button" class="mdl-button btn btn-primary" id="btnCancelPatientCategoryBusinessLink" onclick="fnClearPatientCategoryBusinessLink()"><i class="fa fa-times"></i> Cancel</button>
+    </div>
+</div>
+
+
+<script>
+var RateTypes = (@Html.Raw(Json.Serialize(ViewBag.RateType)));
+</script>     
+

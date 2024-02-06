@@ -32,6 +32,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int PreferredLanguage = 8;
         public const int UserGroup = 1;
         public const int UserRole = 2;
+        public const int SecurityQuestions = 3;
         #endregion
 
         #region Token System
@@ -41,11 +42,18 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
 
         #region Config Patient
-        public const int PatientCategory = 72;
+
+        //public const int PatientCategory = 59;
         public const int ConfigPatientRateType = 62;
+        //public const int PatientType = 58;
+        public const int Relationship = 56;
+
+        public const int PatientCategory = 72;
         public const int PatientType = 71;
-        public const int Relationship = 14;
+
         #endregion
+
+
 
     }
 }

@@ -10,7 +10,7 @@
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public List<DO_eSyaParameter> l_ptypeparams { get; set; }
     }
 }
