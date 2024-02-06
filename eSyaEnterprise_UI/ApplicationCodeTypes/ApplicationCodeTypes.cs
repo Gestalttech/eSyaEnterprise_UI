@@ -39,21 +39,12 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int FloorId = 301;
         #endregion
 
-
-
         #region Config Patient
 
-        //public const int PatientCategory = 59;
+        public const int PatientCategory = 59;
         public const int ConfigPatientRateType = 62;
-        //public const int PatientType = 58;
+        public const int PatientType = 58;
         public const int Relationship = 56;
-
-        public const int PatientCategory = 72;
-        public const int PatientType = 71;
-
         #endregion
-
-
-
     }
 }
