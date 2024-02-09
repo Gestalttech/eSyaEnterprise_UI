@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "EBM_04_00";
+    ViewData["Title"] = "EMS_03_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -132,36 +132,39 @@
     </div>
 
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 hide-in-smallscreen">
-        <div>
-            <h5>@Localizer["Action"]</h5>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 btn_pdnTop collapse">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
+            </div>
+        
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item collapse">
                 <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" onclick="fnDeleteNode()">
                     <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
                 </button>
-            </div>
-            <div class="col-lg-12 btn_pdnTop collapse">
+            </li>
+            <li class="list-group-item collapse">
                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveUp" onclick="fnMoveItemUpDown('U')">
                     <i class="fas fa-arrow-up"></i>   @Localizer["MoveUp"]
                 </button>
-            </div>
-            <div class="col-lg-12 btn_pdnTop collapse">
+            </li>
+            <li class="list-group-item collapse">
                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveDown" onclick="fnMoveItemUpDown('D')">
                     <i class="fas fa-arrow-down"></i>   @Localizer["MoveDown"]
                 </button>
-            </div>
-            <div class="col-lg-12 btn_pdnTop">
+            </li>
+            <li class="list-group-item">
                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
                     <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
                 </button>
-            </div>
-            <div class="col-lg-12 btn_pdnTop">
+            </li>
+            <li class="list-group-item">
                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
                     <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
                 </button>
-            </div>
+            </li>
 
+            </ul>
         </div>
     </div>
 

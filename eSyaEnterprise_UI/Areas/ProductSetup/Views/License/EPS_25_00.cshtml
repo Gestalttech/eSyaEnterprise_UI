@@ -39,17 +39,29 @@
     </div>
 </div>
    <div class="row">
-    <div class="col-lg-4 col-md-12 col-sm-10 col-10">
+    <div class="col-lg-5 col-md-5 col-sm-10 col-10">
         <div id="jstLocationMenuLinkList"></div>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="divActionsforTree" style="display:none;">
-        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100 mb-3" id="btnExpandAll" onclick="fnExpandAll()">
-            <i class="fas fa-expand" style="color:#fff !important"></i>&nbsp;@Localizer["ExpandAll"]
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100 mb-3" id="btnCollapseAll" onclick="fnCollapseAll()">
-            <i class="fas fa-compress" style="color:#fff !important"></i>&nbsp;@Localizer["CollapseAll"]
-        </button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect w-100" id="btnSave" onclick="fnSaveLocationwiseMenuLink()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary">  <i class="fa fa-tasks"></i> Tree Action</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnExpandAll" onclick="fnExpandAll()">
+                        <i class="fas fa-expand"></i>&nbsp;@Localizer["ExpandAll"]
+                    </button>
+                </li>
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnCollapseAll" onclick="fnCollapseAll()">
+                    <i class="fas fa-compress"></i>&nbsp;@Localizer["CollapseAll"]</button>
+                </li>
 
+                <li class="list-group-item">
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect w-100" id="btnSave" onclick="fnSaveLocationwiseMenuLink()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                </li>
+            </ul>
+         </div>
   </div>
 </div>

@@ -275,6 +275,11 @@
   "UI0274": "Please select row to select Patient Type",
   "UI0275": "Please select a row to select Patient Category",
   "UI0276": "Please Enter the Card Pattern",
+  "UI0277": "Please Enter the Current Password",
+  "UI0278": "Please Enter the new Password",
+  "UI0279": "Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.",
+  "UI0280": "Please Enter Confirm Password",
+  "UI0281": "Current Password and Confirm Password should be same",
 
 
 

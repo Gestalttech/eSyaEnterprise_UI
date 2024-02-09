@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -117,5 +118,22 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Models
         public bool IsUserDeactivated { get; set; }
         public string? usersignature { get; set; }
          public int CreatedBy { get; set; }
+    }
+
+    public class DO_BlockUser
+    {
+        public int UserID { get; set; }
+        public bool BlockSignIn { get; set; }
+        public int ModifiedBy { get; set; }
+        public string TerminalID { get; set; }
+    }
+    public class DO_ChangePassword
+    {
+        public int userID { get; set; }
+        public string oldpassword { get; set; }
+        public string newPassword { get; set; }
+        public string FormID { get; set; }
+        public int CreatedBy { get; set; }
+        public string TerminalID { get; set; }
     }
 }

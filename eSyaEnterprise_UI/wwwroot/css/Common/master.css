@@ -157,7 +157,11 @@ hr.left {
         font-size: 11px;
         margin-bottom: 5px;
     }
-   .context-menu-hover .icon-contextMenu svg{color:white;}
+
+
+    .context-menu-hover .icon-contextMenu svg {
+    color: white;
+}
 .context-menu-icon::before{content:"" !important;}
 .context-menu-item.context-menu-hover {
     background: var(--color-primary) !important;

@@ -163,6 +163,8 @@
     <Folder Include="Areas\ConfigInventory\Views\" />
     <Folder Include="Areas\ConfigPatient\Controllers\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
+    <Folder Include="Areas\Customer\Controllers\" />
+    <Folder Include="Areas\Customer\Views\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />

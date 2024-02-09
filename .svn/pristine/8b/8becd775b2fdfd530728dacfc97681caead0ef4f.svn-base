@@ -1,0 +1,325 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "EPT_03_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "EPS_03_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Masters/VendorMaster.css" rel="stylesheet" />
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<style>
+    .ui-jqgrid, .ui-jqgrid-view, .ui-jqgrid-hdiv, .ui-jqgrid-bdiv, .ui-jqgrid-btable, .ui-jqgrid-htable, .ui-jqgrid-bdiv, .ui-jqgrid-pager {
+        width: 100% !important;
+    }
+</style>
+<script>
+    var localization = {
+        BusinessLocation: '@Localizer["BusinessLocation"]',
+        PatientType: '@Localizer["PatientType"]',
+        PatientCategory: '@Localizer["PatientCategory"]',
+        Select: '@Localizer["Select"]',
+        ActiveStatus: '@Localizer["Status"]',
+        Actions: '@Localizer["Actions"]',
+        CareCard: '@Localizer["Care Card"]',
+        DocumentSubmission: '@Localizer["Document Submission"]',
+        RateTypes: '@Localizer["Rate Types"]',
+        Specialty: '@Localizer["Specialty"]',
+        Dependent: '@Localizer["Dependent"]',
+        DocumentID: '@Localizer["DocumentID"]',
+        AddDocumentSubmission: '@Localizer["AddDocumentSubmission"]',
+        DocumentDesc: '@Localizer["DocumentDesc"]',
+        ServiceTypeDesc: '@Localizer["ServiceTypeDescription"]',
+        RateType: '@Localizer["RateType"]',
+        SpecialtyDesc: '@Localizer["SpecialtyDescription"]',
+        DependentDesc: '@Localizer["DependentDescription"]',
+        Currency: '@Localizer["Currency"]',
+        Rate: '@Localizer["Rate"]',
+        ValidForNoOfDays: '@Localizer["ValidForNoOfDays"]',
+        DependentDesc: '@Localizer["DependentDescription"]',
+        EffectiveFrom: '@Localizer["EffectiveFrom"]',
+        EffectiveTill: '@Localizer["EffectiveTill"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Delete: '@Localizer["Delete"]',
+        Update: '@Localizer["Update"]',
+        Save: '@Localizer["Save"]',
+        AddDocument: '@Localizer["AddDocument"]',
+        UpdateDocument: '@Localizer["UpdateDocument"]',
+        ViewDocument: '@Localizer["ViewDocument"]',
+        ServiceType: '@Localizer["ServiceType"]',
+        Specialty: '@Localizer["Specialty"]',
+        Relationship: '@Localizer["Relationship"]',
+
+    }
+    var errorMsg = {
+        BusinessLocation_E1: '@Localizer["UI0064"]',
+        SelectRow_E2: '@Localizer["UIC13"]',
+        SelectRowToSelectPatientType_E3: '@Localizer["UI0274"]',
+        SelectRowToSelectPatientCategory_E4: '@Localizer["UI0275"]',
+        CardPattern_E5: '@Localizer["UI0276"]',
+        DocumentDescription_E6: '@Localizer["UI0021"]',
+    }
+</script>
+@section scripts{
+    <script src="~/js/ConfigPatient/PatientCategoryAttribute.js"></script>
+    <script src="~/js/ConfigPatient/DocumentSubmission.js"></script>
+    <script src="~/js/ConfigPatient/RateTypes.js"></script>
+    <script src="~/js/ConfigPatient/Specialty.js"></script>
+    <script src="~/js/ConfigPatient/Dependent.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+<section id="sectionGrid">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="form-group">
+                <label>@Localizer["BusinessLocation"]</label>
+                @await Component.InvokeAsync("UserBusinessLocation")
+            </div>
+        </div>
+        <div class="col-lg-12 col-12 col-md-12 form-group">
+            <table id="jqgPatientCategoryAttribute"></table>
+            <div id="jqpPatientCategoryAttribute"></div>
+        </div>
+    </div>
+</section>
+<section class="" id="sectionTabs" style="display:none">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <h6 class="displayNames" id="hdDoctorName"> <span onclick="fnClosePatientCategoryAttributeGrid()"><i class="fa fa-times"></i></span></h6>
+        </div>
+        <input type="hidden" id="hdPatientTypeId" />
+        <input type="hidden" id="hdPatientCategoryId" />
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 col-xl-1 animated slideInLeft sidebarSmall">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="careCard-tab" data-toggle="pill" href="#careCard" role="tab" aria-controls="careCard" aria-selected="true">  @Localizer["Care Card"]</a>
+                <a class="nav-link" id="documentSubmission-tab" data-toggle="pill" href="#documentSubmission" role="tab" aria-controls="documentSubmission" aria-selected="false" onclick="fnAddDocumentDetailsTab()">  @Localizer["Document Submission"]</a>
+                <a class="nav-link " id="rateTypes-tab" data-toggle="pill" href="#rateTypes" role="tab" aria-controls="rateTypes" aria-selected="false" onclick="fnAddServiceRateTypeTab()"> @Localizer["Rate Types"]</a>
+                <a class="nav-link" id="specialty-tab" data-toggle="pill" href="#specialty" role="tab" aria-controls="specialty" aria-selected="false" onclick="fnAddSpecialtyTab()">  @Localizer["Specialty"]</a>
+                <a class="nav-link" id="dependent-tab" data-toggle="pill" href="#dependent" role="tab" aria-controls="dependent" aria-selected="false" onclick="fnAddDependentTab()">  @Localizer["Dependent"]</a>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xl-11 bg-white animated fadeIn delay-1s  padleft0 mainbarSmall">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="careCard" role="tabpanel" aria-labelledby="careCard-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Type</label>
+                            <label class="d-block" id="cardPatientType"></label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Category</label>
+                            <label class="d-block" id="cardPatientCategory"></label>
+                        </div>
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <label>Card Pattern</label>
+                            <input type="text" value="" class="form-control" maxlength="10" id="txtCardPattern" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <label>Current Card</label>
+                            <input type="text" name="textbox" readonly value="" class="form-control" id="txtCurrentCard" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                        <input type="text" style="display:none" id="txtCardNo" />
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnClosePatientCategoryAttributeGrid()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveCareCard" onclick="fnSaveCareCards()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearCareCard" onclick="fnClearCareCard()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="documentSubmission" role="tabpanel" aria-labelledby="documentSubmission-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Type</label>
+                            <label class="d-block" id="DocumentPatientType"></label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Category</label>
+                            <label class="d-block" id="DocumentPatientCategory"></label>
+                        </div>
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="jqgDocumentSubmission"></table>
+                            <div id="jqpDocumentSubmission"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnClosePatientCategoryAttributeGrid()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                            @*<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorProfile" onclick=""><i class="far fa-save"></i> @Localizer["Save"]</button>*@
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDocumentdetails" onclick="fnGridRefreshDocumentSubmission()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="rateTypes" role="tabpanel" aria-labelledby="rateTypes-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Type</label>
+                            <label class="d-block" id="RateTypesPatientType"></label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Category</label>
+                            <label class="d-block" id="RateTypesPatientCategory"></label>
+                        </div>
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="jqgRateTypes"></table>
+                            <div id="jqpRateTypes"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnClosePatientCategoryAttributeGrid()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveServiceType" onclick="fnSaveServiceType()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearServiceType" onclick="fnClearServiceType()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="specialty" role="tabpanel" aria-labelledby="specialty-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Type</label>
+                            <label class="d-block" id="SpecialtyPatientType"></label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Category</label>
+                            <label class="d-block" id="SpecialtyPatientCategory"></label>
+                        </div>
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="jqgSpecialty"></table>
+                            <div id="jqpSpecialty"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnClosePatientCategoryAttributeGrid()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSavePTSpecialty" onclick="fnSavePTSpecialty()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearPTSpecialty" onclick="fnClearPTSpecialty()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="dependent" role="tabpanel" aria-labelledby="dependent-tab">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Type</label>
+                            <label class="d-block" id="DependentPatientType"></label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-4 form-group">
+                            <label>Patient Category</label>
+                            <label class="d-block" id="DependentPatientCategory"></label>
+                        </div>
+                        <div class="col-12">
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="jqgDependent"></table>
+                            <div id="jqpDependent"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnClosePatientCategoryAttributeGrid()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSavePTDependent" onclick="fnSavePTDependent()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearPTDependent" onclick="fnClearPTDependent()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade in" id="PopupDocumentSubmission" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddDocument"]</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row padbot4">
+                    @*<div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="txtDocumentID"> @Localizer["DocumentID"]</label>
+                                <input id="txtDocumentID" class="form-control" maxlength="50" type="text" />
+                            </div>
+                        </div>*@
+                    <input id="txtDocumentID" class="form-control" style="display:none" type="text" />
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label for="txtDocumentDescription"> @Localizer["DocumentDesc"]</label>
+                            <input id="txtDocumentDescription" class="form-control" maxlength="50" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkdocActiveStatus">
+                            <input type="checkbox" id="chkdocActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveDocumentSubmission" onclick="fnSaveDocumentSubmission()">
+                            <i class="fa fa-save"></i> @Localizer[" Save "]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="btnCancelDocumentSubmission"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

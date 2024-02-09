@@ -3,7 +3,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "ECP_05_00";
+    ViewData["Title"] = "ECP_06_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -54,17 +54,31 @@
         <div id="jstClinicConsultantTree"></div>
     </div>
 
-    <div class="col-lg-2 col-md-2">
-        <h5>Action</h5>
+    <div class="col-lg-2 col-md-2 col-sm-6">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
         <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnSaveOPClinic" @(userFormRole.IsInsert ? "" : "disabled") onclick="fnSaveOPClinic()">
             <i class="fas fa-save"></i> @Localizer["Save"]
         </button>
+        </li>
+                
+                    <li class="list-group-item">
         <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
-            <i class="fas fa-expand" style="color:#fff !important"></i> @Localizer["ExpandAll"]
+            <i class="fas fa-expand"></i> @Localizer["ExpandAll"]
         </button>
+        </li>
+                
+                    <li class="list-group-item">
         <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
-            <i class="fas fa-compress" style="color:#fff !important"></i> @Localizer["CollapseAll"]
+            <i class="fas fa-compress"></i> @Localizer["CollapseAll"]
         </button>
+        </li>
+        </ul>
+        </div>
     </div>
 </div>
 

@@ -1,0 +1,128 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EEU_01_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        LoginID: '@Localizer["LoginID"]',
+        LoginDescription: '@Localizer["LoginDescription"]',
+        MobileNumber: '@Localizer["MobileNumber"]',
+        LastActivityDate: '@Localizer["LastActivityDate"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        LocationDescription: '@Localizer["LocationDescription"]',
+        UserGroup: '@Localizer["UserGroup"]',
+        UserType: '@Localizer["UserType"]',
+        AllowMFY: '@Localizer["AllowMFY"]',
+        Action: '@Localizer["Action"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        MenuLink: '@Localizer["MenuLink"]',
+        EditBusinessSegment: '@Localizer["EditBusinessSegment"]',
+        ViewBusinessSegment: '@Localizer["ViewBusinessSegment"]',
+        UserAuthentication: '@Localizer["UserAuthentication"]',
+        UserID: '@Localizer["UserID"]',
+        IUStatus: '@Localizer["IUStatus"]',
+        FormName: '@Localizer["FormName"]',
+        SearchForm: '@Localizer["SearchForm"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        UserGroup_E6: '@Localizer["UI0130"]',
+        UserRole_E7: '@Localizer["UI0132"]'
+    }
+</script>
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+@section scripts{
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/EndUser/UserGroup.js"></script>
+}
+<div class="row padbot10">
+
+    
+
+    <div class="col-lg-4 col-md-5 col-sm-6 col-6">
+        <div class="form-group">
+            <label class="lable-color"> @Localizer["BusinessLocation"]</label>
+
+            <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="" data-size="8" onchange="fnOnChangeUserGroup()">
+                @foreach (var ut in ViewBag.Businesskeys)
+                {
+                    <option value="@ut.BusinessKey">@ut.LocationDescription</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+        <div class="form-group">
+            <label class="lable-color"> @Localizer["UserGroup"]</label>
+
+            <select class="selectpicker" data-live-search="true" id="cboUsergroup" title="" data-size="8" onchange="fnOnChangeUserGroup()">
+                @foreach (var ug in ViewBag.UGappcodes)
+                {
+                    <option value="@ug.ApplicationCode">@ug.CodeDesc</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+   
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+        <div class="form-group">
+            <label class="lable-color"> @Localizer["UserRole"]</label>
+
+            <select class="selectpicker" data-live-search="true" id="cboUserRole" title="" data-size="8" onchange="fnOnChangeUserGroup()">
+                @foreach (var ur in ViewBag.URappcodes)
+                {
+                    <option value="@ur.ApplicationCode">@ur.CodeDesc</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-5 col-sm-6">
+        <div id="jstUserGroup"></div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="divUserActionsforTree" style="display:none;">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnExpandAll" onclick="fnExpandAll()">
+            <i class="fas fa-expand" style="color:#fff !important"></i>&nbsp;@Localizer["ExpandAll"]
+                    </button>
+                </li>
+                <li class="list-group-item">
+        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnCollapseAll" onclick="fnCollapseAll()">
+            <i class="fas fa-compress" style="color:#fff !important"></i>&nbsp;@Localizer["CollapseAll"]
+        </button>
+        </li>
+                <li class="list-group-item">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button w-100" id="btnSaveRoleMenulist" onclick="fnSaveRoleMenulist();"> <i class="fa fa-save"></i> @Localizer["Save"]</button>
+          </li>
+          </ul>
+    </div>
+   
+</div>
+

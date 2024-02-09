@@ -3797,6 +3797,10 @@
       "PackagePath": "staticwebassets\\js\\ConfigureSMS\\SMSVariable.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\ChangePassword.js",
+      "PackagePath": "staticwebassets\\js\\EndUser\\ChangePassword.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\MapUserToUserGroup.js",
       "PackagePath": "staticwebassets\\js\\EndUser\\MapUserToUserGroup.js"
     },

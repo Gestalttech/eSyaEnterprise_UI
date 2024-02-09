@@ -2201,6 +2201,33 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<JsonResult> ChangeUserPassword(DO_ChangePassword obj)
+        {
+            try
+            {
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.CreatedBy = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.userID = AppSessionVariables.GetSessionUserID(HttpContext);
+                //obj.userID = 1;
+
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("UserCreation/ChangeUserPassword", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChangeUserPassword:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ChangeUserPassword:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
         #endregion
     }
 }

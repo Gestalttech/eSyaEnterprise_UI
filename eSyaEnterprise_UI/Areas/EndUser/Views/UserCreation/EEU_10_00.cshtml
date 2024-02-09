@@ -21,6 +21,12 @@
         LoginID_E1: '@Localizer["UI0133"]',
         LoginDesc_E2: '@Localizer["UI0134"]',
         ReasonForDeactivation_E3: '@Localizer["UI0135"]',
+        CurrentPassword_E4: '@Localizer["UI0277"]',
+        NewPassword_E5: '@Localizer["UI0278"]',
+        PasswordPattern_E6: '@Localizer["UI0279"]',
+        EnterPassword_E7: '@Localizer["UI0280"]',
+        PasswordSame_E8: '@Localizer["UI0281"]',
+
     }
     
 </script>
@@ -60,61 +66,13 @@
             
         </div>
         <div class="col-sm-12" style="text-align:center">
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-r-15" id="btnSave" onclick="fnSave()"><i class="fas fa-sync"></i> Update </button>
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnClear" onclick="fnClear()"><i class="fa fa-trash"></i> Clear</button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-r-15" id="btnSave" onclick="fnSaveChangePassword()"><i class="fas fa-sync"></i>@Localizer["ChangePassword"] </button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnClear" onclick="fnClear()"><i class="fa fa-trash"></i>@Localizer["Cancel"]</button>
         </div>
     </div>
 </section>
 
- <script>
-     
-    $(document).on("click", ".popover .close", function () {
-        $(this).parents(".popover").popover('hide');
-    });
+@section scripts {
 
-    $(document).on('click', '#viewPassword', function () {
-        //$(this).text($(this).text() == "Show" ? "Hide" : "Show");
-        $("#viewPassword svg").toggleClass("fa-eye-slash fa-eye");
-        $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
-     });
-
-    $("#txtNewPassword").blur(function () {
-        $(".popover").popover('hide');
-    });
-
-    function fnSave() {
-        $("#btnSave").attr("disabled", true);
-        $.ajax({
-            url: getBaseURL() + '/UserProfile/ResetUserPassword',
-            type: 'POST',
-            datatype: 'json',
-            data: {
-                currentPassword: $("#txtCurrentPassword").val(),
-                newPassword: $("#txtNewPassword").val(),
-                confirmPassword: $("#txtConfirmPassword").val()
-            },
-            async: false,
-            success: function (response) {
-
-                if (response.Status == true) {
-                    fnAlert("s", "", response.StatusCode, response.Message);
-                    fnClear();
-                }
-                else {
-                    fnAlert("e", "", response.StatusCode, response.Message);
-                }
-                $("#btnSave").attr("disabled", false);
-            },
-            error: function (error) {
-                fnAlert("e", "", error.StatusCode, error.statusText);
-                $("#btnSave").attr("disabled", false);
-            }
-        });
-    }
-
-    function fnClear() {
-        $("#txtCurrentPassword").val("");
-        $("#txtNewPassword").val("")
-        $("#txtConfirmPassword").val("")
-    }
- </script>
+    <script src="~/js/EndUser/ChangePassword.js"></script>
+}

@@ -20,6 +20,7 @@
         Save: '@Localizer["Save"]',
         Update: '@Localizer["Update"]',
         ViewStoreBusinessLink: '@Localizer["ViewStoreBusinessLink"]',
+        Action: '@Localizer["Action"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -139,27 +140,24 @@
 
     </div>
     <div class="col-lg-2 col-md-2 col-sm-6">
-        <div>
-            <h5>@Localizer["Action"]</h5>
+        <div class="card treeaction">
+        <div class="card-header">
+                <h5> @Localizer["Action"]</h5>
         </div>
-        <div class="row">
-            @*<div class="col-lg-12 btn_pdnTop">
-            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDeleteNode" onclick="fnDeleteNode()">
-            <i class="fa fa-times" style="color:#fff !important"></i>     Delete Node
-            </button>
-            </div>*@
-
-            <div class="col-lg-12 btn_pdnTop">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
-                    <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
-                </button>
-            </div>
-            <div class="col-lg-12 btn_pdnTop">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
-                    <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
-                </button>
-            </div>
-
+       
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnExpandAll" onclick="fnExpandAll()">
+                            <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                        </button>
+                    </li>
+                    <li class="list-group-item">
+                        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnCollapseAll" onclick="fnCollapseAll()">
+                            <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                        </button>
+                    </li>
+                </ul>
+             
         </div>
     </div>
 </div>

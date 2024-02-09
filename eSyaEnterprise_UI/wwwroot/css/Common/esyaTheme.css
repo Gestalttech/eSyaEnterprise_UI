@@ -16,6 +16,20 @@
     color:var(--primary-color);
     background-color: var(--banner-bg);
 }
+.bg-primary {
+    background-color: var(--primary-color);
+}
+.c-primary {
+    color: var(--primary-color);
+}
+.treeaction .card-header {
+    background-color: var(--color-primary);
+    color: var(--secondary-color);
+}
+
+.treeaction h5 {
+    color: var(--secondary-color);
+}
 .jquery-accordion-menu ul li a {
     background-color: var(--primary-color);
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rhVJKUPenQnW1oBO4dsvUHIhOcAnmRqCEM5IeKB4myc=",
+  "Hash": "TSaWsqTy0HhEyoEXUBAQ/N+hz7PaYQMMO2N976l1Ojc=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -12669,6 +12669,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\ConfigureSMS\\SMSVariable.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\ChangePassword.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/EndUser/ChangePassword.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\EndUser\\ChangePassword.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\EndUser\\MapUserToUserGroup.js",
