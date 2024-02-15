@@ -157,9 +157,12 @@ hr.left {
         font-size: 11px;
         margin-bottom: 5px;
     }
+.divCheckbox{
+    display:flex;
+    align-items:center;
+}
 
-
-    .context-menu-hover .icon-contextMenu svg {
+.context-menu-hover .icon-contextMenu svg {
     color: white;
 }
 .context-menu-icon::before{content:"" !important;}
@@ -301,6 +304,7 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
 }
 #gview_jqgParameters .ui-jqgrid-bdiv {
     max-height: 159px !important;
+    max-height: 159px !important;
     overflow-y: auto !important;
 }
 #gview_jqgServiceBaseRate .ui-jqgrid-bdiv {
@@ -308,10 +312,10 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     overflow-y: auto !important;
 }
 #lblGridView,#lblTreeView{
-    width:140px;
    font-size:14px !important;
-   padding:10px;
+   padding:7px 14px;
    cursor:pointer;
+   border-radius:0px;
 }
 #sessionTimeout-dialog {
     background: #adadad;
@@ -1353,6 +1357,12 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
 .activeSideBar {
     transition: right .15s linear;
     right: 15px !important;
+}
+.treeaction li.list-group-item {
+    padding: 1px 4px;
+}
+.treeaction h5{
+    font-weight:300;margin-bottom:0px;
 }
 .pt-3_5 {
     padding-top: 1.35rem !important;

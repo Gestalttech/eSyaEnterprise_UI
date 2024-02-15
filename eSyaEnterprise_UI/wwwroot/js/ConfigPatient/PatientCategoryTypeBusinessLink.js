@@ -47,7 +47,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
         scrollOffset: 0,
         cellEdit: true,
         cellsubmit: 'clientArray',
-
+        caption: localization.PatientCategoryTypeBusinessLink,
         onSelectRow: function (id) {
 
             if (id) { $('#jqgMapBusiness').jqGrid('editRow', id, true); }

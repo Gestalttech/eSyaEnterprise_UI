@@ -45,7 +45,7 @@ function fnLoadClinicServiceLink() {
         loadonce: true,
         align: "left",
         scrollOffset: 0,
-        caption: "Clinic Service Link",
+        caption: localization.ClinicServiceLink,
         loadComplete: function (data) {
             $(this).find(">tbody>tr.jqgrow:odd").addClass("myAltRowClassEven");
             $(this).find(">tbody>tr.jqgrow:even").addClass("myAltRowClassOdd");

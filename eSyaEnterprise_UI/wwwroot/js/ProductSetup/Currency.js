@@ -64,7 +64,7 @@ function fnGridLoadCurrencyMaster() {
 
             //},
             {
-                name: 'edit', search: false, align: 'center', width: 35, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="mr-1 btn btn-outline" id="btnCurrencyMaster"><i class="fa fa-ellipsis-v"></i></button>'
                 }

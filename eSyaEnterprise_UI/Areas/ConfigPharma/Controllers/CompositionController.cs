@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using eSyaEnterprise_UI.Areas.ConfigPharma.Data;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +12,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using eSyaEnterprise_UI.Areas.ConfigPharma.Models;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
+using System.Reflection.Emit;
 
 
 namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
@@ -27,23 +28,65 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             _eSyapharmaAPIServices = pharmacyAPIServices;
             _logger = logger;
         }
-        #region Generic Composition Link
+        #region Drug Composition 
         [Area("ConfigPharma")]
         public IActionResult EPH_03_00()
         {
-            return View();
-        }
+            try
+            {
 
+                List<int> l_codeType = new List<int>();
+                l_codeType.Add(ApplicationCodeTypeValues.DrugClass);
+                l_codeType.Add(ApplicationCodeTypeValues.TherapueticClass);
+                l_codeType.Add(ApplicationCodeTypeValues.PharmacyGroup);
+
+
+                var response = _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeTypeList", l_codeType).Result;
+                if (response.Status)
+                {
+                    List<DO_ApplicationCodes> DrugClass = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DrugClass).ToList();
+                    ViewBag.DrugClassList = DrugClass.Select(a => new SelectListItem
+                    {
+                        Text = a.CodeDesc,
+                        Value = a.ApplicationCode.ToString()
+                    });
+
+                    List<DO_ApplicationCodes> TherapueticClass = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.TherapueticClass).ToList();
+                    ViewBag.TherapueticClassList = TherapueticClass.Select(a => new SelectListItem
+                    {
+                        Text = a.CodeDesc,
+                        Value = a.ApplicationCode.ToString()
+                    });
+
+                    List<DO_ApplicationCodes> PharmacyGroup = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.PharmacyGroup).ToList();
+                    ViewBag.PharmacyGroupList = PharmacyGroup.Select(a => new SelectListItem
+                    {
+                        Text = a.CodeDesc,
+                        Value = a.ApplicationCode.ToString()
+                    });
+                }
+                else
+                {
+                    _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
         /// <summary>
-        /// Getting Generic/Composition Link List.
+        /// Getting Composition List By Prefix
         /// </summary>
         [HttpGet]
-        public async Task<JsonResult> GetGenericComposition(string prefix)
+        public async Task<JsonResult> GetCompositionByPrefix(string prefix)
         {
             try
             {
                 var parameter = "?prefix=" + prefix;
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("Generic/GetGenericComposition" + parameter);
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("DrugComposition/GetCompositionByPrefix" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -52,30 +95,29 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetGenericComposition:For prefix {0} ", prefix);
+                _logger.LogError(ex, "UD:GetCompositionByPrefix :For prefix {0} ", prefix);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
-
         /// <summary>
-        /// Add Or Update Generic/Composition Link.
+        /// Insert Composition
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> AddOrUpdateGenericComposition(DO_Composition obj)
+        public async Task<JsonResult> InsertComposition(DO_Composition obj)
         {
 
             try
             {
-                //obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                //obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Generic/AddOrUpdateGenericComposition", obj);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/InsertComposition", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateGenericComposition:params:" + JsonConvert.SerializeObject(obj));
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 
@@ -83,22 +125,103 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:AddOrUpdateGenericComposition:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
         /// <summary>
-        /// Getting  Generic/Composition Link.
+        ///  Update Composition
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> UpdateComposition(DO_Composition obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/UpdateComposition", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Getting Composition List For tree
         /// </summary>
         [HttpGet]
-        public async Task<JsonResult> GetGenericCompositionByID(int GenericID, int CompositionID)
+        public async Task<ActionResult> GetCompositionForTree(string prefix)
         {
             try
             {
-                var parameter = "?GenericID=" + GenericID;
-                parameter += "&CompositionID=" + CompositionID;
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<DO_Composition>("Generic/GetGenericCompositionByID" + parameter);
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject();
+                jsObj.id = "C";
+                jsObj.parent = "#";
+                jsObj.text = "Compositions";
+                jsObj.icon = "/images/jsTree/foldergroupicon.png";
+                jsObj.state = new stateObject { opened = true, selected = false };
+                treeView.Add(jsObj);
+
+                var parameter = "?prefix=" + prefix;
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("DrugComposition/GetCompositionByPrefix" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var g_list = serviceResponse.Data;
+                        foreach (var g in g_list)
+                        {
+                            jsObj = new jsTreeObject();
+                            jsObj.id = g.CompositionId.ToString();
+                            jsObj.text = g.DrugCompDesc;
+                            jsObj.icon = "/images/jsTree/openfolder.png";
+                            jsObj.parent = "C";
+                            treeView.Add(jsObj);
+                        }
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCompositionForTree :For prefix {0} ", prefix);
+                }
+
+                return Json(treeView);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCompositionForTree :For prefix {0} ", prefix);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
+
+
+        /// <summary>
+        /// Getting Composition By ID
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetCompositionInfo(int composId)
+        {
+            try
+            {
+                var parameter = "?composId=" + composId;
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<DO_Composition>("DrugComposition/GetCompositionInfo" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -107,14 +230,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetGenericCompositionByID :For GenericID {0} , CompositionID {1} ", GenericID, CompositionID);
+                _logger.LogError(ex, "UD:GetCompositionByID :For composId {0} ", composId);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+
         #endregion
-        public IActionResult Index()
-        {
-            return View();
-        }
+
     }
 }

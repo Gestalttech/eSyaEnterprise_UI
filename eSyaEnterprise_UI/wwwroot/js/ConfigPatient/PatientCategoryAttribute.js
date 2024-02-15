@@ -56,7 +56,7 @@ function fnLoadPatientCategoryAttribute() {
         shrinkToFit: true,
         forceFit: true,
         loadonce: false,
-
+        caption: localization.PatientCategoryAttribute,
         // editurl: 'url',
         // cellsubmit: 'clientArray',
 

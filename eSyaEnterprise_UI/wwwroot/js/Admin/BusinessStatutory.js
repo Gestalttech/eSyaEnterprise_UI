@@ -57,6 +57,7 @@ function fnGridLoadStatutoryInformation() {
         scrollOffset: 0,
         cellEdit: true,
         cellsubmit: 'clientArray',
+        caption: localization.StatutoryDetails,
         onSelectRow: function (id) {
             if (id) { $('#jqgStatutoryDetails').jqGrid('editRow', id, true); }
         },

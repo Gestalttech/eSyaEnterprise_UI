@@ -81,7 +81,7 @@ function fnloadVendorStatutorydetails() {
             { name: "StatutoryDescription", width: 120, editable: true, align: 'left' },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
-                name: 'edit', search: false, align: 'center', width: 50, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 50, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="btn-xs btn-jqgrid" title="Edit" onclick="return fnEditStatutoryDetails(event)"><i class="fas fa-pen"></i>' + localization.Edit+' </button>';
                 }

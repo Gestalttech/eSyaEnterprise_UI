@@ -151,6 +151,7 @@ builder.Services.AddHttpClient<IeSyaInventoryAPIServices, eSyaInventoryAPIServic
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
+
 });
 builder.Services.AddHttpClient<IeSyaEndUserAPIServices, eSyaEndUserAPIServices>(p =>
 {

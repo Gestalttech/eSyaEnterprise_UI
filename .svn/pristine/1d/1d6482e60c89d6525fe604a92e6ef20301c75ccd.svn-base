@@ -1,0 +1,146 @@
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  },
+  "Localization": {
+    "Culture": "en-US",
+    "UICulture": "en-US"
+  },
+  //"Localization": {
+  //  "Culture": "en-IN",
+  //  "UICulture": "en-IN"
+  //},
+  "AllowedHosts": "*",
+  "NlogConnection": {
+    "DbProvider": "sqlserver",
+    "DbHost": "103.227.97.123,1433",
+    "Database": "eSyaEnterprise_Prod",
+    "User": "esya",
+    "Password": "Gt@pl#20"
+  },
+  "ConnectionStrings": {
+    "NLogDb": "Server=103.227.97.123,1433;Database=eSyaEnterprise_Prod;user id=esya;password=Gt@pl#20;",
+    //"dbConn_eSyaEnterprise": "Server=103.227.97.123,1433;Database=eSyaEnterprise_Prod;user id=esya;password=Gt@pl#20;"
+    "dbConn_eSyaEnterprise": "Server=92.205.18.29,1433;Database=eSyaEnterprise_Beta_Live;user id=esya;password=Gt@pl#20;"
+    //"dbConn_eSyaEnterprise": "Server=103.227.97.123;Database=HCSEnterprise_Prod;user id=esya;password=Gt@pl#20;"
+    //"dbConn_eSyaEnterprise": "Server=92.205.18.29,1433;Database=eSyaEnterprise_Test;user id=esya;password=Gt@pl#20;"
+  },
+
+
+
+
+  // our
+  // "eSyaGateway_API": "http://92.205.18.29/eSyaENTGateway_WebAPI/api/",
+  "eSyaGateway_API": "http://103.227.97.123/eSyaEntGateway6.0_WebAPI/api/",
+  "eSyaGestaltSetUpGateway_API": "http://103.227.97.123/eSyaEntGestaltSetUpGateway6.0_WebAPI/api/",
+  //"eSyaConfigProduct_API": "http://103.227.97.123/eSyaEntConfigProduct6.0_WebAPI/api/",
+  //"eSyaFacility_API": "http://103.227.97.123/eSyaEntConfigProduct6.0_WebAPI/api/",
+  //"eSyaStore_API": "http://103.227.97.123/eSyaEntConfigStores6.0_WebAPI/api/",
+  //"eSyaConfigInventory_API": "http://103.227.97.123/eSyaEntConfigStores6.0_WebAPI/api/",
+  //"eSyaManageRates_API": "http://103.227.97.123/eSyaEntManageRates6.0_WebAPI/api/",
+  //"eSyaVendor_API": "http://103.227.97.123/eSyaEntVendor6.0_WebAPI/api/",
+  //"eSyaManageServices_API": "http://103.227.97.123/eSyaEntManageServices6.0_WebAPI/api/",
+  //"eSyaAdmin_API": "http://103.227.97.123/eSyaEntAdminSetup6.0_WebAPI/api/",
+  //"eSyaEndUser_API": "http://103.227.97.123/eSyaEntUserCreation6.0_WebAPI/api/",
+  //"eSyaLocalize_API": "http://103.227.97.123/eSyaEntLocalize6.0_WebAPI/api/",
+  //"eSyaSMS_API": "http://103.227.97.123/eSyaEntSMS6.0_WebAPI/api/",
+  //"eSyaInventory_API": "http://103.227.97.123/eSyaEntInventory6.0_WebAPI/api/",
+  "eSyaProductSetup_API": "http://103.227.97.123/eSyaEntProductSetup6.0_WebAPI/api/",
+
+  
+  //live
+
+ // "eSyaGateway_API": "http://103.227.97.123/eSyaEntGateway6.0_WebAPI/api/",
+ // "eSyaGestaltSetUpGateway_API": "http://103.227.97.123/eSyaEntSetUpGateway_Live6.0_WebAPI/api/",
+  "eSyaConfigProduct_API": "http://103.227.97.123/eSyaEntConfigProduct_Live6.0_WebAPI/api/",
+  "eSyaFacility_API": "http://103.227.97.123/eSyaEntConfigProduct_Live6.0_WebAPI/api/",
+  "eSyaStore_API": "http://103.227.97.123/eSyaEntConfigStores_Live6.0_WebAPI/api/",
+  //"eSyaConfigInventory_API": "http://103.227.97.123/eSyaEntConfigStores_Live6.0_WebAPI/api/",
+  "eSyaManageRates_API": "http://103.227.97.123/eSyaEntManageRates_Live6.0_WebAPI/api/",
+  "eSyaVendor_API": "http://103.227.97.123/eSyaEntVendor_Live6.0_WebAPI/api/",
+  "eSyaManageServices_API": "http://103.227.97.123/eSyaEntManageServices_Live6.0_WebAPI/api/",
+  "eSyaAdmin_API": "http://103.227.97.123/eSyaEntAdminSetup_Live6.0_WebAPI/api/",
+  "eSyaEndUser_API": "http://103.227.97.123/eSyaEntUserCreation_Live6.0_WebAPI/api/",
+  "eSyaLocalize_API": "http://103.227.97.123/eSyaEntLocalize_Live6.0_WebAPI/api/",
+  "eSyaSMS_API": "http://103.227.97.123/eSyaEntSMS_Live6.0_WebAPI/api/",
+  "eSyaInventory_API": "http://103.227.97.123/eSyaEntInventory_Live6.0_WebAPI/api/",
+  //"eSyaProductSetup_API": "http://103.227.97.123/eSyaEntProductSetup_Live6.0_WebAPI/api/",
+  "eSyaTokenSystem_API": "http://103.227.97.123/eSyaEntTokenSystem_Live6.0_WebAPI/api/",
+  "eSyaConfigSKU_API": "http://103.227.97.123/eSyaEntConfigSKU_Live6.0_WebAPI/api/",
+  "eSyaConfigPatient_API": "http://103.227.97.123/eSyaENTPatientTypes_Live6.0_WebAPI/api/",
+  "eSyaConfigPharma_API": "http://103.227.97.123/eSyaENTConfigPharmacy_Livet6.0_WebAPI/api/",
+  "eSyaCustomer_API": "http://103.227.97.123/eSyaENTCustomer_Live6.0_WebAPI/api/",
+
+
+  //test
+  //"eSyaGateway_API": "http://92.205.18.29/eSyaENTGateway_WebAPI/api/",
+  //"eSyaGateway_API": "http://103.227.97.123/eSyaEntGateway6.0_WebAPI/api/",
+  //"eSyaGestaltSetUpGateway_API": "http://103.227.97.123/eSyaEntSetUpGateway_Test6.0_WebAPI/api/",
+  //"eSyaConfigProduct_API": "http://103.227.97.123/eSyaEntConfigProduct_Test6.0_WebAPI/api/",
+  //"eSyaFacility_API": "http://103.227.97.123/eSyaEntConfigProduct_Test6.0_WebAPI/api/",
+  //"eSyaStore_API": "http://103.227.97.123/eSyaEntConfigStores_Test6.0_WebAPI/api/",
+  //// "eSyaConfigInventory_API": "http://103.227.97.123/eSyaEntConfigStores_Test6.0_WebAPI/api/", Removed
+  //"eSyaManageRates_API": "http://103.227.97.123/eSyaEntManageRates_Test6.0_WebAPI/api/",
+  //"eSyaVendor_API": "http://103.227.97.123/eSyaEntVendor_Test6.0_WebAPI/api/",
+  //"eSyaManageServices_API": "http://103.227.97.123/eSyaEntManageServices_Test6.0_WebAPI/api/",
+  //"eSyaAdmin_API": "http://103.227.97.123/eSyaEntAdminSetup_Test6.0_WebAPI/api/",
+  //"eSyaEndUser_API": "http://103.227.97.123/eSyaEntUserCreation_Test6.0_WebAPI/api/",
+  //"eSyaLocalize_API": "http://103.227.97.123/eSyaEntLocalize_Test6.0_WebAPI/api/",
+  //"eSyaSMS_API": "http://103.227.97.123/eSyaEntSMS_Test6.0_WebAPI/api/",
+  //"eSyaInventory_API": "http://103.227.97.123/eSyaEntInventory_Test6.0_WebAPI/api/",
+  //"eSyaProductSetup_API": "http://103.227.97.123/eSyaEntProductSetup_Test6.0_WebAPI/api/",
+  //"eSyaTokenSystem_API": "http://103.227.97.123/eSyaEntTokenSystem_Test6.0_WebAPI/api/",
+  //"eSyaConfigSKU_API": "http://103.227.97.123/eSyaEntConfigSKU_Test6.0_WebAPI/api/",
+  //"eSyaConfigPatient_API": "http://103.227.97.123/eSyaENTPatientTypes_Test6.0_WebAPI/api/",
+  //"eSyaConfigPharma_API": "http://103.227.97.123/eSyaENTConfigPharmacy_Test6.0_WebAPI/api/",
+  //"eSyaCustomer_API": "http://103.227.97.123/eSyaENTCustomer_Test6.0_WebAPI/api/",
+
+
+
+
+
+
+  "dbContextType": "prod",
+  //"dbContextType": "pexpat",
+
+  "Apikey": "1",
+
+  "accept-language": "en-US",
+
+  //"accept-language": "ar-EG",
+
+  "cnf": {
+    "DateFormat": "dd/mm/yy",
+    "ShortDateFormat": "d/m/Y",
+    "DecimalDigit": "2",
+    "LocalCurrencyCode": "INR",
+    "ISDCode": "91"
+  },
+
+  "SessionTimeInMintues": {
+    "TimeOut": "60",
+    "Warning": "55"
+  },
+
+  "PasswordPolicy": {
+    "RequiredLength": 8,
+    "RequireLowercase": 1,
+    "RequireUppercase": 1,
+    "RequireNumeric": 1,
+    "RequireSpecialChar": 1,
+    "PasswordValidity": 30,
+    "PasswordRepeatationPolicy": 5,
+    "UnsuccessfulLoginAttempt": 3
+  },
+
+
+
+  "ReportServerURL": "http://92.205.18.29/eSyaReportViewer",
+  "GuestPortalURL": "https://product.esyahealth.in/esyaguestportal.ui/GuestBooking/UserRoomBooking?userId="
+
+}
+ 

@@ -7,10 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    ViewData["Title"] = "EPS_03_00";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 <link href="~/css/Masters/VendorMaster.css" rel="stylesheet" />
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 <style>
@@ -55,7 +51,12 @@
         ServiceType: '@Localizer["ServiceType"]',
         Specialty: '@Localizer["Specialty"]',
         Relationship: '@Localizer["Relationship"]',
-
+        Dependent: '@Localizer["Dependent"]',
+        DocumentSubmission:'@Localizer["DocumentSubmission"]',
+        PatientCategoryAttribute: '@Localizer["PatientCategoryAttribute"]',
+        MapBusiness: '@Localizer["MapBusiness"]',
+        RateTypes: '@Localizer["RateTypes"]',
+        Specialty: '@Localizer["Specialty"]',
     }
     var errorMsg = {
         BusinessLocation_E1: '@Localizer["UI0064"]',

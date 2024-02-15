@@ -133,7 +133,7 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
         editurl: 'url',
         scrollOffset: 0,
         cellsubmit: 'clientArray',
-        caption: 'Service Business Link',
+        caption: localization.ServiceBusinessLink,
         onSelectRow: function (id) {
             if (id) { $('#jqgServiceBusinessLink').jqGrid('editRow', id, true); }
         },

@@ -82,7 +82,7 @@ function fnLoadServiceRateTypeGrid(rowData) {
         scrollOffset: 0,
         cellEdit: true,
         cellsubmit: 'clientArray',
-
+        caption: localization.RateTypes,
         onSelectRow: function (id) {
             if (id) { $('#jqgRateTypes').jqGrid('editRow', id, true); }
         },

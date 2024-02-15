@@ -330,7 +330,7 @@ function fnGridLoadParameters() {
                     value: "A: Amount;B: Boolean;D:Description;P: Percentage;V: Value"
                 }
             },
-            { name: "ActiveStatus", width: 45, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 55, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'action', search: false, align: 'left', width: 80, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

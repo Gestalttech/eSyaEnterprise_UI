@@ -171,6 +171,12 @@ p {
             font-weight: 100;
             font-size: 22px !important;
         }
+    .center_div_ver_hor {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 @media screen and (max-width:767px) and (min-width:500px) {
     .sessionTimeout-innercontainer h3 {

@@ -5,21 +5,24 @@
     ViewData["Title"] = "EPH_03_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/css/common/jstree.css" rel="stylesheet" />
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts {
     <script src="~/js/ConfigPharma/DrugComposition.js"></script>
-    
+	<script src="~/js/common/jstree.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 }
-
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
 <script>
-    @*//var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');*@
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
         var localization = {
         CompositionId: '@Localizer["CompositionId"]',
         CompositionDescription: '@Localizer["CompositionDescription"]',
         DrugCompositionDescription: '@Localizer["DrugCompositionDescription"]',
+        DrugCompDesc: '@Localizer["DrugCompositionDescription"]',
         IsCombination: '@Localizer["IsCombination"]',
         DrugClass: '@Localizer["DrugClass"]',
         DrugFormDescription: '@Localizer["DrugFormDescription"]',
@@ -40,8 +43,19 @@
         AddComposition: '@Localizer["AddComposition"]',
         ViewComposition: '@Localizer["ViewComposition"]',
         EditComposition: '@Localizer["EditComposition"]',
-
+        DrugComposition: '@Localizer["DrugComposition"]',
     };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        DrugCompositionDescription_E5: '@Localizer["UI0282"]',
+        DrugClass_E6: '@Localizer["UI0283"]',
+        TherapueticClass_E7: '@Localizer["UI0284"]',
+        DrugSchedul_E8: '@Localizer["UI0285"]',
+        PharmacyGroup_E9: '@Localizer["UI0286"]',
+    }
 </script>
 
 <section id="divGridDrugCompositions">
@@ -50,18 +64,18 @@
 
 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-outline-primary" id="lblGridView">
-                    <input type="radio" name="options" id="rdGridView" autocomplete="off"> Grid View <i class="fa fa-th"></i>
+                <label class="btn btn-outline-primary" id="lblGridView" >
+                    <input type="radio" name="options" id="rdGridView" autocomplete="off" onclick="fnGettheTypeofView()"> Grid View <i class="fa fa-table-cells-large"></i>
                 </label>
                 <label class="btn btn-outline-primary" id="lblTreeView">
-                    <input type="radio" name="options" id="rdTreeView" autocomplete="off"> Tree View  <i class="fa fa-tree"></i>
+                    <input type="radio" name="options" id="rdTreeView" autocomplete="off" onclick="fnGettheTypeofView()"> Tree View  <i class="fa fa-folder-tree"></i>
                 </label>
 
             </div>
         </div>
     </div>
      <div class="row padbot10">
-        <div class="col-lg-12 col-xl-12 col-sm-12 form-group" id="divAlphabets">
+        <div class="col-lg-12 col-xl-12 col-sm-12 form-group" id="divAlphabets" style="display:none">
             <label>@Localizer["ChooseDrugCompositionsbyalphabets"]</label>
             <span class="dot">A</span>
             <span class="dot">B</span>
@@ -120,10 +134,12 @@
         <div class="col-sm-4 col-md-4 col-lg-4">
 
             <div id="jstComposition">
+                <ul>
+                    <li>Root</li>
+                </ul>
             </div>
-        </div>
-        <div class="col-sm-1 col-md-1 col-lg-1"></div>
-        <div id="dvComposition" class="col-lg-5 col-md-5 col-sm-5 f-right" style="display:none;">
+        </div>                                             
+        <div id="dvComposition" class="col-lg-6 col-md-6 col-sm-6 f-right" style="display:none;">
 
             <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddComposition">
                 <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
@@ -131,7 +147,7 @@
                 </div>
                 <div class="mdl-card__supporting-text fullwidth padbot0">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
                             <div class="">
                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsCombination_t">
                                     <input type="checkbox" id="chkIsCombination_t" class="mdl-checkbox__input">
@@ -141,23 +157,27 @@
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-9">
                             <div class="form-group">
-                                <label for="txtCompositions_t"> @Localizer["DrugCompDesc"]</label>
+                                <label for="txtCompositions_t"> @Localizer["DrugCompositionDescription"]</label>
                                 <input id="txtCompositions_t" type="text" class="form-control" maxlength="100" />
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="form-group">
-                                <label for="txtDrugClass_t"> @Localizer["DrugClass"]</label>
-                                <select id="txtDrugClass_t" class="form-control selectpicker"><option>Select</option></select>
+                                <label for="cboDrugClass_t"> @Localizer["DrugClass"]</label>
+                                <select id="cboDrugClass_t" class="form-control selectpicker" asp-items="@ViewBag.DrugClassList" data-size="5" data-container="body">
+                                    <option value="0">Select</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="form-group">
-                                <label for="txtTherapueticClass_t"> @Localizer["TherapueticClass"]</label>
-                                <select id="txtTherapueticClass_t" class="form-control selectpicker"><option value="0">Select</option></select>
+                                <label for="cboTherapueticClass_t"> @Localizer["TherapueticClass"]</label>
+                                <select id="cboTherapueticClass_t" class="form-control selectpicker" asp-items="@ViewBag.TherapueticClassList" data-size="5" data-container="body">
+                                    <option value="0">Select</option>
+                                    </select>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="col-lg-4 col-md-4 col-sm-6 divCheckbox">
                             <div class="">
                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAvailableAsGeneric_t">
                                     <input type="checkbox" id="chkAvailableAsGeneric_t" class="mdl-checkbox__input">
@@ -168,19 +188,21 @@
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="form-group">
                                 <label> @Localizer["DrugSchedule"] </label>
-                                <select class="selectpicker" data-live-search="true" id="cboDrugSchedule_t" title="Select" data-size="8">
+                                <select class="selectpicker" data-live-search="true" id="cboDrugSchedule_t" title="Select" data-size="5" data-container="body">
                                     <option value="0">Select</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="form-group">
-                                <label for="txtPharmacyGroup_t"> @Localizer["PharmacyGroup"]</label>
-                                <select id="txtPharmacyGroup_t" class="form-control selectpicker"><option value="0">Select</option></select>
+                                <label for="cboPharmacyGroup_t"> @Localizer["PharmacyGroup"]</label>
+                                <select id="cboPharmacyGroup_t" class="form-control selectpicker" asp-items="@ViewBag.PharmacyGroupList" data-size="5" data-container="body">
+                                    <option value="0">Select</option>
+                                    </select>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
                             <div class="">
                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus_t">
                                     <input type="checkbox" id="chkActiveStatus_t" class="mdl-checkbox__input">
@@ -188,11 +210,17 @@
                                 </label>
                             </div>
                         </div>
+                       <div class="col-lg-12 col-12 col-sm-12">
+                            <p class="subheading">Parameter table</p>
+                            <hr class="left" />
+                            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "24" })
+                       </div>
                     </div>
                 </div>
                 <div class="mdl-card__actions text-center">
                     <hr />
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSaveDrugComposition_t" onclick="fnSaveDrugComposition('Tree')"><i class="fa fa-save"></i> @Localizer[" Save "]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSaveDrugComposition_t" onclick="fnSaveDrugComposition('Tree')"><i class="fa fa-save"></i> @Localizer[" Save "]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelDrugComposition_t" onclick="fnCancelDrugComposition('Tree')"><i class="fa fa-save"></i> @Localizer[" Cancel "]</button>
                 </div>
             </div>
         </div>
@@ -255,7 +283,7 @@
                         <p class="subheading">Composition Details</p>
                         <hr class="left" />
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
                                 <div class="">
                                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsCombination">
                                         <input type="checkbox" id="chkIsCombination" class="mdl-checkbox__input">
@@ -265,23 +293,23 @@
                             </div>
                             <div class="col-lg-8 col-md-8 col-sm-9">
                                 <div class="form-group">
-                                    <label for="txtCompositions"> @Localizer["DrugCompDesc"]</label>
-                                    <input id="txtCompositions" type="text" class="form-control" maxlength="100" />
+                                    <label for="txtDrugCompositionDescription"> @Localizer["DrugCompositionDescription"]</label>
+                                    <input id="txtDrugCompositionDescription" type="text" class="form-control" maxlength="100" />
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
-                                    <label for="txtDrugClass"> @Localizer["DrugClass"]</label>
-                                    <select id="txtDrugClass" class="form-control selectpicker"><option>Select</option></select>
+                                    <label for="cboDrugClass"> @Localizer["DrugClass"]</label>
+                                    <select id="cboDrugClass" class="form-control selectpicker"><option>Select</option></select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
-                                    <label for="txtTherapueticClass"> @Localizer["TherapueticClass"]</label>
-                                    <select id="txtTherapueticClass" class="form-control selectpicker"><option value="0">Select</option></select>
+                                    <label for="cboTherapueticClass"> @Localizer["TherapueticClass"]</label>
+                                    <select id="cboTherapueticClass" class="form-control selectpicker"><option value="0">Select</option></select>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6 divCheckbox">
                                 <div class="">
                                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAvailableAsGeneric">
                                         <input type="checkbox" id="chkAvailableAsGeneric" class="mdl-checkbox__input">
@@ -299,12 +327,12 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
-                                    <label for="txtPharmacyGroup"> @Localizer["PharmacyGroup"]</label>
-                                    <select id="txtPharmacyGroup" class="form-control selectpicker"><option value="0">Select</option></select>
+                                    <label for="cboPharmacyGroup"> @Localizer["PharmacyGroup"]</label>
+                                    <select id="cboPharmacyGroup" class="form-control selectpicker"><option value="0">Select</option></select>
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
                                 <div class="">
                                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                                         <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">

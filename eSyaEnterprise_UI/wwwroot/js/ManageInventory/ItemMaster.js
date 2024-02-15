@@ -88,6 +88,7 @@ function fnGetItemDetails() {
                     shrinkToFit: true,
                     forceFit: true,
                     scrollOffset: 0,
+                    caption: localization.ItemMaster,
                     loadComplete: function (data) {
                         SetGridControlByAction();
                     },
@@ -291,6 +292,7 @@ function fnGridLoadItemMaster() {
         autowidth: true,
         shrinkToFit: true,
         scrollOffset: 0,
+        caption: localization.ItemMaster,
 
         loadComplete: function (data) {
             SetGridControlByAction();

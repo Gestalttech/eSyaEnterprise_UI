@@ -65,7 +65,7 @@ function fnLoadPTSpecialtyGrid(rowData) {
         scrollOffset: 0,
         cellEdit: true,
         cellsubmit: 'clientArray',
-
+        caption: localization.Specialty,
         onSelectRow: function (id) {
             if (id) { $('#jqgSpecialty').jqGrid('editRow', id, true); }
         },

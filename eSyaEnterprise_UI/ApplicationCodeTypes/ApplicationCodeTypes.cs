@@ -46,5 +46,11 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int PatientType = 58;
         public const int Relationship = 56;
         #endregion
+
+        #region Config Pharma
+        public const int DrugClass = 102;
+        public const int TherapueticClass = 104;
+        public const int PharmacyGroup =106;
+        #endregion
     }
 }

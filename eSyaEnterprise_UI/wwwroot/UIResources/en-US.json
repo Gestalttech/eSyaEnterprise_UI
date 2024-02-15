@@ -280,6 +280,11 @@
   "UI0279": "Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.",
   "UI0280": "Please Enter Confirm Password",
   "UI0281": "Current Password and Confirm Password should be same",
+  "UI0282": "Please enter the Drug Composition Description",
+  "UI0283": "Please Select a Drug Class",
+  "UI0284": "Please select a Therapuetic Class",
+  "UI0285": "Please select a Drug Schedule",
+  "UI0286": "Please select a Pharmacy Group",
 
 
 

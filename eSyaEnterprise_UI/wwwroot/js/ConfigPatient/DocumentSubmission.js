@@ -90,7 +90,7 @@ function fnLoadDocumentSubmission(rowData) {
         forceFit: true,
         loadonce: true,
         cellEdit: true,
-
+        caption: localization.DocumentSubmission,
         loadComplete: function (data) {
             $("#jqgDocumentSubmission").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
         }

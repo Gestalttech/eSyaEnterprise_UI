@@ -65,7 +65,7 @@ function fnLoadPTDependentGrid(rowData) {
         scrollOffset: 0,
         cellEdit: true,
         cellsubmit: 'clientArray',
-
+        caption: localization.Dependent,
         onSelectRow: function (id) {
             if (id) { $('#jqgDependent').jqGrid('editRow', id, true); }
         },

@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_28_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@section scripts{
+    <script src="~/js/ProductSetup/SMSConnect.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+
+    @*<script src="~/js/jquery.inputmask/inputmask-userdefined.js"></script>*@
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        BusinessEntity: '@Localizer["BusinessEntity"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        BusinessLocation: '@Localizer["BusinessLocation"]',
+        EffectiveFrom: '@Localizer["EffectiveFrom"]',
+        ServiceProvider: '@Localizer["ServiceProvider"]',
+        Api: '@Localizer["Api"]',
+        UserId: '@Localizer["UserId"]',
+        Password: '@Localizer["Password"]',
+        SenderId: '@Localizer["SenderId"]',
+        ISDCode: '@Localizer["ISDCode"]',
+        EffectiveFromDate: '@Localizer["EffectiveFromDate"]',
+        EffectiveTillDate: '@Localizer["EffectiveTillDate"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        DActivate: '@Localizer["Deactivate"]',
+        AddSMSConnect: '@Localizer["AddSMS"]',
+        UpdateSMSConnect: '@Localizer["UpdateSMSConnect"]',
+        ViewSMSConnect: '@Localizer["ViewSMSConnect"]',
+        SMSConnect: '@Localizer["SMSConnect"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        BusinessLocation_E6: '@Localizer["UI0064"]',
+        ServiceProvider_E7: '@Localizer["UI0210"]',
+        FromDate_E8: '@Localizer["UI0069"]',
+        ToDate_E9: '@Localizer["UI0070"]',
+        Api_E10: '@Localizer["UI0207"]',
+        UserId_E11: '@Localizer["UI0208"]',
+        Password_E12: '@Localizer["UI0136"]',
+        SenderId_E13: '@Localizer["UI0209"]',
+        ISDCode_E14: '@Localizer["UI0034"]',
+        BusinessEntity_E15: '@Localizer["UI0049"]',
+        BusinessEntity_E16: '@Localizer["UI0213"]'
+    }
+</script>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label>@Localizer["BusinessEntity"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessEntity" title="Choose Business Entity" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnEntityOnchange()"></select>
+        </div>
+    </div>
+    <div class="col-lg-12 co-md-12 col-12">
+        <table id="jqgSMSConnect"></table>
+        <div id="jqpSMSConnect"></div>
+    </div>
+</div>
+
+<div class="modal fade in" id="PopupSMSConnect" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddSMSConnect"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <label>@Localizer["BusinessLocation"]</label>
+                        <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="Choose Business Location" onchange="fnBusinessKeyOnchange()">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["ISDCode"]</label>
+                            @await Component.InvokeAsync("IsdCountryInput",new{id="locISD"})
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["ServiceProvider"]</label>
+                            <input type="text" class="form-control" id="txtServiceProvider" name="alpha" maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["Api"]</label>
+                            <input type="text" class="form-control" id="txtAPI"  maxlength="200" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["UserID"]</label>
+                            <input type="text" class="form-control" id="txtUserID"  maxlength="2000"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["Password"]</label>
+                            <input type="password" class="form-control" id="txtPassword"  maxlength="2000" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["SenderID"]</label>
+                            <input type="text" class="form-control" id="txtSenderID"  maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["EffectiveFromDate"]</label>
+                            <input id="txtEffectiveFRMDate" class="form-control" type="text" autocomplete="off" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["EffectiveTillDate"]</label>
+                            <input id="txtEffectiveTillDate" class="form-control" type="text" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="default-checkbox separate">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button  primary-button" id="btnSaveSMSConnect" onclick="fnSaveSMSConnect()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelSMSConnect"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveSMSConnect" onclick="fnDeleteSMSConnect();"><i class="fa fa-times"></i> @Localizer["DeActivate"] </button>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+ </div>

@@ -41,7 +41,7 @@ function fnGridLoadCodeTypes() {
             //    }
             //},
             {
-                name: 'edit', search: false, align: 'center', width: 35, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="mr-1 btn btn-outline" id="btnCodeType"><i class="fa fa-ellipsis-v"></i></button>'
                    // return `<button class="mr-1 btn btn-outline" id="btnCodeType"><span class="material-symbols-outlined">more_vert</span ></button>`
