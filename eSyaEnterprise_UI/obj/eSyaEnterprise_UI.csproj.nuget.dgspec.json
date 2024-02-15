@@ -1,23 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {}
+    "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {
+    "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+        "projectUniqueName": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
         "projectName": "eSyaEnterprise_UI",
-        "projectPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
-        "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
+        "projectPath": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+        "packagesPath": "C:\\Users\\Mohideen Batcha\\.nuget\\packages\\",
+        "outputPath": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mohideen Batcha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,6 +27,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
