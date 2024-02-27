@@ -1,0 +1,382 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "ETM_04_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        BusinessKey: '@Localizer["BusinessKey"]',
+        TokenType: '@Localizer["TokenType"]',
+        CounterNumber: '@Localizer["CounterNumber"]',
+        FloorId: '@Localizer["FloorId"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
+        TokenDesc: '@Localizer["TokenDescription"]',
+        FloorName: '@Localizer["FloorName"]',
+        CounterNumberdesc: '@Localizer["CounterNumberdescription"]',
+        TokenPrefix: '@Localizer["TokenPrefix"]',
+        CounterKey: '@Localizer["CounterKey"]',
+        AddOn: '@Localizer["AddOn"]',
+        CounterMappingHeader: '@Localizer["CounterMappingHeader"]',
+      }
+</script>
+
+<div class="AddOncontainer">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <table id="jqgCounterMappingHeader"></table>
+            <div id="jqpCounterMappingHeader"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var data = new Array();
+    $(document).ready(function () {
+        var newrowid;
+        var newrowids;
+        var grid = $("#jqgCounterMappingHeader");
+        callingJQGrid();
+        //fnGridCounterMappingHeader();
+        var _headergriddata = [{ BusinessKey: 11, TokenType: 'RG', CounterNumber: 1, FloorId: 'F1', ActiveStatus: true }, { BusinessKey: 11, TokenType: 'DC', CounterNumber: 2, FloorId: 'F2', ActiveStatus: true }];
+        var _Innergriddata = [{BusinessKey: 11, CounterKey :'C1', Addon: 'DC', FloorName: 'First Floor', ActiveStatus: true }, { BusinessKey: 11, CounterKey: 'C1',Addon: 'CC', FloorName: 'First Floor', ActiveStatus: true }];
+        function callingJQGrid() {
+            grid.jqGrid({
+                //url: getBaseURL() + "/Rules/GetProcessMaster",
+                datatype: "json",
+                contenttype: "application/json; charset-utf-8",
+                mtype: 'GET',
+                jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+                colNames: [localization.BusinessKey, localization.TokenType, localization.CounterNumber, localization.FloorId, localization.ActiveStatus],
+                colModel: [
+                    {
+                        name: "BusinessKey", editable: true, width: "80px", formatter: 'integer', editoptions: {
+                            dataInit: function (element) {
+                                $(element).keypress(function (e) {
+                                    if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    { name: "TokenType", editable: true, width: '100%' },
+                    { name: "CounterNumber", editable: true, width: '100%' },
+                    { name: "FloorId", editable: true, width: '100%' },
+                    { name: "ActiveStatus", editable: true, width: "70px", edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
+                ],
+                rowNum: 10,
+                loadonce: true,
+                //data: _headergriddata,
+                //datatype:"local",
+                rowList: [10, 20, 50, 100],
+                rownumWidth: 55,
+                pager: "#jqpCounterMappingHeader",
+                viewrecords: true,
+                gridview: true,
+                rownumbers: true,
+                height: 'auto',
+                width: $(document).width() - 400,
+                autowidth: true,
+                loadonce: true,
+                caption: localization.CounterMappingHeader,
+                onSelectRow: function (rowid) {
+                    subRowId = rowid;
+
+                    if (newrowid != undefined) {
+                        $("#jqgCounterMappingHeader #" + newrowid + ":first").css({ background: '' });
+                    }
+                     newrowid = rowid;
+                },
+                loadComplete: function (data) {
+                    $("#jqgCounterMappingHeader .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
+                    $("#jqgCounterMappingHeader .jqgrow:odd").css({ background: '#e4edf5' });
+                    $("#jqgCounterMappingHeader .ui-pg-div:first").css({ 'border-left': "none" });
+                    $("#jqgCounterMappingHeader .jqgrow").hover(function () {
+                        if (!$(this).hasClass('ui-state-highlight')) {
+                            $(this).css({ 'background': "rgb(139, 157, 239)", color: 'white' })
+                        }
+                    }, function () {
+                        if (!$(this).hasClass('ui-state-highlight')) {
+                            $(this).css({ 'background': "", color: '' })
+                        }
+
+                    });
+                   // SetGridControlByAction("jqgCounterMappingHeader");
+                    $("#jqgCounterMappingHeader").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+                    fnAddGridSerialNoHeading();
+                },
+                subGrid: true,
+                subGridRowExpanded: function (subId, rowId) {
+                    //setTimeout(function () { $("#gview_jqgCounterMappingHeader_3_t .jqgrid-rownum:odd").css({ 'background': "#e4edf5" }); }, 200);
+                    var selArray = new Array();
+                    var subRowId;
+                    function returnData() {
+
+                        var proId = grid.getRowData(rowId).ProcessId;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ProcessId == proId) {
+                                selArray.push(data[i]);
+                            }
+                        }
+                        return selArray;
+                    }
+                    var subData = {
+                        page: 1,
+                        rows: returnData(),
+                        records: selArray.length,
+                    };
+                    var subGridTableId;
+                    var subGridDivId;
+                    var subGridWidth = grid.width() - 51;
+                    subGridTableId = subId + "_t";
+                    subGridIdGlobal = subGridTableId;
+                    subGridDivId = subId + "_d";
+                    $("#" + subId).html("<table id='" + subGridTableId + "'></table><div id='" + subGridDivId + "'></div>");
+                    $("#" + subGridTableId).jqGrid({
+
+                        colNames: [localization.BusinessKey, localization.CounterKey, localization.AddOn, localization.FloorName, localization.ActiveStatus],
+                        colModel: [
+                            { name: "BusinessKey", hidden: true },
+                            { name: "CounterKey", hidden: true },
+                            { name: "AddOn", editable: true, width: "250px" },
+                            { name: "FloorName", editable: true, width: "250px" },
+                            { name: "ActiveStatus", editable: true, width: "60px", edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
+                        ],
+                        pager: "#" + subGridDivId,
+                        rowNum: 20,
+                        rowList: [20, 40],
+                        viewrecords: true,
+                        recordtext: "Showing records {0} to {1} of {2}",
+                        gridview: true,
+                        rownumbers: true,
+                        datatype: 'local',
+                        height: 'auto',
+                        width: subGridWidth,
+                        caption: localization.SubGrid,
+                        data:_Innergriddata,
+                        onSelectRow: function (rowids) {
+                            subRowId = rowids;
+
+                            if (newrowids != undefined) {
+                                $("#" + subGridTableId + " #" + newrowids).css({ background: '' });
+                            }
+
+                            $("#" + subGridTableId + " #" + rowids).css({ background: '#F9D953 url("images/ui-bg_flat_55_fbec88_40x100.png") 50% 50% repeat-x', color: '#000' });
+                            newrowids = rowids;
+                        },
+                        loadComplete: function () {
+
+                            setTimeout(function () {
+                                $("#jqgh_" + subGridTableId + "_RuleId").css({ 'text-align': 'right' });
+                                $("#" + subGridTableId + " .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
+                                $("#" + subGridTableId + " .jqgrow:odd").css({ background: '#e4edf5' });
+                                $("#" + subGridDivId + " .ui-pg-div:first").css({ 'border-left': "none" });
+                                $("#" + subGridTableId + " .jqgrow").hover(function () {
+                                    if (!$(this).hasClass('ui-state-highlight')) {
+                                        $(this).css({ 'background': "rgb(139, 157, 239)", color: 'white' })
+                                    }
+                                }, function () {
+                                    if (!$(this).hasClass('ui-state-highlight')) {
+                                        $(this).css({ 'background': "", color: '' })
+                                    }
+
+                                })
+                            }, 100);
+                            fnAddGridSerialNoHeading();
+                        },
+                        // caption: 'Process Rule',
+                    }).jqGrid('navGrid', '#' + subGridDivId, { del: false, search: false, addtext: 'Add', edittext: 'Edit', refresh: false },
+                        {
+                            editCaption: localization.EditProcessRule,
+                            url: getBaseURL() + '/Rules/UpdateApplicationRule',
+                            closeAfterEdit: true,
+                            reloadAfterSubmit: true,
+                            beforeShowForm: function (formid) {
+                                $("#RuleId").prop("disabled", true);
+                                $("#RuleDesc").width("300px");
+                                $("#Notes").width("90%");
+                                $("#editmodjqgCounterMappingHeader_" + rowId + "_t").css({
+                                    'width': Math.round($("#" + subGridTableId).width() / 1.7) + "px",
+                                    'height': 'auto'
+                                });
+                                $("#FrmGrid_jqgCounterMappingHeader_" + rowId + "_t").css({
+                                    'width': Math.round(grid.width() / 1.7) + "px",
+                                    'height': 'auto'
+                                });
+                            },
+                            beforeSubmit: function (postdata, formid) {
+
+                                postdata.ProcessId = grid.getRowData(rowId).ProcessId;
+                                postdata.RuleId = $("#" + subGridTableId).getRowData(subRowId).RuleId;
+                                console.log(postdata, grid.getRowData(rowId).ProcessId);
+                                var message = fnValidateRule(postdata);
+                                if (message != '') {
+                                    fnAlert("w", "ETM_04_00", "", message);
+                                    return [false]
+                                }
+                                else {
+                                    return [true, '']
+                                }
+                            },
+                            afterSubmit: function (response, postdata) {
+                                if (response.responseJSON.Status === true) {
+                                    fnGridProcessRule();
+                                    setTimeout(function () {
+                                        $("#jqgCounterMappingHeader").collapseSubGridRow(rowId);
+                                        $("#jqgCounterMappingHeader").expandSubGridRow(rowId);
+                                    }, 1000);
+                                    return [true, '']
+                                }
+                                else {
+                                    fnAlert("e", "ETM_04_00", "", response.responseJSON.Message);
+                                    return [false]
+                                }
+                            }
+                        },
+                        {
+                            addCaption: localization.AddProcessRule,
+                            url: getBaseURL() + '/Rules/InsertApplicationRule',
+                            closeAfterAdd: true,
+                            reloadAfterSubmit: true,
+                            beforeShowForm: function (formid) {
+                                console.log($("#" + subGridTableId).width());
+                                $("#RuleId").prop("disabled", false);
+                                $("#RuleDesc").width("300px");
+                                $("#Notes").width("90%");
+                                $("#editmodjqgCounterMappingHeader_" + rowId + "_t").css({
+                                    'width': Math.round($("#" + subGridTableId).width() / 1.7) + "px",
+                                    'height': 'auto'
+                                });
+                                $("#FrmGrid_jqgCounterMappingHeader_" + rowId + "_t").css({
+                                    'width': Math.round(grid.width() / 1.7) + "px",
+                                    'height': 'auto'
+                                });
+                            },
+                            beforeSubmit: function (postdata, formid) {
+                                postdata.ProcessId = grid.getRowData(rowId).ProcessId;
+                                //console.log(postdata, grid.getRowData(rowId).ProcessId);
+                                var message = fnValidateRule(postdata);
+                                if (message != '') {
+                                    fnAlert("w", "ETM_04_00", "", message);
+                                    return [false]
+                                }
+                                else {
+                                    return [true, '']
+                                }
+                            },
+                            afterSubmit: function (response, postdata) {
+                                if (response.responseJSON.Status === true) {
+                                    fnGridProcessRule();
+                                    setTimeout(function () {
+                                        $("#jqgCounterMappingHeader").collapseSubGridRow(rowId);
+                                        $("#jqgCounterMappingHeader").expandSubGridRow(rowId);
+                                    }, 1000);
+
+                                    return [true, '']
+                                }
+                                else {
+                                    fnAlert("e", "ETM_04_00", "", response.responseJSON.Message);
+                                    return [false]
+                                }
+                            }
+                        });
+                    $("#" + subGridTableId)[0].addJSONData(subData);
+                    SetSubGridControlByAction(subGridTableId);
+                }
+
+            }).jqGrid('navGrid', "#jqpCounterMappingHeader", { del: false, search: false, add:false, edittext: 'Edit', refreshtext: 'Refresh' },
+                {
+                    editCaption: localization.EditProcess,
+                    url: getBaseURL() + '/Rules/UpdateProcessMaster',
+                    closeAfterEdit: true,
+                    reloadAfterSubmit: true,
+                    beforeShowForm: function (formid) {
+                        $("#ProcessId").prop("disabled", true);
+                        $("#ProcessDesc").width("300px");
+                        $("#editmodjqgCounterMappingHeader").css({
+                            'width': Math.round(grid.width() / 2) + "px",
+                            'height': 'auto'
+                        });
+                        $("#FrmGrid_jqgCounterMappingHeader").css({
+                            'width': Math.round(grid.width() / 2) + "px",
+                            'height': 'auto'
+                        });
+                    },
+                    beforeSubmit: function (postdata, formid) {
+
+                        var message = fnValidateProcess(postdata);
+                        if (message != '') {
+                            fnAlert("w", "ETM_04_00", "UI0072", message);
+                            return [false]
+                        }
+                        else {
+                            $('#jqgCounterMappingHeader').trigger('reloadGrid');
+                            return [true, '']
+                        }
+                    },
+                    afterSubmit: function (response, postdata) {
+                        console.log(response.responseJSON);
+                        if (response.responseJSON.Status === true) {
+                            fnAlert("s", "", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            $('#jqgCounterMappingHeader').trigger('reloadGrid');
+                            return [true, ''];
+                        }
+                        else {
+                            fnAlert("e", "ETM_04_00", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            return [false, response.responseJSON.Message];
+                        }
+                    }
+                },
+                {
+                    addCaption: localization.AddProcess,
+                    url: getBaseURL() + '/Rules/InsertProcessMaster',
+                    closeAfterAdd: true,
+                    reloadAfterSubmit: true,
+                    beforeShowForm: function () {
+                        $("#ProcessId").prop("disabled", false);
+                        $("#ProcessDesc").width("300px");
+                        $("#editmodjqgCounterMappingHeader").css({
+                            'width': Math.round(grid.width() / 2) + "px",
+                            'height': 'auto'
+                        });
+                        $("#FrmGrid_jqgCounterMappingHeader").css({
+                            'width': Math.round(grid.width() / 2) + "px",
+                            'height': 'auto'
+                        });
+                    },
+                    beforeSubmit: function (postdata, formid) {
+                        //console.log(postdata);
+                        var message = fnValidateProcess(postdata);
+                        if (message != '') {
+                            fnAlert("w", "ETM_04_00", "UI0072", message);
+                            return [false];
+
+                        }
+                        else {
+
+                            return [true, '']
+                        }
+                    },
+                    afterSubmit: function (response, postdata) {
+
+                        if (response.responseJSON.Status === true) {
+                            fnAlert("s", "", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            $('#jqgCounterMappingHeader').trigger('reloadGrid');
+                            return [true, ''];
+                        }
+                        else {
+                            fnAlert("e", "ETM_04_00", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            return [false]
+                        }
+                    }
+                });;
+        }
+    });
+</script>
+

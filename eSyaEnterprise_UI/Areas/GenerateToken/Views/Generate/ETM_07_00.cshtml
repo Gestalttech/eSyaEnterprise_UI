@@ -1,0 +1,216 @@
+﻿
+
+@{
+    ViewData["Title"] = "ETM_07_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/css/TokenSystem/tokensystem.css" rel="stylesheet" />
+
+
+<header>
+    <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
+</header>
+
+<main>
+    <p class="headerText font-weight-bolder">Welcome <span id="txtMobile"></span></p>
+    <h1 class="text-center">Token Management System</h1>
+    <p class="text-small text-center instruction"> <span>Instruction:</span> Please click on the one of the button to generate token number for your required Service</p>
+    <div class="container atmDisplay">
+        <div class="row" id="dvMain">
+          
+
+        </div>
+       @*  <div class="row divTK_panel" id="devTokenStatus">
+           
+        </div> *@
+
+    </div>
+
+</main>
+
+<script src="~/js/Common/jquery.PrintArea.js"></script>
+<script src="~/js/Common/jQuery.print.min.js"></script>
+
+
+
+<div class="modal fade in " id="PopupTokenPrint" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="overflow: scroll;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title blur"> Token Print</h4>
+            </div>
+            <div class="modal-body bg-lightgrey">
+                <div style="text-align:center">
+                    <div id="dvPrint" style="text-align:center;  width:7.5cm;height:7.5cm;">
+                        <div id="dvPrintToken" class="PrintArea" style="border:8px double;padding:10px;margin:10px;text-align:center">
+                            <div>
+                                <h1>Token Number</h1>
+                            </div>
+                            <hr style="border-top: 2px solid #212529;" />
+                            <div>
+                                <h1 id="lblTokenNumber" style="font-weight: 900;font-size:60px">-</h1>
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="jQuery('#dvPrintToken').print()">Print</button>
+                <button type="button" class="btn btn-default" onclick="fnCloseModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var isd = '';
+    var mobile = '';
+    var bKey = '';
+
+    $(document).ready(function () {
+        $('.header').css('display', 'none');
+        isd = localStorage.getItem("isd");
+        mobile = localStorage.getItem("mobile");
+        bKey = localStorage.getItem("BKey");
+        $('#txtMobile').text(isd + ' ' + mobile);
+        fnGetTokenTypes();
+    });
+    function fnGetTokenTypes() {
+        $.ajax({
+            url: getBaseURL() + '/Generate/GetTokenTypes',
+            type: 'POST',
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var _content = "";
+                $.each(result, function (key, data) {
+                    _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4' onclick=fnGeneratToken('" + data.TokenPrefix + "')> " + data.TokenDesc + "</button></div>";
+                });
+                $("#dvMain").html(_content);
+                fnGetTokenStatus();
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+    function fnGetTokenStatus() {
+        $.ajax({
+            url: getBaseURL() + '/Generate/GetTokenDetailByMobile',
+            type: 'GET',
+            data: {
+                isdCode: isd,
+                mobileNumber: mobile,
+                businessKey: bKey
+            },
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var _content = "<div class='col-lg-12 col-md-12 col-12'><h5>Token Status</h5> <hr class='m-0' /> </div>";
+                $.each(result, function (key, data) {
+                    _content += "<div class='col-lg-4 col-md-6 col-4 border-right border-bottom d-flex justify-content-center flex-column'>";
+                    _content += "<span class='tokenNumberDisplay'>" + data.TokenPrefix + "</span>";
+                    _content += "</div>";
+                    _content += "<div class='col-lg-4 col-md-4 col-4 border-bottom align-items-center'>";
+                    _content += "<button type='button' class='btn btn-sm btn-link text-dark text-center'>" + data.TokenPrefix + "</button>";
+                    _content += "<hr class='left w-100' />";
+                    _content += "<p class='m-0 text-small f-11 text-center'>" + data.TokenStatus + "</p>";
+                    _content += "</div>";
+                    _content += "<div class='col-lg-4 col-md-4 col-4 border-bottom d-flex justify-content-center flex-column'>";
+                    _content += "<p class='txtwaittime'>Approximate Wait Time</p><p class='text-center m-0'>05:10</p>";
+                    _content += "</div>";
+
+                });
+                $("#devTokenStatus").html(_content);
+
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+
+
+    function fnGeneratToken(_type) {
+        var obj = {
+            BusinessKey: bKey,
+            TokenPrefix: _type,
+            Isdcode: isd,
+            MobileNumber: mobile
+        };
+        var URL = getBaseURL() + '/Generate/GenerateToken';
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            datatype: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            data: obj,
+            success: function (response) {
+                if (response.Status) {
+                    // toastr.success("Token Generated. Token Number is : " + response.key);
+                    $('#lblTokenNumber').text(response.key);
+                    fnPrintToken();
+                    fnGetTokenStatus();
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+    function fnPrintToken() {
+      
+
+        $("#dvPrintToken").print({
+            // Use Global styles
+            globalStyles: false,
+
+            // Add link with attrbute media=print
+            mediaPrint: false,
+
+            //Custom stylesheet
+            stylesheet: "http://fonts.googleapis.com/css?family=Inconsolata",
+
+            //Print in a hidden iframe
+            iframe: true,
+
+            // Don't print this
+            noPrintSelector: ".avoid-this",
+
+            // Add this on top
+            //append: "Free jQuery Plugins<br/>",
+
+            //// Add this at bottom
+            //prepend: "<br/>jQueryScript.net",
+            // Manually add form values
+            manuallyCopyFormValues: false,
+
+            // resolves after print and restructure the code for better maintainability
+            deferred: $.Deferred(),
+            // timeout
+            timeout: 250,
+
+            // Custom title
+            title: null,
+            // Custom document type
+            doctype: '<!doctype html>'
+        });
+    }
+
+</script>
+
+
+
+
+

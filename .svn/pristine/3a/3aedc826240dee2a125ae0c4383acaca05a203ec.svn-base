@@ -1,0 +1,199 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Views\Rules\**" />
+    <Compile Remove="Areas\ConfigInventory\Views\Grouping\**" />
+    <Compile Remove="Areas\ConfigProduct\**" />
+    <Compile Remove="Areas\ProductSetup\Views\AgeRange\**" />
+    <Content Remove="Areas\Admin\Views\Rules\**" />
+    <Content Remove="Areas\ConfigInventory\Views\Grouping\**" />
+    <Content Remove="Areas\ConfigProduct\**" />
+    <Content Remove="Areas\ProductSetup\Views\AgeRange\**" />
+    <EmbeddedResource Remove="Areas\Admin\Views\Rules\**" />
+    <EmbeddedResource Remove="Areas\ConfigInventory\Views\Grouping\**" />
+    <EmbeddedResource Remove="Areas\ConfigProduct\**" />
+    <EmbeddedResource Remove="Areas\ProductSetup\Views\AgeRange\**" />
+    <None Remove="Areas\Admin\Views\Rules\**" />
+    <None Remove="Areas\ConfigInventory\Views\Grouping\**" />
+    <None Remove="Areas\ConfigProduct\**" />
+    <None Remove="Areas\ProductSetup\Views\AgeRange\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Controllers\RulesController.cs" />
+    <Compile Remove="Areas\Admin\Models\DO_InventoryRules.cs" />
+    <Compile Remove="Areas\Admin\Models\DO_UnitofMeasure.cs" />
+    <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ConfigInventory\Controllers\GroupingController.cs" />
+    <Compile Remove="Areas\ConfigInventory\Data\eSyaConfigInventoryAPIServices.cs" />
+    <Compile Remove="Areas\ConfigInventory\Data\eSyaInventoryAPIServices.cs" />
+    <Compile Remove="Areas\ConfigInventory\Data\IeSyaConfigInventoryAPIServices.cs" />
+    <Compile Remove="Areas\ConfigInventory\Data\IeSyaInventoryAPIServices.cs" />
+    <Compile Remove="Areas\ConfigInventory\Models\DO_ItemCategory.cs" />
+    <Compile Remove="Areas\ConfigInventory\Models\DO_ItemGroup.cs" />
+    <Compile Remove="Areas\ConfigInventory\Models\DO_ItemGroupCategory.cs" />
+    <Compile Remove="Areas\ConfigInventory\Models\DO_ItemSParameter.cs" />
+    <Compile Remove="Areas\ConfigInventory\Models\DO_ItemSubCategory.cs" />
+    <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
+    <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
+    <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
+    <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ProductSetup\Controllers\AgeRangeController.cs" />
+    <Compile Remove="Areas\ProductSetup\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_AgeRange.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnectHeader.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
+    <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
+    <Compile Remove="Areas\Vendor\Data\CodeTypeValues.cs" />
+    <Compile Remove="DataServices\eSyaGestaltUserSetUpGatewayServices.cs" />
+    <Compile Remove="DataServices\eSyaSetUpGatewayServices.cs" />
+    <Compile Remove="DataServices\IeSyaGestaltUserSetUpGatewayServices.cs" />
+    <Compile Remove="DataServices\IeSyaSetUpGatewayServices.cs" />
+    <Compile Remove="DataServices\IPasswordPolicy.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Stores\Views\ConfigStores\ECS_03_00.cshtml" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.rtl.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.rtl.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.rtl.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.min.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.rtl.css.map" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css" />
+    <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap.rtl.min.css.map" />
+    <Content Remove="Views\Account\Login.cshtml" />
+    <Content Remove="wwwroot\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Remove="wwwroot\images\ui-bg_highlight-soft_100_f6f6f6_1x100.png" />
+    <Content Remove="wwwroot\images\ui-bg_highlight-soft_25_0073ea_1x100.png" />
+    <Content Remove="wwwroot\images\ui-bg_highlight-soft_50_dddddd_1x100.png" />
+    <Content Remove="wwwroot\images\ui-icons_0073ea_256x240.png" />
+    <Content Remove="wwwroot\images\ui-icons_454545_256x240.png" />
+    <Content Remove="wwwroot\images\ui-icons_666666_256x240.png" />
+    <Content Remove="wwwroot\images\ui-icons_ff0084_256x240.png" />
+    <Content Remove="wwwroot\images\ui-icons_ffffff_256x240.png" />
+    <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
+    <Content Remove="wwwroot\js\Admin\InventoryRules.js" />
+    <Content Remove="wwwroot\js\Admin\UnitofMeasure.js" />
+    <Content Remove="wwwroot\js\ConfigInventory\ItemCategory.js" />
+    <Content Remove="wwwroot\js\ConfigInventory\ItemGroup.js" />
+    <Content Remove="wwwroot\js\ConfigInventory\ItemGroupCategoryMapping.js" />
+    <Content Remove="wwwroot\js\ConfigInventory\ItemSubCategory.js" />
+    <Content Remove="wwwroot\js\jquery.PrintArea.js" />
+    <Content Remove="wwwroot\js\ProductSetup\AgeRange.js" />
+    <Content Remove="wwwroot\js\ProductSetup\UserRoleActionLink.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\ConfigProduct\Controllers\AgeRangeController.cs" />
+    <Compile Include="Areas\ConfigProduct\Controllers\ServicesController.cs" />
+    <Compile Include="Areas\ConfigProduct\Data\eSyaConfigProductAPIServices.cs" />
+    <Compile Include="Areas\ConfigProduct\Data\IeSyaConfigProductAPIServices.cs" />
+    <Compile Include="Areas\ConfigProduct\Models\DO_AgeRange.cs" />
+    <Compile Include="Areas\ConfigProduct\Models\DO_eSyaParameter.cs" />
+    <Compile Include="Areas\ConfigProduct\Models\DO_ServiceClass.cs" />
+    <Compile Include="Areas\ConfigProduct\Models\DO_ServiceGroup.cs" />
+    <Compile Include="Areas\ConfigProduct\Models\DO_ServiceType.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.102.1" />
+    <PackageReference Include="eSyaEssentialsUI6" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.3" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="TinyMCE" Version="6.5.1" />
+  </ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Areas\Appointment\Data\" />
+    <Folder Include="Areas\Appointment\Models\" />
+    <Folder Include="Areas\ConfigInventory\Controllers\" />
+    <Folder Include="Areas\ConfigInventory\Data\" />
+    <Folder Include="Areas\ConfigInventory\Models\" />
+    <Folder Include="Areas\ConfigInventory\Views\" />
+    <Folder Include="Areas\ConfigPatient\Controllers\" />
+    <Folder Include="Areas\ConfigPatient\Data\" />
+    <Folder Include="Areas\Customer\Controllers\" />
+    <Folder Include="Areas\Customer\Views\" />
+    <Folder Include="Areas\GenerateToken\Controllers\" />
+    <Folder Include="Areas\GenerateToken\Models\" />
+    <Folder Include="Areas\GenerateToken\Views\" />
+    <Folder Include="Areas\TokenSystem\Data\" />
+    <Folder Include="Areas\TokenSystem\Models\" />
+    <Folder Include="Extension\" />
+    <Folder Include="ResourcesExtention\" />
+    <Folder Include="wwwroot\css\Login\" />
+    <Folder Include="wwwroot\js\Common\tinymce\" />
+    <Folder Include="wwwroot\js\ConfigInventory\" />
+    <Folder Include="wwwroot\js\Vendor\" />
+    <Folder Include="wwwroot\UIResources\" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Content Include="Areas\ConfigProduct\Views\Services\ECP_01_00.cshtml" />
+    <Content Include="Areas\ConfigProduct\Views\Services\ECP_02_00.cshtml" />
+    <Content Include="Areas\ConfigProduct\Views\Services\ECP_03_00.cshtml" />
+	<Content Include="Areas\ConfigProduct\Views\AgeRange\EPS_33_00.cshtml" />
+    <None Include="Views\Shared\Components\eSyaBusinessLocation\_esyaBusinessLocation.cshtml" />
+    <None Include="Views\Shared\Components\eSyaParameter\_eSyaParameter.cshtml" />
+    <None Include="Views\Shared\Components\IsdCountryInput\_IsdCountryInput.cshtml" />
+    <None Include="Views\Shared\Components\IsdMobileInput\_IsdMobileInput.cshtml" />
+    <None Include="Views\Shared\Components\Menu\_UserMenu.cshtml" />
+    <None Include="Views\Shared\Components\UserBusinessLocation\_UserBusinessLocation.cshtml" />
+    <None Include="wwwroot\js\jquery.inputmask\bindings\inputmask.binding.js" />
+    <None Include="wwwroot\js\jquery.inputmask\inputmask-userdefined.js" />
+    <None Include="wwwroot\js\jquery.inputmask\inputmask.js" />
+    <None Include="wwwroot\js\jquery.inputmask\jquery.inputmask.min.js" />
+  </ItemGroup>
+
+</Project>

@@ -158,6 +158,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRW5kVXNlclxWaWV3c1xVc2VyQ3JlYXRpb25cX1VzZXJEZWFjdGl2YXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/GenerateToken/Views/Addon/ETM_04_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcR2VuZXJhdGVUb2tlblxWaWV3c1xBZGRvblxFVE1fMDRfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/GenerateToken/Views/Generate/ETM_05_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcR2VuZXJhdGVUb2tlblxWaWV3c1xHZW5lcmF0ZVxFVE1fMDVfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/GenerateToken/Views/Generate/ETM_06_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcR2VuZXJhdGVUb2tlblxWaWV3c1xHZW5lcmF0ZVxFVE1fMDZfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/GenerateToken/Views/Generate/ETM_07_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcR2VuZXJhdGVUb2tlblxWaWV3c1xHZW5lcmF0ZVxFVE1fMDdfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/GenerateToken/Views/TokenManagement/ETM_08_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcR2VuZXJhdGVUb2tlblxWaWV3c1xUb2tlbk1hbmFnZW1lbnRcRVRNXzA4XzAwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Localize/Views/Controller/ELE_03_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTG9jYWxpemVcVmlld3NcQ29udHJvbGxlclxFTEVfMDNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -388,38 +408,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/CounterMapping/ETM_03_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcQ291bnRlck1hcHBpbmdcRVRNXzAzXzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_100_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTAwXzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_10_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTBfMDAuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_11_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTFfMDAuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/DisplaySystem/ETM_12_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcRGlzcGxheVN5c3RlbVxFVE1fMTJfMDAuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_05_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA1XzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_06_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA2XzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/Generate/ETM_07_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcR2VuZXJhdGVcRVRNXzA3XzAwLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/TokenSystem/Views/TokenManagement/ETM_08_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVG9rZW5TeXN0ZW1cVmlld3NcVG9rZW5NYW5hZ2VtZW50XEVUTV8wOF8wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/Vendor/Views/Approve/EVN_02_00.cshtml]

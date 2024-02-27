@@ -1,0 +1,371 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "ETM_06_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .bootstrap-select.form-control {
+        border-bottom-width: 0px;
+    }
+</style>
+<link href="~/css/TokenSystem/tokensystem.css" rel="stylesheet" />
+<script>
+    var errorMsg = {
+        MobileNumber_e1: '@Localizer["UI0111"]',
+    }
+</script>
+<input type="hidden" id="hdBKey" value="@ViewBag.businessKey" />
+<header>
+    <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
+</header>
+<main class="divTK_panel">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <h1 class="">Token Management System</h1>
+            </div>
+        </div>
+        <section id="dvMobileNo">
+            <div class="row">
+                @*<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                <label>Please enter the mobile number</label>
+                <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+                <input type="text" maxlength="4" class="form-control" id="txtISD" name="isd" value="" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 form-group">
+                <input type="text" maxlength="10" class="form-control" id="txtMobileNo" name="mobilenumber" value="" />
+                </div>
+                </div>
+
+                @await Component.InvokeAsync("IsdMobileInput", new { id = "MobileNumber" })
+                </div>*@
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <label>Mobile Number</label>
+                    @await Component.InvokeAsync("IsdMobileInput", new { id = "MobileNumber" })
+                </div>
+                <div class="col-lg-12 ">
+                    <button type="button" class="btn btn-primary w-100" id="btnContinue">Continue</button>
+
+                </div>
+                @*<div class="col-lg-12 form-group text-left">
+                <p class="m-0"><span class="txt-resendOTP"> Resend OTP in <span id="countdowntimer">60</span> Second(s) </span> <button type="button" id="btn-resendOTP" class="btn btn-link pl-0"> Resend OTP</button></p>
+                </div>*@
+            </div>
+        </section>
+        <section id="dvOTP" style="display:none">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <div class="input-group">
+                        <label class="text-small pb-3">Enter the OTP sent on <span id="txtMobNoRD" class="font-weight-bold mr-1"></span><button type="button" class="btn btn-outline-secondary mr-10" id="btnEditMobileNo"><i class="fa fa-pen"></i></button></label>
+                        <div id="divOTPInput">
+                            <input type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+                            <input type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+                            <input type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+                            <input type="number" step="1" min="0" max="9" autocomplete="no" pattern="\d*">
+
+                        </div>
+                        <input type="hidden" name="txtOTP">
+
+
+                        @* <input type="text" id="txtOTP" maxlength="4" class="form-control txtOTP w-50" name="otpnumber" value="" /> *@
+                        @*<input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">*@
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" id="btn-resendOTP" type="button">Resend OTP<span class="txt-resendOTP"> in <span id="countdowntimer">60</span> S </span> </button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-lg-12 form-group">
+
+                    <button type="button" class="btn btn-primary mr-10 w-100" id="btnConfirm" onclick="fnConfirmOTP()">Confirm</button>
+                    @* <button type="button" class="btn btn-primary" onclick="fnGenerateOTP()">Resend OTP<span class="txt-resendOTP"> in <span id="countdowntimer">60</span> S </span> </button>*@
+                    <p class="m-0"><span id="lblOTP"> OTP sent </span> </p>
+
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+</main>
+@*<footer>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <p class="text-small text-center m-0 d-none">Instruction : Please click on the one of the button for your required Service</p>
+                <p class="m-0">Powered by Gestalt Technologies Pvt. Ltd.</p>
+            </div>
+        </div>
+    </footer>*@
+
+<script>
+    var _intOTP = 0;
+    $(function () {
+
+        $("#btn-resendOTP").attr('disabled', true);
+        $("#lblOTP").hide();
+        //$(".txt-resendOTP").hide();
+        var mnH = $("main").height();
+        var winH = $(window).height();
+        if (winH < mnH) {
+            $('footer').css('position', 'relative');
+        }
+        else {
+            $('footer').css('position', 'absolute');
+        }
+
+    });
+
+    //OTP resend Timer function starts
+    function fnOTPTimer() {
+        var timeleft = 60;
+        $(".txt-resendOTP").show();
+        var downloadTimer = setInterval(function () {
+            timeleft--;
+            document.getElementById("countdowntimer").textContent = timeleft;
+            if (timeleft <= 0) {
+                clearInterval(downloadTimer);
+                $("#btn-resendOTP").prop('disabled', false);
+                $(".txt-resendOTP").hide();
+                $("#lblOTP").hide();
+            }
+        }, 1000);
+    }
+    //OTP resend Timer function ends
+
+    $("#btnContinue").click(function () {
+        // if ($("#txtMobileNo").val() == "" || $("#txtMobileNo").val() == null || $("#txtMobileNo").val() == undefined || $("#txtMobileNo").val().length < 10) {
+        if ($('#cboMobileNumber').val() == "0" || $('#txtMobileNumber').val() == "" || $('#txtMobileNumber').val() == undefined || $('#txtMobileNumber').val().length < 10) {
+            fnAlert("w", "ETM_06_00", "UI0111", errorMsg.MobileNumber_e1);
+            return false;
+        }
+        fnGenerateOTP();
+    });
+    $("#btnEditMobileNo").click(function () {
+        $("#dvMobileNo").animate({ right: '0px', width: '100%', opacity: '1' }).css('display', 'block');
+        $("#dvOTP").hide('slow');
+        $("#dvOTP").animate({ top: '0px', height: '0px', opacity: 0, position: 'relative' }).hide();
+        $("#btn-resendOTP").show();
+        $("#btn-resendOTP").attr('disabled', true);
+        $("#lblOTP").hide();
+        _intOTP = 0;
+    });
+
+    function fnGenerateOTP() {
+
+        // var obj = {
+
+        //     Otptype: "TK",
+        //     MobileNumber: $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim()
+        // };
+        var Otptype = "TK";
+        var MobileNumber = $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim();
+        var URL = getBaseURL() + '/Generate/GenerateOTP?Otptype=' + Otptype + '&MobileNumber=' + MobileNumber;
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            datatype: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            // data: JSON.stringify(obj),
+            success: function (response) {
+                if (response.Status) {
+                    //fnSendOTPSMS(response.key)
+                    $("#dvMobileNo").animate({ right: '420px', width: '0px', opacity: '0' }).css('display', 'none');
+                    $("#dvOTP").animate({ top: '0px', height: '182px', opacity: 1, position: 'relative' }).show();
+                    $("#txtMobNoRD").text('+' + $('#cboMobileNumber').val() + $('#txtMobileNumber').val());
+                    if (_intOTP == 0) {
+                        fnOTPTimer();
+                        _intOTP = 1;
+                    }
+                    else {
+                        $("#btn-resendOTP").hide();
+                        $("#lblOTP").show();
+                    }
+
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+    }
+
+
+    function fnConfirmOTP() {
+        //localStorage.setItem("isd", $("#txtISD").val());
+        //localStorage.setItem("mobile", $("#txtMobileNo").val());
+        //var url = getBaseURL() + '/TokenSystem/Generate/ETM_07_00';
+        //window.location.href = url;
+        var obj = {
+            Otptype: "TK",
+            MobileNumber: $('#cboMobileNumber').val() + $('#txtMobileNumber').val().trim(),
+            Otp: $('input[name=txtOTP]').val().trim()
+        };
+        var URL = getBaseURL() + '/Generate/ConfirmOTP';
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            datatype: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            data: obj,
+            success: function (response) {
+                if (response.Status) {
+                    localStorage.setItem("isd", $('#cboMobileNumber').val());
+                    localStorage.setItem("mobile", $('#txtMobileNumber').val().trim());
+                    localStorage.setItem("BKey", $('#hdBKey').val());
+                    var url = getBaseURL() + '/TokenSystem/Generate/ETM_07_00';
+                    window.location.href = url;
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+    function fnSendOTPSMS(_otp) {
+
+        var URL = getBaseURL() + '/Generate/SendSMSForMobileOTP';
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            //datatype: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            data: {
+                isdCode: $('#cboMobileNumber').val(),
+                mobileNumber: $('#txtMobileNumber').val().trim(),
+                otp: _otp
+            },
+            success: function (response) {
+                if (response.Status) {
+                    fnAlert("s", "", response.StatusCode, response.Message);
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+    }
+
+</script>
+
+<script>
+    (function () {
+        const inputs = document.querySelectorAll("#divOTPInput input");
+
+        for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+
+            input.addEventListener("input", function () {
+                // handling normal input
+                if (input.value.length == 1 && i + 1 < inputs.length) {
+                    inputs[i + 1].focus();
+                }
+
+                // if a value is pasted, put each character to each of the next input
+                if (input.value.length > 1) {
+                    // sanitise input
+                    if (isNaN(input.value)) {
+                        input.value = "";
+                        updateInput();
+                        return;
+                    }
+
+                    // split characters to array
+                    const chars = input.value.split('');
+
+                    for (let pos = 0; pos < chars.length; pos++) {
+                        // if length exceeded the number of inputs, stop
+                        if (pos + i >= inputs.length) break;
+
+                        // paste value
+                        let targetInput = inputs[pos + i];
+                        targetInput.value = chars[pos];
+                    }
+
+                    // focus the input next to the last pasted character
+                    let focus_index = Math.min(inputs.length - 1, i + chars.length);
+                    inputs[focus_index].focus();
+                }
+                updateInput();
+            });
+
+            input.addEventListener("keydown", function (e) {
+                // backspace button
+                if (e.keyCode == 8 && input.value == '' && i != 0) {
+                    // shift next values towards the left
+                    for (let pos = i; pos < inputs.length - 1; pos++) {
+                        inputs[pos].value = inputs[pos + 1].value;
+                    }
+
+                    // clear previous box and focus on it
+                    inputs[i - 1].value = '';
+                    inputs[i - 1].focus();
+                    updateInput();
+                    return;
+                }
+
+                // delete button
+                if (e.keyCode == 46 && i != inputs.length - 1) {
+                    // shift next values towards the left
+                    for (let pos = i; pos < inputs.length - 1; pos++) {
+                        inputs[pos].value = inputs[pos + 1].value;
+                    }
+
+                    // clear the last box
+                    inputs[inputs.length - 1].value = '';
+                    input.select();
+                    e.preventDefault();
+                    updateInput();
+                    return;
+                }
+
+                // left button
+                if (e.keyCode == 37) {
+                    if (i > 0) {
+                        e.preventDefault();
+                        inputs[i - 1].focus();
+                        inputs[i - 1].select();
+                    }
+                    return;
+                }
+
+                // right button
+                if (e.keyCode == 39) {
+                    if (i + 1 < inputs.length) {
+                        e.preventDefault();
+                        inputs[i + 1].focus();
+                        inputs[i + 1].select();
+                    }
+                    return;
+                }
+            });
+        }
+
+        function updateInput() {
+            let inputValue = Array.from(inputs).reduce(function (otp, input) {
+                otp += (input.value.length) ? input.value : ' ';
+                return otp;
+            }, "");
+            document.querySelector("input[name=txtOTP]").value = inputValue;
+        }
+    })();
+</script>
+
+

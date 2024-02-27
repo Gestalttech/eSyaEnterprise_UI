@@ -3833,6 +3833,14 @@
       "PackagePath": "staticwebassets\\js\\EndUser\\UserRoleActionLink.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\GenerateToken\\CounterAddon.js",
+      "PackagePath": "staticwebassets\\js\\GenerateToken\\CounterAddon.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\GenerateToken\\TokenManagement.js",
+      "PackagePath": "staticwebassets\\js\\GenerateToken\\TokenManagement.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Localize\\CultureKeys.js",
       "PackagePath": "staticwebassets\\js\\Localize\\CultureKeys.js"
     },
@@ -4067,10 +4075,6 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\TokenCounter.js",
       "PackagePath": "staticwebassets\\js\\TokenSystem\\TokenCounter.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\TokenSystem\\TokenManagement.js",
-      "PackagePath": "staticwebassets\\js\\TokenSystem\\TokenManagement.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Vendor\\ApprovalListInVendorRegister.js",

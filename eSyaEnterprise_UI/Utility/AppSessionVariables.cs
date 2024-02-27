@@ -60,7 +60,7 @@ namespace eSyaEnterprise_UI.Utility
         public static int GetSessionBusinessKey(HttpContext httpContext)
         {
             var key = httpContext.Session.GetInt32("BusinessKey");
-            return (int)(key == null ? 587 : key);
+            return (int)(key == null ? 11 : key);
         }
 
         public static void SetSessionUserBusinessKeyLink(HttpContext httpContext, Dictionary<int, string> l_businessKey)
