@@ -119,11 +119,8 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(storecodes.StoreType))
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Store Type" });
-                }
-                else if (string.IsNullOrEmpty(storecodes.StoreDesc))
+                
+                if (string.IsNullOrEmpty(storecodes.StoreDesc))
                 {
                     return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Store Description" });
                 }
@@ -185,13 +182,13 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
         /// Activate or De Activate Store Code
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveStoreCode(bool status, string storetype, int storecode)
+        public async Task<JsonResult> ActiveOrDeActiveStoreCode(bool status, int storecode)
         {
 
             try
             {
 
-                var parameter = "?status=" + status + "&storetype=" + storetype + "&storecode=" + storecode;
+                var parameter = "?status=" + status + "&storecode=" + storecode;
                 var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("StoreMaster/ActiveOrDeActiveStoreCode" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);

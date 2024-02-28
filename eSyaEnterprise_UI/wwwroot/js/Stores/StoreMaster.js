@@ -25,12 +25,11 @@ function fnGridLoadStoreCodes() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["Store Codes", localization.StoreType, localization.StoreDescription, localization.Active, localization.Actions],
+        colNames: ["Store Codes",  localization.StoreDescription, localization.Active, localization.Actions],
 
         colModel: [
 
             { name: "StoreCode", width: 10, editable: true, align: 'left', editoptions: { maxlength: 25 }, hidden: true },
-            { name: "StoreType", editable: true, width: 60, edittype: "select", align: 'left', formatter: 'select', editoptions: { value: "M:Main Store;S:Sub Store;D:Department" } },
             {
                 name: "StoreDesc", width: 150, editable: true, editoptions: { size: "40", maxlength: "25" }, edittype: "text"
             },
@@ -91,8 +90,6 @@ function fnEditStoreCodes(e, actiontype) {
     var rowid = $("#jqgStoreMaster").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgStoreMaster').jqGrid('getRowData', rowid);
     $('#txtStoreCode').val(rowData.StoreCode);
-    $("#cboStoreType").val(rowData.StoreType).selectpicker('refresh');
-    $("#cboStoreType").attr('disabled', true);
     $("#txtStoreDescription").val(rowData.StoreDesc);
     if (rowData.ActiveStatus === "true") {
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -189,7 +186,6 @@ function fnSaveStoreCodes() {
     $("#btnSaveStoreMaster").attr('disabled', true);
 
     storecodes = {
-        StoreType: $("#cboStoreType").val(),
         StoreCode: $("#txtStoreCode").val() === '' ? 0 : $("#txtStoreCode").val(),
         StoreDesc: $("#txtStoreDescription").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
@@ -227,10 +223,7 @@ function fnSaveStoreCodes() {
 }
 
 function validateStoreCodes() {
-    if ($("#cboStoreType").val() === "0" || $("#cboStoreType").val() === "") {
-        fnAlert("w", "ECS_01_00", "UI0180", errorMsg.StoreType_E6);
-        return false;
-    }
+    
     if (IsStringNullorEmpty($("#txtStoreDescription").val())) {
         fnAlert("w", "ECS_01_00", "UI0181", errorMsg.StoreDesc_E7);
         return false;
@@ -244,8 +237,6 @@ function fnGridRefreshStoreCodes() {
 
 function fnClearFields() {
     $("#txtStoreCode").val("");
-    $("#cboStoreType").attr('disabled', false);
-    $("#cboStoreType").val("0").selectpicker('refresh');
     $("#txtStoreDescription").val("");
     $("#chkActiveStatus").parent().addClass("is-checked");
     eSyaParams.ClearValue();
@@ -272,7 +263,7 @@ function fnDeleteStoreMaster() {
     }
     $("#btnDeactivateStoreMaster").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/ConfigStores/ActiveOrDeActiveStoreCode?status=' + a_status + '&storetype=' + $("#cboStoreType").val() + '&storecode=' + $("#txtStoreCode").val(),
+        url: getBaseURL() + '/ConfigStores/ActiveOrDeActiveStoreCode?status=' + a_status  + '&storecode=' + $("#txtStoreCode").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {

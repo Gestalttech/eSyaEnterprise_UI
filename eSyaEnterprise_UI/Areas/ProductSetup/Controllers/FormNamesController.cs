@@ -411,63 +411,63 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
 
-        public JsonResult GetFormSubParameterByID(int formID, int parameterId)
-        {
-            try
-            {
-                var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormSubParameter>>("Forms/GetFormSubParameterByID?formID=" + formID + "&parameterId=" + parameterId).Result;
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFormSubParameterByID:params:" + JsonConvert.SerializeObject(new { formID }));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetFormSubParameterByID:Params:" + JsonConvert.SerializeObject(new { formID }));
-                throw ex;
-            }
-        }
+        //public JsonResult GetFormSubParameterByID(int formID, int parameterId)
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_FormSubParameter>>("Forms/GetFormSubParameterByID?formID=" + formID + "&parameterId=" + parameterId).Result;
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFormSubParameterByID:params:" + JsonConvert.SerializeObject(new { formID }));
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetFormSubParameterByID:Params:" + JsonConvert.SerializeObject(new { formID }));
+        //        throw ex;
+        //    }
+        //}
 
-        [HttpPost]
-        public JsonResult InsertIntoFormSubParameter(DO_Forms obj)
-        {
-            try
-            {
-                if (obj.FormID == 0)
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "First add the form" });
-                }
-                else
-                {
-                    obj.ControllerName = string.IsNullOrEmpty(obj.ControllerName) ? string.Empty : obj.ControllerName;
-                    obj.FormCode = string.IsNullOrEmpty(obj.FormCode) ? string.Empty : obj.FormCode;
-                    obj.FormDescription = string.IsNullOrEmpty(obj.FormDescription) ? string.Empty : obj.FormDescription;
-                    obj.FormName = string.IsNullOrEmpty(obj.FormName) ? string.Empty : obj.FormName;
-                    obj.InternalFormNumber = string.IsNullOrEmpty(obj.InternalFormNumber) ? string.Empty : obj.InternalFormNumber;
-                    obj.NavigateURL = string.IsNullOrEmpty(obj.NavigateURL) ? string.Empty : obj.NavigateURL;
+        //[HttpPost]
+        //public JsonResult InsertIntoFormSubParameter(DO_Forms obj)
+        //{
+        //    try
+        //    {
+        //        if (obj.FormID == 0)
+        //        {
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = "First add the form" });
+        //        }
+        //        else
+        //        {
+        //            obj.ControllerName = string.IsNullOrEmpty(obj.ControllerName) ? string.Empty : obj.ControllerName;
+        //            obj.FormCode = string.IsNullOrEmpty(obj.FormCode) ? string.Empty : obj.FormCode;
+        //            obj.FormDescription = string.IsNullOrEmpty(obj.FormDescription) ? string.Empty : obj.FormDescription;
+        //            obj.FormName = string.IsNullOrEmpty(obj.FormName) ? string.Empty : obj.FormName;
+        //            obj.InternalFormNumber = string.IsNullOrEmpty(obj.InternalFormNumber) ? string.Empty : obj.InternalFormNumber;
+        //            obj.NavigateURL = string.IsNullOrEmpty(obj.NavigateURL) ? string.Empty : obj.NavigateURL;
 
-                    obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                    obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //            obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //            obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                    var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Forms/InsertIntoFormSubParameter", obj).Result;
-                    if (serviceResponse.Status)
-                        return Json(serviceResponse.Data);
-                    else
-                    {
-                        _logger.LogError(serviceResponse.Message, "UD:InsertIntoFormSubParameter:Params:" + JsonConvert.SerializeObject(obj));
-                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:InsertIntoFormSubParameter:Params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        //            var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Forms/InsertIntoFormSubParameter", obj).Result;
+        //            if (serviceResponse.Status)
+        //                return Json(serviceResponse.Data);
+        //            else
+        //            {
+        //                _logger.LogError(serviceResponse.Message, "UD:InsertIntoFormSubParameter:Params:" + JsonConvert.SerializeObject(obj));
+        //                return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:InsertIntoFormSubParameter:Params:" + JsonConvert.SerializeObject(obj));
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
         #endregion Forms
 

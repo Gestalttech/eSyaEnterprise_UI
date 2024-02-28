@@ -7,9 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- 
-
-
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts{
     <script src="~/js/common/jquery.contextMenu.min.js"></script>
@@ -63,7 +60,7 @@
         </div>
     </div>
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
         <table id="jqgTokenCounter"></table>
         <div id="jqpTokenCounter"></div>
     </div>
@@ -112,7 +109,7 @@
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelTokenCounter"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveTokenCounter" onclick="fnDeleteTokenCounter()"><i class="fa fa-times"></i>@Localizer["Deactivate"]   </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveTokenCounter" onclick="fnDeleteTokenCounter()"><i class="fa fa-times"></i> @Localizer["Deactivate"]   </button>
 
                     </div>
                 </div>

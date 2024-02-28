@@ -11,8 +11,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Config Facalities
+
         public const int Clinic = 83;
-        public const int ConsultationType = 84;
+        //public const int ConsultationType = 84; not used
         #endregion
 
         #region Manage Inventory
@@ -29,28 +30,28 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region End User
-        public const int PreferredLanguage = 8;
+        //public const int PreferredLanguage = 8; not used
         public const int UserGroup = 1;
         public const int UserRole = 2;
-        public const int SecurityQuestions = 3;
+        //public const int SecurityQuestions = 3;not used
         #endregion
 
         #region Token System
         //lIVE
-        //public const int FloorId = 5;
+        public const int FloorId = 5;
 
-        public const int FloorId = 301;
+        //public const int FloorId = 301;
 
         #endregion
 
         #region Config Patient
 
         public const int PatientCategory = 59;
-        //Need To Remove
-        public const int ConfigPatientRateType = 62;
-        //Need To Remove
+        //Need To Remove later
+        public const int ConfigPatientRateType = 62; 
+        //Need To Remove later
         public const int PatientType = 58;
-        public const int Relationship = 56;
+        //public const int Relationship = 56;not used
         #endregion
 
         #region Config Pharma
@@ -59,16 +60,16 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int PharmacyGroup =203;
         #endregion
 
-        public const int TasKList = 4;
-        public const int Religion = 52;
-        public const int Caste = 53;
-        public const int PatientAccess = 54;
-        public const int PreRegistrationInfo = 55;
-        public const int BloodGroup = 57;
-        public const int SourceofReferrenceOrRequestChannel = 60;
-        public const int ServiceProviderClassforDoctor = 81;
-        public const int ServiceProviderCategoryforDoctor = 82;
-        public const int BillSuspendType = 86;
+        //public const int TasKList = 4;not used
+        //public const int Religion = 52; not used
+        //public const int Caste = 53; not used
+        //public const int PatientAccess = 54; not used
+        //public const int PreRegistrationInfo = 55; not used
+        //public const int BloodGroup = 57; not used
+        //public const int SourceofReferrenceOrRequestChannel = 60; not used
+        //public const int ServiceProviderClassforDoctor = 81; not used
+        //public const int ServiceProviderCategoryforDoctor = 82; not used
+        //public const int BillSuspendType = 86; not used
 
 
     }

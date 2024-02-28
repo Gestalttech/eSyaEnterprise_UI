@@ -147,7 +147,8 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6" id="dvTable">
+
+                   @*  <div class="col-sm-12 col-md-6 col-lg-6" id="dvTable">
                         <table id="jqgFormSubParameter"></table>
                         <div id="jqpFormSubParameter"></div>
                         <div style="text-align:center;padding:5px">
@@ -155,7 +156,8 @@
                                 <i class="fa fa-save"></i> @Localizer["Save"]
                             </button>
                         </div>
-                    </div>
+                    </div> *@
+
                     @*@await Component.InvokeAsync("eSyaParameter", new { parameterType = "8" })*@
 
 
@@ -171,7 +173,7 @@
 </div>
 
 
-<div class="modal fade in" id="PopupSubParameter" data-bs-keyboard="false" data-bs-backdrop="static">
+@* <div class="modal fade in" id="PopupSubParameter" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md " role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
@@ -199,7 +201,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 
 <div class="row">
@@ -271,7 +273,7 @@
 
     $(function () {
 
-        $('#dvTable').hide();
+        // $('#dvTable').hide();
         $('#dvFormAction').hide();
         $('#dvFormParameter').hide();
         fnLoadFormsTree();
@@ -480,7 +482,7 @@
                     $('#dvFormAction').show();
                     fnLoadFormActionGrid(formID);
                     fnLoadFormParameterGrid(formID);
-                    $('#dvTable').hide();
+                    // $('#dvTable').hide();
                     //    eSyaParams.SetJSONValue(result.l_FormParameter);
                 }
 
@@ -848,7 +850,7 @@
                     }
                 }
             ],
-            caption: localization.FormParameter",
+            caption: localization.FormParameter,
             height: '100',
             width: '200',
             rowNum: 100,
@@ -867,10 +869,10 @@
             },
             onSelectRow: function (id) {
 
-                $('#dvTable').show();
-                parameterId = $("#jqgFormParameter").jqGrid('getCell', id, 'ParameterId');
-                _parameterId = parameterId;
-                fnLoadFormSubParameterGrid(FormID, parameterId);
+                // $('#dvTable').show();
+                // parameterId = $("#jqgFormParameter").jqGrid('getCell', id, 'ParameterId');
+                // _parameterId = parameterId;
+                // fnLoadFormSubParameterGrid(FormID, parameterId);
 
             },
             ondblClickRow: function (rowid) {
@@ -883,7 +885,7 @@
                     if (ids[i] && i > 0)
                         $('#jqgFormParameter').jqGrid('editRow', ids[i]);
                 }
-                $('#dvTable').hide();
+                // $('#dvTable').hide();
                 $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
                 fnJqgridSmallScreen("jqgFormParameter");
             }
@@ -934,101 +936,101 @@
 
     }
 
-    function fnLoadFormSubParameterGrid(FormID, parameterId) {
+    // function fnLoadFormSubParameterGrid(FormID, parameterId) {
 
-        $("#jqgFormSubParameter").GridUnload();
-        $('#btnSaveFormSubParameter').show();
-        // debugger;
-        $("#jqgFormSubParameter").jqGrid({
-            url: getBaseURL() + '/FormNames/GetFormSubParameterByID',
-            datatype: "json",
-            mtype: 'POST',
-            rownumbers: true,
-            postData: {
-                formID: function () { return FormID; },
-                parameterId: function () { return parameterId; },
-            },
-            colNames: ["Parameter ID", "@Localizer["SubParameter"]", "@Localizer["ActiveStatus"]"],
-            colModel: [
+    //     $("#jqgFormSubParameter").GridUnload();
+    //     $('#btnSaveFormSubParameter').show();
+    //     // debugger;
+    //     $("#jqgFormSubParameter").jqGrid({
+    //         url: getBaseURL() + '/FormNames/GetFormSubParameterByID',
+    //         datatype: "json",
+    //         mtype: 'POST',
+    //         rownumbers: true,
+    //         postData: {
+    //             formID: function () { return FormID; },
+    //             parameterId: function () { return parameterId; },
+    //         },
+    //         colNames: ["Parameter ID", "@Localizer["SubParameter"]", "@Localizer["ActiveStatus"]"],
+    //         colModel: [
 
-                { name: 'SubParameterId', key: true, index: 'SubParameterId', width: 0, sortable: false, hidden: true },
-                { name: 'SubParameterDesc', index: 'SubParameterDesc', width: 300, sortable: false },
-                { name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
-            ],
-            caption: localization.FormSubParameter,
-            height: '95',
-            width: '400',
-            rowNum: 100,
-            viewrecords: true,
-            gridview: true,
-            loadonce: true,
-            autowidth: true,
-            shrinkToFit: true,
-            forceFit: true,
-            cellEdit: true,
-            onSelectRow: function (id) {
-                if (id) { $('#jqgFormSubParameter').jqGrid('editRow', id, true); }
-            },
-            loadComplete: function () {
-                var ids = $('#jqgFormSubParameter').jqGrid('getDataIDs');
-                var i = 0;
-                for (i = 0; i < ids.length; i++) {
-                    if (ids[i])
-                        $('#jqgFormSubParameter').jqGrid('editRow', ids[i]);
-                }
-                $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
-                fnJqgridSmallScreen("jqgFormSubParameter");
-            }
-        });
-
-
-        fnTreeSize();
+    //             { name: 'SubParameterId', key: true, index: 'SubParameterId', width: 0, sortable: false, hidden: true },
+    //             { name: 'SubParameterDesc', index: 'SubParameterDesc', width: 300, sortable: false },
+    //             { name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
+    //         ],
+    //         caption: localization.FormSubParameter,
+    //         height: '95',
+    //         width: '400',
+    //         rowNum: 100,
+    //         viewrecords: true,
+    //         gridview: true,
+    //         loadonce: true,
+    //         autowidth: true,
+    //         shrinkToFit: true,
+    //         forceFit: true,
+    //         cellEdit: true,
+    //         onSelectRow: function (id) {
+    //             if (id) { $('#jqgFormSubParameter').jqGrid('editRow', id, true); }
+    //         },
+    //         loadComplete: function () {
+    //             var ids = $('#jqgFormSubParameter').jqGrid('getDataIDs');
+    //             var i = 0;
+    //             for (i = 0; i < ids.length; i++) {
+    //                 if (ids[i])
+    //                     $('#jqgFormSubParameter').jqGrid('editRow', ids[i]);
+    //             }
+    //             $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
+    //             fnJqgridSmallScreen("jqgFormSubParameter");
+    //         }
+    //     });
 
 
-    }
+    //     fnTreeSize();
 
-    function fnSaveFormSubParameter() {
-        var $grid = $("#jqgFormSubParameter")
-        var l_formSubParameter = [];
-        var ids = jQuery("#jqgFormSubParameter").jqGrid('getDataIDs');
-        for (var i = 0; i < ids.length; i++) {
-            var rowId = ids[i];
-            var rowData = jQuery('#jqgFormSubParameter').jqGrid('getRowData', rowId);
-            if (rowData.ActiveStatus == "Yes") {
-                l_formSubParameter.push({ SubParameterId: rowData.SubParameterId })
-            }
-        }
 
-        $("#btnSaveFormSubParameter").attr("disabled", true);
-        $.ajax({
-            url: getBaseURL() + '/FormNames/InsertIntoFormSubParameter',
-            type: 'POST',
-            datatype: 'json',
-            data: {
-                FormID: $("#txtFormID").val(),
-                ParameterId: _parameterId,
-                l_FormSubParameter: l_formSubParameter
-            },
-            async: false,
-            success: function (response) {
-                if (response.Status == true) {
-                   fnAlert("s", "EPS_01_00", response.StatusCode, response.Message);
-                    // $('#PopupSubParameter').modal('hide');
-                    fnLoadFormParameterGrid($("#txtFormID").val());
-                    $('#dvTable').hide();
-                }
-                else {
-                    fnAlert("e", "EPS_01_00", response.StatusCode, response.Message);
-                }
-                $("#btnSaveFormSubParameter").attr("disabled", false);
-            },
-            error: function (error) {
-                fnAlert("e", "EPS_01_00", error.StatusCode, error.statusText);
-                $("#btnSaveFormSubParameter").attr("disabled", false);
-            }
-        });
+    // }
 
-    }
+    // function fnSaveFormSubParameter() {
+    //     var $grid = $("#jqgFormSubParameter")
+    //     var l_formSubParameter = [];
+    //     var ids = jQuery("#jqgFormSubParameter").jqGrid('getDataIDs');
+    //     for (var i = 0; i < ids.length; i++) {
+    //         var rowId = ids[i];
+    //         var rowData = jQuery('#jqgFormSubParameter').jqGrid('getRowData', rowId);
+    //         if (rowData.ActiveStatus == "Yes") {
+    //             l_formSubParameter.push({ SubParameterId: rowData.SubParameterId })
+    //         }
+    //     }
+
+    //     $("#btnSaveFormSubParameter").attr("disabled", true);
+    //     $.ajax({
+    //         url: getBaseURL() + '/FormNames/InsertIntoFormSubParameter',
+    //         type: 'POST',
+    //         datatype: 'json',
+    //         data: {
+    //             FormID: $("#txtFormID").val(),
+    //             ParameterId: _parameterId,
+    //             l_FormSubParameter: l_formSubParameter
+    //         },
+    //         async: false,
+    //         success: function (response) {
+    //             if (response.Status == true) {
+    //                fnAlert("s", "EPS_01_00", response.StatusCode, response.Message);
+    //                 // $('#PopupSubParameter').modal('hide');
+    //                 fnLoadFormParameterGrid($("#txtFormID").val());
+    //                 $('#dvTable').hide();
+    //             }
+    //             else {
+    //                 fnAlert("e", "EPS_01_00", response.StatusCode, response.Message);
+    //             }
+    //             $("#btnSaveFormSubParameter").attr("disabled", false);
+    //         },
+    //         error: function (error) {
+    //             fnAlert("e", "EPS_01_00", error.StatusCode, error.statusText);
+    //             $("#btnSaveFormSubParameter").attr("disabled", false);
+    //         }
+    //     });
+
+    // }
 
     function fnShowUserAction_onclick() {
 

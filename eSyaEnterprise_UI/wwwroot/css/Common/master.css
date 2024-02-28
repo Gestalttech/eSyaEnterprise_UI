@@ -891,11 +891,13 @@ button.close:hover {
 
 .mdl-card__title-text {
     border-bottom: 1px double #e6e6e6;
-    background: var(--color-secondary); width: 100%;
+    background: var(--color-secondary);
+    width: 100%;
     padding: 10px 15px;
     color: gold;
     font-size: 14px !important;
     letter-spacing: normal !important;
+    font-family: 'helvetica-bold';
 }
 .mdl-card__title{padding:0px 0px 15px !important;}
 .bootstrap-select .dropdown-menu ul > li > a {padding: 0px 10px !important;line-height: 34px !important}

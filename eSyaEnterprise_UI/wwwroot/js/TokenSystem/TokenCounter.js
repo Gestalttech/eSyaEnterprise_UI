@@ -44,14 +44,6 @@ function fnGridLoadTokenCounter() {
             { name: "FloorName", width: 120, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "CounterNumber", width: 80, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: 'edit', search: false, align: 'left', width: 70, sortable: false, resizable: false,
-            //    formatter: function (cellValue, options, rowdata, action) {
-            //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditTokenCounter(event,\'edit\');"><i class="fas fa-pen"></i> ' + localization.Edit + '</button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnEditTokenCounter(event,\'view\');"><i class="far fa-eye"></i>' + localization.View + '</button>'
-            //            + '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Delete" id="jqgDelete" onclick="return fnEditTokenCounter(event,\'delete\');"><i class="fas fa-trash"></i>' + localization.Delete + '</button>'
-            //    }
-            //},
             {
                 name: 'edit', search: false, align: 'left', width: 70, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

@@ -12,7 +12,7 @@ function fnLoadServiceBaseRate() {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         // jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["Service ID", localization.ServiceType, localization.ServiceGroup, localization.ServiceClass, localization.ServiceDescription, localization.EffectiveDate, localization.ServiceRule, localization.OPBaseRate, localization.IPBaseRate, localization.IsIprateWardwise, localization.Active],
+        colNames: [localization.ServiceId, localization.ServiceType, localization.ServiceGroup, localization.ServiceClass, localization.ServiceDescription, localization.EffectiveDate, localization.ServiceRule, localization.OPBaseRate, localization.IPBaseRate, localization.IsIprateWardwise, localization.Active],
 
         colModel: [
 

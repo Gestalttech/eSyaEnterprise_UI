@@ -18,7 +18,7 @@ function fnLoadClinicVisitRate() {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["Clinic ID", "Consultation ID", "Service ID", localization.ClinicType, localization.ConsultationType, localization.ServiceDescription, localization.EffectiveDate, localization.Tariff, localization.Active],
+        colNames: [localization.ClinicID, localization.ConsultationID, localization.ServiceID, localization.ClinicType, localization.ConsultationType, localization.ServiceDescription, localization.EffectiveDate, localization.Tariff, localization.Active],
 
         colModel: [
 
