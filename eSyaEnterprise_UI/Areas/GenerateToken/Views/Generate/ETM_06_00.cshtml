@@ -25,19 +25,17 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <h1 class="">Token Management System</h1>
+                <h1 class="">@Localizer["TokenManagementSystem"]</h1>
             </div>
         </div>
         <section id="dvMobileNo">
             <div class="row">
-              
                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                    <label>Mobile Number</label>
+                    <label>@Localizer["MobileNumber"]</label>
                     @await Component.InvokeAsync("IsdMobileInput", new { id = "MobileNumber" })
                 </div>
-                <div class="col-lg-12 ">
-                    <button type="button" class="btn btn-primary w-100" id="btnContinue">Continue</button>
-
+                <div class="col-lg-12">
+                    <button type="button" class="btn btn-primary w-100" id="btnContinue"> @Localizer["Continue"]</button>
                 </div>
               
             </div>
@@ -55,22 +53,16 @@
 
                         </div>
                         <input type="hidden" name="txtOTP">
-
-
-                      
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" id="btn-resendOTP" type="button">Resend OTP<span class="txt-resendOTP"> in <span id="countdowntimer">60</span> S </span> </button>
                         </div>
                     </div>
                 </div>
 
-
-
-
                 <div class="col-lg-12 form-group">
 
                     <button type="button" class="btn btn-primary mr-10 w-100" id="btnConfirm" onclick="fnConfirmOTP()">Confirm</button>
-                    <p class="m-0"><span id="lblOTP"> OTP sent </span> </p>
+                    <p class="m-0"><span id="lblOTP"> @Localizer["OTPsent"]</span> </p>
 
                 </div>
             </div>
@@ -79,14 +71,7 @@
 
     </div>
 </main>
-@*<footer>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <p class="text-small text-center m-0 d-none">Instruction : Please click on the one of the button for your required Service</p>
-                <p class="m-0">Powered by Gestalt Technologies Pvt. Ltd.</p>
-            </div>
-        </div>
-    </footer>*@
+ 
 
 <script>
     var _intOTP = 0;

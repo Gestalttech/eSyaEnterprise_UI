@@ -1,4 +1,5 @@
-﻿
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "ETM_05_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,41 +14,33 @@
         <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
     </header>
 
-    <main>
-        <h1 class="text-center">Token Management System</h1>
-        <div class="container atmDisplay">
-            <div class="row" id="dvMain">
+<main>
+    <h1 class="text-center">Token Management System</h1>
+    <div class="container atmDisplay">
+        <div class="row" id="dvMain">
                
-            </div>
         </div>
+    </div>
 </main>
-
-    @*<script src="~/lib/bootstrap/dist/js/jquery-3.2.1.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/material.min.js"></script>
-    <script src="~/js/all.min.js"></script>
-    <script src="~/js/jquery-ui.min.js"></script>*@
-
-    <script src="~/js/Common/jquery.PrintArea.js"></script>
-    <script src="~/js/Common/jQuery.print.min.js"></script>
-
-
+    
+      @section scripts {
+            <script src="~/js/Common/jquery.PrintArea.js"></script>
+            <script src="~/js/Common/jQuery.print.min.js"></script>
+      }
 
     <div class="modal fade in " id="PopupTokenPrint" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="overflow: scroll;">
         <div class="modal-dialog" role="document">
             <div class="modal-content ">
                 <div class="modal-header ">
                     <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
-                    <h4 class="modal-title blur"> Token Print</h4>
+                    <h4 class="modal-title blur"> @Localizer["TokenPrint"]</h4>
                 </div>
                 <div class="modal-body bg-lightgrey">
                     <div style="text-align:center">
                         <div id="dvPrint" style="text-align:center;  width:7.5cm;height:7.5cm;">
                             <div id="dvPrintToken" class="PrintArea" style="border:8px double;padding:10px;margin:10px;text-align:center">
                                 <div>
-                                    <h1>Token Number</h1>
+                                    <h1>@Localizer["TokenNumber"]</h1>
                                   
                                 </div>
                                 <hr style="border-top: 2px solid #212529;" />
@@ -60,8 +53,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="jQuery('#dvPrintToken').print()">Print</button>
-                    <button type="button" class="btn btn-default" onclick="fnCloseModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="jQuery('#dvPrintToken').print()"><i class="fa fa-print"></i> @Localizer["Print"]</button>
+                    <button type="button" class="btn btn-default" onclick="fnCloseModal()"><i class="fa fa-times"></i> @Localizer["Close"]</button>
                 </div>
             </div>
         </div>
