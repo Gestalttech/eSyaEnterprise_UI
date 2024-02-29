@@ -38,15 +38,6 @@ function fnGridLoadApplicationCodes() {
             { name: "ShortCode", width: 50, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 15 } },
             { name: "DefaultStatus", width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: 'edit', search: false, align: 'left', width: 78, sortable: false, resizable: false,
-            //    formatter: function (cellValue, options, rowdata, action) {
-            //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditApplicationCodes(event,\'edit\')"><i class="fas fa-pen"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnEditApplicationCodes(event,\'view\')"><i class="far fa-eye"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title = "Delete" id="jqgDelete" onclick = "return fnEditApplicationCodes(event,\'delete\')" > <i class="fas fa-trash"></i></button>'
-
-            //    }
-            //}
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

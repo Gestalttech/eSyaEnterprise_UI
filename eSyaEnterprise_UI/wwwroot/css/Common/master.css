@@ -146,19 +146,19 @@ hr.left {
     background: linear-gradient(to top,#fff,#fffaf1);
 }
 
-    .divAction label {
-        margin-bottom: 10px;
-        font-family: 'helvetica-Bold';
-        font-size: 14px !important;
-    }
+.divAction label {
+    margin-bottom: 10px;
+    font-family: 'helvetica-Bold';
+    font-size: 14px !important;
+}
 
-    .divAction button {
-        box-shadow: none;
-        border: 1px solid #ccc;
-        padding: 0px 5px;
-        font-size: 11px;
-        margin-bottom: 5px;
-    }
+.divAction button {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    padding: 0px 5px;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
 .divCheckbox{
     display:flex;
     align-items:center;

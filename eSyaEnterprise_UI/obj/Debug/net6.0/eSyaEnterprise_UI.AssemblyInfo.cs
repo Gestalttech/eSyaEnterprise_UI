@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eSyaEnterprise_UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< Updated upstream
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dcfa013904238f865acbcd8ef28d62bfc6590c3")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+>>>>>>> Stashed changes
 [assembly: System.Reflection.AssemblyProductAttribute("eSyaEnterprise_UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eSyaEnterprise_UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
