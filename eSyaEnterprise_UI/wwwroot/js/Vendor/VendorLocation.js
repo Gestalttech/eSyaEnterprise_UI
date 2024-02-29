@@ -28,7 +28,7 @@ function fnloadvendorLocationGrid() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["", "", "", "", localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.WhatsAppNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorLocationId, localization.Isdcode, localization.StateCode, localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.WhatsAppNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorLocationId", width: 70, editable: true, align: 'left', hidden: true },
@@ -170,7 +170,7 @@ function IsValidLocation() {
         return false;
     }
     if (IsStringNullorEmpty($("#txtwhatsappnumber").val())) {
-        fnAlert("w", "EVN_01_00", "UI0138", "Please Enter WhatsApp Number");
+        fnAlert("w", "EVN_01_00", "UI0245", errorMsg.WhatsAppNumber_E27);
         return false;
     }
     if (IsStringNullorEmpty($("#txtvendoremailid").val())) {
@@ -178,7 +178,7 @@ function IsValidLocation() {
         return false;
     }
     if ($("#cboStateCode").val() == 0 || $("#cboStateCode").val() == "0" || IsStringNullorEmpty($("#cboStateCode").val())) {
-        fnAlert("w", "EVN_01_00", "UI0137", "Please Select State Code");
+        fnAlert("w", "EVN_01_00", "UI0067", errorMsg.StateCode_E28);
         return false;
     }
     var validemail = IsValidateEmail($("#txtvendoremailid").val());

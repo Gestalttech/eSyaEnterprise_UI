@@ -30,7 +30,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
         }
         #region Drug Composition 
         [Area("ConfigPharma")]
-        public IActionResult EPH_03_00()
+        public IActionResult EPH_05_00()
         {
             try
             {

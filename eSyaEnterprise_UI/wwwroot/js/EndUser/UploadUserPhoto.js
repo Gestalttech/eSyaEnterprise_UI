@@ -87,7 +87,7 @@ function fnGridLoadUploadUserPhoto() {
         onSelectRow: function (id) {
             if (id) { $('#jqpUploadUserPhoto').jqGrid('editRow', id, true); }
         },
-        caption: 'User Role Action Link',
+        
         loadComplete: function () {
             fnJqgridSmallScreen("jqpUploadUserPhoto");
         },

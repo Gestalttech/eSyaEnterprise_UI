@@ -70,16 +70,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGF0aWVudFxWaWV3c1xQYXRpZW50VHlwZVxFUFRfMDNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Composition/EPH_03_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXENvbXBvc2l0aW9uXEVQSF8wM18wMC5jc2h0bWw=
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Composition/EPH_05_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXENvbXBvc2l0aW9uXEVQSF8wNV8wMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/DrugClass/EPH_02_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXERydWdDbGFzc1xFUEhfMDJfMDAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/DrugClass/EPH_03_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXERydWdDbGFzc1xFUEhfMDNfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Manufacturer/EPH_01_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXE1hbnVmYWN0dXJlclxFUEhfMDFfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Vendor/EPH_02_00.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXFZlbmRvclxFUEhfMDJfMDAuY3NodG1s
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Vendor/EPH_04_00.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXFZlbmRvclxFUEhfMDRfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigSKU/Views/Grouping/ECS_04_00.cshtml]

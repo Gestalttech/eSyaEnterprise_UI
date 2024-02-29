@@ -3737,6 +3737,10 @@
       "PackagePath": "staticwebassets\\js\\ConfigPatient\\Specialty.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugClass.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugClass.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugComposition.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugComposition.js"
     },
@@ -3747,6 +3751,10 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\MapManufacturerToVendor.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\MapManufacturerToVendor.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\TherapeuticClass.js",
+      "PackagePath": "staticwebassets\\js\\ConfigPharma\\TherapeuticClass.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\AgeRange.js",

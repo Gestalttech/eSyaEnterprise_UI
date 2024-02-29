@@ -28,7 +28,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 
         [Area("ConfigPharma")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPH_02_00()
+        public async Task<IActionResult> EPH_04_00()
         {
             return View();
         }

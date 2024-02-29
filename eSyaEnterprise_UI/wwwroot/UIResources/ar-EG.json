@@ -287,7 +287,8 @@
   "UI0286": "Please select a Pharmacy Group",
   "UI0287": "Please enter the Confirmation URL",
   "UI0288": "Please add your signature",
-
+  "UI0289": "Please Enter Drug Class Description",
+  "UI0290": "Please Enter Threapeutic Class Description",
 
 
   "UIC01": "You are not Authorized to Add",

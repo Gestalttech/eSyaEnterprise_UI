@@ -33,7 +33,7 @@ $(document).ready(function () {
 
       
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["", localization.VendorName, "","", localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
@@ -87,7 +87,7 @@ function fnloadVendorGrid(alphabet) {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["", localization.VendorName, "","", localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active,localization.Actions],
+        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true }, 
             { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
@@ -126,34 +126,7 @@ function fnloadVendorGrid(alphabet) {
             SetGridControlByAction();
             fnJqgridSmallScreen("jqgVendorRegister");
         },
-        onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        },
-
-    }).jqGrid('navGrid', '#jqpVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
+  }).jqGrid('navGrid', '#jqpVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
         .jqGrid('navButtonAdd', '#jqpVendorRegister', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshVendorGrid
     }).jqGrid('navButtonAdd', '#jqpVendorRegister', {
@@ -251,7 +224,7 @@ function fnEditVendor(e,actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_02_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EVN_01_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $("#btnSaveUnitofMeasure").show();
@@ -263,7 +236,7 @@ function fnEditVendor(e,actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EVN_01_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $("#btnSaveUnitofMeasure").hide();
@@ -334,12 +307,12 @@ function IsValidVendor() {
         return false;
     }
     if ($("#cboPayMode").val() == 0 || $("#cboPayMode").val() == "0" || IsStringNullorEmpty($("#cboPayMode").val())) {
-        fnAlert("w", "EVN_01_00", "","Select Payment Preferred Mode");
+        fnAlert("w", "EVN_01_00", "UI0289", errorMsg.PaymentPreferredMode_E25);
         return false;
     } 
     
     if ($("#cboVendorClass").val() == 0 || $("#cboVendorClass").val() == "0" || IsStringNullorEmpty($("#cboVendorClass").val())) {
-        fnAlert("w", "EVN_01_00", " ", "Select Vendor Class");
+        fnAlert("w", "EVN_01_00", "UI0290", errorMsg.VendorClass_E26);
         return false;
     }
 
@@ -415,7 +388,7 @@ function fnEnableVendorRegister(val) {
 function fnDeActivateVendor(e) {
     fnSetSidebar();
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "EPS_02_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+        fnAlert("w", "EVN_01_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
         return;
     }
 

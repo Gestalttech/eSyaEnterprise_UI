@@ -86,7 +86,7 @@ function fnLoadServiceRateTypeGrid(rowData) {
         onSelectRow: function (id) {
             if (id) { $('#jqgRateTypes').jqGrid('editRow', id, true); }
         },
-        caption: 'Service Rate Types',
+        
         loadComplete: function () {
             fnJqgridSmallScreen("jqgRateTypes");
         },

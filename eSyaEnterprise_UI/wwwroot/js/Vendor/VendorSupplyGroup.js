@@ -14,7 +14,7 @@
                 postdata.Vendorcode = $("#txtVendorCode").val();
                 return JSON.stringify(postdata.Vendorcode);
             },
-            colNames: ['', "ParameterDescription", localization.Select],
+            colNames: [localization.ParameterId, localization.ParameterDescription, localization.Active],
             colModel: [
                 { name: "ParameterId", width: 70, editable: true, align: 'left', hidden: true },
                 { name: 'ParameterDesc', index: 'ParameterDesc', width: '228', resizable: false },

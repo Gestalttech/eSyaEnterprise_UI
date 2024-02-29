@@ -69,7 +69,7 @@ function fnLoadPTSpecialtyGrid(rowData) {
         onSelectRow: function (id) {
             if (id) { $('#jqgSpecialty').jqGrid('editRow', id, true); }
         },
-        caption: 'Specialty Link',
+        
         loadComplete: function () {
             fnJqgridSmallScreen("jqgSpecialty");
         },

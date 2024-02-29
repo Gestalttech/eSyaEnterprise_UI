@@ -42,7 +42,7 @@ function fnGridLoadUserRoleActionLink() {
         onSelectRow: function (id) {
             if (id) { $('#jqgUserRoleActionLink').jqGrid('editRow', id, true); }
         },
-        caption: 'User Role Action Link',
+         
         loadComplete: function () {
             fnJqgridSmallScreen("jqgUserRoleActionLink");
         },

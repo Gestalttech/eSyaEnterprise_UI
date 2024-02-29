@@ -52,7 +52,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
 
             if (id) { $('#jqgMapBusiness').jqGrid('editRow', id, true); }
         },
-        caption: 'Patient Category Type Business Link',
+        
         loadComplete: function () {
             fnJqgridSmallScreen("jqgMapBusiness");
         },

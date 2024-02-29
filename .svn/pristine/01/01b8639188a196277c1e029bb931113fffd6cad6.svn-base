@@ -1,0 +1,20 @@
+﻿namespace eSyaEnterprise_UI.Areas.ConfigPharma.Models
+{
+    public class DO_DrugClass
+    {
+        public int DrugClass { get; set; }
+        public string DrugClassDesc { get; set; }
+        public bool ActiveStatus { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+    }
+    public class DO_DrugTherapeutic
+    {
+        public int DrugTherapeutic { get; set; }
+        public string DrugTherapeuticDesc { get; set; } 
+        public bool ActiveStatus { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
+    }
+    
+}

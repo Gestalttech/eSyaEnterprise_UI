@@ -16,7 +16,7 @@ function fnLoadBankDetails() {
             return JSON.stringify(postdata.VendorId);
         },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["", localization.BeneficiaryName, localization.BankName, localization.BankAcNo, localization.SwiftCode, localization.IFSCCode, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.BeneficiaryName, localization.BankName, localization.BankAcNo, localization.SwiftCode, localization.IFSCCode, localization.Active, localization.Actions],
         colModel: [
         { name: 'VendorId', width: '40', resizable: false, hidden: true },
         { name: 'BenificiaryName', width: '170', resizable: false },

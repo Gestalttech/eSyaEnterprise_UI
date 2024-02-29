@@ -69,7 +69,7 @@ function fnLoadPTDependentGrid(rowData) {
         onSelectRow: function (id) {
             if (id) { $('#jqgDependent').jqGrid('editRow', id, true); }
         },
-        caption: 'Relation SHip Link',
+       
         loadComplete: function () {
             fnJqgridSmallScreen("jqgDependent");
         },

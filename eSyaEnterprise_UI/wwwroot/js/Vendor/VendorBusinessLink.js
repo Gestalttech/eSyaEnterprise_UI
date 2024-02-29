@@ -13,7 +13,7 @@
                 postdata.Vendorcode = $("#txtVendorCode").val();
                 return JSON.stringify(postdata.Vendorcode);
             },
-            colNames: ['',  localization.BusinessLocation, localization.Select],
+            colNames: [localization.BusinessKey,  localization.BusinessLocation, localization.Select],
             colModel: [
                 { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
                 { name: 'BusinessLocation', index: 'BusinessLocation', width: '228', resizable: false },
