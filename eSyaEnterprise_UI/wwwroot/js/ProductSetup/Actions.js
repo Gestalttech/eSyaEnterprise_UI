@@ -169,14 +169,14 @@ function fnEditActions(e, actiontype) {
             return;
         }
         $('#PopupActions').modal('show');
-        $('#PopupActions').find('.modal-title').text("Activate/De Activate Actions");
+        $('#PopupActions').find('.modal-title').text(localization.ActivateDeactivateActions);
         $("#btnSaveActions").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
         $("#btnSaveActions").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveActions").html(localization.DActivate);
+            $("#btndeActiveActions").html(localization.Deactivate);
         }
         else {
             $("#btndeActiveActions").html(localization.Activate);

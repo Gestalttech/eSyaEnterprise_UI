@@ -55,11 +55,11 @@
 </script>
 <div class="row">
     <div class="col-lg-5 col-md-5 col-sm-9 col-12 form-group">
-        <label>Country</label>
+        <label>@Localizer["Country"]</label>
         @await Component.InvokeAsync("IsdCountryInput", new { id = "CityCountry" })
     </div>
     <div class="col-lg-3 col-md-3 col-sm-12 form-group">
-        <label>State</label>
+        <label for="cboStateCode">@Localizer["State"]</label>
         <select class="selectpicker" data-live-search="true" id="cboStateCode" title="Select" onchange=" fnGridLoadCityList();">
             <option value="0">Select</option>
         </select>
@@ -67,7 +67,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
         <table id="jqgCityCode"></table>
         <div id="jqpCityCode"></div>
     </div>
@@ -82,7 +82,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="row padbot4">
+                <div class="row">
                     <div class="col-sm-12">
                         <input type="text" class="form-control" id="txtCityCode" style="display:none">
                     </div>

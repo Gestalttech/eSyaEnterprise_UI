@@ -259,8 +259,6 @@ function fnSaveDrugComposition(_source) {
                 DrugCompDesc: $("#txtDrugCompositionDescription").val(),
                 DrugClass: $("#cboDrugClass").val(),
                 TherapueticClass: $("#cboTherapueticClass").val(),
-                AvailableAsGeneric: $("#chkAvailableAsGeneric").parent().hasClass("is-checked"), 
-                DrugSchedule: $("#cboDrugSchedule").val(),
                 PharmacyGroup: $("#cboPharmacyGroup").val(),
                 ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
             };
@@ -272,8 +270,6 @@ function fnSaveDrugComposition(_source) {
                 DrugCompDesc: $("#txtDrugCompositionDescription").val(),
                 DrugClass: $("#cboDrugClass").val(),
                 TherapueticClass: $("#cboTherapueticClass").val(),
-                AvailableAsGeneric: $("#chkAvailableAsGeneric").parent().hasClass("is-checked"),
-                DrugSchedule: $("#cboDrugSchedule").val(),
                 PharmacyGroup: $("#cboPharmacyGroup").val(),
                 ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
             };
@@ -295,8 +291,6 @@ function fnSaveDrugComposition(_source) {
                 DrugCompDesc: $("#txtDrugCompositionDescription_t").val(),
                 DrugClass: $("#cboDrugClass_t").val(),
                 TherapueticClass: $("#cboTherapueticClass_t").val(),
-                AvailableAsGeneric: $("#chkAvailableAsGeneric_t").parent().hasClass("is-checked"),
-                DrugSchedule: $("#cboDrugSchedule_t").val(),
                 PharmacyGroup: $("#cboPharmacyGroup_t").val(),
                 ActiveStatus: $("#chkActiveStatus_t").parent().hasClass("is-checked")
             };
@@ -308,8 +302,6 @@ function fnSaveDrugComposition(_source) {
                 DrugCompDesc: $("#txtDrugCompositionDescription_t").val(),
                 DrugClass: $("#cboDrugClass_t").val(),
                 TherapueticClass: $("#cboTherapueticClass_t").val(),
-                AvailableAsGeneric: $("#chkAvailableAsGeneric_t").parent().hasClass("is-checked"),
-                DrugSchedule: $("#cboDrugSchedule_t").val(),
                 PharmacyGroup: $("#cboPharmacyGroup_t").val(),
                 ActiveStatus: $("#chkActiveStatus_t").parent().hasClass("is-checked")
             };
@@ -363,10 +355,7 @@ function validateDrugComposition() {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.TherapueticClass_E7);
         return false;
     }
-    if ($("#cboDrugSchedule").val() === "0" || $("#cboDrugSchedule").val() === "") {
-        fnAlert("w", "EPH_03_00", "UI0285", errorMsg.DrugSchedul_E8);
-        return false;
-    }
+    
     if ($("#cboPharmacyGroup").val() === "0" || $("#cboPharmacyGroup").val() === "") {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.PharmacyGroup_E9);
         return false;
@@ -388,10 +377,7 @@ function validateDrugCompositionTree() {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.TherapueticClass_E7);
         return false;
     }
-    if ($("#cboDrugSchedule_t").val() === "0" || $("#cboDrugSchedule_t").val() === "") {
-        fnAlert("w", "EPH_03_00", "UI0285", errorMsg.DrugSchedul_E8);
-        return false;
-    }
+     
     if ($("#cboPharmacyGroup_t").val() === "0" || $("#cboPharmacyGroup_t").val() === "") {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.PharmacyGroup_E9);
         return false;

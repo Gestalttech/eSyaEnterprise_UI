@@ -107,7 +107,7 @@ function fnEditStateCodes(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_14_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupStateCode').modal('show');
@@ -120,7 +120,7 @@ function fnEditStateCodes(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_14_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupStateCode').modal('show');

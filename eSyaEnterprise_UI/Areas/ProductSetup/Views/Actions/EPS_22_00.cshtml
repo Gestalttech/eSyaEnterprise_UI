@@ -29,7 +29,8 @@
         Update: '@Localizer["Update"]',
         Delete: '@Localizer["Delete"]',
         Activate: '@Localizer["Activate"]',
-        DActivate: '@Localizer["Deactivate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        ActivateDeactivateActions: '@Localizer["ActivateDeactivateActions"]',
     };
     var errorMsg = {
         UnAuthorised_edit_E1: '@Localizer["UIC02"]',
@@ -41,8 +42,8 @@
 
 
 
-<div class="row padbot10">
-    <div class="col-lg-12 col-md-12 col-sm-12">
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
         <table id="jqgActions"></table>
         <div id="jqpActions"></div>
     </div>
@@ -87,7 +88,7 @@
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelActions"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteActions();"><i class="fa fa-times"></i> @Localizer["DeActivate"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteActions();"><i class="fa fa-times"></i> @Localizer["Deactivate"] </button>
 
                     </div>
                 </div>

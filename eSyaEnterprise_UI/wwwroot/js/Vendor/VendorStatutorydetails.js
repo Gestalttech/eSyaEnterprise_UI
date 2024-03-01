@@ -8,7 +8,7 @@
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: ["", localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.LocationID, localization.IsDefaultLocation,localization.Active],
+        colNames: [localization.VendorId, localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.LocationID, localization.IsDefaultLocation,localization.Active],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorLocation", width: 150, editable: true, align: 'left', hidden: false },
@@ -73,7 +73,7 @@ function fnloadVendorStatutorydetails() {
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: ["", "", "", localization.StatutoryDescription, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorLocationId, localization.StatutoryCode,  localization.StatutoryDescription, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorLocationId", width: 150, editable: true, align: 'left', hidden: true },

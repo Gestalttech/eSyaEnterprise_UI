@@ -3737,19 +3737,11 @@
       "PackagePath": "staticwebassets\\js\\ConfigPatient\\Specialty.js"
     },
     {
-<<<<<<< Updated upstream
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugClass.js",
-      "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugClass.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugComposition.js",
-=======
       "Id": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugClass.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugClass.js"
     },
     {
       "Id": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\DrugComposition.js",
->>>>>>> Stashed changes
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\DrugComposition.js"
     },
     {
@@ -3761,19 +3753,11 @@
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\MapManufacturerToVendor.js"
     },
     {
-<<<<<<< Updated upstream
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\TherapeuticClass.js",
-      "PackagePath": "staticwebassets\\js\\ConfigPharma\\TherapeuticClass.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\AgeRange.js",
-=======
       "Id": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigPharma\\TherapeuticClass.js",
       "PackagePath": "staticwebassets\\js\\ConfigPharma\\TherapeuticClass.js"
     },
     {
       "Id": "F:\\Siva\\D_drive\\Solutions_VS_2022\\eSyaEnterprise_UI_Feb_2024\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigProduct\\AgeRange.js",
->>>>>>> Stashed changes
       "PackagePath": "staticwebassets\\js\\ConfigProduct\\AgeRange.js"
     },
     {
