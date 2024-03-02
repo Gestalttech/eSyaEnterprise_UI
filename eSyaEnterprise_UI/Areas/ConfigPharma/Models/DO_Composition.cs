@@ -7,8 +7,6 @@
         public string DrugCompDesc { get; set; }
         public int DrugClass { get; set; }
         public int TherapueticClass { get; set; }
-        public bool AvailableAsGeneric { get; set; }
-        public string DrugSchedule { get; set; }
         public int PharmacyGroup { get; set; }
         public bool ActiveStatus { get; set; }
         public string? DrugClassDesc { get; set; }

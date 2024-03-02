@@ -145,6 +145,12 @@
                 </div>
                 <div class="mdl-card__supporting-text fullwidth padbot0">
                     <div class="row">
+                        <div class="col-lg-12 collapse">
+                            <div>
+                                <label for="txtCompositionId-t"> @Localizer["CompositionId"]</label>
+                                <input id="txtCompositionId-t" class="form-control" maxlength="10" type="text" />
+                            </div>
+                        </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
                             <div class="">
                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsCombination_t">
@@ -155,8 +161,8 @@
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-9">
                             <div class="form-group">
-                                <label for="txtCompositions_t"> @Localizer["DrugCompositionDescription"]</label>
-                                <input id="txtCompositions_t" type="text" class="form-control" maxlength="100" />
+                                <label for="txtDrugCompositionDescription_t"> @Localizer["DrugCompositionDescription"]</label>
+                                <input id="txtDrugCompositionDescription_t" type="text" class="form-control" maxlength="100" />
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6">
@@ -283,20 +289,28 @@
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="cboDrugClass"> @Localizer["DrugClass"]</label>
-                                    <select id="cboDrugClass" class="form-control selectpicker"><option>Select</option></select>
+                                    <select id="cboDrugClass" class="form-control selectpicker" asp-items="@ViewBag.DrugClassList" data-size="5" data-container="body">
+                                        <option value="0">Select</option>
+                                    </select>
+                                
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="cboTherapueticClass"> @Localizer["TherapueticClass"]</label>
-                                    <select id="cboTherapueticClass" class="form-control selectpicker"><option value="0">Select</option></select>
+                                    <select id="cboTherapueticClass" class="form-control selectpicker" asp-items="@ViewBag.TherapueticClassList" data-size="5" data-container="body">
+                                        <option value="0">Select</option>
+                                    </select>
+                                
                                 </div>
                             </div>
                              
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="cboPharmacyGroup"> @Localizer["PharmacyGroup"]</label>
-                                    <select id="cboPharmacyGroup" class="form-control selectpicker"><option value="0">Select</option></select>
+                                    <select id="cboPharmacyGroup" class="form-control selectpicker" asp-items="@ViewBag.PharmacyGroupList" data-size="5" data-container="body">
+                                    <option value="0">Select</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -313,7 +327,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-12  shadowLite p-4">
                         <p class="subheading">Parameter table</p>
                         <hr class="left" />
-                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "27" })
+                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "27"})
 
                     </div>
                    
@@ -325,7 +339,7 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveDrugComposition" onclick="fnSaveDrugComposition('Grid')">
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelDrugComposition" onclick="fnCancelDrugComposition('Grid')"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
 
 
                     </div>

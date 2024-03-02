@@ -30,32 +30,32 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
         }
         #region Drug Composition 
         [Area("ConfigPharma")]
-        public IActionResult EPH_05_00()
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> EPH_05_00()
         {
             try
             {
 
                 List<int> l_codeType = new List<int>();
-                l_codeType.Add(ApplicationCodeTypeValues.DrugClass);
-                l_codeType.Add(ApplicationCodeTypeValues.TherapueticClass);
                 l_codeType.Add(ApplicationCodeTypeValues.PharmacyGroup);
 
 
                 var response = _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeTypeList", l_codeType).Result;
-                if (response.Status)
+                var respDrugClass =await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugClass>>("DrugComposition/GetActiveDrugClass");
+                var responseTherapueticClass =await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugTherapeutic>>("DrugComposition/GetActiveDrugTherapeutics");
+
+                if (response.Status && respDrugClass.Status && responseTherapueticClass.Status)
                 {
-                    List<DO_ApplicationCodes> DrugClass = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DrugClass).ToList();
-                    ViewBag.DrugClassList = DrugClass.Select(a => new SelectListItem
+                    ViewBag.DrugClassList = respDrugClass.Data.Select(a => new SelectListItem
                     {
-                        Text = a.CodeDesc,
-                        Value = a.ApplicationCode.ToString()
+                        Text = a.DrugClassDesc,
+                        Value = a.DrugClass.ToString()
                     });
 
-                    List<DO_ApplicationCodes> TherapueticClass = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.TherapueticClass).ToList();
-                    ViewBag.TherapueticClassList = TherapueticClass.Select(a => new SelectListItem
+                    ViewBag.TherapueticClassList = responseTherapueticClass.Data.Select(a => new SelectListItem
                     {
-                        Text = a.CodeDesc,
-                        Value = a.ApplicationCode.ToString()
+                        Text = a.DrugTherapeuticDesc,
+                        Value = a.DrugTherapeutic.ToString()
                     });
 
                     List<DO_ApplicationCodes> PharmacyGroup = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.PharmacyGroup).ToList();
@@ -104,7 +104,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
         /// Insert Composition
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertComposition(DO_Composition obj)
+        public async Task<JsonResult> InsertOrUpdateComposition(DO_Composition obj)
         {
 
             try
@@ -112,43 +112,27 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/InsertComposition", obj);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
+                if (obj.CompositionId == 0)
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/InsertComposition", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
                 }
-
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-
-        /// <summary>
-        ///  Update Composition
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> UpdateComposition(DO_Composition obj)
-        {
-
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/UpdateComposition", obj);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugComposition/UpdateComposition", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateComposition:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
                 }
 
 
