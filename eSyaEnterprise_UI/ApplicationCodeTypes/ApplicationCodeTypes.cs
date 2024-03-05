@@ -51,7 +51,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int ConfigPatientRateType = 62; 
         //Need To Remove later
         public const int PatientType = 58;
-        //public const int Relationship = 56;not used
+        //public const int Relationship = 56;not used   
         #endregion
 
         #region Config Pharma
