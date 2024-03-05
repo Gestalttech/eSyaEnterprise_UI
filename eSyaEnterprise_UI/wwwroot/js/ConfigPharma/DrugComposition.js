@@ -486,7 +486,7 @@ function fnBackToGrid() {
 }
 
 
-function fnTreeComposition() {
+function fnTreeComposition(_dcnamePrefix) {
     $("#divTreeSection").show(500);
     $("#jstComposition").jstree();
 
