@@ -1,0 +1,98 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "EPS_22_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<script src="~/js/ProductSetup/Actions.js"></script>
+<script src="~/js/Common/jquery.contextMenu.min.js"></script>
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        ActionId: '@Localizer["ActionId"]',
+        ActionDesc: '@Localizer["ActionDescription"]',
+        Active: '@Localizer["Active"]',
+        AddActions: '@Localizer["AddActions"]',
+        UpdateActions: '@Localizer["UpdateActions"]',
+        ViewActions: '@Localizer["ViewActions"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        ActivateDeactivateActions: '@Localizer["ActivateDeactivateActions"]',
+    };
+    var errorMsg = {
+        UnAuthorised_edit_E1: '@Localizer["UIC02"]',
+        UnAuthorised_view_E2: '@Localizer["UIC03"]',
+        UnAuthorised_delete_E3: '@Localizer["UIC04"]',
+        ActionDesc_E4: '@Localizer["UI0201"]',
+    };
+</script>
+
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <table id="jqgActions"></table>
+        <div id="jqpActions"></div>
+    </div>
+</div>
+
+
+<div class="modal fade in" id="PopupActions" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddActions"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row padbot4">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtActionId" style="display:none">
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="txtActionDesc"> @Localizer["ActionDescription"]</label>
+                            <input id="txtActionDesc" class="form-control" maxlength="50" type="text" />
+
+                        </div>
+                    </div>
+                  
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveActions" onclick="fnSaveActions();">
+                            <i class="fa fa-save"></i> @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelActions"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteActions();"><i class="fa fa-times"></i> @Localizer["Deactivate"] </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

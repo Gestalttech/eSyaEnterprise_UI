@@ -1,0 +1,76 @@
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+
+
+    <div class="col-lg-12 collapse">
+        <div class="form-group">
+            <label for="txtCompositionId"> @Localizer["CompositionId"]</label>
+            <input id="txtCompositionId" class="form-control" maxlength="10" type="text" />
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12  shadowLite p-4">
+        <p class="subheading">Composition Details</p>
+        <hr class="left" />
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
+                <div class="">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsCombination">
+                        <input type="checkbox" id="chkIsCombination" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">@Localizer["IsCombination"]</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-9">
+                <div class="form-group">
+                    <label for="txtDrugCompositionDescription"> @Localizer["DrugCompositionDescription"]</label>
+                    <input id="txtDrugCompositionDescription" type="text" class="form-control" maxlength="100" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label for="cboDrugClass"> @Localizer["DrugClass"]</label>
+                    <select id="cboDrugClass" class="form-control selectpicker" asp-items="@ViewBag.DrugClassList" data-size="5" data-container="body">
+                        <option value="0">Select</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label for="cboTherapueticClass"> @Localizer["TherapueticClass"]</label>
+                    <select id="cboTherapueticClass" class="form-control selectpicker" asp-items="@ViewBag.TherapueticClassList" data-size="5" data-container="body">
+                        <option value="0">Select</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label for="cboPharmacyGroup"> @Localizer["PharmacyGroup"]</label>
+                    <select id="cboPharmacyGroup" class="form-control selectpicker" asp-items="@ViewBag.PharmacyGroupList" data-size="5" data-container="body">
+                        <option value="0">Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 divCheckbox">
+                <div class="">
+                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                        <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                        <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+  
+           

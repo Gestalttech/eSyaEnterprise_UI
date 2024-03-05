@@ -55,10 +55,10 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Config Pharma
-        public const int DrugClass = 201;
-        public const int TherapueticClass = 202;
-        //public const int PharmacyGroup =203;
-        public const int PharmacyGroup = 1;
+        //public const int DrugClass = 201; changed to getting  from Master
+        //public const int TherapueticClass = 202; changed to getting  from Master
+        public const int PharmacyGroup = 203;
+        //public const int PharmacyGroup = 1;
         #endregion
 
         //public const int TasKList = 4;not used
