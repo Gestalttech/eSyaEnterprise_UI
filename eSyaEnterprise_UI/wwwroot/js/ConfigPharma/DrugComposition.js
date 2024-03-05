@@ -8,24 +8,25 @@ var ItemCategoryID = "0";
 var _GridView = document.getElementById("rdGridView");
 var _TreeView = document.getElementById("rdTreeView");
 function fnGettheTypeofView() {
-    
+
     if (_GridView.checked == true) {
         $(".dot,#lblTreeView").removeClass('active');
         $("#lblGridView").addClass('active');
         $("#divAlphabets").show(500);
         $("#divSearch,#divTreeSection,#dvComposition").hide(500);
-        
+        eSyaParamsType.ClearValue("tblPopupParam");
     }
-    if(_TreeView.checked == true){
+    if (_TreeView.checked == true) {
         $(".dot,#lblGridView").removeClass('active');
         $("#lblTreeView").addClass('active');
         $("#divAlphabets").show(500);
         $("#divSearch").hide(500);
-        $("#divGridSection").css('display','none');
+        $("#divGridSection").css('display', 'none');
+        eSyaParamsType.ClearValue("tblTreeParam");
     }
 }
 $(document).ready(function () {
-    
+
     $(".dot").click(function () {
         $('.filter-div').empty();
         $('.dot').removeClass('active');
@@ -61,13 +62,13 @@ $(document).ready(function () {
             if (_GridView.checked == true) {
                 $("#divGridSection").css('display', 'block');
                 fnGridLoadDrugCompositions(_dcnamePrefix);
-                
+
             }
             if (_TreeView.checked == true) {
                 fnTreeComposition(_dcnamePrefix);
             }
-             
-            
+
+
             $(this).addClass('active');
         });
         //Going Back to the A to Z Selection
@@ -79,7 +80,7 @@ $(document).ready(function () {
             $("#divDrugBrandsForm").css("display", "none");
             $("#divGrid").show(500);
         })
-      
+
     });
     $.contextMenu({
         // define which elements trigger this menu
@@ -108,7 +109,7 @@ function fnGridLoadDrugCompositions(dcnamePrefix) {
         mtype: 'Get',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CompositionId, localization.IsCombination, localization.DrugCompositionDescription,"", localization.DrugClass,"", localization.TheraupaticCode, "", localization.PharmacyGroup,localization.Active, localization.Actions],
+        colNames: [localization.CompositionId, localization.IsCombination, localization.DrugCompositionDescription, "", localization.DrugClass, "", localization.TheraupaticCode, "", localization.PharmacyGroup, localization.Active, localization.Actions],
         colModel: [
             { name: "CompositionId", width: 35, editable: true, align: 'left', hidden: true },
             { name: "IsCombination", editable: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -173,7 +174,13 @@ function SetGridControlByAction() {
 }
 function fnGridAddCompositions() {
     $("#PopupComposition").modal('show');
-    fnEnableControl(true);
+    eSyaParamsType.ClearValue("tblPopupParam");
+    fnEnableControl(false);
+    fnClearDrugComposition();
+    $("#btnSaveDrugComposition_p").show();
+    $("#btnCancelDrugComposition_p").show();
+    $("#btnSaveDrugComposition_t").hide();
+    $("#btnCancelDrugComposition_t").hide();
 }
 function fnEditDrugComposition(e, actiontype) {
 
@@ -182,23 +189,31 @@ function fnEditDrugComposition(e, actiontype) {
     var rowid = $("#jqgDrugCompositions").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDrugCompositions').jqGrid('getRowData', rowid);
 
+   
+
+    $("#btnSaveDrugComposition_p").attr('disabled', false);
+    $("#btnSaveDrugComposition_p").show();
+    $("#btnCancelDrugComposition_p").show();
+    $("#btnSaveDrugComposition_t").hide();
+    $("#btnCancelDrugComposition_t").hide();
     fnGetDrugCompositionByIdforGrid(rowData.CompositionId);
-    $("#btnSaveDrugComposition").attr('disabled', false);
 
     if (actiontype.trim() == "edit") {
         //$("#divGridDrugCompositions").hide();
         //$("#divDrugCompositionsForm").css('display', 'block');
         $('#PopupComposition').modal('show');
 
-        $("#btnSaveDrugComposition").html(localization.Update);
+        $("#btnSaveDrugComposition_p").html(localization.Update);
 
         fnEnableControl(false);
+        
+        
     }
     if (actiontype.trim() == "view") {
         //$("#divGridDrugCompositions").hide();
         //$("#divDrugCompositionsForm").css('display', 'block');
         $('#PopupComposition').modal('show');
-        $("#btnSaveDrugComposition").hide();
+        $("#btnSaveDrugComposition_p").hide();
         fnEnableControl(true);
     }
 }
@@ -211,6 +226,39 @@ function fnGetDrugCompositionByIdforGrid(compId) {
         },
         success: function (result) {
            
+            $('#txtCompositionId_p').val(result.CompositionId);
+            $("#txtDrugCompositionDescription_p").val(result.DrugCompDesc);
+
+            if (result.IsCombination == "true" || result.IsCombination == true) {
+                $("#chkIsCombination_p").parent().addClass("is-checked");
+            }
+            else { $("#chkIsCombination_p").parent().removeClass("is-checked"); }
+
+            $("#cboDrugClass_p").val(result.DrugClass).selectpicker('refresh');
+            $("#cboTherapueticClass_p").val(result.TherapueticClass).selectpicker('refresh');
+            $("#cboPharmacyGroup_p").val(result.PharmacyGroup).selectpicker('refresh');
+            if (result.ActiveStatus == "true" || result.ActiveStatus == true) {
+                $("#chkActiveStatus_p").parent().addClass("is-checked");
+            }
+            else { $("#chkActiveStatus_p").parent().removeClass("is-checked"); }
+
+            eSyaParamsType.ClearValue("tblPopupParam");
+           
+            eSyaParamsType.SetJSONValue(result.l_composionparams,"tblPopupParam");
+
+        }
+    });
+
+}
+
+function fnGetDrugCompositionByIdforTreeview(compId) {
+    $.ajax({
+        url: getBaseURL() + '/Composition/GetCompositionInfo',
+        data: {
+            composId: compId
+        },
+        success: function (result) {
+         
             $('#txtCompositionId').val(result.CompositionId);
             $("#txtDrugCompositionDescription").val(result.DrugCompDesc);
 
@@ -226,39 +274,8 @@ function fnGetDrugCompositionByIdforGrid(compId) {
                 $("#chkActiveStatus").parent().addClass("is-checked");
             }
             else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result.l_composionparams);
-           
-        }
-    });
-
-}
-
-function fnGetDrugCompositionByIdforTreeview(compId) {
-    $.ajax({
-        url: getBaseURL() + '/Composition/GetCompositionInfo',
-        data: {
-            composId: compId
-        },
-        success: function (result) {
-          
-            $('#txtCompositionId-t').val(result.CompositionId);
-            $("#txtDrugCompositionDescription_t").val(result.DrugCompDesc);
-
-            if (result.IsCombination == "true" || result.IsCombination == true) {
-                $("#chkIsCombination_t").parent().addClass("is-checked");
-            }
-            else { $("#chkIsCombination_t").parent().removeClass("is-checked"); }
-
-            $("#cboDrugClass_t").val(result.DrugClass).selectpicker('refresh');
-            $("#cboTherapueticClass_t").val(result.TherapueticClass).selectpicker('refresh');
-            $("#cboPharmacyGroup_t").val(result.PharmacyGroup).selectpicker('refresh');
-            if (result.ActiveStatus == "true" || result.ActiveStatus == true) {
-                $("#chkActiveStatus_t").parent().addClass("is-checked");
-            }
-            else { $("#chkActiveStatus_t").parent().removeClass("is-checked"); }
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result.l_composionparams);
+            eSyaParamsType.ClearValue("tblTreeParam");
+            eSyaParamsType.SetJSONValue(result.l_composionparams, "tblTreeParam");
         }
     });
 
@@ -266,77 +283,77 @@ function fnGetDrugCompositionByIdforTreeview(compId) {
 function fnEnableControl(val) {
     $("input,textarea").attr('readonly', val);
     $("select").next().attr('disabled', val);
+    
 }
 
 function fnSaveDrugComposition(_source) {
-    debugger;
+  
     if (_source == "Grid") {
 
         if (validateDrugComposition() === false) {
             return;
         }
 
-        $("#btnSaveDrugComposition").attr('disabled', true);
-        var genricId = $("#txtCompositionId").val();
-        var cPar = eSyaParams.GetJSONValue();
+        $("#btnSaveDrugComposition_p").attr('disabled', true);
+        var genricId = $("#txtCompositionId_p").val();
+        var cPar = eSyaParamsType.GetJSONValue("","tblPopupParam");
         var drugComposition;
         if (genricId === null || genricId === "") {
             drugComposition = {
                 CompositionId: 0,
-                IsCombination: $("#chkIsCombination").parent().hasClass("is-checked"),
-                DrugCompDesc: $("#txtDrugCompositionDescription").val(),
-                DrugClass: $("#cboDrugClass").val(),
-                TherapueticClass: $("#cboTherapueticClass").val(),
-                PharmacyGroup: $("#cboPharmacyGroup").val(),
-                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+                IsCombination: $("#chkIsCombination_p").parent().hasClass("is-checked"),
+                DrugCompDesc: $("#txtDrugCompositionDescription_p").val(),
+                DrugClass: $("#cboDrugClass_p").val(),
+                TherapueticClass: $("#cboTherapueticClass_p").val(),
+                PharmacyGroup: $("#cboPharmacyGroup_p").val(),
+                ActiveStatus: $("#chkActiveStatus_p").parent().hasClass("is-checked"),
                 l_composionparams: cPar
             };
         }
         else {
             drugComposition = {
-                CompositionId:$("#txtCompositionId").val(),
-                CompositionDesc: $("#txtCompositions").val(),
-                IsCombination: $("#chkIsCombination").parent().hasClass("is-checked"),
-                DrugCompDesc: $("#txtDrugCompositionDescription").val(),
-                DrugClass: $("#cboDrugClass").val(),
-                TherapueticClass: $("#cboTherapueticClass").val(),
-                PharmacyGroup: $("#cboPharmacyGroup").val(),
-                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+                CompositionId: $("#txtCompositionId_p").val(),
+                IsCombination: $("#chkIsCombination_p").parent().hasClass("is-checked"),
+                DrugCompDesc: $("#txtDrugCompositionDescription_p").val(),
+                DrugClass: $("#cboDrugClass_p").val(),
+                TherapueticClass: $("#cboTherapueticClass_p").val(),
+                PharmacyGroup: $("#cboPharmacyGroup_p").val(),
+                ActiveStatus: $("#chkActiveStatus_p").parent().hasClass("is-checked"),
                 l_composionparams: cPar
             };
         }
     }
     else if (_source == "Tree") {
 
-        if (validateDrugCompositionTree() === false) {
+        if (validateDrugCompositionTreeview() === false) {
             return;
         }
 
-        $("#btnSaveDrugComposition-t").attr('disabled', true);
-        var genricId = $("#txtCompositionId-t").val();
-        var cPar = eSyaParams.GetJSONValue();
+        $("#btnSaveDrugComposition_t").attr('disabled', true);
+        var genricId = $("#txtCompositionId").val();
+        var cPar = eSyaParamsType.GetJSONValue("","tblTreeParam");
         var drugComposition;
         if (genricId === null || genricId === "") {
             drugComposition = {
                 CompositionId: 0,
-                IsCombination: $("#txtCompositionId-t").parent().hasClass("is-checked"),
-                DrugCompDesc: $("#txtDrugCompositionDescription_t").val(),
-                DrugClass: $("#cboDrugClass_t").val(),
-                TherapueticClass: $("#cboTherapueticClass_t").val(),
-                PharmacyGroup: $("#cboPharmacyGroup_t").val(),
-                ActiveStatus: $("#chkActiveStatus_t").parent().hasClass("is-checked"),
+                IsCombination: $("#chkIsCombination").parent().hasClass("is-checked"),
+                DrugCompDesc: $("#txtDrugCompositionDescription").val(),
+                DrugClass: $("#cboDrugClass").val(),
+                TherapueticClass: $("#cboTherapueticClass").val(),
+                PharmacyGroup: $("#cboPharmacyGroup").val(),
+                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
                 l_composionparams: cPar
             };
         }
         else {
             drugComposition = {
-                CompositionId: $("#txtCompositionId-t").val(),
-                IsCombination: $("#chkIsCombination_t").parent().hasClass("is-checked"),
-                DrugCompDesc: $("#txtDrugCompositionDescription_t").val(),
-                DrugClass: $("#cboDrugClass_t").val(),
-                TherapueticClass: $("#cboTherapueticClass_t").val(),
-                PharmacyGroup: $("#cboPharmacyGroup_t").val(),
-                ActiveStatus: $("#chkActiveStatus_t").parent().hasClass("is-checked"),
+                CompositionId: $("#txtCompositionId").val(),
+                IsCombination: $("#chkIsCombination").parent().hasClass("is-checked"),
+                DrugCompDesc: $("#txtDrugCompositionDescription").val(),
+                DrugClass: $("#cboDrugClass").val(),
+                TherapueticClass: $("#cboTherapueticClass").val(),
+                PharmacyGroup: $("#cboPharmacyGroup").val(),
+                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
                 l_composionparams: cPar
             };
         }
@@ -352,31 +369,62 @@ function fnSaveDrugComposition(_source) {
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnGridRefreshCompositions();
-                $("#btnSaveDrugComposition").attr('disabled', false);
-                $("#btnSaveDrugComposition-t").attr('disabled', false);
-                fnBackToGrid();
-                $("#jsTreeComposition").jstree("destroy");
+               
+                $("#btnSaveDrugComposition_p").attr('disabled', false);
+                $("#btnSaveDrugComposition_t").attr('disabled', false);
                 fnClearDrugComposition();
-                fnLoadCompositionsTree();
                 fnCancelDrugComposition();
+
+                if (_source == "Tree") {
+                    $("#jsTreeComposition").jstree("destroy");
+                    fnBackToGrid();
+                    fnTreeComposition();
+                }
+                else
+                {
+                    fnCancelDrugCompositionPopup();
+                    fnGridRefreshCompositions();
+                }
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveDrugComposition").attr('disabled', false);
-                $("#btnSaveDrugComposition-t").attr('disabled', false);
+                $("#btnSaveDrugComposition_p").attr('disabled', false);
+                $("#btnSaveDrugComposition_t").attr('disabled', false);
             }
 
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveDrugComposition").attr("disabled", false);
+            $("#btnSaveDrugComposition_p").attr("disabled", false);
+            $("#btnSaveDrugComposition_t").attr('disabled', false);
         }
     });
 }
 
 function validateDrugComposition() {
-    
+
+    if (IsStringNullorEmpty($("#txtDrugCompositionDescription_p").val())) {
+        fnAlert("w", "EPH_03_00", "UI0282", errorMsg.DrugCompositionDescription_E5);
+        $('#txtDrugCompositionDescription_p').focus();
+        return false;
+    }
+    if ($("#cboDrugClass_p").val() === "0" || $("#cboDrugClass_p").val() === "") {
+        fnAlert("w", "EPH_03_00", "UI0283", errorMsg.DrugClass_E6);
+        return false;
+    }
+    if ($("#cboTherapueticClass_p").val() === "0" || $("#cboTherapueticClass_p").val() === "") {
+        fnAlert("w", "EPH_03_00", "UI0284", errorMsg.TherapueticClass_E7);
+        return false;
+    }
+
+    if ($("#cboPharmacyGroup_p").val() === "0" || $("#cboPharmacyGroup_p").val() === "") {
+        fnAlert("w", "EPH_03_00", "UI0284", errorMsg.PharmacyGroup_E9);
+        return false;
+    }
+
+}
+function validateDrugCompositionTreeview() {
+
     if (IsStringNullorEmpty($("#txtDrugCompositionDescription").val())) {
         fnAlert("w", "EPH_03_00", "UI0282", errorMsg.DrugCompositionDescription_E5);
         $('#txtDrugCompositionDescription').focus();
@@ -390,30 +438,8 @@ function validateDrugComposition() {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.TherapueticClass_E7);
         return false;
     }
-    
-    if ($("#cboPharmacyGroup").val() === "0" || $("#cboPharmacyGroup").val() === "") {
-        fnAlert("w", "EPH_03_00", "UI0284", errorMsg.PharmacyGroup_E9);
-        return false;
-    }
-     
-}
-function validateDrugCompositionTree() {
 
-    if (IsStringNullorEmpty($("#txtDrugCompositionDescription_t").val())) {
-        fnAlert("w", "EPH_03_00", "UI0282", errorMsg.DrugCompositionDescription_E5);
-        $('#txtDrugCompositionDescription_t').focus();
-        return false;
-    }
-    if ($("#cboDrugClass_t").val() === "0" || $("#cboDrugClass_t").val() === "") {
-        fnAlert("w", "EPH_03_00", "UI0283", errorMsg.DrugClass_E6);
-        return false;
-    }
-    if ($("#cboTherapueticClass_t").val() === "0" || $("#cboTherapueticClass_t").val() === "") {
-        fnAlert("w", "EPH_03_00", "UI0284", errorMsg.TherapueticClass_E7);
-        return false;
-    }
-     
-    if ($("#cboPharmacyGroup_t").val() === "0" || $("#cboPharmacyGroup_t").val() === "") {
+    if ($("#cboPharmacyGroup").val() === "0" || $("#cboPharmacyGroup").val() === "") {
         fnAlert("w", "EPH_03_00", "UI0284", errorMsg.PharmacyGroup_E9);
         return false;
     }
@@ -422,6 +448,19 @@ function validateDrugCompositionTree() {
 
 
 function fnClearDrugComposition() {
+    $('#txtCompositionId_p').val('');
+    $("#chkIsCombination_p").parent().removeClass("is-checked");
+    $('#txtDrugCompositionDescription_p').val('');
+    $('#cboDrugClass_p').val("0").selectpicker('refresh');
+    $('#cboTherapueticClass_p').val("0").selectpicker('refresh');
+    $('#cboPharmacyGroup_p').val("0").selectpicker('refresh');
+    $("#chkActiveStatus_p").parent().addClass("is-checked");
+    $("#btnSaveDrugComposition_p").html(localization.Save);
+    $("#btnSaveDrugComposition_p").attr("disabled", false);
+    $("#btnSaveDrugComposition_p").show();
+    $("#btnCancelDrugComposition_p").show(); 
+   
+
     $('#txtCompositionId').val('');
     $("#chkIsCombination").parent().removeClass("is-checked");
     $('#txtDrugCompositionDescription').val('');
@@ -429,21 +468,13 @@ function fnClearDrugComposition() {
     $('#cboTherapueticClass').val("0").selectpicker('refresh');
     $('#cboPharmacyGroup').val("0").selectpicker('refresh');
     $("#chkActiveStatus").parent().addClass("is-checked");
-    $("#btnSaveDrugComposition").html(localization.Save);
-    $("#btnSaveDrugComposition").show();
-    $("#btnSaveDrugComposition").attr("disabled", false);
-
-    $('#txtCompositionId_t').val('');
-    $("#chkIsCombination_t").parent().removeClass("is-checked");
-    $('#txtDrugCompositionDescription_t').val(''); 
-    $('#cboDrugClass_t').val("0").selectpicker('refresh');
-    $('#cboTherapueticClass_t').val("0").selectpicker('refresh');
-    $('#cboPharmacyGroup_t').val("0").selectpicker('refresh'); 
-    $("#chkActiveStatus_t").parent().addClass("is-checked");
     $("#btnSaveDrugComposition_t").html(localization.Save);
-    $("#btnSaveDrugComposition-t").show();
-    $("#btnSaveDrugComposition-t").attr("disabled", false);
-    eSyaParams.ClearValue();
+    $("#btnSaveDrugComposition_t").attr("disabled", false);
+    $("#btnSaveDrugComposition_t").show();
+    $("#btnCancelDrugComposition_t").show();
+    
+    eSyaParamsType.ClearValue("tblPopupParam");
+    eSyaParamsType.ClearValue("tblTreeParam");
 }
 
 function fnGridRefreshCompositions() {
@@ -504,8 +535,17 @@ function fnTreeComposition() {
                             fnAlert("w", "EPH_03_00", "UIC03", errorMsg.addauth_E1);
                             return;
                         }
+
                         fnClearDrugComposition();
+
+                        eSyaParamsType.ClearValue("tblTreeParam");
+
                         fnEnableControl(false);
+                        $("#btnSaveDrugComposition_p").hide();
+                        $("#btnCancelDrugComposition_p").hide();
+                        $("#btnSaveDrugComposition_t").show();
+                        $("#btnCancelDrugComposition_t").show();
+
                         $('#dvComposition').css('display', 'block');
                         $("#pnlAddComposition .mdl-card__title-text").text(localization.AddComposition);
                     });
@@ -526,10 +566,13 @@ function fnTreeComposition() {
                         //ItemCategoryID = data.node.id;
                         $("input").prop("disabled", true);
                         $("#chkActiveStatus").prop("disabled", true);
-                        $("#chkActiveStatus_t").prop("disabled", true);
                         fnClearDrugComposition();
                         fnGetDrugCompositionByIdforTreeview(data.node.id);
                         fnEnableControl(true);
+                        $("#btnSaveDrugComposition_p").hide();
+                        $("#btnCancelDrugComposition_p").hide();
+                        $("#btnSaveDrugComposition_t").hide();
+                        $("#btnCancelDrugComposition_t").show();
                     });
 
                     $('#Edit').on('click', function () {
@@ -545,10 +588,15 @@ function fnTreeComposition() {
                         //ItemCategoryID = data.node.id;
                         $("input").prop("disabled", false);
                         $("#chkActiveStatus").prop("disabled", false);
-                        $("#chkActiveStatus_t").prop("disabled", false);
+                       
                         fnClearDrugComposition();
                         fnGetDrugCompositionByIdforTreeview(data.node.id);
                         fnEnableControl(false);
+                        $("#btnSaveDrugComposition_p").hide();
+                        $("#btnCancelDrugComposition_p").hide();
+                        $("#btnSaveDrugComposition_t").show();
+                        $("#btnCancelDrugComposition_t").show();
+
                     });
                 }
             }
@@ -556,7 +604,9 @@ function fnTreeComposition() {
     });
 }
 
-
+function fnCancelDrugCompositionPopup() {
+    $("#PopupComposition").modal('hide');
+}
 function fnCancelDrugComposition() {
     $("#dvComposition").css('display', 'none');
 }

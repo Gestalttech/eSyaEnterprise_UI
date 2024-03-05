@@ -24,5 +24,6 @@ namespace eSyaEnterprise_UI.ViewComponents
 
             return View("_eSyaParameter", params_list);
         }
+
     }
 }

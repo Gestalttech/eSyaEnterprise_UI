@@ -218,7 +218,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-
+        [Area("ConfigPharma")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult _DrugComposition()
+        {
+            return View();
+        }
+        
         #endregion
 
     }

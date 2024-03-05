@@ -74,6 +74,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXENvbXBvc2l0aW9uXEVQSF8wNV8wMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/Composition/_DrugComposition.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXENvbXBvc2l0aW9uXF9EcnVnQ29tcG9zaXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Areas/ConfigPharma/Views/DrugClass/EPH_02_00.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ29uZmlnUGhhcm1hXFZpZXdzXERydWdDbGFzc1xFUEhfMDJfMDAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -620,6 +624,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/Shared/Components/eSyaBusinessLocation/_esyaBusinessLocation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcZVN5YUJ1c2luZXNzTG9jYXRpb25cX2VzeWFCdXNpbmVzc0xvY2F0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/Shared/Components/eSyaParameterType/_eSyaParameterType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcZVN5YVBhcmFtZXRlclR5cGVcX2VTeWFQYXJhbWV0ZXJUeXBlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/eSyaProjects2022/eSyaEnterprise_UI/eSyaEnterprise_UI/Views/Shared/Components/eSyaParameter/_eSyaParameter.cshtml]
