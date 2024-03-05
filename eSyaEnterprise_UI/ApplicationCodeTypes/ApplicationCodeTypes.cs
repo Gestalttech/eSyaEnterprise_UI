@@ -55,7 +55,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Config Pharma
-        //public const int DrugClass = 201; changed to getting  from Master   
+        //public const int DrugClass = 201; changed to getting  from Master Copy   
         //public const int TherapueticClass = 202; changed to getting  from Master
         public const int PharmacyGroup = 203;
         //public const int PharmacyGroup = 1;
