@@ -56,7 +56,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
         #region Config Pharma
 
-        //public const int DrugClass = 201; changed to getting  from Master   Copy Test
+        //public const int DrugClass = 201; changed to getting  from Master   Copy Test 
 
         //public const int DrugClass = 201; changed to getting  from Master Copy   
 
