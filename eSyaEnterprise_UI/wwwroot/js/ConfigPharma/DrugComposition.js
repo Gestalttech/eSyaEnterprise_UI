@@ -69,6 +69,8 @@ $(document).ready(function () {
             }
 
 
+
+
             $(this).addClass('active');
         });
         //Going Back to the A to Z Selection
