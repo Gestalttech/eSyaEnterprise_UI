@@ -40,7 +40,7 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
         {
             try
             {
-                var serviceresponse = await _eSyaGenerateTokenAPIServices.HttpClientServices.GetAsync<List<DO_Floor>>("CounterMapping/GetFloorsbyFloorId?codetype=" + ApplicationCodeTypeValues.FloorId);
+                var serviceresponse = await _eSyaGenerateTokenAPIServices.HttpClientServices.GetAsync<List<DO_Floor>>("TokenManagement/GetFloorsbyFloorId?codetype=" + ApplicationCodeTypeValues.FloorId);
                 if (serviceresponse.Status)
                 {
                     ViewBag.Floors = serviceresponse.Data.
@@ -65,17 +65,40 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
             }
         }
 
+        /// <summary>
+        /// Getting Counter Number by floorId for Dropdown
+        /// </summary>
+        [Area("GenerateToken")]
+        [HttpPost]
+        public async Task<JsonResult> GetCounterNumbersbyFloorId(int floorId)
+        {
+            try
+            {
+                var parameter = "?floorId=" + floorId;
+                var serviceResponse = await _eSyaGenerateTokenAPIServices.HttpClientServices.GetAsync<List<DO_CounterMapping>>("TokenManagement/GetCounterNumbersbyFloorId" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCounterNumbersbyFloorId :For floorId {0} ", floorId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
 
         /// <summary>
         /// Getting Tokens for Grid
         /// </summary>
         [HttpGet]
-        public async Task<JsonResult> GetTokenDetailByTokenType(string tokenType)
+        public async Task<JsonResult> GetTokenDetailByTokenType(string tokenprefix)
         {
             try
             {
                 var parameter = "?businessKey=" + AppSessionVariables.GetSessionBusinessKey(HttpContext);
-                parameter += "&tokenType=" + tokenType.ToString();
+                parameter += "&tokenprefix=" + tokenprefix.ToString();
                 var serviceResponse = await _eSyaGenerateTokenAPIServices.HttpClientServices.GetAsync<List<DO_TokenGeneration>>("TokenManagement/GetTokenDetailByTokenType" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
@@ -87,7 +110,7 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
             {
 
                 _logger.LogError(ex, string.Format("UD:GetTokenDetailByTokenType:params: businessKey:{0},tokenType:{1}",
-                        AppSessionVariables.GetSessionBusinessKey(HttpContext).ToString(), tokenType));
+                        AppSessionVariables.GetSessionBusinessKey(HttpContext).ToString(), tokenprefix));
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
