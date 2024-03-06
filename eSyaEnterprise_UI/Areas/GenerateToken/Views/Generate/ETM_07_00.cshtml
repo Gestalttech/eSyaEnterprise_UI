@@ -11,11 +11,13 @@
 
 <header>
     <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
+    <h1 class="text-center">Token Management System</h1>
+     <p class="headerText font-weight-bolder" hidden>Welcome <span id="txtMobile"></span></p>
 </header>
 
 <main>
-    <p class="headerText font-weight-bolder">Welcome <span id="txtMobile"></span></p>
-    <h1 class="text-center">Token Management System</h1>
+  
+  
     <p class="text-small text-center instruction"> <span>Instruction:</span> Please click on the one of the button to generate token number for your required Service</p>
     <div class="container atmDisplay">
         <div class="row" id="dvMain">
@@ -89,7 +91,7 @@
             success: function (result) {
                 var _content = "";
                 $.each(result, function (key, data) {
-                    _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4' onclick=fnGeneratToken('" + data.TokenPrefix + "')> " + data.TokenDesc + "</button></div>";
+                    _content += "<div class='col-lg-4 col-md-4 pl-3 my-1'><button type='button' class='btn btn-primary p-4' onclick=fnGeneratToken('" + data.TokenPrefix + "')> " + data.TokenDesc + "</button></div>";
                 });
                 $("#dvMain").html(_content);
                 fnGetTokenStatus();
