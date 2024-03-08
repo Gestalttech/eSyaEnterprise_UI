@@ -23,13 +23,13 @@ function fnGridLoadCounterDetail(_prefix) {
                 {
                     name: "Button", width: 80, editable: true, align: 'left', hidden: false, formatter: function (cellValue, options, rowObject) {
                         var i = options.rowId;
-                        return "<button id=btnCall_" + rowObject.TokenPrefix + i + " type='button' class='btn btn-success' onclick=fnCallingToken('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
+                        return "<button id=btnCall_" + rowObject.TokenPrefix + i + " type='button' class='btn btn-success btn-sm' onclick=fnCallingToken('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
                             +
-                            "&nbsp; <button id=btnConfirm_" + rowObject.TokenPrefix + i + " type='button' class='btn btn-success' onclick=fnCallingConfirmation('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "','" + rowObject.TokenCalling + "')> Confirm</button>"
-                            +
-                            "&nbsp; <button id=btnHold_" + rowObject.TokenPrefix + i + "  type='button' class='btn btn-danger mr-3' onclick=fnUpdateTokenToHold('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "')><i class='fas fa-pause c-white'></i> Hold</button> "
-                            +
-                            " <button id=btnRelease_" + rowObject.TokenPrefix + i + " type = 'button' class='btn btn-success' onclick = fnUpdateTokenToRelease('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "') > <i class='fas fa-play c-white'></i> Release</button > "
+                            "&nbsp; <button id=btnHold_" + rowObject.TokenPrefix + i + "  type='button' class='btn btn-danger btn-sm mr-3' onclick=fnUpdateTokenToHold('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "')><i class='fas fa-pause c-white'></i> Hold</button> "
+                           +
+                            "&nbsp; <button id=btnConfirm_" + rowObject.TokenPrefix + i + " type='button' class='btn btn-success btn-sm' onclick=fnCallingConfirmation('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "','" + rowObject.TokenCalling + "')><i class='fa fa-check' aria-hidden='true'></i> Confirm</button>"
+                           +
+                            " <button id=btnRelease_" + rowObject.TokenPrefix + i + " type = 'button' class='btn btn-success btn-sm' onclick = fnUpdateTokenToRelease('" + rowObject.TokenKey + "','" + rowObject.TokenPrefix + "') > <i class='fas fa-play c-white'></i> Release</button > "
 
                             ;
                     }
@@ -133,9 +133,11 @@ function fnGetTokenTypes() {
         success: function (response, data) {
             arr_Type = response;
             var content = "";
+            content += "<div class='row'>";
             for (var i = 0; i < arr_Type.length; i++) {
-                content += "<div class='col-lg-12'><h5>" + arr_Type[i].TokenDesc + "</h5><table id='jqgCounter_" + arr_Type[i].TokenPrefix + "'> </table><div id='jqpCounter_" + arr_Type[i].TokenPrefix + "'><br/></div></div>";
+                content += "<div class='col-lg-6 col-6'><h5 class='episodeType'>" + arr_Type[i].TokenDesc + "</h5><table id='jqgCounter_" + arr_Type[i].TokenPrefix + "'> </table><div id='jqpCounter_" + arr_Type[i].TokenPrefix + "'><br/></div></div>";
             }
+            content += "</div>";
             $("#dvGridData").html(content);
             for (var i = 0; i < arr_Type.length; i++) {
                 fnGridLoadCounterDetail(arr_Type[i].TokenPrefix)

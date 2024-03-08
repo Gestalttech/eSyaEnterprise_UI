@@ -61,7 +61,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
 
 function fnSavePatientCategoryBusinessLink() {
     if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $('#cboBusinessLocation').val() == '' || $('#cboBusinessLocation').val() == '0') {
-        fnAlert("w", "", "UI0064", errorMsg.BusinessLocation);
+        fnAlert("w", "EPT_02_00", "UI0064", errorMsg.BusinessLocation);
         return;
     }
 

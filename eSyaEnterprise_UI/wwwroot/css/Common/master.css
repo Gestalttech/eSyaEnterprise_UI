@@ -1083,6 +1083,28 @@ button.close:hover {
 }
 .padbot2{padding-bottom:2px !important;}
 .modal-dialog{margin:0px auto !important;}
+button[id^="btnCall"], button[id^="btnHold"], button[id^="btnConfirm"], button[id^="btnRelease"] {
+    padding: 2px 4px;
+    font-size: 11px;
+    margin-right: 4px;
+}
+
+.episodeType {
+    margin: 0px auto 1px;
+    text-align: left;
+    display: block;
+    background: linear-gradient(to right, #fff, #f7f7f7);
+    color: #555;
+    border: none;
+    border-top: 1px dashed #c5c5c5;
+    border-top-left-radius: 0px;
+    border-left: 4px solid #555555;
+    border-right: 1px solid #555555;
+    padding: 4px 0px 4px 5px;
+    font-size: 14px;
+    margin-bottom: 0px;
+    border-bottom-left-radius: 0px;
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (min-width:992px) {
     #imgPhotoimageblah {
@@ -2749,6 +2771,7 @@ h5 {
     padding-left: 0px;
     margin-bottom: 10px;
     font-size: 16px;
+    font-family:helvetica-Bold;
 }
 
     #listbox_source_4_wrapper ul li, #listbox_destination_4_wrapper ul li {padding-left: 10px;}
