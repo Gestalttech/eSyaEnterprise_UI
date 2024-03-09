@@ -72,7 +72,7 @@ namespace eSyaEnterprise_UI.Controllers
 
                     AppSessionVariables.SetSessionIsEsyaUser(HttpContext, true);
                     //return new RedirectToActionResult("V_2_00", "FormsMenu", new { area = "eSyaConfig" });
-                    return new RedirectToActionResult("EPS_01_00", "FormNames", new { area = "ProductSetup" });
+                    return new RedirectToActionResult("EPS_04_00", "FormNames", new { area = "ProductSetup" });
                 }
                 var objmodel = new DO_UserLogIn()
                 {
