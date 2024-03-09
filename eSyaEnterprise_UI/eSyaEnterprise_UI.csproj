@@ -66,7 +66,6 @@
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
     <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
-    <Compile Remove="Areas\ProductSetup\Controllers\AgeRangeController.cs" />
     <Compile Remove="Areas\ProductSetup\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_AgeRange.cs" />

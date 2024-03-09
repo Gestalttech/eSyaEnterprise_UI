@@ -37,7 +37,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region State List
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_14_00()
+        public IActionResult EPS_15_00()
         {
             return View();
         }
@@ -102,7 +102,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region City List
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_15_00()
+        public IActionResult EPS_16_00()
         {
             return View();
         }

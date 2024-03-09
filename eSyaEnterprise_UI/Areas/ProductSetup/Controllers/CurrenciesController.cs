@@ -42,7 +42,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_10_00()
+        public IActionResult EPS_11_00()
         {
             return View();
         }
@@ -155,7 +155,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region Currency Denominations
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_11_00()
+        public async Task<IActionResult> EPS_12_00()
         {
             try
             {

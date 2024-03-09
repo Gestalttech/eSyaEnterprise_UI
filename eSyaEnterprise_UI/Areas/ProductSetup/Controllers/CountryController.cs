@@ -40,7 +40,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         /// 
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_12_00()
+        public async Task<IActionResult> EPS_13_00()
         {
             try
             {
@@ -270,7 +270,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         /// </summary>
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_13_00()
+        public async Task<IActionResult> EPS_14_00()
         {
             try
             {
@@ -414,7 +414,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
         #region CountryMobileCarrier
         [Area("ProductSetup")]
-        public  IActionResult EPS_35_00()
+        public  IActionResult EPS_18_00()
         {
             return View();
         }

@@ -27,7 +27,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
         [ServiceFilter(typeof(ViewBagActionFilter))]
         [Area("ProductSetup")]
-        public IActionResult EPS_07_00()
+        public IActionResult EPS_08_00()
         {
             try
             {

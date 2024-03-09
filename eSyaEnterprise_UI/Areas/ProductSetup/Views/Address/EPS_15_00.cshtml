@@ -2,18 +2,16 @@
 @inject IViewLocalizer Localizer
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
 @{
     ViewData["Title"] = "EPS_15_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@*City List*@
+@*State List*@
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
 @section Scripts{
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/ProductSetup/CityList.js"></script>
- 
+    <script src="~/js/ProductSetup/StateList.js"></script>
 }
 
 @{
@@ -26,12 +24,10 @@
     var localization = {
         ISDCode: '@Localizer["ISDCode"]',
         StateCode: '@Localizer["StateCode"]',
-        CityCode: '@Localizer["CityCode"]',
-        CityDesc: '@Localizer["CityDesc"]',
         StateDesc: '@Localizer["StateDesc"]',
-        AddCityCode: '@Localizer["AddCityCode"]',
-        EditCityCode: '@Localizer["EditCityCode"]',
-        ViewCityCode: '@Localizer["ViewCityCode"]',
+        AddStateCode: '@Localizer["AddStateCode"]',
+        UpdateStateCode: '@Localizer["UpdateStateCode"]',
+        ViewStateCode: '@Localizer["ViewStateCode"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
         View: '@Localizer["View"]',
@@ -39,7 +35,7 @@
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]',
         Update: '@Localizer["Update"]',
-        CityList: '@Localizer["CityList"]',
+        StateList: '@Localizer["StateList"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -47,49 +43,42 @@
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
-        CountrySelect_E6: '@Localizer["UI0041"]',
-        StateSelect_E7: '@Localizer["UI0044"]',
-        CountrySelect_E8: '@Localizer["UI0041"]',
-        CityDesc_E9: '@Localizer["UI0045"]',
+        SelectAnyCountry_E6: '@Localizer["UI0041"]',
+        CountryCode_E7: '@Localizer["UI0042"]',
+        StateDesc_E8: '@Localizer["UI0043"]',
     }
 </script>
 <div class="row">
     <div class="col-lg-5 col-md-5 col-sm-9 col-12 form-group">
         <label>@Localizer["Country"]</label>
-        @await Component.InvokeAsync("IsdCountryInput", new { id = "CityCountry" })
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-12 form-group">
-        <label for="cboStateCode">@Localizer["State"]</label>
-        <select class="selectpicker" data-live-search="true" id="cboStateCode" title="Select" onchange=" fnGridLoadCityList();">
-            <option value="0">Select</option>
-        </select>
+        @await Component.InvokeAsync("IsdCountryInput", new { id = "StateCountry" })
     </div>
 </div>
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-        <table id="jqgCityCode"></table>
-        <div id="jqpCityCode"></div>
+        <table id="jqgStateCodes"></table>
+        <div id="jqpStateCodes"></div>
     </div>
 </div>
 
-<div class="modal fade in" id="PopupCityCode" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fade in" id="PopupStateCode" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
         <div class="modal-content">
             <div class="modal-header popupHeader">
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title">@Localizer["AddCityList"]</h4>
+                <h4 class="modal-title">@Localizer["AddStateList"]</h4>
             </div>
 
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <input type="text" class="form-control" id="txtCityCode" style="display:none">
+                        <input type="text" class="form-control" id="txtStateCode" style="display:none">
                     </div>
                     <div class="col-lg-12 col-12">
                         <div class="form-group">
-                            <label for="txtCityDescription"> @Localizer["CityDescription"]</label>
-                            <input id="txtCityDescription" class="form-control" type="text" maxlength="50" />
+                            <label for="txtStateDescription"> @Localizer["StateDescription"]</label>
+                            <input id="txtStateDescription" class="form-control" type="text" maxlength="50" />
                         </div>
                     </div>
 
@@ -104,10 +93,10 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button class="mdl-button primary-button" id="btnSaveCityCode" onclick="fnSaveCityCodes();">
+                        <button class="mdl-button primary-button" id="btnSaveStateCode" onclick="fnSaveStateCodes();">
                             <i class="fa fa-save"></i> @Localizer[" Save "]
                         </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelCityCode">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelStateCode">
                             <i class="fa fa-times"></i> @Localizer["Cancel"]
                         </button>
                     </div>

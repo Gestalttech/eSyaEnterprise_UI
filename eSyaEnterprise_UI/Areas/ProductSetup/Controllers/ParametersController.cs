@@ -27,7 +27,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         /// 
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_06_00()
+        public IActionResult EPS_03_00()
         {
             ViewBag.formName = "Parameters";
             return View();
@@ -207,7 +207,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region Link Parameter Schema
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_31_00()
+        public async Task<IActionResult> EPS_20_00()
         {
 
             try

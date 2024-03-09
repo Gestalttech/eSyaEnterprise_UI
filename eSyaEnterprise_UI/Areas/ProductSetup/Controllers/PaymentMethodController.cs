@@ -33,7 +33,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_34_00()
+        public async Task<IActionResult> EPS_17_00()
         {
             try
             {
