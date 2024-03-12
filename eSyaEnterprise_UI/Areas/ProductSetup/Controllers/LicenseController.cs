@@ -1086,159 +1086,159 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         }
         #endregion
 
-        #region Tax Identification
-        [Area("ProductSetup")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPS_19_00()
-        {
-            try
-            {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetIndiaISDCodes");
-                if (serviceResponse.Status)
-                {
-                    if (serviceResponse.Data != null)
-                    {
-                        ViewBag.ISDCodeList = serviceResponse.Data.Select(b => new SelectListItem
-                        {
-                            Value = b.Isdcode.ToString(),
-                            Text = b.Isdcode.ToString() + '-' + b.CountryName,
-                        }).ToList();
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
-                    }
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
-                }
-                return View();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:TaxIdentification");
-                throw;
-            }
-        }
-        /// <summary>
-        ///Get Tax Identification by Country Code for Grid
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> GetTaxIdentificationByISDCode(int ISDCode)
-        {
-            try
-            {
-                var parameter = "?ISDCode=" + ISDCode;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_TaxIdentification>>("TaxIdentification/GetTaxIdentificationByISDCode" + parameter);
-                if (serviceResponse.Status)
-                {
-                    if (serviceResponse.Data != null)
-                    {
-                        return Json(serviceResponse.Data);
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
-                        return Json(new { Status = false, StatusCode = "500" });
-                    }
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
-                throw;
-                //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        //#region Tax Identification
+        //[Area("ProductSetup")]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        //public async Task<IActionResult> EPS_19_00()
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetIndiaISDCodes");
+        //        if (serviceResponse.Status)
+        //        {
+        //            if (serviceResponse.Data != null)
+        //            {
+        //                ViewBag.ISDCodeList = serviceResponse.Data.Select(b => new SelectListItem
+        //                {
+        //                    Value = b.Isdcode.ToString(),
+        //                    Text = b.Isdcode.ToString() + '-' + b.CountryName,
+        //                }).ToList();
+        //            }
+        //            else
+        //            {
+        //                _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:TaxIdentification");
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:TaxIdentification");
+        //        throw;
+        //    }
+        //}
+        ///// <summary>
+        /////Get Tax Identification by Country Code for Grid
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> GetTaxIdentificationByISDCode(int ISDCode)
+        //{
+        //    try
+        //    {
+        //        var parameter = "?ISDCode=" + ISDCode;
+        //        var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_TaxIdentification>>("TaxIdentification/GetTaxIdentificationByISDCode" + parameter);
+        //        if (serviceResponse.Status)
+        //        {
+        //            if (serviceResponse.Data != null)
+        //            {
+        //                return Json(serviceResponse.Data);
+        //            }
+        //            else
+        //            {
+        //                _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+        //                return Json(new { Status = false, StatusCode = "500" });
+        //            }
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetTaxIdentificationByISDCode:For ISDCode {0}", ISDCode);
+        //        throw;
+        //        //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
 
-        /// <summary>
-        /// Insert Tax Identification 
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateTaxIdentification(DO_TaxIdentification tax_Ident)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationId.ToString()) || tax_Ident.TaxIdentificationId == 0)
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification" });
-                }
-                if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationDesc))
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification Description" });
-                }
-                //else if (string.IsNullOrEmpty(tax_Ident.TaxCode.ToString()) || tax_Ident.TaxCode == 0)
-                //{
-                //    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Tax Description" });
-                //}
-                else
-                {
-                    tax_Ident.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                    tax_Ident.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                    tax_Ident.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                    if (tax_Ident.InsertStatus == 0)
-                    {
-                        var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/InsertIntoTaxIdentiFication", tax_Ident);
-                        if (serviceResponse.Status)
-                            return Json(serviceResponse.Data);
-                        else
-                        {
-                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
-                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                        }
-                    }
-                    else
-                    {
-                        var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/UpdateTaxIdentiFication", tax_Ident);
-                        if (serviceResponse.Status)
-                            return Json(serviceResponse.Data);
-                        else
-                        {
-                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
-                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
-                return Json(new { Status = false, Message = ex.ToString() });
-                //return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
-            }
-        }
-        /// <summary>
-        /// Activate or De Activate Tax Identification
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveTaxIdentification(bool status, int Isd_code, int TaxIdentificationId)
-        {
+        ///// <summary>
+        ///// Insert Tax Identification 
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> InsertOrUpdateTaxIdentification(DO_TaxIdentification tax_Ident)
+        //{
+        //    try
+        //    {
+        //        if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationId.ToString()) || tax_Ident.TaxIdentificationId == 0)
+        //        {
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification" });
+        //        }
+        //        if (string.IsNullOrEmpty(tax_Ident.TaxIdentificationDesc))
+        //        {
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Tax Identification Description" });
+        //        }
+        //        //else if (string.IsNullOrEmpty(tax_Ident.TaxCode.ToString()) || tax_Ident.TaxCode == 0)
+        //        //{
+        //        //    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Tax Description" });
+        //        //}
+        //        else
+        //        {
+        //            tax_Ident.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //            tax_Ident.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //            tax_Ident.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        //            if (tax_Ident.InsertStatus == 0)
+        //            {
+        //                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/InsertIntoTaxIdentiFication", tax_Ident);
+        //                if (serviceResponse.Status)
+        //                    return Json(serviceResponse.Data);
+        //                else
+        //                {
+        //                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+        //                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //                }
+        //            }
+        //            else
+        //            {
+        //                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("TaxIdentification/UpdateTaxIdentiFication", tax_Ident);
+        //                if (serviceResponse.Status)
+        //                    return Json(serviceResponse.Data);
+        //                else
+        //                {
+        //                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+        //                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:InsertOrUpdateTaxIdentification:params:" + JsonConvert.SerializeObject(tax_Ident));
+        //        return Json(new { Status = false, Message = ex.ToString() });
+        //        //return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
+        //    }
+        //}
+        ///// <summary>
+        ///// Activate or De Activate Tax Identification
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> ActiveOrDeActiveTaxIdentification(bool status, int Isd_code, int TaxIdentificationId)
+        //{
 
-            try
-            {
+        //    try
+        //    {
 
-                var parameter = "?status=" + status + "&Isd_code=" + Isd_code + "&TaxIdentificationId=" + TaxIdentificationId;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("TaxIdentification/ActiveOrDeActiveTaxIdentification" + parameter);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //        var parameter = "?status=" + status + "&Isd_code=" + Isd_code + "&TaxIdentificationId=" + TaxIdentificationId;
+        //        var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("TaxIdentification/ActiveOrDeActiveTaxIdentification" + parameter);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:ActiveOrDeActiveTaxIdentification:For TaxIdentificationId {0} ", TaxIdentificationId);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-        #endregion
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:ActiveOrDeActiveTaxIdentification:For TaxIdentificationId {0} ", TaxIdentificationId);
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
+        //#endregion
 
         #region Location Wise Menu
         [Area("ProductSetup")]

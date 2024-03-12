@@ -8,6 +8,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int Nationality = 51;
         public const int PaymentMethod = 87;
         public const int InstrumentType = 88;
+
         #endregion
 
         #region Config Facalities

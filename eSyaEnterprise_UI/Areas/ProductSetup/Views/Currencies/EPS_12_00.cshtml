@@ -1,0 +1,170 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EPS_11_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/js/ProductSetup/CurrencyDenominationInformation.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+    @*<script src="~/js/jquery.inputmask/inputmask-userdefined.js"></script>
+    <script src="~/js/jquery.inputmask/jquery.inputmask.min.js"></script>*@
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+
+        CurrencyCode: '@Localizer["CurrencyCode"]',
+        CurrencyName: '@Localizer["CurrencyName"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Denomination: '@Localizer["Denomination"]',
+        DenominationSequence: '@Localizer["DenominationSequence"]',
+        EffectiveDate: '@Localizer["EffectiveDate(MM/DD/YYYY)"]',
+        Add: '@Localizer["Add"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        Delete: '@Localizer["Delete"]',
+        DenominationId: '@Localizer["DenominationId"]',
+        DenominationDescription: '@Localizer["DenominationDescription"]',
+        BNorCNId: '@Localizer["BNorCNId"]',
+        DenominationConversion: '@Localizer["DenominationConversion"]',
+        BankNoteorCoin: '@Localizer["BankNoteorCoin"]',
+        AddCurrencyDenomination: '@Localizer["AddCurrencyDenomination"]',
+        UpdateCurrencyDenomination: '@Localizer["UpdateCurrencyDenomination"]',
+        Update: '@Localizer["Update"]',
+        ViewCurrencyDenomination: '@Localizer["ViewCurrencyDenomination"]',
+        Activate: '@Localizer["Activate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        CurrencyDenomination: '@Localizer["CurrencyDenomination"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        CurrencyCodeAddDenomination_E6: '@Localizer["UI0027"]',
+        CurrencyBnOrCn_E7: '@Localizer["UI0028"]',
+        Denomination_E8: '@Localizer["UI0029"]',
+        DenominationDesc_E9: '@Localizer["UI0030"]',
+        DenominationConversion_E10: '@Localizer["UI0031"]',
+        SequenceNumber_E11: '@Localizer["UI0032"]',
+        EffectiveDate_E12: '@Localizer["UI0033"]',
+    }
+</script>
+
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12 form-group">
+        <label> @Localizer["CurrencyName"]</label>
+        <select class="selectpicker" data-live-search="true" id="cbocurrencycode" title="" data-size="8" asp-items="@ViewBag.currencies" onchange="fnGridLoadCurrencyDenomination()"></select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgCurrencyDenomination"></table>
+        <div id="jqpCurrencyDenomination"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="PopupCurrencyDenomination" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["CurrencyDenomination"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row padbot4">
+
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label> @Localizer["BNorCNId"] </label>
+                            <select class="selectpicker" data-live-search="false" id="cboBnorCnId" title="">
+                                <option value="0">@Localizer["Select"]</option>
+                                <option value="B">@Localizer["BankNote"]</option>
+                                <option value="C">@Localizer["Coin"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="lable-color" for="txtDenomId">@Localizer["DenominationId"]</label>
+                            <input id="txtDenomId" class="form-control" autocomplete="off" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="lable-color" for="txtDenomDescription">@Localizer["DenominationDescription"]</label>
+                            <input id="txtDenomDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="lable-color" for="txtDenomConversion">@Localizer["DenominationConversion"]</label>
+                            <input id="txtDenomConversion" class="form-control decimalFormat" type="text" autocomplete="off" maxlength="50" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="lable-color" for="txtSequence">@Localizer["DenominationSequence"]</label>
+                            <input id="txtSequence" class="form-control integerFormat numberonly" autocomplete="off" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["EffectiveDateFrom"] <span class="lblInfo">(DD/MM/YYYY)</span></label>
+                            <input id="txtEffectiveDate" class="form-control datepicker" type="text" autocomplete="off" maxlength="50" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="default-checkbox separate">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveCurrencyDenomination" onclick="fnSaveCurrencyDenomination()">
+                            @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateCurrencyDenomination" onclick="fnDeleteCurrencyDenomination()"><i class="fa-solid fa-ban"></i>  @Localizer["Deactivate"] </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal" id="btnCancelCurrencyDenomination">  @Localizer["Cancel"] </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        $("#txtEffectiveDate").datepicker({
+            minDate: 0,
+            dateFormat: _cnfDateFormat
+        });
+    });
+
+</script>

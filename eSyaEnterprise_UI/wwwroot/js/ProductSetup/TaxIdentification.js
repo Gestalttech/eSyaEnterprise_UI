@@ -25,7 +25,7 @@ function fnISDCountryCode_onChange() {
 }
 function fnGridLoadTaxIdentification() {
     var ISDCode = $("#cboCountryCode").val();
-    var URL = getBaseURL() + '/License/GetTaxIdentificationByISDCode?ISDCode=' + ISDCode;
+    var URL = getBaseURL() + '/Country/GetTaxIdentificationByISDCode?ISDCode=' + ISDCode;
     $("#jqgTaxIdentification").jqGrid('GridUnload');
     $("#jqgTaxIdentification").jqGrid({
         url: URL,
@@ -207,7 +207,7 @@ function fnSaveTaxIdentification() {
     }
 
     $.ajax({
-        url: getBaseURL() + '/License/InsertOrUpdateTaxIdentification',
+        url: getBaseURL() + '/Country/InsertOrUpdateTaxIdentification',
         type: 'POST',
         datatype: 'json',
         data: { tax_Ident },
@@ -272,7 +272,7 @@ function fnDeleteTaxIdentification() {
     }
     $("#btnDeactivateTaxIdentification").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/License/ActiveOrDeActiveTaxIdentification?status=' + a_status + '&Isd_code=' + $("#cboCountryCode").val() + '&TaxIdentificationId=' + $("#txtTaxIdentificationID").val(),
+        url: getBaseURL() + '/Country/ActiveOrDeActiveTaxIdentification?status=' + a_status + '&Isd_code=' + $("#cboCountryCode").val() + '&TaxIdentificationId=' + $("#txtTaxIdentificationID").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {

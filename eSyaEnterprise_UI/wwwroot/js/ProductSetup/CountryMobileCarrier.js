@@ -22,14 +22,14 @@ function fnLoadGridCountryMobileCarrier() {
     $("#jqgCountryMobileCarrier").GridUnload();
 
     $("#jqgCountryMobileCarrier").jqGrid({
-        //url: getBaseURL() + ,
+        url: getBaseURL() + '/Country/GetMobileCarriers',
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.ISDCode, localization.MobilePrefix, localization.MobileNoDigit, localization.Active, localization.Actions],
         colModel: [
-            { name: "ISDCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "Isdcode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "MobilePrefix", width:80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
             { name: "MobileNoDigit", width:80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
@@ -75,7 +75,6 @@ function fnLoadGridCountryMobileCarrier() {
     });
     fnAddGridSerialNoHeading();
 }
-
 function fnAddCountryMobileCarrier() {
     _isInsert = true;
     fnClearFields();
@@ -87,11 +86,15 @@ function fnAddCountryMobileCarrier() {
     $("#btnSaveCountryMobileCarrier").show();
     $("#btndeActiveCountryMobileCarrier").hide();
 }
-
 function fnEditCountryMobileCarrier(e, actiontype) {
     var rowid = $("#jqgCountryMobileCarrier").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgCountryMobileCarrier').jqGrid('getRowData', rowid);
-    
+
+    $("#cboCountryMobileCarrier").val(rowData.Isdcode).selectpicker('refresh');; 
+    $("#cboCountryMobileCarrier").next().attr('disabled', true).selectpicker('refresh');;
+    $("#txtMobilePrefix").val(rowData.MobilePrefix);
+    $("#txtMobilePrefix").attr('readonly', true);
+    $("#txtMobileNoDigit").val(rowData.MobileNoDigit); 
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -147,7 +150,7 @@ function fnEditCountryMobileCarrier(e, actiontype) {
         $("#btnSaveCountryMobileCarrier").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveCountryMobileCarrier").html(localization.DActivate);
+            $("#btndeActiveCountryMobileCarrier").html(localization.Deactivate);
         }
         else {
             $("#btndeActiveCountryMobileCarrier").html(localization.Activate);
@@ -162,27 +165,37 @@ function fnEditCountryMobileCarrier(e, actiontype) {
         });
     }
 }
-
 function fnSaveCountryMobileCarrier() {
 
-    if (IsStringNullorEmpty($("#txtMobileDesc").val())) {
-        fnAlert("w", "EPS_22_00", "UI0201", errorMsg.ActionDesc_E4);
+    if (IsStringNullorEmpty($("#cboCountryMobileCarrier").val()) || $("#cboCountryMobileCarrier").val() == '0' || $("#cboCountryMobileCarrier").val()=="0") {
+        fnAlert("w", "EPS_18_00", "UI0201", "Please select ISD Code");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtMobilePrefix").val())) {
+        fnAlert("w", "EPS_18_00", "UI0201", "Please Enter Mobile Prefix");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtMobileNoDigit").val())) {
+        fnAlert("w", "EPS_18_00", "UI0201", "Please Enter Mobile Number Digit");
         return;
     }
 
-    obj_action = {
-        ActionId: $("#txtActionId").val() === '' ? 0 : $("#txtActionId").val(),
-        ActionDesc: $("#txtActionDesc").val(),
+    objmob = {
+        Isdcode: $("#cboCountryMobileCarrier").val(),
+        MobilePrefix: $("#txtMobilePrefix").val(),
+        MobileNoDigit: $("#txtMobileNoDigit").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
     $("#btnSaveCountryMobileCarrier").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/CountryMobileCarrier/InsertOrUpdateCountryMobileCarrier',
+        url: getBaseURL() + '/Country/InsertOrUpdateMobileCarrier',
         type: 'POST',
         datatype: 'json',
-        data: { isInsert: _isInsert, obj: obj_action },
+        //data: { isInsert: _isInsert, obj: obj_action },
+        data: { obj: objmob },
+
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -202,18 +215,18 @@ function fnSaveCountryMobileCarrier() {
         }
     });
 }
-
 function fnGridRefreshCountryMobileCarrier() {
     $("#jqgCountryMobileCarrier").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
-
 function fnClearFields() {
-    $("#txtActionId").val('');
-    $("#txtActionDesc").val('');
+    $("#cboCountryMobileCarrier").val('0').selectpicker('refresh');
+    $("#txtMobilePrefix").val('');
+    $("#txtMobileNoDigit").val('');
     $("#chkActiveStatus").prop('disabled', false);
     $("#btnSaveCountryMobileCarrier").attr("disabled", false);
     $("#btndeActiveCountryMobileCarrier").attr("disabled", false);
     $("input,textarea").attr('readonly', false);
+    $("#cboCountryMobileCarrier").next().attr('disabled', false).selectpicker('refresh');
 }
 
 $("#btnCancelCountryMobileCarrier").click(function () {
@@ -221,7 +234,6 @@ $("#btnCancelCountryMobileCarrier").click(function () {
     $('#PopupCountryMobileCarrier').modal('hide');
     fnClearFields();
 });
-
 function SetGridControlByAction() {
     $('#jqgAdd').removeClass('ui-state-disabled');
 
@@ -229,7 +241,6 @@ function SetGridControlByAction() {
         $('#jqgAdd').addClass('ui-state-disabled');
     }
 }
-
 function fnDeleteCountryMobileCarrier() {
 
     var a_status;
@@ -242,7 +253,7 @@ function fnDeleteCountryMobileCarrier() {
     }
     $("#btndeActiveCountryMobileCarrier").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/CountryMobileCarrier/ActiveOrDeActiveCountryMobileCarrier?status=' + a_status + '&actionId=' + $("#txtActionId").val(),
+        url: getBaseURL() + '/Country/ActiveOrDeActiveMobileCarrier?status=' + a_status + '&ISDCode=' + $("#cboCountryMobileCarrier").val() + '&MobilePrefix=' + $("#txtMobilePrefix").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
@@ -265,4 +276,7 @@ function fnDeleteCountryMobileCarrier() {
             $("#btndeActiveCountryMobileCarrier").html('De Activate');
         }
     });
+}
+function fnISDCountryCode_onChange() {
+    console.log($("#cboCountryMobileCarrier").val());
 }
