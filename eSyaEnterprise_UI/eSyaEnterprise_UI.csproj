@@ -10,6 +10,9 @@
     <Compile Remove="Areas\Admin\Views\Rules\**" />
     <Compile Remove="Areas\ConfigInventory\Views\Grouping\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
+    <Compile Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
+    <Compile Remove="Areas\ProductSetup\Views\Connect\**" />
+    <Compile Remove="Areas\ProductSetup\Views\License\**" />
     <Compile Remove="Areas\TokenSystem\Views\Addon\**" />
     <Compile Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <Compile Remove="Areas\TokenSystem\Views\Generate\**" />
@@ -17,6 +20,9 @@
     <Content Remove="Areas\Admin\Views\Rules\**" />
     <Content Remove="Areas\ConfigInventory\Views\Grouping\**" />
     <Content Remove="Areas\ConfigProduct\**" />
+    <Content Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
+    <Content Remove="Areas\ProductSetup\Views\Connect\**" />
+    <Content Remove="Areas\ProductSetup\Views\License\**" />
     <Content Remove="Areas\TokenSystem\Views\Addon\**" />
     <Content Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <Content Remove="Areas\TokenSystem\Views\Generate\**" />
@@ -24,6 +30,9 @@
     <EmbeddedResource Remove="Areas\Admin\Views\Rules\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\Views\Grouping\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
+    <EmbeddedResource Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
+    <EmbeddedResource Remove="Areas\ProductSetup\Views\Connect\**" />
+    <EmbeddedResource Remove="Areas\ProductSetup\Views\License\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Addon\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Generate\**" />
@@ -31,6 +40,9 @@
     <None Remove="Areas\Admin\Views\Rules\**" />
     <None Remove="Areas\ConfigInventory\Views\Grouping\**" />
     <None Remove="Areas\ConfigProduct\**" />
+    <None Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
+    <None Remove="Areas\ProductSetup\Views\Connect\**" />
+    <None Remove="Areas\ProductSetup\Views\License\**" />
     <None Remove="Areas\TokenSystem\Views\Addon\**" />
     <None Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <None Remove="Areas\TokenSystem\Views\Generate\**" />
@@ -62,9 +74,21 @@
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
     <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ProductSetup\Controllers\BusinessCalendarController.cs" />
+    <Compile Remove="Areas\ProductSetup\Controllers\ConnectController.cs" />
+    <Compile Remove="Areas\ProductSetup\Controllers\ControlController.cs" />
+    <Compile Remove="Areas\ProductSetup\Controllers\LicenseController.cs" />
     <Compile Remove="Areas\ProductSetup\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_BusinessCalendar.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_BusinessEntity.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_BusinessSubscription.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_CalendarHeader.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnect.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnectHeader.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_EntityPreferredLanguage.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_LocationMenuLink.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_SMSConnect.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\AddonController.cs" />
@@ -83,7 +107,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\ProductSetup\Views\License\EPS_19_00.cshtml" />
+    <Content Remove="Areas\ProductSetup\Views\Control\EPS_08_00.cshtml" />
+    <Content Remove="Areas\ProductSetup\Views\Control\EPS_09_00.cshtml" />
+    <Content Remove="Areas\ProductSetup\Views\Control\EPS_21_00.cshtml" />
+    <Content Remove="Areas\ProductSetup\Views\Control\EPS_23_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Rules\EPS_24_00.cshtml" />
     <Content Remove="Areas\Stores\Views\ConfigStores\ECS_03_00.cshtml" />
     <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
@@ -137,6 +164,19 @@
     <Content Remove="wwwroot\js\ConfigInventory\ItemSubCategory.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
+    <Content Remove="wwwroot\js\ProductSetup\BusinessCalendar.js" />
+    <Content Remove="wwwroot\js\ProductSetup\BusinessLocation.js" />
+    <Content Remove="wwwroot\js\ProductSetup\BusinessSubscription.js" />
+    <Content Remove="wwwroot\js\ProductSetup\CalendarDetails.js" />
+    <Content Remove="wwwroot\js\ProductSetup\CalendarHeader.js" />
+    <Content Remove="wwwroot\js\ProductSetup\CalendarPatientID.js" />
+    <Content Remove="wwwroot\js\ProductSetup\DocumentControl.js" />
+    <Content Remove="wwwroot\js\ProductSetup\DocumentFormLink.js" />
+    <Content Remove="wwwroot\js\ProductSetup\EmailConnect.js" />
+    <Content Remove="wwwroot\js\ProductSetup\FormDocumentLink.js" />
+    <Content Remove="wwwroot\js\ProductSetup\LocationwiseMenu.js" />
+    <Content Remove="wwwroot\js\ProductSetup\MapRuleswithLocation.js" />
+    <Content Remove="wwwroot\js\ProductSetup\SMSConnect.js" />
     <Content Remove="wwwroot\js\ProductSetup\UserRoleActionLink.js" />
     <Content Remove="wwwroot\js\TokenSystem\CounterAddon.js" />
     <Content Remove="wwwroot\js\TokenSystem\TokenManagement.js" />
@@ -185,6 +225,7 @@
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
+    <Folder Include="Areas\ProductSetup\Views\Control\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />
