@@ -42,6 +42,7 @@ using eSyaEnterprise_UI.Areas.ConfigSKU.Data;
 using eSyaEnterprise_UI.Areas.ConfigPatient.Data;
 using eSyaEnterprise_UI.Areas.Customer.Data;
 using eSyaEnterprise_UI.Areas.GenerateToken.Data;
+using eSyaEnterprise_UI.Areas.CalDoc.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -255,6 +256,15 @@ builder.Services.AddHttpClient<IeSyaTokenSystemAPIServices, eSyaTokenSystemAPISe
 builder.Services.AddHttpClient<IeSyaGenerateTokenAPIServices, eSyaGenerateTokenAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaGenerateToken_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
+builder.Services.AddHttpClient<IeSyaCalDocAPIServices, eSyaCalDocAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaCalDoc_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));

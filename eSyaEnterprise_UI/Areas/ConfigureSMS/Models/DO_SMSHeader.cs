@@ -30,4 +30,9 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Models
         public string TerminalID { get; set; }
         public string FormID { get; set; }
     }
+    public class DO_BusinessLocation
+    {
+        public int BusinessKey { get; set; }
+        public string LocationDescription { get; set; }
+    }
 }

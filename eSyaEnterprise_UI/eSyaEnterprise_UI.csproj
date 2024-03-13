@@ -217,6 +217,8 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
+    <Folder Include="Areas\CalDoc\Controllers\" />
+    <Folder Include="Areas\CalDoc\Views\" />
     <Folder Include="Areas\ConfigInventory\Controllers\" />
     <Folder Include="Areas\ConfigInventory\Data\" />
     <Folder Include="Areas\ConfigInventory\Models\" />
