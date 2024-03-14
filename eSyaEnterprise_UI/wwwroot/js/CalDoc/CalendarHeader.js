@@ -8,30 +8,33 @@
 });
 
 $('#txtCalDefFRMDate').change(function () {
-    var date = this.valueAsDate;
-    date.setDate(date.getDate() + 365);
-    $('#txtCalDefTillDate')[0].valueAsDate = date;
+    
+    var myDate = this.valueAsDate;
+    myDate.setFullYear(myDate.getFullYear() + 1, myDate.getMonth()+1, myDate.getDate()-1);
+    $('#txtCalDefTillDate')[0].valueAsDate = myDate;
 });
 
 function fnGridLoadCalendarHeader() {
     $("#jqgCalendarHeader").jqGrid('GridUnload');
     $("#jqgCalendarHeader").jqGrid({
-        url: getBaseURL() + '/Control/GetCalendarHeaders',
+        url: getBaseURL() + '/CalendarControl/GetCalendarHeaders',
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CalenderType, localization.Year, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Active],
+        colNames: ["",localization.CalenderType, localization.Year,"", localization.StartMonth, localization.CalenderKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Active],
         colModel: [
-            { name: "CalenderType", width: 70, editable: true, align: 'left', hidden: false },
+            { name: "CalenderType", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "CalenderType", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year;NA: Not Applicable" } },
 
             { name: "Year", width: 70, editable: true, align: 'left', hidden: false },
-            //{ name: "FromDate", editable: true, width: 90, align: 'left', formatter: 'date' },
+            { name: "StartMonth", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "StartMonth", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "1: January;2: February;3: March;4: April;5: May;6: June;7: July;8: Auguest;9: September;10: October;11: November;12: December" } },
+            { name: "CalenderKey", width: 70, editable: true, align: 'left', hidden: true },
             {
                 name: 'FromDate', index: 'FromDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
-            //{ name: "TillDate", editable: true, width: 90, align: 'left', formatter: 'date' },
             {
                 name: 'TillDate', index: 'TillDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
@@ -95,7 +98,7 @@ function fnSaveCalendarHeader() {
     }
     $("#btnSaveCalendarHeader").attr('disabled', true);
     $.ajax({
-        url: getBaseURL() + '/Control/InsertCalendarHeader',
+        url: getBaseURL() + '/CalendarControl/InsertCalendarHeader',
         type: 'POST',
         data: JSON.stringify(obj),
         contentType: "application/json",

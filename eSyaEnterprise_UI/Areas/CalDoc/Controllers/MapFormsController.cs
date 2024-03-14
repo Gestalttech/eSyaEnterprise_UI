@@ -21,7 +21,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
         #region FORM LINK TO DOCUMENT
 
-        [Area("ProductSetup")]
+        [Area("CalDoc")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ECD_03_00()
         {
@@ -36,7 +36,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetFormDocumentlink?formID=" + formID);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("DocumentControl/GetFormDocumentlink?formID=" + formID);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -76,7 +76,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Control/GetFormsForDocumentControl");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("DocumentControl/GetFormsForDocumentControl");
 
                 if (serviceResponse.Status)
                 {
@@ -123,7 +123,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                     return true;
                 });
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateFormDocumentLinks", obj);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DocumentControl/UpdateFormDocumentLinks", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -145,7 +145,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
         #region DOCUMENT LINK TO FORM
 
-        [Area("ProductSetup")]
+        [Area("CalDoc")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ECD_04_00()
         {
@@ -161,7 +161,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetDocumentFormlink?documentID=" + documentID);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("DocumentControl/GetDocumentFormlink?documentID=" + documentID);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -201,7 +201,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("Control/GetActiveDocumentControls");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_FormDocumentLink>>("DocumentControl/GetActiveDocumentControls");
 
                 if (serviceResponse.Status)
                 {
@@ -248,7 +248,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                     return true;
                 });
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/UpdateDocumentFormlink", obj);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DocumentControl/UpdateDocumentFormlink", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

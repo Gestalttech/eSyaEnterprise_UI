@@ -40,7 +40,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("Control/GetCalendarHeaders");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("CalendarControl/GetCalendarHeaders");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -68,10 +68,11 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
             try
             {
+                obj.StartMonth = obj.FromDate.Month;
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarHeader", obj);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CalendarControl/InsertCalendarHeader", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -113,7 +114,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("Control/GetDocumentControlMaster");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("DocumentControl/GetDocumentControlMaster");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -122,35 +123,6 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                 else
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDocumentControlMaster");
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetDocumentControlMaster");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-
-
-        /// <summary>
-        /// Getting Parameters By Document ID
-        /// </summary>
-
-        [HttpGet]
-        public async Task<JsonResult> GetDocumentParametersByID(int documentID)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Control/GetDocumentParametersByID?documentID=" + documentID);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDocumentParametersByID:documentID {0} ", documentID);
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
@@ -174,7 +146,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/AddOrUpdateDocumentControl", obj);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DocumentControl/AddOrUpdateDocumentControl", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -200,7 +172,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
             {
 
                 var parameter = "?status=" + status + "&documentId=" + documentId;
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Control/ActiveOrDeActiveDocumentControlMaster" + parameter);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("DocumentControl/ActiveOrDeActiveDocumentControlMaster" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

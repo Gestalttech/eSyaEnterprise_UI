@@ -59,7 +59,7 @@ function fnLoadDocumentCtrlGrid() {
     //}];
     $("#jqvDocContManagement").jqGrid({
 
-        url: getBaseURL() + '/Control/GetDocumentControlMaster',
+        url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
         mtype: 'GET',
         datatype: 'json',
         // data: gridData,
@@ -71,7 +71,7 @@ function fnLoadDocumentCtrlGrid() {
             { name: "DocumentDesc", width: 220, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "SchemeId", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "SchemaId", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
@@ -148,7 +148,7 @@ function fnAddDocumentControl() {
     $('#PopupDocContrManagement').modal('show');
     $('#PopupDocContrManagement').modal({ backdrop: 'static', keyboard: false });
     $('#PopupDocContrManagement').find('.modal-title').text(localization.AddDocumentControl);
-    // $("#chkActiveStatus").parent().addClass("is-checked");
+    $("#chkActiveStatus").parent().addClass("is-checked");
     $("#btnsaveDocContrManagement").html('<i class="fa fa-save"></i> ' + localization.Save);
     $("#chkActiveStatus").prop('disabled', true);
     $("#btnsaveDocContrManagement").show();
@@ -170,23 +170,9 @@ function fnEditDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#cboSchemeName").val(rowData.SchemeId);
-    $('#cboSchemeName').selectpicker('refresh');
+    $("#txtSchemeName").val(rowData.SchemaId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    $("#txtDocumentCategory").val(rowData.DocumentCategory);
-    $("#txtCategoryDescription").val(rowData.DocCatgDesc);
-
-    $.ajax({
-        url: getBaseURL() + '/Control/GetDocumentParametersByID',
-        data: {
-            documentID: rowData.DocumentId
-        },
-        success: function (result) {
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result);
-        }
-    });
-
+   
 
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
@@ -198,20 +184,33 @@ function fnEditDocumentControl(e) {
     $("#chkActiveStatus").prop('disabled', true);
 
     if (rowData.UsageStatus === "true") {
-        $('#PopupDocContrManagement').find('.modal-title').text(localization.ViewDocumentControl);
-        $("#btnsaveDocContrManagement").hide();
-        $("#btnDeactivateDocumentControl").hide();
-        $("input,textarea").attr('readonly', true);
-        $("select").next().attr('disabled', true);
-        $("input[id*=chk]").attr('disabled', true);
-        $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
-            $("#btnsaveDocContrManagement").show();
-            $("input,textarea").attr('readonly', false);
-            $("select").next().attr('disabled', false);
-            $("input[id*=chk]").attr('disabled', false);
-            $("#btnsaveDocContrManagement").attr('disabled', false);
-        })
+
+        $("#chkUsageStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkUsageStatus").parent().removeClass("is-checked");
     }
+    if (rowData.ActiveStatus === "true") {
+
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
+
+    $('#PopupDocContrManagement').find('.modal-title').text(localization.UpdateDocumentControl);
+    $("#btnsaveDocContrManagement").show();
+    $("#btnDeactivateDocumentControl").hide();
+    $("input,textarea").attr('readonly', false);
+    $("select").next().attr('disabled', false);
+    $("input[id*=chk]").attr('disabled', false);
+    $("#txtDocumentId").prop('readonly', true);
+    $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
+        $("#btnsaveDocContrManagement").show();
+        $("input,textarea").attr('readonly', false);
+        $("select").next().attr('disabled', false);
+        $("input[id*=chk]").attr('disabled', false);
+        $("#btnsaveDocContrManagement").attr('disabled', false);
+    });
+  
 
 }
 
@@ -220,22 +219,20 @@ function fnSaveDocumentControl() {
     if (fnValidateDocumentControl() === false) {
         return;
     }
-    var dPar = eSyaParams.GetJSONValue();
     var obj = {
         DocumentId: $("#txtDocumentId").val(),
         DocumentType: $("#txtDocumentType").val(),
         ShortDesc: $("#txtShortDesc").val(),
         DocumentDesc: $("#txtDocumentDesc").val(),
-        SchemeId: $("#cboSchemeName").val(),
+        SchemaId: $("#txtSchemeName").val(),
         UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
-
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         Isadd: Isadd,
-        l_DocumentParameter: dPar
     };
 
     $("#btnsaveDocContrManagement").attr('disabled', true);
     $.ajax({
-        url: getBaseURL() + '/Control/AddOrUpdateDocumentControl',
+        url: getBaseURL() + '/CalendarControl/AddOrUpdateDocumentControl',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -279,7 +276,7 @@ function fnValidateDocumentControl() {
         fnAlert("w", "EPS_08_00", "UI0019", errorMsg.ShortDesc_E6);
         return false;
     }
-    if (IsStringNullorEmpty($("#cboSchemeName").val())) {
+    if (IsStringNullorEmpty($("#txtSchemeName").val())) {
         fnAlert("w", "EPS_08_00", "UI0020", errorMsg.SelectScheme_E7);
         return false;
     }
@@ -308,24 +305,20 @@ function fnViewDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#cboSchemeName").val(rowData.SchemeId);
-    $('#cboSchemeName').selectpicker('refresh');
+    $("#txtSchemeName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    $("#txtDocumentCategory").val(rowData.DocumentCategory);
-    $("#txtCategoryDescription").val(rowData.DocCatgDesc);
+    if (rowData.UsageStatus === "true") {
 
-    $.ajax({
-        url: getBaseURL() + '/Control/GetDocumentParametersByID',
-        data: {
-            documentID: rowData.DocumentId
-        },
-        success: function (result) {
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result);
-        }
-    });
+        $("#chkUsageStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkUsageStatus").parent().removeClass("is-checked");
+    }
+    if (rowData.ActiveStatus === "true") {
 
-
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
     $('#PopupDocContrManagement').find('.modal-title').text(localization.ViewDocumentControl);
@@ -340,7 +333,7 @@ function fnViewDocumentControl(e) {
         $("select").next().attr('disabled', false);
         $("input[id*=chk]").attr('disabled', false);
         $("#btnsaveDocContrManagement").attr('disabled', false);
-    })
+    });
 }
 
 function fnPopUpDeleteDocumentControl(e) {
@@ -356,24 +349,20 @@ function fnPopUpDeleteDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#cboSchemeName").val(rowData.SchemeId);
-    $('#cboSchemeName').selectpicker('refresh');
+    $("#txtSchemeName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    $("#txtDocumentCategory").val(rowData.DocumentCategory);
-    $("#txtCategoryDescription").val(rowData.DocCatgDesc);
+    if (rowData.UsageStatus === "true") {
 
-    $.ajax({
-        url: getBaseURL() + '/Control/GetDocumentParametersByID',
-        data: {
-            documentID: rowData.DocumentId
-        },
-        success: function (result) {
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result);
-        }
-    });
+        $("#chkUsageStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkUsageStatus").parent().removeClass("is-checked");
+    }
+    if (rowData.ActiveStatus === "true") {
 
-
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
     $('#PopupDocContrManagement').find('.modal-title').text("Active/De Active Document Control");
@@ -389,65 +378,17 @@ function fnPopUpDeleteDocumentControl(e) {
         $("select").next().attr('disabled', false);
         $("input[id*=chk]").attr('disabled', false);
         $("#btnsaveDocContrManagement").attr('disabled', false);
-    })
+    });
 }
-
-//$(document).on('click', function (e) {
-//    console.log(e.target);
-//    console.log(e.target.value);
-//    if (e.target.id == 'chkIsVoucherTypeApplicable' && e.target.value == "on") {
-
-//        $("#chkIsVoucherTypeApplicable").parent().addClass("is-checked");
-//        $("#chkIsPaymentAndVoucherType").parent().removeClass("is-checked");
-//        $(this).bind('click');
-//    }
-//    if (e.target.id == 'chkIsPaymentAndVoucherType' && e.target.value == "on") {
-//        $('input[type="checkbox"]').prop('checked',false);
-//        $("#chkIsPaymentAndVoucherType").parent().addClass("is-checked"); 
-//        $("#chkIsVoucherTypeApplicable").parent().removeClass("is-checked");
-//        $(this).bind('click');
-//    }
-//})
-
-//function fnChkIsVoucherTypeApplicable(ele) {
-//    debugger;
-//    console.log(ele);
-//    if (ele.checked) {
-//        $('input[name="PaymentAndVoucherType"]').prop('checked', false);
-//        $("#chkIsPaymentAndVoucherType").parent().removeClass("is-checked");
-//        $("#chkIsVoucherTypeApplicable").parent().addClass("is-checked");
-
-
-//    }
-//    else {
-//        $("#chkIsVoucherTypeApplicable").parent().removeClass("is-checked");
-//    }
-
-
-
-// }
-//function fnChkIsPaymentAndVoucherType(ele) {
-//    console.log(ele);
-//    if (ele.checked) {
-//        $('input[name="VoucherType"]').prop('checked', false);
-//        $("#chkIsVoucherTypeApplicable").parent().removeClass("is-checked");
-//        $("#chkIsPaymentAndVoucherType").parent().addClass("is-checked");
-
-//    }
-
-//   }
-
 function fnClearFields() {
     $("#txtDocumentId").val('');
     $("#txtDocumentType").val('');
     $("#txtShortDesc").val('');
-    $("#cboSchemeName").val('');
-    $('#cboSchemeName').selectpicker('refresh');
+    $("#txtSchemeName").val('');
     $("#txtDocumentDesc").val('');
     $("#chkUsageStatus").parent().removeClass("is-checked");
-
+    $("#chkActiveStatus").parent().addClass("is-checked");
     $("#btnsaveDocContrManagement").attr('disabled', false);
-    eSyaParams.ClearValue();
 }
 
 function fnDeleteDocumentControl() {
@@ -462,7 +403,7 @@ function fnDeleteDocumentControl() {
     }
     $("#btnDeactivateDocumentControl").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Control/ActiveOrDeActiveDocumentControl?status=' + a_status + '&documentId=' + $("#txtDocumentId").val(),
+        url: getBaseURL() + '/CalendarControl/ActiveOrDeActiveDocumentControl?status=' + a_status + '&documentId=' + $("#txtDocumentId").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {

@@ -3,7 +3,7 @@ var prevSelectedID = '';
 function fnLoadFormsTree() {
 
     $.ajax({
-        url: getBaseURL() + '/Control/GetFormsForDocumentControl',
+        url: getBaseURL() + '/MapForms/GetFormsForDocumentControl',
         type: 'Post',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -62,7 +62,7 @@ function fnLoadDocumentGrid(_formID) {
 
     $("#jqgFormtoDocumentLink").GridUnload();
     $("#jqgFormtoDocumentLink").jqGrid({
-        url: getBaseURL() + '/Control/GetFormDocumentlink?formID=' + _formID,
+        url: getBaseURL() + '/MapForms/GetFormDocumentlink?formID=' + _formID,
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
@@ -122,7 +122,7 @@ function fnSaveFormDocumentLink() {
 
     $("#btnSave").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Control/UpdateFormDocumentLinks',
+        url: getBaseURL() + '/MapForms/UpdateFormDocumentLinks',
         type: 'POST',
         datatype: 'json',
         data: { obj: Doc_Links },
