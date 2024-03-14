@@ -23,7 +23,6 @@
         DocumentDescription: '@Localizer["DocumentDescription"]',
         DocumentId: '@Localizer["DocumentId"]',
         Scheme: '@Localizer["Schema"]',
-        UsageStatus: '@Localizer["UsageStatus"]',
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]',
         Edit: '@Localizer["Edit"]',
@@ -48,7 +47,9 @@
         IsPaymentAndVoucherType: '@Localizer["IsPaymentAndVoucherType"]',
         VoucherTypeAppl: '@Localizer["IsVoucherTypeApplicable"]',
         PaymentandVoucherType: '@Localizer["IsPaymentandVoucherType"]',
-        DocumentControlManagement: '@Localizer["DocumentControlManagement"]'
+        DocumentControlManagement: '@Localizer["DocumentControlManagement"]',
+        UsageStatus: '@Localizer["UsageStatus"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
     };
     var errorMsg = {
         DocumentID_E1: '@Localizer["UI0017"]',
@@ -116,21 +117,8 @@
 
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["Schema"] </label>
-                            <select id="cboSchemeName" class="selectpicker" title="Select" data-size="10" data-live-search="true" data-container="body">
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
-                                <option value="06">06</option>
-                                <option value="07">07</option>
-                                <option value="08">08</option>
-                                <option value="09">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
+                            <label for="txtSchemeName">@Localizer["Schema"] </label>
+                            <input id="txtSchemeName" class="form-control" type="text" autocomplete="off" maxlength="50" />
                         </div>
                     </div>
 
@@ -139,6 +127,20 @@
                             <label>@Localizer["DocumentDescription"] </label>
                             <input id="txtDocumentDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
                         </div>
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkUsageStatus">
+                            <input type="checkbox" id="chkUsageStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["UsageStatus"]</span>
+                        </label>
+
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+
                     </div>
                     <div id="dvParameters" class="col-lg-12 col-md-12 col-sm-12">
                         <p class="subheading">
