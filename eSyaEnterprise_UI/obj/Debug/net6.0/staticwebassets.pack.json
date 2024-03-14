@@ -3953,30 +3953,6 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\AreaController.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\BusinessCalendar.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\BusinessCalendar.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\BusinessLocation.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\BusinessLocation.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\BusinessSubscription.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\BusinessSubscription.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarDetails.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarDetails.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarHeader.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarHeader.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CalendarPatientID.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\CalendarPatientID.js"
-    },
-    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\CityList.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\CityList.js"
     },
@@ -4005,22 +3981,6 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\CurrencyDenominationInformation.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\DocumentControl.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\DocumentControl.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\DocumentFormLink.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\DocumentFormLink.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\EmailConnect.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\EmailConnect.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\FormDocumentLink.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\FormDocumentLink.js"
-    },
-    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\FormsMenu.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\FormsMenu.js"
     },
@@ -4029,24 +3989,12 @@
       "PackagePath": "staticwebassets\\js\\ProductSetup\\LinkParameterSchema.js"
     },
     {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LocationwiseMenu.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\LocationwiseMenu.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\MapRuleswithLocation.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\MapRuleswithLocation.js"
-    },
-    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Parameters.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\Parameters.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\PaymentMethod.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\PaymentMethod.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\SMSConnect.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\SMSConnect.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\StateList.js",
