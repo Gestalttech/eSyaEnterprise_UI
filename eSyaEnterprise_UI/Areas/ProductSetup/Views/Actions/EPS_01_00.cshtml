@@ -51,15 +51,15 @@
 
 
 <div class="modal fade in" id="PopupActions" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
-        <div class="modal-content ">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content">
             <div class="modal-header popupHeader">
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
                 <h4 class="modal-title">@Localizer["AddActions"]</h4>
             </div>
 
             <div class="modal-body">
-                <div class="row padbot4">
+                <div class="row">
                     <div class="col-sm-12">
                         <input type="text" class="form-control" id="txtActionId" style="display:none">
                     </div>
@@ -68,7 +68,6 @@
                         <div class="form-group">
                             <label for="txtActionDesc"> @Localizer["ActionDescription"]</label>
                             <input id="txtActionDesc" class="form-control" maxlength="50" type="text" />
-
                         </div>
                     </div>
 
@@ -77,7 +76,6 @@
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                         </label>
-
                     </div>
                 </div>
             </div>
@@ -89,7 +87,6 @@
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelActions"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteActions();"><i class="fa fa-times"></i> @Localizer["Deactivate"] </button>
-
                     </div>
                 </div>
             </div>

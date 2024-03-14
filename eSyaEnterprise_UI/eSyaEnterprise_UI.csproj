@@ -158,6 +158,7 @@
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
     <Content Remove="wwwroot\js\Admin\InventoryRules.js" />
     <Content Remove="wwwroot\js\Admin\UnitofMeasure.js" />
+    <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
     <Content Remove="wwwroot\js\ConfigInventory\ItemCategory.js" />
     <Content Remove="wwwroot\js\ConfigInventory\ItemGroup.js" />
     <Content Remove="wwwroot\js\ConfigInventory\ItemGroupCategoryMapping.js" />
@@ -217,8 +218,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\CalDoc\Controllers\" />
-    <Folder Include="Areas\CalDoc\Views\" />
     <Folder Include="Areas\ConfigInventory\Controllers\" />
     <Folder Include="Areas\ConfigInventory\Data\" />
     <Folder Include="Areas\ConfigInventory\Models\" />
