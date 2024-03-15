@@ -219,9 +219,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\ConfigBusiness\Controllers\" />
-    <Folder Include="Areas\ConfigBusiness\Models\" />
-    <Folder Include="Areas\ConfigBusiness\Views\" />
     <Folder Include="Areas\ConfigeSya\Controllers\" />
     <Folder Include="Areas\ConfigeSya\Models\" />
     <Folder Include="Areas\ConfigeSya\Views\" />
