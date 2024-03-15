@@ -121,10 +121,10 @@ function fnAddBusinessLocation() {
 
     fnClearFields();
     var id = $("#cboBusinessEntity").val();
-    //if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
-    //    fnAlert("w", "ECB_02_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
-    //}
-    //else {
+    if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
+        fnAlert("w", "ECB_02_00", "UI0051", errorMsg.SelectBusinessEntity_E6);
+    }
+    else {
         _isInsert = true;
         fnClearFields();
         BindCities();
@@ -166,7 +166,7 @@ function fnAddBusinessLocation() {
         fnGetBusinessUnitType();
         fnLoadGridPreferredLanguage();
 
-    //}
+    }
 }
 
 function fnEditBusinessLocation(e, actiontype) {
