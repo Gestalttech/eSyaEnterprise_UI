@@ -128,7 +128,7 @@ function fnAddCurrencyMaster() {
 
 function fnEditCurrencyMaster(e) {
     if (_userFormRole.IsEdit === false) {
-        fnAlert("w", "EPS_10_00", "UIC02", errorMsg.editauth_E2);
+        fnAlert("w", "EPS_11_00", "UIC02", errorMsg.editauth_E2);
         return;
     }
     var rowid = $("#jqgCurrencyMaster").jqGrid('getGridParam', 'selrow');
@@ -218,23 +218,23 @@ function fnSaveCurrencyMaster() {
 function ValidateCurrencyMaster() {
 
     if ($("#cboCurrencyCode").val() === '0') {
-        fnAlert("w", "EPS_10_00", "UI0022", errorMsg.CurrencyCode_E6);
+        fnAlert("w", "EPS_11_00", "UI0022", errorMsg.CurrencyCode_E6);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCurrencyName").val())) {
-        fnAlert("w", "EPS_10_00", "UI0023", errorMsg.CurrencyName_E7);
+        fnAlert("w", "EPS_11_00", "UI0023", errorMsg.CurrencyName_E7);
         return false;
     }
     if ($("#cboSymbol").val() === '0') {
-        fnAlert("w", "EPS_10_00", "UI0024", errorMsg.CurrencySymbol_E8);
+        fnAlert("w", "EPS_11_00", "UI0024", errorMsg.CurrencySymbol_E8);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDecimalPlaces").val())) {
-        fnAlert("w", "EPS_10_00", "UI0025", errorMsg.DecimalPlaces_E9);
+        fnAlert("w", "EPS_11_00", "UI0025", errorMsg.DecimalPlaces_E9);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDecimalPortionWord").val())) {
-        fnAlert("w", "EPS_10_00", "UI0026", errorMsg.DecimalPortionWord_E10);
+        fnAlert("w", "EPS_11_00", "UI0026", errorMsg.DecimalPortionWord_E10);
         return false;
     }
 
@@ -246,7 +246,7 @@ function fnGridRefreshCurrencyMaster() {
 
 function fnViewCurrencyMaster(e) {
     if (_userFormRole.IsView === false) {
-        fnAlert("w", "EPS_10_00", "UIC03", errorMsg.vieweauth_E3);
+        fnAlert("w", "EPS_11_00", "UIC03", errorMsg.vieweauth_E3);
         return;
     }
     var rowid = $("#jqgCurrencyMaster").jqGrid('getGridParam', 'selrow');
@@ -298,7 +298,7 @@ function fnViewCurrencyMaster(e) {
 
 function fnPopUpDeleteCurrencyMaster(e) {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "EPS_10_00", "UIC04", errorMsg.deleteauth_E4);
+        fnAlert("w", "EPS_11_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
     var rowid = $("#jqgCurrencyMaster").jqGrid('getGridParam', 'selrow');

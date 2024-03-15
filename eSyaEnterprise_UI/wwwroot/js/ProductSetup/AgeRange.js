@@ -111,7 +111,7 @@ function fnEditAgeRange(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_33_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EPS_10_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $('#PopupAgeRange').modal('show');
@@ -124,7 +124,7 @@ function fnEditAgeRange(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_33_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPS_10_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupAgeRange').modal('show');
@@ -143,7 +143,7 @@ function fnEditAgeRange(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_33_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+            fnAlert("w", "EPS_10_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
             return;
         }
         $('#PopupAgeRange').modal('show');
@@ -172,25 +172,25 @@ function fnEditAgeRange(e, actiontype) {
 
 function fnSaveAgeRange() {
     if (IsStringNullorEmpty($("#txtRangeDesc").val())) {
-        fnAlert("w", "EPS_33_00", "UI0230", errorMsg.RangeDesc_E6);
+        fnAlert("w", "EPS_10_00", "UI0230", errorMsg.RangeDesc_E6);
         return;
     }
     if ($("#txtAgeRangeFrom").val() == '' || $("#txtAgeRangeFrom").val() == null || $("#txtAgeRangeFrom").val() == undefined) {
-        fnAlert("w", "EPS_33_00", "UI0231", errorMsg.AgeRangeFrom_E7);
+        fnAlert("w", "EPS_10_00", "UI0231", errorMsg.AgeRangeFrom_E7);
         return;
     }
     if ($("#cboRangeFromPeriod").val() == '0' || $("#cboRangeFromPeriod").val() == 0) {
-        fnAlert("w", "EPS_33_00", "UI0232", errorMsg.RangeFromPeriod_E8);
+        fnAlert("w", "EPS_10_00", "UI0232", errorMsg.RangeFromPeriod_E8);
         return;
     }
 
     if ($("#txtAgeRangeTo").val() == '' || $("#txtAgeRangeTo").val() == null || $("#txtAgeRangeTo").val() == undefined) {
-        fnAlert("w", "EPS_33_00", "UI0233", errorMsg.AgeRangeTo_E9);
+        fnAlert("w", "EPS_10_00", "UI0233", errorMsg.AgeRangeTo_E9);
         return;
     }
 
     if ($("#cboRangeToPeriod").val() == '0' || $("#cboRangeToPeriod").val() == 0) {
-        fnAlert("w", "EPS_33_00", "UI0234", errorMsg.RangeToPeriod_E10);
+        fnAlert("w", "EPS_10_00", "UI0234", errorMsg.RangeToPeriod_E10);
         return;
     }
     obj_range = {

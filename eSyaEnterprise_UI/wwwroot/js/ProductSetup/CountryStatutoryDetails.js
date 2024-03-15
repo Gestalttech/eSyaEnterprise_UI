@@ -94,7 +94,7 @@ function fnAddStatutoryCodes() {
     fnClearFields();
     var id = $("#cboIsdcode").val();
     if (id === 0 || id === "0") {
-        fnAlert("w", "EPS_13_00", "UI0039", errorMsg.SelectIsdCode_E6);
+        fnAlert("w", "EPS_14_00", "UI0039", errorMsg.SelectIsdCode_E6);
     }
     else {
         $("#PopupStatutoryCode").modal('show');
@@ -260,15 +260,15 @@ function fnSaveStatutoryCodes() {
 function fnValidateStatutoryCodes() {
     
     if (IsStringNullorEmpty($("#txtStatShortCode").val())) {
-        fnAlert("w", "EPS_13_00", "UI0040", errorMsg.ShortCode_E7);
+        fnAlert("w", "EPS_14_00", "UI0040", errorMsg.ShortCode_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#txtStatutoryDescription").val())) {
-        fnAlert("w", "EPS_13_00", "UIC11", errorMsg.Description_E8);
+        fnAlert("w", "EPS_14_00", "UIC11", errorMsg.Description_E8);
         return false;
     }
     if (IsStringNullorEmpty($("#txtStatPattern").val())) {
-        fnAlert("w", "EPS_13_00", "UIC12", errorMsg.Pattern_E9);
+        fnAlert("w", "EPS_14_00", "UIC12", errorMsg.Pattern_E9);
         return false;
     }
 }

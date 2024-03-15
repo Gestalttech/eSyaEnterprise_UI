@@ -144,7 +144,7 @@ function fnEditCodeTypes(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_04_00", "UIC02", errorMsg.editauth_E3);
+            fnAlert("w", "EPS_06_00", "UIC02", errorMsg.editauth_E3);
             return;
         }
         $('#PopupCodeTypes').modal('show');
@@ -157,7 +157,7 @@ function fnEditCodeTypes(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_04_00", "UIC03", errorMsg.vieweauth_E4);
+            fnAlert("w", "EPS_06_00", "UIC03", errorMsg.vieweauth_E4);
             return;
         }
         $('#PopupCodeTypes').modal('show');
@@ -176,7 +176,7 @@ function fnEditCodeTypes(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_04_00", "UIC04", errorMsg.deleteauth_E5);
+            fnAlert("w", "EPS_06_00", "UIC04", errorMsg.deleteauth_E5);
             return;
         }
         $('#PopupCodeTypes').modal('show');
@@ -206,11 +206,11 @@ function fnEditCodeTypes(e, actiontype) {
 var _isInsert = true;
 function fnSaveCodeType() {
     if (IsStringNullorEmpty($("#txtCodeType").val())) {
-        fnAlert("w", "EPS_04_00", "UI0001", errorMsg.codeType_E1);
+        fnAlert("w", "EPS_06_00", "UI0001", errorMsg.codeType_E1);
         return;
     }
     if (IsStringNullorEmpty($("#txtCodeDescription").val())) {
-        fnAlert("w", "EPS_04_00", "UI0002", errorMsg.codedesc_E2);
+        fnAlert("w", "EPS_06_00", "UI0002", errorMsg.codedesc_E2);
         return;
     }
     ct_type = {

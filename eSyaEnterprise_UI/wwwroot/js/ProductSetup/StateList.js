@@ -75,7 +75,7 @@ function fnAddStateCodes() {
   
     var id = $("#cboStateCountry").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboStateCountry").val())) {
-        fnAlert("w", "EPS_14_00", "UI0041", errorMsg.SelectAnyCountry_E6)
+        fnAlert("w", "EPS_15_00", "UI0041", errorMsg.SelectAnyCountry_E6)
     }
     else
     {
@@ -107,7 +107,7 @@ function fnEditStateCodes(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_14_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_15_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupStateCode').modal('show');
@@ -120,7 +120,7 @@ function fnEditStateCodes(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_14_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_15_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupStateCode').modal('show');
@@ -161,12 +161,12 @@ $("#btnCancelStateCode").click(function () {
 function fnSaveStateCodes() {
     
     if ($("#cboStateCountry").val() === 0 || $("#cboStateCountry").val() === "0" || IsStringNullorEmpty($("#cboStateCountry").val())) {
-        fnAlert("w", "EPS_14_00", "UI0042", errorMsg.CountryCode_E7);
+        fnAlert("w", "EPS_15_00", "UI0042", errorMsg.CountryCode_E7);
         return;
     }
 
     if (IsStringNullorEmpty($("#txtStateDescription").val())) {
-        fnAlert("w", "EPS_14_00", "UI0043", errorMsg.StateDesc_E8);
+        fnAlert("w", "EPS_15_00", "UI0043", errorMsg.StateDesc_E8);
         return;
     }
 

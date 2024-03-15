@@ -106,7 +106,7 @@ function fnAddApplicationCodes() {
     fnClearFields();
     var id = $("#cboCodeType").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboCodeType").val())) {
-        fnAlert("w", "EPS_04_00", "UI0011", errorMsg.Applicationcode_E1);
+        fnAlert("w", "EPS_07_00", "UI0011", errorMsg.Applicationcode_E1);
     }
     else {
         $('#PopupApplicationCodes').modal('show');
@@ -148,7 +148,7 @@ function fnEditApplicationCodes(e, actiontype) {
     $("#btnSaveApplicationCode").attr('disabled', false);
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_05_00", "UIC02", errorMsg.editauth_E3);
+            fnAlert("w", "EPS_07_00", "UIC02", errorMsg.editauth_E3);
             return;
         }
         $('#PopupApplicationCodes').modal('show').css({ top: firstRow.top + 31 });
@@ -165,7 +165,7 @@ function fnEditApplicationCodes(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_05_00", "UIC03", errorMsg.vieweauth_E4);
+            fnAlert("w", "EPS_07_00", "UIC03", errorMsg.vieweauth_E4);
             return;
         }
         $('#PopupApplicationCodes').modal('show');
@@ -178,7 +178,7 @@ function fnEditApplicationCodes(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_05_00", "UIC04", errorMsg.deleteauth_E5);
+            fnAlert("w", "EPS_07_00", "UIC04", errorMsg.deleteauth_E5);
             return;
         }
         $('#PopupApplicationCodes').modal('show');
@@ -204,16 +204,16 @@ function fnEditApplicationCodes(e, actiontype) {
 
 function fnSaveApplicationCode() {
     if (IsStringNullorEmpty($("#txtApplicationCodeDescription").val())) {
-        fnAlert("w", "EPS_05_00", "UI0012", errorMsg.ApplicationcodeDesc_E6);
+        fnAlert("w", "EPS_07_00", "UI0012", errorMsg.ApplicationcodeDesc_E6);
         return;
     }
     if ($("#cboCodeType").val() === 0 || $("#cboCodeType").val() === "0") {
-        fnAlert("w", "EPS_05_00", "UI0011", errorMsg.Applicationcode_E1);
+        fnAlert("w", "EPS_07_00", "UI0011", errorMsg.Applicationcode_E1);
         return;
     }
   
     if (IsStringNullorEmpty($("#txtShortCode").val())) {
-        fnAlert("w", "EPS_05_00", "UI0040", errorMsg.ShortCode_E7);
+        fnAlert("w", "EPS_07_00", "UI0040", errorMsg.ShortCode_E7);
         return;
     }
       $("#btnSaveApplicationCode").attr('disabled', true);

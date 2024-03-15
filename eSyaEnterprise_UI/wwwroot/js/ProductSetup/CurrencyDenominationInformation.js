@@ -85,7 +85,7 @@ function fnAddCurrencyDenomination() {
     fnClearFields();
     var id = $("#CurrencyCode").val();
     if (id === 0 || id === "0") {
-           fnAlert("w", "EPS_11_00", "UI0027", errorMsg.CurrencyCodeAddDenomination_E6);
+           fnAlert("w", "EPS_12_00", "UI0027", errorMsg.CurrencyCodeAddDenomination_E6);
     }
     else {
         $('#PopupCurrencyDenomination').modal('show');
@@ -142,7 +142,7 @@ function fnEditCurrencyDenomination(e, actiontype) {
 
     if (actiontype == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_11_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_12_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupCurrencyDenomination').modal('show');
@@ -159,7 +159,7 @@ function fnEditCurrencyDenomination(e, actiontype) {
     }
     if (actiontype == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_11_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_12_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupCurrencyDenomination').modal('show');
@@ -177,7 +177,7 @@ function fnEditCurrencyDenomination(e, actiontype) {
     }
     if (actiontype == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_11_00", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EPS_12_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupCurrencyDenomination').modal('show');
@@ -257,28 +257,28 @@ function fnGridRefreshCurrencyDenomination() {
 
 function fnValidateCurrencyDenomination() {
     if ($("#cboBnorCnId").val() === "0" || $("#cboBnorCnId").val() === "") {
-        fnAlert("w", "EPS_11_00", "UI0028", errorMsg.CurrencyBnOrCn_E7);
+        fnAlert("w", "EPS_12_00", "UI0028", errorMsg.CurrencyBnOrCn_E7);
         return false;
     }
 
     if (IsStringNullorEmpty($("#txtDenomId").val())) {
-        fnAlert("w", "EPS_11_00", "UI0029", errorMsg.Denomination_E8);
+        fnAlert("w", "EPS_12_00", "UI0029", errorMsg.Denomination_E8);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDenomDescription").val())) {
-        fnAlert("w", "EPS_11_00", "UI0030", errorMsg.DenominationDesc_E9);
+        fnAlert("w", "EPS_12_00", "UI0030", errorMsg.DenominationDesc_E9);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDenomConversion").val())) {
-        fnAlert("w", "EPS_11_00", "UI0031", errorMsg.DenominationConversion_E10);
+        fnAlert("w", "EPS_12_00", "UI0031", errorMsg.DenominationConversion_E10);
         return false;
     }
     if (IsStringNullorEmpty($("#txtSequence").val())) {
-        fnAlert("w", "EPS_11_00", "UI0032", errorMsg.SequenceNumber_E11);
+        fnAlert("w", "EPS_12_00", "UI0032", errorMsg.SequenceNumber_E11);
         return false;
     }
     if (IsStringNullorEmpty($("#txtEffectiveDate").val())) {
-        fnAlert("w", "EPS_11_00", "UI0033", errorMsg.EffectiveDate_E12);
+        fnAlert("w", "EPS_12_00", "UI0033", errorMsg.EffectiveDate_E12);
         return false;
     }
 }

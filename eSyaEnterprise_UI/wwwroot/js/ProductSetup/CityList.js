@@ -75,11 +75,11 @@ function fnAddCityCodes() {
     var id = $("#cboCityCountry").val();
     var sid = $("#cboStateCode").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboCityCountry").val())) {
-        fnAlert("w", "EPS_15_00", "UI0041", errorMsg.CountrySelect_E6);
+        fnAlert("w", "EPS_16_00", "UI0041", errorMsg.CountrySelect_E6);
     }
     else if (sid === 0 || sid === "0" || IsStringNullorEmpty($("#cboStateCode").val()))
     {
-        fnAlert("w", "EPS_15_00", "UI0044", errorMsg.StateSelect_E7);
+        fnAlert("w", "EPS_16_00", "UI0044", errorMsg.StateSelect_E7);
     }
     else
     {
@@ -111,7 +111,7 @@ function fnEditCityCodes(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_15_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_16_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupCityCode').modal('show');
@@ -124,7 +124,7 @@ function fnEditCityCodes(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_15_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_16_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupCityCode').modal('show');
@@ -165,15 +165,15 @@ $("#btnCancelCityCode").click(function () {
 function fnSaveCityCodes() {
 
     if ($("#cboCityCountry").val() === 0 || $("#cboCityCountry").val() === "0" || IsStringNullorEmpty($("#cboCityCountry").val())) {
-        fnAlert("w", "EPS_15_00", "UI0041", errorMsg.CountrySelect_E8);
+        fnAlert("w", "EPS_16_00", "UI0041", errorMsg.CountrySelect_E8);
         return;
     }
     if ($("#cboStateCode").val() === 0 || $("#cboStateCode").val() === "0" || IsStringNullorEmpty($("#cboStateCode").val())) {
-        fnAlert("w", "EPS_15_00", "UI0044", errorMsg.StateSelect_E7);
+        fnAlert("w", "EPS_16_00", "UI0044", errorMsg.StateSelect_E7);
         return;
     }
     if (IsStringNullorEmpty($("#txtCityDescription").val())) {
-        fnAlert("w", "EPS_15_00", "UI0045", errorMsg.CityDesc_E9);
+        fnAlert("w", "EPS_16_00", "UI0045", errorMsg.CityDesc_E9);
         return;
     }
 

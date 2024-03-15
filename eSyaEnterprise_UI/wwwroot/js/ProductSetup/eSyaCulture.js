@@ -132,7 +132,7 @@ function fnEditeSyaCulture(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_02_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EPS_09_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $('#PopupeSyaCulture').modal('show');
@@ -145,7 +145,7 @@ function fnEditeSyaCulture(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPS_09_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupeSyaCulture').modal('show');
@@ -164,7 +164,7 @@ function fnEditeSyaCulture(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_02_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+            fnAlert("w", "EPS_09_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
             return;
         }
         $('#PopupeSyaCulture').modal('show');
@@ -194,11 +194,11 @@ function fnEditeSyaCulture(e, actiontype) {
 function fnSaveeSyaCulture() {
 
     if (IsStringNullorEmpty($("#txtCultureCode").val())) {
-        fnAlert("w", "EPS_27_00", "UI0204", errorMsg.CultureCode_E4);
+        fnAlert("w", "EPS_09_00", "UI0204", errorMsg.CultureCode_E4);
         return;
     }
     if (IsStringNullorEmpty($("#txtCultureDesc").val())) {
-        fnAlert("w", "EPS_27_00", "UI0205", errorMsg.CultureDesc_E5);
+        fnAlert("w", "EPS_09_00", "UI0205", errorMsg.CultureDesc_E5);
         return;
     }
     obj_cul = {

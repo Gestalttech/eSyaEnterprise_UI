@@ -241,7 +241,7 @@ function fnEditCountryCode(e,actiontype) {
     if (actiontype.trim() == "edit") {
         debugger;
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_12_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EPS_13_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
       
@@ -272,7 +272,7 @@ function fnEditCountryCode(e,actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_12_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EPS_13_00", "UIC03", errorMsg.vieweauth_E3);
              return;
         }
         $('#PopupCountryCode').modal('show');
@@ -295,7 +295,7 @@ function fnEditCountryCode(e,actiontype) {
 
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_12_00", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EPS_13_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupCountryCode').modal('show');
@@ -436,39 +436,39 @@ function fnSaveCountryCode() {
 function fnValidateCountryCode() {
 
     if (IsStringNullorEmpty($("#txtIsdcode").val())) {
-        fnAlert("w", "EPS_12_00", "UI0034", errorMsg.ISDCode_E6);
+        fnAlert("w", "EPS_13_00", "UI0034", errorMsg.ISDCode_E6);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCountrycode").val())) {
-        fnAlert("w", "EPS_12_00", "UI0035", errorMsg.CountryCode_E7);
+        fnAlert("w", "EPS_13_00", "UI0035", errorMsg.CountryCode_E7);
         return false;
     }
     
     if ($("#cboflagImage").val() === '0' || $("#cboflagImage").val() === null) {
-        fnAlert("w", "EPS_12_00", "UI0036", errorMsg.CountryFlag_E8);
+        fnAlert("w", "EPS_13_00", "UI0036", errorMsg.CountryFlag_E8);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCountryName").val())) {
-        fnAlert("w", "EPS_12_00", "UI0037", errorMsg.CountryName_E9);
+        fnAlert("w", "EPS_13_00", "UI0037", errorMsg.CountryName_E9);
         return false;
     }
    
     if ($("#cboCurrencycode").val() === "0" || $("#cboCurrencycode").val() === '0' || IsStringNullorEmpty($("#cboCurrencycode").val())) {
-        fnAlert("w", "EPS_12_00", "UI0038", errorMsg.Currency_E10);
+        fnAlert("w", "EPS_13_00", "UI0038", errorMsg.Currency_E10);
         return false;
     }
     if (IsStringNullorEmpty($("#txtMobileNumberPattern").val())) {
-        fnAlert("w", "EPS_12_00", "UI0266", errorMsg.MobileNumberPattern_E12);
+        fnAlert("w", "EPS_13_00", "UI0266", errorMsg.MobileNumberPattern_E12);
         return false;
     }
     if ($("#cboNationality").val() === "0" || $("#cboNationality").val() === '0' || IsStringNullorEmpty($("#cboNationality").val())) {
-        fnAlert("w", "EPS_12_00", "UI0215", errorMsg.Country_E11);
+        fnAlert("w", "EPS_13_00", "UI0215", errorMsg.Country_E11);
         return false;
     }
     var _POBoxApplicable = $("#chkIsPOBoxAppllicable").parent().hasClass("is-checked");
     if (_POBoxApplicable == true) {
         if (IsStringNullorEmpty($("#txtPOBoxPattern").val())) {
-            fnAlert("w", "EPS_12_00", "UI0267", errorMsg.POBoxApplicable_E13);
+            fnAlert("w", "EPS_13_00", "UI0267", errorMsg.POBoxApplicable_E13);
             return false;
         }
     }
@@ -477,16 +477,16 @@ function fnValidateCountryCode() {
     var _PinOBoxApplicable = $("#chkIsPinApplicable").parent().hasClass("is-checked");
     if (_PinOBoxApplicable == true) {
         if (IsStringNullorEmpty($("#txtPincodePattern").val())) {
-            fnAlert("w", "EPS_12_00", "UI0268", errorMsg.Pincode_E14);
+            fnAlert("w", "EPS_13_00", "UI0268", errorMsg.Pincode_E14);
             return false;
         }
     }
     if (IsStringNullorEmpty($("#txtDateFormat").val())) {
-        fnAlert("w", "EPS_12_00", "UI0269", errorMsg.DateFormat_E15);
+        fnAlert("w", "EPS_13_00", "UI0269", errorMsg.DateFormat_E15);
         return false;
     }
     if (IsStringNullorEmpty($("#txtShortDateFormat").val())) {
-        fnAlert("w", "EPS_12_00", "UI0270", errorMsg.ShortDateFormat_E16);
+        fnAlert("w", "EPS_13_00", "UI0270", errorMsg.ShortDateFormat_E16);
         return false;
     }
     
