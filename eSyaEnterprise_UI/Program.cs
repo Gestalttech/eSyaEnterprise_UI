@@ -43,6 +43,8 @@ using eSyaEnterprise_UI.Areas.ConfigPatient.Data;
 using eSyaEnterprise_UI.Areas.Customer.Data;
 using eSyaEnterprise_UI.Areas.GenerateToken.Data;
 using eSyaEnterprise_UI.Areas.CalDoc.Data;
+using eSyaEnterprise_UI.Areas.ConfigBusiness.Data;
+using eSyaEnterprise_UI.Areas.ConfigeSya.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -265,6 +267,24 @@ builder.Services.AddHttpClient<IeSyaGenerateTokenAPIServices, eSyaGenerateTokenA
 builder.Services.AddHttpClient<IeSyaCalDocAPIServices, eSyaCalDocAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaCalDoc_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
+builder.Services.AddHttpClient<IeSyaConfigBusinessAPIServices, eSyaConfigBusinessAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigBusiness_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
+builder.Services.AddHttpClient<IeSyaConfigeSyaAPIServices, eSyaConfigeSyaAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigeSya_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
