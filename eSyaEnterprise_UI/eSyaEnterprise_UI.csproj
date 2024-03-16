@@ -54,6 +54,7 @@
     <Compile Remove="Areas\Admin\Models\DO_InventoryRules.cs" />
     <Compile Remove="Areas\Admin\Models\DO_UnitofMeasure.cs" />
     <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
+    <Compile Remove="Areas\ConfigBusiness\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
