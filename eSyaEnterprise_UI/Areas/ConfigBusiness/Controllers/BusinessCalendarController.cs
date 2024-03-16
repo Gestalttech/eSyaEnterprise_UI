@@ -51,11 +51,11 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         /// </summary>
 
         [HttpPost]
-        public async Task<JsonResult> GetCalendarHeaders()
+        public async Task<JsonResult> GetCalendarHeaders(int businesskey)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_CalendarHeader>>("Control/GetCalendarHeaders");
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_BusinessCalendarLink>>("CalendarControl/GetCalendarHeaders?businesskey="+ businesskey);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -78,7 +78,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         /// Insert Calendar Header 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertCalendarDetails(DO_CalendarHeader obj)
+        public async Task<JsonResult> InsertCalendarDetails(DO_BusinessCalendarLink obj)
         {
 
             try
@@ -86,7 +86,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Control/InsertCalendarDetails", obj);
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CalendarControl/InsertBusinessKeyIntoCalendar", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

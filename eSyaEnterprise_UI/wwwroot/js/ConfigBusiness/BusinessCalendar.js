@@ -30,7 +30,7 @@ function fnLoadGridBusinessCalendar() {
 
     $("#jqgBusinessCalendar").jqGrid({
 
-        //url: getBaseURL() + '/BusinessCalendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/BusinessCalendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -149,7 +149,7 @@ function fnSaveBusinessCalendar() {
     $("#btnSaveBusinessCalendar").attr("disabled", true);
 
     $.ajax({
-       // url: getBaseURL() + '/BusinessCalendar/InsertOrUpdateBusinessCalendar',
+        url: getBaseURL() + '/BusinessCalendar/InsertOrUpdateBusinessCalendar',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },

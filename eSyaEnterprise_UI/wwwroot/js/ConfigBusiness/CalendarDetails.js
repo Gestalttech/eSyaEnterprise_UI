@@ -1,4 +1,7 @@
-﻿
+﻿function fnloadCalendarDetails() {
+    fnGridLoadCalendarDetails();
+
+}
 $(document).ready(function () {
     $('#cboBusinessKey').selectpicker('refresh');
     fnGridLoadCalendarDetails();
@@ -21,17 +24,20 @@ $(document).ready(function () {
 function fnGridLoadCalendarDetails() {
     $("#jqgCalendarDetails").jqGrid('GridUnload');
     $("#jqgCalendarDetails").jqGrid({
-        //url: getBaseURL() + '/License/GetCalendarHeaders',
+        url: getBaseURL() + '/BusinessCalendar/GetCalendarHeaders?businesskey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CalenderType, localization.Year, localization.CalendarKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Alreadylinked, localization.Active, localization.Actions],
+        colNames: [localization.CalenderType, localization.Year, localization.CalendarKey,"",localization.StartMonth, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Alreadylinked, localization.Active, localization.Actions],
         colModel: [
             { name: "CalenderType", width: 30, editable: true, align: 'left', hidden: false },
 
             { name: "Year", width: 30, editable: true, align: 'left', hidden: false },
             { name: "CalenderKey", width: 30, editable: true, align: 'left', hidden: false },
+            { name: "StartMonth", width: 30, editable: true, align: 'left', hidden: true }, 
+            { name: "StartMonth", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "1: January;2: February;3: March;4: April;5: May;6: June;7: July;8: Auguest;9: September;10: October;11: November;12: December" } },
+
             {
                 name: 'FromDate', index: 'FromDate', width: 30, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
@@ -107,7 +113,7 @@ function fnSaveCalendarDetails(edit) {
 
 
     $.ajax({
-        url: getBaseURL() + '/License/InsertCalendarDetails',
+        url: getBaseURL() + '/BusinessCalendar/InsertCalendarDetails',
         type: 'POST',
         datatype: 'json',
         data: { obj },

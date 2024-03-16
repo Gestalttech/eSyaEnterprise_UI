@@ -37,6 +37,7 @@
         Actions: '@Localizer["Actions"]',
         GenerateCalendar: '@Localizer["GenerateCalendar"]',
         CalendarDetails: '@Localizer["CalendarDetails"]',
+        StartMonth: '@Localizer["StartMonth"]',
     };
 
     var errorMsg = {
@@ -50,7 +51,7 @@
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="form-group">
             <label class="">@Localizer["BusinessLocation"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" data-container="body" title="" data-size="8" asp-items="@ViewBag.BusinessKey"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" data-container="body" title="" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnloadCalendarDetails()"></select>
 
         </div>
     </div>

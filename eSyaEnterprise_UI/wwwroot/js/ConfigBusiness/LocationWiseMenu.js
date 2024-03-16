@@ -20,7 +20,7 @@ function fnTreeSize() {
 function fnGetLocationWiseMenuList() {
     $('#jstLocationMenuLinkList').jstree("destroy");
     $.ajax({
-       // url: getBaseURL() + '/License/GetLocationMenuLinkbyBusinessKey?businesskey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/LocationMenu/GetLocationMenuLinkbyBusinessKey?businesskey=' + $("#cboBusinessKey").val(),
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -75,7 +75,7 @@ function fnSaveLocationwiseMenuLink() {
 
     $("#btnSave").attr("disabled", true);
     $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateLocationMenuLink',
+        url: getBaseURL() + '/LocationMenu/InsertOrUpdateLocationMenuLink',
         type: 'POST',
         datatype: 'json',
         data: {

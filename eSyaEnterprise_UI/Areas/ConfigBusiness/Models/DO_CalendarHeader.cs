@@ -1,6 +1,6 @@
 ﻿namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Models
 {
-    public class DO_CalendarHeader
+    public class DO_BusinessCalendarLink
     {
         public int BusinessKey { get; set; }
         public string CalenderType { get; set; }
@@ -14,5 +14,8 @@
         public int UserID { get; set; }
         public string TerminalID { get; set; }
         public bool Alreadylinked { get; set; }
+        public int StartMonth { get; set; }
     }
+
+   
 }
