@@ -209,7 +209,7 @@ function fnSaveBusinessEntity() {
     if (fnValidationBusinessEntity() === false) {
         return;
     }
-    $("#jqgUserRoleActionLink").jqGrid('editCell', 0, 0, false).attr("value");
+    $("#jqgPreferredLanguageLink").jqGrid('editCell', 0, 0, false).attr("value");
 
     $("#btnSaveBusinessEntity").attr('disabled', true);
     var EntityID = $("#txtBusinessEntityId").val();
@@ -217,7 +217,7 @@ function fnSaveBusinessEntity() {
     if (EntityID == null || EntityID == "") {
 
         var obj = [];
-        var gvT = $('#jqgUserRoleActionLink').jqGrid('getRowData');
+        var gvT = $('#jqgPreferredLanguageLink').jqGrid('getRowData');
         for (var i = 0; i < gvT.length; ++i) {
             if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
                 var _objBusinessEntity = {
@@ -250,7 +250,7 @@ function fnSaveBusinessEntity() {
     else {
 
         var obj = [];
-        var gvT = $('#jqgUserRoleActionLink').jqGrid('getRowData');
+        var gvT = $('#jqgPreferredLanguageLink').jqGrid('getRowData');
         for (var i = 0; i < gvT.length; ++i) {
             if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
 
@@ -405,8 +405,8 @@ function fnTreeSize() {
 
 
 function fnGridLoadPreferredLanguage() {
-    $("#jqgUserRoleActionLink").jqGrid('GridUnload');
-    $("#jqgUserRoleActionLink").jqGrid({
+    $("#jqgPreferredLanguageLink").jqGrid('GridUnload');
+    $("#jqgPreferredLanguageLink").jqGrid({
         url: getBaseURL() + '/Entity/GetPreferredLanguagebyBusinessKey?BusinessId=' + $("#txtBusinessEntityId").val(),
         datatype: 'json',
         mtype: 'POST',
@@ -424,7 +424,7 @@ function fnGridLoadPreferredLanguage() {
         rowNum: 10,
         rowList: [10, 20, 50, 100],
         loadonce: true,
-        pager: "#jqpUserRoleActionLink",
+        pager: "#jqpPreferredLanguageLink",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -439,12 +439,12 @@ function fnGridLoadPreferredLanguage() {
         cellsubmit: 'clientArray',
         caption: localization.UserRoleActionLink,
         onSelectRow: function (id) {
-            if (id) { $('#jqgUserRoleActionLink').jqGrid('editRow', id, true); }
+            if (id) { $('#jqgPreferredLanguageLink').jqGrid('editRow', id, true); }
         },
         caption: 'User Role Action Link',
         loadComplete: function () {
-            fnJqgridSmallScreen("jqgUserRoleActionLink");
+            fnJqgridSmallScreen("jqgPreferredLanguageLink");
         },
-    }).jqGrid('navGrid', '#jqpUserRoleActionLink', { add: false, edit: false, search: false, del: false, refresh: false });
+    }).jqGrid('navGrid', '#jqpPreferredLanguageLink', { add: false, edit: false, search: false, del: false, refresh: false });
 }
 
