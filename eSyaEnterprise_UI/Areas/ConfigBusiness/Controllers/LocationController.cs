@@ -23,6 +23,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
             _logger = logger;
         }
 
+
         #region New Business Location
         /// <summary>
         /// Business Location

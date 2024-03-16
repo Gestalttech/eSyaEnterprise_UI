@@ -19,6 +19,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         {
             _eSyaConfigBusinessAPIServices = eSyaConfigBusinessAPIServices;
             _logger = logger;
+        
         }
 
         #region Business Entity

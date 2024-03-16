@@ -21,6 +21,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
             _eSyaConfigBusinessAPIServices = eSyaConfigBusinessAPIServices;
             _logger = logger;
         }
+
         #region Location Wise Menu
         [Area("ConfigBusiness")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
