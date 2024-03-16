@@ -23,7 +23,7 @@ function fnHideshowUnits() {
 }
 function LoadBusinessEntityTree() {
     $.ajax({
-        //url: getBaseURL() + '/License/GetBusinessEntitiesforTreeView',
+        url: getBaseURL() + '/Entity/GetBusinessEntitiesforTreeView',
         success: function (result) {
             fnGetBusinessEntities_Success(result);
         },
@@ -170,7 +170,7 @@ function fnFillBusinessEntityInfo() {
     if ($("#txtBusinessEntityId").val() != '' && $("#txtBusinessEntityId").val() != undefined) {
         $.ajax({
             async: false,
-            // url: getBaseURL() + "/License/GetBusinessEntityInfo?BusinessId=" + $("#txtBusinessEntityId").val(),
+            url: getBaseURL() + "/Entity/GetBusinessEntityInfo?BusinessId=" + $("#txtBusinessEntityId").val(),
             type: 'post',
             datatype: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -205,7 +205,7 @@ function fnFillBusinessEntityInfo() {
 }
 
 function fnSaveBusinessEntity() {
-
+    
     if (fnValidationBusinessEntity() === false) {
         return;
     }
@@ -280,7 +280,7 @@ function fnSaveBusinessEntity() {
         };
     }
     $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateBusinessEntity',
+        url: getBaseURL() + '/Entity/InsertOrUpdateBusinessEntity',
         type: 'POST',
         datatype: 'json',
         data: { businessentity },
@@ -356,7 +356,7 @@ function fnDeleteNode() {
     }
     $("#btnDeleteNode").attr('disabled', true);
     $.ajax({
-        //url: getBaseURL() + '/License/DeleteBusinessEntity?BusinessEntityId=' + $("#txtBusinessEntityId").val(),
+        url: getBaseURL() + '/Entity/DeleteBusinessEntity?BusinessEntityId=' + $("#txtBusinessEntityId").val(),
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -407,7 +407,7 @@ function fnTreeSize() {
 function fnGridLoadPreferredLanguage() {
     $("#jqgUserRoleActionLink").jqGrid('GridUnload');
     $("#jqgUserRoleActionLink").jqGrid({
-        // url: getBaseURL() + '/License/GetPreferredLanguagebyBusinessKey?BusinessId=' + $("#txtBusinessEntityId").val(),
+        url: getBaseURL() + '/Entity/GetPreferredLanguagebyBusinessKey?BusinessId=' + $("#txtBusinessEntityId").val(),
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
