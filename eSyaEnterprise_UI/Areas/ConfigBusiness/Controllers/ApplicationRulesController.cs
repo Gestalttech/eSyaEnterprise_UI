@@ -1,7 +1,6 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.Areas.ConfigBusiness.Data;
 using eSyaEnterprise_UI.Areas.ConfigBusiness.Models;
-using eSyaEnterprise_UI.Areas.ProductSetup.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +48,28 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetBusinessKey");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        public async Task<JsonResult> GetProcessMaster()
+        {
+            try
+            {
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_ProcessMaster>>("Rules/GetProcessMaster");
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetProcessMaster");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetProcessMaster");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }

@@ -50,6 +50,8 @@
     </div>
 </div>
 
+
+
 <style>
     .ui-widget-content {
         border-left: 1px solid rgba(0,0,0,0.1) !important;
@@ -71,7 +73,7 @@
 
         function callingJQGrid() {
             grid.jqGrid({
-                //url: getBaseURL() + "/Rules/GetProcessMaster",
+                url: getBaseURL() + "/ApplicationRules/GetProcessMaster",
                 datatype: "json",
                 contenttype: "application/json; charset-utf-8",
                 mtype: 'GET',
@@ -223,7 +225,7 @@
                     }).jqGrid('navGrid', '#' + subGridDivId, { del: false, search: false, add: false, edittext: 'Edit', refresh: false },
                         {
                             editCaption: localization.EditProcessRule,
-                            url: getBaseURL() + '/Rules/InsertorUpdateProcessRulebySegment',
+                            url: getBaseURL() + '/ApplicationRules/InsertorUpdateProcessRulebySegment',
                             closeAfterEdit: true,
                             reloadAfterSubmit: true,
                             beforeShowForm: function (formid) {
@@ -312,7 +314,7 @@
 
     function fnGridProcessRule() {
         $.ajax({
-            //url: getBaseURL() + "/Rules/GetProcessRulebyBusinessKey?BusinessKey=" + $("#cboBusinesskey").val(),
+            url: getBaseURL() + "/ApplicationRules/GetProcessRulebyBusinessKey?BusinessKey=" + $("#cboBusinesskey").val(),
             type: 'post',
             datatype: 'json',
             async: false,

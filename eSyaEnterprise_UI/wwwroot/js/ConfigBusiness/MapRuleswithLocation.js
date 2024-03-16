@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 function fnLoadServiceBusinessLocationTree() {
     $.ajax({
-        //url: getBaseURL() + '/Rules/GetProcessRulesMapwithLocation',
+        url: getBaseURL() + '/ApplicationRules/GetProcessRulesMapwithLocation',
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -137,7 +137,7 @@ function fnSaveRuleswithLocations() {
 
     }
     $.ajax({
-        //url: getBaseURL() + '/Rules/InsertOrUpdateProcessRulesMapwithLocation',
+        url: getBaseURL() + '/ApplicationRules/InsertOrUpdateProcessRulesMapwithLocation',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -175,7 +175,7 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
 
     $("#jqgMapRuleswithLocation").jqGrid('GridUnload');
     $("#jqgMapRuleswithLocation").jqGrid({
-       // url: getBaseURL() + '/Rules/GetProcessRulesMappedwithLocationByID?processID=' + ProcessID + "&ruleID=" + RuleID,
+        url: getBaseURL() + '/ApplicationRules/GetProcessRulesMappedwithLocationByID?processID=' + ProcessID + "&ruleID=" + RuleID,
         datatype: 'json',
         mtype: 'GET',
         contentType: 'application/json; charset=utf-8',
