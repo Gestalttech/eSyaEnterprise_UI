@@ -48,7 +48,7 @@ function fnGridLoadBusinessLocation() {
     $("#jqgBusienssLocation").GridUnload();
 
     $("#jqgBusienssLocation").jqGrid({
-        //url: getBaseURL() + '/License/GetBusinessLocationByBusinessId?BusinessId=' + $("#cboBusinessEntity").val(),
+        url: getBaseURL() + '/Location/GetBusinessLocationByBusinessId?BusinessId=' + $("#cboBusinessEntity").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
@@ -150,9 +150,9 @@ function fnAddBusinessLocation() {
         $("#chkFininfoActiveStatus").parent().addClass("is-checked");
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveLicenseInfo").show();
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
-        $("#btnSaveLicenseInfo").attr("disabled", false);
+        //$("#btnSaveLicenseInfo").show();
+        //$("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
+        //$("#btnSaveLicenseInfo").attr("disabled", false);
         $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
@@ -242,9 +242,9 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#btnSaveFinancialInfo").show();
         $("#chkFininfoActiveStatus").prop('disabled', true);
 
-        $("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
-        $("#btnSaveLicenseInfo").attr("disabled", false);
-        $("#btnSaveLicenseInfo").show();
+        //$("#btnSaveLicenseInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
+        //$("#btnSaveLicenseInfo").attr("disabled", false);
+        //$("#btnSaveLicenseInfo").show();
         $("#chkLicinfoActiveStatus").prop('disabled', true);
 
         $("#btnSaveTaxInfo").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
@@ -270,8 +270,8 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#btnSaveLocationInfo").hide();
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#btnSaveFinancialInfo").hide();
-        $("#btnSaveLicenseInfo").attr("disabled", false);
-        $("#btnSaveLicenseInfo").hide();
+        //$("#btnSaveLicenseInfo").attr("disabled", false);
+        //$("#btnSaveLicenseInfo").hide();
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#btnSaveTaxInfo").hide();
         $("#chkLocinfoActiveStatus").prop('disabled', true);
@@ -287,8 +287,8 @@ function fnEditBusinessLocation(e, actiontype) {
             $("#btnSaveLocationInfo").show();
             $("#btnSaveFinancialInfo").attr("disabled", false);
             $("#btnSaveFinancialInfo").show();
-            $("#btnSaveLicenseInfo").attr("disabled", false);
-            $("#btnSaveLicenseInfo").show();
+            //$("#btnSaveLicenseInfo").attr("disabled", false);
+            //$("#btnSaveLicenseInfo").show();
             $("#btnSaveTaxInfo").attr("disabled", false);
             $("#btnSaveTaxInfo").show();
 
@@ -312,8 +312,8 @@ function fnEditBusinessLocation(e, actiontype) {
         $("#btnSaveLocationInfo").hide();
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#btnSaveFinancialInfo").hide();
-        $("#btnSaveLicenseInfo").attr("disabled", false);
-        $("#btnSaveLicenseInfo").hide();
+        //$("#btnSaveLicenseInfo").attr("disabled", false);
+        //$("#btnSaveLicenseInfo").hide();
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#btnSaveTaxInfo").hide();
         $("#chkLocinfoActiveStatus").prop('disabled', true);
@@ -335,8 +335,8 @@ function fnEditBusinessLocation(e, actiontype) {
             $("#btnSaveLocationInfo").show();
             $("#btnSaveFinancialInfo").attr("disabled", false);
             $("#btnSaveFinancialInfo").show();
-            $("#btnSaveLicenseInfo").attr("disabled", false);
-            $("#btnSaveLicenseInfo").show();
+            //$("#btnSaveLicenseInfo").attr("disabled", false);
+            //$("#btnSaveLicenseInfo").show();
             $("#btnSaveTaxInfo").attr("disabled", false);
             $("#btnSaveTaxInfo").show();
 
@@ -350,7 +350,7 @@ function fnEditBusinessLocation(e, actiontype) {
 
     $.ajax({
         async: false,
-        //url: getBaseURL() + "/License/GetLocationParametersbyBusinessKey?BusinessKey=" + $('#txtBusinesskey').val(),
+        url: getBaseURL() + "/Location/GetLocationParametersbyBusinessKey?BusinessKey=" + $('#txtBusinesskey').val(),
         type: 'POST',
         datatype: 'json',
         success: function (result) {
@@ -519,7 +519,7 @@ function fnSaveLocationInfo() {
     $("#btnSaveLocationInfo").attr("disabled", true);
 
     $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateBusinessLocation',
+        url: getBaseURL() + '/Location/InsertOrUpdateBusinessLocation',
         type: 'POST',
         datatype: 'json',
         data: { isInsert: _isInsert, obj: objloc },
@@ -556,7 +556,7 @@ function fnDeleteLocationInfo() {
     }
     $("#btnDeactivateBusinessLocation").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/License/ActiveOrDeActiveBusinessLocation?status=' + a_status + '&BusinessId=' + $("#cboBusinessEntity").val()
+        url: getBaseURL() + '/Location/ActiveOrDeActiveBusinessLocation?status=' + a_status + '&BusinessId=' + $("#cboBusinessEntity").val()
             + '&LocationId=' + $("#txtlocationId").val(),
         type: 'POST',
         success: function (response) {
@@ -586,7 +586,7 @@ function BindCities() {
 
     $("#cboCityCode").empty();
     $.ajax({
-        //url: getBaseURL() + '/License/GetCityListbyISDCode?isdCode=' + $("#cbolocISD").val(),
+        url: getBaseURL() + '/Location/GetCityListbyISDCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -622,7 +622,7 @@ function BindTaxIdentification() {
 
     $("#cboTaxIdentification").empty();
     $.ajax({
-        //url: getBaseURL() + '/License/GetTaxIdentificationListByIsdCode?isdCode=' + $("#cbolocISD").val(),
+        url: getBaseURL() + '/Location/GetTaxIdentificationListByIsdCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -658,7 +658,7 @@ function BindCurrrencies() {
 
     $("#cboCurrrencyCode").empty();
     $.ajax({
-        //url: getBaseURL() + '/License/GetCurrencyListbyIsdCode?isdCode=' + $("#cbolocISD").val(),
+        url: getBaseURL() + '/Location/GetCurrencyListbyIsdCode?isdCode=' + $("#cbolocISD").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -694,7 +694,7 @@ function fnBindExistingLocationsasSegments() {
 
     $("#cboBusinessSegment").empty();
     $.ajax({
-        //url: getBaseURL() + '/License/GetActiveLocationsAsSegments',
+        url: getBaseURL() + '/Location/GetActiveLocationsAsSegments',
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -740,7 +740,7 @@ function fnGetStateNamebyTaxCode() {
 
     $.ajax({
         type: 'POST',
-        //url: getBaseURL() + '/License/GetStateCodeByISDCode?isdCode=' + $("#cbolocISD").val() + '&TaxIdentificationId=' + $("#cboTaxIdentification").val(),
+        url: getBaseURL() + '/Location/GetStateCodeByISDCode?isdCode=' + $("#cbolocISD").val() + '&TaxIdentificationId=' + $("#cboTaxIdentification").val(),
         success: function (response) {
             if (response !== null) {
                 $("#txtTin").val('');
@@ -773,7 +773,7 @@ function fnToRealCurrency(elem) {
 }
 
 function LoadCurrencybyBusinessKey() {
-    //var URL = getBaseURL() + "/License/GetCurrencybyBusinessKey?Businesskey=" + $("#txtBusinesskey").val();
+    var URL = getBaseURL() + "/Location/GetCurrencybyBusinessKey?Businesskey=" + $("#txtBusinesskey").val();
 
     $("#jqgBSCurrency").jqGrid('GridUnload');
     $("#jqgBSCurrency").jqGrid({
@@ -820,7 +820,7 @@ function fnGetBusinessUnitType() {
 
     $.ajax({
         type: 'POST',
-        //url: getBaseURL() + '/License/GetBusinessUnitType?businessId=' + $("#cboBusinessEntity").val(),
+        url: getBaseURL() + '/Location/GetBusinessUnitType?businessId=' + $("#cboBusinessEntity").val(),
         success: function (response) {
             if (response !== null) {
                 if (response.BusinessUnitType == "M") {
@@ -858,7 +858,7 @@ function fnLoadGridPreferredLanguage() {
     $("#jqgPreferredLanguage").jqGrid('GridUnload');
 
     $("#jqgPreferredLanguage").jqGrid({
-        //url: getBaseURL() + '/License/GetLocationPreferredLanguagebyBusinessKey?BusinessID=' + $("#cboBusinessEntity").val() + '&BusinessKey=' + $("#txtBusinesskey").val(),
+        url: getBaseURL() + '/Location/GetLocationPreferredLanguagebyBusinessKey?BusinessID=' + $("#cboBusinessEntity").val() + '&BusinessKey=' + $("#txtBusinesskey").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
@@ -961,7 +961,7 @@ function fnSaveFinancialInfo() {
     $("#btnSaveFinancialInfo").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/License/InsertOrUpdateLocationFinancialInfo',
+        url: getBaseURL() + '/Location/InsertOrUpdateLocationFinancialInfo',
         type: 'POST',
         datatype: 'json',
         data: { obj: objfin },
@@ -987,7 +987,7 @@ function fnFinanceInfo() {
 
     $.ajax({
         type: 'POST',
-        //url: getBaseURL() + '/License/GetLocationFinancialInfo?BusinessKey=' + $("#txtBusinesskey").val(),
+        url: getBaseURL() + '/Location/GetLocationFinancialInfo?BusinessKey=' + $("#txtBusinesskey").val(),
         success: function (response) {
 
             if (response !== null) {
@@ -1042,102 +1042,7 @@ $("#btnCancelFinancialInfo").click(function () {
 });
 /* End*/
 
-/* Save License Info*/
 
-function fnGetLicenseInfoDetails() {
-    fnLicensesInfo();
-}
-function fnSaveLicenseInfo() {
-
-    if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
-        fnAlert("w", "ECB_02_00", "UI0052", errorMsg.SelectBusinessEntity_E7);
-        return;
-    }
-    if ($("#cboLicenseType").val() === '0' || $("#cboLicenseType").val() === "0" || IsStringNullorEmpty($("#cboLicenseType").val())) {
-        fnAlert("w", "ECB_02_00", "UI0060", errorMsg.LicenseType_E15);
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtUserLicenses").val())) {
-        fnAlert("w", "ECB_02_00", "UI0061", errorMsg.UserLicenses_E16);
-        return;
-    }
-
-
-    objlic = {
-        BusinessKey: $("#txtBusinesskey").val(),
-        //TaxIdentification: $("#cboTaxIdentification").val(),
-        ESyaLicenseType: $("#cboLicenseType").val(),
-        EUserLicenses: $("#txtUserLicenses").val(),
-        ENoOfBeds: $("#txtNoOfBeds").val(),
-        ActiveStatus: $("#chkLicinfoActiveStatus").parent().hasClass("is-checked")
-    };
-
-
-    $("#btnSaveLicenseInfo").attr("disabled", true);
-
-    $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateLocationLicenseInfo',
-        type: 'POST',
-        datatype: 'json',
-        data: { obj: objlic },
-        success: function (response) {
-            if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
-                //    $("#btnSaveLicenseInfo").html('<i class="fa fa-spinner fa-spin"></i> wait');
-                $("#btnSaveLicenseInfo").attr("disabled", false);
-
-            }
-            else {
-                fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveLicenseInfo").attr("disabled", false);
-            }
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveLicenseInfo").attr("disabled", false);
-        }
-    });
-}
-
-function fnLicensesInfo() {
-
-    $.ajax({
-        type: 'POST',
-        //url: getBaseURL() + '/License/GetLocationLicenseInfo?BusinessKey=' + $("#txtBusinesskey").val(),
-        success: function (response) {
-            if (response !== null) {
-                $('#cboLicenseType').val(response.ESyaLicenseType).selectpicker('refresh');
-                $('#txtUserLicenses').val(response.EUserLicenses);
-                $('#txtNoOfBeds').val(response.ENoOfBeds);
-                if (response.ActiveStatus == 'true' || response.ActiveStatus == true) {
-                    $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
-                    $('#chkLicinfoActiveStatus').attr('disabled', true);
-                }
-                else {
-                    $("#chkLicinfoActiveStatus").parent().removeClass("is-checked");
-                    $('#chkLicinfoActiveStatus').attr('disabled', true);
-                }
-            }
-            else {
-                $('#cboLicenseType').val('0').selectpicker('refresh');
-                $('#txtUserLicenses').val('');
-                $('#txtNoOfBeds').val('');
-                $('#chkLicinfoActiveStatus').parent().addClass("is-checked");
-                $('#chkLicinfoActiveStatus').attr('disabled', true);
-            }
-
-        },
-        error: function (response) {
-        }
-    });
-}
-
-$("#btnCancelLicenseInfo").click(function () {
-    $("#jqgBusienssLocation").jqGrid('resetSelection');
-    $('#PopupBusienssLocation').modal('hide');
-    fnClearFields();
-});
-/* End*/
 
 /* Save Tax Info*/
 function fnSaveTaxInfo() {
@@ -1164,7 +1069,7 @@ function fnSaveTaxInfo() {
     $("#btnSaveTaxInfo").attr("disabled", true);
 
     $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateLocationTaxInfo',
+        url: getBaseURL() + '/Location/InsertOrUpdateLocationTaxInfo',
         type: 'POST',
         datatype: 'json',
         data: { obj: objtax },
@@ -1195,7 +1100,7 @@ function fnTaxInfo() {
 
     $.ajax({
         type: 'POST',
-       // url: getBaseURL() + '/License/GetLocationLocationTaxInfo?BusinessKey=' + $("#txtBusinesskey").val(),
+        url: getBaseURL() + '/Location/GetLocationLocationTaxInfo?BusinessKey=' + $("#txtBusinesskey").val(),
         success: function (response) {
             if (response !== null) {
                 debugger;
@@ -1228,3 +1133,6 @@ $("#btnCancelTaxInfo").click(function () {
     fnClearFields();
 });
 /* End*/
+
+
+

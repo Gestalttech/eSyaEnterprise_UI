@@ -178,12 +178,7 @@
                 <div class="row">
 
                     <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 col-xl-2 animated slideInLeft sidebarSmall">
-                        @* <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="locationInfo-tab" data-bs-toggle="pill" href="#locationInfo" role="tab" aria-controls="locationInfo" aria-selected="true">@Localizer["LocationInfo"]  </a>
-                        <a class="nav-link" id="financialInfo-tab" data-bs-toggle="pill" href="#financialInfo" role="tab" aria-controls="financialInfo" aria-selected="false" onclick="fnGetFinancialInfoDetails()">@Localizer["FinancialInfo"]  </a>
-                        <a class="nav-link" id="licenseInfo-tab" data-bs-toggle="pill" href="#licenseInfo" role="tab" aria-controls="licenseInfo" aria-selected="false" onclick="fnGetLicenseInfoDetails()">@Localizer["LicenseInfo"]  </a>
-                        <a class="nav-link" id="taxInfo-tab" data-bs-toggle="pill" href="#taxInfo" role="tab" aria-controls="taxInfo" aria-selected="false" onclick="fnGetTaxInfoDetails()">@Localizer["TaxInfo"]  </a>
-                        </div> *@
+                       
                         <ul class="nav flex-column nav-tabs shadowLite" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active position-relative" id="locationInfo-tab" data-bs-toggle="pill" data-bs-target="#locationInfo" type="button" role="tab" aria-controls="pills-locationInfo" aria-selected="true">@Localizer["LocationInfo"]</button>
@@ -191,9 +186,7 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link position-relative" id="financialInfo-tab" data-bs-toggle="pill" data-bs-target="#financialInfo" type="button" role="tab" aria-controls="pills-financialInfo" aria-selected="true" onclick="fnGetFinancialInfoDetails()">@Localizer["FinancialInfo"]</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link position-relative" id="licenseInfo-tab" data-bs-toggle="pill" data-bs-target="#licenseInfo" type="button" role="tab" aria-controls="pills-licenseInfo" aria-selected="true" onclick="fnGetLicenseInfoDetails()">@Localizer["LicenseInfo"]</button>
-                            </li>
+                           
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link position-relative" id="taxInfo-tab" data-bs-toggle="pill" data-bs-target="#taxInfo" type="button" role="tab" aria-controls="pills-taxInfo" aria-selected="true" onclick="fnGetTaxInfoDetails()">@Localizer["TaxInfo"]</button>
                             </li>
@@ -277,7 +270,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-5 col-md-5 col-sm-5 col-12">
-                                     @*  @await Component.InvokeAsync("eSyaParameter", new { parameterType = "2" }) *@
+                                      @await Component.InvokeAsync("eSyaParameter", new { parameterType = "2" })
 
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7 col-12">
@@ -387,53 +380,7 @@
 
                             </div>
 
-                            <div class="tab-pane fade" id="licenseInfo" role="tabpanel" aria-labelledby="licenseInfo-tab">
-                                <div class="row">
-                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label> @Localizer["LicenseType"] </label>
-                                            <div>
-                                                <select class="selectpicker" data-live-search="false" data-container="body" id="cboLicenseType" title="Select">
-                                                    <option value="0">Select</option>
-                                                    <option value="P">Perpetual</option>
-                                                    <option value="S">Subscription</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
-                                        <div class="form-group lbl-right">
-                                            <label> @Localizer["UserLicenses"] </label>
-                                            <input type="text" id="txtUserLicenses" name="name" value="" class="form-control numberonly" maxlength="5" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-3  col-md-4 col-sm-12 col-xs-12">
-                                        <div class="form-group lbl-right">
-                                            <label> @Localizer["LicensedToNoofBeds"] </label>
-                                            <input type="text" id="txtNoOfBeds" name="name" value="" class="form-control numberonly" maxlength="5" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12  d-flex align-items-center">
-
-                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkLicinfoActiveStatus">
-                                            <input type="checkbox" id="chkLicinfoActiveStatus" class="mdl-checkbox__input">
-                                            <span class="mdl-checkbox__label">@Localizer["ActiveStatus"]</span>
-                                        </label>
-
-                                    </div>
-                                    <div class="col-lg-12 text-center">
-                                        <hr />
-                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mr-10 primary-button" id="btnSaveLicenseInfo" onclick="fnSaveLicenseInfo()">
-                                            <i class="fa fa-save"></i> @Localizer["Save"]
-                                        </button>
-
-                                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelLicenseInfo"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
-
-                                    </div>
-                                </div>
-                            </div>
+                           
 
                             <div class="tab-pane fade" id="taxInfo" role="tabpanel" aria-labelledby="taxInfo-tab">
                                 <div class="row" id="divTaxIdentification">
