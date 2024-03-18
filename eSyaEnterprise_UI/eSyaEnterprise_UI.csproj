@@ -55,6 +55,9 @@
     <Compile Remove="Areas\Admin\Models\DO_UnitofMeasure.cs" />
     <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
     <Compile Remove="Areas\ConfigBusiness\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessEntity.cs" />
+    <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessLocation.cs" />
+    <Compile Remove="Areas\ConfigeSya\Models\DO_CountryCodes.cs" />
     <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
@@ -220,9 +223,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\ConfigeSya\Controllers\" />
-    <Folder Include="Areas\ConfigeSya\Models\" />
-    <Folder Include="Areas\ConfigeSya\Views\" />
     <Folder Include="Areas\ConfigInventory\Controllers\" />
     <Folder Include="Areas\ConfigInventory\Data\" />
     <Folder Include="Areas\ConfigInventory\Models\" />
