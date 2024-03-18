@@ -107,7 +107,7 @@ function fnEditeSyaLicense(e, actiontype) {
         }
         $('#PopupeSyaLicense').modal('show');
         $('#PopupeSyaLicense').find('.modal-title').text(localization.UpdateeSyaLicense);
-        $("#btnSaveeSyaLicense").html('<i class="fa fa-sync"></i>' + localization.Update);
+        $("#btnSaveeSyaLicense").html('<i class="fa fa-sync"></i>' + localization.Save);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveeSyaLicense").attr("disabled", false);        
     }
@@ -179,6 +179,7 @@ function fnSaveeSyaLicense() {
                 $("#PopupeSyaLicense").modal('hide');
                 fnClearFields();
                 fnGridRefresheSyaLicense();
+                location.reload();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
