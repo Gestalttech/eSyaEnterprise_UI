@@ -2741,6 +2741,22 @@
       "PackagePath": "staticwebassets\\js\\Appointment\\ClinicConsultation.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\CalDoc\\CalendarHeader.js",
+      "PackagePath": "staticwebassets\\js\\CalDoc\\CalendarHeader.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\CalDoc\\DocumentControl.js",
+      "PackagePath": "staticwebassets\\js\\CalDoc\\DocumentControl.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\CalDoc\\DocumentFormLink.js",
+      "PackagePath": "staticwebassets\\js\\CalDoc\\DocumentFormLink.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\CalDoc\\FormDocumentLink.js",
+      "PackagePath": "staticwebassets\\js\\CalDoc\\FormDocumentLink.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Common\\all.min.js",
       "PackagePath": "staticwebassets\\js\\Common\\all.min.js"
     },
@@ -3693,6 +3709,30 @@
       "PackagePath": "staticwebassets\\js\\Common\\webcam-easy.min.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\BusinessCalendar.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\BusinessCalendar.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\BusinessEntity.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\BusinessEntity.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\BusinessLocation.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\BusinessLocation.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\CalendarDetails.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\CalendarDetails.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\LocationWiseMenu.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\LocationWiseMenu.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigBusiness\\MapRuleswithLocation.js",
+      "PackagePath": "staticwebassets\\js\\ConfigBusiness\\MapRuleswithLocation.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js",
       "PackagePath": "staticwebassets\\js\\ConfigFacilities\\ManageClinicsConsultationTypes.js"
     },
@@ -3783,6 +3823,14 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigSKU\\ItemSubCategory.js",
       "PackagePath": "staticwebassets\\js\\ConfigSKU\\ItemSubCategory.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigeSya\\eSyaLicense.js",
+      "PackagePath": "staticwebassets\\js\\ConfigeSya\\eSyaLicense.js"
+    },
+    {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigeSya\\eSyaSubscription.js",
+      "PackagePath": "staticwebassets\\js\\ConfigeSya\\eSyaSubscription.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ConfigureSMS\\SMSInformation.js",
@@ -3983,10 +4031,6 @@
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\FormsMenu.js",
       "PackagePath": "staticwebassets\\js\\ProductSetup\\FormsMenu.js"
-    },
-    {
-      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\LinkParameterSchema.js",
-      "PackagePath": "staticwebassets\\js\\ProductSetup\\LinkParameterSchema.js"
     },
     {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\ProductSetup\\Parameters.js",
