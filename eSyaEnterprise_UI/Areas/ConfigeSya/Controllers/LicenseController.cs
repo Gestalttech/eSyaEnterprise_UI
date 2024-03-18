@@ -38,73 +38,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigeSya.Controllers
         {
             try
             {
-                ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };
+                ///Getting Business Key
+                var Bk_response = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("License/GetActiveLocationsforLicenses");
 
-                /// Tax Identification for Dropdown
-                var IsdcodeResponse = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<List<DO_CountryCodes>>("ConfigMasterData/GetISDCodes");
-                var serviceResponse = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("License/GetActiveBusinessEntities");
-
-                if (serviceResponse.Status && IsdcodeResponse.Status)
+                if (Bk_response.Status)
                 {
-                    if (IsdcodeResponse.Data != null)
+                    if (Bk_response.Data != null)
                     {
-                        ViewBag.IsdCodes = IsdcodeResponse.Data.Select(b => new SelectListItem
+                        ViewBag.BusinessKeyList = Bk_response.Data.Select(b => new SelectListItem
                         {
-                            Value = b.Isdcode.ToString(),
-                            Text = b.CountryName,
+                            Value = b.BusinessKey.ToString(),
+                            Text = b.LocationDescription.ToString(),
                         }).ToList();
-
-                        ViewBag.entity_list = serviceResponse.Data;
                     }
-                    if (serviceResponse.Data != null)
+                    else
                     {
-                        ViewBag.entity_list = serviceResponse.Data.Select(b => new SelectListItem
-                        {
-                            Value = b.BusinessId.ToString(),
-                            Text = b.BusinessDesc,
-                        }).ToList();
-
+                        _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
                     }
-
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:BusinessLocation");
+                    _logger.LogError(new Exception(Bk_response.Message), "UD:BusinessSubscription");
                 }
-
                 return View();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:BusinessLocation");
-                throw;
-            }
-        }
-            
-
-        /// <summary>
-        ///Get Business Unit Type by Entity Id
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> GetBusinessUnitType(int businessId)
-        {
-            try
-            {
-
-                var serviceResponse = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<DO_BusinessEntity>("License/GetBusinessUnitType?businessId=" + businessId);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessUnitType:For businessId {0}", businessId);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetBusinessUnitType:For BusinessId {0}", businessId);
+                _logger.LogError(ex, "UD:BusinessSubscription");
                 throw;
             }
         }
@@ -114,13 +74,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigeSya.Controllers
         /// <summary>
         ///Get Location License Info by BusinessKey
         /// </summary>
+        [Area("ConfigeSya")]
         [HttpPost]
         public async Task<JsonResult> GetLocationLicenseInfo(int BusinessKey)
         {
             try
             {
 
-                var serviceResponse = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<DO_LocationLicenseInfo>("License/GetLocationLicenseInfo?BusinessKey=" + BusinessKey);
+                var serviceResponse = await _eSyaConfigeSyaAPIServices.HttpClientServices.GetAsync<List<DO_LocationLicenseInfo>>("License/GetLocationLicenseInfo?BusinessKey=" + BusinessKey);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -142,6 +103,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigeSya.Controllers
         /// <summary>
         /// Insert or Update Location License Info
         /// </summary>
+        [Area("ConfigeSya")]
         [HttpPost]
         public async Task<JsonResult> InsertOrUpdateLocationLicenseInfo(DO_LocationLicenseInfo obj)
         {
@@ -228,6 +190,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigeSya.Controllers
         /// <summary>
         ///Get Business Subscription by Business Key for Grid
         /// </summary>
+        [Area("ConfigeSya")]
         [HttpPost]
         public async Task<JsonResult> GetBusinessSubscription(int BusinessKey)
         {
@@ -263,6 +226,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigeSya.Controllers
         /// <summary>
         /// Insert or Update Business Subscription
         /// </summary>
+        [Area("ConfigeSya")]
         [HttpPost]
         public async Task<JsonResult> InsertOrUpdateBusinessSubscription(DO_BusinessSubscription busssubs)
         {

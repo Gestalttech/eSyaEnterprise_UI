@@ -10,35 +10,34 @@ $(document).ready(function () {
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditeSyaLicense(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditeSyaLicense(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditeSyaLicense(event, 'delete') } },
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.AddEdit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
 var actiontype = "";
-var _isInsert = true;
 
 function fnLoadGrideSyaLicense() {
 
     $("#jqgeSyaLicense").GridUnload();
 
     $("#jqgeSyaLicense").jqGrid({
-        //url: getBaseURL() + '/eSyaLicense/GetAlleSyaLicense',
+        url: getBaseURL() + '/ConfigeSya/License/GetLocationLicenseInfo?BusinessKey=' + $("#cboBusinessLocation").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessKey, localization.eBusinessKey, localization.eSyaLicenseType, localization.eUserLicenses, localization.eActiveUsers, localization.eNoOfBeds, localization.Active, localization.Actions],
+        colNames: [localization.BusinessKey, "Location Description", localization.eBusinessKey, localization.eSyaLicenseType, localization.eUserLicenses, localization.eActiveUsers, localization.eNoOfBeds,"License status", localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "eBusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "eSyaLicenseType", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "eUserLicenses", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "eActiveUsers", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "eNoOfBeds", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "LocationDescription", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "EBusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "ESyaLicenseType", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "EUserLicenses", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "EActiveUsers", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false, hidden: true },
+            { name: "ENoOfBeds", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "Lstatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
@@ -67,12 +66,11 @@ function fnLoadGrideSyaLicense() {
             SetGridControlByAction();
             fnJqgridSmallScreen("jqgeSyaLicense");
         },
-       
+
     }).jqGrid('navGrid', '#jqpeSyaLicense', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpeSyaLicense', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefresheSyaLicense
-    }).jqGrid('navButtonAdd', '#jqpeSyaLicense', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddeSyaLicense
     });
+    
 
     $(window).on("resize", function () {
         var $grid = $("#jqgeSyaLicense"),
@@ -82,27 +80,17 @@ function fnLoadGrideSyaLicense() {
     fnAddGridSerialNoHeading();
 }
 
-function fnAddeSyaLicense() {
-    _isInsert = true;
-    if ($("#cboBusinessEntity").val() == 0 || $("#cboBusinessEntity").val() == '0' || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", errorMsg.BusinessEntity_E1);
-        return;
-    }
-    else {
-    fnClearFields();
-    $('#PopupeSyaLicense').modal('show');
-    $("#chkActiveStatus").parent().addClass("is-checked");
-    $('#PopupeSyaLicense').find('.modal-title').text(localization.AddeSyaLicense);
-    $("#btnSaveeSyaLicense").html('<i class="fa fa-save"></i> ' + localization.Save);
-    $("#chkActiveStatus").prop('disabled', true);
-    $("#btnSaveeSyaLicense").show();
-    $("#btndeActiveeSyaLicense").hide();
-    }
-}
 
 function fnEditeSyaLicense(e, actiontype) {
+  
     var rowid = $("#jqgeSyaLicense").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgeSyaLicense').jqGrid('getRowData', rowid);
+
+    $("#txtBusinesskey").val(rowData.BusinessKey); 
+    $("#cboLicenseType").val(rowData.ESyaLicenseType).selectpicker('refresh');
+    $("#txteUserLicenses").val(rowData.EUserLicenses);
+    $("#txteActiveUsers").val(rowData.EActiveUsers);
+    $("#txteNoofBeds").val(rowData.ENoOfBeds);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -111,7 +99,6 @@ function fnEditeSyaLicense(e, actiontype) {
     }
     $("#btnSaveeSyaLicense").attr("disabled", false);
 
-    _isInsert = false;
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
@@ -121,14 +108,8 @@ function fnEditeSyaLicense(e, actiontype) {
         $('#PopupeSyaLicense').modal('show');
         $('#PopupeSyaLicense').find('.modal-title').text(localization.UpdateeSyaLicense);
         $("#btnSaveeSyaLicense").html('<i class="fa fa-sync"></i>' + localization.Update);
-        $("#btndeActiveeSyaLicense").hide();
         $("#chkActiveStatus").prop('disabled', true);
-        $("#btnSaveeSyaLicense").attr("disabled", false);
-        $("#cboLicenseType").val(rowData.eSyaLicenseType).selectpicker('refresh');
-        $("#txteUserLicenses").val(rowData.eUserLicenses);
-        $("#txteUserLicenses").val(rowData.eActiveUsers);
-        $("#txteNoofBeds").val(rowData.eNoOfBeds);
-        
+        $("#btnSaveeSyaLicense").attr("disabled", false);        
     }
 
     if (actiontype.trim() == "view") {
@@ -142,72 +123,55 @@ function fnEditeSyaLicense(e, actiontype) {
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
         $("#btnSaveeSyaLicense").hide();
-        $("#btndeActiveeSyaLicense").hide();
-        $("#chkActiveStatus").prop('disabled', true);
-        $("#cboLicenseType").val(rowData.eSyaLicenseType).selectpicker('refresh');
-        $("#txteUserLicenses").val(rowData.eUserLicenses);
-        $("#txteUserLicenses").val(rowData.eActiveUsers);
-        $("#txteNoofBeds").val(rowData.eNoOfBeds);
-        
+        $("#chkActiveStatus").prop('disabled', true);        
         $("#PopupeSyaLicense").on('hidden.bs.modal', function () {
             $("#btnSaveeSyaLicense").show();
             $("input,textarea").attr('readonly', false);
             $("select").next().attr('disabled', false);
         });
     }
-    if (actiontype.trim() == "delete") {
-        if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "ECE_01_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
-            return;
-        }
-        $('#PopupeSyaLicense').modal('show');
-        $('#PopupeSyaLicense').find('.modal-title').text(localization.ActivateDeactivateeSyaLicense);
-        $("#btnSaveeSyaLicense").attr("disabled", false);
-        $("input,textarea").attr('readonly', true);
-        $("select").next().attr('disabled', true);
-        $("#btnSaveeSyaLicense").hide();
-
-        if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveeSyaLicense").html(localization.Deactivate);
-        }
-        else {
-            $("#btndeActiveeSyaLicense").html(localization.Activate);
-        }
-
-        $("#btndeActiveeSyaLicense").show();
-        $("#chkActiveStatus").prop('disabled', true);
-        $("#PopupeSyaLicense").on('hidden.bs.modal', function () {
-            $("#btnSaveeSyaLicense").show();
-            $("input,textarea").attr('readonly', false);
-            $("select").next().attr('disabled', false);
-        });
-    }
+  
 }
 
 function fnSaveeSyaLicense() {
 
-    if ($("#cboBusinessEntity").val() == 0 || $("#cboBusinessEntity").val() == '0' || IsStringNullorEmpty($("#cboBusinessEntity").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", errorMsg.BusinessEntity_E1);
+    if ($("#txtBusinesskey").val() == 0 || $("#txtBusinesskey").val() == '0' || IsStringNullorEmpty($("#txtBusinesskey").val())) {
+        fnAlert("w", "ECE_01_00", "UI0052", "Business Key Required");
         return;
     }
-
+    if ($("#cboLicenseType").val() == 0 || $("#cboLicenseType").val() == '0' || IsStringNullorEmpty($("#cboLicenseType").val())) {
+        fnAlert("w", "ECE_01_00", "UI0052", "Please Select License Type");
+        return;
+    }
+    if ($("#txteUserLicenses").val() == 0 || $("#txteUserLicenses").val() == '0' || IsStringNullorEmpty($("#txteUserLicenses").val())) {
+        fnAlert("w", "ECE_01_00", "UI0052", "User Licenses Required");
+        return;
+    }
+    //if ($("#txteActiveUsers").val() == 0 || $("#txteActiveUsers").val() == '0' || IsStringNullorEmpty($("#txteActiveUsers").val())) {
+    //    fnAlert("w", "ECE_01_00", "UI0052", "Active Users Required");
+    //    return;
+    //}
+    if ($("#txteNoofBeds").val() == 0 || $("#txteNoofBeds").val() == '0' || IsStringNullorEmpty($("#txteNoofBeds").val())) {
+        fnAlert("w", "ECE_01_00", "UI0052", "No of Beds Required");
+        return;
+    }
     obj_esyaLicense = {
-        BusinessKey: $("#cboBusinessEntity").val(),
-        eBusinessKey:'',
-        eSyaLicenseType: $("#cboLicenseType").val(),
-        eUserLicenses: $("#txteUserLicenses").val(),
-        eActiveUsers: $("#txteActiveUsers").val(),
-        eNoOfBeds: $("#txteNoofBeds").val(),
+        BusinessKey: $("#txtBusinesskey").val(),
+        EBusinessKey:'',
+        ESyaLicenseType: $("#cboLicenseType").val(),
+        EUserLicenses: $("#txteUserLicenses").val(),
+        EActiveUsers: $("#txteActiveUsers").val(),
+        ENoOfBeds: $("#txteNoofBeds").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
     $("#btnSaveeSyaLicense").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/eSyaLicense/InsertOrUpdateeSyaLicense',
+        url: getBaseURL() + '/ConfigeSya/License/InsertOrUpdateLocationLicenseInfo',
         type: 'POST',
         datatype: 'json',
-        data: { isInsert: _isInsert, obj: obj_esyaLicense },
+        data: {obj: obj_esyaLicense },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -255,41 +219,4 @@ function SetGridControlByAction() {
     if (_userFormRole.IsInsert === false) {
         $('#jqgAdd').addClass('ui-state-disabled');
     }
-}
-
-function fnDeleteeSyaLicense() {
-
-    var a_status;
-    //Activate or De Activate the status
-    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
-        a_status = false
-    }
-    else {
-        a_status = true;
-    }
-    $("#btndeActiveeSyaLicense").attr("disabled", true);
-    $.ajax({
-       // url: getBaseURL() + '/eSyaLicense/ActiveOrDeActiveeSyaLicense?',
-        type: 'POST',
-        success: function (response) {
-            if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btndeActiveeSyaLicense").html('<i class="fa fa-spinner fa-spin"></i> wait');
-                $("#PopupeSyaLicense").modal('hide');
-                fnClearFields();
-                fnGridRefresheSyaLicense();
-                $("#btndeActiveeSyaLicense").attr("disabled", false);
-            }
-            else {
-                fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btndeActiveeSyaLicense").attr("disabled", false);
-                $("#btndeActiveeSyaLicense").html('De Activate');
-            }
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btndeActiveeSyaLicense").attr("disabled", false);
-            $("#btndeActiveeSyaLicense").html('De Activate');
-        }
-    });
 }

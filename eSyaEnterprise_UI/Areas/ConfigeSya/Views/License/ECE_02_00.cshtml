@@ -48,7 +48,6 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                @*<label class="lable-color">Business Location</label>*@
                 <label> @Localizer["BusinessLocation"] </label>
                 <select class="selectpicker" data-live-search="false" id="cboBusinessLocation" title="Select" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnGridLoadBusinessSubscription()">
                     <option value="0">Select</option>

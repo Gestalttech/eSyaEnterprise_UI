@@ -14,6 +14,7 @@
         public bool? TolocalCurrency { get; set; }
         public bool TocurrConversion { get; set; }
         public bool TorealCurrency { get; set; }
+        public bool Lstatus { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; }
         public int UserID { get; set; }

@@ -36,6 +36,7 @@
         eNoOfBeds: '@Localizer["eNoOfBeds"]',
         LicensedToNoofBeds: '@Localizer["LicensedToNoofBeds"]',
         UserLicenses: '@Localizer["UserLicenses"]',
+        AddEdit: '@Localizer["Add/Edit"]',
       
     }
     var errorMsg = {
@@ -49,8 +50,10 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-12 form-group">
-        <label> @Localizer["BusinessEntity"]</label>
-        <select class="selectpicker" data-live-search="true" id="cboBusinessEntity" data-container="body" title="" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnGridLoadBusinessLocation()"></select>
+            <label> @Localizer["BusinessLocation"] </label>
+        <select class="selectpicker" data-live-search="false" id="cboBusinessLocation" title="Select" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadGrideSyaLicense()">
+                <option value="0">Select</option>
+        </select>
     </div>
 </div>
 
@@ -74,6 +77,7 @@
                 <div class="row">
                     <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12" hidden>
                         <input type="text" id="txtBusines" hidden />
+                        <input type="text" id="txtBusinesskey" hidden />
                     </div>
                     <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -125,7 +129,6 @@
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCanceleSyaLicense"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteeSyaLicense();"><i class="fa fa-times"></i> @Localizer["Deactivate"] </button>
                     </div>
                 </div>
             </div>

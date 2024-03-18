@@ -8,6 +8,8 @@
         public int EUserLicenses { get; set; }
         public byte[] EActiveUsers { get; set; } = null!;
         public int ENoOfBeds { get; set; }
+        public bool Lstatus { get; set; }
+        public string? LocationDescription { get; set; }
         public bool ActiveStatus { get; set; }
         public int UserID { get; set; }
         public string FormID { get; set; }

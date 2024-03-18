@@ -21,11 +21,11 @@ var actiontype = "";
 
 function fnGridLoadBusinessSubscription() {
     var BusinessKey = $("#cboBusinessLocation").val();
-    var URL = getBaseURL() + '/License/GetBusinessSubscription?BusinessKey=' + BusinessKey;
+    var URL = getBaseURL() + '/ConfigeSya/License/GetBusinessSubscription?BusinessKey=' + BusinessKey;
 
     $("#jqgBusinessSubscription").jqGrid('GridUnload');
     $("#jqgBusinessSubscription").jqGrid({
-       // url: URL,
+        url: URL,
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -201,7 +201,7 @@ function fnSaveBusinessSubscription() {
     $("#btnSaveBusinessSubscription").attr('disabled', true);
 
     $.ajax({
-        //url: getBaseURL() + '/License/InsertOrUpdateBusinessSubscription',
+        url: getBaseURL() + '/ConfigeSya/License/InsertOrUpdateBusinessSubscription',
         type: 'POST',
         data: { busssubs },
         success: function (response) {
