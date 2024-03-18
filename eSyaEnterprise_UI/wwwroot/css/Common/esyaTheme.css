@@ -30,6 +30,12 @@
 .treeaction h5 {
     color: var(--secondary-color);
 }
+.jquery-accordion-menu ul li:first-of-type a:first-of-type {
+    background-color: var(--secondary-color);
+}
+#eSyaMenuName,#eSyaVersion {
+    color: var(--primary-color);
+}
 .jquery-accordion-menu ul li a {
     background-color: var(--primary-color);
 }
