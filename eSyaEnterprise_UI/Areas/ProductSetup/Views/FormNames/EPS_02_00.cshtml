@@ -1,6 +1,7 @@
 ﻿
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "EPS_02_00";
@@ -43,11 +44,32 @@
     };
 </script>
 
-<div class="row py-2">
+<div class="row">
+    <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="">@Localizer["Area"] </label>
+            <div>
+                <select class="selectpicker" data-live-search="true" id="cboArea" title="" data-size="8"
+                        asp-items="@ViewBag.AreaController"
+                        onchange="fnLoadGridAreaController()">
+                    <option value="All">All</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-end">
+            <button type="button" class="mdl-button  primary-button float-right" id="btnAreaController" onclick="fnOpenFormMaster()"><i class="fa-solid fa-file-export"></i> @Localizer["FormMaster"]  </button>
+        </div>
+    </div>
+</div>
+
+
+@* <div class="row py-2">
     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-end">
         <button type="button" class="mdl-button  primary-button float-right" id="btnAreaController" onclick="fnOpenFormMaster()"><i class="fa-solid fa-file-export"></i> @Localizer["FormMaster"]  </button>
     </div>
-</div>
+</div> *@
 
 <div class="row padbot10">
     <div class="col-lg-12 col-md-12 col-sm-12">

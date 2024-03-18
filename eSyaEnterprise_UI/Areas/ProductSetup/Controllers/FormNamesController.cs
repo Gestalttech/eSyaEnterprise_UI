@@ -7,6 +7,7 @@ using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -480,18 +481,31 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         public IActionResult EPS_02_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsDelete = true, IsView = true };
+            var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_AreaController>>("Forms/GetAllAreaController").Result;
+            if (serviceResponse.Status)
+            {
+                ViewBag.AreaController = serviceResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.Area.ToString(),
+                    Text = b.Area,
+                }).ToList();
+            }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:EPS_02_00");
+            }
             return View();
         }
         /// <summary>
         ///Get Area Controllers for Grid
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetAllAreaController()
+        public async Task<JsonResult> GetControllerbyArea(string Area)
         {
 
             try
             {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_AreaController>>("Forms/GetAllAreaController");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_AreaController>>("Forms/GetControllerbyArea?Area="+ Area);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);

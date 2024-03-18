@@ -24,9 +24,9 @@ var _isInsert = true;
 function fnLoadGridAreaController() {
 
     $("#jqgAreaController").GridUnload();
-
+    
     $("#jqgAreaController").jqGrid({
-        url: getBaseURL() + '/FormNames/GetAllAreaController',
+        url: getBaseURL() + '/FormNames/GetControllerbyArea?Area=' + $("#cboArea").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
