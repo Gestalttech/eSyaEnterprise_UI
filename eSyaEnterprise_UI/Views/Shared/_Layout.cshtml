@@ -142,11 +142,12 @@
             <div class="jquery-accordion-menu-header">
                 <span class="btnMenuBar" aria-label="Menu"><i class="fa fa-bars"></i></span>
                 <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive MasterPage-Logo" />
-                @*<span id="version-number">  Enterprise Ver.1.0 </span><span id="btnCloseMenu"><i class="fa fa-times"></i></span>*@
+                <span id="version-number">  Enterprise Ver.1.0 </span><span id="btnCloseMenu"><i class="fa fa-times"></i></span>
             </div>
+            
             <ul>
                 <li>
-                    <a href="#" id="eSyaMenuName">eSya Enterprise </a>
+                    <a href="#" id="eSyaMenuName">  </a> <span id="eSyaVersion">Ver. 1.0.0 </span>
                     @await Component.InvokeAsync("Menu") 
                 </li>
             </ul>
@@ -201,6 +202,7 @@
 
                 if (data != null)
                     $('#eSyaMenuName').html(data.MenuName);
+                    $('#eSyaVersion').html(data.Version);
             });
 
            
