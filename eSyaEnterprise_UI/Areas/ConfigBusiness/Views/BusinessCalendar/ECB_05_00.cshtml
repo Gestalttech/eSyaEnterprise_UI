@@ -21,13 +21,16 @@
     var localization = {
         BusinessKey: '@Localizer["BusinessKey"]',
         DocumentId: '@Localizer["DocumentId"]',
+        CalenderKey: '@Localizer["CalenderKey"]',
         EffectiveFrom: '@Localizer["EffectiveFrom"]',
         CalendarType: '@Localizer["CalendarType"]',
         EffectiveTill: '@Localizer["EffectiveTill"]',
         ActiveStatus: '@Localizer["ActiveStatus"]',
         DocumentDesc: '@Localizer["DocumentDesc"]',
         CalendarTypeDesc: '@Localizer["CalendarTypeDesc"]',
+        AddBusinessCalendar: '@Localizer["AddBusinessCalendar"]',
         EditBusinessCalendar: '@Localizer["EditBusinessCalendar"]',
+        ViewBusinessCalendar: '@Localizer["ViewBusinessCalendar"]',
         BusinessCalendar: '@Localizer["BusinessCalendar"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
@@ -36,6 +39,8 @@
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]',
         Update: '@Localizer["Update"]',
+        DocumentDesc: '@Localizer["DocumentDesc"]',
+        GeneNoYearOrMonth: '@Localizer["GeneNoYearOrMonth"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -44,6 +49,7 @@
         DocumentId_E5: '@Localizer["UI0017"]',
         EffectiveFrom_E6: '@Localizer["UI0235"]',
         CalendarType_E7: '@Localizer["UI0214"]',
+        BusinessEntity_E1: '@Localizer["UI0052"]',
     }
 </script>
 
@@ -68,32 +74,27 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["DocumentId"]</label>
-                            <input type="text" class="form-control" id="txtDocumentId" readonly />
-                        </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>@Localizer["CalendarKey"]</label>
+                        <select class="selectpicker" data-live-search="true" id="cboCalendarKey" title="" data-size="8">
+                            <option value="0">Choose Calendar Key </option>
+                        </select>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["DocumentDesc"]</label>
-                            <input type="text" class="form-control" id="txtDocumentDesc" readonly />
-                        </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>@Localizer["Document"]</label>
+                        <select class="selectpicker" data-live-search="true" id="cboDocument" title="ChooseDocument" data-size="8" asp-items="@ViewBag.Document">
+                        </select>
                     </div>
+                   
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["EffectiveFrom"]</label>
-                            <input type="text" class="form-control" id="txtEffectiveFrom" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["CalendarType"]</label>
-                            <select class="selectpicker" id="cboCalendarType" data-container="body" data-size="5">
-                                <option value="0">Choose Calendar Type </option>
-                                <option value="FY">Financial Year</option>
-                                <option value="CY">Calendar Year</option>
-                                <option value="NA">Not Applicable</option>
+                            <label>@Localizer["GenerateType"]</label>
+                            <select class="selectpicker" id="cboGenerateType" data-container="body" data-size="5">
+                                <option value="0">Choose Generate Type </option>
+                                <option value="Y">Year</option>
+                                <option value="M">Month</option>
+                                <option value="C">Calendar</option>
                             </select>
                         </div>
                     </div>
