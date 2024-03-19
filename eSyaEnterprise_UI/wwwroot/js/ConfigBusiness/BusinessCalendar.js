@@ -10,23 +10,12 @@
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    var todaydt = new Date();
-    $("#txtEffectiveFrom").datepicker({
-        autoclose: true,
-        dateFormat: _cnfDateFormat,
-
-        onSelect: function (date) {
-
-
-        }
-    });
 
 });
-
 function fnBusinessKeyOnchange() {
     fnLoadGridBusinessCalendar();
-}
 
+}
 function fnLoadGridBusinessCalendar() {
     $("#jqgBusinessCalendar").jqGrid('GridUnload');
 
@@ -70,7 +59,9 @@ function fnLoadGridBusinessCalendar() {
         scrollOffset: 0,
         caption: localization.BusinessCalendar,
         loadComplete: function (data) {
-            // SetGridControlByAction();
+            fnBindCalendarKeys();
+            SetGridControlByAction();
+           
             fnJqgridSmallScreen("jqgBusinessCalendar");
         },
     }).jqGrid('navGrid', '#jqpBusinessCalendar', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpBusinessCalendar', {
@@ -80,16 +71,26 @@ function fnLoadGridBusinessCalendar() {
     });
     fnAddGridSerialNoHeading();
 }
+function SetGridControlByAction() {
+    $('#jqgAdd').removeClass('ui-state-disabled');
 
+    if (_userFormRole.IsInsert === false) {
+        $('#jqgAdd').addClass('ui-state-disabled');
+    }
+}
 function fnAddBusinessCalendar() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() == "0") {
-        fnAlert("w", "ECB_05_00", "UI0052", errorMsg.BusinessEntity_E1);
+        fnAlert("w", "ECB_05_00", "UI0052", "Please Select Business Location to add");
         return;
     }
     else {
+        fnClearFields();
+        fnBindCalendarKeys();
         $('#PopupBusinessCalendar').modal('show');
         $('#PopupBusinessCalendar').find('.modal-title').text(localization.AddBusinessCalendar);
+        $("#btnSaveBusinessCalendar").show();
         $("#btnSaveBusinessCalendar").html('<i class="fa fa-save mr-1"></i>' + localization.Save);
+        $("#chkActiveStatus").parent().addClass("is-checked");
    }
 }
 function fnEditBusinessCalendar(e, actiontype) {
@@ -99,8 +100,19 @@ function fnEditBusinessCalendar(e, actiontype) {
     var firstRow = $("tr.ui-widget-content:first").offset();
     $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
 
-    $("#txtDocumentId").val(rowData.DocumentId);
-    $("#txtDocumentDesc").val(rowData.DocumentDesc);
+    fnBindCalendarKeys();
+
+    $("#cboCalendarKey").val(rowData.CalenderKey).selectpicker('refresh');
+    $("#cboCalendarKey").next().attr('disabled', true).selectpicker('refresh');
+    $("#cboDocumentId").val(rowData.DocumentId).selectpicker('refresh');
+    $("#cboDocumentId").next().attr('disabled', true).selectpicker('refresh');
+    $("#cboGenerateType").val(rowData.GeneNoYearOrMonth).selectpicker('refresh');
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
 
      if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
@@ -114,10 +126,7 @@ function fnEditBusinessCalendar(e, actiontype) {
         $("#chkActiveStatus").prop('disabled', false);
        
         $("#btnSaveBusinessCalendar").html('<i class="fa fa-sync"></i> ' + localization.Update);
-        $("#btnDeactivateApplicationCode").hide();
-        $("input,textarea").attr('readonly', false);
-        $("select").next().attr('disabled', false);
-        $("#btnSaveApplicationCode").show();
+         $("#btnSaveBusinessCalendar").show();
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
@@ -133,41 +142,41 @@ function fnEditBusinessCalendar(e, actiontype) {
         $("select").next().attr('disabled', true);
     }
 }
-
-
 function fnGridRefreshBusinessCalendar() {
     $("#jqgBusinessCalendar").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
-
 function fnClearFields() {
-    $("#cboCalendarType").val('0').selectpicker('refresh');
-    $('#txtDocumentId').val('');
-    $('#txtDocumentDesc').val('');
-    $('#txtEffectiveFrom').val('');
+    $("#cboCalendarKey").val('0').selectpicker('refresh');
+    $("#cboDocumentId").val('0').selectpicker('refresh');
+    $("#cboGenerateType").val('0').selectpicker('refresh');
+    $('#chkActiveStatus').prop('disabled', false);
+    $('#btnSaveActions').attr("disabled", false);
+    $("input,textarea").attr('readonly', false);
+    $("select").next().attr('disabled', false);
 }
 function fnSaveBusinessCalendar() {
 
     if ($("#cboBusinessKey ").val() === "0" || $("#cboBusinessKey ").val() === "" || $("#cboBusinessKey ").val() === '' || $("#cboBusinessKey ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0175", errorMsg.BusinessKey_E4);
+        fnAlert("w", "ECB_05_00", "UI0175", "Please select Business Location");
         return;
     }
-    if (IsStringNullorEmpty($("#txtDocumentId").val())) {
-        fnAlert("w", "ECB_05_00", "UI0017", errorMsg.DocumentId_E5);
+    if ($("#cboCalendarKey ").val() === "0" || $("#cboCalendarKey ").val() === "" || $("#cboCalendarKey ").val() === '' || $("#cboCalendarKey ").val() == null) {
+        fnAlert("w", "ECB_05_00", "UI0214", "Please select Calendar Key");
         return;
     }
-    if (IsStringNullorEmpty($("#txtEffectiveFrom").val())) {
-        fnAlert("w", "ECB_05_00", "UI0235", errorMsg.EffectiveFrom_E6);
+    if ($("#cboDocumentId ").val() === "0" || $("#cboDocumentId ").val() === "" || $("#cboDocumentId ").val() === '' || $("#cboDocumentId ").val() == null) {
+        fnAlert("w", "ECB_05_00", "UI0214", "Please select Document");
         return;
     }
-    if ($("#cboCalendarType ").val() === "0" || $("#cboCalendarType ").val() === "" || $("#cboCalendarType ").val() === '' || $("#cboCalendarType ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0214", errorMsg.CalendarType_E7);
+    if ($("#cboGenerateType ").val() === "0" || $("#cboGenerateType ").val() === "" || $("#cboGenerateType ").val() === '' || $("#cboGenerateType ").val() == null) {
+        fnAlert("w", "ECB_05_00", "UI0214", "Please select Generate Type");
         return;
     }
     obj = {
         BusinessKey: $("#cboBusinessKey").val(),
-        DocumentId: $("#txtDocumentId").val(),
-        CalendarType: $("#cboCalendarType").val(),
-        EffectiveFrom: getDate($("#txtEffectiveFrom")),
+        CalenderKey: $("#cboCalendarKey").val(),
+        DocumentId: $("#cboDocumentId").val(),
+        GeneNoYearOrMonth: $("#cboGenerateType").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
@@ -198,3 +207,39 @@ function fnSaveBusinessCalendar() {
         }
     });
 }
+function fnBindCalendarKeys() {
+    var businesskey = $("#cboBusinessKey").val();
+    $("#cboCalendarKey").empty();
+    $.ajax({
+        url: getBaseURL() + '/BusinessCalendar/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboCalendarKey").empty();
+
+                $("#cboCalendarKey").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboCalendarKey").append($("<option></option>").val(response[i]["CalenderKey"]).html(response[i]["CalenderKey"]));
+                }
+                $('#cboCalendarKey').selectpicker('refresh');
+            }
+            else {
+                $("#cboCalendarKey").empty();
+                $("#cboCalendarKey").append($("<option value='0'> Choose Calendar Key </option>"));
+                $('#cboCalendarKey').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+

@@ -77,13 +77,13 @@
                     
                     <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                         <label>@Localizer["CalendarKey"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboCalendarKey" title="" data-size="8">
+                        <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="" data-size="8">
                             <option value="0">Choose Calendar Key </option>
                         </select>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                         <label>@Localizer["Document"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboDocument" title="ChooseDocument" data-size="8" asp-items="@ViewBag.Document">
+                        <select class="selectpicker" data-live-search="true" id="cboDocumentId" title="Choose Document" data-container="body"  data-size="8" asp-items="@ViewBag.Documents">
                         </select>
                     </div>
                    
