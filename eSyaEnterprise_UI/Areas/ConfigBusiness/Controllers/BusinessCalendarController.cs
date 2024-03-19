@@ -111,14 +111,20 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
             try
             {
                 var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
-                if (serviceResponse.Status)
+                var documentResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControl>>("BusinessCalendar/GetActiveDocuments");
+
+                if (serviceResponse.Status && documentResponse.Status)
                 {
                     ViewBag.BusinessKeys = serviceResponse.Data.Select(b => new SelectListItem
                     {
                         Value = b.BusinessKey.ToString(),
                         Text = b.LocationDescription,
                     }).ToList();
-
+                    ViewBag.Documents = documentResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.DocumentId.ToString(),
+                        Text = b.DocumentDesc,
+                    }).ToList();
                     return View();
                 }
                 else
@@ -134,6 +140,36 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
             }
         }
 
+        /// <summary>
+        ///Get Business Calendar for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetBusinesslinkedCalendarkeys(int businessKey)
+        {
+
+            try
+            {
+
+                var parameter = "?businessKey=" + businessKey;
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_BusinessCalendar>>("BusinessCalendar/GetBusinesslinkedCalendarkeys" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinesslinkedCalendarkeys:For businessKey {0}", businessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinesslinkedCalendarkeys:For businessKey {0} ", businessKey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
         /// <summary>
         ///Get Business Calendar for Grid
         /// </summary>
