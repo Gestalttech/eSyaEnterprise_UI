@@ -28,7 +28,7 @@ function fnLoadGrideSyaLicense() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessKey, "Location Description", localization.eBusinessKey, localization.eSyaLicenseType, localization.eUserLicenses, localization.eActiveUsers, localization.eNoOfBeds,"License status", localization.Active, localization.Actions],
+        colNames: [localization.BusinessKey, localization.LocationDescription, localization.eBusinessKey, localization.eSyaLicenseType, localization.eUserLicenses, localization.eActiveUsers, localization.eNoOfBeds, localization.LicenseStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "LocationDescription", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },

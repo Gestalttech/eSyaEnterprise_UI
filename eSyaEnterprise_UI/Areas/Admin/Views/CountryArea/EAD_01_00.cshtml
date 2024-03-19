@@ -71,19 +71,19 @@
     } */
 </style>
 <div class="row">
-    <div class="col-lg-2 col-md-3 col-sm-6 col-12 form-group">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12 form-group">
         <label>@Localizer["Country"]</label>
         @await Component.InvokeAsync("IsdCountryInput", new { id = "ZipCountry" })
     </div>
    
-    <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+    <div class="col-lg-3 col-md-4 col-sm-12 form-group">
         <label>@Localizer["State"]</label>
         <select class="selectpicker" data-live-search="true" id="cboStateCode" title="SelectState" onchange="fnBindCitiesCodes();">
             <option value="0">Select State</option>
         </select>
     </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+    <div class="col-lg-3 col-md-4 col-sm-12 form-group">
         <label>@Localizer["City"]</label>
         <select class="selectpicker" data-live-search="true" id="cboCityCode" title="SelectCity" onchange="fnGridLoadZipcodeHeader();">
             <option value="0">Select </option>
@@ -109,13 +109,13 @@
             <div class="modal-body">
                 <div class="row padbot4">
                    
-                    <div class="col-lg-2 col-6">
+                    <div class="col-lg-3 col-4">
                         <div class="form-group">
                             <label for="txtZipcode"> @Localizer["Zipcode"]</label>
                             <input id="txtZipcode" class="form-control" type="text" maxlength="10"/>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-6">
+                    <div class="col-lg-9 col-8">
                         <div class="form-group">
                             <label for="txtZipCodeDescription"> @Localizer["ZipcodeDesc"]</label>
                             <input id="txtZipCodeDescription" class="form-control" type="text" maxlength="75" />

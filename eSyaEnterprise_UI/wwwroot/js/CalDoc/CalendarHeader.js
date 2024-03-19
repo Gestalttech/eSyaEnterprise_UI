@@ -22,7 +22,7 @@ function fnGridLoadCalendarHeader() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["",localization.CalenderType, localization.Year,"", localization.StartMonth, localization.CalenderKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Active],
+        colNames: ["",localization.CalendarType, localization.Year,"", localization.StartMonth, localization.CalenderKey, localization.FromDate, localization.TillDate, localization.YearEndStatus, localization.Active],
         colModel: [
             { name: "CalenderType", width: 70, editable: true, align: 'left', hidden: true },
             { name: "CalenderType", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year;NA: Not Applicable" } },

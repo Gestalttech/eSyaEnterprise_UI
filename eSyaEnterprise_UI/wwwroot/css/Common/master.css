@@ -51,7 +51,8 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 .martop0{margin-top:0px !important}
 .f-11{font-size:11px;}
 .padbot0{padding-bottom:0px;}
-.filter-option-inner-inner{font-size:12px;}
+.filter-option-inner-inner{font-size:11px;}
+.bootstrap-select .btn{color:#999}
 .m-t-4 {
     margin-top: 4px !important;
 }
