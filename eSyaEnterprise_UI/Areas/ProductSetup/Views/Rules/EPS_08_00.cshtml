@@ -256,7 +256,7 @@
                                 console.log(postdata, grid.getRowData(rowId).ProcessId);
                                 var message = fnValidateRule(postdata);
                                 if (message != '') {
-                                    fnAlert("w", "EPS_07_00", "", message);
+                                    fnAlert("w", "EPS_08_00", "", message);
                                     return [false]
                                 }
                                 else {
@@ -273,7 +273,7 @@
                                     return [true, '']
                                 }
                                 else {
-                                    fnAlert("e", "EPS_07_00", "", response.responseJSON.Message);
+                                    fnAlert("e", "EPS_08_00", "", response.responseJSON.Message);
                                     return [false]
                                 }
                             }
@@ -302,7 +302,7 @@
                                 //console.log(postdata, grid.getRowData(rowId).ProcessId);
                                 var message = fnValidateRule(postdata);
                                 if (message != '') {
-                                    fnAlert("w", "EPS_07_00", "", message);
+                                    fnAlert("w", "EPS_08_00", "", message);
                                     return [false]
                                 }
                                 else {
@@ -320,7 +320,7 @@
                                     return [true, '']
                                 }
                                 else {
-                                    fnAlert("e", "EPS_07_00", "", response.responseJSON.Message);
+                                    fnAlert("e", "EPS_08_00", "", response.responseJSON.Message);
                                     return [false]
                                 }
                             }
@@ -351,7 +351,7 @@
 
                         var message = fnValidateProcess(postdata);
                         if (message != '') {
-                            fnAlert("w", "EPS_07_00", "UI0072", message);
+                            fnAlert("w", "EPS_08_00", "UI0072", message);
                             return [false]
                         }
                         else {
@@ -367,7 +367,7 @@
                             return [true, ''];
                         }
                         else {
-                            fnAlert("e", "EPS_07_00", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            fnAlert("e", "EPS_08_00", response.responseJSON.StatusCode, response.responseJSON.Message);
                             return [false, response.responseJSON.Message];
                         }
                     }
@@ -393,7 +393,7 @@
                         //console.log(postdata);
                         var message = fnValidateProcess(postdata);
                         if (message != '') {
-                            fnAlert("w", "EPS_07_00", "UI0072", message);
+                            fnAlert("w", "EPS_08_00", "UI0072", message);
                             return [false];
 
                         }
@@ -410,7 +410,7 @@
                             return [true, ''];
                         }
                         else {
-                            fnAlert("e", "EPS_07_00", response.responseJSON.StatusCode, response.responseJSON.Message);
+                            fnAlert("e", "EPS_08_00", response.responseJSON.StatusCode, response.responseJSON.Message);
                             return [false]
                         }
                     }
@@ -429,7 +429,7 @@
                     $("#ProcessId,#ProcessDesc").css('width', $("#TblGrid_gvProcessRule").width())
                 },
                 error: function (error) {
-                    fnAlert("e", "EPS_07_00", "", error.status);
+                    fnAlert("e", "EPS_08_00", "", error.status);
                 }
             });
         }

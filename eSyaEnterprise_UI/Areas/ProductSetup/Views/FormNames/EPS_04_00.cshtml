@@ -120,24 +120,24 @@
                     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnConfigureMenu" onclick="fnOpenConfigureMenu()" )><i class="fa fa-plus"></i> @Localizer["ConfigureMenu"]</button>
                     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  mdl-js-ripple-effect" id="btnAreaController" onclick="fnOpenAreaControllerMenu()"><i class="fa fa-plus"></i> @Localizer["AreaController"] </button>
                 </div>
-
-                <div class="col-lg-12 col-md-12 col-sm-12 pad0 p-b-4 m-y-4">
+                <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 p-b-4 m-y-4">
                     <table id="jqgInternalForms"></table>
                     <div id="jqpInternalForms"></div>
                 </div>
-
-                <div id="dvFormAction">
-                    <div class="col-lg-12 col-md-12 col-sm-12 pad0">
+                  
+                <div id="dvFormAction" class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-xs-12">
+                   
                         <table id="jqgFormAction"></table>
                         <div id="jqpFormAction"></div>
-                    </div>
+                   
 
                     <div class="mdl-card__actions text-center m-t-4 pad0">
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSaveFormAction" onclick="fnSaveFormAction()"><i class="fa fa-save"></i> @Localizer["SaveAction"] </button>
                     </div>
                 </div>
-                <div class="row  m-t-4" id="dvFormParameter">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-xs-12" id="dvFormParameter">
+                    
                         @*@await Component.InvokeAsync("eSyaParameter", new { parameterType = "13" })*@
                         <table id="jqgFormParameter"></table>
                         <div id="jqpFormParameter"></div>
@@ -146,7 +146,7 @@
                                 <i class="fa fa-save"></i> @Localizer["Save"]
                             </button>
                         </div>
-                    </div>
+                   
 
                     @*  <div class="col-sm-12 col-md-6 col-lg-6" id="dvTable">
                     <table id="jqgFormSubParameter"></table>
@@ -165,7 +165,7 @@
                     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSaveFormParameter" onclick="fnSaveFormParameter()"><i class="fa fa-save"></i> @Localizer["SaveParameter"] </button>
                     </div>*@
                 </div>
-
+                </div>
 
             </div>
         </div>
@@ -515,19 +515,19 @@
         debugger;
         var _areaController = $('#cboAreaController').val();
         if (_areaController == "" || _areaController == '0' || _areaController == 0) {
-            fnAlert("w", "EPS_01_00", "UI0003", errorMsg.Controllerdesc__E3);
+            fnAlert("w", "EPS_04_00", "UI0003", errorMsg.Controllerdesc__E3);
             return false;
         }
         if (isInsert && IsStringNullorEmpty($("#txtControllerName").val())) {
-            fnAlert("w", "EPS_01_00", "UI0003", errorMsg.Controllerdesc__E3);
+            fnAlert("w", "EPS_04_00", "UI0003", errorMsg.Controllerdesc__E3);
             return false;
         }
         if (IsStringNullorEmpty(formCode)) {
-            fnAlert("w", "EPS_01_00", "UI0001", errorMsg.FormId_E1);
+            fnAlert("w", "EPS_04_00", "UI0001", errorMsg.FormId_E1);
             return false;
         }
         else if (IsStringNullorEmpty(txtFormDescription)) {
-            fnAlert("w", "EPS_01_00", "UI0001", errorMsg.Formdesc_E2);
+            fnAlert("w", "EPS_04_00", "UI0001", errorMsg.Formdesc_E2);
             return false;
         }
 
@@ -601,8 +601,8 @@
             colModel: [
                 { name: "FormID", width: 40, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text', hidden: true },
                 { name: "InternalFormNumber", width: 40, editable: true, align: 'left', edittype: 'text', hidden: false },
-                { name: "NavigateURL", width: 140, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 50 }, hidden: false },
-                { name: "FormDescription", width: 70, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 25 }, hidden: false },
+                { name: "NavigateURL", width: 120, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 50 }, hidden: false },
+                { name: "FormDescription", width: 50, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 25 }, hidden: false },
                 { name: "ActiveStatus", editable: true, width: 40, align: 'center !important', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             ],
             rowNum: 10,
@@ -805,16 +805,16 @@
             async: false,
             success: function (response) {
                 if (response.Status == true) {
-                    fnAlert("s", "EPS_01_00", response.StatusCode, response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
 
                 }
                 else {
-                    fnAlert("e", "EPS_01_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSaveFormAction").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "EPS_01_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnSaveFormAction").attr("disabled", false);
             }
         });
@@ -838,13 +838,24 @@
             colModel: [
                 { name: 'ParameterId', key: true, index: 'ParameterId', width: 0, sortable: false, hidden: true },
                 { name: 'ParameterDesc', index: 'ParameterDesc', classes: 'ellip', width: 150, sortable: false },
+                // {
+                //     name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox",
+                //     cellattr: function (id, val, rawdata, cm, rdata) {
+                //         ret = ""
+                //         if (rdata['ParameterId'] == 1) {
+                //             console.log(rdata['ParameterId']);
+                //             ret = " class='not-editable-cell'";
+                //         }
+                //         return ret;
+                //     }
+                // }
                 {
-                    name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox",
+                    name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, editable: true, edittype: "checkbox",formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } ,
                     cellattr: function (id, val, rawdata, cm, rdata) {
                         ret = ""
                         if (rdata['ParameterId'] == 1) {
                             console.log(rdata['ParameterId']);
-                            ret = " class='not-editable-cell'";
+                            ret = " class=''";
                         }
                         return ret;
                     }
@@ -888,6 +899,7 @@
                 // $('#dvTable').hide();
                 $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
                 fnJqgridSmallScreen("jqgFormParameter");
+                $(".ui-jqgrid-bdiv").scrollTop( 0 );
             }
         });
         //   debugger;
@@ -903,11 +915,15 @@
         for (var i = 0; i < ids.length; i++) {
             var rowId = ids[i];
             var rowData = jQuery('#jqgFormParameter').jqGrid('getRowData', rowId);
-            if (rowData.ActiveStatus == "Yes") {
+             
+            // if (rowData.ActiveStatus == "Yes") {
+            //     l_formParameter.push({ ParameterId: rowData.ParameterId, ActiveStatus: true })
+            // }
+            if (rowData.ActiveStatus == true || rowData.ActiveStatus == 'true') {
                 l_formParameter.push({ ParameterId: rowData.ParameterId, ActiveStatus: true })
             }
         }
-
+        
         $("#btnSaveFormParameter").attr("disabled", true);
         $.ajax({
             url: getBaseURL() + '/FormNames/InsertIntoFormParameter',
@@ -920,16 +936,16 @@
             async: false,
             success: function (response) {
                 if (response.Status == true) {
-                    fnAlert("s", "EPS_01_00", response.StatusCode, response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
                     fnLoadFormParameterGrid($("#txtFormID").val());
                 }
                 else {
-                    fnAlert("e", "EPS_01_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSaveFormParameter").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "EPS_01_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnSaveFormParameter").attr("disabled", false);
             }
         });

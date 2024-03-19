@@ -132,7 +132,7 @@ function fnEditParametersType(e, actiontype) {
     $("#btnSaveParametersType").attr('disabled', false);
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_06_00", "UIC02", errorMsg.editauth_E3);
+            fnAlert("w", "EPS_03_00", "UIC02", errorMsg.editauth_E3);
             return;
         }
         $("#PopupParametersHeader").modal('show');
@@ -144,7 +144,7 @@ function fnEditParametersType(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_06_00", "UIC03", errorMsg.vieweauth_E4);
+            fnAlert("w", "EPS_03_00", "UIC03", errorMsg.vieweauth_E4);
             return;
         }
         $("#PopupParametersHeader").modal('show');
@@ -166,7 +166,7 @@ function fnEditParametersType(e, actiontype) {
 
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_06_00", "UIC04", errorMsg.deleteauth_E5);
+            fnAlert("w", "EPS_03_00", "UIC04", errorMsg.deleteauth_E5);
             return;
         }
         $("#PopupParametersHeader").modal('show');
@@ -217,15 +217,15 @@ function fnClearParameterTypeFields() {
 function fnSaveParameterType() {
 
     if (IsStringNullorEmpty($("#txtParameterTypeId").val())) {
-        fnAlert("w", "EPS_06_00", "UI0014", errorMsg.ParameterTypeID_E1);
+        fnAlert("w", "EPS_03_00", "UI0014", errorMsg.ParameterTypeID_E1);
         return false;
     }
     if ($("#txtParameterTypeId").val() == 0) {
-        fnAlert("w", "EPS_06_00", "UI0015", errorMsg.ParameterIdNotZero_E7);
+        fnAlert("w", "EPS_03_00", "UI0015", errorMsg.ParameterIdNotZero_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#txtParameterTypeDescription").val())) {
-        fnAlert("w", "EPS_06_00", "UI0016", errorMsg.ParameterTypeDesc_E8);
+        fnAlert("w", "EPS_03_00", "UI0016", errorMsg.ParameterTypeDesc_E8);
         return false;
     }
 
@@ -412,7 +412,7 @@ function fnUserAction(val) {
 function fnSaveParameters() {
    
     if (IsStringNullorEmpty($("#txtParameterDescription").val())) {
-        fnAlert("w", "EPS_06_00", "UI0013", errorMsg.Parameterdesc_E2);
+        fnAlert("w", "EPS_03_00", "UI0013", errorMsg.Parameterdesc_E2);
         return false;
     }
 

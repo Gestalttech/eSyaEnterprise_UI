@@ -460,7 +460,7 @@
 
                                 if (_userFormRole.IsView === false) {
                                     $('#pnlMainMenu').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC03", errorMsg.UnAuthorised_view_E3);
+                                    fnAlert("w", "EPS_05_00", "UIC03", errorMsg.UnAuthorised_view_E3);
                                     return;
                                 }
                                 $('#pnlAddSubMenu').hide();
@@ -477,7 +477,7 @@
                             $('#Edit').on('click', function () {
                                 if (_userFormRole.IsEdit === false) {
                                     $('#pnlMainMenu').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC02", errorMsg.UnAuthorised_edit_E2);
+                                    fnAlert("w", "EPS_05_00", "UIC02", errorMsg.UnAuthorised_edit_E2);
                                     return;
                                 }
                                 $('#pnlAddSubMenu').hide();
@@ -495,7 +495,7 @@
                             $('#Add').on('click', function () {
                                 if (_userFormRole.IsInsert === false) {
                                     $('#pnlMainMenu').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC01", errorMsg.UnAuthorised_add_E1);
+                                    fnAlert("w", "EPS_05_00", "UIC01", errorMsg.UnAuthorised_add_E1);
                                     return;
                                 }
                                 $('#pnlAddSubMenu').show();
@@ -530,7 +530,7 @@
                                     $('#pnlAddSubMenu').hide();
                                     $('#pnlSubMenu').hide();
                                     $('#pnlForm').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC03", errorMsg.UnAuthorised_view_E3);
+                                    fnAlert("w", "EPS_05_00", "UIC03", errorMsg.UnAuthorised_view_E3);
                                     return;
                                 }
                                 $('#hdfMenuItemID').val(data.node.id.substring(2));
@@ -549,7 +549,7 @@
                                     $('#pnlAddSubMenu').hide();
                                     $('#pnlSubMenu').hide();
                                     $('#pnlForm').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC02", errorMsg.UnAuthorised_edit_E2);
+                                    fnAlert("w", "EPS_05_00", "UIC02", errorMsg.UnAuthorised_edit_E2);
                                     return;
                                 }
                                 $('#hdfMenuItemID').val(data.node.id.substring(2));
@@ -569,7 +569,7 @@
                                     $('#hdfMenuItemID').val(0);
                                     $('#pnlAddSubMenu').hide();
                                     $('#pnlrdoAddItem').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC01", errorMsg.UnAuthorised_add_E1);
+                                    fnAlert("w", "EPS_05_00", "UIC01", errorMsg.UnAuthorised_add_E1);
                                     return;
                                 }
                                 $('#hdfMenuItemID').val(0);
@@ -600,7 +600,7 @@
                                 if (_userFormRole.IsView === false) {
                                     $('#pnlAddSubMenu').hide();
                                     $('#pnlForm').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC03", errorMsg.UnAuthorised_view_E3);
+                                    fnAlert("w", "EPS_05_00", "UIC03", errorMsg.UnAuthorised_view_E3);
                                     return;
                                 }
 
@@ -628,7 +628,7 @@
                                 if (_userFormRole.IsEdit === false) {
                                     $('#pnlAddSubMenu').hide();
                                     $('#pnlForm').hide();
-                                    fnAlert("w", "EPS_03_00", "UIC03", errorMsg.UnAuthorised_view_E3);
+                                    fnAlert("w", "EPS_05_00", "UIC03", errorMsg.UnAuthorised_view_E3);
                                     return;
                                 }
 
@@ -684,11 +684,11 @@
     function fnSaveeSyaMenu() {
 
         if (IsStringNullorEmpty($("#txteSyaMenuName").val())) {
-            fnAlert("w", "EPS_03_00", "UI0007", errorMsg.MenuName_E5);
+            fnAlert("w", "EPS_05_00", "UI0007", errorMsg.MenuName_E5);
             return false;
         }
         if (IsStringNullorEmpty($("#txtVersion").val())) {
-            fnAlert("w", "EPS_03_00", "UI0008", errorMsg.VersionName_E6);
+            fnAlert("w", "EPS_05_00", "UI0008", errorMsg.VersionName_E6);
             return false;
         }
 
@@ -799,12 +799,12 @@
 
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
         if (selectedNode.length != 1) {
-            fnAlert("w", "EPS_03_00", "UIC06", errorMsg.SelectOneNode_E7);
+            fnAlert("w", "EPS_05_00", "UIC06", errorMsg.SelectOneNode_E7);
         }
         else {
 
             if (IsStringNullorEmpty($("#txtMainMenuName").val())) {
-                fnAlert("w", "EPS_03_00", "UIC08", errorMsg.MainMenuName_E8);
+                fnAlert("w", "EPS_05_00", "UIC08", errorMsg.MainMenuName_E8);
                 return false;
             }
 
@@ -863,11 +863,11 @@
 
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
         if (selectedNode.length != 1) {
-            fnAlert("w", "EPS_03_00", "UIC06", errorMsg.SelectOneNode_E7);
+            fnAlert("w", "EPS_05_00", "UIC06", errorMsg.SelectOneNode_E7);
         }
         else {
             if (IsStringNullorEmpty($("#txtSubMenuName").val())) {
-                fnAlert("w", "EPS_03_00", "UIC09", errorMsg.SubMenuName_E9);
+                fnAlert("w", "EPS_05_00", "UIC09", errorMsg.SubMenuName_E9);
                 return false;
             }
 
@@ -922,15 +922,15 @@
 
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
         if (selectedNode.length != 1) {
-            fnAlert("w", "EPS_03_00", "UIC06", errorMsg.SelectOneNode_E7);
+            fnAlert("w", "EPS_05_00", "UIC06", errorMsg.SelectOneNode_E7);
         }
         else {
             if (IsStringNullorEmpty($("#cboInternalForm").val()) || $("#cboInternalForm").val() == '0') {
-                fnAlert("w", "EPS_03_00", "UI0009", errorMsg.InternalForm_E10);
+                fnAlert("w", "EPS_05_00", "UI0009", errorMsg.InternalForm_E10);
                 return false;
             }
             if (IsStringNullorEmpty($("#txtFormName").val())) {
-                fnAlert("w", "EPS_03_00", "UI0010", errorMsg.Formname_E11);
+                fnAlert("w", "EPS_05_00", "UI0010", errorMsg.Formname_E11);
                 return false;
             }
 
@@ -996,7 +996,7 @@
 
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
         if (selectedNode.length != 1) {
-            fnAlert("w", "EPS_03_00", "UIC06", errorMsg.SelectOneNode_E7);
+            fnAlert("w", "EPS_05_00", "UIC06", errorMsg.SelectOneNode_E7);
         }
         else {
             selectedNode = selectedNode[0];
@@ -1075,7 +1075,7 @@
         var URL;
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
         if (selectedNode.length != 1) {
-            fnAlert("w", "EPS_03_00", "UIC10", errorMsg.NodeMove_E12)
+            fnAlert("w", "EPS_05_00", "UIC10", errorMsg.NodeMove_E12)
             return;
         }
         else {

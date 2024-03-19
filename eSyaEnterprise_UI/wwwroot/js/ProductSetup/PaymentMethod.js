@@ -99,7 +99,7 @@ function fnGridRefreshPaymentMethod() {
 function fnAddPaymentMethod() {
    
     if ($("#cboPaymentMethodCountry").val() === 0 || $("#cboPaymentMethodCountry").val() === "0" || IsStringNullorEmpty($("#cboPaymentMethodCountry").val())) {
-        fnAlert("w", "EPS_34_00", "UI0042", errorMsg.PaymentMethodCountry_E1);
+        fnAlert("w", "EPS_17_00", "UI0042", errorMsg.PaymentMethodCountry_E1);
         return;
     }
 
@@ -132,7 +132,7 @@ function fnEditPaymentMethod(e, actiontype) {
     }
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_34_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EPS_17_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $('#PopupPaymentMethod').modal('show');
@@ -151,7 +151,7 @@ function fnEditPaymentMethod(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_34_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPS_17_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupPaymentMethod').modal('show');
@@ -172,16 +172,16 @@ function fnEditPaymentMethod(e, actiontype) {
 }
 function fnSavePaymentMethod() {
     if ($("#cboPaymentMethodCountry").val() == '' || $("#cboPaymentMethodCountry").val() == "0" || IsStringNullorEmpty($("#cboPaymentMethodCountry").val())) {
-        fnAlert("w", "EPS_34_00", "UI0042", errorMsg.PaymentMethodCountry_E1);
+        fnAlert("w", "EPS_17_00", "UI0042", errorMsg.PaymentMethodCountry_E1);
         return;
     }
     if ($("#cboPaymentMethod").val() == '' || $("#cboPaymentMethod").val() == "0" || IsStringNullorEmpty($("#cboPaymentMethod").val())) {
-        fnAlert("w", "EPS_34_00", "UI0244", errorMsg.PaymentMethod_E1);
+        fnAlert("w", "EPS_17_00", "UI0244", errorMsg.PaymentMethod_E1);
         return;
     }
 
     if ($("#cboInstrumentType").val() == '' || $("#cboInstrumentType").val() === "0" || IsStringNullorEmpty($("#cboInstrumentType").val())) {
-        fnAlert("w", "EPS_34_00", "UI0245", errorMsg.InstrumentType_E1);
+        fnAlert("w", "EPS_17_00", "UI0245", errorMsg.InstrumentType_E1);
         return;
     }
         
