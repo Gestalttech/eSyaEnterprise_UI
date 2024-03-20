@@ -264,10 +264,11 @@
     };
 
     var errorMsg = {
-        FormId_E1: '@Localizer["UI0001"]',
+        FormId_E1: '@Localizer["UI0003"]',
         Formdesc_E2: '@Localizer["UI0002"]',
-        Controllerdesc__E3: '@Localizer["UI0003"]',
+        Controllerdesc__E3: '@Localizer["UI0006"]',
         UserAction__E4: '@Localizer["UI0004"]',
+        AreaControllerdesc_E5: '@Localizer["UI0001"]',
     };
     var prevSelectedID = 'FM';
 
@@ -511,23 +512,23 @@
                 parentID = 0;
             }
         }
-        console.log($("#txtControllerName").val());
-        debugger;
+       
+       
         var _areaController = $('#cboAreaController').val();
         if (_areaController == "" || _areaController == '0' || _areaController == 0) {
-            fnAlert("w", "EPS_04_00", "UI0003", errorMsg.Controllerdesc__E3);
+            fnAlert("w", "EPS_04_00", "UI0001", errorMsg.AreaControllerdesc_E4);
             return false;
         }
         if (isInsert && IsStringNullorEmpty($("#txtControllerName").val())) {
-            fnAlert("w", "EPS_04_00", "UI0003", errorMsg.Controllerdesc__E3);
+            fnAlert("w", "EPS_04_00", "UI0006", errorMsg.Controllerdesc__E3);
             return false;
         }
         if (IsStringNullorEmpty(formCode)) {
-            fnAlert("w", "EPS_04_00", "UI0001", errorMsg.FormId_E1);
+            fnAlert("w", "EPS_04_00", "UI0003", errorMsg.FormId_E1);
             return false;
         }
         else if (IsStringNullorEmpty(txtFormDescription)) {
-            fnAlert("w", "EPS_04_00", "UI0001", errorMsg.Formdesc_E2);
+            fnAlert("w", "EPS_04_00", "UI0002", errorMsg.Formdesc_E2);
             return false;
         }
 
@@ -1147,7 +1148,7 @@
 
         var _FormId = Number($(txtFID).val());
         if (_userActionlist.length <= 0) {
-            fnAlert("w", "", "UI00004", errorMsg.UserAction__E4)
+            fnAlert("w", "", "UI0004", errorMsg.UserAction__E4);
         }
         else {
 

@@ -168,15 +168,15 @@ function fnEditCountryMobileCarrier(e, actiontype) {
 function fnSaveCountryMobileCarrier() {
 
     if (IsStringNullorEmpty($("#cboCountryMobileCarrier").val()) || $("#cboCountryMobileCarrier").val() == '0' || $("#cboCountryMobileCarrier").val()=="0") {
-        fnAlert("w", "EPS_18_00", "UI0201", "Please select ISD Code");
+        fnAlert("w", "EPS_18_00", "UI0056", errorMsg.ISDCode_E6);
         return;
     }
     if (IsStringNullorEmpty($("#txtMobilePrefix").val())) {
-        fnAlert("w", "EPS_18_00", "UI0201", "Please Enter Mobile Prefix");
+        fnAlert("w", "EPS_18_00", "UI0291", errorMsg.MobilePrefix_E7);
         return;
     }
     if (IsStringNullorEmpty($("#txtMobileNoDigit").val())) {
-        fnAlert("w", "EPS_18_00", "UI0201", "Please Enter Mobile Number Digit");
+        fnAlert("w", "EPS_18_00", "UI0138", errorMsg.MobileNumber_E8);
         return;
     }
 
