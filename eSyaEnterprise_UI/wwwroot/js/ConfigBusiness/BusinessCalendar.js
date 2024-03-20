@@ -80,7 +80,7 @@ function SetGridControlByAction() {
 }
 function fnAddBusinessCalendar() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() == "0") {
-        fnAlert("w", "ECB_05_00", "UI0052", "Please Select Business Location to add");
+        fnAlert("w", "ECB_05_00", "UI0175", errorMsg.BusinessKey_E4);
         return;
     }
     else {
@@ -157,19 +157,19 @@ function fnClearFields() {
 function fnSaveBusinessCalendar() {
 
     if ($("#cboBusinessKey ").val() === "0" || $("#cboBusinessKey ").val() === "" || $("#cboBusinessKey ").val() === '' || $("#cboBusinessKey ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0175", "Please select Business Location");
+        fnAlert("w", "ECB_05_00", "UI0175", errorMsg.BusinessKey_E4);
         return;
     }
     if ($("#cboCalendarKey ").val() === "0" || $("#cboCalendarKey ").val() === "" || $("#cboCalendarKey ").val() === '' || $("#cboCalendarKey ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0214", "Please select Calendar Key");
+        fnAlert("w", "ECB_05_00", "UI0292", errorMsg.CalendarKey_E9);
         return;
     }
     if ($("#cboDocumentId ").val() === "0" || $("#cboDocumentId ").val() === "" || $("#cboDocumentId ").val() === '' || $("#cboDocumentId ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0214", "Please select Document");
+        fnAlert("w", "ECB_05_00", "UI0017", errorMsg.DocumentId_E5);
         return;
     }
     if ($("#cboGenerateType ").val() === "0" || $("#cboGenerateType ").val() === "" || $("#cboGenerateType ").val() === '' || $("#cboGenerateType ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0214", "Please select Generate Type");
+        fnAlert("w", "ECB_05_00", "UI0293", errorMsg.GenerateType_E10);
         return;
     }
     obj = {
@@ -223,7 +223,7 @@ function fnBindCalendarKeys() {
                 //refresh each time
                 $("#cboCalendarKey").empty();
 
-                $("#cboCalendarKey").append($("<option value='0'> Select </option>"));
+                $("#cboCalendarKey").append($("<option value='0'>"+localization.Select+"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboCalendarKey").append($("<option></option>").val(response[i]["CalenderKey"]).html(response[i]["CalenderKey"]));
@@ -232,7 +232,7 @@ function fnBindCalendarKeys() {
             }
             else {
                 $("#cboCalendarKey").empty();
-                $("#cboCalendarKey").append($("<option value='0'> Choose Calendar Key </option>"));
+                $("#cboCalendarKey").append($("<option value='0'>"+localization.ChooseCalendarKey+"</option>"));
                 $('#cboCalendarKey').selectpicker('refresh');
             }
         },

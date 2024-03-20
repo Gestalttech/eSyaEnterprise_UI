@@ -165,7 +165,7 @@ $("#btnCancelCityCode").click(function () {
 function fnSaveCityCodes() {
 
     if ($("#cboCityCountry").val() === 0 || $("#cboCityCountry").val() === "0" || IsStringNullorEmpty($("#cboCityCountry").val())) {
-        fnAlert("w", "EPS_16_00", "UI0041", errorMsg.CountrySelect_E8);
+        fnAlert("w", "EPS_16_00", "UI0041", errorMsg.CountrySelect_E6);
         return;
     }
     if ($("#cboStateCode").val() === 0 || $("#cboStateCode").val() === "0" || IsStringNullorEmpty($("#cboStateCode").val())) {

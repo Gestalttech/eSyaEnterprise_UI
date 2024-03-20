@@ -158,7 +158,7 @@ function fnAddDocumentControl() {
 
 function fnEditDocumentControl(e) {
     if (_userFormRole.IsEdit === false) {
-        fnAlert("w", "EPS_08_00", "", errorMsg.editauth_E3);
+        fnAlert("w", "ECD_02_00", "UIC02", errorMsg.editauth_E3);
         return;
     }
 
@@ -264,24 +264,24 @@ function fnSaveDocumentControl() {
 function fnValidateDocumentControl() {
 
     if (IsStringNullorEmpty($("#txtDocumentId").val())) {
-        fnAlert("w", "EPS_08_00", "UI0017", errorMsg.DocumentID_E1);
+        fnAlert("w", "ECD_02_00", "UI0017", errorMsg.DocumentID_E1);
         return false;
     }
 
     if (IsStringNullorEmpty($("#txtDocumentType").val())) {
-        fnAlert("w", "EPS_08_00", "UI0018", errorMsg.DocumenType_E2);
+        fnAlert("w", "ECD_02_00", "UI0018", errorMsg.DocumenType_E2);
         return false;
     }
     if (IsStringNullorEmpty($("#txtShortDesc").val())) {
-        fnAlert("w", "EPS_08_00", "UI0019", errorMsg.ShortDesc_E6);
+        fnAlert("w", "ECD_02_00", "UI0019", errorMsg.ShortDesc_E6);
         return false;
     }
     if (IsStringNullorEmpty($("#txtSchemeName").val())) {
-        fnAlert("w", "EPS_08_00", "UI0020", errorMsg.SelectScheme_E7);
+        fnAlert("w", "ECD_02_00", "UI0020", errorMsg.SelectScheme_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDocumentDesc").val())) {
-        fnAlert("w", "EPS_08_00", "UI0021", errorMsg.DocumentDesc_E8);
+        fnAlert("w", "ECD_02_00", "UI0021", errorMsg.DocumentDesc_E8);
         return false;
     }
 
@@ -294,7 +294,7 @@ function fnRefreshDocumentControlGrid() {
 
 function fnViewDocumentControl(e) {
     if (_userFormRole.IsView === false) {
-        fnAlert("w", "EPS_08_00", "UIC04", errorMsg.vieweauth_E4);
+        fnAlert("w", "ECD_02_00", "UIC04", errorMsg.vieweauth_E4);
         return;
     }
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
@@ -338,7 +338,7 @@ function fnViewDocumentControl(e) {
 
 function fnPopUpDeleteDocumentControl(e) {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "", "", errorMsg.deleteauth_E5);
+        fnAlert("w", "ECD_02_00", "UIC03", errorMsg.deleteauth_E5);
         return;
     }
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');

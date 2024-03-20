@@ -83,7 +83,7 @@ function RefreshCalendarDetailsGrid() {
 function fnSaveCalendarDetails(edit) {
 
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() == "0" || $("#cboBusinessKey").val() == '0') {
-        fnAlert("w", "ECB_04_00", "UI0053", errorMsg.Loc_E1);
+        fnAlert("w", "ECB_04_00", "UI0064", errorMsg.Loc_E1);
         return;
     }
 

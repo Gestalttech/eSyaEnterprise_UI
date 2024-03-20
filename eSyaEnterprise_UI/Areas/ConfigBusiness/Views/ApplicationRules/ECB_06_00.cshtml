@@ -29,6 +29,10 @@
         ProcessRule: '@Localizer["ProcessRule"]',
         subGrid: '@Localizer["subGrid"]',
     };
+    var errorMsg = {
+       RuleDescription_E1: '@Localizer["UI0294"]',
+       RuleId_E2: '@Localizer["UI0295"]',
+    }
 </script>
 <div class="row">
     <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
@@ -248,10 +252,12 @@
                                 postdata.BusinessKey = $("#cboBusinesskey").val();
                                 var message = fnValidateRule(postdata);
                                 if (message != '') {
-                                    return [false, message]
+                                    return [false, ]
+                                    fnAlert("e", "", "", message);
                                 }
                                 else {
-                                    return [true, '']
+                                    return [true, ''];
+                                   
                                 }
                             },
                             afterSubmit: function (response, postdata) {
@@ -282,15 +288,15 @@
 
             for (var i = 0; i < dataArray.length; i++) {
                 if (dataArray[i].RuleDesc === rowData.RuleDesc && dataArray[i].RuleId != rowData.RuleId) {
-                    val = 'Choose another rule description';
+                    val = errorMsg.RuleDescription_E1;
                     break;
                 }
             }
             if (IsStringNullorEmpty(rowData.RuleId)) {
-                val = "Rule ID cannot be empty";
+                val = errorMsg.RuleId_E2;
             }
             else if (IsStringNullorEmpty(rowData.RuleDesc)) {
-                val = "Rule Description cannot be empty";
+                val = errorMsg.RuleDescription_E1;
             }
 
             return val;

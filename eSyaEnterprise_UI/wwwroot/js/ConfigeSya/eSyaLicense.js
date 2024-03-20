@@ -136,15 +136,15 @@ function fnEditeSyaLicense(e, actiontype) {
 function fnSaveeSyaLicense() {
 
     if ($("#txtBusinesskey").val() == 0 || $("#txtBusinesskey").val() == '0' || IsStringNullorEmpty($("#txtBusinesskey").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", "Business Key Required");
+        fnAlert("w", "ECE_01_00", "UI0175", errorMsg.BusinessKey_E4);
         return;
     }
     if ($("#cboLicenseType").val() == 0 || $("#cboLicenseType").val() == '0' || IsStringNullorEmpty($("#cboLicenseType").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", "Please Select License Type");
+        fnAlert("w", "ECE_01_00", "UI0060", errorMsg.LicenseType_E5);
         return;
     }
     if ($("#txteUserLicenses").val() == 0 || $("#txteUserLicenses").val() == '0' || IsStringNullorEmpty($("#txteUserLicenses").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", "User Licenses Required");
+        fnAlert("w", "ECE_01_00", "UI0061", errorMsg.EnterUserLicense_E6);
         return;
     }
     //if ($("#txteActiveUsers").val() == 0 || $("#txteActiveUsers").val() == '0' || IsStringNullorEmpty($("#txteActiveUsers").val())) {
@@ -152,7 +152,7 @@ function fnSaveeSyaLicense() {
     //    return;
     //}
     if ($("#txteNoofBeds").val() == 0 || $("#txteNoofBeds").val() == '0' || IsStringNullorEmpty($("#txteNoofBeds").val())) {
-        fnAlert("w", "ECE_01_00", "UI0052", "No of Beds Required");
+        fnAlert("w", "ECE_01_00", "UI0296", errorMsg.EnterNoofBeds_E7);
         return;
     }
     obj_esyaLicense = {
