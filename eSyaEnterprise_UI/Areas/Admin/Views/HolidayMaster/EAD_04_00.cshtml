@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "EAD_03_00";
+    ViewData["Title"] = "EAD_04_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
@@ -34,10 +34,12 @@
             AddHolidayMaster: '@Localizer["AddHolidayMaster"]',
             Cancel:'@Localizer["Cancel"]',
             HolidayDate: '@Localizer["HolidayDate"]',
-            DActivate: '@Localizer["DActivate"]',
+            DActivate: '@Localizer["Deactivate"]',
             EditHolidayMaster: '@Localizer["EditHolidayMaster"]',
             ViewHolidayMaster: '@Localizer["ViewHolidayMaster"]',
             HolidayMaster: '@Localizer["HolidayMaster"]',
+            Year: '@Localizer["Year"]',
+            HolidayType: '@Localizer["HolidayType"]',
 
         }
     var errorMsg = {
@@ -49,6 +51,9 @@
         BusinessKey_E6: '@Localizer["UI0175"]',
         HolidayDesc_E7: '@Localizer["UI0176"]',
         HolidayDate_E8: '@Localizer["UI0177"]',
+        EnterYear_E9: '@Localizer["UI0068"]',
+        HolidayType_E10: '@Localizer["UI0297"]',
+        EnterYearlength_E11: '@Localizer["UI0298"]',
     }
 
 </script>
@@ -85,7 +90,7 @@
 
 
 <div class="modal fade in" id="PopupHolidayMaster" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
@@ -94,28 +99,33 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label for="txtHolidayDesc">@Localizer["HolidayDesc"] </label>
+                    <div class="col-lg-3 col-md-3 col-6 form-group">
+                        <label>@Localizer["Year"]</label>
+                        <input type="text" class="form-control numberonly" id="txtYear" maxlength="4" />
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-6 form-group">
+                        <label class="lable-color" for="dtHolidayDate">@Localizer["HolidayDate"] </label>
+                        <input type="text" class="form-control datepicker" id="dtHolidayDate" autocomplete="off" onkeydown="return false" />
+                    </div>
+
+                    
+                    <div class="col-lg-3 col-md-3 col-6 form-group">
+                        <label>@Localizer["HolidayType"]</label>
+                        <select class="selectpicker" data-size="4" data-container="body" id="cboHolidayType">
+                            <option value="0">@Localizer["Select"]</option>
+                            <option value="G">@Localizer["General"]</option>
+                            <option value="R">@Localizer["Restricted"]</option>
+                        </select>
+                        </div>
+                   
+                    <div class="col-lg-12 form-group">
+                           <label for="txtHolidayDesc">@Localizer["HolidayDesc"] </label>
                             <input type="text" id="txtHolidayDesc" class="form-control" maxlength="150" />
-
-                        </div>
                     </div>
 
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <label class="lable-color" for="dtHolidayDate">@Localizer["HolidayDate"] </label>
-
-                            <input type="text" class="form-control datepicker" id="dtHolidayDate" autocomplete="off" onkeydown="return false"/>
-                        </div>
-                    </div>
-                    
-
-                    
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                   
+                 
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>
@@ -146,8 +156,8 @@
         $("#dtHolidayDate").datepicker({
             autoclose: true,
             dateFormat: _cnfDateFormat,
-            endDate: todaydt
-           
+            endDate: todaydt,
+            minDate:0,
         });
         
     });

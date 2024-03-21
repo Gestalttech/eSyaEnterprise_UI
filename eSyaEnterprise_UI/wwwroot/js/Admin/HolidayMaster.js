@@ -37,11 +37,12 @@ function fnGridLoadHolidayMaster() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.Businesskey, localization.HolidayDesc, localization.CurrentDocDate, localization.Active, localization.Actions],
+        colNames: [localization.Businesskey, localization.HolidayDesc, localization.Year, localization.HolidayType, localization.CurrentDocDate, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 15 }, resizable: false, hidden: true },
             { name: "HolidayDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
-
+            { name: "Year", width: 180, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "HolidayType", width: 180, align: 'left', editable: true, formatter: 'select', edittype: 'select', editoptions: { value: "G:General;R:Restricted" }, resizable: false, hidden: false },
             {
                 name: 'HolidayDate', index: 'FromDate', width: 60, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
@@ -82,15 +83,15 @@ function fnGridLoadHolidayMaster() {
         }).jqGrid('navButtonAdd', '#jqpHolidayMaster', {
             caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddHolidayMaster
     });
-
+    fnAddGridSerialNoHeading();
 }
 
 function fnAddHolidayMaster() {
-    if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
-        fnAlert("w", "EAD_03_00", "UIC01", errorMsg.addauth_E1);
-        return;
-    }
-    else {
+    //if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
+    //    fnAlert("w", "EAD_03_00", "UIC01", errorMsg.addauth_E1);
+    //    return;
+    //}
+    //else {
         $('#PopupHolidayMaster').modal({ backdrop: 'static', keyboard: false });
         $('#PopupHolidayMaster').find('.modal-title').text(localization.AddHolidayMaster);
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -102,7 +103,7 @@ function fnAddHolidayMaster() {
         $("#btndeActiveHolidayMaster").hide();
         $('#PopupHolidayMaster').modal('show');
         _isInsert = true;
-    }
+    //}
 }
 
 function fnEditHolidayMaster(e, actiontype) {
@@ -136,7 +137,8 @@ function fnEditHolidayMaster(e, actiontype) {
         $('#PopupHolidayMaster').find('.modal-title').text(localization.EditHolidayMaster);
         $("#btnSaveHolidayMaster").html('<i class="fa fa-sync"></i>' + localization.Update);
         $("#btndeActiveHolidayMaster").hide();
-        $("#chkActiveStatus").prop('disabled', true);
+        $("#chkActiveStatus,#txtYear").prop('disabled', true);
+        $("#cboHolidayType").next().prop('disabled', true);
         $("#btnSaveHolidayMaster").attr("disabled", false);
       //  $("#dtHolidayDate").datepicker('enable');
     }
@@ -214,9 +216,21 @@ function fnClearFields() {
 }
 
 function fnSaveHolidayMaster() {
-
-    if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
+    var yearlength = $("#txtYear").val().length;
+    if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === 0) {
         fnAlert("w", "EAD_03_00", "UI0175", errorMsg.BusinessKey_E6);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtYear").val()) || $("#txtYear").val() === "0") {
+        fnAlert("w", "EAD_03_00", "UI0068", errorMsg.EnterYear_E9);
+        return;
+    }
+    if (yearlength < 4) {
+        fnAlert("w", "EAD_03_00", "UI0298", errorMsg.EnterYearlength_E11);
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboHolidayType").val()) || $("#cboHolidayType").val() === 0) {
+        fnAlert("w", "EAD_03_00", "UI0297", errorMsg.HolidayType_E10);
         return;
     }
     if (IsStringNullorEmpty($("#txtHolidayDesc").val()) || $("#txtHolidayDesc").val() === "0") {
