@@ -5,6 +5,7 @@ using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
+using eSyaEssentials_UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -102,6 +103,7 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         {
             try
             {
+              
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);

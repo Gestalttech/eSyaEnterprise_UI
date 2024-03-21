@@ -87,11 +87,11 @@ function fnGridLoadHolidayMaster() {
 }
 
 function fnAddHolidayMaster() {
-    //if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
-    //    fnAlert("w", "EAD_03_00", "UIC01", errorMsg.addauth_E1);
-    //    return;
-    //}
-    //else {
+    if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
+        fnAlert("w", "EAD_03_00", "UIC01", errorMsg.BusinessKey_E6);
+        return;
+    }
+    else {
         $('#PopupHolidayMaster').modal({ backdrop: 'static', keyboard: false });
         $('#PopupHolidayMaster').find('.modal-title').text(localization.AddHolidayMaster);
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -103,14 +103,20 @@ function fnAddHolidayMaster() {
         $("#btndeActiveHolidayMaster").hide();
         $('#PopupHolidayMaster').modal('show');
         _isInsert = true;
-    //}
+    }
 }
 
 function fnEditHolidayMaster(e, actiontype) {
     var rowid = $("#jqgHolidayMaster").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgHolidayMaster').jqGrid('getRowData', rowid);
     _isInsert = false;
-  
+
+    $('#txtYear').val(rowData.Year);
+    $("#txtYear").attr("readonly", true);
+
+    $('#cboHolidayType').val(rowData.HolidayType).selectpicker('refresh');
+    $("#cboHolidayType").next().attr('disabled', true).selectpicker('refresh');
+
     $('#txtHolidayDesc').val(rowData.HolidayDesc);
    
     if (rowData.HolidayDate !== null) {
@@ -137,7 +143,7 @@ function fnEditHolidayMaster(e, actiontype) {
         $('#PopupHolidayMaster').find('.modal-title').text(localization.EditHolidayMaster);
         $("#btnSaveHolidayMaster").html('<i class="fa fa-sync"></i>' + localization.Update);
         $("#btndeActiveHolidayMaster").hide();
-        $("#chkActiveStatus,#txtYear").prop('disabled', true);
+        $("#chkActiveStatus").prop('disabled', true);
         $("#cboHolidayType").next().prop('disabled', true);
         $("#btnSaveHolidayMaster").attr("disabled", false);
       //  $("#dtHolidayDate").datepicker('enable');
@@ -206,13 +212,21 @@ function SetGridControlByAction() {
 }
 
 function fnClearFields() {
+    
+    $('#txtYear').val('');
+    $("#txtYear").attr("readonly", false);
 
     $('#dtHolidayDate').val('');
     document.getElementById("dtHolidayDate").disabled = false;
+
+    $("#cboHolidayType").next().attr('disabled', false).selectpicker('refresh');
+    $('#cboHolidayType').val('0').selectpicker('refresh');
+  
     $('#txtHolidayDesc').val('');
     $("#chkActiveStatus").prop('disabled', true);
     $("#btnSaveHolidayMaster").attr("disabled", false);
     $("#btndeActiveHolidayMaster").attr("disabled", false);
+    
 }
 
 function fnSaveHolidayMaster() {
@@ -229,7 +243,11 @@ function fnSaveHolidayMaster() {
         fnAlert("w", "EAD_03_00", "UI0298", errorMsg.EnterYearlength_E11);
         return;
     }
-    if (IsStringNullorEmpty($("#cboHolidayType").val()) || $("#cboHolidayType").val() === 0) {
+    if (IsStringNullorEmpty($("#dtHolidayDate").val())) {
+        fnAlert("w", "EAD_03_00", "UI0177", errorMsg.HolidayDate_E8);
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboHolidayType").val()) || $("#cboHolidayType").val() === 0 || $("#cboHolidayType").val() === "0") {
         fnAlert("w", "EAD_03_00", "UI0297", errorMsg.HolidayType_E10);
         return;
     }
@@ -237,14 +255,13 @@ function fnSaveHolidayMaster() {
         fnAlert("w", "EAD_03_00", "UI0176", errorMsg.HolidayDesc_E7);
         return;
     }
-    if (IsStringNullorEmpty($("#dtHolidayDate").val())) {
-        fnAlert("w", "EAD_03_00", "UI0177", errorMsg.HolidayDate_E8);
-        return;
-    }
+    
    
 
     objhm = {
         BusinessKey: $("#cboBusinessLocation").val(),
+        HolidayType: $("#cboHolidayType").val(),
+        Year: $("#txtYear").val(),
         HolidayDesc: $("#txtHolidayDesc").val(),
         HolidayDate: getDate($("#dtHolidayDate")),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
@@ -292,6 +309,8 @@ function fnDeleteHolidayMaster() {
 
     objgen = {
         BusinessKey: $("#cboBusinessLocation").val(),
+        HolidayType: $("#cboHolidayType").val(),
+        Year: $("#txtYear").val(),
         HolidayDesc: $("#txtHolidayDesc").val(),
         HolidayDate: getDate($("#dtHolidayDate")),
         _status: a_status,
