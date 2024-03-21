@@ -112,7 +112,7 @@ function fnEditHolidayMaster(e, actiontype) {
     _isInsert = false;
 
     $('#txtYear').val(rowData.Year);
-    $("#txtYear").attr("readonly", true);
+    $("#txtYear").attr("disabled", true);
 
     $('#cboHolidayType').val(rowData.HolidayType).selectpicker('refresh');
     $("#cboHolidayType").next().attr('disabled', true).selectpicker('refresh');
@@ -214,7 +214,7 @@ function SetGridControlByAction() {
 function fnClearFields() {
     
     $('#txtYear').val('');
-    $("#txtYear").attr("readonly", false);
+    $("#txtYear").attr("disabled", false);
 
     $('#dtHolidayDate').val('');
     document.getElementById("dtHolidayDate").disabled = false;
