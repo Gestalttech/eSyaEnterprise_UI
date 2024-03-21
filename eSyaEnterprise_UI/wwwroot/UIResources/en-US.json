@@ -297,6 +297,8 @@
   "UI0296": "Please enter the No of Beds",
   "UI0297": "Please select the holiday type",
   "UI0298": "Year should be in 4 digits",
+  "UI0299": "Please enter the current year or upcoming year",
+  "UI0300": "Please enter the current year or next year",
 
 
   "UIC01": "You are not Authorized to Add",
