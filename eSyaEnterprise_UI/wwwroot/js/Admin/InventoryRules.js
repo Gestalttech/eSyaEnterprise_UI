@@ -22,7 +22,7 @@ function fnGridLoadInventoryRules() {
 
     $("#jqgInventoryRules").jqGrid('GridUnload');
     $("#jqgInventoryRules").jqGrid({
-        url: getBaseURL() + '/Stores/Rules/GetInventoryRules',
+        url: getBaseURL() + '/Admin/Rules/GetInventoryRules',
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -181,7 +181,7 @@ function fnSaveInventoryRules() {
     }
     $("#btnSaveInventoryRules").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Stores/Rules/InsertOrUpdateInventoryRules',
+        url: getBaseURL() + '/Admin/Rules/InsertOrUpdateInventoryRules',
         type: 'POST',
         datatype: 'json',
         data: { rule },
@@ -265,7 +265,7 @@ function fnDeleteInventoryRules() {
     }
     $("#btnDeactivateInventoryRules").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Stores/Rules/ActiveOrDeActiveInventoryRules?status=' + a_status + '&InventoryId=' + $("#cboInventoryRule").val(),
+        url: getBaseURL() + '/Admin/Rules/ActiveOrDeActiveInventoryRules?status=' + a_status + '&InventoryId=' + $("#cboInventoryRule").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {

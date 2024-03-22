@@ -7,7 +7,7 @@
         if (!IsStringNullorEmpty($("#txtUOMPurchase").val())) {
 
             $.ajax({
-                url: getBaseURL() + '/ManageInventory/Rules/GetUOMPDescriptionbyUOMP?uomp=' + $("#txtUOMPurchase").val(),
+                url: getBaseURL() + '/Admin/Rules/GetUOMPDescriptionbyUOMP?uomp=' + $("#txtUOMPurchase").val(),
                 type: 'POST',
                 datatype: 'json',
                 async: false,
@@ -36,7 +36,7 @@
 
         if (!IsStringNullorEmpty($("#txtUOMStack").val())) {
             $.ajax({
-                url: getBaseURL() + '/ManageInventory/Rules/GetUOMSDescriptionbyUOMS?uoms=' + $("#txtUOMStack").val(),
+                url: getBaseURL() + '/Admin/Rules/GetUOMSDescriptionbyUOMS?uoms=' + $("#txtUOMStack").val(),
                 type: 'POST',
                 datatype: 'json',
                 async: false,
@@ -84,7 +84,7 @@ function fnLoadUnitofMeasureGrid() {
     $("#jqgUnitofMeasure").GridUnload();
 
     $("#jqgUnitofMeasure").jqGrid({
-        url: getBaseURL() + '/ManageInventory/Rules/GetUnitofMeasurements',
+        url: getBaseURL() + '/Admin/Rules/GetUnitofMeasurements',
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -230,7 +230,7 @@ function fnSaveUnitofMeasure() {
     };
     $("#btnSaveUnitofMeasure").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/ManageInventory/Rules/InsertOrUpdateUnitofMeasurement',
+        url: getBaseURL() + '/Admin/Rules/InsertOrUpdateUnitofMeasurement',
         type: 'POST',
         datatype: 'json',
         data: { uoms },
@@ -325,7 +325,7 @@ function fnDeleteUnitofMeasure() {
     }
     $("#btnDeactivateUnitofMeasure").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/ManageInventory/Rules/ActiveOrDeActiveUnitofMeasure?status=' + a_status + '&unitId=' + $("#txtUnitofMeasure").val(),
+        url: getBaseURL() + '/Admin/Rules/ActiveOrDeActiveUnitofMeasure?status=' + a_status + '&unitId=' + $("#txtUnitofMeasure").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
