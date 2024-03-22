@@ -84,6 +84,7 @@
     <Compile Remove="Areas\ProductSetup\Data\IConfigAPIServices.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_BusinessCalendar.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_BusinessEntity.cs" />
+    <Compile Remove="Areas\ProductSetup\Models\DO_BusinessLocation.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_BusinessSubscription.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_CalendarHeader.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_EmailConnect.cs" />
@@ -94,6 +95,8 @@
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\Stores\Controllers\RulesController.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
+    <Compile Remove="Areas\Stores\Models\DO_FormSubParameter.cs" />
+    <Compile Remove="Areas\Stores\Models\DO_InventoryRules.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\AddonController.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\DisplaySystemController.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\GenerateController.cs" />

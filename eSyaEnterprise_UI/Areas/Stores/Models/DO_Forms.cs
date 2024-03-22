@@ -35,4 +35,12 @@ namespace eSyaEnterprise_UI.Areas.Stores.Models
         public int ParameterId { get; set; }
         public List<DO_FormSubParameter> l_FormSubParameter { get; set; }
     }
+    public class DO_FormSubParameter
+    {
+        public int ParameterId { get; set; }
+        public int SubParameterId { get; set; }
+        public string? SubParameterDesc { get; set; }
+        public bool ActiveStatus { get; set; }
+
+    }
 }
