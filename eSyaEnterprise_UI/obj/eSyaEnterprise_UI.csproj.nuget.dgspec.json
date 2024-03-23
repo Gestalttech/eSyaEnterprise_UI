@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {}
+    "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {
+    "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+        "projectUniqueName": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
         "projectName": "eSyaEnterprise_UI",
-        "projectPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+        "projectPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
         "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
+        "outputPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
