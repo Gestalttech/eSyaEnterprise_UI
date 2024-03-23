@@ -31,11 +31,27 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
             _eSyaStoreAPIServices = eSyaStoreAPIServices;
             _logger = logger;
         }
-        #region Store Business Link
+        #region Map Business to Stores & its Portfolio
         [Area("Stores")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECS_03_00()
+        public async Task<IActionResult> ECS_04_00()
         {
+            var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("Common/GetBusinessKey");
+            if (serviceResponse.Status)
+            {
+                if (serviceResponse.Data != null)
+                {
+                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.BusinessKey.ToString(),
+                        Text = b.LocationDescription,
+                    }).ToList();
+                }
+            }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1511_00:GetBusinessKey");
+            }
             return View();
 
         }
@@ -130,36 +146,41 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
         {
             try
             {
-                var _actypes = GetAllStoreClass();
+                //var _actypes = GetAllStoreClass();
 
                 var parameter = "?BusinessKey=" + BusinessKey + "&StoreCode=" + StoreCode;
-                var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<List<DO_StoreBusinessLink>>("StoreMaster/GetStoreBusinessLinkInfo" + parameter);
+                var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<DO_StoreBusinessLink>("StoreMaster/GetStoreBusinessLinkInfo" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetStoreBusinessLinkInfo:For BusinessKey {0} with StoreCode entered {1}", BusinessKey, StoreCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetStoreBusinessLinkInfo:For BusinessKey {0} with StoreCode entered {1} ", BusinessKey, StoreCode);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetPortfolioStoreBusinessLinkInfo(int BusinessKey, int StoreCode)
+        {
+            try
+            {
+                var parameter = "?BusinessKey=" + BusinessKey + "&StoreCode=" + StoreCode;
+                var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<List<DO_StoreBusinessLink>>("StoreMaster/GetPortfolioStoreBusinessLinkInfo" + parameter);
 
                 List<DO_StoreBusinessLink> Storelinkdata = serviceResponse.Data;
 
                 if (serviceResponse.Status)
                 {
-                    foreach (var obj in _actypes)
-                    {
-
-                        if (Storelinkdata.Count > 0)
-                        {
-                            var is_linked = Storelinkdata
-                                  .Where(x => x.StoreClass == obj.StoreClass).FirstOrDefault();
-
-                            if (is_linked != null)
-                            {
-                                obj.ActiveStatus = true;
-                            }
-                            else
-                            {
-                                obj.ActiveStatus = false;
-                            }
-
-                        }
-
-                    }
-                    return Json(_actypes);
+                    return Json(serviceResponse.Data);
                 }
                 else
                 {

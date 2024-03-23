@@ -34,7 +34,6 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
 
         #region Store Master
         //Store Master 
-        //Resolved bin issue
         [Area("Stores")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECS_01_00()
@@ -340,6 +339,103 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
 
         #endregion  Store_Form_Link
 
+        #region Portfolio Master
+        [Area("Stores")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult ECS_03_00()
+        {
+
+            return View();
+        }
+        /// <summary>
+        ///Get Portfolios for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetAllPortfolios()
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<List<DO_PortfolioMaster>>("StoreMaster/GetAllPortfolios");
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetAllPortfolios");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetAllPortfolios");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        /// <summary>
+        /// Insert or Update Actions
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateIntoPortfolio(bool isInsert, DO_PortfolioMaster obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                if (isInsert)
+                {
+                    var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("StoreMaster/InsertIntoPortfolio", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("StoreMaster/UpdatePortfolio", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateIntoPortfolio:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Activate or De Activate Portfolio
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> ActiveOrDeActivePortfolio(bool status, int PortfolioId)
+        {
+
+            try
+            {
+
+                var parameter = "?status=" + status + "&PortfolioId=" + PortfolioId;
+                var serviceResponse = await _eSyaStoreAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("StoreMaster/ActiveOrDeActivePortfolio" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ActiveOrDeActivePortfolio:For ID {0} ", PortfolioId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
 
     }
 }

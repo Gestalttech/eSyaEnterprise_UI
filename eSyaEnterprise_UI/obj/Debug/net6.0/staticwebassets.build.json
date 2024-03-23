@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jtPn9eNWnh7Lfwa+/gwjv/OO/nGGUrH+nsnnSapLoGo=",
+  "Hash": "7qWMdZHwWOsJRSxyIZ6XsnoxuKMi/18dW+VCa9OBEjs=",
   "Source": "eSyaEnterprise_UI",
   "BasePath": "_content/eSyaEnterprise_UI",
   "Mode": "Default",
@@ -21162,6 +21162,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Stores\\MapStoresBusiness.js"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\PortfolioMaster.js",
+      "SourceId": "eSyaEnterprise_UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\",
+      "BasePath": "_content/eSyaEnterprise_UI",
+      "RelativePath": "js/Stores/PortfolioMaster.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Stores\\PortfolioMaster.js"
     },
     {
       "Identity": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\StoreMaster.js",

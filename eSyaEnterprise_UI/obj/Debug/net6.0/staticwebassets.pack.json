@@ -4061,6 +4061,10 @@
       "PackagePath": "staticwebassets\\js\\Stores\\MapStoresBusiness.js"
     },
     {
+      "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\PortfolioMaster.js",
+      "PackagePath": "staticwebassets\\js\\Stores\\PortfolioMaster.js"
+    },
+    {
       "Id": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\wwwroot\\js\\Stores\\StoreMaster.js",
       "PackagePath": "staticwebassets\\js\\Stores\\StoreMaster.js"
     },

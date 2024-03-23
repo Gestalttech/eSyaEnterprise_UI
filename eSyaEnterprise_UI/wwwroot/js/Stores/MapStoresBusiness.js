@@ -4,7 +4,7 @@ var prevSelectedID;
 $(document).ready(function () {
     fnFormaction();
 });
-function fnBusinessLocation_onChange() {
+function fnBusinessKey_onChange() {
 
     fnFormaction();
     fnTreeSize();
@@ -105,7 +105,11 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                             $("#btnAddStoreBusinessLink").html('<i class="fa fa-save"></i> ' + localization.Save);
                             $("#chkActiveStatus").attr('disabled', true);
                             //$("#btnAddStoreBusinessLink").attr("disabled", _userFormRole.IsInsert === false);
-                            fnLoadStoreBusinessLinkGrid();
+                            // fnLoadStoreBusinessLinkGrid();
+
+                            $("#cboStoreClass").val("0").selectpicker('refresh');
+                            $("#cboStoreClass").next().attr('disabled', false).selectpicker('refresh');
+                            fnLoadPortfolioStoreBusinessLinkGrid();
                             fnEnableActivecheckboxs();
                         });
 
@@ -121,7 +125,9 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                             $(".mdl-card__title-text").text(localization.ViewStoreBusinessLink);
                             $('#txtStoreCode').val(storeID);
                             $('#txtStoreDescription').val(data.node.text);
-                            fnLoadStoreBusinessLinkGrid();
+                            //fnLoadStoreBusinessLinkGrid();
+                            fnfnLoadStoreBusinessLink();
+                            fnLoadPortfolioStoreBusinessLinkGrid();
                             $('.lblFormName').text(data.node.text);
 
                             $("#btnAddStoreBusinessLink").hide();
@@ -144,7 +150,9 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                             $('#txtStoreCode').val(storeID);
                             $('#txtStoreDescription').val(data.node.text);
 
-                            fnLoadStoreBusinessLinkGrid();
+                            /* fnLoadStoreBusinessLinkGrid();*/
+                            fnfnLoadStoreBusinessLink();
+                            fnLoadPortfolioStoreBusinessLinkGrid();
                             $('.lblFormName').text(data.node.text);
 
                             $("#btnAddStoreBusinessLink").show();
@@ -194,34 +202,138 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
     });
 
 };
+function fnSaveBusinessEntity() {
+
+    if (fnValidationBusinessEntity() === false) {
+        return;
+    }
+    $("#jqgPreferredLanguageLink").jqGrid('editCell', 0, 0, false).attr("value");
+
+    $("#btnSaveBusinessEntity").attr('disabled', true);
+    var EntityID = $("#txtBusinessEntityId").val();
+    var businessentity;
+    if (EntityID == null || EntityID == "") {
+
+        var obj = [];
+        var gvT = $('#jqgPreferredLanguageLink').jqGrid('getRowData');
+        for (var i = 0; i < gvT.length; ++i) {
+            if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
+                var _objBusinessEntity = {
+                    BusinessId: 0,
+                    CultureCode: gvT[i]['CultureCode'],
+                    CultureDesc: gvT[i]['CultureDesc'],
+                    Pldesc: gvT[i]['Pldesc'],
+                    UsageStatus: gvT[i]['UsageStatus'],
+                    ActiveStatus: gvT[i]['ActiveStatus']
+                }
+                obj.push(_objBusinessEntity);
+            }
+        }
+
+
+
+        businessentity = {
+            BusinessId: 0,
+            BusinessDesc: $("#txtEntityDescription").val(),
+            //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
+            BusinessUnitType: $('#cboUnitType').val(),
+            NoOfUnits: $('#txtNoofUnits').val(),
+            UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
+            ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+            ActiveNoOfUnits: $('#txtNoActiveofUnits').val(),
+            l_Preferredlang: obj
+        };
+    }
+
+    else {
+
+        var obj = [];
+        var gvT = $('#jqgPreferredLanguageLink').jqGrid('getRowData');
+        for (var i = 0; i < gvT.length; ++i) {
+            if (!IsStringNullorEmpty(gvT[i]['Pldesc'])) {
+
+                var _objBusinessEntity = {
+                    BusinessId: $("#txtBusinessEntityId").val(),
+                    CultureCode: gvT[i]['CultureCode'],
+                    CultureDesc: gvT[i]['CultureDesc'],
+                    Pldesc: gvT[i]['Pldesc'],
+                    DefaultLanguage: gvT[i]['DefaultLanguage'],
+                    UsageStatus: gvT[i]['UsageStatus'],
+                    ActiveStatus: gvT[i]['ActiveStatus']
+                }
+                obj.push(_objBusinessEntity);
+
+            }
+        }
+        businessentity = {
+            BusinessId: $("#txtBusinessEntityId").val(),
+            BusinessDesc: $("#txtEntityDescription").val(),
+            //IsMultiSegmentApplicable: $("#chkIsMultiSegmentApplicable").parent().hasClass("is-checked"),
+            BusinessUnitType: $('#cboUnitType').val(),
+            NoOfUnits: $('#txtNoofUnits').val(),
+            UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
+            ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+            ActiveNoOfUnits: $('#txtNoActiveofUnits').val(),
+            l_Preferredlang: obj
+        };
+    }
+    $.ajax({
+        url: getBaseURL() + '/Entity/InsertOrUpdateBusinessEntity',
+        type: 'POST',
+        datatype: 'json',
+        data: { businessentity },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                location.reload();
+
+                return true;
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveBusinessEntity").attr('disabled', false);
+                return false;
+            }
+
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveBusinessEntity").attr('disabled', false);
+        }
+    });
+}
+
 
 function fnSaveStoreBusinessLink() {
 
     if (validationStoreBusinessLink() === false) {
         return;
     }
-
+    $("#jqgPortfolioLink").jqGrid('editCell', 0, 0, false).attr("value");
     $("#btnAddStoreBusinessLink").attr('disabled', true);
 
-    var $grid = $("#jqgBusinessLink");
+    var $grid = $("#jqgPortfolioLink");
     var _storelinks = [];
-    var ids = jQuery("#jqgBusinessLink").jqGrid('getDataIDs');
+    var ids = jQuery("#jqgPortfolioLink").jqGrid('getDataIDs');
     for (var i = 0; i < ids.length; i++) {
         var rowId = ids[i];
-        var rowData = jQuery('#jqgBusinessLink').jqGrid('getRowData', rowId);
+        var rowData = jQuery('#jqgPortfolioLink').jqGrid('getRowData', rowId);
 
-        if (rowData.ActiveStatus == "true") {
+        
             _storelinks.push({
                 BusinessKey: $("#cboBusinessLocation").val(),
                 StoreCode: $("#txtStoreCode").val(),
-                StoreClass: rowData.StoreClass,
+                StoreClass: $("#cboStoreClass").val(),
+                PortfolioId: rowData.PortfolioId,
                 ActiveStatus: rowData.ActiveStatus
             });
-        }
+        
     }
     var _objlink = {
         BusinessKey: $("#cboBusinessLocation").val(),
         StoreCode: $("#txtStoreCode").val(),
+        StoreClass: $("#cboStoreClass").val(),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         lst_businessLink: _storelinks
     };
 
@@ -268,7 +380,10 @@ function validationStoreBusinessLink() {
         fnAlert("w", "ECS_03_00", "UI0182", errorMsg.SelectStore_E7);
         return false;
     }
-
+    if (IsStringNullorEmpty($("#cboStoreClass").val()) || $("#cboStoreClass").val()=="0") {
+        fnAlert("w", "ECS_03_00", "UI0182", "Please select Store Class");
+        return false;
+    }
 }
 
 function fnClearFields() {
@@ -297,23 +412,108 @@ function fnTreeSize() {
     });
 }
 
-function fnLoadStoreBusinessLinkGrid() {
+//function fnLoadStoreBusinessLinkGrid() {
 
-    $("#jqgBusinessLink").GridUnload();
+//    $("#jqgBusinessLink").GridUnload();
+
+//    if ($("#txtStoreCode").val() != '' && $("#txtStoreCode").val() != undefined) {
+//        $("#jqgBusinessLink").jqGrid(
+
+//            {
+//                url: getBaseURL() + "/Stores/GetStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
+//                datatype: 'json',
+//                mtype: 'POST',
+//                contentType: 'application/json; charset=utf-8',
+//                ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+//                colNames: ["StoreClass", " Store Class Description", "Active"],
+//                colModel: [
+//                    { name: "StoreClass", width: 70, editable: true, align: 'left', hidden: true },
+//                    { name: 'StoreClassDescription', index: 'StoreClassDescription', width: 270, resizable: false },
+//                    {
+//                        name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
+//                        formatter: "checkbox", formatoptions: { disabled: false },
+//                        edittype: "checkbox", editoptions: { value: "true:false" }
+//                    },
+//                ],
+//                rowNum: 10,
+//                rowList: [10, 20, 50, 100],
+//                rownumWidth: 55,
+//                loadonce: true,
+//                pager: "#jqpBusinessLink",
+//                viewrecords: true,
+//                gridview: true,
+//                rownumbers: true,
+//                height: 'auto',
+//                width: 'auto',
+//                autowidth: true,
+//                shrinkToFit: true,
+//                forceFit: true,
+//                scroll: false, scrollOffset: 0,
+//                caption: localization.BusinessLink,
+//                onSelectRow: function (rowid) {
+//                    //BusinessKey = $("#jqgBusinessLink").jqGrid('getCell', rowid, 'BusinessKey');
+
+//                },
+//                loadComplete: function (data) {
+//                    $(this).find(">tbody>tr.jqgrow:odd").addClass("myAltRowClassEven");
+//                    $(this).find(">tbody>tr.jqgrow:even").addClass("myAltRowClassOdd");
+//                },
+//            })
+
+//            .jqGrid('navGrid', '#jqpBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false })
+//            .jqGrid('navButtonAdd', '#jqpBusinessLink', {
+//                caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshBusinessLinkGrid
+//            });
+//        fnAddGridSerialNoHeading();
+//    }
+//}
+function fnfnLoadStoreBusinessLink() {
+
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + "/Stores/GetStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
+        success: function (result) {
+            if (result !== null) {
+                
+                $('#cboStoreClass').val(result.StoreClass);
+                $('#cboStoreClass').selectpicker('refresh');
+                if (result.ActiveStatus == 1) {
+                    $("#chkActiveStatus").parent().addClass("is-checked");
+                }
+                else { $('#chkActiveStatus').parent().removeClass("is-checked"); }
+
+
+                //$("#cboStoreClass").next().attr('disabled', false).selectpicker('refresh');
+                //$('#cboStoreClass').val(response.StoreClass).selectpicker('refresh');
+                $("#cboStoreClass").next().attr('disabled', true).selectpicker('refresh');
+            }
+            else {
+                $("#cboStoreClass").val("0").selectpicker('refresh');
+                $("#cboStoreClass").next().attr('disabled', true).selectpicker('refresh');
+            }
+        },
+        error: function (response) {
+        }
+    });
+}
+
+function fnLoadPortfolioStoreBusinessLinkGrid() {
+
+    $("#jqgPortfolioLink").GridUnload();
 
     if ($("#txtStoreCode").val() != '' && $("#txtStoreCode").val() != undefined) {
-        $("#jqgBusinessLink").jqGrid(
+        $("#jqgPortfolioLink").jqGrid(
 
             {
-                url: getBaseURL() + "/Stores/GetStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
+                url: getBaseURL() + "/Stores/GetPortfolioStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
                 datatype: 'json',
                 mtype: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-                colNames: ["StoreClass", "Description", "Active"],
+                colNames: ["PortfolioId", " Portfolio Description", "Active"],
                 colModel: [
-                    { name: "StoreClass", width: 70, editable: true, align: 'left', hidden: true },
-                    { name: 'StoreClassDescription', index: 'StoreClassDescription', width: 270, resizable: false },
+                    { name: "PortfolioId", width: 70, editable: true, align: 'left', hidden: true },
+                    { name: 'PortfolioDesc', index: 'StoreClassDescription', width: 270, resizable: false },
                     {
                         name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
                         formatter: "checkbox", formatoptions: { disabled: false },
@@ -324,7 +524,7 @@ function fnLoadStoreBusinessLinkGrid() {
                 rowList: [10, 20, 50, 100],
                 rownumWidth: 55,
                 loadonce: true,
-                pager: "#jqpBusinessLink",
+                pager: "#jqpPortfolioLink",
                 viewrecords: true,
                 gridview: true,
                 rownumbers: true,
@@ -345,13 +545,14 @@ function fnLoadStoreBusinessLinkGrid() {
                 },
             })
 
-            .jqGrid('navGrid', '#jqpBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false })
-            .jqGrid('navButtonAdd', '#jqpBusinessLink', {
+            .jqGrid('navGrid', '#jqpPortfolioLink', { add: false, edit: false, search: false, del: false, refresh: false })
+            .jqGrid('navButtonAdd', '#jqpPortfolioLink', {
                 caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshBusinessLinkGrid
             });
         fnAddGridSerialNoHeading();
     }
 }
+
 
 function fnDisableActivecheckboxs() {
     $("input[type=checkbox]").attr('disabled', true);
