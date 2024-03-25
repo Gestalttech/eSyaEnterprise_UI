@@ -14,14 +14,28 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Models
         public string SpecialtyGroup { get; set; }
         public string? MedicalIcon { get; set; }
         public string? FocusArea { get; set; }
-        public int AgeRangeFrom { get; set; }
-        public string RangePeriodFrom { get; set; }
-        public int AgeRangeTo { get; set; }
-        public string? RangePeriodTo { get; set; }
+        //public int AgeRangeFrom { get; set; }
+        //public string RangePeriodFrom { get; set; }
+        //public int AgeRangeTo { get; set; }
+        //public string? RangePeriodTo { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-
+        public List<DO_AgeRangeMatrixSpecialtyLink>? lstAgerangeSpecilatyLink { get; set; }
+    }
+    public class DO_AgeRangeMatrixSpecialtyLink
+    {
+        public int SpecialtyId { get; set; }
+        public int AgeRangeId { get; set; }
+        public string? RangeDesc { get; set; }
+        public int AgeRangeFrom { get; set; }
+        public string? RangeFromPeriod { get; set; }
+        public int AgeRangeTo { get; set; }
+        public string? RangeToPeriod { get; set; }
+        public bool ActiveStatus { get; set; }
+        public string FormId { get; set; }
+        public int UserID { get; set; }
+        public string TerminalID { get; set; }
     }
 }
