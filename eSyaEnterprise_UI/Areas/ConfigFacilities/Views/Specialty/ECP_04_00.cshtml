@@ -22,6 +22,13 @@
         wait: '@Localizer["wait"]',
         Save: '@Localizer["Save"]',
         SpecialtyGroup: '@Localizer["SpecialtyGroup"]',
+        AgeRangeId: '@Localizer["AgeRangeId"]',
+        RangeDesc: '@Localizer["RangeDescription"]',
+        AgeRangeFrom: '@Localizer["AgeRangeFrom"]',
+        RangeFromPeriod: '@Localizer["RangeFromPeriod"]',
+        AgeRangeTo: '@Localizer["AgeRangeTo"]',
+        RangeToPeriod: '@Localizer["RangeToPeriod"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -110,37 +117,10 @@
                             <textarea name="FocusArea" row="3" cols="10" value="" class="form-control" id="txtFocusArea" maxlength="2000"></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["AgeRangeFrom"]</label>
-                            <input type="text" class="form-control numberonly" id="txtAgeRangeFrom" maxlength="3" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["RangeFromPeriod"]</label>
-                            <select class="selectpicker" id="cboRangeFromPeriod" data-container="body" data-size="5">
-                                <option value="0">Choose Range From Period </option>
-                                <option value="Y">Year</option>
-                                <option value="D">Day</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["AgeRangeTo"]</label>
-                            <input type="text" class="form-control numberonly" id="txtAgeRangeTo" maxlength="3" />
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["RangeToPeriod"]</label>
-                            <select class="selectpicker" id="cboRangeToPeriod" data-container="body" data-size="5">
-                                <option value="0">Choose RangeToPeriod </option>
-                                <option value="Y">Year</option>
-                                <option value="D">Day</option>
-                            </select>
-                        </div>
+                 
+                    <div class="col-lg-12 col-md-12 col-12 form-group">
+                        <table id="jqgAgeRange"></table>
+                        <div id="jqpAgeRange"></div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">

@@ -42,7 +42,8 @@ function fnLoadSpecialtyCode() {
                         $("#btnSaveSpecialty").html('<i class="fa fa-plus"></i> ' + localization.Add);
                         $("#btnSaveSpecialty").attr("disabled", _userFormRole.IsInsert === false);
                         $("#pnlMainMenu").show();
-                        $("#btnSaveSpecialty").show();
+                        $("#btnSaveSpecialty").show(); 
+                        fnLoadAgeRangeGrid()
                     });
                 }
                 else if (data.node.parent === "H0") {
@@ -60,6 +61,7 @@ function fnLoadSpecialtyCode() {
                         fnSetControlStatus(true);
                         fnShowSpecialtyDetail(data.node.id);
                         $("#pnlMainMenu").show();
+                        
                     });
 
                     $('#Edit').on('click', function () {
@@ -336,4 +338,59 @@ function fnValidateBeforeSave() {
         return false;
     }
     return true;
+}
+
+
+
+function fnLoadAgeRangeGrid() {
+
+    $("#jqgAgeRange").GridUnload();
+    $('#btnSaveAgeRange').show();
+
+    $("#jqgAgeRange").jqGrid({
+        url: getBaseURL() + 'Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
+        datatype: "json",
+        mtype: 'POST',
+        rownumbers: true,
+        
+        colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom, localization.RangeFromPeriod, localization.AgeRangeTo, localization.RangeToPeriod, localization.ActiveStatus],
+        colModel: [
+            { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
+            { name: 'RangeDesc', index: 'RangeDesc', width: 200, sortable: false },
+            { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 90, sortable: false },
+            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 90, sortable: false },
+            { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 90, sortable: false },
+            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 100, sortable: false },
+            { name: 'ActiveStatus', index: 'ActiveStatus', width: 100, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
+        ],
+        caption: localization.AgeRange,
+        height: '100',
+        width: '200',
+        rowNum: 100,
+        viewrecords: true,
+        gridview: true,
+        loadonce: true,
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        cellEdit: true,
+        onSelectRow: function (id) {
+            if (id) { $('#jqgAgeRange').jqGrid('editRow', id, true); }
+        },
+        loadComplete: function () {
+            var ids = $('#jqgAgeRange').jqGrid('getDataIDs');
+            var i = 0;
+            for (i = 0; i < ids.length; i++) {
+                if (ids[i])
+                    $('#jqgAgeRange').jqGrid('editRow', ids[i]);
+            }
+            $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
+            var scrollPosition = 0
+            jQuery("#jqgAgeRange").closest(".ui-jqgrid-bdiv").scrollTop(scrollPosition);
+            fnJqgridSmallScreen("jqgAgeRange");
+        }
+    });
+    //debugger;
+    fnTreeSize();
+
 }
