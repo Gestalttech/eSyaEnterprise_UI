@@ -43,7 +43,7 @@ function fnLoadSpecialtyCode() {
                         $("#btnSaveSpecialty").attr("disabled", _userFormRole.IsInsert === false);
                         $("#pnlMainMenu").show();
                         $("#btnSaveSpecialty").show(); 
-                        fnLoadAgeRangeGrid()
+                        fnLoadAgeRangeGrid();
                     });
                 }
                 else if (data.node.parent === "H0") {
@@ -60,6 +60,7 @@ function fnLoadSpecialtyCode() {
                         $("#btnSaveSpecialty").hide();
                         fnSetControlStatus(true);
                         fnShowSpecialtyDetail(data.node.id);
+                        fnLoadAgeRangeGrid();
                         $("#pnlMainMenu").show();
                         
                     });
@@ -75,6 +76,7 @@ function fnLoadSpecialtyCode() {
                         $("#btnSaveSpecialty").show();
                         fnSetControlStatus(false);
                         fnShowSpecialtyDetail(data.node.id);
+                        fnLoadAgeRangeGrid();
                         $("#pnlMainMenu").show();
                     });
                 }
@@ -105,10 +107,6 @@ function fnShowSpecialtyDetail(specialtyId) {
                 $('#cboSpecialtyGroup').val(response.SpecialtyGroup);
                 $('#cboSpecialtyGroup').selectpicker('refresh');
                 $('#txtFocusArea').val(response.FocusArea);
-                $('#txtAgeRangeFrom').val(response.AgeRangeFrom);
-                $('#cboRangeFromPeriod').val(response.RangePeriodFrom).selectpicker('refresh');
-                $('#txtAgeRangeTo').val(response.AgeRangeTo);
-                $('#cboRangeToPeriod').val(response.RangePeriodTo).selectpicker('refresh');
                 if (response.ActiveStatus === true)
                     $('#chkActiveStatus').parent().addClass("is-checked");
                 else
@@ -198,6 +196,27 @@ function fnSaveSpecialtyCodes() {
 
     $("#btnSaveSpecialty").attr('disabled', true);
 
+   
+    $("#jqgAgeRange").jqGrid('editCell', 0, 0, false).attr("value");
+    var _agelinks = [];
+    var ids = jQuery("#jqgAgeRange").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgAgeRange').jqGrid('getRowData', rowId);
+
+
+        _agelinks.push({
+            AgeRangeId: rowData.AgeRangeId,
+            RangeDesc: rowData.RangeDesc,
+            AgeRangeFrom: rowData.AgeRangeFrom,
+            RangeFromPeriod: rowData.RangeFromPeriod,
+            AgeRangeTo: rowData.AgeRangeTo,
+            RangeToPeriod: rowData.RangeToPeriod,
+            ActiveStatus: rowData.ActiveStatus
+        });
+
+    }
+   
     var obj =
     {
         SpecialtyID: $('#txtSpecialtyId').val(),
@@ -206,11 +225,8 @@ function fnSaveSpecialtyCodes() {
         SpecialtyType: $('#cboSpecialtyType').val(),
         SpecialtyGroup: $('#cboSpecialtyGroup').val(),
         FocusArea: $('#txtFocusArea').val(),
-        AgeRangeFrom: $('#txtAgeRangeFrom').val(),
-        RangePeriodFrom: $('#cboRangeFromPeriod').val(),
-        AgeRangeTo: $('#txtAgeRangeTo').val(),
-        RangePeriodTo: $('#cboRangeToPeriod').val(),
-        ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked")
+        ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked"),
+        lstAgerangeSpecilatyLink: _agelinks
     };
 
     var URL;
@@ -262,16 +278,11 @@ function fnClearFields() {
     $('#txtSpecialtyId').val('');
     $('#txtSpecialtyDesc').val('');
     $('#txtFocusArea').val('');
-    $('#txtAgeRangeFrom').val('');
-    $('#txtAgeRangeTo').val('');
     $("#cboGender").val('A').selectpicker('refresh');
     $("#cboSpecialtyType").val('G').selectpicker('refresh');
     $("#cboSpecialtyGroup").val('0').selectpicker('refresh');
-    $("#cboRangeFromPeriod").val('0').selectpicker('refresh');
-    $("#cboRangeToPeriod").val('0').selectpicker('refresh');
     $('#chkActiveStatus').parent().addClass("is-checked");
 }
-
 function fnSetControlStatus(isdisabled) {
     $("#txtSpecialtyDesc").prop("disabled", isdisabled);
     $("#cboGender").prop("disabled", isdisabled);
@@ -280,15 +291,10 @@ function fnSetControlStatus(isdisabled) {
     $('#cboSpecialtyType').selectpicker('refresh');
     $("#cboSpecialtyGroup").prop("disabled", isdisabled);
     $('#cboSpecialtyGroup').selectpicker('refresh');
-    $("#cboRangeFromPeriod").prop("disabled", isdisabled).selectpicker('refresh');
-    $("#cboRangeToPeriod").prop("disabled", isdisabled).selectpicker('refresh');
     $("#txtFocusArea").prop("disabled", isdisabled);
-    $("#txtAgeRangeFrom").prop("disabled", isdisabled);
-    $("#txtAgeRangeTo").prop("disabled", isdisabled);
     $("#chkActiveStatus").prop("disabled", isdisabled);
 
 }
-
 function fnValidateBeforeSave() {
 
     if ($('#txtSpecialtyDesc').val() === "" || $('#txtSpecialtyDesc').val() === null) {
@@ -312,26 +318,7 @@ function fnValidateBeforeSave() {
         $('#cboSpecialtyGroup').focus();
         return false;
     }
-    if (IsStringNullorEmpty($('#txtAgeRangeFrom').val())) {
-        fnAlert("w", "ECP_04_00", "UI0240", errorMsg.AgeRangeFrom_E13);
-        $('#txtAgeRangeFrom').focus();
-        return false;
-    }
-    if (IsStringNullorEmpty($('#cboRangeFromPeriod').val()) || $('#cboRangeFromPeriod').val() == '0' || $('#cboRangeFromPeriod').val()=="0") {
-        fnAlert("w", "ECP_04_00", "UI0241", errorMsg.SelectRangeFromPeriod_E14);
-        $('#cboRangeFromPeriod').focus();
-        return false;
-    }
-    if (IsStringNullorEmpty($('#txtAgeRangeTo').val())) {
-        fnAlert("w", "ECP_04_00", "UI0242", errorMsg.AgeRangeTo_E15);
-        $('#txtAgeRangeTo').focus();
-        return false;
-    }
-    if (IsStringNullorEmpty($('#cboRangeToPeriod').val()) || $('#cboRangeToPeriod').val() == '0' || $('#cboRangeToPeriod').val() == "0") {
-        fnAlert("w", "ECP_04_00", "UI0243", errorMsg.SelectRangeToPeriod_E16);
-        $('#cboRangeToPeriod').focus();
-        return false;
-    }
+    
     if ($('#txtSpecialtyId').val() === "" && $('#chkActiveStatus').parent().hasClass("is-checked") === false) {
         fnAlert("w", "ECP_04_00", "UI0127", errorMsg.SelectStatus_E12);
         $('#chkActiveStatus').focus();
@@ -339,16 +326,13 @@ function fnValidateBeforeSave() {
     }
     return true;
 }
-
-
-
 function fnLoadAgeRangeGrid() {
-
+    
     $("#jqgAgeRange").GridUnload();
     $('#btnSaveAgeRange').show();
 
     $("#jqgAgeRange").jqGrid({
-        url: getBaseURL() + 'Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
+        url: getBaseURL() + '/Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
         datatype: "json",
         mtype: 'POST',
         rownumbers: true,
@@ -358,10 +342,14 @@ function fnLoadAgeRangeGrid() {
             { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
             { name: 'RangeDesc', index: 'RangeDesc', width: 200, sortable: false },
             { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 90, sortable: false },
-            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 90, sortable: false },
+            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 90, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
             { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 90, sortable: false },
-            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 100, sortable: false },
-            { name: 'ActiveStatus', index: 'ActiveStatus', width: 100, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
+            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 100, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            {
+                name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
+                formatter: "checkbox", formatoptions: { disabled: false },
+                edittype: "checkbox", editoptions: { value: "true:false" }
+            },
         ],
         caption: localization.AgeRange,
         height: '100',
@@ -390,7 +378,7 @@ function fnLoadAgeRangeGrid() {
             fnJqgridSmallScreen("jqgAgeRange");
         }
     });
-    //debugger;
+   
     fnTreeSize();
 
 }
