@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eSyaEnterprise_UI.ApplicationCodeTypes;
+using Microsoft.CodeAnalysis;
 namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
 {
     [SessionTimeout]
@@ -45,6 +46,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
+                obj.lstAgerangeSpecilatyLink.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    return true;
+                });
+
                 var Insertresponse = _eSyafacilityAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SpecialtyCodes/InsertSpecialtyCodes", obj).Result;
                 if (Insertresponse.Status)
                 {
@@ -75,6 +84,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.lstAgerangeSpecilatyLink.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    return true;
+                });
                 var response = _eSyafacilityAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SpecialtyCodes/UpdateSpecialtyCodes", obj).Result;
                 if (response.Status)
                 {
@@ -197,6 +213,36 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:GetSpecialtyCode");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get Age Range Matrix Link by SpecialtyId for Grid
+        /// </summary>
+        [HttpPost]
+        public JsonResult GetAgeRangeMatrixLinkbySpecialtyId(int specialtyId)
+        {
+            try
+            {
+                var response = _eSyafacilityAPIServices.HttpClientServices.GetAsync<List<DO_AgeRangeMatrixSpecialtyLink>>("SpecialtyCodes/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=" + specialtyId).Result;
+                if (response.Status)
+                {
+                    return Json(response.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(response.Message), "UD:GetAgeRangeMatrixLinkbySpecialtyId");
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = response.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetAgeRangeMatrixLinkbySpecialtyId");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }

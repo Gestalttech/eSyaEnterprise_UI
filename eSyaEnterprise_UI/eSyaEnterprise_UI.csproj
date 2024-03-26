@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Compile Remove="Areas\ConfigInventory\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
     <Compile Remove="Areas\ManageInventory\Views\Rules\**" />
@@ -19,6 +20,7 @@
     <Compile Remove="Areas\TokenSystem\Views\Generate\**" />
     <Compile Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <Compile Remove="wwwroot\js\ConfigInventory\**" />
+    <Content Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Content Remove="Areas\ConfigInventory\**" />
     <Content Remove="Areas\ConfigProduct\**" />
     <Content Remove="Areas\ManageInventory\Views\Rules\**" />
@@ -31,6 +33,7 @@
     <Content Remove="Areas\TokenSystem\Views\Generate\**" />
     <Content Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <Content Remove="wwwroot\js\ConfigInventory\**" />
+    <EmbeddedResource Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
     <EmbeddedResource Remove="Areas\ManageInventory\Views\Rules\**" />
@@ -43,6 +46,7 @@
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Generate\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <EmbeddedResource Remove="wwwroot\js\ConfigInventory\**" />
+    <None Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <None Remove="Areas\ConfigInventory\**" />
     <None Remove="Areas\ConfigProduct\**" />
     <None Remove="Areas\ManageInventory\Views\Rules\**" />
@@ -65,9 +69,11 @@
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessEntity.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessLocation.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_CountryCodes.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Controllers\SpecialtyTeachingController.cs" />
     <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyUnit.cs" />
     <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
@@ -162,6 +168,7 @@
     <Content Remove="wwwroot\images\ui-icons_ffffff_256x240.png" />
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
     <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
+    <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
     <Content Remove="wwwroot\js\ManageInventory\UnitofMeasure.js" />
