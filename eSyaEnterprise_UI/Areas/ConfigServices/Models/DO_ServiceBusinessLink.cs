@@ -8,9 +8,9 @@
         public string? ServiceClassDesc { get; set; }
         public string? LocationDescription { get; set; }
         public decimal? ServiceCost { get; set; }
-        public string? InternalServiceCode { get; set; }
-        public decimal NightLinePercentage { get; set; }
-        public decimal HolidayPercentage { get; set; }
+        //public string? InternalServiceCode { get; set; }
+        //public decimal NightLinePercentage { get; set; }
+        //public decimal HolidayPercentage { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; }
         public int UserID { get; set; }

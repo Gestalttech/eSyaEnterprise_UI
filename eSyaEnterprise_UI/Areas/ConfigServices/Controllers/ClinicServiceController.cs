@@ -48,7 +48,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse.Message), "UD:EFM_08:GetBusinessKey");
             }
-            var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.Clinic);
+            var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.Clinic);
             if (serviceResponse1.Status)
             {
                 if (serviceResponse1.Data != null)
@@ -117,8 +117,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("ClinicServices/GetConsultationTypeByBKeyClinicType?businessKey=" + businessKey + "&clinictype=" + clinictype);
-                var ct_list = new List<DO_ApplicationCode>();
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ClinicServices/GetConsultationTypeByBKeyClinicType?businessKey=" + businessKey + "&clinictype=" + clinictype);
+                var ct_list = new List<DO_ApplicationCodes>();
                 if (serviceResponse.Status)
                 {
                     ct_list = serviceResponse.Data;
