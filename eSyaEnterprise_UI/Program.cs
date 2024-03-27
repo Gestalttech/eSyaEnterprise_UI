@@ -30,7 +30,7 @@ using eSyaEnterprise_UI.Areas.ConfigFacilities.Data;
 using eSyaEnterprise_UI.Areas.ManageInventory.Data;
 using eSyaEnterprise_UI.Areas.EndUser.Data;
 using eSyaEnterprise_UI.Areas.Admin.Data;
-using eSyaEnterprise_UI.Areas.ManageServices.Data;
+//using eSyaEnterprise_UI.Areas.ManageServices.Data;
 using eSyaEnterprise_UI.Areas.Stores.Data;
 //using eSyaEnterprise_UI.Areas.ConfigInventory.Data;
 using eSyaEnterprise_UI.Areas.ManageRates.Data;
@@ -173,14 +173,14 @@ builder.Services.AddHttpClient<IeSyaAdminAPIServices, eSyaAdminAPIServices>(p =>
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
-builder.Services.AddHttpClient<IeSyaManageServicesAPIServices, eSyaManageServicesAPIServices>(p =>
-{
-    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaManageServices_API"));
-    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
-    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
-    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+//builder.Services.AddHttpClient<IeSyaManageServicesAPIServices, eSyaManageServicesAPIServices>(p =>
+//{
+//    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaManageServices_API"));
+//    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+//    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+//    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
-});
+//});
 builder.Services.AddHttpClient<IeSyaStoreAPIServices, eSyaStoreAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaStore_API"));
