@@ -49,7 +49,7 @@ function fnLoadServiceTypeTree() {
 
                         if (_userFormRole.IsInsert === false) {
                             // $('#dvServiceType').hide();
-                            fnAlert("w", "", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ECP_01_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
 
@@ -72,7 +72,7 @@ function fnLoadServiceTypeTree() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ECP_01_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         $("#pnlAddServiceType .mdl-card__title-text").text(localization.ViewServiceType);
@@ -89,7 +89,7 @@ function fnLoadServiceTypeTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ECP_01_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $("#pnlAddServiceType .mdl-card__title-text").text(localization.EditServiceType);
@@ -232,7 +232,7 @@ function fnMoveItemUpDown(updown) {
 }
 function fnDeleteNode() {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "", "UIC04", errorMsg.deleteauth_E4);
+        fnAlert("w", "ECP_01_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
 

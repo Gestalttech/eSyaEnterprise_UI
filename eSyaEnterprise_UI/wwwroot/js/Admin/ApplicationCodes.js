@@ -133,7 +133,7 @@ function fnEditApplicationCodes(e, actiontype) {
     $("#btnSaveApplicationCode").attr('disabled', false);
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EAD_02_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupApplicationCodes').modal('show').css({ top: firstRow.top + 31 });
@@ -215,19 +215,19 @@ function fnSaveApplicationCode() {
         data: { app_codes },
         success: function (response) {
             if (response.Status) {
-                fnAlert("s", "EAD_02_00", response.StatusCode, response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveApplicationCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#btnSaveApplicationCode").attr('disabled', false);
                 fnGridRefreshApplicationCodes();
                 $('#PopupApplicationCodes').modal('hide');
             }
             else {
-                fnAlert("w", "EAD_02_00", response.StatusCode, response.Message);
+                fnAlert("w", "", response.StatusCode, response.Message);
                 $("#btnSaveApplicationCode").attr('disabled', false);
             }
         },
         error: function (error) {
-            fnAlert("e", "EAD_02_00", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveApplicationCode").attr("disabled", false);
         }
     });
@@ -282,7 +282,7 @@ function fnDeleteApplicationCodes() {
         type: 'POST',
         success: function (response) {
             if (response.Status) {
-                fnAlert("s", "EAD_02_00", response.StatusCode, response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnDeactivateApplicationCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $('#PopupApplicationCodes').modal('hide');
                 fnClearFields();
@@ -290,13 +290,13 @@ function fnDeleteApplicationCodes() {
                 $("#btnDeactivateApplicationCode").attr("disabled", false);
             }
             else {
-                fnAlert("e", "EAD_02_00", response.StatusCode, response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnDeactivateApplicationCode").attr("disabled", false);
                 $("#btnDeactivateApplicationCode").html('De Activate');
             }
         },
         error: function (error) {
-            fnAlert("e", "EAD_02_00", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnDeactivateApplicationCode").attr("disabled", false);
             $("#btnDeactivateApplicationCode").html('De Activate');
         }

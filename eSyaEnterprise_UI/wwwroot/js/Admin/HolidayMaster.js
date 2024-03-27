@@ -88,7 +88,7 @@ function fnGridLoadHolidayMaster() {
 
 function fnAddHolidayMaster() {
     if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === "0") {
-        fnAlert("w", "EAD_03_00", "UIC01", errorMsg.BusinessKey_E6);
+        fnAlert("w", "EAD_04_00", "UIC01", errorMsg.BusinessKey_E6);
         return;
     }
     else {
@@ -136,7 +136,7 @@ function fnEditHolidayMaster(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EAD_03_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EAD_04_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupHolidayMaster').modal('show');
@@ -151,7 +151,7 @@ function fnEditHolidayMaster(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EAD_03_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EAD_04_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupHolidayMaster').modal('show');
@@ -170,7 +170,7 @@ function fnEditHolidayMaster(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EAD_03_00", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EAD_04_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupHolidayMaster').modal('show');
@@ -232,27 +232,27 @@ function fnClearFields() {
 function fnSaveHolidayMaster() {
     var yearlength = $("#txtYear").val().length;
     if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $("#cboBusinessLocation").val() === 0) {
-        fnAlert("w", "EAD_03_00", "UI0175", errorMsg.BusinessKey_E6);
+        fnAlert("w", "EAD_04_00", "UI0175", errorMsg.BusinessKey_E6);
         return;
     }
     if (IsStringNullorEmpty($("#txtYear").val()) || $("#txtYear").val() === "0") {
-        fnAlert("w", "EAD_03_00", "UI0068", errorMsg.EnterYear_E9);
+        fnAlert("w", "EAD_04_00", "UI0068", errorMsg.EnterYear_E9);
         return;
     }
     if (yearlength < 4) {
-        fnAlert("w", "EAD_03_00", "UI0298", errorMsg.EnterYearlength_E11);
+        fnAlert("w", "EAD_04_00", "UI0298", errorMsg.EnterYearlength_E11);
         return;
     }
     if (IsStringNullorEmpty($("#dtHolidayDate").val())) {
-        fnAlert("w", "EAD_03_00", "UI0177", errorMsg.HolidayDate_E8);
+        fnAlert("w", "EAD_04_00", "UI0177", errorMsg.HolidayDate_E8);
         return;
     }
     if (IsStringNullorEmpty($("#cboHolidayType").val()) || $("#cboHolidayType").val() === 0 || $("#cboHolidayType").val() === "0") {
-        fnAlert("w", "EAD_03_00", "UI0297", errorMsg.HolidayType_E10);
+        fnAlert("w", "EAD_04_00", "UI0297", errorMsg.HolidayType_E10);
         return;
     }
     if (IsStringNullorEmpty($("#txtHolidayDesc").val()) || $("#txtHolidayDesc").val() === "0") {
-        fnAlert("w", "EAD_03_00", "UI0176", errorMsg.HolidayDesc_E7);
+        fnAlert("w", "EAD_04_00", "UI0176", errorMsg.HolidayDesc_E7);
         return;
     }
     

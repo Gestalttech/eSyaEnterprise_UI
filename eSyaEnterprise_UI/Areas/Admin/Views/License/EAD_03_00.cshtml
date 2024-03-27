@@ -37,7 +37,7 @@
             <label class="lable-color"> @Localizer["BusinessLocation"]</label>
             <div>
                 <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
-                    <option value="0">Select</option>
+                    <option value="0">@Localizer["Select"]</option>
                 </select>
             </div>
         </div>

@@ -72,7 +72,7 @@
                 $("#jtrForms").jstree({ core: { data: result, multiple: false } });
             },
             error: function (error) {
-                fnAlert("e", "ECS_02_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
             }
         });
 
@@ -180,16 +180,16 @@
             async: false,
             success: function (response) {
                 if (response.Status == true) {
-                    fnAlert("s", "ECS_02_00", response.StatusCode, response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
                     $('#dvStoreFormLink').hide();
                 }
                 else {
-                    fnAlert("e", "ECS_02_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSaveFormStoreLink").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "ECS_02_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnSaveFormStoreLink").attr("disabled", false);
             }
         });

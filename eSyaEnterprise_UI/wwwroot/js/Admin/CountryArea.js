@@ -170,7 +170,7 @@ function fnAddZipcode() {
         fnAlert("w", "EAD_01_00", "UI0159", errorMsg.StateAdd_E7);
     }
     else if (cid === 0 || cid === "0" || IsStringNullorEmpty($("#cboCityCode").val())) {
-        fnAlert("w", "EAD_01_00", "UI0162", errorMsg.CityAdd_E8); 
+        fnAlert("w", "EAD_01_00", "UI0162", errorMsg.SelectCity_E10); 
     }
     else {
         fnClearAreaHeaderFields();

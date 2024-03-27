@@ -42,6 +42,7 @@ function fnGridLoadStatutoryInformation() {
             //},
         ],
         rowNum: 10,
+        rownumWidth:55,
         rowList: [10, 20, 50, 100],
         loadonce: true,
         pager: "#jqpStatutoryDetails",
@@ -61,11 +62,12 @@ function fnGridLoadStatutoryInformation() {
         onSelectRow: function (id) {
             if (id) { $('#jqgStatutoryDetails').jqGrid('editRow', id, true); }
         },
-        caption: 'Statutory Details',
         loadComplete: function () {
             fnJqgridSmallScreen("jqgStatutoryDetails");
+
         },
     }).jqGrid('navGrid', '#jqpStatutoryDetails', { add: false, edit: false, search: false, del: false, refresh: false });
+    fnAddGridSerialNoHeading();
 }
 
 $(document).on('focusout', '[role="gridcell"] *', function () {
@@ -75,7 +77,7 @@ $(document).on('focusout', '[role="gridcell"] *', function () {
 
 function fnSaveBusinessStatutory() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() === 0) {
-        fnAlert("w", "EBM_01_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
+        fnAlert("w", "EAD_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         return false;
     }
 

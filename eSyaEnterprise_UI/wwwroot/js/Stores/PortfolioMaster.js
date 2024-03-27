@@ -58,7 +58,7 @@ function fnLoadGridPortfolios() {
         width: 'auto',
         autowidth: true,
         shrinkToFit: true,
-        forceFit: true, caption: localization.Actions,
+        forceFit: true, caption: localization.Portfolio,
         loadComplete: function (data) {
             SetGridControlByAction();
             fnJqgridSmallScreen("jqgPortfolio");
@@ -133,7 +133,7 @@ function fnEditPortfolio(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_01_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "ECS_03_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $('#PopupPortfolio').modal('show');
@@ -146,7 +146,7 @@ function fnEditPortfolio(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_01_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "ECS_03_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupPortfolio').modal('show');
@@ -165,7 +165,7 @@ function fnEditPortfolio(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_01_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+            fnAlert("w", "ECS_03_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
             return;
         }
         $('#PopupPortfolio').modal('show');
@@ -195,7 +195,7 @@ function fnEditPortfolio(e, actiontype) {
 function fnSavePortfolio() {
 
     if (IsStringNullorEmpty($("#txtPortfolioDesc").val())) {
-        fnAlert("w", "EPS_22_00", "UI0201", "Please Enter Portfolio Description");
+        fnAlert("w", "ECS_03_00", "UI0301", errorMsg.Protfolio_E1);
         return;
     }
 

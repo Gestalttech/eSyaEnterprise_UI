@@ -53,7 +53,7 @@ function fnLoadSpecialtyCode() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#pnlMainMenu').hide();
-                            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ECP_04_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         $(".mdl-card__title-text").text(localization.ViewSpecialty);
@@ -68,7 +68,7 @@ function fnLoadSpecialtyCode() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#pnlMainMenu').hide();
-                            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ECP_04_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $("#btnSaveSpecialty").html('<i class="fa fa-sync"></i> ' + localization.Update);

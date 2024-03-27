@@ -174,7 +174,7 @@ function fnEditUnitofMeasure(e, actiontype) {
     $("#btnSaveUnitofMeasure").attr("disabled", false);
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EAD_06_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $("#PopupUnitofMeasure").modal('show');
@@ -187,7 +187,7 @@ function fnEditUnitofMeasure(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EAD_06_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $("#PopupUnitofMeasure").modal('show');
@@ -198,7 +198,7 @@ function fnEditUnitofMeasure(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EAD_06_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $("#PopupUnitofMeasure").modal('show');
@@ -262,23 +262,23 @@ function fnSaveUnitofMeasure() {
 
 function validationUnitofMeasure() {
     if (IsStringNullorEmpty($("#txtUOMPurchase").val())) {
-        fnAlert("w", "EAD_05_00", "UI0170", errorMsg.UnitOfPurchase_E6);
+        fnAlert("w", "EAD_06_00", "UI0170", errorMsg.UnitOfPurchase_E6);
         return false;
     }
     if (IsStringNullorEmpty($("#txtUOMPurchaseDesc").val())) {
-        fnAlert("w", "EAD_05_00", "UI0171", errorMsg.UnitOfPurchaseDesc_E7);
+        fnAlert("w", "EAD_06_00", "UI0171", errorMsg.UnitOfPurchaseDesc_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#txtUOMStack").val())) {
-        fnAlert("w", "EAD_05_00", "UI0172", errorMsg.UnitOfStack_E8);
+        fnAlert("w", "EAD_06_00", "UI0172", errorMsg.UnitOfStack_E8);
         return false;
     }
     if (IsStringNullorEmpty($("#txtUOMStackDesc").val())) {
-        fnAlert("w", "EAD_05_00", "UI0173", errorMsg.UnitOfStackDesc_E9);
+        fnAlert("w", "EAD_06_00", "UI0173", errorMsg.UnitOfStackDesc_E9);
         return false;
     }
     if (IsStringNullorEmpty($("#txtConversionFactor").val())) {
-        fnAlert("w", "EAD_05_00", "UI0174", errorMsg.ConversionFactor_E10)
+        fnAlert("w", "EAD_06_00", "UI0174", errorMsg.ConversionFactor_E10)
         return false;
     }
 }

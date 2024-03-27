@@ -110,7 +110,7 @@ function fnEditInventoryRules(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EAD_05_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupInventoryRules').modal('show');
@@ -124,7 +124,7 @@ function fnEditInventoryRules(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EAD_05_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupInventoryRules').modal('show');
@@ -135,7 +135,7 @@ function fnEditInventoryRules(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "", "UIC04", errorMsg.deleteauth_E4);
+            fnAlert("w", "EAD_05_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupInventoryRules').modal('show');

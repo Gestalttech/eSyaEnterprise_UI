@@ -20,7 +20,7 @@ function fnFormaction() {
             fnGetUserMenuList_Success(result, BusinessKey);
         },
         error: function (error) {
-            fnAlert("e", "ECS_03_00", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
 
@@ -70,7 +70,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                     else if (data.node.id.startsWith("ST")) {
 
                         if ($("#cboBusinessLocation").val() <= 0 || $("#cboBusinessLocation").val() === "") {
-                            fnAlert("w", "ECS_03_00", "UI0064", errorMsg.SelectBusinessLocation_E6);
+                            fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E6);
                             return;
                         }
                         storeID = 0;
@@ -88,7 +88,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 $('#pnlMainMenu').hide();
-                                fnAlert("w", "ECS_03_00", "",errorMsg.addauth_E1);
+                                fnAlert("w", "ECS_04_00", "UIC01",errorMsg.addauth_E1);
                                 return;
                             }
 
@@ -117,7 +117,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
 
                             if (_userFormRole.IsView === false) {
                                 $('#pnlMainMenu').hide();
-                                fnAlert("w", "ECS_03_00", "UIC03", errorMsg.vieweauth_E3);
+                                fnAlert("w", "ECS_04_00", "UIC03", errorMsg.vieweauth_E3);
                                 return;
                             }
 
@@ -141,7 +141,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
 
                             if (_userFormRole.IsEdit === false) {
                                 $('#pnlMainMenu').hide();
-                                fnAlert("w", "ECS_03_00", "UIC02", errorMsg.editauth_E2);
+                                fnAlert("w", "ECS_04_00", "UIC02", errorMsg.editauth_E2);
                                 return;
                             }
 
@@ -243,20 +243,20 @@ function fnSaveStoreBusinessLink() {
 
         success: function (response) {
             if (response.Status) {
-                fnAlert("s", "ECS_03_00", response.StatusCode, response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnAddStoreBusinessLink").attr('disabled', false);
                 location.reload();
                 return true;
             }
             else {
-                fnAlert("e", "ECS_03_00", response.StatusCode, response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnAddStoreBusinessLink").attr('disabled', false);
                 return false;
             }
 
         },
         error: function (error) {
-            fnAlert("e", "ECS_03_00", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnAddStoreBusinessLink").attr('disabled', false);
         }
     });
@@ -265,21 +265,21 @@ function fnSaveStoreBusinessLink() {
 function validationStoreBusinessLink() {
 
     if ($("#cboBusinessLocation").val() <= 0) {
-        fnAlert("w", "ECS_03_00", "UI0064", errorMsg.SelectBusinessLocation_E6);
+        fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
         return;
     }
 
-    if (IsStringNullorEmpty($("#txtStoreCode").val())) {
-        fnAlert("w", "ECS_03_00", "UI0182", errorMsg.SelectStore_E7);
-        return false;
-    }
+    //if (IsStringNullorEmpty($("#txtStoreCode").val())) {
+    //    fnAlert("w", "ECS_04_00", "UI0182", errorMsg.SelectStore_E7);
+    //    return false;
+    //}
 
     if (IsStringNullorEmpty($("#txtStoreDescription").val())) {
-        fnAlert("w", "ECS_03_00", "UI0182", errorMsg.SelectStore_E7);
+        fnAlert("w", "ECS_04_00", "UI0181", errorMsg.SelectDesc_E5);
         return false;
     }
     if (IsStringNullorEmpty($("#cboStoreClass").val()) || $("#cboStoreClass").val()=="0") {
-        fnAlert("w", "ECS_03_00", "UI0182", "Please select Store Class");
+        fnAlert("w", "ECS_04_00", "UI0302", errorMsg.StoreClass_E6);
         return false;
     }
 }

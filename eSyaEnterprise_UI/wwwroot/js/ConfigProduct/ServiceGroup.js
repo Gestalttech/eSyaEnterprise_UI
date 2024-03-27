@@ -50,7 +50,7 @@ function fnLoadServiceGroupTree() {
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $('#dvServiceGroup').hide();
-                            fnAlert("w", "", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ECP_02_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
                         $("#pnlAddServiceGroup .mdl-card__title-text").text(localization.AddServiceGroup);
@@ -75,7 +75,7 @@ function fnLoadServiceGroupTree() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#dvServiceGroup').hide();
-                            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ECP_02_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         $("#pnlAddServiceGroup .mdl-card__title-text").text(localization.ViewServiceGroup);
@@ -94,7 +94,7 @@ function fnLoadServiceGroupTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvServiceGroup').hide();
-                            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ECP_02_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $("#pnlAddServiceGroup .mdl-card__title-text").text(localization.EditServiceGroup);
@@ -215,14 +215,14 @@ function fnMoveItemUpDown(updown) {
     var selectedNode = $('#ServiceGroupTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
-        fnAlert("w", "ECP_02_00", "UI0113", errorMsg.ServiceGroupMove_E8);
+        fnAlert("w", "ECP_02_00", "UI0117", errorMsg.ServiceGroupMove_E8);
     }
     else {
 
         selectedNode = selectedNode[0];
 
         if (!selectedNode.id.startsWith("G")) {
-            fnAlert("w", "ECP_02_00", "UI0113", errorMsg.ServiceGroupMove_E8);
+            fnAlert("w", "ECP_02_00", "UI0117", errorMsg.ServiceGroupMove_E8);
         }
         else {
             var data = {};
@@ -265,7 +265,7 @@ function fnMoveItemUpDown(updown) {
 }
 function fnDeleteNode() {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "", "UIC04", errorMsg.deleteauth_E4);
+        fnAlert("w", "ECP_02_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
 

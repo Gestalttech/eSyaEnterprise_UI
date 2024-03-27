@@ -60,7 +60,7 @@ function fnLoadServiceClassTree() {
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $('#dvServiceClass').hide();
-                            fnAlert("w", "", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ECP_03_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
 
@@ -84,7 +84,7 @@ function fnLoadServiceClassTree() {
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $('#dvServiceClass').hide();
-                            fnAlert("w", "", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ECP_03_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
                         $("#txtServiceClassDesc").prop("disabled", false);
@@ -110,7 +110,7 @@ function fnLoadServiceClassTree() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#dvServiceClass').hide();
-                            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ECP_03_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         $("#txtServiceClassDesc").prop("disabled", true);
@@ -129,7 +129,7 @@ function fnLoadServiceClassTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvServiceClass').hide();
-                            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ECP_03_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $("#txtServiceClassDesc").prop("disabled", false);
@@ -309,7 +309,7 @@ function fnMoveItemUpDown(updown) {
 }
 function fnDeleteNode() {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "", "UIC04", errorMsg.deleteauth_E4);
+        fnAlert("w", "ECP_03_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
     var selectedNode = $('#ServiceClassTree').jstree().get_selected(true);
