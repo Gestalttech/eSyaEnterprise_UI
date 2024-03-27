@@ -1,32 +1,26 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.ApplicationCodeTypes;
-using eSyaEnterprise_UI.Areas.ManageServices.Data;
-using eSyaEnterprise_UI.Areas.ManageServices.Models;
+using eSyaEnterprise_UI.Areas.ConfigServices.Data;
+using eSyaEnterprise_UI.Areas.ConfigServices.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
+namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 {
     [SessionTimeout]
     public class ClinicServiceController : Controller
     {
-        private readonly IeSyaManageServicesAPIServices _eSyaManageServicesAPIServices;
+        private readonly IeSyaConfigServicesAPIServices _eSyaConfigServicesAPIServices;
         private readonly ILogger<ClinicServiceController> _logger;
-
-        public ClinicServiceController(IeSyaManageServicesAPIServices eSyaManageServicesAPIServices, ILogger<ClinicServiceController> logger)
+        public ClinicServiceController(IeSyaConfigServicesAPIServices eSyaConfigServicesAPIServices, ILogger<ClinicServiceController> logger)
         {
-            _eSyaManageServicesAPIServices = eSyaManageServicesAPIServices;
+            _eSyaConfigServicesAPIServices = eSyaConfigServicesAPIServices;
             _logger = logger;
         }
+
         #region ClinicServiceLink
 
         /// <summary>
@@ -34,11 +28,11 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [Area("ManageServices")]
+        [Area("ConfigServices")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_04_00()
         {
-            var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+            var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
             if (serviceResponse.Status)
             {
                 if (serviceResponse.Data != null)
@@ -54,7 +48,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse.Message), "UD:EFM_08:GetBusinessKey");
             }
-            var serviceResponse1 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype="+ ApplicationCodeTypeValues.Clinic);
+            var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.Clinic);
             if (serviceResponse1.Status)
             {
                 if (serviceResponse1.Data != null)
@@ -70,7 +64,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1517_00:GetApplicationCodesByCodeType: CodeType {0} 61");
             }
-            var serviceResponse2 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
+            var serviceResponse2 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
             if (serviceResponse2.Status)
             {
                 if (serviceResponse2.Data != null)
@@ -95,7 +89,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ClinicServiceLink>>("ClinicServices/GetClinicServiceLinkByBKey?businessKey=" + businessKey);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ClinicServiceLink>>("ClinicServices/GetClinicServiceLinkByBKey?businessKey=" + businessKey);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -123,7 +117,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("ClinicServices/GetConsultationTypeByBKeyClinicType?businessKey=" + businessKey + "&clinictype=" + clinictype);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("ClinicServices/GetConsultationTypeByBKeyClinicType?businessKey=" + businessKey + "&clinictype=" + clinictype);
                 var ct_list = new List<DO_ApplicationCode>();
                 if (serviceResponse.Status)
                 {
@@ -158,7 +152,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ClinicServices/AddClinicServiceLink", obj);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ClinicServices/AddClinicServiceLink", obj);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);

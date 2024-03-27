@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-namespace eSyaEnterprise_UI.Areas.ManageServices.Models
+﻿namespace eSyaEnterprise_UI.Areas.ConfigServices.Models
 {
     public class DO_ServiceCode
     {
+
         public int ServiceId { get; set; }
         public int ServiceTypeId { get; set; }
         public int ServiceGroupId { get; set; }

@@ -32,15 +32,15 @@
         wait: '@Localizer["wait"]',
     }
     var errorMsg = {
-        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
         vieweauth_E3: '@Localizer["UIC03"]',
     }
 </script>
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
-            <label class="lable-color">@Localizer["BusinessKey"]</label>
-            <select class="selectpicker" data-live-search="true" data-size="6" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
+            <label class="">@Localizer["BusinessKey"]</label>
+            <select class="selectpicker" data-live-search="false" data-mobile="true" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
         </div>
         <label>@Localizer["Specialty"] </label>
         <div id="jstSpecialtyClinicLink"></div>

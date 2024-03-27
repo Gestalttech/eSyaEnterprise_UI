@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-namespace eSyaEnterprise_UI.Areas.ManageServices.Models
+﻿namespace eSyaEnterprise_UI.Areas.ConfigServices.Models
 {
     public class DO_BusinessLocation
     {
-
         public int BusinessId { get; set; }
         public int SegmentId { get; set; }
         public int LocationId { get; set; }

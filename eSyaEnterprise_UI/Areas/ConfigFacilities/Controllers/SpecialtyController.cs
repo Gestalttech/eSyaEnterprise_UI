@@ -254,11 +254,17 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
         public IActionResult ECP_05_00()
         {
             var responseBk = _eSyafacilityAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey").Result;
-            ViewBag.BusinessKeyList = responseBk.Data.Select(a => new SelectListItem
+            if (responseBk.Status)
             {
-                Text = a.LocationDescription,
-                Value = a.BusinessKey.ToString()
-            });
+                if (responseBk.Data != null)
+                {
+                    ViewBag.BusinessKeyList = responseBk.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.LocationDescription,
+                        Value = a.BusinessKey.ToString()
+                    });
+                }
+            }
 
             ViewBag.SpecialtyParameter = ParameterValues.SpecialtyParameter;
 

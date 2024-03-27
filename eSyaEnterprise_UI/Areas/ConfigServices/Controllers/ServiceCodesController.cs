@@ -1,30 +1,27 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.Areas.ConfigProduct.Models;
-using eSyaEnterprise_UI.Areas.ManageServices.Data;
-using eSyaEnterprise_UI.Areas.ManageServices.Models;
+using eSyaEnterprise_UI.Areas.ConfigServices.Data;
+using eSyaEnterprise_UI.Areas.ConfigServices.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
+namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 {
     [SessionTimeout]
     public class ServiceCodesController : Controller
     {
-        private readonly IeSyaManageServicesAPIServices _eSyaManageServicesAPIServices;
+        private readonly IeSyaConfigServicesAPIServices _eSyaConfigServicesAPIServices;
         private readonly ILogger<ServiceCodesController> _logger;
-        public ServiceCodesController(IeSyaManageServicesAPIServices eSyaManageServicesAPIServices, ILogger<ServiceCodesController> logger)
+
+        public ServiceCodesController(IeSyaConfigServicesAPIServices eSyaManageServicesAPIServices, ILogger<ServiceCodesController> logger)
         {
-            _eSyaManageServicesAPIServices = eSyaManageServicesAPIServices;
+            _eSyaConfigServicesAPIServices = eSyaManageServicesAPIServices;
             _logger = logger;
         }
+
         #region ServiceCode
         //IeSyaManageServicesAPIServices
         /// <summary>
@@ -32,7 +29,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [Area("ManageServices")]
+        [Area("ConfigServices")]
         //[ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EMS_01_00()
         {
@@ -45,7 +42,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceType>>("ServiceManagement/GetServiceTypes");
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceType>>("ServiceManagement/GetServiceTypes");
                 var st_list = new List<DO_ServiceType>();
                 if (serviceResponse.Status)
                 {
@@ -55,7 +52,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceCodes:GetServiceTypes");
                 }
-                var serviceResponse1 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceGroup>>("ServiceManagement/GetServiceGroups");
+                var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceGroup>>("ServiceManagement/GetServiceGroups");
                 var sg_list = new List<DO_ServiceGroup>();
                 if (serviceResponse1.Status)
                 {
@@ -65,7 +62,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetServiceCodes:GetServiceGroups");
                 }
-                var serviceResponse2 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceClass>>("ServiceManagement/GetServiceClasses");
+                var serviceResponse2 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceClass>>("ServiceManagement/GetServiceClasses");
                 var sc_list = new List<DO_ServiceClass>();
                 if (serviceResponse2.Status)
                 {
@@ -75,7 +72,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse2.Message), "UD:GetServiceCodes:GetServiceClasses");
                 }
-                var serviceResponse3 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ServiceManagement/GetServiceCodes");
+                var serviceResponse3 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ServiceManagement/GetServiceCodes");
                 var sm_list = new List<DO_ServiceCode>();
                 if (serviceResponse3.Status)
                 {
@@ -184,7 +181,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<DO_ServiceCode>("ServiceManagement/GetServiceCodeByID?ServiceID=" + ServiceID);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<DO_ServiceCode>("ServiceManagement/GetServiceCodeByID?ServiceID=" + ServiceID);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -221,7 +218,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateServiceCode", obj);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateServiceCode", obj);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -255,13 +252,13 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         /// Business Location Service Link
         /// </summary>
         /// <returns></returns>
-        [Area("ManageServices")]
+        [Area("ConfigServices")]
         //[ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_02_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };
 
-            var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+            var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
             if (serviceResponse.Status)
             {
                 if (serviceResponse.Data != null)
@@ -283,7 +280,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceType>>("ServiceManagement/GetServiceTypes");
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceType>>("ServiceManagement/GetServiceTypes");
                 var st_list = new List<DO_ServiceType>();
                 if (serviceResponse.Status)
                 {
@@ -293,7 +290,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceBusinessLink:GetServiceTypes");
                 }
-                var serviceResponse1 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceGroup>>("ServiceManagement/GetServiceGroups");
+                var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceGroup>>("ServiceManagement/GetServiceGroups");
                 var sg_list = new List<DO_ServiceGroup>();
                 if (serviceResponse.Status)
                 {
@@ -303,7 +300,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceBusinessLink:GetServiceGroups");
                 }
-                var serviceResponse2 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceClass>>("ServiceManagement/GetServiceClasses");
+                var serviceResponse2 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceClass>>("ServiceManagement/GetServiceClasses");
                 var sc_list = new List<DO_ServiceClass>();
                 if (serviceResponse.Status)
                 {
@@ -313,7 +310,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceBusinessLink:GetServiceClasses");
                 }
-                var serviceResponse3 = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ServiceManagement/GetServiceBusinessLink?businessKey=" + businessKey);
+                var serviceResponse3 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ServiceManagement/GetServiceBusinessLink?businessKey=" + businessKey);
                 var sm_list = new List<DO_ServiceCode>();
                 if (serviceResponse.Status)
                 {
@@ -426,7 +423,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceBusinessLink>>("ServiceManagement/GetBusinessLocationServices?businessKey=" + businessKey);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceBusinessLink>>("ServiceManagement/GetBusinessLocationServices?businessKey=" + businessKey);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -463,7 +460,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 }
 
 
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateBusinessLocationServices", obj);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateBusinessLocationServices", obj);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -494,7 +491,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceBusinessLink>>("ServiceManagement/GetServiceBusinessLocations?ServiceId=" + ServiceId);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceBusinessLink>>("ServiceManagement/GetServiceBusinessLocations?ServiceId=" + ServiceId);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -531,7 +528,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
                 }
 
 
-                var serviceResponse = await _eSyaManageServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/UpdateServiceBusinessLocations", obj);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/UpdateServiceBusinessLocations", obj);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -560,6 +557,7 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
         }
         #endregion
 
+
         #region Servive-Business Link-Service wise
         /// <summary>
         /// Service Business Locations
@@ -573,5 +571,6 @@ namespace eSyaEnterprise_UI.Areas.ManageServices.Controllers
             return View();
         }
         #endregion
+
     }
 }

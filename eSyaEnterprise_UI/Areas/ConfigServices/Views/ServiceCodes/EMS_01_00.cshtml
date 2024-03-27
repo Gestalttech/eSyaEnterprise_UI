@@ -5,17 +5,16 @@
     ViewData["Title"] = "EMS_01_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
 <script>
         var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 </script>
-@section scripts{
+@section scripts {
     <script src="~/js/Common/jsTree.js"></script>
     <link href="~/css/Common/jsTree.css" rel="stylesheet" />
-    <script src="~/js/ManageServices/ServiceCode.js"></script>
+    <script src="~/js/ConfigServices/ServiceCode.js"></script>
 }
 <script>
     var localization = {
@@ -36,6 +35,8 @@
         ServiceDesc_E7: '@Localizer["UI0193"]',
     }
 </script>
+
+
 <style>
     .disable-Param {
         pointer-events: none;
@@ -199,30 +200,30 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item collapse">
-                <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" onclick="fnDeleteNode()">
-                    <i class="fa fa-times" style="color:#fff !important"></i>     @Localizer["DeleteNode"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" onclick="fnDeleteNode()">
+                        <i class="fa fa-times" style="color:#fff !important"></i>     @Localizer["DeleteNode"]
+                    </button>
+                </li>
                 <li class="list-group-item collapse">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveUp" onclick="fnMoveItemUpDown('U')">
-                    <i class="fas fa-arrow-up" style="color:#fff !important"></i>   @Localizer["MoveUp"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveUp" onclick="fnMoveItemUpDown('U')">
+                        <i class="fas fa-arrow-up" style="color:#fff !important"></i>   @Localizer["MoveUp"]
+                    </button>
+                </li>
                 <li class="list-group-item collapse">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveDown" onclick="fnMoveItemUpDown('D')">
-                    <i class="fas fa-arrow-down" style="color:#fff !important"></i>   @Localizer["MoveDown"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveDown" onclick="fnMoveItemUpDown('D')">
+                        <i class="fas fa-arrow-down" style="color:#fff !important"></i>   @Localizer["MoveDown"]
+                    </button>
+                </li>
                 <li class="list-group-item">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
-                    <i class="fas fa-expand" style="color:#fff !important"></i>   @Localizer["ExpandAll"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                        <i class="fas fa-expand" style="color:#fff !important"></i>   @Localizer["ExpandAll"]
+                    </button>
+                </li>
                 <li class="list-group-item ">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
-                    <i class="fas fa-compress" style="color:#fff !important"></i>   @Localizer["CollapseAll"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                        <i class="fas fa-compress" style="color:#fff !important"></i>   @Localizer["CollapseAll"]
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
