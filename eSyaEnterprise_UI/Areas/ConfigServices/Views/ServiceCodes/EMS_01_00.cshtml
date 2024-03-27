@@ -103,6 +103,19 @@
                 </div>
                 <div class="mdl-card__supporting-text fullwidth">
                     <div class="row">
+                          <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>
+                                    @Localizer["ServiceFor"]
+                                </label>
+                                
+                                    <select class="selectpicker" data-live-search="true" id="cboServicesFor" title="" asp-items="@ViewBag.ServicesFor">
+                                        <option value="0"> @Localizer["Select"] </option>
+                                   </select>
+
+                                
+                            </div>
+                        </div>
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>
@@ -139,7 +152,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>
+                                    @Localizer["InternalServiceCode"]
+                                </label>
+                                <input type="text" maxlength="15" class="form-control" id="txtInternalServiceCode" />
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-md-6 col-lg-6">
