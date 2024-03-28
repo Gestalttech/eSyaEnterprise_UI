@@ -1,5 +1,10 @@
-﻿$(document).ready(function () {
+﻿var ServiceID = "0";
+var prevSelectedID = '';
+var Editable = false;
+
+$(document).ready(function () {
     $("#btnSave").hide();
+    $("#divActions").hide();
 });
 function fnLoadBusinessServiceTree() {
     $('#jstBusinessServiceTree').jstree("destroy");
@@ -16,7 +21,7 @@ function fnLoadBusinessServiceTree() {
                 //    "keep_selected_style": true
                 //},
             });
-
+            $("#divActions").show();
             fnTreeSize("#jstBusinessServiceTree");
             $(window).on('resize', function () {
                 fnTreeSize("#jstBusinessServiceTree");
@@ -65,7 +70,7 @@ function fnLoadBusinessServiceTree() {
                             ServiceID = data.node.id;
                             $("#txtServiceDesc").val(data.node.text);
                             $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.ViewServiceBusinessLinkServiceWise);
-                            fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
+                           // fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
                             $("#btnSMAdd").hide();
                             $("#dvServiceParameters").show();
 
@@ -81,7 +86,7 @@ function fnLoadBusinessServiceTree() {
                             ServiceID = data.node.id;
                             $("#txtServiceDesc").val(data.node.text);
                             $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.EditServiceBusinessLinkServiceWise);
-                            fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
+                           // fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
                             $("#btnSMAdd").hide();
                             $("#dvServiceParameters").show();
 

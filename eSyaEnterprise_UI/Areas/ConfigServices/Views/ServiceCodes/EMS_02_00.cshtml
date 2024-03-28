@@ -103,7 +103,7 @@
         <div id="jstBusinessServiceTree">
         </div>
     </div>
-    <div class="col-lg-5 col-md-5 col-sm-5 f-right">
+    <div class="col-lg-6 col-md-6 col-sm-6 f-right">
         <div id="dvServiceParameters" style="display:none;">
 
             <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddServiceCode">
@@ -112,7 +112,19 @@
                 </div>
                 <div class="mdl-card__supporting-text fullwidth">
                     <div class="row">
-                         
+                        <div class="col-lg-6 col-md-6 col-6 form-group">
+                            <label>@Localizer["ServiceCost"]</label>
+                            <input  type="text" class="form-control decimal_3" />
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-6">
+                            <div class="default-checkbox">
+                                <label class="mdl-checkbox mdl-js-checkbox" for="chkActiveStatus">
+                                    <input type="checkbox" id="chkActiveStatus"
+                                           class="mdl-checkbox__input">
+                                    <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                                </label>
+                            </div>
+                        </div>
 
                           <div class="col-lg-12 col-md-12 col-sm-12">
                         <p class="subheading">
@@ -136,7 +148,7 @@
         </div>
     </div>
 
-    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 hide-in-smallscreen">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 hide-in-smallscreen" id="divActions" style="display:none;">
         <div class="card treeaction">
             <div class="card-header">
                 <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
