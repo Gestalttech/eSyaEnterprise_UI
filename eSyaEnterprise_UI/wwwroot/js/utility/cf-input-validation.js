@@ -59,7 +59,7 @@ $('input[name="alphanumeric"]').keypress(function (e) {
     }
 });
 
-    $('.decimal').keydown(function (e) {
+    $('.decimal,.decimal_3').keydown(function (e) {
         //Get the occurence of decimal operator
         var match = $(this).val().match(/\./g);
         if (match != null) {
@@ -94,6 +94,14 @@ $('input[name="alphanumeric"]').keypress(function (e) {
             if ($(this).val().split(".")[1].length > 2) {
                 if (isNaN(parseFloat(this.value))) return;
                 this.value = parseFloat(this.value).toFixed(2);
+            }
+        }
+    });
+    $('.decimal_3').keyup(function () {
+        if ($(this).val().indexOf('.') != -1) {
+            if ($(this).val().split(".")[1].length > 2) {
+                if (isNaN(parseFloat(this.value))) return;
+                this.value = parseFloat(this.value).toFixed(3);
             }
         }
     });
