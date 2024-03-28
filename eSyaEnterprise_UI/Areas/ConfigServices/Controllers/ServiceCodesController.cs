@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ConfigServices.Data;
 using eSyaEnterprise_UI.Areas.ConfigServices.Models;
 using eSyaEnterprise_UI.Models;
@@ -30,10 +31,26 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 
         [Area("ConfigServices")]
         //[ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EMS_01_00()
+        public async Task<IActionResult> EMS_01_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };
 
+            var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.ServiceFor);
+            if (serviceResponse.Status)
+            {
+                if (serviceResponse.Data != null)
+                {
+                    ViewBag.Servicesfor = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
+                    }).ToList();
+                }
+            }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1511_00:GetBusinessKey");
+            }
             return View();
         }
 
@@ -494,7 +511,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         /// </summary>
         /// <returns></returns>
 
-        [Area("ManageServices")]
+        [Area("ConfigServices")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EMS_03_00()
         {

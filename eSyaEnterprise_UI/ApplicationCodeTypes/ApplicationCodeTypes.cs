@@ -64,6 +64,10 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         //public const int PharmacyGroup = 1;
         #endregion
 
+        #region ConfigServices
+        public const int ServiceFor = 4;
+        #endregion
+
         //public const int TasKList = 4;not used
         //public const int Religion = 52; not used
         //public const int Caste = 53; not used

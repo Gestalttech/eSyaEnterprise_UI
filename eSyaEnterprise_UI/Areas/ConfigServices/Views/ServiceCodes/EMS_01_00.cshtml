@@ -108,12 +108,20 @@
                                 <label>
                                     @Localizer["ServiceFor"]
                                 </label>
-                                
-                                    <select class="selectpicker" data-live-search="true" id="cboServicesFor" title="" asp-items="@ViewBag.ServicesFor">
-                                        <option value="0"> @Localizer["Select"] </option>
+
+                                <select class="selectpicker" data-live-search="true" id="cboServicesFor" data-size="6" title="" asp-items="@ViewBag.Servicesfor">
+                                        <option value='0'> @Localizer["Select"] </option>
                                    </select>
 
                                 
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>
+                                    @Localizer["ServiceShortDescription"]
+                                </label>
+                                <input type="text" maxlength="6" class="form-control" id="txtServiceShortDesc" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-12 col-lg-12">
@@ -126,14 +134,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>
-                                    @Localizer["ServiceShortDescription"]
-                                </label>
-                                <input type="text" maxlength="6" class="form-control" id="txtServiceShortDesc" />
-                            </div>
-                        </div>
+                       
                         <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>
@@ -152,6 +153,8 @@
                                 </div>
                             </div>
                         </div>
+                         
+                    
                         <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="form-group">
                                 <label>
@@ -160,17 +163,7 @@
                                 <input type="text" maxlength="15" class="form-control" id="txtInternalServiceCode" />
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-6 col-lg-6">
-                            <div class="form-group">
-                                <label>
-                                    @Localizer["InternalServiceCode"]
-                                </label>
-                                <input type="text" maxlength="15" class="form-control" id="txtInternalServiceCode" />
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6 col-lg-6">
+                       @*  <div class="col-sm-6 col-md-6 col-lg-6">
                             <div class="default-checkbox">
                                 <label class="mdl-checkbox mdl-js-checkbox" for="chkBillable">
                                     <input type="checkbox" id="chkBillable"
@@ -178,9 +171,8 @@
                                     <span class="mdl-checkbox__label">@Localizer["Billable"]</span>
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row ">
+                        </div> *@
+                   
                         <div class="col-lg-12">
                             <div class="default-checkbox checkbox-group">
                                 <label class="mdl-checkbox mdl-js-checkbox" for="chkActiveStatus">
@@ -191,7 +183,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-md-12 col-sm-12">
+                      @*   <div class="col-lg-12 col-md-12 col-sm-12">
                             <p class="subheading">
                                 @Localizer["ServiceParameters"]
                             </p>
@@ -201,7 +193,7 @@
                         <div id="dvParameters" class="col-lg-12 col-md-12 col-sm-12">
                             @await Component.InvokeAsync("eSyaParameter", new { parameterType = "7" })
                         </div>
-
+ *@
                     </div>
 
 

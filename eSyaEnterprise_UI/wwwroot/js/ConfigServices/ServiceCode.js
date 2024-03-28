@@ -170,12 +170,8 @@ function fnFillServiceDetail(ServiceID) {
             $("#txtInternalServiceCode").val(result.InternalServiceCode);
             $("#cboGender").val(result.Gender);
             $('#cboGender').selectpicker('refresh');
-            if (result.IsServiceBillable == true) {
-                $('#chkBillable').parent().addClass("is-checked");
-            }
-            else {
-                $('#chkBillable').parent().removeClass("is-checked");
-            };
+            $("#cboServicesFor").val(result.ServiceFor);
+            $('#cboServicesFor').selectpicker('refresh'); 
 
             if (result.ActiveStatus == true) {
                 $('#chkActiveStatus').parent().addClass("is-checked");
@@ -191,6 +187,10 @@ function fnFillServiceDetail(ServiceID) {
 
 }
 function fnAddOrUpdateServiceCode() {
+    if ($("#cboServicesFor").val() == "" || $("#cboServicesFor").val() == null || $("#cboServicesFor").val() == undefined || $("#cboServicesFor").val() == "0") {
+        fnAlert("w", "EMS_01_00", "UI0192", "Please select Services For");
+        return false;
+    }
     if (ServiceClassID == "0" && ServiceID == "0") {
         fnAlert("w", "EMS_01_00", "UI0191", errorMsg.SelectServiceClass_E6);
         return false;
@@ -202,22 +202,22 @@ function fnAddOrUpdateServiceCode() {
         return false;
     }
 
-
+    
 
     else {
 
         $("#btnSMAdd").attr("disabled", true);
         var sPar = eSyaParams.GetJSONValue();
         var obj = {
-            ServiceTypeID: ServiceTypeID,
-            ServiceGroupID: ServiceGroupID,
-            ServiceClassID: ServiceClassID,
-            ServiceID: ServiceID,
+            //ServiceTypeID: ServiceTypeID,
+            //ServiceGroupID: ServiceGroupID,
+            ServiceClassId: ServiceClassID,
+            ServiceId: ServiceID,
+            ServiceFor: $("#cboServicesFor").val(),
             ServiceDesc: $("#txtServiceDesc").val(),
             ServiceShortDesc: $("#txtServiceShortDesc").val(),
             InternalServiceCode: $("#txtInternalServiceCode").val(),
             Gender: $("#cboGender").val(),
-            IsServiceBillable: $("#chkBillable").parent().hasClass("is-checked"),
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
             l_ServiceParameter: sPar
         }
@@ -237,7 +237,8 @@ function fnAddOrUpdateServiceCode() {
                         $("#txtInternalServiceCode").val('');
                         $("#cboGender").val('A');
                         $('#cboGender').selectpicker('refresh');
-                        $('#chkBillable').parent().addClass("is-checked");
+                        $("#cboServicesFor").val('0');
+                        $('#cboServicesFor').selectpicker('refresh');
                         $('#chkActiveStatus').parent().addClass("is-checked");
                         //ServiceTypeID = "0";
                         //ServiceGroupID = "0";
