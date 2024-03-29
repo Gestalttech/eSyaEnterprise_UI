@@ -135,15 +135,11 @@ function fnFillBusinessServiceLinkDetail(ServiceID) {
 function fnSaveBusinessServiceLink() {
    
     if (IsStringNullorEmpty($('#cboBusinessKey').val()) || $('#cboBusinessKey').val() == '0') {
-        fnAlert("w", "EBM_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
-        toastr.warning("Please Select a Business Location");
-        $('#cboBusinessKey').focus();
+        fnAlert("w", "EMS_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         return;
     }
-    if (IsStringNullorEmpty(ServiceID) || ServiceID == '0' || ServiceID == "0") {
-        fnAlert("w", "EBM_03_00", "UI0064", "Please select Service to Link");
-        toastr.warning("Please Select a Business Location");
-        $('#cboBusinessKey').focus();
+    if (IsStringNullorEmpty(ServiceID) || ServiceID == '0' || ServiceID == 0) {
+        fnAlert("w", "EMS_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         return;
     }
     $("#btnSave").attr("disabled", true);

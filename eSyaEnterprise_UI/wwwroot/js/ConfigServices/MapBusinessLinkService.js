@@ -11,10 +11,10 @@ function fnLoadServiceBusinessLocationTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ServiceBusinessLocationTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ServiceBusinessLocationTree");
+            $("#jstServiceBusinessLocationTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstServiceBusinessLocationTree");
             $(window).on('resize', function () {
-                fnTreeSize("#ServiceBusinessLocationTree");
+                fnTreeSize("#jstServiceBusinessLocationTree");
             })
         },
         error: function (error) {
@@ -22,13 +22,13 @@ function fnLoadServiceBusinessLocationTree() {
         }
     });
 
-    $("#ServiceBusinessLocationTree").on('loaded.jstree', function () {
-        $("#ServiceBusinessLocationTree").jstree()._open_to(prevSelectedID);
-        $('#ServiceBusinessLocationTree').jstree().select_node(prevSelectedID);
+    $("#jstServiceBusinessLocationTree").on('loaded.jstree', function () {
+        $("#jstServiceBusinessLocationTree").jstree()._open_to(prevSelectedID);
+        $('#jstServiceBusinessLocationTree').jstree().select_node(prevSelectedID);
        
     });
 
-    $('#ServiceBusinessLocationTree').on("changed.jstree", function (e, data) {
+    $('#jstServiceBusinessLocationTree').on("changed.jstree", function (e, data) {
 
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
@@ -38,7 +38,7 @@ function fnLoadServiceBusinessLocationTree() {
                 $('#Add').remove();
                 $("#dvServiceBusinessLink").hide();
 
-                var parentNode = $("#ServiceBusinessLocationTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstServiceBusinessLocationTree").jstree(true).get_parent(data.node.id);
 
                 if (parentNode == "#" || parentNode.startsWith('T') || parentNode == "SM") {
                     $("#dvServiceBusinessLink").hide();
@@ -90,9 +90,9 @@ function fnLoadServiceBusinessLocationTree() {
         }
     });
 
-    $('#ServiceBusinessLocationTree').on("close_node.jstree", function (node) {
+    $('#jstServiceBusinessLocationTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ServiceBusinessLocationTree').jstree().deselect_node(closingNode.children);
+        $('#jstServiceBusinessLocationTree').jstree().deselect_node(closingNode.children);
     });
 }
 
@@ -163,7 +163,7 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
 function fnUpdateServiceBusinessLink() {
 
     if (IsStringNullorEmpty(servId) || servId === "0") {
-        fnAlert("w", "EAD_04_00", "UIC01", "Please select the Service");
+        fnAlert("w", "EAD_04_00", "UIC01", "Please click any Business location from the grid");
         return;
     }
     if (IsStringNullorEmpty(businessloc) || businessloc === "0") {
@@ -226,12 +226,12 @@ function fnFillServiceParams(e) {
     })
 }
 function fnExpandAll() {
-    $("#ServiceBusinessLocationTree").jstree('open_all');
+    $("#jstServiceBusinessLocationTree").jstree('open_all');
 }
 
 function fnCollapseAll() {
     fnClearFields();
-    $("#ServiceBusinessLocationTree").jstree('close_all');
+    $("#jstServiceBusinessLocationTree").jstree('close_all');
     $("#dvServiceBusinessLink").hide();
     $("#divParameterTable").css('display', 'none');
 }

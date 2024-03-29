@@ -97,20 +97,20 @@ function fnClearFields() {
     $("#chkActiveStatus").parent().addClass("is-checked");
 }
 function fnSaveClinicServiceLink() {
-    if ($("#cboClinicType").val() == "0") {
-        fnAlert("w", "EMS_02_00", "UI0194", errorMsg.ClinicType_E6);
+    if ($("#cboClinicType").val() == "0" || $("#cboClinicType").val() == 0) {
+        fnAlert("w", "EMS_04_00", "UI0194", errorMsg.ClinicType_E6);
         return;
     }
-    if ($("#cboConsultationType").val() == "0") {
-        fnAlert("w", "EMS_02_00", "UI0195", errorMsg.ConsultationType_E7);
+    if ($("#cboConsultationType").val() == "0" || $("#cboConsultationType").val() == 0) {
+        fnAlert("w", "EMS_04_00", "UI0195", errorMsg.ConsultationType_E7);
         return;
     }
-    if ($("#cboService").val() == "0") {
-        fnAlert("w", "EMS_02_00", "UI0196", errorMsg.Service_E8);
+    if ($("#cboService").val() == "0" || $("#cboService").val() == 0) {
+        fnAlert("w", "EMS_04_00", "UI0196", errorMsg.Service_E8);
         return;
     }
     if (IsStringNullorEmpty($("#txtVisitRule").val()) || $('#txtVisitRule').val() <= '0') {
-        fnAlert("w", "EMS_02_00", "UI0196", errorMsg.VisitRule_E9);
+        fnAlert("w", "EMS_04_00", "UI0197", errorMsg.VisitRule_E9);
         return;
     }
 
