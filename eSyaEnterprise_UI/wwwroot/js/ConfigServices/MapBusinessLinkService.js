@@ -25,6 +25,7 @@ function fnLoadServiceBusinessLocationTree() {
     $("#ServiceBusinessLocationTree").on('loaded.jstree', function () {
         $("#ServiceBusinessLocationTree").jstree()._open_to(prevSelectedID);
         $('#ServiceBusinessLocationTree').jstree().select_node(prevSelectedID);
+       
     });
 
     $('#ServiceBusinessLocationTree').on("changed.jstree", function (e, data) {
@@ -61,9 +62,9 @@ function fnLoadServiceBusinessLocationTree() {
                             $("#txtServiceDesc").val(data.node.text);
                             $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.ViewServiceBusinessLinkServiceWise);
                             fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
-                            $("#btnSMAdd").hide();
-                            $("#dvServiceBusinessLink").show();
-
+                            $("#btnSave").hide();
+                           
+                            $("#divParameterTable").css('display', 'none');
                         });
 
                         $('#Edit').on('click', function () {
@@ -77,9 +78,8 @@ function fnLoadServiceBusinessLocationTree() {
                             $("#txtServiceDesc").val(data.node.text);
                             $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.EditServiceBusinessLinkServiceWise);
                             fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
-                            $("#btnSMAdd").hide();
-                            $("#dvServiceBusinessLink").show();
-
+                            $("#btnSave").show();
+                            $("#divParameterTable").css('display', 'none');
 
                         });
 
@@ -97,7 +97,7 @@ function fnLoadServiceBusinessLocationTree() {
 }
 
 function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
-    var disabled = false;
+    var disabled = false; var lastSel = '';
     if (Editable === false) {
         disabled = true;
     }
@@ -108,18 +108,18 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["Service ID", "Business Key", "BusinessLocation", "Active"],
+        colNames: [localization.ServiceID, localization.BusinessKey, localization.BusinessLocation, localization.Active],
         colModel: [
             { name: "ServiceId", width: 10, editable: false, align: 'left', hidden: true },
             { name: "BusinessKey", width: 10, editable: false, align: 'left', hidden: true },
-            { name: "LocationDescription", width: 220, editable: false, align: 'left', edittype: 'text' },
-            { name: "ActiveStatus", editable: Editable, width: 220, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } }
+            { name: "LocationDescription", width: 120, editable: false, align: 'left', edittype: 'text' },
+            { name: "ActiveStatus", editable: Editable, width: 60, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } }
         ],
         rowNum: 10,
         rowList: [10, 20, 30, 50],
-        emptyrecords: "No records to Veiw",
+        emptyrecords: "No records to View",
         pager: "#jqpServiceBusinessLink",
-        viewrecords: true,
+        viewrecords: false,
         gridview: true,
         rownumbers: true,
         height: 'auto',
@@ -129,21 +129,25 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
         shrinkToFit: true,
         forceFit: true,
         loadonce: true,
-        cellEdit: true,
-        editurl: 'url',
+        cellEdit: false,
+        //editurl: 'url',
         scrollOffset: 0,
         cellsubmit: 'clientArray',
         caption: localization.ServiceBusinessLink,
-        onSelectRow: function (id) {
-            if (id) { $('#jqgServiceBusinessLink').jqGrid('editRow', id, true); }
+        onSelectRow: function (rowid, status, e) {
+           $("#divParameterTable").css('display', 'block');
+            fnFillServiceParams(rowid);
         },
         ondblClickRow: function (rowid) {
+           
         },
         loadComplete: function (data) {
             $(this).find(">tbody>tr.jqgrow:odd").addClass("myAltRowClassEven");
             $(this).find(">tbody>tr.jqgrow:even").addClass("myAltRowClassOdd");
             $("#jqgServiceBusinessLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
             fnJqgridSmallScreen("jqgServiceBusinessLink");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-btable,.ui-jqgrid-htable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
+            $("#dvServiceBusinessLink").show();
         }
     }).jqGrid('navGrid', '#jqpServiceBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false });
     if (Editable === true) {
@@ -152,10 +156,14 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
     else {
         $("#btnSave").hide();
     }
-
+    $("#jqgServiceBusinessLink tr").on('click',function () {
+        
+    });
 }
 function fnUpdateServiceBusinessLink() {
     var ServiceBusinessLink = $('#jqgServiceBusinessLink').jqGrid("getRowData");
+    //var serviceParams = eSyaParams.GetJSONValue();
+
     $("#btnSave").attr("disabled", true);
     $.ajax({
         url: getBaseURL() + '/ServiceCodes/UpdateServiceBusinessLocations',
@@ -167,6 +175,7 @@ function fnUpdateServiceBusinessLink() {
         success: function (response) {
             if (response.Status == true) {
                 fnAlert("s", "", response.StatusCode, response.Message);
+                fnCollapseAll();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
@@ -179,10 +188,32 @@ function fnUpdateServiceBusinessLink() {
         }
     });
 }
+
+function fnFillServiceParams(serviceid) {
+    $.ajax({
+        url: getBaseURL() + '',
+        data: {
+            ServiceId: serviceid
+        },
+        success: function (result) {
+            if (result != null) {
+                //eSyaParams.ClearValue();
+                //eSyaParams.SetJSONValue(result.l_ServiceParameter);
+            }
+        }
+    })
+}
 function fnExpandAll() {
     $("#ServiceBusinessLocationTree").jstree('open_all');
 }
+
 function fnCollapseAll() {
+    fnClearFields();
     $("#ServiceBusinessLocationTree").jstree('close_all');
     $("#dvServiceBusinessLink").hide();
+    $("#divParameterTable").css('display', 'none');
+}
+function fnClearFields() {
+   // eSyaParams.ClearValue();
+    $("#txtServiceDesc").val('');
 }

@@ -368,6 +368,9 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     cursor: none;
     border-bottom: 1px solid #ccc;
 }
+#dvParameters .divTblParameter {
+    max-height: 293px;
+}
 .div-section {
     padding: 10px 10px;
     margin: 0px 0px 5px;
@@ -1388,8 +1391,17 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
 .treeaction li.list-group-item {
     padding: 1px 4px;
 }
-.treeaction h5{
-    font-weight:300;margin-bottom:0px;
+.treeaction h5 {
+    font-weight: 300;
+    margin-bottom: 0px;
+    font-family: 'helvetica-bold';
+    color: gold;
+    letter-spacing: normal;
+}
+.treeaction h6 {
+    font-family: 'helvetica-bold';
+    color: gold;
+    letter-spacing: normal;
 }
 .pt-3_5 {
     padding-top: 1.35rem !important;
