@@ -7,6 +7,7 @@ using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 {
@@ -403,16 +404,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                                                     {
                                                         if (sc.ServiceClassId == sm.ServiceClassId)
                                                         {
-                                                            jsObj = new jsTreeObject();
-                                                            jsObj.id = "S" + sm.ServiceId.ToString();
-                                                            jsObj.text = sm.ServiceDesc;
-                                                            jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
-                                                            jsObj.parent = "C" + sc.ServiceClassId.ToString();
-                                                            jsObj.state = new stateObject { opened = false, selected = sm.BusinessLinkStatus, checkbox_disabled = false };
-                                                            treeView.Add(jsObj);
+                                                            if (sm.BusinessLinkStatus)
+                                                            {
+                                                                jsObj = new jsTreeObject();
+                                                                jsObj.id = "S" + sm.ServiceId.ToString();
+                                                                jsObj.text = sm.ServiceDesc;
+                                                                //jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
+                                                                jsObj.icon = baseURL + "/images/jsTree/checkedstate.jpg";
+                                                                jsObj.parent = "C" + sc.ServiceClassId.ToString();
+                                                                jsObj.state = new stateObject { opened = false, selected = sm.BusinessLinkStatus, checkbox_disabled = false };
+                                                                treeView.Add(jsObj);
+                                                            }
+                                                            else
+                                                            {
+                                                                jsObj = new jsTreeObject();
+                                                                jsObj.id = "S" + sm.ServiceId.ToString();
+                                                                jsObj.text = sm.ServiceDesc;
+                                                                jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
+                                                                jsObj.parent = "C" + sc.ServiceClassId.ToString();
+                                                                jsObj.state = new stateObject { opened = false, selected = sm.BusinessLinkStatus, checkbox_disabled = false };
+                                                                treeView.Add(jsObj);
+                                                            }
+                                                           
                                                         }
                                                     }
                                                 }
+
+                                               
                                             }
                                         }
                                     }
@@ -434,19 +452,17 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 
 
         }
-        public async Task<ActionResult> GetBusinessLocationServices(int businessKey)
+        public async Task<ActionResult> GetBusinessLocationServices(int businessKey, int serviceId)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceBusinessLink>>("ServiceCodes/GetBusinessLocationServices?businessKey=" + businessKey);
+                var parameter = "?businessKey=" + businessKey + "&serviceId=" + serviceId;
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<DO_ServiceBusinessLink>("ServiceCodes/GetBusinessLocationServices" + parameter);
+
+                
                 if (serviceResponse.Status)
                 {
-                    if (serviceResponse.Data != null)
-                    {
-                        var ServiceBusinessLink_list = serviceResponse.Data;
-                        return Json(ServiceBusinessLink_list);
-                    }
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                     return Json(serviceResponse.Data);
                 }
                 else
                 {
@@ -462,17 +478,18 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
             }
         }
-        public async Task<ActionResult> AddOrUpdateBusinessLocationServices(List<DO_ServiceBusinessLink> obj)
+        [HttpPost]
+        public async Task<ActionResult> AddOrUpdateBusinessLocationServices(DO_ServiceBusinessLink obj)
         {
             try
             {
-                foreach (var ser_bl in obj)
-                {
-                    ser_bl.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                    ser_bl.CreatedOn = DateTime.Now;
-                    ser_bl.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                    ser_bl.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                }
+
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.CreatedOn = DateTime.Now;
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.ServiceCost = 0;
+                obj.ActiveStatus = true;
 
 
                 var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceCodes/AddOrUpdateBusinessLocationServices", obj);
@@ -545,17 +562,16 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
             }
         }
-        public async Task<ActionResult> UpdateServiceBusinessLocations(List<DO_ServiceBusinessLink> obj)
+        public async Task<ActionResult> UpdateServiceBusinessLocations(DO_ServiceBusinessLink obj)
         {
             try
             {
-                foreach (var ser_bl in obj)
-                {
-                    ser_bl.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                    ser_bl.CreatedOn = DateTime.Now;
-                    ser_bl.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                    ser_bl.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                }
+               
+                    obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    obj.CreatedOn = DateTime.Now;
+                    obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                
 
 
                 var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceCodes/UpdateServiceBusinessLocations", obj);

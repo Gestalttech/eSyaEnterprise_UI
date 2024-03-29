@@ -16,12 +16,10 @@ function fnLoadBusinessServiceTree() {
         success: function (result) {
             $('#jstBusinessServiceTree').jstree({
                 core: { 'data': result, 'check_callback': true, 'multiple': true, 'expand_selected_onload': false },
-                //"plugins": ["checkbox"],
-                //"checkbox": {
-                //    "keep_selected_style": true
-                //},
-            });
+                });
             $("#divActions").show();
+            
+            
             fnTreeSize("#jstBusinessServiceTree");
             $(window).on('resize', function () {
                 fnTreeSize("#jstBusinessServiceTree");
@@ -67,13 +65,14 @@ function fnLoadBusinessServiceTree() {
                                 return;
                             }
                             Editable = false;
-                            ServiceID = data.node.id;
-                            $("#txtServiceDesc").val(data.node.text);
-                            $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.ViewServiceBusinessLinkServiceWise);
-                           // fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
-                            $("#btnSMAdd").hide();
+                            ServiceID = data.node.id.substring(1);
+                            //$("#txtServiceCost").val('').prop('disabled',true);
+                            $("#pnlAddServiceCode .mdl-card__title-text").text(localization.ViewService);
+                            fnFillBusinessServiceLinkDetail(ServiceID);
+                            //$('#chkActiveStatus').prop('disabled', true);
+                            $("#btnSave").hide();
                             $("#dvServiceParameters").show();
-
+                            $("#dvServiceParameters").css('display', 'block');
                         });
 
                         $('#Edit').on('click', function () {
@@ -83,13 +82,15 @@ function fnLoadBusinessServiceTree() {
                                 return;
                             }
                             Editable = true;
-                            ServiceID = data.node.id;
+                            ServiceID = data.node.id.substring(1);
+                            //$("#txtServiceCost").val(''); $("#txtServiceCost").val('').prop('disabled', false);
                             $("#txtServiceDesc").val(data.node.text);
-                            $("#pnlAddServiceBusinessLink .mdl-card__title-text").text(localization.EditServiceBusinessLinkServiceWise);
-                           // fnLoadServiceBusinessLinkGrid(ServiceID, Editable);
-                            $("#btnSMAdd").hide();
+                            $("#pnlAddServiceCode .mdl-card__title-text").text(localization.EditService);
+                            fnFillBusinessServiceLinkDetail(ServiceID);
+                            //$('#chkActiveStatus').prop('disabled', true);
+                            $("#btnSave").show();
                             $("#dvServiceParameters").show();
-
+                            $("#dvServiceParameters").css('display', 'block');
 
                         });
 
@@ -105,41 +106,73 @@ function fnLoadBusinessServiceTree() {
         $('#jstBusinessServiceTree').jstree().deselect_node(closingNode.children);
     });
 }
-function fnSaveBusinessServiceLink() {
 
-    if ($('#cboBusinessKey').val() == '') {
+function fnFillBusinessServiceLinkDetail(ServiceID) {
+    $.ajax({
+        url: getBaseURL() + '/ServiceCodes/GetBusinessLocationServices?businessKey=' + $("#cboBusinessKey").val() + '&serviceId=' + ServiceID,
+        success: function (result) {
+            //debugger;
+            //if (result != null) {
+                //$("#txtServiceCost").val(result.ServiceCost);
+               
+                //if (result.ActiveStatus == true) {
+                //    $('#chkActiveStatus').parent().addClass("is-checked");
+                //}
+                //else {
+                //    $('#chkActiveStatus').parent().removeClass("is-checked");
+                //};
+                eSyaParams.ClearValue();
+                eSyaParams.SetJSONValue(result.l_ServiceParameter);
+            //}
+            //else
+            //{
+            //    $('#chkActiveStatus').parent().addClass("is-checked");
+            //}
+        }
+    });
+
+}
+function fnSaveBusinessServiceLink() {
+   
+    if (IsStringNullorEmpty($('#cboBusinessKey').val()) || $('#cboBusinessKey').val() == '0') {
         fnAlert("w", "EBM_03_00", "UI0064", errorMsg.SelectBusinessLocation_E1);
         toastr.warning("Please Select a Business Location");
         $('#cboBusinessKey').focus();
         return;
     }
-
-    var businessKey = $('#cboBusinessKey').val();
-    var ServiceBusinessLink = [];
-
-    var treeUNodes = $('#jstBusinessServiceTree').jstree(true).get_json('#', { 'flat': true });
-    $.each(treeUNodes, function () {
-        if (this.id.startsWith('S') && this.id != "SM") {
-            var sbl = {
-                BusinessKey: businessKey,
-                ServiceId: this.id.substring(1),
-                ActiveStatus: this.state.selected
-            }
-            ServiceBusinessLink.push(sbl);
-        }
-    });
-
+    if (IsStringNullorEmpty(ServiceID) || ServiceID == '0' || ServiceID == "0") {
+        fnAlert("w", "EBM_03_00", "UI0064", "Please select Service to Link");
+        toastr.warning("Please Select a Business Location");
+        $('#cboBusinessKey').focus();
+        return;
+    }
     $("#btnSave").attr("disabled", true);
+    var sPar = eSyaParams.GetJSONValue();
+    var sbl = {
+                BusinessKey: $('#cboBusinessKey').val(),
+                ServiceId: ServiceID,
+                //ServiceCost: $('#txtServiceCost').val(), 
+                //ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+                l_ServiceParameter: sPar
+            }
     $.ajax({
-        url: getBaseURL() + '/ServiceCodes/UpdateServiceBusinessLocations',
+        url: getBaseURL() + '/ServiceCodes/AddOrUpdateBusinessLocationServices',
         type: 'POST',
         datatype: 'json',
         data: {
-            obj: ServiceBusinessLink
+            obj: sbl
         },
         success: function (response) {
             if (response.Status == true) {
                 fnAlert("s", "", response.StatusCode, response.Message);
+                //$("#txtServiceCost").val('');
+                //$('#chkActiveStatus').parent().addClass("is-checked");
+                //$('#chkActiveStatus').prop('disabled', true);
+                eSyaParams.ClearValue();
+                //$('#jstBusinessServiceTree').jstree('refresh');
+                fnLoadBusinessServiceTree()
+                $("#dvServiceParameters").css('display', 'none');
+                $("#dvServiceParameters").hide();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);

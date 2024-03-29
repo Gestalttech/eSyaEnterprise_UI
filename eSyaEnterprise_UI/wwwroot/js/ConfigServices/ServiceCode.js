@@ -8,7 +8,7 @@ $(document).ready(function () {
     fnLoadServiceCodeTree()
     $("#txtInternalServiceCode").val('');
     $('#chkActiveStatus').parent().addClass("is-checked");
-    $('#chkBillable').parent().addClass("is-checked");
+    //$('#chkBillable').parent().addClass("is-checked");
     $("#btnSMAdd").attr("disabled", _userFormRole.IsInsert === false);
 });
 function fnLoadServiceCodeTree() {
@@ -66,7 +66,7 @@ function fnLoadServiceCodeTree() {
                             $("#txtInternalServiceCode").prop("disabled", false);
                             $("#chkBillable").prop("disabled", false);
                             $("#chkActiveStatus").prop("disabled", false);
-                            $("#dvParameters").removeClass("disable-Param");
+                            //$("#dvParameters").removeClass("disable-Param");
 
 
                             $("#pnlAddServiceCode .mdl-card__title-text").text(localization.AddService);
@@ -81,6 +81,7 @@ function fnLoadServiceCodeTree() {
                             $("#btnSMAdd").show();
                             $("#dvServiceCode").show();
                             ServiceClassID = data.node.id.substring(1);
+                            
                             if (parentNode.startsWith('G')) {
                                 ServiceGroupID = parentNode.substring(1);
                             }
@@ -93,7 +94,7 @@ function fnLoadServiceCodeTree() {
                             }
                             ServiceTypeID = $("#ServiceCodeTree").jstree(true).get_parent("G" + ServiceGroupID).substring(1);
                             ServiceID = "0"
-                            eSyaParams.ClearValue();
+                        //    eSyaParams.ClearValue();
                         });
                     }
                     else {
@@ -180,8 +181,8 @@ function fnFillServiceDetail(ServiceID) {
                 $('#chkActiveStatus').parent().removeClass("is-checked");
             };
 
-            eSyaParams.ClearValue();
-            eSyaParams.SetJSONValue(result.l_ServiceParameter);
+            //eSyaParams.ClearValue();
+            //eSyaParams.SetJSONValue(result.l_ServiceParameter);
         }
     });
 
@@ -207,7 +208,7 @@ function fnAddOrUpdateServiceCode() {
     else {
 
         $("#btnSMAdd").attr("disabled", true);
-        var sPar = eSyaParams.GetJSONValue();
+      /*  var sPar = eSyaParams.GetJSONValue();*/
         var obj = {
             //ServiceTypeID: ServiceTypeID,
             //ServiceGroupID: ServiceGroupID,
@@ -219,7 +220,7 @@ function fnAddOrUpdateServiceCode() {
             InternalServiceCode: $("#txtInternalServiceCode").val(),
             Gender: $("#cboGender").val(),
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
-            l_ServiceParameter: sPar
+           /* l_ServiceParameter: sPar*/
         }
         $.ajax({
             url: getBaseURL() + '/ServiceCodes/AddOrUpdateServiceCode',
@@ -240,11 +241,8 @@ function fnAddOrUpdateServiceCode() {
                         $("#cboServicesFor").val('0');
                         $('#cboServicesFor').selectpicker('refresh');
                         $('#chkActiveStatus').parent().addClass("is-checked");
-                        //ServiceTypeID = "0";
-                        //ServiceGroupID = "0";
-                        //ServiceClassID = "0";
                         ServiceID = "0";
-                        eSyaParams.ClearValue();
+                  
 
                     }
                     else {
