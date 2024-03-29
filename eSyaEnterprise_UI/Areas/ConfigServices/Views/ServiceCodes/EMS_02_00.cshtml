@@ -21,6 +21,9 @@
         ViewService: '@Localizer["ViewService"]',
         EditService: '@Localizer["EditService"]',
         Update: '@Localizer["Update"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Cancel: '@Localizer["Cancel"]',
     }
     var errorMsg = {
         SelectBusinessLocation_E1: '@Localizer["UI0064"]',
@@ -142,7 +145,8 @@
 
                 </div>
                 <div class="mdl-card__actions mdl-card--border text-center">
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSave" onclick="fnSaveBusinessServiceLink()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSave" onclick="fnSaveBusinessServiceLink()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancel" onclick="fnCollapseParameter()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                 </div>
             </div>
         </div>

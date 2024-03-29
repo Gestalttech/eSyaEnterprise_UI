@@ -56,8 +56,8 @@ function fnLoadBusinessServiceTree() {
                         $("#dvServiceParameters").hide();
                     }
                     else {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" title=' + localization.View +' style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" title=' + localization.Edit +' style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
                         $('#View').on('click', function () {
                             if (_userFormRole.IsView === false) {
                                 $('#dvServiceParameters').hide();
@@ -193,4 +193,9 @@ function fnCollapseAll() {
     $("#jstBusinessServiceTree").jstree('close_all');
     $("#dvServiceParameters").hide();
 }
+function fnCollapseParameter() {
+    $("#dvServiceParameters").hide(); fnLoadBusinessServiceTree();
+}
+
+
 

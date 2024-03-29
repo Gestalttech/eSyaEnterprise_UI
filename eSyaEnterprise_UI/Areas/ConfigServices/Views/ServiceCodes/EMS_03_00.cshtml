@@ -32,6 +32,9 @@
         BusinessKey: '@Localizer["BusinessKey"]',
         BusinessLocation: '@Localizer["BusinessLocation"]',
         Active: '@Localizer["Active"]',
+        View: '@Localizer["View"]',
+        Edit: '@Localizer["Edit"]',
+        Cancel: '@Localizer["Cancel"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -142,7 +145,8 @@
 
                 </div>
                 <div class="mdl-card__actions text-center  mdl-card--border">
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSave" onclick="fnUpdateServiceBusinessLink()"><i class="fa fa-sync"></i> @Localizer["Update"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSave" onclick="fnUpdateServiceBusinessLink()"><i class="fa fa-sync"></i> @Localizer["Update"]</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancel" onclick="fnCollapseServiceParameter()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                 </div>
             </div>
         </div>
