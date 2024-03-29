@@ -135,8 +135,8 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
         cellsubmit: 'clientArray',
         caption: localization.ServiceBusinessLink,
         onSelectRow: function (rowid, status, e) {
-           $("#divParameterTable").css('display', 'block');
-            fnFillServiceParams(rowid);
+            $("#divParameterTable").css('display', 'block');
+            fnFillServiceParams(event);
         },
         ondblClickRow: function (rowid) {
            
@@ -161,21 +161,37 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
     });
 }
 function fnUpdateServiceBusinessLink() {
-    var ServiceBusinessLink = $('#jqgServiceBusinessLink').jqGrid("getRowData");
-    //var serviceParams = eSyaParams.GetJSONValue();
+
+    if (IsStringNullorEmpty(servId) || servId === "0") {
+        fnAlert("w", "EAD_04_00", "UIC01", "Please select the Service");
+        return;
+    }
+    if (IsStringNullorEmpty(businessloc) || businessloc === "0") {
+        fnAlert("w", "EAD_04_00", "UIC01", "Please select the Business Key");
+        return;
+    }
+    var serviceParams = eSyaParams.GetJSONValue();
 
     $("#btnSave").attr("disabled", true);
+    objmap = {
+        BusinessKey: businessloc,
+        ServiceId: servId,
+        l_ServiceParameter: serviceParams
+
+    };
     $.ajax({
         url: getBaseURL() + '/ServiceCodes/UpdateServiceBusinessLocations',
         type: 'POST',
         datatype: 'json',
         data: {
-            obj: ServiceBusinessLink
+            obj: objmap
         },
         success: function (response) {
             if (response.Status == true) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 fnCollapseAll();
+                fnCollapseServiceParameter();
+                fnExpandAll();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
@@ -188,18 +204,23 @@ function fnUpdateServiceBusinessLink() {
         }
     });
 }
-
-function fnFillServiceParams(serviceid) {
-    debugger;
+var servId = "0";
+var businessloc = "0";
+function fnFillServiceParams(e) {
+    var rowid = $("#jqgServiceBusinessLink").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgServiceBusinessLink').jqGrid('getRowData', rowid);
+    servId = rowData.ServiceId;
+    businessloc = rowData.BusinessKey;
     $.ajax({
-       // url: getBaseURL() + '',
-        data: {
-            ServiceId: serviceid
-        },
+        url: getBaseURL() + '/ServiceCodes/GetServiceBusinessLocationParameters?serviceId=' + rowData.ServiceId + '&businessKey=' + rowData.BusinessKey,
+        
         success: function (result) {
             if (result != null) {
-                //eSyaParams.ClearValue();
-                //eSyaParams.SetJSONValue(result.l_ServiceParameter);
+                eSyaParams.ClearValue();
+                eSyaParams.SetJSONValue(result.l_ServiceParameter);
+            }
+            else {
+                eSyaParams.ClearValue();
             }
         }
     })
@@ -221,6 +242,8 @@ function fnCollapseServiceParameter() {
     fnLoadServiceBusinessLocationTree();
 }
 function fnClearFields() {
-   // eSyaParams.ClearValue();
+    eSyaParams.ClearValue();
     $("#txtServiceDesc").val('');
+     servId = "0";
+     businessloc = "0";
 }

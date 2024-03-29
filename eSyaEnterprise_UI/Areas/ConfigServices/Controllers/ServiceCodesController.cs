@@ -562,6 +562,32 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
             }
         }
+        public async Task<ActionResult> GetServiceBusinessLocationParameters(int serviceId, int businessKey)
+        {
+            try
+            {
+                var parameter = "?serviceId=" + serviceId + "&businessKey=" + businessKey;
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<DO_ServiceBusinessLink>("ServiceCodes/GetServiceBusinessLocationParameters" + parameter);
+
+
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceBusinessLocationParameters:For BusinessKey {0}", businessKey);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetServiceBusinessLocationParameters:For BusinessKey {0}", businessKey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
         public async Task<ActionResult> UpdateServiceBusinessLocations(DO_ServiceBusinessLink obj)
         {
             try
@@ -571,7 +597,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                     obj.CreatedOn = DateTime.Now;
                     obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                     obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                
+                    obj.ServiceCost = 0;
+                    obj.ActiveStatus = true;
 
 
                 var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceCodes/UpdateServiceBusinessLocations", obj);

@@ -107,7 +107,7 @@ function fnAddApplicationCodes() {
 }
 
 function fnEditApplicationCodes(e, actiontype) {
-    debugger;
+   
     var rowid = $("#jqgApplicationCodes").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgApplicationCodes').jqGrid('getRowData', rowid);
     var _selectedRow = $("#" + rowid).offset();
