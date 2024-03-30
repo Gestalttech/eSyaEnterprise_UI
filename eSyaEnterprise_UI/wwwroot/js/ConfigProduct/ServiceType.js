@@ -14,10 +14,10 @@ function fnLoadServiceTypeTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ServiceTypeTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ServiceTypeTree");
+            $("#jstServiceTypeTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstServiceTypeTree");
             $(window).on('resize', function () {
-                fnTreeSize("#ServiceTypeTree");
+                fnTreeSize("#jstServiceTypeTree");
             })
         },
         error: function (error) {
@@ -25,12 +25,12 @@ function fnLoadServiceTypeTree() {
         }
     });
 
-    $("#ServiceTypeTree").on('loaded.jstree', function () {
-        $("#ServiceTypeTree").jstree()._open_to(prevSelectedID);
-        $('#ServiceTypeTree').jstree().select_node(prevSelectedID);
+    $("#jstServiceTypeTree").on('loaded.jstree', function () {
+        $("#jstServiceTypeTree").jstree()._open_to(prevSelectedID);
+        $('#jstServiceTypeTree').jstree().select_node(prevSelectedID);
     });
 
-    $('#ServiceTypeTree').on("changed.jstree", function (e, data) {
+    $('#jstServiceTypeTree').on("changed.jstree", function (e, data) {
 
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
@@ -40,7 +40,7 @@ function fnLoadServiceTypeTree() {
                 $('#Add').remove();
                 $("#dvServiceType").hide();
                 //$(".divTreeActions").hide();
-                var parentNode = $("#ServiceTypeTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstServiceTypeTree").jstree(true).get_parent(data.node.id);
 
                 // If Parent node is selected
                 if (parentNode == "#") {
@@ -117,7 +117,7 @@ function fnLoadServiceTypeTree() {
     });
     $('#ItemGrouServiceTypeTreepTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ServiceTypeTree').jstree().deselect_node(closingNode.children);
+        $('#jstServiceTypeTree').jstree().deselect_node(closingNode.children);
     });
 }
 function fnFillServiceTypeDetail(ServiceTypeID) {
@@ -162,7 +162,7 @@ function fnAddOrUpdateServiceType() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ServiceTypeTree").jstree("destroy");
+                    $("#jstServiceTypeTree").jstree("destroy");
                     fnLoadServiceTypeTree();
 
                 }
@@ -189,7 +189,7 @@ function fnMoveItemUpDown(updown) {
         isMoveDown = true;
         str = ' down';
     }
-    var selectedNode = $('#ServiceTypeTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceTypeTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_01_00", "UI0113", errorMsg.ServiceType_E7);
@@ -212,7 +212,7 @@ function fnMoveItemUpDown(updown) {
                 success: function (response) {
                     if (response.Status === true) {
                         fnAlert("s", "", response.StatusCode, response.Message);
-                        $("#ServiceTypeTree").jstree("destroy");
+                        $("#jstServiceTypeTree").jstree("destroy");
                         fnLoadServiceTypeTree();
                     }
                     else {
@@ -236,7 +236,7 @@ function fnDeleteNode() {
         return;
     }
 
-    var selectedNode = $('#ServiceTypeTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceTypeTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_01_00", "UI0114", errorMsg.ServiceTypeDel_E8);
@@ -257,7 +257,7 @@ function fnDeleteNode() {
                 success: function (response) {
                     if (response.Status === true) {
                         fnAlert("s", "", response.StatusCode, response.Message);
-                        $("#ServiceTypeTree").jstree("destroy");
+                        $("#jstServiceTypeTree").jstree("destroy");
                         fnLoadServiceTypeTree();
                     }
                     else {

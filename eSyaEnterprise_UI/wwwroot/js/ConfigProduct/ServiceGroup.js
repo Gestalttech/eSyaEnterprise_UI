@@ -14,10 +14,10 @@ function fnLoadServiceGroupTree() {
         contentType: 'application/json; charset=utf-8',
         async: false,
         success: function (result) {
-            $("#ServiceGroupTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ServiceGroupTree");
+            $("#jstServiceGroupTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstServiceGroupTree");
             $(window).on('resize', function () {
-                fnTreeSize("#ServiceGroupTree");
+                fnTreeSize("#jstServiceGroupTree");
             })
         },
         error: function (error) {
@@ -25,11 +25,11 @@ function fnLoadServiceGroupTree() {
         }
     });
 
-    $("#ServiceGroupTree").on('loaded.jstree', function () {
-        $("#ServiceGroupTree").jstree()._open_to(prevSelectedID);
-        $('#ServiceGroupTree').jstree().select_node(prevSelectedID);
+    $("#jstServiceGroupTree").on('loaded.jstree', function () {
+        $("#jstServiceGroupTree").jstree()._open_to(prevSelectedID);
+        $('#jstServiceGroupTree').jstree().select_node(prevSelectedID);
     });
-    $('#ServiceGroupTree').on("changed.jstree", function (e, data) {
+    $('#jstServiceGroupTree').on("changed.jstree", function (e, data) {
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -38,7 +38,7 @@ function fnLoadServiceGroupTree() {
                 $('#Add').remove();
                 $("#dvServiceGroup").hide();
 
-                var parentNode = $("#ServiceGroupTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstServiceGroupTree").jstree(true).get_parent(data.node.id);
 
                 // If Parent node is selected
                 if (parentNode == "#") {
@@ -116,9 +116,9 @@ function fnLoadServiceGroupTree() {
         }
     });
 
-    $('#ServiceGroupTree').on("close_node.jstree", function (node) {
+    $('#jstServiceGroupTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ServiceGroupTree').jstree().deselect_node(closingNode.children);
+        $('#jstServiceGroupTree').jstree().deselect_node(closingNode.children);
     });
 
 }
@@ -177,7 +177,7 @@ function fnAddOrUpdateServiceGroup() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ServiceGroupTree").jstree("destroy");
+                    $("#jstServiceGroupTree").jstree("destroy");
                     fnLoadServiceGroupTree();
 
                 }
@@ -194,10 +194,10 @@ function fnAddOrUpdateServiceGroup() {
     }
 }
 function fnExpandAll() {
-    $("#ServiceGroupTree").jstree('open_all');
+    $("#jstServiceGroupTree").jstree('open_all');
 }
 function fnCollapseAll() {
-    $("#ServiceGroupTree").jstree('close_all');
+    $("#jstServiceGroupTree").jstree('close_all');
     $('#dvServiceGroup').hide();
 }
 
@@ -212,7 +212,7 @@ function fnMoveItemUpDown(updown) {
         isMoveDown = true;
         str = ' down';
     }
-    var selectedNode = $('#ServiceGroupTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceGroupTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_02_00", "UI0117", errorMsg.ServiceGroupMove_E8);
@@ -244,7 +244,7 @@ function fnMoveItemUpDown(updown) {
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#ServiceGroupTree").jstree("destroy");
+                            $("#jstServiceGroupTree").jstree("destroy");
                             fnLoadServiceGroupTree();
                         }
                         else {
@@ -269,7 +269,7 @@ function fnDeleteNode() {
         return;
     }
 
-    var selectedNode = $('#ServiceGroupTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceGroupTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_02_00", "UI0118", errorMsg.ServiceGroupDelete_E9);
@@ -297,7 +297,7 @@ function fnDeleteNode() {
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#ServiceGroupTree").jstree("destroy");
+                            $("#jstServiceGroupTree").jstree("destroy");
                             fnLoadServiceGroupTree();
                         }
                         else {

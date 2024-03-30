@@ -10,7 +10,7 @@ $(document).ready(function () {
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
 });
 $(window).on('resize', function () {
-    fnTreeSize("#ServiceClassTree");
+    fnTreeSize("#jstServiceClassTree");
 })
 function fnLoadServiceClassTree() {
     $.ajax({
@@ -19,18 +19,18 @@ function fnLoadServiceClassTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ServiceClassTree").jstree({ core: { data: result, multiple: false } });
+            $("#jstServiceClassTree").jstree({ core: { data: result, multiple: false } });
         },
         error: function (error) {
             alert(error.statusText)
         }
     });
-    $("#ServiceClassTree").on('loaded.jstree', function () {
-        $("#ServiceClassTree").jstree()._open_to(prevSelectedID);
-        $('#ServiceClassTree').jstree().select_node(prevSelectedID);
+    $("#jstServiceClassTree").on('loaded.jstree', function () {
+        $("#jstServiceClassTree").jstree()._open_to(prevSelectedID);
+        $('#jstServiceClassTree').jstree().select_node(prevSelectedID);
     });
 
-    $('#ServiceClassTree').on("changed.jstree", function (e, data) {
+    $('#jstServiceClassTree').on("changed.jstree", function (e, data) {
 
 
         if (data.node != undefined) {
@@ -42,7 +42,7 @@ function fnLoadServiceClassTree() {
                 $("#dvServiceClass").hide();
 
 
-                var parentNode = $("#ServiceClassTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstServiceClassTree").jstree(true).get_parent(data.node.id);
 
                 // If Root is selected
                 if (parentNode == '#') {
@@ -101,7 +101,7 @@ function fnLoadServiceClassTree() {
                         ServiceClassID = "0";
                         ServiceGroupID = parentNode;
                         while (ServiceGroupID.startsWith('C')) {
-                            ServiceGroupID = $("#ServiceClassTree").jstree(true).get_parent(ServiceGroupID);
+                            ServiceGroupID = $("#jstServiceClassTree").jstree(true).get_parent(ServiceGroupID);
                         };
                         eSyaParams.ClearValue();
                         ClassParentID = data.node.id.substring(1);
@@ -151,11 +151,11 @@ function fnLoadServiceClassTree() {
         }
 
     });
-    $('#ServiceClassTree').on("close_node.jstree", function (node) {
+    $('#jstServiceClassTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ServiceClassTree').jstree().deselect_node(closingNode.children);
+        $('#jstServiceClassTree').jstree().deselect_node(closingNode.children);
     });
-    fnTreeSize("#ServiceClassTree");
+    fnTreeSize("#jstServiceClassTree");
 }
 
 
@@ -223,7 +223,7 @@ function fnAddOrUpdateServiceClass() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ServiceClassTree").jstree("destroy");
+                    $("#jstServiceClassTree").jstree("destroy");
                     fnLoadServiceClassTree();
 
                 }
@@ -240,10 +240,10 @@ function fnAddOrUpdateServiceClass() {
     }
 }
 function fnExpandAll() {
-    $("#ServiceClassTree").jstree('open_all');
+    $("#jstServiceClassTree").jstree('open_all');
 }
 function fnCollapseAll() {
-    $("#ServiceClassTree").jstree('close_all');
+    $("#jstServiceClassTree").jstree('close_all');
     $('#dvServiceClass').hide();
 }
 function fnMoveItemUpDown(updown) {
@@ -257,7 +257,7 @@ function fnMoveItemUpDown(updown) {
         isMoveDown = true;
         str = ' down';
     }
-    var selectedNode = $('#ServiceClassTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceClassTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_03_00", "UI0120", errorMsg.ServiceClassMove_E7);
@@ -288,7 +288,7 @@ function fnMoveItemUpDown(updown) {
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#ServiceClassTree").jstree("destroy");
+                            $("#jstServiceClassTree").jstree("destroy");
                             fnLoadServiceClassTree();
                         }
                         else {
@@ -312,7 +312,7 @@ function fnDeleteNode() {
         fnAlert("w", "ECP_03_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
-    var selectedNode = $('#ServiceClassTree').jstree().get_selected(true);
+    var selectedNode = $('#jstServiceClassTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECP_03_00", "UI0121", errorMsg.ServiceClassDel_E8);
@@ -339,7 +339,7 @@ function fnDeleteNode() {
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#ServiceClassTree").jstree("destroy");
+                            $("#jstServiceClassTree").jstree("destroy");
                             fnLoadServiceClassTree();
                         }
                         else {
