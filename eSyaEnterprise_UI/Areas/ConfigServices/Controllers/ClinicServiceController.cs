@@ -154,7 +154,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 
 
         }
-        public async Task<ActionResult> AddClinicServiceLink(DO_MapClinicServiceLink obj)
+        public async Task<ActionResult> AddOrUpdateClinicServiceLink(DO_MapClinicServiceLink obj)
         {
             try
             {
@@ -162,21 +162,21 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ClinicServices/AddClinicServiceLink", obj);
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ClinicServices/AddOrUpdateClinicServiceLink", obj);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddClinicServiceLink:params:" + JsonConvert.SerializeObject(obj));
+                    _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateClinicServiceLink:params:" + JsonConvert.SerializeObject(obj));
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:AddClinicServiceLink:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:AddOrUpdateClinicServiceLink:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }

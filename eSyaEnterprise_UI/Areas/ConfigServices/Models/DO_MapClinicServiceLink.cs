@@ -12,8 +12,8 @@
         public string FormId { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string ClinicDesc { get; set; }
-        public string ConsultationDesc { get; set; }
-        public string ServiceDesc { get; set; }
+        public string? ClinicDesc { get; set; }
+        public string? ConsultationDesc { get; set; }
+        public string? ServiceDesc { get; set; }
     }
 }
