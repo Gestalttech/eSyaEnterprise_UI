@@ -52,7 +52,7 @@
     <div class="col-lg-4  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["BusinessLocation"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadGrid()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnBusinessKey_onChange()"></select>
 
         </div>
     </div>
@@ -78,16 +78,9 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label> @Localizer["ClinicType"] </label>
-                            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="" data-size="6" data-container="body" onchange="fnLoadConsultationType()">
-                                <option value="0" selected> @Localizer["Select"]</option>
-                                @if (ViewBag.ClinicType != null)
-                                {
-                                    foreach (var c in ViewBag.ClinicType)
-                                    {
-                                        <option value="@c.Value">@c.Text</option>
-                                    }
-
-                                }
+                            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="" data-size="6" data-container="body" onchange="fnClinicType_onChange()">
+                                <option value="0"> @Localizer["Select"]</option>
+                               
                             </select>
                         </div>
                     </div>
@@ -95,7 +88,7 @@
                         <div class="form-group">
                             <label> @Localizer["ConsultationType"] </label>
                             <select class="selectpicker" data-live-search="true" id="cboConsultationType" title="" data-size="6" data-container="body">
-                                <option value="0" selected> @Localizer["Select"]</option>
+                                <option value="0"> @Localizer["Select"]</option>
                             </select>
                         </div>
                     </div>
@@ -104,6 +97,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label> @Localizer["Service"] </label>
+
                             <select class="selectpicker" data-live-search="true" id="cboService" title="" data-size="6" data-container="body">
                                 <option value="0" selected> @Localizer["Select"]</option>
                                 @if (ViewBag.Services != null)

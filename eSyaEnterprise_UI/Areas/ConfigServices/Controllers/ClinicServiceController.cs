@@ -32,76 +32,52 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_04_00()
         {
-            var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
-            if (serviceResponse.Status)
+            var businessserviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+            var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetActiveServices");
+
+            if (businessserviceResponse.Status && serviceResponse.Status)
             {
-                if (serviceResponse.Data != null)
+                if (businessserviceResponse.Data != null)
                 {
-                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
+                    ViewBag.BusinessKey = businessserviceResponse.Data.Select(b => new SelectListItem
                     {
                         Value = b.BusinessKey.ToString(),
                         Text = b.LocationDescription,
                     }).ToList();
                 }
-            }
-            else
-            {
-                _logger.LogError(new Exception(serviceResponse.Message), "UD:EFM_08:GetBusinessKey");
-            }
-            var serviceResponse1 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.Clinic);
-            if (serviceResponse1.Status)
-            {
-                if (serviceResponse1.Data != null)
+                if (serviceResponse.Data != null)
                 {
-                    ViewBag.ClinicType = serviceResponse1.Data.Select(r => new SelectListItem
-                    {
-                        Value = r.ApplicationCode.ToString(),
-                        Text = r.CodeDesc,
-                    }).ToList();
-                }
-            }
-            else
-            {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1517_00:GetApplicationCodesByCodeType: CodeType {0} 61");
-            }
-            var serviceResponse2 = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
-            if (serviceResponse2.Status)
-            {
-                if (serviceResponse2.Data != null)
-                {
-                    ViewBag.Services = serviceResponse2.Data.Select(s => new SelectListItem
+                    ViewBag.Services = serviceResponse.Data.Select(s => new SelectListItem
                     {
                         Value = s.ServiceId.ToString(),
                         Text = s.ServiceDesc,
                     }).ToList();
                 }
             }
+            
             else
             {
-                _logger.LogError(new Exception(serviceResponse2.Message), "UD:V_1517_00:GetServicesPerformedByDoctor");
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:EMS_04_00:GetActiveServices");
             }
 
             return View();
 
         }
-
-        public async Task<ActionResult> GetClinicServiceLinkByBKey(int businessKey)
+        [HttpGet]
+        public async Task<ActionResult> GetClinicServiceLinkbyBusinesskey(int businessKey)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ClinicServiceLink>>("ClinicServices/GetClinicServiceLinkByBKey?businessKey=" + businessKey);
+                var parameter = "?businessKey=" + businessKey;
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_MapClinicServiceLink>>("ClinicServices/GetClinicServiceLinkbyBusinesskey" + parameter);
                 if (serviceResponse.Status)
                 {
-                    if (serviceResponse.Data != null)
-                    {
-                        var ClinicServiceLink_list = serviceResponse.Data;
-                        return Json(ClinicServiceLink_list);
-                    }
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    var ClinicServiceLink_list = serviceResponse.Data;
+                    return Json(ClinicServiceLink_list);
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetClinicServiceLinkByBKey:For BusinessKey {0} ", businessKey);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetClinicServiceLinkbyBusinesskey:For BusinessKey {0} ", businessKey);
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 
@@ -109,15 +85,17 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetClinicServiceLinkByBKey:For BusinessKey {0} ", businessKey);
+                _logger.LogError(ex, "UD:GetClinicServiceLinkbyBusinesskey:For BusinessKey {0} ", businessKey);
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
             }
         }
-        public async Task<ActionResult> GetConsultationTypeByBKeyClinicType(int businessKey, int clinictype)
+        [HttpPost]
+        public async Task<ActionResult> GetClinicbyBusinesskey(int businessKey)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ClinicServices/GetConsultationTypeByBKeyClinicType?businessKey=" + businessKey + "&clinictype=" + clinictype);
+                var parameter = "?businessKey=" + businessKey;
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ClinicServices/GetClinicbyBusinesskey"+ parameter);
                 var ct_list = new List<DO_ApplicationCodes>();
                 if (serviceResponse.Status)
                 {
@@ -125,7 +103,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetConsultationTypeByBKeyClinicType: businessKey{0}, clinictype{1}", businessKey, clinictype);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetClinicbyBusinesskey: businessKey{0}", businessKey);
                 }
 
 
@@ -135,7 +113,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetConsultationTypeByBKeyClinicType: businessKey{0}, clinictype{1}", businessKey, clinictype);
+                _logger.LogError(ex, "UD:businessKey: businessKey{0}", businessKey);
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
 
@@ -143,12 +121,44 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
 
 
         }
-        public async Task<ActionResult> AddClinicServiceLink(DO_ClinicServiceLink obj)
+        [HttpPost]
+        public async Task<ActionResult> GetConsultationbyClinicIdandBusinesskey(int clinicId, int businessKey)
+        {
+            try
+            {
+                var parameter = "?clinicId=" + clinicId + "&businessKey=" + businessKey;
+
+                var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ClinicServices/GetConsultationbyClinicIdandBusinesskey" + parameter);
+                var ct_list = new List<DO_ApplicationCodes>();
+                if (serviceResponse.Status)
+                {
+                    ct_list = serviceResponse.Data;
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetConsultationbyClinicIdandBusinesskey: clinicId{0}", clinicId);
+                }
+
+
+
+
+                return Json(ct_list);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetConsultationbyClinicIdandBusinesskey: clinicId{0}", clinicId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+
+
+
+
+        }
+        public async Task<ActionResult> AddClinicServiceLink(DO_MapClinicServiceLink obj)
         {
             try
             {
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                obj.CreatedOn = DateTime.Now;
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 

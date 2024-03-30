@@ -9,7 +9,7 @@ function fnLoadGrid() {
 function fnLoadClinicServiceLink() {
     $("#jqgClinicServiceLink").jqGrid('GridUnload');
     $("#jqgClinicServiceLink").jqGrid({
-        url: getBaseURL() + '/ClinicService/GetClinicServiceLinkByBKey?businessKey=' + $('#cboBusinessKey').val(),
+        url: getBaseURL() + '/ClinicService/GetClinicServiceLinkbyBusinesskey?businessKey=' + $('#cboBusinessKey').val(),
         datatype: 'json',
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -56,29 +56,9 @@ function fnLoadClinicServiceLink() {
         .jqGrid('navButtonAdd', '#jqpClinicServiceLink', {
             caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnGridAddClinicServiceLink
         });
+    fnBindClinics();
 }
-function fnLoadConsultationType() {
-    var ClinicType = $("#cboClinicType").val();
-    var BusinessKey = $("#cboBusinessKey").val();
-    $.ajax({
-        url: getBaseURL() + '/ClinicService/GetConsultationTypeByBKeyClinicType',
-        data: {
-            businessKey: BusinessKey,
-            clinictype: ClinicType
 
-        },
-        success: function (result) {
-            $("#cboConsultationType").empty();
-            $('#cboConsultationType').selectpicker('refresh');
-            $("#cboConsultationType").append('<option value="0">' + localization.Select + '</option>');
-            $('#cboConsultationType').selectpicker('refresh');
-            for (var i = 0; i < result.length; i++) {
-                $("#cboConsultationType").append('<option value="' + result[i].ApplicationCode + '"> ' + result[i].CodeDesc + ' </option>');
-                $('#cboConsultationType').selectpicker('refresh');
-            }
-        }
-    });
-}
 function fnGridAddClinicServiceLink() {
     fnClearFields();
     AddFlag = true;
@@ -87,7 +67,7 @@ function fnGridAddClinicServiceLink() {
     $('#PopupClinicServiceLink').modal('show');
 }
 function fnClearFields() {
-    $('#cboClinicType').val('0');
+    $("#cboClinicType").html('<option value="0"> Select</option>');
     $('#cboClinicType').selectpicker('refresh');
     $('#cboService').val('0');
     $('#cboService').selectpicker('refresh');
@@ -146,6 +126,85 @@ function fnSaveClinicServiceLink() {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSave").attr("disabled", false);
         }
+    });
+
+}
+
+function fnBusinessKey_onChange() {
+    fnLoadClinicServiceLink();
+ 
+}
+function fnClinicType_onChange()
+{
+    fnBindConsultations();
+}
+function fnBindClinics() {
+    $("#cboClinicType").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/ClinicService/GetClinicbyBusinesskey?businessKey=' + $("#cboBusinessKey").val(),
+        type: 'POST',
+        datatype: 'json',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboClinicType").empty();
+
+                $("#cboClinicType").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboClinicType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboClinicType').selectpicker('refresh');
+
+            }
+            else {
+                $("#cboClinicType").empty();
+                $("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $('#cboClinicType').selectpicker('refresh');
+            }
+
+        },
+        async: false,
+        processData: false
+    });
+
+    fnBindConsultations();
+}
+
+function fnBindConsultations() {
+    $("#cboConsultationType").empty();
+    $.ajax({
+        url: getBaseURL() + '/ClinicService/GetConsultationbyClinicIdandBusinesskey?clinicId=' + $("#cboClinicType").val() + '&businessKey=' + $("#cboBusinessKey").val(),
+        type: 'POST',
+        datatype: 'json',
+        error: function (xhr) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboConsultationType").empty();
+
+                $("#cboConsultationType").append($("<option value='0'> Select</option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboConsultationType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboConsultationType').selectpicker('refresh');
+            }
+            else {
+                $("#cboConsultationType").empty();
+                $("#cboConsultationType").append($("<option value='0'> Select</option>"));
+                $('#cboConsultationType').selectpicker('refresh');
+            }
+
+        },
+        async: false,
+        processData: false
     });
 
 }

@@ -84,6 +84,7 @@
     <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyUnit.cs" />
     <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigServicesController.cs" />
+    <Compile Remove="Areas\ConfigServices\Models\DO_ClinicServiceLink.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
