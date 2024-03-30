@@ -7,7 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
@@ -26,6 +25,8 @@
         Cancel: '@Localizer["Cancel"]',
     }
     var errorMsg = {
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
         SelectBusinessLocation_E1: '@Localizer["UI0064"]',
     }
 </script>
@@ -34,77 +35,18 @@
     <link href="~/css/Common/jsTree.css" rel="stylesheet" />
     <script src="~/js/ConfigServices/MapServicesBusiness.js"></script>
 }
-
-<style>
-    .disable-Param {
-        pointer-events: none;
-    }
-
-    .w-120 {
-        width: 120px !important
-    }
-
-    .mdl-card__title {
-        max-height: 45px !important;
-        display: block !important;
-        padding-left: 0px !important;
-        padding-top: 0px !important;
-    }
-
-    .mdl-card {
-        min-height: auto !important
-    }
-
-
-
-    hr {
-        border-color: #f1f1f1 !important;
-    }
-
-    #pnlAddMainMenu, #pnlAddSubMenu {
-        width: 100%;
-    }
-
-    #lblServiceCode {
-        cursor: pointer;
-        padding: 2px 4px;
-    }
-
-        #lblServiceCode:hover {
-            background: #e7f4f9;
-            box-shadow: inset 0 0 1px #cccccc;
-        }
-
-    .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-        width: 100% !important
-    }
-
-    hr {
-        margin-bottom: 8px;
-        margin-top: 8px;
-    }
-</style>
-
-
-<div class="row padbot10">
-
+ 
+<div class="row">
     <div class="col-lg-4  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["BusinessLocation"] </label>
             <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadBusinessServiceTree()"></select>
-
         </div>
     </div>
-  @*   <div class="col-lg-1  col-md-1 col-sm-8 col-xs-12 vertical-center-end">
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSave" onclick="fnSaveBusinessServiceLink()"><i class="fa fa-sync"></i> @Localizer["Save"]</button>
-    </div> *@
-
-</div>
+ </div>
 <div class="row row-bottom-pad">
     <div class="col-sm-4 col-md-4 col-lg-4">
-
-        <div id="jstBusinessServiceTree">
-        </div>
+        <div id="jstBusinessServiceTree"></div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 f-right">
         <div id="dvServiceParameters" style="display:none;">
@@ -129,17 +71,13 @@
                             </div>
                         </div> *@
 
-                          <div class="col-lg-12 col-md-12 col-sm-12">
-                        <p class="subheading">
-                        @Localizer["ServiceParameters"]
-                        </p>
-                        <hr class="left" />
-
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p class="subheading">@Localizer["ServiceParameters"]</p>
+                            <hr class="left" />
                         </div>
                         <div id="dvParameters" class="col-lg-12 col-md-12 col-sm-12">
-                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "7" })
+                            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "7" })
                         </div>
-                       
                     </div>
 
 
@@ -159,13 +97,7 @@
             </div>
 
             <ul class="list-group list-group-flush">
-                <li class="list-group-item collapse">
-                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" onclick="fnSaveBusinessServiceLink()">
-                        <i class="fa fa-times"></i>     @Localizer["Save"]
-                    </button>
-                </li>
-               
-                <li class="list-group-item">
+              <li class="list-group-item">
                     <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
                         <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
                     </button>
@@ -175,12 +107,9 @@
                         <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
                     </button>
                 </li>
-
             </ul>
         </div>
     </div>
-
-
 </div>
 
 
