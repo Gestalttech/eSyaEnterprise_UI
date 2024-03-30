@@ -67,12 +67,12 @@ function fnGridAddClinicServiceLink() {
     $('#PopupClinicServiceLink').modal('show');
 }
 function fnClearFields() {
-    $("#cboClinicType").html('<option value="0"> Select</option>');
-    $('#cboClinicType').selectpicker('refresh');
+    //$("#cboClinicType").html('<option value="0"> Select</option>');
+    //$('#cboClinicType').selectpicker('refresh');
     $('#cboService').val('0');
     $('#cboService').selectpicker('refresh');
-    $("#cboConsultationType").html('<option value="0"> Select</option>');
-    $('#cboConsultationType').selectpicker('refresh');
+    //$("#cboConsultationType").html('<option value="0"> Select</option>');
+    //$('#cboConsultationType').selectpicker('refresh');
     $('#txtVisitRule').val('');
     $("#chkActiveStatus").parent().addClass("is-checked");
 }
