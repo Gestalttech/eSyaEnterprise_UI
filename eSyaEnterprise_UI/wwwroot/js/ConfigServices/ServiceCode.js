@@ -25,7 +25,7 @@ function fnLoadServiceCodeTree() {
             })
         },
         error: function (error) {
-            fnAlert("e", "EMS_01_00", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
 
@@ -189,11 +189,11 @@ function fnFillServiceDetail(ServiceID) {
 }
 function fnAddOrUpdateServiceCode() {
     if ($("#cboServicesFor").val() == "" || $("#cboServicesFor").val() == null || $("#cboServicesFor").val() == undefined || $("#cboServicesFor").val() == "0") {
-        fnAlert("w", "EMS_01_00", "UI0192", "Please select Services For");
+        fnAlert("w", "EMS_01_00", "UI0192", errorMsg.SelectServiceClass_E6);
         return false;
     }
     if (ServiceClassID == "0" && ServiceID == "0") {
-        fnAlert("w", "EMS_01_00", "UI0191", errorMsg.SelectServiceClass_E6);
+        fnAlert("w", "EMS_01_00", "UI0192", errorMsg.SelectServiceClass_E6);
         return false;
     };
 
@@ -232,7 +232,7 @@ function fnAddOrUpdateServiceCode() {
             success: function (response) {
                 if (response.Status == true) {
                     if (ServiceID == 0) {
-                        fnAlert("s", "EMS_01_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                         $("#txtServiceDesc").val('');
                         $("#txtServiceShortDesc").val('');
                         $("#txtInternalServiceCode").val('');
@@ -246,19 +246,19 @@ function fnAddOrUpdateServiceCode() {
 
                     }
                     else {
-                        fnAlert("s", "EMS_01_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                     }
                     $("#ServiceCodeTree").jstree("destroy");
                     fnLoadServiceCodeTree();
 
                 }
                 else {
-                    fnAlert("e", "EMS_01_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSMAdd").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "EMS_01_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnSMAdd").attr("disabled", false);
             }
         });
