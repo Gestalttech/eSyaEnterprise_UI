@@ -1,5 +1,19 @@
 ﻿var AddFlag = true;
-
+$(document).ready(function () {
+    
+    
+    $.contextMenu({
+        selector: "#btnActions",
+        trigger: 'left',
+        items: {
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditClinicServiceLink(event, 'edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditClinicServiceLink(event, 'view') } },
+        }
+     });
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+  
+});
 function fnLoadGrid() {
     if ($('#cboBusinessKey').val() != '') {
         fnLoadClinicServiceLink();
@@ -14,7 +28,7 @@ function fnLoadClinicServiceLink() {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ClinicDesc, localization.ConsultationDesc, localization.ServiceDesc, localization.VisitRule, localization.Active],
+        colNames: [localization.ClinicDesc, localization.ConsultationDesc, localization.ServiceDesc, localization.VisitRule, localization.Active,localization.Actions],
         colModel: [
 
             { name: "ClinicDesc", width: 50, editable: false, align: 'left' },
@@ -22,11 +36,12 @@ function fnLoadClinicServiceLink() {
             { name: "ServiceDesc", width: 50, editable: false, align: 'left' },
             { name: "VisitRule", width: 20, editable: false, align: 'left' },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: 'checkbox', formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: "Button", width: 20, editable: false, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
-            //        return "<button type='button' style='width:100px' class='btn btn-primary' onclick=fnGridEditRatePlan('" + rowObject.RateType + "')><i class='fas fa-external-link-alt c-white'></i> Edit  </button>";
-            //    }
-            //}
+            {
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnActions"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
 
         ],
         rowNum: 10,
@@ -60,21 +75,69 @@ function fnLoadClinicServiceLink() {
 }
 
 function fnGridAddClinicServiceLink() {
+    if ($("#cboBusinessKey").val() == 0) {
+        fnAlert("w", "EMS_04_00", "UI064", errorMsg.BusinessLocation_E10);
+        return;
+    }
+    else {
+        fnClearFields();
+        AddFlag = true;
+        $('#PopupClinicServiceLink').find('.modal-title').text(localization.AddClinicServiceLink);
+        $("#btnSave").html("<i class='fa fa-save'></i> " + localization.Save);
+        $('#PopupClinicServiceLink').modal('show');
+
+    }
+}
+
+function fnEditClinicServiceLink(e, actiontype) {
+
+    var rowid = $("#jqgClinicServiceLink").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgClinicServiceLink').jqGrid('getRowData', rowid);
+
     fnClearFields();
-    AddFlag = true;
-    $('#PopupClinicServiceLink').find('.modal-title').text(localization.AddClinicServiceLink);
-    $("#btnSave").html("<i class='fa fa-save'></i> " + localization.Save);
-    $('#PopupClinicServiceLink').modal('show');
+    if (actiontype.trim() == "edit") {
+        if (_userFormRole.IsEdit === false) {
+            fnAlert("w", "EMS_04_00", "UIC02", errorMsg.editauth_E2);
+            return;
+        }
+        $('#PopupClinicServiceLink').modal('show');
+        $('#PopupClinicServiceLink').find('.modal-title').text(localization.EditClinicServiceLink);
+        $("#btnSave").html("<i class='fa fa-sync'></i> " + localization.Update);
+        $("#cboClinicType").next().prop('disabled', true);
+        $("#cboConsultationType").next().prop('disabled', true);
+        $("#cboService").next().prop('disabled', true);
+    }
+
+    if (actiontype.trim() == "view") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "EMS_04_00", "UIC03", errorMsg.vieweauth_E3);
+            return;
+        }
+        $('#PopupClinicServiceLink').modal('show');
+        $('#PopupClinicServiceLink').find('.modal-title').text(localization.ViewClinicServiceLink);
+        $("#btnSave").hide();
+        $("#chkActiveStatus").prop('disabled', true);
+        $("#cboClinicType").next().prop('disabled', true);
+        $("#cboConsultationType").next().prop('disabled', true);
+        $("#cboService").next().prop('disabled', true);
+        $("#txtVisitRule").prop('disabled', true);
+    }
 }
 function fnClearFields() {
-    $("#cboClinicType").html('<option value="0"> Select</option>');
+    $("#cboClinicType").html('<option value="0">' + localization.Select+'</option>');
     $('#cboClinicType').selectpicker('refresh');
     $('#cboService').val('0');
     $('#cboService').selectpicker('refresh');
-    $("#cboConsultationType").html('<option value="0"> Select</option>');
+    $("#cboConsultationType").html('<option value="0"> ' + localization.Select +'</option>');
     $('#cboConsultationType').selectpicker('refresh');
     $('#txtVisitRule').val('');
     $("#chkActiveStatus").parent().addClass("is-checked");
+    $("#btnSave").show();
+    $("#cboClinicType").next().prop('disabled', false);
+    $("#cboConsultationType").next().prop('disabled', false);
+    $("#cboService").next().prop('disabled', false);
+    $("#txtVisitRule").prop('disabled', false);
+    $("#chkActiveStatus").prop('disabled', false);
 }
 function fnSaveClinicServiceLink() {
     if ($("#cboClinicType").val() == "0" || $("#cboClinicType").val() == 0) {
@@ -153,7 +216,7 @@ function fnBindClinics() {
                 //refresh each time
                 $("#cboClinicType").empty();
 
-                $("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $("#cboClinicType").append($("<option value='0'>" + localization.Select+"</option > "));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboClinicType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
@@ -163,7 +226,7 @@ function fnBindClinics() {
             }
             else {
                 $("#cboClinicType").empty();
-                $("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $("#cboClinicType").append($("<option value='0'> " + localization.Select +" </option>"));
                 $('#cboClinicType').selectpicker('refresh');
             }
 
@@ -189,7 +252,7 @@ function fnBindConsultations() {
                 //refresh each time
                 $("#cboConsultationType").empty();
 
-                $("#cboConsultationType").append($("<option value='0'> Select</option>"));
+                $("#cboConsultationType").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboConsultationType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
@@ -198,7 +261,7 @@ function fnBindConsultations() {
             }
             else {
                 $("#cboConsultationType").empty();
-                $("#cboConsultationType").append($("<option value='0'> Select</option>"));
+                $("#cboConsultationType").append($("<option value='0'> " + localization.Select +"</option>"));
                 $('#cboConsultationType').selectpicker('refresh');
             }
 
