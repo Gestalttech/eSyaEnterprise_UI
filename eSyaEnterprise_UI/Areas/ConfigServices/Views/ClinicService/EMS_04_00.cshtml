@@ -12,12 +12,15 @@
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 </script>
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts {
     <script src="~/js/Common/jsTree.js"></script>
-    <link href="~/css/Common/jsTree.css" rel="stylesheet" />
+   
+    
     <script src="~/js/ConfigServices/MapBusinessClinicService.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 }
-
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
 <script>
     var localization = {
         ClinicDesc: '@Localizer["ClinicDescription"]',
@@ -25,24 +28,26 @@
         ServiceDesc: '@Localizer["ServiceDescription"]',
         VisitRule: '@Localizer["VisitRule"]',
         Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
         Update: '@Localizer["Update"]',
         Save: '@Localizer["Save"]',
         Select: '@Localizer["Select"]',
         EditClinicServiceLink: '@Localizer["EditClinicServiceLink"]',
         AddClinicServiceLink: '@Localizer["AddClinicServiceLink"]',
         ClinicServiceLink: '@Localizer["ClinicServiceLink"]',
-
+        ViewClinicServiceLink: '@Localizer["ViewClinicServiceLink"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
     }
     var errorMsg = {
-        addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
         vieweauth_E3: '@Localizer["UIC03"]',
-        deleteauth_E4: '@Localizer["UIC04"]',
-        actDeact_E5: '@Localizer["UIC05"]',
         ClinicType_E6: '@Localizer["UI0194"]',
         ConsultationType_E7: '@Localizer["UI0195"]',
         Service_E8: '@Localizer["UI0196"]',
         VisitRule_E9: '@Localizer["UI0197"]',
+        BusinessLocation_E10: '@Localizer["UI0064"]',
     }
 </script>
 
@@ -58,7 +63,7 @@
     </div>
 
 </div>
-<div class="row padbot10">
+<div class="row form-group">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <table id="jqgClinicServiceLink"></table>
         <div id="jqpClinicServiceLink"></div>
