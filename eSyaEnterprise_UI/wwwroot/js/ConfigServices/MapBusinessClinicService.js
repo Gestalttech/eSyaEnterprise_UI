@@ -152,7 +152,7 @@ function fnClearFields() {
 }
 function fnSaveClinicServiceLink() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val())||$("#cboBusinessKey").val() == "0" || $("#cboBusinessKey").val() == 0) {
-        fnAlert("w", "EMS_04_00", "UI0194", errorMsg.ClinicType_E6);
+        fnAlert("w", "EMS_04_00", "UI0064", errorMsg.BusinessLocation_E10);
         return;
     }
     if (IsStringNullorEmpty($("#cboClinicType").val()) ||$("#cboClinicType").val() == "0" || $("#cboClinicType").val() == 0) {

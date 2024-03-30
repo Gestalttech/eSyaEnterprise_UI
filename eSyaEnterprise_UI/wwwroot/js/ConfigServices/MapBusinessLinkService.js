@@ -163,11 +163,11 @@ function fnLoadServiceBusinessLinkGrid(ServiceID, Editable) {
 function fnUpdateServiceBusinessLink() {
 
     if (IsStringNullorEmpty(servId) || servId === "0") {
-        fnAlert("w", "EAD_04_00", "UIC01", "Please click any Business location from the grid");
+        fnAlert("w", "EMS_03_00", "UI0303", errorMsg.selectBusinessLoc_E6);
         return;
     }
     if (IsStringNullorEmpty(businessloc) || businessloc === "0") {
-        fnAlert("w", "EAD_04_00", "UIC01", "Please select the Business Key");
+        fnAlert("w", "EMS_03_00", "UI0303", errorMsg.selectBusinessLoc_E6);
         return;
     }
     var serviceParams = eSyaParams.GetJSONValue();
