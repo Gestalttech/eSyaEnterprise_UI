@@ -29,6 +29,8 @@
         PreferredLanguage: '@Localizer["PreferredLanguage"]',
         DefaultLanguage: '@Localizer["DefaultLanguage"]',
         Active: '@Localizer["Active"]',
+        SingleSegment: '@Localizer["SingleSegment"]',
+        MultiSegment: '@Localizer["MultiSegment"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -77,8 +79,8 @@
                             <label> @Localizer["BusinessUnitType"] </label>
                             <div>
                                 <select class="selectpicker" data-live-search="false" id="cboUnitType" onchange="fnHideshowUnits()">
-                                    <option value="S">Single Segment</option>
-                                    <option value="M">Multi Segment</option>
+                                    <option value="S">@Localizer["SingleSegment"]</option>
+                                    <option value="M">@Localizer["MultiSegment"]</option>
                                 </select>
                             </div>
                         </div>
