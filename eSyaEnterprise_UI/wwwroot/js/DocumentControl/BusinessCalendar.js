@@ -21,7 +21,7 @@ function fnLoadGridBusinessCalendar() {
 
     $("#jqgBusinessCalendar").jqGrid({
 
-        url: getBaseURL() + '/DocumentCalendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/DocumentControl/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -183,7 +183,7 @@ function fnSaveBusinessCalendar() {
     $("#btnSaveBusinessCalendar").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/DocumentCalendar/InsertOrUpdateBusinessCalendar',
+        url: getBaseURL() + '/DocumentControl/InsertOrUpdateBusinessCalendar',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -211,7 +211,7 @@ function fnBindCalendarKeys() {
     var businesskey = $("#cboBusinessKey").val();
     $("#cboCalendarKey").empty();
     $.ajax({
-        url: getBaseURL() + '/DocumentCalendar/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
+        url: getBaseURL() + '/DocumentControl/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
