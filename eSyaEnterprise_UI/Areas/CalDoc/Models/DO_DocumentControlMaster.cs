@@ -6,7 +6,7 @@
         public string DocumentDesc { get; set; } = null!;
         public string ShortDesc { get; set; } = null!;
         public string DocumentType { get; set; } = null!;
-        public string? SchemaId { get; set; } = null!;
+        //public string? SchemaId { get; set; } = null!;
         public bool UsageStatus { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; }

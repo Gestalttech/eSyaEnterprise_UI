@@ -65,13 +65,12 @@ function fnLoadDocumentCtrlGrid() {
         // data: gridData,
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.DocumentId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.Scheme, localization.UsageStatus, localization.Active, localization.Actions],
+        colNames: [localization.DocumentId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "DocumentId", width: 30, editable: true, align: 'left', hidden: false },
             { name: "DocumentDesc", width: 220, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "SchemaId", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
@@ -170,7 +169,7 @@ function fnEditDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#txtSchemeName").val(rowData.SchemaId);
+    //$("#txtSchemeName").val(rowData.SchemaId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
    
 
@@ -224,7 +223,7 @@ function fnSaveDocumentControl() {
         DocumentType: $("#txtDocumentType").val(),
         ShortDesc: $("#txtShortDesc").val(),
         DocumentDesc: $("#txtDocumentDesc").val(),
-        SchemaId: $("#txtSchemeName").val(),
+        //SchemaId: $("#txtSchemeName").val(),
         UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         Isadd: Isadd,
@@ -276,10 +275,10 @@ function fnValidateDocumentControl() {
         fnAlert("w", "ECD_02_00", "UI0019", errorMsg.ShortDesc_E6);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtSchemeName").val())) {
-        fnAlert("w", "ECD_02_00", "UI0020", errorMsg.SelectScheme_E7);
-        return false;
-    }
+    //if (IsStringNullorEmpty($("#txtSchemeName").val())) {
+    //    fnAlert("w", "ECD_02_00", "UI0020", errorMsg.SelectScheme_E7);
+    //    return false;
+    //}
     if (IsStringNullorEmpty($("#txtDocumentDesc").val())) {
         fnAlert("w", "ECD_02_00", "UI0021", errorMsg.DocumentDesc_E8);
         return false;
@@ -305,7 +304,7 @@ function fnViewDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#txtSchemeName").val(rowData.SchemeId);
+    //$("#txtSchemeName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
     if (rowData.UsageStatus === "true") {
 
@@ -349,7 +348,7 @@ function fnPopUpDeleteDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#txtSchemeName").val(rowData.SchemeId);
+    //$("#txtSchemeName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
     if (rowData.UsageStatus === "true") {
 
@@ -384,7 +383,7 @@ function fnClearFields() {
     $("#txtDocumentId").val('');
     $("#txtDocumentType").val('');
     $("#txtShortDesc").val('');
-    $("#txtSchemeName").val('');
+   // $("#txtSchemeName").val('');
     $("#txtDocumentDesc").val('');
     $("#chkUsageStatus").parent().removeClass("is-checked");
     $("#chkActiveStatus").parent().addClass("is-checked");
