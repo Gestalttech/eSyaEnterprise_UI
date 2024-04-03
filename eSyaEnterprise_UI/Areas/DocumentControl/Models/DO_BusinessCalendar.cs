@@ -17,4 +17,9 @@
         public int DocumentId { get; set; }
         public string DocumentDesc { get; set; }
     }
+    public class DO_BusinessLocation
+    {
+        public int BusinessKey { get; set; }
+        public string LocationDescription { get; set; }
+    }
 }
