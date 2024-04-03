@@ -103,7 +103,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         #endregion Calendar detail
 
 
-        #region Document Calendar Business Link
+        #region Map Document Control to Calendar Business Link
         [Area("ConfigBusiness")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ECB_05_00()
