@@ -65,12 +65,19 @@ function fnLoadDocumentCtrlGrid() {
         // data: gridData,
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.DocumentId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active, localization.Actions],
+        colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId,localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "DocumentId", width: 30, editable: true, align: 'left', hidden: false },
+            { name: "GeneLogic", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "CalendarType", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "IsTransationMode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsStoreCode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsPaymentMode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "SchemaId", width: 30, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "ComboId", width: 30, editable: true, align: 'left', resizable: false, hidden: true },
             { name: "DocumentDesc", width: 220, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: true },
+            { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: true },
             { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
@@ -169,8 +176,10 @@ function fnEditDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    //$("#txtSchemeName").val(rowData.SchemaId);
+    $("#txtSchemaName").val(rowData.SchemaId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
+    $("#cboGenLogin").val(rowData.GeneLogin).selectpicker('refresh');
+    $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
    
 
     Isadd = 0;
@@ -182,12 +191,33 @@ function fnEditDocumentControl(e) {
     $("#btnDeactivateDocumentControl").hide();
     $("#chkActiveStatus").prop('disabled', true);
 
-    if (rowData.UsageStatus === "true") {
+    if (rowData.IsTransactionMode === "true") {
 
-        $("#chkUsageStatus").parent().addClass("is-checked");
+        $("#chkIsTransactionMode").parent().addClass("is-checked");
     } else {
-        $("#chkUsageStatus").parent().removeClass("is-checked");
+        $("#chkIsTransactionMode").parent().removeClass("is-checked");
     }
+
+    if (rowData.IsStoreCode === "true") {
+
+        $("#chkIsStoreCode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsStoreCode").parent().removeClass("is-checked");
+    }
+
+    if (rowData.IsPaymentMode === "true") {
+
+        $("#chkIsPaymentMode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsPaymentMode").parent().removeClass("is-checked");
+    }
+
+    //if (rowData.UsageStatus === "true") {
+
+    //    $("#chkUsageStatus").parent().addClass("is-checked");
+    //} else {
+    //    $("#chkUsageStatus").parent().removeClass("is-checked");
+    //}
     if (rowData.ActiveStatus === "true") {
 
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -220,11 +250,17 @@ function fnSaveDocumentControl() {
     }
     var obj = {
         DocumentId: $("#txtDocumentId").val(),
+        GeneLogic: $("#cboGenLogin").val(),
+        CalendarType: $("#cboCalendarType").val(),
         DocumentType: $("#txtDocumentType").val(),
         ShortDesc: $("#txtShortDesc").val(),
         DocumentDesc: $("#txtDocumentDesc").val(),
-        //SchemaId: $("#txtSchemeName").val(),
-        UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
+        SchemaId: $("#txtSchemaName").val(),
+        IsTransactionMode: $("#chkIsTransactionMode").parent().hasClass("is-checked"),
+        IsStoreCode: $("#chkIsStoreCode").parent().hasClass("is-checked"),
+        IsPaymentMode: $("#chkIsPaymentMode").parent().hasClass("is-checked"),
+        //UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
+        UsageStatus: false,
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         Isadd: Isadd,
     };
@@ -275,10 +311,18 @@ function fnValidateDocumentControl() {
         fnAlert("w", "ECD_02_00", "UI0019", errorMsg.ShortDesc_E6);
         return false;
     }
-    //if (IsStringNullorEmpty($("#txtSchemeName").val())) {
-    //    fnAlert("w", "ECD_02_00", "UI0020", errorMsg.SelectScheme_E7);
-    //    return false;
-    //}
+    if ($("#cboGenLogin").val() == 0) {
+        fnAlert("w", "ECD_02_00", "UI0304", errorMsg.GeneLogin_E9);
+        return false;
+    }
+    if ($("#cboCalendarType").val() == 0) {
+        fnAlert("w", "ECD_02_00", "UI0214", errorMsg.CalendarType_E10);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtSchemaName").val())) {
+        fnAlert("w", "ECD_02_00", "UI0020", errorMsg.EnterSchema_E7);
+        return false;
+    }
     if (IsStringNullorEmpty($("#txtDocumentDesc").val())) {
         fnAlert("w", "ECD_02_00", "UI0021", errorMsg.DocumentDesc_E8);
         return false;
@@ -304,7 +348,7 @@ function fnViewDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    //$("#txtSchemeName").val(rowData.SchemeId);
+    $("#txtSchemaName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
     if (rowData.UsageStatus === "true") {
 
@@ -348,7 +392,7 @@ function fnPopUpDeleteDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    //$("#txtSchemeName").val(rowData.SchemeId);
+    $("#txtSchemaName").val(rowData.SchemeId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
     if (rowData.UsageStatus === "true") {
 
@@ -383,8 +427,14 @@ function fnClearFields() {
     $("#txtDocumentId").val('');
     $("#txtDocumentType").val('');
     $("#txtShortDesc").val('');
-   // $("#txtSchemeName").val('');
+    $("#txtSchemaName").val('');
     $("#txtDocumentDesc").val('');
+    $("#cboGenLogin").val('0').selectpicker('refresh');
+    $("#cboCalendarType").val('0').selectpicker('refresh');
+    $("#chkIsTransactionMode").parent().removeClass("is-checked");
+    $("#chkIsStoreCode").parent().removeClass("is-checked");
+    $("#chkIsPaymentMode").parent().removeClass("is-checked");
+
     $("#chkUsageStatus").parent().removeClass("is-checked");
     $("#chkActiveStatus").parent().addClass("is-checked");
     $("#btnsaveDocContrManagement").attr('disabled', false);

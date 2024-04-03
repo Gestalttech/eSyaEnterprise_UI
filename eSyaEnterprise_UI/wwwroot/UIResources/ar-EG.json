@@ -18,7 +18,7 @@
   "UI0017": "Please Enter the Document ID",
   "UI0018": "Please Enter the Document Type",
   "UI0019": "Please Enter the Short Description",
-  "UI0020": "Please Select a Scheme",
+  "UI0020": "Please Select a Schema",
   "UI0021": "Please Enter the Document Description",
   "UI0022": "Please Select a Currency Code",
   "UI0023": "Please Enter the Currency Name",
@@ -302,6 +302,7 @@
   "UI0301": "Please Enter the Portfolio Description",
   "UI0302": "Please select a Store Class",
   "UI0303": "Please click any Business location from the grid",
+  "UI0304": "Please select a Gen Logic",
 
 
   "UIC01": "You are not Authorized to Add",
