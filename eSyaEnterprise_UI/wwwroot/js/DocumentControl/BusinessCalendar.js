@@ -21,12 +21,12 @@ function fnLoadGridBusinessCalendar() {
 
     $("#jqgBusinessCalendar").jqGrid({
 
-        url: getBaseURL() + '/BusinessCalendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/DocumentCalendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.CalenderKey, localization.DocumentId, localization.DocumentDesc, localization.GeneNoYearOrMonth,localization.Active, localization.Actions],
+        colNames: [localization.BusinessKey, localization.CalenderKey, localization.DocumentId, localization.DocumentDesc, localization.GeneNoYearOrMonth, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "CalenderKey", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
@@ -61,7 +61,7 @@ function fnLoadGridBusinessCalendar() {
         loadComplete: function (data) {
             fnBindCalendarKeys();
             SetGridControlByAction();
-           
+
             fnJqgridSmallScreen("jqgBusinessCalendar");
         },
     }).jqGrid('navGrid', '#jqpBusinessCalendar', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpBusinessCalendar', {
@@ -91,7 +91,7 @@ function fnAddBusinessCalendar() {
         $("#btnSaveBusinessCalendar").show();
         $("#btnSaveBusinessCalendar").html('<i class="fa fa-save mr-1"></i>' + localization.Save);
         $("#chkActiveStatus").parent().addClass("is-checked");
-   }
+    }
 }
 function fnEditBusinessCalendar(e, actiontype) {
     var rowid = $("#jqgBusinessCalendar").jqGrid('getGridParam', 'selrow');
@@ -114,7 +114,7 @@ function fnEditBusinessCalendar(e, actiontype) {
         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
 
-     if (actiontype.trim() == "edit") {
+    if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
             fnAlert("w", "ECB_05_00", "UIC02", errorMsg.editauth_E2);
             return;
@@ -122,11 +122,11 @@ function fnEditBusinessCalendar(e, actiontype) {
         $('#PopupBusinessCalendar').modal('show').css({ top: firstRow.top + 31 });
 
         $('#PopupBusinessCalendar').find('.modal-title').text(localization.UpdateBusinessCalendar);
-      
+
         $("#chkActiveStatus").prop('disabled', false);
-       
+
         $("#btnSaveBusinessCalendar").html('<i class="fa fa-sync"></i> ' + localization.Update);
-         $("#btnSaveBusinessCalendar").show();
+        $("#btnSaveBusinessCalendar").show();
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
@@ -136,7 +136,7 @@ function fnEditBusinessCalendar(e, actiontype) {
         $('#PopupBusinessCalendar').modal('show');
         $('#PopupBusinessCalendar').find('.modal-title').text(localization.ViewBusinessCalendar);
         $("#chkActiveStatus").prop('disabled', true);
-        
+
         $("#btnSaveBusinessCalendar").hide();
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
@@ -183,7 +183,7 @@ function fnSaveBusinessCalendar() {
     $("#btnSaveBusinessCalendar").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/BusinessCalendar/InsertOrUpdateBusinessCalendar',
+        url: getBaseURL() + '/DocumentCalendar/InsertOrUpdateBusinessCalendar',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -211,7 +211,7 @@ function fnBindCalendarKeys() {
     var businesskey = $("#cboBusinessKey").val();
     $("#cboCalendarKey").empty();
     $.ajax({
-        url: getBaseURL() + '/BusinessCalendar/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
+        url: getBaseURL() + '/DocumentCalendar/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -223,7 +223,7 @@ function fnBindCalendarKeys() {
                 //refresh each time
                 $("#cboCalendarKey").empty();
 
-                $("#cboCalendarKey").append($("<option value='0'>"+localization.Select+"</option>"));
+                $("#cboCalendarKey").append($("<option value='0'>" + localization.Select + "</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboCalendarKey").append($("<option></option>").val(response[i]["CalenderKey"]).html(response[i]["CalenderKey"]));
@@ -232,7 +232,7 @@ function fnBindCalendarKeys() {
             }
             else {
                 $("#cboCalendarKey").empty();
-                $("#cboCalendarKey").append($("<option value='0'>"+localization.ChooseCalendarKey+"</option>"));
+                $("#cboCalendarKey").append($("<option value='0'>" + localization.ChooseCalendarKey + "</option>"));
                 $('#cboCalendarKey').selectpicker('refresh');
             }
         },

@@ -24,7 +24,7 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
 
         [Area("DocumentControl")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> ECB_05_00()
+        public async Task<IActionResult> EDC_01_00()
         {
             try
             {

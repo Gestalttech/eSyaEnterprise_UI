@@ -130,6 +130,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\ConfigBusiness\Views\BusinessCalendar\ECB_05_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_08_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_09_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_21_00.cshtml" />
@@ -179,6 +180,7 @@
     <Content Remove="wwwroot\images\ui-icons_ffffff_256x240.png" />
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
     <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
+    <Content Remove="wwwroot\js\ConfigBusiness\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
@@ -242,7 +244,6 @@
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
-    <Folder Include="Areas\DocumentControl\Views\" />
     <Folder Include="Areas\ProductSetup\Views\Control\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />

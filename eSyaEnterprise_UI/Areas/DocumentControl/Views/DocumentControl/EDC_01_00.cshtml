@@ -1,15 +1,15 @@
 ﻿ @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "ECB_05_00";
+    ViewData["Title"] = "EDC_01_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section Scripts {
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/ConfigBusiness/BusinessCalendar.js"></script>
+    <script src="~/js/DocumentControl/BusinessCalendar.js"></script>
 }
 
 @{
@@ -125,4 +125,5 @@
         </div>
     </div>
 </div>
+
 
