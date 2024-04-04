@@ -72,7 +72,7 @@ function fnLoadDocumentCtrlGrid() {
             { name: "IsPaymentMode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "SchemaId", width: 60, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ComboId", width: 30, editable: true, align: 'left', resizable: false, hidden: true },
-            { name: "DocumentDesc", width: 220, editable: true, align: 'left', resizable: false, hidden: false },
+            { name: "DocumentDesc", width: 180, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: true },
             { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: true },
             { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
