@@ -66,7 +66,7 @@ function fnLoadDocumentCtrlGrid() {
         colModel: [
             { name: "DocumentId", width: 30, editable: true, align: 'left', hidden: false },
             { name: "GeneLogic", width: 40, editable: true, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "C:Continuos;Y:Yearwise;M:Monthwise;D:Datewise" }},
-            { name: "CalendarType", width: 40, editable: true, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "NA:NotApplicable;FY:FinancialYear;CY:CalendarYear" } },
+            { name: "CalendarType", width: 45, editable: true, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "NA:NotApplicable;FY:FinancialYear;CY:CalendarYear" } },
             { name: "IsTransationMode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "IsStoreCode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "IsPaymentMode", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },

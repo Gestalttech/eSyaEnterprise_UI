@@ -222,8 +222,8 @@ td:first-child.ui-state-default.jqgrid-rownum {
 .ui-state-default.jqgrid-rownum {
     color: #797172 !important;
 }
-tr.ui-jqgrid-labels{
-    display:table;
+#gbox_jqgFormAction tr.ui-jqgrid-labels, #gbox_jqgFormParameter tr.ui-jqgrid-labels {
+    display: table;
 }
 /*Custom Table for Parameter*/
 #tbParameter {
