@@ -8,7 +8,7 @@
         public string? CalenderKey { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime TillDate { get; set; }
-        public bool YearEndStatus { get; set; }
+        //public bool YearEndStatus { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormID { get; set; }
         public int UserID { get; set; }
