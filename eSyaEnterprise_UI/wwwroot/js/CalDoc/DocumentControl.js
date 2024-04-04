@@ -54,15 +54,12 @@ $(document).ready(function () {
 function fnLoadDocumentCtrlGrid() {
 
     $("#jqvDocContManagement").jqGrid('GridUnload');
-    //var gridData = [{
-    //    DocumentId: '1000', DocumentDesc: 'Test', ShortDesc: '', DocumentType: '', SchemeName: '', IsFinancialYearAppl: '', IsStoreLinkAppl: '', IsTransactionModeAppl: '', IsCustomerGroupAppl: '', UsageStatus: '', ActiveStatus: '', edit: ''
-    //}];
+   
     $("#jqvDocContManagement").jqGrid({
 
         url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
         mtype: 'GET',
         datatype: 'json',
-        // data: gridData,
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId,localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active, localization.Actions],
@@ -85,9 +82,6 @@ function fnLoadDocumentCtrlGrid() {
                 formatter: function (cellValue, options, rowdata, action) {
 
                     return '<button class="mr-1 btn btn-outline" id="btnDocContManagement"><i class="fa fa-ellipsis-v"></i></button>'
-                    //'<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditDocumentControl(event,\'edit\')"><i class="fas fa-pen"></i> ' + localization.Edit + '</button>' +
-                    //'<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnViewDocumentControl(event,\'view\')"><i class="far fa-eye"></i> ' + localization.View + '</button>' +
-                    //'<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title = "Delete" id="jqgDelete" onclick = "return fnPopUpDeleteDocumentControl(event,\'delete\')" > <i class="fas fa-trash"></i>' + localization.Delete + '</button>'
                 }
             },
         ],
@@ -134,9 +128,7 @@ function fnLoadDocumentCtrlGrid() {
                 default:
                     break;
             }
-            // fnEditDocumentControl(JSON.stringify(rowData._id_));
-            //alert("full row data:\n\n" + JSON.stringify(rowData._id_));
-            //    return RowAction(rowData);
+            
         },
 
     }).jqGrid('navGrid', '#jqpDocContManagement', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDocContManagement', {
@@ -170,17 +162,16 @@ function fnEditDocumentControl(e) {
 
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
+    
     $("#txtDocumentId").val(rowData.DocumentId);
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
     $("#txtSchemaName").val(rowData.SchemaId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    $("#cboGenLogin").val(rowData.GeneLogin).selectpicker('refresh');
+    $("#cboGenLogin").val(rowData.GeneLogic).selectpicker('refresh');
     $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
-   
+    $("#txtcomboId").val(rowData.ComboId);
 
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
@@ -191,7 +182,7 @@ function fnEditDocumentControl(e) {
     $("#btnDeactivateDocumentControl").hide();
     $("#chkActiveStatus").prop('disabled', true);
 
-    if (rowData.IsTransactionMode === "true") {
+    if (rowData.IsTransationMode === "true") {
 
         $("#chkIsTransactionMode").parent().addClass("is-checked");
     } else {
@@ -211,13 +202,6 @@ function fnEditDocumentControl(e) {
     } else {
         $("#chkIsPaymentMode").parent().removeClass("is-checked");
     }
-
-    //if (rowData.UsageStatus === "true") {
-
-    //    $("#chkUsageStatus").parent().addClass("is-checked");
-    //} else {
-    //    $("#chkUsageStatus").parent().removeClass("is-checked");
-    //}
     if (rowData.ActiveStatus === "true") {
 
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -256,13 +240,13 @@ function fnSaveDocumentControl() {
         ShortDesc: $("#txtShortDesc").val(),
         DocumentDesc: $("#txtDocumentDesc").val(),
         SchemaId: $("#txtSchemaName").val(),
-        IsTransactionMode: $("#chkIsTransactionMode").parent().hasClass("is-checked"),
+        IsTransationMode: $("#chkIsTransactionMode").parent().hasClass("is-checked"),
         IsStoreCode: $("#chkIsStoreCode").parent().hasClass("is-checked"),
         IsPaymentMode: $("#chkIsPaymentMode").parent().hasClass("is-checked"),
-        //UsageStatus: $("#chkUsageStatus").parent().hasClass("is-checked"),
         UsageStatus: false,
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         Isadd: Isadd,
+        ComboId: $("#txtcomboId").val()
     };
 
     $("#btnsaveDocContrManagement").attr('disabled', true);
@@ -348,13 +332,30 @@ function fnViewDocumentControl(e) {
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
     $("#txtDocumentType").val(rowData.DocumentType);
-    $("#txtSchemaName").val(rowData.SchemeId);
+    $("#txtSchemaName").val(rowData.SchemaId);
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    if (rowData.UsageStatus === "true") {
+    $("#txtcomboId").val(rowData.ComboId);
+    $("#cboGenLogin").val(rowData.GeneLogic).selectpicker('refresh');
+    $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
+    if (rowData.IsTransationMode === "true") {
 
-        $("#chkUsageStatus").parent().addClass("is-checked");
+        $("#chkIsTransactionMode").parent().addClass("is-checked");
     } else {
-        $("#chkUsageStatus").parent().removeClass("is-checked");
+        $("#chkIsTransactionMode").parent().removeClass("is-checked");
+    }
+
+    if (rowData.IsStoreCode === "true") {
+
+        $("#chkIsStoreCode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsStoreCode").parent().removeClass("is-checked");
+    }
+
+    if (rowData.IsPaymentMode === "true") {
+
+        $("#chkIsPaymentMode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsPaymentMode").parent().removeClass("is-checked");
     }
     if (rowData.ActiveStatus === "true") {
 
@@ -379,51 +380,10 @@ function fnViewDocumentControl(e) {
     });
 }
 
-function fnPopUpDeleteDocumentControl(e) {
-    if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "ECD_02_00", "UIC03", errorMsg.deleteauth_E5);
-        return;
-    }
-    var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    $("#txtDocumentId").val(rowData.DocumentId);
-    $("#txtDocumentId").prop('readonly', true);
-    $("#txtShortDesc").val(rowData.ShortDesc);
-    $("#txtDocumentType").val(rowData.DocumentType);
-    $("#txtSchemaName").val(rowData.SchemeId);
-    $("#txtDocumentDesc").val(rowData.DocumentDesc);
-    if (rowData.UsageStatus === "true") {
 
-        $("#chkUsageStatus").parent().addClass("is-checked");
-    } else {
-        $("#chkUsageStatus").parent().removeClass("is-checked");
-    }
-    if (rowData.ActiveStatus === "true") {
-
-        $("#chkActiveStatus").parent().addClass("is-checked");
-    } else {
-        $("#chkActiveStatus").parent().removeClass("is-checked");
-    }
-    Isadd = 0;
-    $('#PopupDocContrManagement').modal('show');
-    $('#PopupDocContrManagement').find('.modal-title').text("Active/De Active Document Control");
-    $("#btnsaveDocContrManagement").hide();
-    $("#btnDeactivateDocumentControl").show();
-    $("#chkActiveStatus").prop('disabled', true);
-    $("input,textarea").attr('readonly', true);
-    $("select").next().attr('disabled', true);
-    $("input[id*=chk]").attr('disabled', true);
-    $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
-        $("#btnsaveDocContrManagement").show();
-        $("input,textarea").attr('readonly', false);
-        $("select").next().attr('disabled', false);
-        $("input[id*=chk]").attr('disabled', false);
-        $("#btnsaveDocContrManagement").attr('disabled', false);
-    });
-}
 function fnClearFields() {
+    
+    $("#txtcomboId").val('');
     $("#txtDocumentId").val('');
     $("#txtDocumentType").val('');
     $("#txtShortDesc").val('');
@@ -487,7 +447,50 @@ function SetGridControlByAction() {
 }
 
 
+//function fnPopUpDeleteDocumentControl(e) {
+//    if (_userFormRole.IsDelete === false) {
+//        fnAlert("w", "ECD_02_00", "UIC03", errorMsg.deleteauth_E5);
+//        return;
+//    }
+//    var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
+//    var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
+//    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
+//    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
+//    $("#txtDocumentId").val(rowData.DocumentId);
+//    $("#txtDocumentId").prop('readonly', true);
+//    $("#txtShortDesc").val(rowData.ShortDesc);
+//    $("#txtDocumentType").val(rowData.DocumentType);
+//    $("#txtSchemaName").val(rowData.SchemeId);
+//    $("#txtDocumentDesc").val(rowData.DocumentDesc);
+//    if (rowData.UsageStatus === "true") {
 
+//        $("#chkUsageStatus").parent().addClass("is-checked");
+//    } else {
+//        $("#chkUsageStatus").parent().removeClass("is-checked");
+//    }
+//    if (rowData.ActiveStatus === "true") {
+
+//        $("#chkActiveStatus").parent().addClass("is-checked");
+//    } else {
+//        $("#chkActiveStatus").parent().removeClass("is-checked");
+//    }
+//    Isadd = 0;
+//    $('#PopupDocContrManagement').modal('show');
+//    $('#PopupDocContrManagement').find('.modal-title').text("Active/De Active Document Control");
+//    $("#btnsaveDocContrManagement").hide();
+//    $("#btnDeactivateDocumentControl").show();
+//    $("#chkActiveStatus").prop('disabled', true);
+//    $("input,textarea").attr('readonly', true);
+//    $("select").next().attr('disabled', true);
+//    $("input[id*=chk]").attr('disabled', true);
+//    $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
+//        $("#btnsaveDocContrManagement").show();
+//        $("input,textarea").attr('readonly', false);
+//        $("select").next().attr('disabled', false);
+//        $("input[id*=chk]").attr('disabled', false);
+//        $("#btnsaveDocContrManagement").attr('disabled', false);
+//    });
+//}
 
 
 
