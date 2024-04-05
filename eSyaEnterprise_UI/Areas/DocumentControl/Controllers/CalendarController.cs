@@ -9,19 +9,19 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
 {
-    public class DocumentControlController : Controller
+    public class CalendarController : Controller
     {
         private readonly IeSyaDocumentControlAPIServices _documentControlAPIServices;
-        private readonly ILogger<DocumentControlController> _logger;
+        private readonly ILogger<CalendarController> _logger;
 
 
-        public DocumentControlController(IeSyaDocumentControlAPIServices documentControlAPIServices, ILogger<DocumentControlController> logger)
+        public CalendarController(IeSyaDocumentControlAPIServices documentControlAPIServices, ILogger<CalendarController> logger)
         {
             _documentControlAPIServices = documentControlAPIServices;
             _logger = logger;
         }
-        #region Map Document Control to Calendar Business Link
 
+        #region Map Business to Calendar
         [Area("DocumentControl")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EDC_01_00()

@@ -10,6 +10,7 @@
     <Compile Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Compile Remove="Areas\ConfigInventory\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
+    <Compile Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <Compile Remove="Areas\ManageInventory\Views\Rules\**" />
     <Compile Remove="Areas\ManageServices\**" />
     <Compile Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
@@ -25,6 +26,7 @@
     <Content Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Content Remove="Areas\ConfigInventory\**" />
     <Content Remove="Areas\ConfigProduct\**" />
+    <Content Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <Content Remove="Areas\ManageInventory\Views\Rules\**" />
     <Content Remove="Areas\ManageServices\**" />
     <Content Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
@@ -40,6 +42,7 @@
     <EmbeddedResource Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
+    <EmbeddedResource Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <EmbeddedResource Remove="Areas\ManageInventory\Views\Rules\**" />
     <EmbeddedResource Remove="Areas\ManageServices\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
@@ -55,6 +58,7 @@
     <None Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <None Remove="Areas\ConfigInventory\**" />
     <None Remove="Areas\ConfigProduct\**" />
+    <None Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <None Remove="Areas\ManageInventory\Views\Rules\**" />
     <None Remove="Areas\ManageServices\**" />
     <None Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
@@ -87,6 +91,7 @@
     <Compile Remove="Areas\ConfigServicesController.cs" />
     <Compile Remove="Areas\ConfigServices\Models\DO_ClinicServiceLink.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
+    <Compile Remove="Areas\DocumentControl\Controllers\DocumentControlController.cs" />
     <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
@@ -183,6 +188,7 @@
     <Content Remove="wwwroot\js\ConfigBusiness\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
+    <Content Remove="wwwroot\js\DocumentControl\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
     <Content Remove="wwwroot\js\ManageInventory\UnitofMeasure.js" />
     <Content Remove="wwwroot\js\ProductSetup\BusinessCalendar.js" />

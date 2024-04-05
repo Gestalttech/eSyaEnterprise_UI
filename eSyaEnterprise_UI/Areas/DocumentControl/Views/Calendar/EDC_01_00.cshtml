@@ -1,15 +1,14 @@
-﻿ @using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "EDC_01_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+ @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section Scripts {
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/DocumentControl/BusinessCalendar.js"></script>
+    <script src="~/js/DocumentControl/MapBusinessToCalendar.js"></script>
 }
 
 @{
@@ -82,7 +81,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    
+
                     <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                         <label>@Localizer["CalendarKey"]</label>
                         <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="" data-size="8">
@@ -91,10 +90,10 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                         <label>@Localizer["Document"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboDocumentId" title="Choose Document" data-container="body"  data-size="8" asp-items="@ViewBag.Documents">
+                        <select class="selectpicker" data-live-search="true" id="cboDocumentId" title="Choose Document" data-container="body" data-size="8" asp-items="@ViewBag.Documents">
                         </select>
                     </div>
-                   
+
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>@Localizer["GenerateType"]</label>
@@ -125,5 +124,3 @@
         </div>
     </div>
 </div>
-
-

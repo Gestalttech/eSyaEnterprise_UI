@@ -21,7 +21,7 @@ function fnLoadGridBusinessCalendar() {
 
     $("#jqgBusinessCalendar").jqGrid({
 
-        url: getBaseURL() + '/DocumentControl/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/Calendar/GetBusinessCalendarBYBusinessKey?businessKey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -80,7 +80,7 @@ function SetGridControlByAction() {
 }
 function fnAddBusinessCalendar() {
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() == "0") {
-        fnAlert("w", "ECB_05_00", "UI0175", errorMsg.BusinessKey_E4);
+        fnAlert("w", "EDC_01_00", "UI0175", errorMsg.BusinessKey_E4);
         return;
     }
     else {
@@ -116,7 +116,7 @@ function fnEditBusinessCalendar(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "ECB_05_00", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EDC_01_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupBusinessCalendar').modal('show').css({ top: firstRow.top + 31 });
@@ -130,7 +130,7 @@ function fnEditBusinessCalendar(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "ECB_05_00", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EDC_01_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupBusinessCalendar').modal('show');
@@ -157,19 +157,19 @@ function fnClearFields() {
 function fnSaveBusinessCalendar() {
 
     if ($("#cboBusinessKey ").val() === "0" || $("#cboBusinessKey ").val() === "" || $("#cboBusinessKey ").val() === '' || $("#cboBusinessKey ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0175", errorMsg.BusinessKey_E4);
+        fnAlert("w", "EDC_01_00", "UI0175", errorMsg.BusinessKey_E4);
         return;
     }
     if ($("#cboCalendarKey ").val() === "0" || $("#cboCalendarKey ").val() === "" || $("#cboCalendarKey ").val() === '' || $("#cboCalendarKey ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0292", errorMsg.CalendarKey_E9);
+        fnAlert("w", "EDC_01_00", "UI0292", errorMsg.CalendarKey_E9);
         return;
     }
     if ($("#cboDocumentId ").val() === "0" || $("#cboDocumentId ").val() === "" || $("#cboDocumentId ").val() === '' || $("#cboDocumentId ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0017", errorMsg.DocumentId_E5);
+        fnAlert("w", "EDC_01_00", "UI0017", errorMsg.DocumentId_E5);
         return;
     }
     if ($("#cboGenerateType ").val() === "0" || $("#cboGenerateType ").val() === "" || $("#cboGenerateType ").val() === '' || $("#cboGenerateType ").val() == null) {
-        fnAlert("w", "ECB_05_00", "UI0293", errorMsg.GenerateType_E10);
+        fnAlert("w", "EDC_01_00", "UI0293", errorMsg.GenerateType_E10);
         return;
     }
     obj = {
@@ -183,7 +183,7 @@ function fnSaveBusinessCalendar() {
     $("#btnSaveBusinessCalendar").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/DocumentControl/InsertOrUpdateBusinessCalendar',
+        url: getBaseURL() + '/Calendar/InsertOrUpdateBusinessCalendar',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -211,7 +211,7 @@ function fnBindCalendarKeys() {
     var businesskey = $("#cboBusinessKey").val();
     $("#cboCalendarKey").empty();
     $.ajax({
-        url: getBaseURL() + '/DocumentControl/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
+        url: getBaseURL() + '/Calendar/GetBusinesslinkedCalendarkeys?businessKey=' + businesskey,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
