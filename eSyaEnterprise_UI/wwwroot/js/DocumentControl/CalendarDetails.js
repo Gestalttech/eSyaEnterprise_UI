@@ -24,7 +24,7 @@ $(document).ready(function () {
 function fnGridLoadCalendarDetails() {
     $("#jqgCalendarDetails").jqGrid('GridUnload');
     $("#jqgCalendarDetails").jqGrid({
-        url: getBaseURL() + '/BusinessCalendar/GetCalendarHeaders?businesskey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/Calendar/GetCalendarHeaders?businesskey=' + $("#cboBusinessKey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -101,7 +101,7 @@ function fnSaveCalendarDetails(edit) {
 
 
     $.ajax({
-        url: getBaseURL() + '/BusinessCalendar/InsertCalendarDetails',
+        url: getBaseURL() + '/Calendar/InsertCalendarDetails',
         type: 'POST',
         datatype: 'json',
         data: { obj },
