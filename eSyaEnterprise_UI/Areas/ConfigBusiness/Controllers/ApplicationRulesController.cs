@@ -24,7 +24,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         [Area("ConfigBusiness")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
 
-        public async Task<IActionResult> ECB_06_00()
+        public async Task<IActionResult> ECB_04_00()
         {
             try
             {
@@ -149,7 +149,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         #region Map Application Rules - Business
         [Area("ConfigBusiness")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECB_07_00()
+        public IActionResult ECB_05_00()
         {
             return View();
 

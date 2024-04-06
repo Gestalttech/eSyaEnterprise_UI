@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
-    ViewData["Title"] = "ECB_06_00";
+    ViewData["Title"] = "ECB_04_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,8 +31,8 @@
         subGrid: '@Localizer["subGrid"]',
     };
     var errorMsg = {
-       RuleDescription_E1: '@Localizer["UI0294"]',
-       RuleId_E2: '@Localizer["UI0295"]',
+        RuleDescription_E1: '@Localizer["UI0294"]',
+        RuleId_E2: '@Localizer["UI0295"]',
     }
 </script>
 <div class="row">
@@ -252,12 +253,12 @@
                                 postdata.BusinessKey = $("#cboBusinesskey").val();
                                 var message = fnValidateRule(postdata);
                                 if (message != '') {
-                                    return [false, ]
+                                    return [false,]
                                     fnAlert("e", "", "", message);
                                 }
                                 else {
                                     return [true, ''];
-                                   
+
                                 }
                             },
                             afterSubmit: function (response, postdata) {
@@ -336,4 +337,6 @@
     }
 
 </script>
+
+
 

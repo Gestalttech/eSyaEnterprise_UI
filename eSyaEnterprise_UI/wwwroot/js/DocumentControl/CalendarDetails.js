@@ -29,11 +29,11 @@ function fnGridLoadCalendarDetails() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CalenderType,  localization.CalendarKey,"",localization.StartMonth,  localization.YearEndStatus, localization.Alreadylinked, localization.Active, localization.Actions],
+        colNames: [localization.CalenderType, localization.CalendarKey, "", localization.StartMonth, localization.YearEndStatus, localization.Alreadylinked, localization.Active, localization.Actions],
         colModel: [
             { name: "CalenderType", width: 30, editable: true, align: 'left', hidden: false },
             { name: "CalenderKey", width: 30, editable: true, align: 'left', hidden: false },
-            { name: "StartMonth", width: 30, editable: true, align: 'left', hidden: true }, 
+            { name: "StartMonth", width: 30, editable: true, align: 'left', hidden: true },
             { name: "StartMonth", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "1: January;2: February;3: March;4: April;5: May;6: June;7: July;8: Auguest;9: September;10: October;11: November;12: December" } },
 
             { name: "YearEndStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },

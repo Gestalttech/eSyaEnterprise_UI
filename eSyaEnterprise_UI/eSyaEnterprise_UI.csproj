@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <Compile Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Compile Remove="Areas\ConfigInventory\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
@@ -23,6 +24,7 @@
     <Compile Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <Compile Remove="wwwroot\js\ConfigInventory\**" />
     <Compile Remove="wwwroot\js\ManageServices\**" />
+    <Content Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <Content Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Content Remove="Areas\ConfigInventory\**" />
     <Content Remove="Areas\ConfigProduct\**" />
@@ -39,6 +41,7 @@
     <Content Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <Content Remove="wwwroot\js\ConfigInventory\**" />
     <Content Remove="wwwroot\js\ManageServices\**" />
+    <EmbeddedResource Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <EmbeddedResource Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
@@ -55,6 +58,7 @@
     <EmbeddedResource Remove="Areas\TokenSystem\Views\TokenManagement\**" />
     <EmbeddedResource Remove="wwwroot\js\ConfigInventory\**" />
     <EmbeddedResource Remove="wwwroot\js\ManageServices\**" />
+    <None Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <None Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <None Remove="Areas\ConfigInventory\**" />
     <None Remove="Areas\ConfigProduct\**" />
@@ -77,7 +81,9 @@
     <Compile Remove="Areas\Admin\Models\DO_InventoryRules.cs" />
     <Compile Remove="Areas\Admin\Models\DO_UnitofMeasure.cs" />
     <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
+    <Compile Remove="Areas\ConfigBusiness\Controllers\BusinessCalendarController.cs" />
     <Compile Remove="Areas\ConfigBusiness\Models\DO_BusinessCalendar.cs" />
+    <Compile Remove="Areas\ConfigBusiness\Models\DO_CalendarHeader.cs" />
     <Compile Remove="Areas\ConfigBusiness\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessEntity.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessLocation.cs" />
@@ -135,7 +141,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\ConfigBusiness\Views\BusinessCalendar\ECB_05_00.cshtml" />
+    <Content Remove="Areas\ConfigBusiness\Views\ApplicationRules\ECB_06_00.cshtml" />
+    <Content Remove="Areas\ConfigBusiness\Views\ApplicationRules\ECB_07_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_08_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_09_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_21_00.cshtml" />
@@ -186,6 +193,7 @@
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
     <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
     <Content Remove="wwwroot\js\ConfigBusiness\BusinessCalendar.js" />
+    <Content Remove="wwwroot\js\ConfigBusiness\CalendarDetails.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
     <Content Remove="wwwroot\js\DocumentControl\BusinessCalendar.js" />

@@ -1,126 +1,69 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+
 @inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EDC_01_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
-@section Scripts {
-    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/DocumentControl/MapBusinessToCalendar.js"></script>
-}
 
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
+@section scripts {
+    <script src="~/js/DocumentControl/CalendarDetails.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
-
     var localization = {
-        BusinessKey: '@Localizer["BusinessKey"]',
-        DocumentId: '@Localizer["DocumentId"]',
-        CalenderKey: '@Localizer["CalenderKey"]',
-        EffectiveFrom: '@Localizer["EffectiveFrom"]',
-        CalendarType: '@Localizer["CalendarType"]',
-        EffectiveTill: '@Localizer["EffectiveTill"]',
-        ActiveStatus: '@Localizer["ActiveStatus"]',
-        DocumentDesc: '@Localizer["DocumentDesc"]',
-        CalendarTypeDesc: '@Localizer["CalendarTypeDesc"]',
-        AddBusinessCalendar: '@Localizer["AddBusinessCalendar"]',
-        EditBusinessCalendar: '@Localizer["EditBusinessCalendar"]',
-        ViewBusinessCalendar: '@Localizer["ViewBusinessCalendar"]',
-        BusinessCalendar: '@Localizer["BusinessCalendar"]',
+        Year: '@Localizer["Year"]',
+        Year: '@Localizer["Year"]',
+        FromDate: '@Localizer["FromDate"]',
+        TillDate: '@Localizer["TillDate"]',
+        Active: '@Localizer["Active"]',
+        AddCalendarHeader: '@Localizer["AddCalendarHeader"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
-        View: '@Localizer["View"]',
-        Edit: '@Localizer["Edit"]',
+        CalenderType: '@Localizer["CalenderType"]',
+        YearEndStatus: '@Localizer["YearEndStatus"]',
         Active: '@Localizer["Active"]',
+        Edit: '@Localizer["Edit"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        CalendarKey: '@Localizer["CalendarKey"]',
+        Alreadylinked: '@Localizer["Alreadylinked"]',
         Actions: '@Localizer["Actions"]',
-        Update: '@Localizer["Update"]',
-        ChooseGenerateType: '@Localizer["ChooseGenerateType"]',
-        Year: '@Localizer["Year"]',
-        Month: '@Localizer["Month"]',
-        Calendar: '@Localizer["Calendar"]',
-        DocumentDesc: '@Localizer["DocumentDesc"]',
-        GeneNoYearOrMonth: '@Localizer["GeneNoYearOrMonth"]',
-        Select: '@Localizer["Select"]',
-        ChooseCalendarKey: '@Localizer["ChooseCalendarKey"]',
-    }
+        GenerateCalendar: '@Localizer["GenerateCalendar"]',
+        CalendarDetails: '@Localizer["CalendarDetails"]',
+        StartMonth: '@Localizer["StartMonth"]',
+        LinkLocationCalendar: '@Localizer["LinkLocationCalendar"]',
+    };
+
     var errorMsg = {
-        editauth_E2: '@Localizer["UIC02"]',
-        vieweauth_E3: '@Localizer["UIC03"]',
-        BusinessKey_E4: '@Localizer["UI0175"]',
-        DocumentId_E5: '@Localizer["UI0017"]',
-        EffectiveFrom_E6: '@Localizer["UI0235"]',
-        CalendarType_E7: '@Localizer["UI0214"]',
-        BusinessLocation_E8: '@Localizer["UI0064"]',
-        CalendarKey_E9: '@Localizer["UI0292"]',
-        GenerateType_E10: '@Localizer["UI0293"]',
+        Loc_E1: '@Localizer["UI0064"]'
     }
 </script>
 
+
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-6 form-group">
-        <label>@Localizer["BusinessKey"]</label>
-        <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="ChooseBusinessKey" data-size="8" asp-items="@ViewBag.BusinessKeys" onchange="fnBusinessKeyOnchange()"></select>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="">@Localizer["BusinessLocation"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" data-container="body" title="" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnloadCalendarDetails()"></select>
+
+        </div>
     </div>
 
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <table id="jqgBusinessCalendar"></table>
-        <div id="jqpBusinessCalendar"></div>
-    </div>
 </div>
 
-<div class="modal fade in" id="PopupBusinessCalendar" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
-        <div class="modal-content ">
-            <div class="modal-header popupHeader">
-                <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title">@Localizer["EditBusinessCalendar"]</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                        <label>@Localizer["CalendarKey"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="" data-size="8">
-                            <option value="0">@Localizer["ChooseCalendarKey"]</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                        <label>@Localizer["Document"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboDocumentId" title="Choose Document" data-container="body" data-size="8" asp-items="@ViewBag.Documents">
-                        </select>
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <label>@Localizer["GenerateType"]</label>
-                            <select class="selectpicker" id="cboGenerateType" data-container="body" data-size="5">
-                                <option value="0">@Localizer["ChooseGenerateType"]</option>
-                                <option value="Y">@Localizer["Year"]</option>
-                                <option value="M">@Localizer["Month"]</option>
-                                <option value="C">@Localizer["Calendar"]</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
-                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button class="mdl-button  primary-button" id="btnSaveBusinessCalendar" onclick="fnSaveBusinessCalendar()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelBusinessCalendar"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
-                    </div>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="jqgCalendarDetailsContainer">
+            <table id="jqgCalendarDetails"></table>
+            <div id="jqpCalendarDetails"></div>
         </div>
     </div>
 </div>

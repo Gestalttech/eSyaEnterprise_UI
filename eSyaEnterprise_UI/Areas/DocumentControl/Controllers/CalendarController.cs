@@ -21,130 +21,84 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
             _logger = logger;
         }
 
-        #region Map Business to Calendar
+        #region Calendar Details
+
+
         [Area("DocumentControl")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EDC_01_00()
         {
-            try
+            var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
+            if (serviceResponse.Status)
             {
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
-                var documentResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControl>>("BusinessCalendar/GetActiveDocuments");
-
-                if (serviceResponse.Status && documentResponse.Status)
+                if (serviceResponse.Data != null)
                 {
-                    ViewBag.BusinessKeys = serviceResponse.Data.Select(b => new SelectListItem
+                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
                     {
                         Value = b.BusinessKey.ToString(),
                         Text = b.LocationDescription,
                     }).ToList();
-                    ViewBag.Documents = documentResponse.Data.Select(b => new SelectListItem
-                    {
-                        Value = b.DocumentId.ToString(),
-                        Text = b.DocumentDesc,
-                    }).ToList();
-                    return View();
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
-                    return Json(new { Status = false, StatusCode = "500" });
                 }
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "UD:GetBusinessKey");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1511_00:GetBusinessKey");
             }
+            return View();
         }
-
         /// <summary>
-        ///Get Business Calendar for Grid
+        /// Getting Calendar Header for Grid
         /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> GetBusinesslinkedCalendarkeys(int businessKey)
-        {
 
+        [HttpPost]
+        public async Task<JsonResult> GetCalendarHeaders(int businesskey)
+        {
             try
             {
-
-                var parameter = "?businessKey=" + businessKey;
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessCalendar>>("BusinessCalendar/GetBusinesslinkedCalendarkeys" + parameter);
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessCalendarLink>>("CalendarControl/GetCalendarHeaders?businesskey=" + businesskey);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
+
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinesslinkedCalendarkeys:For businessKey {0}", businessKey);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCalendarHeaders");
                     return Json(new { Status = false, StatusCode = "500" });
                 }
-
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetBusinesslinkedCalendarkeys:For businessKey {0} ", businessKey);
+                _logger.LogError(ex, "UD:GetCalendarHeaders");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
-
         }
+
         /// <summary>
-        ///Get Business Calendar for Grid
+        /// Insert Calendar Header 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetBusinessCalendarBYBusinessKey(int businessKey)
+        public async Task<JsonResult> InsertCalendarDetails(DO_BusinessCalendarLink obj)
         {
 
             try
             {
-
-                var parameter = "?businessKey=" + businessKey;
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessCalendar>>("BusinessCalendar/GetBusinessCalendarBYBusinessKey" + parameter);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessCalendarBYBusinessKey:For businessKey {0}", businessKey);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetBusinessCalendarBYBusinessKey:For businessKey {0} ", businessKey);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-
-        }
-        /// <summary>
-        /// Insert or Update Business Calendar
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateBusinessCalendar(DO_BusinessCalendar obj)
-        {
-
-            try
-            {
-
-                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("BusinessCalendar/InsertOrUpdateBusinessCalendar", obj);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CalendarControl/InsertBusinessKeyIntoCalendar", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:InsertOrUpdateBusinessCalendar:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+                _logger.LogError(ex, "UD:InsertCalendarDetails:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }
-        #endregion
+        #endregion Calendar detail
     }
 }

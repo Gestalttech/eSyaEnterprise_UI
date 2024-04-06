@@ -1,4 +1,4 @@
-﻿namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Models
+﻿namespace eSyaEnterprise_UI.Areas.DocumentControl.Models
 {
     public class DO_BusinessCalendarLink
     {
@@ -13,6 +13,4 @@
         public int StartMonth { get; set; }
         public string? CalenderType { get; set; }
     }
-
-   
 }
