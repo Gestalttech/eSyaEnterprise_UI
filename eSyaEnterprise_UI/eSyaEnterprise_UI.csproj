@@ -98,6 +98,7 @@
     <Compile Remove="Areas\ConfigServices\Models\DO_ClinicServiceLink.cs" />
     <Compile Remove="Areas\ConfigureSMS\Models\DO_SMSTEvent.cs" />
     <Compile Remove="Areas\DocumentControl\Controllers\DocumentControlController.cs" />
+    <Compile Remove="Areas\DocumentControl\Models\DO_BusinessCalendar.cs" />
     <Compile Remove="Areas\EndUser\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\Localize\Controllers\UserCreationController.cs" />
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />

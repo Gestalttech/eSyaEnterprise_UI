@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EDC_02_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -54,11 +57,11 @@
 
 <div class="row">
     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 pr-lg-0 pr-md-0">
+      
         <div class="form-group">
-            <label>@Localizer["CalendarKey"]</label>
-            <select class="selectpicker" title="ChooseCalendarKey" id="cboCalendarKey" onchange="fnCalendarKey()">
-                <option value="fy" selected>FY20244</option>
-            </select>
+            <label class="">@Localizer["CalendarKey"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="Select" data-size="8" asp-items="@ViewBag.CalenderKeys" onchange="fnCalendarKey_onchange()"></select>
+
         </div>
         <div id="jstBusinessDocumentLink">
         </div>

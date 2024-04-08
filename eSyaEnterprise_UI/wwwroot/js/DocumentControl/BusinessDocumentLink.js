@@ -1,6 +1,7 @@
 ﻿var ServiceID = "0";
 var prevSelectedID = '';
 var Editable = false;
+var businesskey = '0';
 $(function () {
     $.contextMenu({
         selector: "#btnBusinessDocument",
@@ -18,24 +19,15 @@ $(function () {
 });
 
 
-function fnCalendarKey() {
+function fnCalendarKey_onchange() {
     var _calendarKey = $("#cboCalendarKey").val();
     fnLoadDocumentsTree(_calendarKey);
 }
 function fnLoadDocumentsTree(_calendarKey) {
-    //$('#jstBusinessDocumentLink').jstree({
-    //    'core': {
-    //        'data': [
-                 
-    //            { "id": "ajson2", "parent": "#", "text": "Business Location" },
-    //            { "id": "ajson3", "parent": "ajson2", "text": "Bengaluru" },
-    //            { "id": "ajson4", "parent": "ajson2", "text": "Chennai" },
-    //        ]
-    //    }
-    //});
+    
          
     $.ajax({
-        //url: getBaseURL() + '/DocumentControl/GetActiveDocumentControls?CalendarKey='+_calendarKey,
+        url: getBaseURL() + '/Document/GetBusinessLocationbyCalendarkeys?calendarkey='+_calendarKey,
         type: 'Post',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -71,8 +63,8 @@ function fnLoadDocumentsTree(_calendarKey) {
 
                     $("#lblSelectedDocumentName").text(data.node.text);
 
-                    documentID = data.node.id;
-                    fnLoadGridBusinesssDocument(documentID);
+                    businesskey = data.node.id;
+                    fnLoadGridBusinesssDocument(businesskey);
                     $("#dvBusinessDocument").css('display', 'block');
                 }
                 else {
@@ -88,20 +80,21 @@ function fnLoadDocumentsTree(_calendarKey) {
     });
 }
 
-function fnLoadGridBusinesssDocument(_BusinessKey) {
-    var _dBusinessDocument = [{ FormId: '1', FormName: 'Map Forms', DocumentId: '1', SchemaId: 'GT_PTBtot', ComboId: false, UsageStatus: false, ActiveStatus:'',edit:'' }]
+function fnLoadGridBusinesssDocument(businesskey) {
     $("#jqgBusinesssDocumentLink").GridUnload();
     $("#jqgBusinesssDocumentLink").jqGrid({
-       // url: getBaseURL() + '/Document/GetDocumentFormlink?BusinessKey=' + _BusinessKey,
-        datatype: 'local',
-        data: _dBusinessDocument,
+        url: getBaseURL() + '/Document/GetDocumentFormlinkwithLocation?calendarkey=' + $("#cboCalendarKey").val() + '&businesskey=' + businesskey,
+        datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.FormID, localization.FormName, localization.DocID, localization.SchemaId, localization.ComboId, localization.UsageStatus, localization.Active, localization.Actions],
+        colNames: [localization.FormID, "", "", localization.FormName,"Document Name" ,localization.DocID, localization.SchemaId, localization.ComboId, localization.UsageStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "FormId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "BusinessKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "CalendarKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "FormName", width: 150, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "DocumentName", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "DocumentId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "SchemaId", width: 60, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ComboId", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
@@ -150,7 +143,7 @@ function fnEditBusinessDocument(e,actiontype) {
     var rowData = $('#jqgBusinesssDocumentLink').jqGrid('getRowData', rowid);
     $('#PopupBusinessDocument').find('.modal-title').text(localization.UpdateBusinessDocument);
     $('#PopupBusinessDocument').modal('show');
-    fnLoadPopupGridBusinessDocumentLink();
+    fnLoadPopupGridBusinessDocumentLink(rowData.FormId);
 }
 
 
@@ -160,17 +153,16 @@ function fnSaveBusinesssDocumentLink() {
 
 
 
-function fnLoadPopupGridBusinessDocumentLink() {
-    var _griddata = [{ DocumentId: '11', GeneLogic: 'C', CalendarType: 'FY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPTKT', ComboId: 'ididid', DocumentDesc: 'document', ShortDesc: 'Sdesc', DocumentType: 'ddd', UsageStatus: true, ActiveStatus: false },
-    { DocumentId: '12', GeneLogic: 'Y', CalendarType: 'CY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPDKT', ComboId: 'idiwid', DocumentDesc: 'document1', ShortDesc: 'Sdesc1', DocumentType: 'dddds', UsageStatus: true, ActiveStatus: false }];
+function fnLoadPopupGridBusinessDocumentLink(formId)
+{
+
     $("#jqgDocContManagement").jqGrid('GridUnload');
 
     $("#jqgDocContManagement").jqGrid({
         
-       // url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
-        mtype: 'POST',
-        datatype: 'local',
-        data: _griddata,
+        url: getBaseURL() + '/Document/GetDocumentControlMaster?formId=' + formId,
+        mtype: 'GET',
+        datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active],
