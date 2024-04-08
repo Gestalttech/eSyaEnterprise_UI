@@ -453,8 +453,21 @@ tr.FormData{
     padding-right: 17px !important;
 }
 .ui-state-hover .svg-inline--fa {
+ /*   color: var(--button-forecolor);*/
+    color: var(--primary-color);
+   }
+
+tr.jqgrow td button.btn {
+/*background:linear-gradient(to top, var(--primary-color),#fff);*/
+background-color:var(--primary-color);
+   
+}
+tr.jqgrow td button.btn-outline .svg-inline--fa {
     color: var(--button-forecolor);
-    
+    font-size:12px;
+}
+.ui-state-hover button{
+    border:1px solid var(--primary-color);
 }
 @media screen and (min-width:551px) and (max-width:991px) {
     .ui-jqgrid .ui-jqgrid-htable th div{
