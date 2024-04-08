@@ -15,23 +15,44 @@ $(function () {
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
-    fnLoadDocumentsTree();
-    
 });
 
-function fnLoadDocumentsTree() {
-    $('#jstBusinessDocumentLink').jstree({
-        'core': {
-            'data': [
+
+function fnCalendarKey() {
+    var _calendarKey = $("#cboCalendarKey").val();
+    fnLoadDocumentsTree(_calendarKey);
+}
+function fnLoadDocumentsTree(_calendarKey) {
+    //$('#jstBusinessDocumentLink').jstree({
+    //    'core': {
+    //        'data': [
                  
-                { "id": "ajson2", "parent": "#", "text": "Business Location" },
-                { "id": "ajson3", "parent": "ajson2", "text": "Bengaluru" },
-                { "id": "ajson4", "parent": "ajson2", "text": "Chennai" },
-            ]
+    //            { "id": "ajson2", "parent": "#", "text": "Business Location" },
+    //            { "id": "ajson3", "parent": "ajson2", "text": "Bengaluru" },
+    //            { "id": "ajson4", "parent": "ajson2", "text": "Chennai" },
+    //        ]
+    //    }
+    //});
+         
+    $.ajax({
+        //url: getBaseURL() + '/DocumentControl/GetActiveDocumentControls?CalendarKey='+_calendarKey,
+        type: 'Post',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+
+            $("#jstBusinessDocumentLink").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstBusinessDocumentLink");
+            $("#dvBusinessDocument").css('display', 'block');
+            $(window).on('resize', function () {
+                fnTreeSize("#jstBusinessDocumentLink");
+            })
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#dvBusinessDocument").css('display', 'none');
         }
     });
-         
-    
 
     $("#jstBusinessDocumentLink").on('loaded.jstree', function () {
         $("#jstBusinessDocumentLink").jstree()._open_to(prevSelectedID);
@@ -116,6 +137,9 @@ function fnLoadGridBusinesssDocument(_BusinessKey) {
         loadComplete: function (data) {
             fnJqgridSmallScreen("jqpBusinesssDocumentLink");
         },
+        onSelectRow: function (rowid, status, e) {
+
+        },
     })
     fnAddGridSerialNoHeading();
 }
@@ -139,14 +163,14 @@ function fnSaveBusinesssDocumentLink() {
 function fnLoadPopupGridBusinessDocumentLink() {
     var _griddata = [{ DocumentId: '11', GeneLogic: 'C', CalendarType: 'FY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPTKT', ComboId: 'ididid', DocumentDesc: 'document', ShortDesc: 'Sdesc', DocumentType: 'ddd', UsageStatus: true, ActiveStatus: false },
     { DocumentId: '12', GeneLogic: 'Y', CalendarType: 'CY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPDKT', ComboId: 'idiwid', DocumentDesc: 'document1', ShortDesc: 'Sdesc1', DocumentType: 'dddds', UsageStatus: true, ActiveStatus: false }];
-
     $("#jqgDocContManagement").jqGrid('GridUnload');
 
     $("#jqgDocContManagement").jqGrid({
         
        // url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
         mtype: 'POST',
-        datatype: 'json',
+        datatype: 'local',
+        data: _griddata,
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active],
