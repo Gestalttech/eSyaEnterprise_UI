@@ -15,33 +15,27 @@ $(function () {
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
-    //fnLoadDocumentsTree();
-    fnLoadGridBusinesssDocument(11);
+    fnLoadDocumentsTree();
+    
 });
 
 function fnLoadDocumentsTree() {
-
-    $.ajax({
-        //url: getBaseURL() + '/MapForms/GetActiveDocumentControls',
-        type: 'Post',
-        datatype: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (result) {
-
-            $("#jstBusinessDocumentLink").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#jstBusinessDocumentLink");
-            $(window).on('resize', function () {
-                fnTreeSize("#jstBusinessDocumentLink");
-            })
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
+    $('#jstBusinessDocumentLink').jstree({
+        'core': {
+            'data': [
+                 
+                { "id": "ajson2", "parent": "#", "text": "Business Location" },
+                { "id": "ajson3", "parent": "ajson2", "text": "Bengaluru" },
+                { "id": "ajson4", "parent": "ajson2", "text": "Chennai" },
+            ]
         }
     });
+         
+    
 
     $("#jstBusinessDocumentLink").on('loaded.jstree', function () {
-        //$("#jstBusinessDocumentLink").jstree()._open_to(prevSelectedID);
-        //$('#jstBusinessDocumentLink').jstree().select_node(prevSelectedID);
+        $("#jstBusinessDocumentLink").jstree()._open_to(prevSelectedID);
+        $('#jstBusinessDocumentLink').jstree().select_node(prevSelectedID);
     });
 
     $('#jstBusinessDocumentLink').on("changed.jstree", function (e, data) {
@@ -57,7 +51,7 @@ function fnLoadDocumentsTree() {
                     $("#lblSelectedDocumentName").text(data.node.text);
 
                     documentID = data.node.id;
-                    fnLoadDocumentGrid(documentID);
+                    fnLoadGridBusinesssDocument(documentID);
                     $("#dvBusinessDocument").css('display', 'block');
                 }
                 else {
@@ -83,7 +77,7 @@ function fnLoadGridBusinesssDocument(_BusinessKey) {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.FormID, localization.FormName, localization.SchemaId, localization.ComboId, localization.DocID, localization.UsageStatus, localization.Active, localization.Actions],
+        colNames: [localization.FormID, localization.FormName, localization.DocID, localization.SchemaId, localization.ComboId, localization.UsageStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "FormId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "FormName", width: 150, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
@@ -93,7 +87,7 @@ function fnLoadGridBusinesssDocument(_BusinessKey) {
             { name: "UsageStatus", width: 40, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 50, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             {
-                name: 'edit', search: false, align: 'left', width: 30, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 40, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
 
                     return '<button class="mr-1 btn btn-outline" id="btnBusinessDocument"><i class="fa fa-ellipsis-v"></i></button>'
@@ -120,12 +114,8 @@ function fnLoadGridBusinesssDocument(_BusinessKey) {
         editurl: 'url',
         cellsubmit: 'clientArray',
         loadComplete: function (data) {
-            //SetGridControlByAction(); 
             fnJqgridSmallScreen("jqpBusinesssDocumentLink");
-
         },
-
-
     })
     fnAddGridSerialNoHeading();
 }
@@ -147,33 +137,33 @@ function fnSaveBusinesssDocumentLink() {
 
 
 function fnLoadPopupGridBusinessDocumentLink() {
-    var _griddata = [{ DocumentId: '11', GeneLogic: 'C', CalendarType: 'FY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPTKT', ComboId: 'ididid', DocumentDesc: 'document', ShortDesc: 'Sdesc', DocumentType: 'ddd', UsageStatus: true, ActiveStatus: true },
-    { DocumentId: '11', GeneLogic: 'Y', CalendarType: 'FY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPTKT', ComboId: 'ididid', DocumentDesc: 'document', ShortDesc: 'Sdesc', DocumentType: 'ddd', UsageStatus: true, ActiveStatus: true }];
+    var _griddata = [{ DocumentId: '11', GeneLogic: 'C', CalendarType: 'FY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPTKT', ComboId: 'ididid', DocumentDesc: 'document', ShortDesc: 'Sdesc', DocumentType: 'ddd', UsageStatus: true, ActiveStatus: false },
+    { DocumentId: '12', GeneLogic: 'Y', CalendarType: 'CY', IsTransationMode: true, IsStoreCode: true, IsPaymentMode: true, SchemaId: 'GT_GTPDKT', ComboId: 'idiwid', DocumentDesc: 'document1', ShortDesc: 'Sdesc1', DocumentType: 'dddds', UsageStatus: true, ActiveStatus: false }];
+
     $("#jqgDocContManagement").jqGrid('GridUnload');
 
     $("#jqgDocContManagement").jqGrid({
         
        // url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
         mtype: 'POST',
-        datatype: 'local',
-        data: _griddata,
+        datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active],
         colModel: [
-            { name: "DocumentId", width: 120, editable: true, align: 'left', hidden: false },
-            { name: "GeneLogic", width: 120, editable: true, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "C:Continuous;Y:Yearwise;M:Monthwise;D:Datewise" } },
-            { name: "CalendarType", width:120, editable: true, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "NA:NotApplicable;FY:FinancialYear;CY:CalendarYear" } },
-            { name: "IsTransationMode", width: 100, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "IsStoreCode", width: 100, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "IsPaymentMode", width: 100, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "SchemaId", width: 120, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "ComboId", width: 120, editable: true, align: 'left', resizable: false, hidden: true },
-            { name: "DocumentDesc", width: 180, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "ShortDesc", width: 120, editable: true, align: 'left', resizable: false, hidden: true },
-            { name: "DocumentType", width: 85, editable: true, align: 'left', resizable: false, hidden: true },
-            { name: "UsageStatus", width: 85, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "ActiveStatus", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "DocumentId",index: "DocumentId", width: 90, editable: false, align: 'left', hidden: false },
+            { name: "GeneLogic", index: "GeneLogic", width: 90, editable: false, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "C:Continuous;Y:Yearwise;M:Monthwise;D:Datewise" } },
+            { name: "CalendarType", index: "CalendarType", width: 90, editable: false, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "NA:NotApplicable;FY:FinancialYear;CY:CalendarYear" } },
+            { name: "IsTransationMode", index: "IsTransationMode", width: 90, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsStoreCode", index: "IsStoreCode", width: 90, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsPaymentMode", index: "IsPaymentMode", width: 90, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "SchemaId", index: "SchemaId", width: 90, editable: false, align: 'left', resizable: false, hidden: false },
+            { name: "ComboId", index: "ComboId", width: 90, editable: false, align: 'left', resizable: false, hidden: true },
+            { name: "DocumentDesc", index: "DocumentDesc", width: 180, editable: false, align: 'left', resizable: false, hidden: false },
+            { name: "ShortDesc", index: "ShortDesc", width: 90, editable: false, align: 'left', resizable: false, hidden: true },
+            { name: "DocumentType", index: "DocumentType", width: 85, editable: false, align: 'left', resizable: false, hidden: true },
+            { name: "UsageStatus", index: "UsageStatus", width: 85, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus",index: "ActiveStatus", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
              
         ],
         rowNum: 10,
@@ -193,18 +183,17 @@ function fnLoadPopupGridBusinessDocumentLink() {
         scrollOffset: 0,
         caption: localization.DocumentControlManagement,
         loadComplete: function () {
-            
             fnJqgridSmallScreen("jqgDocContManagement");
-            //$('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-btable,.ui-jqgrid-htable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', $('.modal-body').width());
         },
         onSelectRow: function (rowid, status, e) {
-            console.log(e);
-            var ch = $(this).find('#' + rowid + ' input[type=checkbox]').prop('checked');
-            if (ch) {
-                $(this).find('#' + rowid + ' input[type=checkbox]').prop('checked', false);
-            } else {
-                $(this).find('#' + rowid + 'input[type=checkbox]').prop('checked', true);
-            }
+             var ch = $(this).find('#' + rowid + 'td:last-child input[type=checkbox]').prop('checked');
+                if (ch) {
+                    $(this).find('#' + rowid + 'td:last-child input[type=checkbox]').prop('checked', false);
+                } else {
+                    $(this).find('#' + rowid + 'td:last-child input[type=checkbox]').prop('checked', true);
+                }  
+           
+            if (rowid) { $('#jqgDocContManagement').jqGrid('editRow', rowid, true); }
         },
 
     }).jqGrid('navGrid', '#jqpDocContManagement', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDocContManagement', {
@@ -215,9 +204,9 @@ function fnLoadPopupGridBusinessDocumentLink() {
 
  
 function fnRefreshDocumentControlGrid() {
-
+    $("#jqgDocContManagement").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
 function fnClearFields() {
-
+    $("#cboCalendarKey").val('0').selectpicker('refresh');
 }
