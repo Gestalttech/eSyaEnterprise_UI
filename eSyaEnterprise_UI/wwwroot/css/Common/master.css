@@ -2,9 +2,10 @@
     --color-white: #ffffff;
     --color-black: #000000;
     --color-primary: #555555;
-    --color-efefef:#efefef;
+    --color-efefef: #efefef;
     --border-lightgrey: 1px solid rgba(0,0,0,0.1);
     --color-secondary: #797172;
+    --menu-hover: #ffffd5;
 }
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
@@ -66,7 +67,7 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 
 #btn-menuBar {
     border: none !important;
-    height: 63px;
+    height: 50px;
     width: 51px;
     padding: 8px 12px;
 }
@@ -79,7 +80,7 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
  
 .btnMenuBar {
     border: none !important;
-    height: 63px;
+    height: 50px;
     width: 51px;
     padding: 8px 12px;
     display: flex;
@@ -88,11 +89,7 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
     flex-flow: column;
 }
 .btnEMRTriage{padding:0.25rem 2.5rem !important;}
-.jquery-accordion-menu-header > .MasterPage-Logo {
-    position: absolute;
-    top: 16px;
-    left: 51px;
-}
+
 .toast-body .fa-circle-check {color: #038f01;}
 .toast-body .fa-circle-exclamation {color: #f39304;}
 .toast-body .fa-circle-xmark {color: #bb3502;}
@@ -265,10 +262,15 @@ footer {
 .body-push{overflow-x:hidden;position:relative;}
 .body-push.active{left:249px;}
 .navbar-brand-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
     background: var(--color-white) !important;
     width: 249px;
-    height: 63px;
-    clip-path: polygon(0.0% 0%, 45.78% -0.55%, 58.94% 101.58%, -0.4% 100%);
+    height:50px;
+    clip-path: polygon(0% 0%, 75.78% -0.55%, 89.94% 108.58%, -0.4% 100%);
 }
 .jquery-accordion-menu .submenu-indicator {display: none;}
 #jqgh_jqgApplicationCodes_DefaultStatus, #jqgh_jqgCountryCode_CountryFlag, #jqgh_jqgBusinessEntity_IsMultiSegmentApplicable,
@@ -687,9 +689,13 @@ ul#menu-v, #menu-v ul {
 }
 .f-right{float:right !important;}
 #navbarSupportedContent { /*background:var(--color-secondary);*/ /*#1094f8;*/
-    padding: 11px;
+    padding:0px 11px;
 }
-.navbar-brand {padding: 0px !important;}
+.navbar-brand {
+    padding: 0px !important;
+    display:flex;
+    align-items: end;
+}
 .padbot10 {padding-bottom: 10px;}
 .padbot20 {padding-bottom: 20px;}
 .padbot15{padding-bottom:15px;}
@@ -1037,7 +1043,7 @@ button.close:hover {
     width: 315px;
     padding: 0px !important;
     border-radius: 4px;
-    top: 53px;
+    /*top: 53px;*/
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     transition: max-height .2s ease-in;
      
@@ -1308,15 +1314,11 @@ label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
     color: var(--color-secondary);
     /* #2e88c9; #3f51b5;*/
 }
-.navbar-brand-container span {
-    font-size: 12px;
-    color: var(--color-secondary); /*#e2b559;*/
-    display: block;
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-align: right;
-    position: relative;
-    top: 3px;
+.navbar-brand-container span, .txtversionNumber {
+    font-size: 11px;
+    color: var(--color-black); /*#e2b559;*/
+    display: flex;
+    padding: 0px 5px 0px;
 }
 .container-fluid{padding-left:15px !important;padding-right:15px !important;}
 
@@ -2305,38 +2307,36 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     }
 
     .renderBody.blur {
-        opacity: 0.05;
+        opacity: 0.65;
         transition: 0.5s ease-in-out;
         transition-timing-function:cubic-bezier(.17,.67,.83,.67);
         pointer-events:none;
     }
 
 nav.blur {
-    opacity: 0.05;
+    opacity: 0.65;
     transition: 0.5s ease-in-out;
     transition-timing-function: cubic-bezier(.17,.67,.83,.67);
     pointer-events: none;
 }
 
 header.blur, .banner.blur {
-    opacity: 0.05;
+    opacity: 0.65;
     transition: 0.5s ease-in-out;
     transition-timing-function: cubic-bezier(.17,.67,.83,.67);
     pointer-events: none;
 }
 
 .message-notification.blur {
-    opacity: 0.05;
+    opacity: 0.65;
     transition: 0.5s ease-in-out;
     transition-timing-function: cubic-bezier(.17,.67,.83,.67);
     pointer-events: none;
 }
 
 #version-number {
-    display: block;
+ 
     font-size: 12px;
-    position: relative;
-    top: 4px;
     color: var(--color-secondary);
 }
 
@@ -2373,7 +2373,7 @@ header.blur, .banner.blur {
 
         .jquery-accordion-menu .jquery-accordion-menu-footer, .jquery-accordion-menu .jquery-accordion-menu-header {
             width: 100%;
-            height: 65px;
+            height: 50px;
             padding-left: 0px;
             float: left;
             /*line-height: 62px;*/
@@ -2383,9 +2383,12 @@ header.blur, .banner.blur {
             border-bottom: 1px solid var(--color-efefef);
         }
 
-    .jquery-accordion-menu-header {
-        font-size: 18px;
-    }
+.jquery-accordion-menu-header {
+    font-size: 18px;
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+}
 
     .jquery-accordion-menu ul {
         margin: 0;
@@ -2491,17 +2494,7 @@ header.blur, .banner.blur {
         }
 
             .jquery-accordion-menu ul ul.submenu li a {
-                width: 100%;
-                float: left;
-                font-size: 12px;
-                background: #f7f7f7;
-                border-top: none;
-                position: relative;
-                border-left: solid 6px transparent;
-                -o-transition: border .2s linear;
-                -moz-transition: border .2s linear;
-                -webkit-transition: border .2s linear;
-                transition: border .2s linear
+                
             }
 
         .jquery-accordion-menu ul ul.submenu.active {
@@ -2518,8 +2511,17 @@ header.blur, .banner.blur {
             /*border-bottom-color: #dfdfdf;*/
             color: var(--color-primary);
             background: var(--color-white); /*linear-gradient(145deg, #ffffff, #fdfdb5);*/
-            font-weight: 600;
-            letter-spacing: 0.15px;
+            width: 100%;
+            float: left;
+            font-size: 12px;
+            background: #f7f7f7;
+            border-top: none;
+            position: relative;
+            border-left: solid 6px transparent;
+            -o-transition: border .2s linear;
+            -moz-transition: border .2s linear;
+            -webkit-transition: border .2s linear;
+            transition: border .2s linear
         }
 
         .jquery-accordion-menu ul ul.submenu li a svg {
@@ -2559,19 +2561,20 @@ header.blur, .banner.blur {
 
 
 
-        .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
-            background: #ffffd5 !important;
-            color: #535252;
-            transform: scale(0.96);
-            transition: 0.1s ease-in-out;
-        }
+        
 
         .jquery-accordion-menu ul ul.submenu > li > a .svg-inline--fa {
         }
 
         .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > ul.submenu > li > a {
             padding-left: 46px;
-            background:var(--color-white) !important;
+            font-family: helvetica;
+        }
+        .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
+            background: var(--menu-hover) !important;
+            color: #535252;
+            
+            transition: 0.1s ease-in-out;
         }
         .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > ul.submenu > li > ul.submenu > li > a {
             padding-left: 62px;

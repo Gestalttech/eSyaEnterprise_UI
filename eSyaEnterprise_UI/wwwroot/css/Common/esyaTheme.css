@@ -30,9 +30,9 @@
 .treeaction h5 {
     color: var(--secondary-color);
 }
-.jquery-accordion-menu ul li:first-of-type a:first-of-type {
+/*.jquery-accordion-menu ul li:first-of-type a:first-of-type {
     background-color: var(--secondary-color);
-}
+}*/
 #eSyaMenuName,#eSyaVersion {
     color: var(--primary-color);
 }
@@ -40,12 +40,15 @@
     background-color: var(--primary-color);
 }
 .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a {
-    background: var(--light-yellow) !important;
+    background: var(--white) !important;
+}
+.jquery-accordion-menu ul ul.submenu > li a{
+    font-family:helvetica-Bold;
 }
 .primary-button, .cancel-button, .ui-button, .loginButton, .mdl-button--raised.mdl-button--colored,
 button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised{
-  background-color: var(--primary-color);
+.show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised {
+    background-color: var(--primary-color);
     color: var(--button-forecolor);
     border-color: transparent;
 }
