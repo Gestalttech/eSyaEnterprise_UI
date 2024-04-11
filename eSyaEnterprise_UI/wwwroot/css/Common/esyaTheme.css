@@ -7,7 +7,8 @@
     --light-orange: #FEFBEB; /*light orange*/
     --light-yellow: #fffff3; /*Light Yellow*/
     --menu-hover: #FFF4BF;
-    --white:#fff;
+    --white: #fff;
+    --lightgrey: #efefef;
 }
 .header nav, #navbarSupportedContent{
     background-color: var(--primary-color);
@@ -39,15 +40,19 @@
 .jquery-accordion-menu ul li a {
     background-color: var(--primary-color);
 }
+.jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > ul.submenu > li > a {
+    background: #fffdf5;
+    border-bottom:1px solid #fafafa;
+    font-size:11px;
+}
 .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a {
-    background: var(--white) !important;
+    background: var(--lightgrey) ;
 }
 .jquery-accordion-menu ul ul.submenu > li a{
     font-family:helvetica-Bold;
 }
-.primary-button, .cancel-button, .ui-button, .loginButton, .mdl-button--raised.mdl-button--colored,
-button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised {
+
+    .primary-button, .cancel-button, .ui-button, .loginButton, .mdl-button--raised.mdl-button--colored, button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised {
     background-color: var(--primary-color);
     color: var(--button-forecolor);
     border-color: transparent;
@@ -128,7 +133,13 @@ button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).acti
 }
 .jquery-accordion-menu ul ul.submenu li:hover > a, .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
     border-left-color: var(--secondary-color);
-    background: var(--menu-hover);
+    /*background: var(--menu-hover);*/
+   
+}
+.jquery-accordion-menu ul ul.submenu li a {
+    font-size: 14px;
+    color: #facb34;
+    background: #555;
 }
 label {
     color: var(--primary-color) !important;

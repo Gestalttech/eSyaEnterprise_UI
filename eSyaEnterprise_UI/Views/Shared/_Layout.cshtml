@@ -123,7 +123,7 @@
         </nav>
         @*<div id="divProgressBar" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>*@
     </section>
-    <div class="header p-y-10 mb-0  banner">
+    <div class="header py-1 mb-0  banner">
         @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>*@
@@ -140,11 +140,11 @@
     <div id="divAlert"></div>
     <div class="container-fluid body-content">
         <div id="jquery-accordion-menu" class="jquery-accordion-menu">
-            <div class="jquery-accordion-menu-header">
+            @* <div class="jquery-accordion-menu-header">
                 <span class="btnMenuBar" aria-label="Menu"><i class="fa fa-bars"></i></span>
                 <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive MasterPage-Logo" />
                 <span id="version-number" class="txtversionNumber"> 1.0.0 </span><span id="btnCloseMenu" style="display:none"><i class="fa fa-times"></i></span>
-            </div>
+            </div> *@
             
             <ul>
                 <li>
@@ -318,7 +318,8 @@
             else{
                 $(id).css({
                     'height': $(window).innerHeight() - _treeIDTop - 15,
-                    'overflow': 'auto'
+                    'overflow-y': 'auto',
+                    'overflow-x': 'hidden'
                 });
             }
         }
@@ -349,8 +350,15 @@
 
 
         $("#jquery-accordion-menu").css({
-            'height': $(window).innerHeight(),
-            'top': 0
+            'height': $(window).innerHeight() - $('section.header').outerHeight() - $(".banner").outerHeight(),
+            'top': $('section.header').outerHeight() + $(".banner").outerHeight() + 'px'
+        });
+
+        $(window).on('resize', function () {
+            $("#jquery-accordion-menu").css({
+                'height': $(window).innerHeight() - $('section.header').outerHeight() - $(".banner").outerHeight(),
+                'top': $('section.header').outerHeight() + $(".banner").outerHeight() + 'px'
+            });
         });
 
         //$('.modal').css({ 'top': $('section.header').height() + $('.banner').height()});
@@ -363,7 +371,10 @@
                 if ($(this).attr("href") == url) {
                     $(this).addClass("active");
                     $(this).parent().parent().css('display', 'block');
+                    $(this).parent().parent().prev().find('svg').attr('data-icon', 'caret-down');
+                    $(this).parent().parent().parent().parent().prev().find('svg').attr('data-icon', 'circle-minus');
                     $(this).parents().css('display', 'block');
+                    
                 }
             })
             toggleTheMenu(e);
@@ -378,43 +389,50 @@
                 if ($(this).attr("href") == url) {
                     $(this).addClass("active");
                     $(this).parent().parent().css('display', 'block');
+                   
                     $(this).parents().css('display', 'block');
+                     
                 }
             })
             toggleTheMenu(e);
         })
         $("body").click(function (e) {
             $("#jquery-accordion-menu").removeClass("active");
-            $(".renderBody,.header,nav,.message-notification").removeClass('blur');
-
+           $(".renderBody").removeClass('blur');
+            $("[data-node=second] li a").find('svg').attr('data-icon', 'caret-right');
+            $("[data-node=second] li a").next().css('display', 'none');
         });
         $("#btnCloseMenu").click(function (e) {
             toggleTheMenu(e);
-        });                                                                                 
-        $(".submenu li a").click(function (e) {
-
-            $(".submenu-indicator-minus").find('svg').removeClass('fa-minus-circle').addClass('fa-circle-plus');
-            if ($(this).find('svg').attr('data-icon') == 'circle-minus') {
-                $(this).find('svg').attr('data-icon', 'circle-plus');
-            } else {
+        }); 
+        $("[data-node=first]").click(function (e) {
+           // $(".submenu-indicator-minus").find('svg').removeClass('fa-circle-plus').addClass('fa-circle-minus');
+            if ($(this).find('svg').attr('data-icon') == 'circle-plus') {
                 $(this).find('svg').attr('data-icon', 'circle-minus');
+            } else {
+                $(this).find('svg').attr('data-icon', 'circle-plus');
             };
-
-
         })
-        
+       
+        $("[data-node=second] li a").click(function (e) {
+            $("[data-node=second] li a").find('svg').attr('data-icon', 'caret-right');
+            // $(this).find('svg').attr('data-icon', 'caret-down');
+            if ($(this).find('svg').attr('data-icon') == 'caret-down') {
+                $(this).find('svg').attr('data-icon', 'caret-right');
+            }
+            else{
+                $(this).find('svg').attr('data-icon', 'caret-down');
+            }
+        });
+
         function toggleTheMenu(e) {
               e.stopPropagation();
             
             $("#jquery-accordion-menu").toggleClass("active");
-            $(".renderBody,.header,nav,.message-notification").toggleClass('blur');
+            $(".renderBody").toggleClass('blur');
         }
 
-        $(".submenu a").click(function () {
-            $(".submenu a").removeClass("active");
-            //$(this).children().toggleClass('fa-plus-circle fa-minus-circle');
-            $(this).find('svg').attr('data-icon', 'circle-minus');
-        });
+         
 
         $(window).bind('resize', function () {
             $(".ui-jqgrid").setGridWidth($(window).width(), true);

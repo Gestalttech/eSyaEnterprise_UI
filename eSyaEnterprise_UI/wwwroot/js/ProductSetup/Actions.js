@@ -47,6 +47,7 @@ function fnLoadGridActions() {
 
         pager: "#jqpActions",
         rowNum: 10,
+        sortable:false,
         rowList: [10, 20, 50, 100],
         rownumWidth: '55',
         loadonce: true,

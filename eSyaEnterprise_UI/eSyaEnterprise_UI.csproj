@@ -142,6 +142,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\CalDoc\Views\CalendarControl\ECD_02_00.cshtml" />
     <Content Remove="Areas\ConfigBusiness\Views\ApplicationRules\ECB_06_00.cshtml" />
     <Content Remove="Areas\ConfigBusiness\Views\ApplicationRules\ECB_07_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_08_00.cshtml" />

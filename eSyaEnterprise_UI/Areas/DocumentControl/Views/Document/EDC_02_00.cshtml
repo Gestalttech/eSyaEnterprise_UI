@@ -52,7 +52,9 @@
         SchemaId: '@Localizer["SchemaId"]',
         ComboId: '@Localizer["ComboId"]',
     }
-
+     var errorMsg ={
+         SelectCalendarKey_E1:'@Localizer["UI0292"]'
+     }
 </script>
 
 <div class="row">
@@ -60,7 +62,10 @@
       
         <div class="form-group">
             <label class="">@Localizer["CalendarKey"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="Select" data-size="8" asp-items="@ViewBag.CalenderKeys" onchange="fnCalendarKey_onchange()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="" data-size="8" asp-items="@ViewBag.CalenderKeys" onchange="fnCalendarKey_onchange()">
+                <option value="0">Select</option>
+
+            </select>
 
         </div>
         <div id="jstBusinessDocumentLink">

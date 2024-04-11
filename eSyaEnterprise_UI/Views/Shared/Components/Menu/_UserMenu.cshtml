@@ -3,21 +3,21 @@
 *@
 @model IEnumerable<eSyaEnterprise_UI.Models.DO_UserMenu.DO_MainMenu>
 
-<ul class="submenu">
+<ul class="submenu" >
     @if (Model != null)
     {
         @foreach (var mn in Model)
         {
             <li>
-                <a href="#"><i class="fa-solid fa-circle-plus fa-lg"></i> @mn.MainMenu </a>
-                <ul class="submenu">
+                <a href="#" data-node="first"><i class="fa-solid fa-circle-plus fa-lg"></i> @mn.MainMenu </a>
+                <ul class="submenu" data-node="second">
 
                     @foreach (var sm1 in mn.l_FormMenu)
                     {
                         @if (sm1.MenuItemId > 0)
                         {
-                            <li>
-                                <a href="#"><i class="fa-solid fa-circle-plus"></i> @sm1.MenuItemName </a>
+                            <li >
+                                <a href="#" data-node="third"><i class="fa-solid fa-caret-right"></i> @sm1.MenuItemName </a>
                                 <ul class="submenu">
 
                                     @foreach (var sm2 in sm1.l_FormMenu)
@@ -32,7 +32,7 @@
                                                         @if (sm3.MenuItemId > 0)
                                                         {
                                                             <li>
-                                                                <a href="#"><i class="fa-solid fa-circle-plus"></i> @sm3.MenuItemName </a>
+                                                                <a href="#"><i class="fa-solid fa-chevron-right"></i> @sm3.MenuItemName </a>
                                                                 <ul class="submenu">
                                                                     @foreach (var sm4 in sm3.l_FormMenu)
                                                                     {
@@ -45,7 +45,7 @@
                                                                         }
                                                                         else
                                                                         {
-                                                                            <li><a asp-area=@sm4.Area asp-controller=@sm4.Controller asp-action=@sm4.View><i class="far fa-file-alt"></i> @sm4.FormNameClient </a></li>
+                                                                            <li data-node="form"><a asp-area=@sm4.Area asp-controller=@sm4.Controller asp-action=@sm4.View><i class="far fa-file-alt"></i> @sm4.FormNameClient </a></li>
                                                                         }
                                                                     }
                                                                 </ul>
@@ -53,7 +53,7 @@
                                                         }
                                                         else
                                                         {
-                                                            <li><a asp-area=@sm3.Area asp-controller=@sm3.Controller asp-action=@sm3.View><i class="far fa-file-alt"></i> @sm3.FormNameClient </a></li>
+                                                            <li data-node="form"><a asp-area=@sm3.Area asp-controller=@sm3.Controller asp-action=@sm3.View><i class="far fa-file-alt"></i> @sm3.FormNameClient </a></li>
                                                         }
                                                     }
                                                 </ul>
@@ -61,7 +61,7 @@
                                         }
                                         else
                                         {
-                                            <li><a asp-area=@sm2.Area asp-controller=@sm2.Controller asp-action=@sm2.View><i class="far fa-file-alt"></i>@sm2.FormNameClient </a></li>
+                                            <li data-node="form"><a asp-area=@sm2.Area asp-controller=@sm2.Controller asp-action=@sm2.View><i class="far fa-file-alt"></i>@sm2.FormNameClient </a></li>
                                         }
                                     }
 

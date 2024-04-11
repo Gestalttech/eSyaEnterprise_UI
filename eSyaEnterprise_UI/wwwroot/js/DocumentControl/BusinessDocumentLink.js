@@ -15,13 +15,22 @@ $(function () {
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
-
+   
 });
 
 
 function fnCalendarKey_onchange() {
     var _calendarKey = $("#cboCalendarKey").val();
-    fnLoadDocumentsTree(_calendarKey);
+    if (_calendarKey == 0) {
+        $('#jstBusinessDocumentLink').css('display', 'none');
+        $('#dvBusinessDocument').css('display', 'none');
+        
+    }
+    else {
+        debugger;
+        fnLoadDocumentsTree(_calendarKey);
+    }
+    
 }
 function fnLoadDocumentsTree(_calendarKey) {
     
@@ -32,10 +41,11 @@ function fnLoadDocumentsTree(_calendarKey) {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-
+            $("#jstBusinessDocumentLink").jstree('destroy');
             $("#jstBusinessDocumentLink").jstree({ core: { data: result, multiple: false } });
             fnTreeSize("#jstBusinessDocumentLink");
-            $("#dvBusinessDocument").css('display', 'block');
+            $('#jstBusinessDocumentLink').css('display', 'block');
+           
             $(window).on('resize', function () {
                 fnTreeSize("#jstBusinessDocumentLink");
             })
@@ -66,6 +76,7 @@ function fnLoadDocumentsTree(_calendarKey) {
                     businesskey = data.node.id;
                     fnLoadGridBusinesssDocument(businesskey);
                     $("#dvBusinessDocument").css('display', 'block');
+                    fnRefreshGridBusinessDocumentLink();
                 }
                 else {
                     $("#dvBusinessDocument").css('display', 'none');
@@ -81,6 +92,7 @@ function fnLoadDocumentsTree(_calendarKey) {
 }
 
 function fnLoadGridBusinesssDocument(businesskey) {
+    debugger;
     $("#jqgBusinesssDocumentLink").GridUnload();
     $("#jqgBusinesssDocumentLink").jqGrid({
         url: getBaseURL() + '/Document/GetDocumentFormlinkwithLocation?calendarkey=' + $("#cboCalendarKey").val() + '&businesskey=' + businesskey,
@@ -91,10 +103,10 @@ function fnLoadGridBusinesssDocument(businesskey) {
         colNames: [localization.FormID, "", "", localization.FormName,"Document Name" ,localization.DocID, localization.SchemaId, localization.ComboId, localization.UsageStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "FormId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
-            { name: "BusinessKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
-            { name: "CalendarKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "BusinessKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
+            { name: "CalendarKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "FormName", width: 150, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "DocumentName", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "DocumentName", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "DocumentId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "SchemaId", width: 60, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ComboId", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
@@ -129,6 +141,7 @@ function fnLoadGridBusinesssDocument(businesskey) {
         cellsubmit: 'clientArray',
         loadComplete: function (data) {
             fnJqgridSmallScreen("jqpBusinesssDocumentLink");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width','100%');
         },
         onSelectRow: function (rowid, status, e) {
 
@@ -144,9 +157,10 @@ function fnEditBusinessDocument(e,actiontype) {
     $('#PopupBusinessDocument').find('.modal-title').text(localization.UpdateBusinessDocument);
     $('#PopupBusinessDocument').modal('show');
     fnLoadPopupGridBusinessDocumentLink(rowData.FormId);
+    $("#btnSaveBusinessDocument").html("<i class='fa fa-sync'></i>" + localization.Update);
 }
 
-
+function fnRefreshGridBusinessDocumentLink() { $("#jqgBusinesssDocumentLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid'); }
 function fnSaveBusinesssDocumentLink() {
 
 }
@@ -200,6 +214,7 @@ function fnLoadPopupGridBusinessDocumentLink(formId)
         caption: localization.DocumentControlManagement,
         loadComplete: function () {
             fnJqgridSmallScreen("jqgDocContManagement");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', '100%');
         },
         onSelectRow: function (rowid, status, e) {
              var ch = $(this).find('#' + rowid + 'td:last-child input[type=checkbox]').prop('checked');
