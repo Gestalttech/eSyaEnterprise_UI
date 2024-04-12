@@ -184,7 +184,7 @@ function fnEditApplicationCodes(e, actiontype) {
         $('#PopupApplicationCodes').modal('show');
         $('#PopupApplicationCodes').find('.modal-title').text("Active/De Active Application Codes");
         if (rowData.ActiveStatus == 'true') {
-            $("#btnDeactivateApplicationCode").html(localization.DActivate);
+            $("#btnDeactivateApplicationCode").html(localization.Deactivate);
         }
         else {
             $("#btnDeactivateApplicationCode").html('Activate');
@@ -310,13 +310,13 @@ function fnDeleteApplicationCodes() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnDeactivateApplicationCode").attr("disabled", false);
-                $("#btnDeactivateApplicationCode").html('De Activate');
+                $("#btnDeactivateApplicationCode").html('Deactivate');
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnDeactivateApplicationCode").attr("disabled", false);
-            $("#btnDeactivateApplicationCode").html('De Activate');
+            $("#btnDeactivateApplicationCode").html('Deactivate');
         }
     });
 }

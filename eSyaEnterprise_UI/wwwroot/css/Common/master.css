@@ -509,7 +509,7 @@ ul#menu-v, #menu-v ul {
         line-height: 20px;
         height: 20px;
         padding:0px 0px!important;
-        font-size: 14px !important;
+        font-size: 12px !important;
     }
     .h-auto{
         height:auto;
@@ -791,7 +791,13 @@ button.close:hover {
 .mdl-textfield__label:after {background-color: #1590c0 !important;}
 .mdl-checkbox__label {font-size: 12px !important;line-height: 24px !important;}
 .mdl-textfield__label {margin-bottom: 0px !important;}
-.mdl-button {text-transform: capitalize !important;line-height: 32px;height: 32px;font-size:12px;}
+.mdl-button {
+    text-transform: capitalize !important;
+    line-height: 32px;
+    height: 32px;
+    font-size: 0.82rem;
+    font-family: 'helvetica-bold';
+}
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {background: gold !important}
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {border: 2px solid gold !important;}
 .mdl-progress.mdl-progress--indeterminate > .bar1, .mdl-progress.mdl-progress__indeterminate > .bar1, .mdl-progress.mdl-progress--indeterminate > .bar3, .mdl-progress.mdl-progress__indeterminate > .bar3 {
@@ -1037,6 +1043,10 @@ button.close:hover {
 }
 .mdl-card, .mdl-card__supporting-text {
     overflow: unset !important;
+
+}
+.mdl-card__supporting-text {
+    padding: 8px 15px;
 }
     .mdl-card__supporting-text.nopad {
         overflow: auto !important;
@@ -1248,7 +1258,7 @@ button[id^="btnCall"], button[id^="btnHold"], button[id^="btnConfirm"], button[i
     }
     .dropdownMenuDiv {display: block;}
     .header nav {padding: 0rem;box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);}
-    body, .ui-jqgrid .ui-jqgrid-view {font-size: 12px !important;}
+    body, .ui-jqgrid .ui-jqgrid-view {font-size: 0.82rem !important;}
 }
 /*#nav-tab .nav-link{border-bottom:2px solid transparent !important;}*/
 #nav-tab .nav-link:hover, #nav-tab .nav-link .active {
@@ -1433,6 +1443,12 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     font-family: 'helvetica-bold';
     color: gold;
     letter-spacing: normal;
+    line-height: normal;
+    font-size:14px;
+}
+.treeaction .card-header {
+    padding: 9px 14px;
+    border-radius: 0px !important;
 }
 .pt-3_5 {
     padding-top: 1.35rem !important;
@@ -2797,9 +2813,12 @@ header.blur, .banner.blur {
 
     .btn-upload {display: block;}
     /*JS Tree Screens Button*/
-    .btn_wdth {
-        width: 100%;
-        text-align: left;
+.btn_wdth {
+    width: 100%;
+    margin-bottom: 0px;
+    text-align: left;
+    height: 33px !important;
+
     }
 
     .btn_pdnTop {

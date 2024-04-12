@@ -100,7 +100,7 @@ function fnLoadGridBusinesssDocument(businesskey) {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.FormID, "", "", localization.FormName,"Document Name" ,localization.DocID, localization.SchemaId, localization.ComboId, localization.UsageStatus, localization.Active, localization.Actions],
+        colNames: [localization.FormID, "", "", localization.FormName,"Document Name" ,localization.DocID, localization.SchemaId, localization.ComboId, localization.InUse, localization.Active, localization.Actions],
         colModel: [
             { name: "FormId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "BusinessKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },

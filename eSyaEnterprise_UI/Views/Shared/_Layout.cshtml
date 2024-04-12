@@ -416,7 +416,7 @@
         })
        
         $("[data-node=second] li a").click(function (e) {
-            $("[data-node=second] li a").find('svg').attr('data-icon', 'caret-right');
+            $("[data-node=second] li a").not(this).find('svg').attr('data-icon', 'caret-right');
             $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines' ,'data-prefix':'far'});
             // $(this).find('svg').attr('data-icon', 'caret-down');
             if ($(this).find('svg').attr('data-icon') == 'caret-down') {
