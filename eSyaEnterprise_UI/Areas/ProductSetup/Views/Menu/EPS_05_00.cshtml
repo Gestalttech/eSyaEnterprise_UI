@@ -392,14 +392,9 @@
                 $('#pnlForm').show();
             }
         });
-        fnTreeSize();
+        fnTreeSize("#jstMenuFormList");
     });
-    function fnTreeSize() {
-        $("#jstMenuFormList").css({
-            'height': $(window).innerHeight() - 136,
-            'overflow': 'auto'
-        });
-    }
+     
     function fnGetMenuFormList() {
         $.ajax({
             url: getBaseURL() + '/Menu/GetConfigureMenuTreeView',

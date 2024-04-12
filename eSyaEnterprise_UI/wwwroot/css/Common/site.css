@@ -10,8 +10,10 @@ body {
 button, input, optgroup, select, textarea, span, p, h1, h2, h3, h4, h5, h6, ul, li, .ui-widget, .mdl-textfield__input, label {
     font-family: 'helvetica',sans-serif;
 }
-
-button, input, optgroup, select, textarea, span, p {
+span.ui-jqgrid-titlebar {
+    font-family: 'helvetica-Bold',sans-serif;
+}
+    button, input, optgroup, select, textarea, span, p {
     line-height: 20px !important;
 }
 

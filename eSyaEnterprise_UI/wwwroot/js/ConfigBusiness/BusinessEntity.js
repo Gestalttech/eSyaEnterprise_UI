@@ -163,7 +163,7 @@ function fnGetBusinessEntities_Success(dataArray) {
         var closingNode = node.handleObj.handler.arguments[1].node;
         $('#jstBusinessEntity').jstree().deselect_node(closingNode.children);
     });
-    fnTreeSize("#divJstBusinessEntity");
+    fnTreeSize("#jstBusinessEntity");
 };
 
 function fnFillBusinessEntityInfo() {
@@ -386,21 +386,7 @@ function fnCollapseAll() {
     $("#pnlMainMenu").hide();
     $('#jstBusinessEntity').jstree('close_all');
 }
-function fnTreeSize() {
-
-    if ($(document).width() < 575) {
-        $("#jstBusinessEntity,#divJstBusinessEntity").css({
-            'height': 50 + '%',
-            'overflow': 'auto'
-        });
-    }
-    else {
-        $("#jstBusinessEntity").css({
-            'height': $(window).innerHeight() - 136,
-            'overflow': 'auto'
-        });
-    }
-}
+ 
 
 
 

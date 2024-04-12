@@ -721,9 +721,7 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
     }
     .ui-jqgrid-titlebar {
         font-size: 13px !important;
-        font-weight: 300 !important;
-        font-family:helvetica-Bold;
-        letter-spacing: 0.15px;
+        letter-spacing: normal;
     }
     .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
         background: transparent !important;

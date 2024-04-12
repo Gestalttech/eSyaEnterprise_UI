@@ -7,8 +7,9 @@
     --light-orange: #FEFBEB; /*light orange*/
     --light-yellow: #fffff3; /*Light Yellow*/
     --menu-hover: #FFF4BF;
-    --white: #fff;
+    --white: #ffffff;
     --lightgrey: #efefef;
+    --black:#000000;
 }
 .header nav, #navbarSupportedContent{
     background-color: var(--primary-color);
@@ -131,10 +132,18 @@
 #divSignOutBox a:hover {
     background: var(--secondary-color) !important;
 }
-.jquery-accordion-menu ul ul.submenu li:hover > a, .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
+.jquery-accordion-menu ul ul.submenu li:hover > a {
     border-left-color: var(--secondary-color);
     /*background: var(--menu-hover);*/
+    transition:0.5s ease-in-out;
    
+}
+.jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
+    border-left-color: var(--secondary-color);
+    /*background: var(--menu-hover);*/
+    color: var(--black);
+    transition: 0.25s cubic-bezier(.07,.25,.83,.67);
+    border-left-color:var(--primary-color);
 }
 .jquery-accordion-menu ul ul.submenu li a {
     font-size: 14px;

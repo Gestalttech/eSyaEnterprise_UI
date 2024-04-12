@@ -31,6 +31,7 @@
         Activate: '@Localizer["Activate"]',
         Deactivate: '@Localizer["Deactivate"]',
         ActivateDeactivateActions: '@Localizer["ActivateDeactivateActions"]',
+        DisplaySequence: '@Localizer["DisplaySequence"]',
     };
     var errorMsg = {
         UnAuthorised_edit_E1: '@Localizer["UIC02"]',
@@ -70,8 +71,11 @@
                             <input id="txtActionDesc" class="form-control" maxlength="50" type="text" placeholder="Enter the alpha numeric description" />
                         </div>
                     </div>
-
-                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group" style="display:none">
+                        <label>@Localizer["DisplaySequence"]</label>
+                        <input type="text" class="form-control numberonly" maxlength="2" />
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>

@@ -374,6 +374,7 @@
                     $(this).parent().parent().prev().find('svg').attr('data-icon', 'caret-down');
                     $(this).parent().parent().parent().parent().prev().find('svg').attr('data-icon', 'circle-minus');
                     $(this).parents().css('display', 'block');
+                    $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines', 'data-prefix': 'far' });
                     
                 }
             })
@@ -416,6 +417,7 @@
        
         $("[data-node=second] li a").click(function (e) {
             $("[data-node=second] li a").find('svg').attr('data-icon', 'caret-right');
+            $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines' ,'data-prefix':'far'});
             // $(this).find('svg').attr('data-icon', 'caret-down');
             if ($(this).find('svg').attr('data-icon') == 'caret-down') {
                 $(this).find('svg').attr('data-icon', 'caret-right');

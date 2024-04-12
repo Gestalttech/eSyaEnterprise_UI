@@ -31,10 +31,11 @@ function fnLoadGridActions() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.ActionId, localization.ActionDesc, localization.Active, localization.Actions],
+        colNames: [localization.ActionId, localization.ActionDesc,localization.DisplaySequence, localization.Active, localization.Actions],
         colModel: [
             { name: "ActionId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "ActionDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "DisplaySequence", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 },hidden:true, resizable: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
