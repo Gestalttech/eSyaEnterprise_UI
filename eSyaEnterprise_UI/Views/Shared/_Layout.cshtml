@@ -375,8 +375,10 @@
                     $(this).parent().parent().parent().parent().prev().find('svg').attr('data-icon', 'circle-minus');
                     $(this).parents().css('display', 'block');
                     $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines', 'data-prefix': 'far' });
-                    
+                    // $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+                    // $("[data-node=first]").next().css('display', 'none');
                 }
+
             })
             toggleTheMenu(e);
 
@@ -402,18 +404,23 @@
            $(".renderBody").removeClass('blur');
             $("[data-node=second] li a").find('svg').attr('data-icon', 'caret-right');
             $("[data-node=second] li a").next().css('display', 'none');
+            $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+            $("[data-node=first]").next().css('display', 'none');
         });
         $("#btnCloseMenu").click(function (e) {
             toggleTheMenu(e);
         }); 
-        $("[data-node=first]").click(function (e) {
-           // $(".submenu-indicator-minus").find('svg').removeClass('fa-circle-plus').addClass('fa-circle-minus');
-            if ($(this).find('svg').attr('data-icon') == 'circle-plus') {
-                $(this).find('svg').attr('data-icon', 'circle-minus');
-            } else {
-                $(this).find('svg').attr('data-icon', 'circle-plus');
-            };
-        })
+        function fnModuleClick (e) {
+            
+            if ($(e.target).find('svg ').attr('data-icon') == 'circle-plus') {
+                $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+                $(e.target).find('svg ').attr('data-icon','circle-minus')
+            }
+            else{
+                $(e.target).find('svg ').attr('data-icon', 'circle-plus');
+            }
+ 
+        }
        
         $("[data-node=second] li a").click(function (e) {
             $("[data-node=second] li a").not(this).find('svg').attr('data-icon', 'caret-right');

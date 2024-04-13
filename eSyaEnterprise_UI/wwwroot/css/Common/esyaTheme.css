@@ -10,6 +10,7 @@
     --white: #ffffff;
     --lightgrey: #efefef;
     --black:#000000;
+    --action-button:#7c7c7c;
 }
 .header nav, #navbarSupportedContent{
     background-color: var(--primary-color);
@@ -57,6 +58,7 @@
     background-color: var(--primary-color);
     color: var(--button-forecolor);
     border-color: transparent;
+    font-family:helvetica-Bold;
 }
     .btn-primary:hover, .mdl-button:hover, .mdl-button:active, .mdl-button:focus:not(:active), .mdl-button--raised.mdl-button--colored:focus:not(:active),
     .mdl-button--raised.mdl-button--colored:hover, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
@@ -153,8 +155,8 @@
 label {
     color: var(--primary-color) !important;
 }
-.ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-    background: var(--primary-color) !important;
+.ui-widget-header .ui-state-default, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    background: var(--action-button) !important;
     color: var(--banner-bg) !important;
 }
 .ui-pg-button{

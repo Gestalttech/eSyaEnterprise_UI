@@ -602,13 +602,14 @@
             jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
             colNames: [localization.FormID, "@Localizer["InternalID"]", "@Localizer["URL"]", "@Localizer["InternalFormDesc"]", "@Localizer["ActiveStatus"]"],
             colModel: [
-                { name: "FormID", width: 40, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text', hidden: true },
+                { name: "FormID", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', edittype: 'text', hidden: true },
                 { name: "InternalFormNumber", width: 40, editable: true, align: 'left', edittype: 'text', hidden: false },
-                { name: "NavigateURL", width: 120, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 50 }, hidden: false },
-                { name: "FormDescription", width: 50, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 25 }, hidden: false },
-                { name: "ActiveStatus", editable: true, width: 40, align: 'center !important', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+                { name: "NavigateURL", width: 100, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 50 }, hidden: false },
+                { name: "FormDescription", width: 60, editable: true, align: 'left', edittype: 'text', editoptions: { maxlength: 25 }, hidden: false },
+                { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             ],
             rowNum: 10,
+            rownumWidth:'45',
             pager: "#jqpInternalForms",
             caption: localization.InternalForms,
             viewrecords: true,
@@ -726,7 +727,7 @@
                     }
                 },
             });
-
+        fnAddGridSerialNoHeading();
 
         //$('#jqgInternalForms_iladd').addClass('ui-state-disabled');
 
@@ -756,6 +757,7 @@
             height: '100',
             width: '200',
             rowNum: 100,
+            rownumWidth:'45',
             viewrecords: true,
             gridview: true,
             loadonce: true,
@@ -779,7 +781,7 @@
                 fnJqgridSmallScreen("jqgFormAction");
             }
         });
-       
+          fnAddGridSerialNoHeading();
     }
 
     function fnSaveFormAction() {
@@ -866,6 +868,7 @@
             height: '100',
             width: '200',
             rowNum: 100,
+            rownumWidth:'45',
             viewrecords: true,
             gridview: true,
             loadonce: true,

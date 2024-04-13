@@ -52,8 +52,8 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 .martop0{margin-top:0px !important}
 .f-11{font-size:11px;}
 .padbot0{padding-bottom:0px;}
-.filter-option-inner-inner{font-size:11px;}
-.bootstrap-select .btn{color:#666666}
+.filter-option-inner-inner{font-size:0.82rem;}
+.bootstrap-select .btn{color:#666666 !important;}
 .m-t-4 {
     margin-top: 4px !important;
 }
@@ -789,14 +789,15 @@ button.close:hover {
 .mdl-textfield--floating-label.is-focused .mdl-textfield__label {color: #1590c0 !important;}
 .mdl-textfield {width: 100% !important}
 .mdl-textfield__label:after {background-color: #1590c0 !important;}
-.mdl-checkbox__label {font-size: 12px !important;line-height: 24px !important;}
+.mdl-checkbox__label {font-size: 0.82rem !important;line-height: 24px !important;}
 .mdl-textfield__label {margin-bottom: 0px !important;}
 .mdl-button {
     text-transform: capitalize !important;
     line-height: 32px;
     height: 32px;
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     font-family: 'helvetica-bold';
+    letter-spacing: normal;
 }
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {background: gold !important}
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {border: 2px solid gold !important;}
@@ -994,7 +995,7 @@ button.close:hover {
     font-size: 13px !important;
     /*color: var(--color-secondary) !important;*/
     font-weight: 300;
-    letter-spacing: 0.5px;
+    letter-spacing: normal;
     font-family: helvetica-Bold;
 }
 .user-logo {vertical-align: text-bottom;font-size: 24px !important;}
@@ -1349,7 +1350,7 @@ button[id^="btnCall"], button[id^="btnHold"], button[id^="btnConfirm"], button[i
 }
 .header .form-name { width: 100%;padding: 0px 15px;}
 label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
-    font-size: 11px !important;
+    font-size: 0.82rem !important;
     top: 4px;
     display: block;
     margin-bottom: 0px;

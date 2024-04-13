@@ -100,7 +100,7 @@ function fnLoadGridBusinesssDocument(businesskey) {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.FormID, "", "", localization.FormName,"Document Name" ,localization.DocID, localization.SchemaId, localization.ComboId, localization.InUse, localization.Active, localization.Actions],
+        colNames: [localization.FormID, localization.BusinessKey, localization.CalendarKey, localization.FormName, localization.DocumentName ,localization.DocID, localization.SchemaId, localization.ComboId, localization.InUse, localization.Active, localization.Actions],
         colModel: [
             { name: "FormId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "BusinessKey", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
@@ -179,7 +179,7 @@ function fnLoadPopupGridBusinessDocumentLink(formId)
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.UsageStatus, localization.Active],
+        colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.InUse, localization.Active],
         colModel: [
             { name: "DocumentId",index: "DocumentId", width: 90, editable: false, align: 'left', hidden: false },
             { name: "GeneLogic", index: "GeneLogic", width: 90, editable: false, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "C:Continuous;Y:Yearwise;M:Monthwise;D:Datewise" } },
