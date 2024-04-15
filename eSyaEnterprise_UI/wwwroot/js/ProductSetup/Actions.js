@@ -35,7 +35,7 @@ function fnLoadGridActions() {
         colModel: [
             { name: "ActionId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "ActionDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "DisplaySequence", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 },hidden:true, resizable: false },
+            { name: "DisplaySequence", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 },hidden:false, resizable: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
@@ -123,6 +123,7 @@ function fnEditActions(e, actiontype) {
     var rowData = $('#jqgActions').jqGrid('getRowData', rowid);
     $('#txtActionId').val(rowData.ActionId);
     $('#txtActionDesc').val(rowData.ActionDesc);
+    $('#txtDisplaySequence').val(rowData.DisplaySequence);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -200,10 +201,14 @@ function fnSaveActions() {
         fnAlert("w", "EPS_22_00", "UI0201", errorMsg.ActionDesc_E4);
         return;
     }
-    
+    if (IsStringNullorEmpty($("#txtDisplaySequence").val()) || $("#txtDisplaySequence").val()=="0") {
+        fnAlert("w", "EPS_22_00", "UI0201", "Please Enter Display Sequence");
+        return;
+    }
     obj_action = {
         ActionId: $("#txtActionId").val() === '' ? 0 : $("#txtActionId").val(),
         ActionDesc: $("#txtActionDesc").val(),
+        DisplaySequence: $("#txtDisplaySequence").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
@@ -241,6 +246,7 @@ function fnGridRefreshActions() {
 function fnClearFields() {
     $("#txtActionId").val('');
     $("#txtActionDesc").val('');
+    $("#txtDisplaySequence").val('');
     $("#chkActiveStatus").prop('disabled', false);
     $("#btnSaveActions").attr("disabled", false);
     $("#btndeActiveActions").attr("disabled", false);

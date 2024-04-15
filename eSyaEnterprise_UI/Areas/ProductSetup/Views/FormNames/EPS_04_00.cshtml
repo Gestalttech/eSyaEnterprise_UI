@@ -747,9 +747,10 @@
             postData: {
                 formID: function () { return FormID; },
             },
-            colNames: ["Action ID", "@Localizer["Action"]", "@Localizer["ActiveStatus"]"],
+            colNames: ["Action ID","Display Sequence", "@Localizer["Action"]", "@Localizer["ActiveStatus"]"],
             colModel: [
                 { name: 'ActionId', key: true, index: 'ActionId', width: 0, sortable: false, hidden: true },
+                { name: 'DisplaySequence', key: true, index: 'ActionId', width: 0, sortable: false, hidden: true },
                 { name: 'ActionDesc', index: 'ActionDesc', width: 150, sortable: false },
                 { name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
             ],

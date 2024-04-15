@@ -61,6 +61,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
     {
         public int ActionId { get; set; }
         public string? ActionDesc { get; set; }
+        public int DisplaySequence { get; set; }
         public bool UsageStatus { get; set; }
         public bool ActiveStatus { get; set; }
 
@@ -103,6 +104,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
     {
         public int ActionId { get; set; }
         public string ActionDesc { get; set; } = null!;
+        public int DisplaySequence { get; set; }
         public bool ActiveStatus { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; } = null!;
