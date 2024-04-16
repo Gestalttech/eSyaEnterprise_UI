@@ -148,7 +148,7 @@
     border-left-color:var(--primary-color);
 }
 .jquery-accordion-menu ul ul.submenu li a {
-    font-size: 14px;
+    font-size: 0.825rem;
     color: #facb34;
     background: #555;
 }

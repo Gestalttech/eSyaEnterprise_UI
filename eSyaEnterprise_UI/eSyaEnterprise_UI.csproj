@@ -222,6 +222,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    
     <Compile Include="Areas\ConfigProduct\Controllers\ServicesController.cs" />
     <Compile Include="Areas\ConfigProduct\Data\eSyaConfigProductAPIServices.cs" />
     <Compile Include="Areas\ConfigProduct\Data\IeSyaConfigProductAPIServices.cs" />
@@ -231,7 +232,7 @@
     <Compile Include="Areas\ConfigProduct\Models\DO_ServiceGroup.cs" />
     <Compile Include="Areas\ConfigProduct\Models\DO_ServiceType.cs" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.1" />
     <PackageReference Include="eSyaEssentialsUI6" Version="6.0.0" />
