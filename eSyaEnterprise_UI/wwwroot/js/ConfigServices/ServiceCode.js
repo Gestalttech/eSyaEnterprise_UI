@@ -13,7 +13,7 @@ $(document).ready(function () {
 });
 function fnLoadServiceCodeTree() {
     $.ajax({
-        url: getBaseURL() + '/ServiceCodes/GetServiceCodes',
+        url: getBaseURL() + '/ClinicServices/GetServiceCodes',
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -161,7 +161,7 @@ function fnLoadServiceCodeTree() {
 }
 function fnFillServiceDetail(ServiceID) {
     $.ajax({
-        url: getBaseURL() + '/ServiceCodes/GetServiceCodeByID',
+        url: getBaseURL() + '/ClinicServices/GetServiceCodeByID',
         data: {
             ServiceID: ServiceID
         },
@@ -223,7 +223,7 @@ function fnAddOrUpdateServiceCode() {
            /* l_ServiceParameter: sPar*/
         }
         $.ajax({
-            url: getBaseURL() + '/ServiceCodes/AddOrUpdateServiceCode',
+            url: getBaseURL() + '/ClinicServices/AddOrUpdateServiceCode',
             type: 'POST',
             datatype: 'json',
             data: {

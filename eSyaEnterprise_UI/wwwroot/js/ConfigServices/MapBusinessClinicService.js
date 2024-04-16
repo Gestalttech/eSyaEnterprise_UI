@@ -22,7 +22,7 @@ function fnLoadGrid() {
 function fnLoadClinicServiceLink() {
     $("#jqgClinicServiceLink").jqGrid('GridUnload');
     $("#jqgClinicServiceLink").jqGrid({
-        url: getBaseURL() + '/ClinicService/GetClinicServiceLinkbyBusinesskey?businessKey=' + $('#cboBusinessKey').val(),
+        url: getBaseURL() + '/ClinicServices/GetClinicServiceLinkbyBusinesskey?businessKey=' + $('#cboBusinessKey').val(),
         datatype: 'json',
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -185,7 +185,7 @@ function fnSaveClinicServiceLink() {
     }
 
     $.ajax({
-        url: getBaseURL() + '/ClinicService/AddOrUpdateClinicServiceLink',
+        url: getBaseURL() + '/ClinicServices/AddOrUpdateClinicServiceLink',
         type: 'POST',
         datatype: 'json',
         data: obj,
@@ -220,7 +220,7 @@ function fnBindClinics() {
     $("#cboClinicType").empty();
 
     $.ajax({
-        url: getBaseURL() + '/ClinicService/GetClinicbyBusinesskey?businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/ClinicServices/GetClinicbyBusinesskey?businessKey=' + $("#cboBusinessKey").val(),
         type: 'POST',
         datatype: 'json',
         error: function (error) {
@@ -255,7 +255,7 @@ function fnBindClinics() {
 function fnBindConsultations() {
     $("#cboConsultationType").empty();
     $.ajax({
-        url: getBaseURL() + '/ClinicService/GetConsultationbyClinicIdandBusinesskey?clinicId=' + $("#cboClinicType").val() + '&businessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/ClinicServices/GetConsultationbyClinicIdandBusinesskey?clinicId=' + $("#cboClinicType").val() + '&businessKey=' + $("#cboBusinessKey").val(),
         type: 'POST',
         datatype: 'json',
         error: function (xhr) {
