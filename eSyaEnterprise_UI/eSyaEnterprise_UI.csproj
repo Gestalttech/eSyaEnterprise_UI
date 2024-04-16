@@ -17,6 +17,7 @@
     <Compile Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Compile Remove="Areas\ProductSetup\Views\Connect\**" />
     <Compile Remove="Areas\ProductSetup\Views\License\**" />
+    <Compile Remove="Areas\Stores\Views\ConfigStores\**" />
     <Compile Remove="Areas\Stores\Views\Rules\**" />
     <Compile Remove="Areas\TokenSystem\Views\Addon\**" />
     <Compile Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
@@ -34,6 +35,7 @@
     <Content Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Content Remove="Areas\ProductSetup\Views\Connect\**" />
     <Content Remove="Areas\ProductSetup\Views\License\**" />
+    <Content Remove="Areas\Stores\Views\ConfigStores\**" />
     <Content Remove="Areas\Stores\Views\Rules\**" />
     <Content Remove="Areas\TokenSystem\Views\Addon\**" />
     <Content Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
@@ -51,6 +53,7 @@
     <EmbeddedResource Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\Connect\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\License\**" />
+    <EmbeddedResource Remove="Areas\Stores\Views\ConfigStores\**" />
     <EmbeddedResource Remove="Areas\Stores\Views\Rules\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Addon\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
@@ -68,6 +71,7 @@
     <None Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <None Remove="Areas\ProductSetup\Views\Connect\**" />
     <None Remove="Areas\ProductSetup\Views\License\**" />
+    <None Remove="Areas\Stores\Views\ConfigStores\**" />
     <None Remove="Areas\Stores\Views\Rules\**" />
     <None Remove="Areas\TokenSystem\Views\Addon\**" />
     <None Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
@@ -122,10 +126,13 @@
     <Compile Remove="Areas\ProductSetup\Models\DO_LocationMenuLink.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_SMSConnect.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
+    <Compile Remove="Areas\Stores\Controllers\ConfigStoresController.cs" />
     <Compile Remove="Areas\Stores\Controllers\RulesController.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
+    <Compile Remove="Areas\Stores\Models\DO_Forms.cs" />
     <Compile Remove="Areas\Stores\Models\DO_FormSubParameter.cs" />
     <Compile Remove="Areas\Stores\Models\DO_InventoryRules.cs" />
+    <Compile Remove="Areas\Stores\Models\DO_StoreFormLink.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\AddonController.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\DisplaySystemController.cs" />
     <Compile Remove="Areas\TokenSystem\Controllers\GenerateController.cs" />
@@ -217,6 +224,8 @@
     <Content Remove="wwwroot\js\ProductSetup\SMSConnect.js" />
     <Content Remove="wwwroot\js\ProductSetup\UserRoleActionLink.js" />
     <Content Remove="wwwroot\js\Stores\InventoryRules.js" />
+    <Content Remove="wwwroot\js\Stores\PortfolioMaster.js" />
+    <Content Remove="wwwroot\js\Stores\StoreMaster.js" />
     <Content Remove="wwwroot\js\TokenSystem\CounterAddon.js" />
     <Content Remove="wwwroot\js\TokenSystem\TokenManagement.js" />
   </ItemGroup>

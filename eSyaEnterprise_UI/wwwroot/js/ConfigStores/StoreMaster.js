@@ -104,6 +104,7 @@ function fnEditStoreCodes(e, actiontype) {
         datatype: 'json',
         success: function (result) {
             if (result != null) {
+                debugger;
                 eSyaParams.SetJSONValue(result.l_FormParameter);
             }
         },
