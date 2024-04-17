@@ -49,6 +49,8 @@ using eSyaEnterprise_UI.Areas.ConfigeSya.Data;
 using eSyaEnterprise_UI.Areas.ConfigServices.Data;
 using eSyaEnterprise_UI.Areas.DocumentControl.Data;
 using eSyaEnterprise_UI.Areas.ConfigStores.Data;
+using eSyaEnterprise_UI.Areas.InterfaceEmail.Data;
+using eSyaEnterprise_UI.Areas.InterfaceSMS.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -118,9 +120,9 @@ builder.Services.AddHttpClient<IeSyaProductSetupAPIServices, eSyaProductSetupAPI
 
 });
 
-builder.Services.AddHttpClient<IeSyaSMSAPIServices, eSyaSMSAPIServices>(p =>
+builder.Services.AddHttpClient<IeSyaInterfaceSMSAPIServices, eSyaInterfaceSMSAPIServices>(p =>
 {
-    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaSMS_API"));
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceSMS_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
@@ -321,6 +323,16 @@ builder.Services.AddHttpClient<IeSyaConfigStoreAPIServices, eSyaConfigStoreAPISe
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+
+builder.Services.AddHttpClient<IeSyaInterfaceEmailAPIServices, eSyaInterfaceEmailAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceEmail_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
 
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
