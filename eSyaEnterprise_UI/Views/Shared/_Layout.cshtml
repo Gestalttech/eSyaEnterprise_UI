@@ -410,17 +410,29 @@
         $("#btnCloseMenu").click(function (e) {
             toggleTheMenu(e);
         }); 
-        function fnModuleClick(e) {
+        // function fnModuleClick(e) {
             
-            if ($(e.target).find('svg ').attr('data-icon') == 'circle-plus') {
-                $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
-                $(e.target).find('svg ').attr('data-icon','circle-minus')
-            }
-            else{
-                $(e.target).find('svg ').attr('data-icon', 'circle-plus');
-            }
+        //     if ($(e.target).find('svg ').attr('data-icon') == 'circle-plus') {
+        //         $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+        //         $(e.target).find('svg ').attr('data-icon','circle-minus')
+        //     }
+        //     else{
+        //         $(e.target).find('svg ').attr('data-icon', 'circle-plus');
+        //     }
  
-        }
+        // }
+
+        $("[data-node=first]").click(function () {
+
+            if ($(this).find('svg ').attr('data-icon') == 'circle-plus') {
+                $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+                $(this).find('svg ').attr('data-icon', 'circle-minus')
+            }
+            else {
+                $(this).find('svg ').attr('data-icon', 'circle-plus');
+            }
+
+        });
        
         $("[data-node=second] li a").click(function (e) {
             $("[data-node=second] li a").not(this).find('svg').attr('data-icon', 'caret-right');

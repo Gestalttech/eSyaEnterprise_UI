@@ -9,7 +9,7 @@
         @foreach (var mn in Model)
         {
             <li>
-                <a href="#" data-node="first" onclick=fnModuleClick(event)><i class="fa-solid fa-circle-plus fa-lg"></i> @mn.MainMenu </a>
+                <a href="#" data-node="first"><i class="fa-solid fa-circle-plus fa-lg"></i> @mn.MainMenu </a>
                 <ul class="submenu" data-node="second">
 
                     @foreach (var sm1 in mn.l_FormMenu)
