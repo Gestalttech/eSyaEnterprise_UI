@@ -1,10 +1,11 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
-using eSyaEnterprise_UI.Areas.CalDoc.Models;
 using eSyaEnterprise_UI.Areas.DocumentControl.Data;
 using eSyaEnterprise_UI.Areas.DocumentControl.Models;
 using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
 {
@@ -140,6 +141,30 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
             {
                 _logger.LogError(ex, "UD:GetDocumentControlMaster");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        /// <summary>
+        /// Insert Or Update Business wise Document Control Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateBusinesswiseDocumentControl(DO_BusinessDocument_Link obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Document/InsertOrUpdateBusinesswiseDocumentControl", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateBusinesswiseDocumentControl:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }
         #endregion
