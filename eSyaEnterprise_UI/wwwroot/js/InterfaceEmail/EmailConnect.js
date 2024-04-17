@@ -34,7 +34,7 @@ function fnLoadGridEmailConnect() {
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port, localization.Active, localization.Actions],
         colModel: [
-            { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: false },
+            { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "OutgoingMailServer", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "Port", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
@@ -83,7 +83,7 @@ function BindLocationsbyBusinessID() {
 
     $("#cboBusinessKey").empty();
     $.ajax({
-        url: getBaseURL() + '/Connect/GetBusinessLocationByBusinessID?BusinessId=' + $("#cboBusinessEntity").val(),
+        url: getBaseURL() + '/InterfaceEmail/Connect/GetBusinessLocationByBusinessID?BusinessId=' + $("#cboBusinessEntity").val(),
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -119,7 +119,9 @@ function fnGetISDCodeByBusinessKey() {
 
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/Connect/GetLocationISDCodeByBusinessKey?BusinessKey=' + $("#cboBusinessKey").val(),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: getBaseURL() + '/InterfaceEmail/Connect/GetLocationISDCodeByBusinessKey?BusinessKey=' + $("#cboBusinessKey").val(),
         success: function (response) {
             if (response !== null) {
 
@@ -166,7 +168,6 @@ function fnEditEmailConnect(e, actiontype) {
     var _selectedRow = $("#" + rowid).offset();
     var firstRow = $("tr.ui-widget-content:first").offset();
     $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
-
     BindLocationsbyBusinessID();
     $("#cboBusinessKey").val(rowData.BusinessKey);
     $("#cboBusinessKey").selectpicker('refresh');

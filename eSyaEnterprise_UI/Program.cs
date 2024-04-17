@@ -120,14 +120,6 @@ builder.Services.AddHttpClient<IeSyaProductSetupAPIServices, eSyaProductSetupAPI
 
 });
 
-builder.Services.AddHttpClient<IeSyaInterfaceSMSAPIServices, eSyaInterfaceSMSAPIServices>(p =>
-{
-    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceSMS_API"));
-    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
-    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
-    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
-
-});
 builder.Services.AddHttpClient<IeSyaLocalizeAPIServices, eSyaLocalizeAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaLocalize_API"));
@@ -332,7 +324,14 @@ builder.Services.AddHttpClient<IeSyaInterfaceEmailAPIServices, eSyaInterfaceEmai
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+builder.Services.AddHttpClient<IeSyaInterfaceSMSAPIServices, eSyaInterfaceSMSAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceSMS_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
+});
 
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();

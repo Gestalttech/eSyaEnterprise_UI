@@ -1,5 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
-using eSyaEnterprise_UI.Areas.ConfigBusiness.Models;
+//using eSyaEnterprise_UI.Areas.ConfigBusiness.Models;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Data;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Models;
 using eSyaEnterprise_UI.Models;
@@ -29,7 +29,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("Connect/GetActiveEntites");
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("EmailConnect/GetActiveEntites");
                 if (serviceResponse.Status)
                 {
                     ViewBag.entity_list = serviceResponse.Data.Select(b => new SelectListItem
@@ -52,7 +52,56 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+        [Area("InterfaceEmail")]
+        [HttpPost]
+        public async Task<JsonResult> GetBusinessLocationByBusinessID(int BusinessId)
+        {
+            try
+            {
+                var parameter = "?BusinessId=" + BusinessId;
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("EmailConnect/GetBusinessLocationByBusinessID" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
 
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessLocationByBusinessID:For BusinessId {0}", BusinessId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessLocationByBusinessID:For BusinessId {0}", BusinessId);
+                throw;
+            }
+        }
+        [Area("InterfaceEmail")]
+        [HttpPost]
+        public async Task<JsonResult> GetLocationISDCodeByBusinessKey(int BusinessKey)
+        {
+            try
+            {
+                var parameter = "?BusinessKey=" + BusinessKey;
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<DO_CountryCodes>("EmailConnect/GetLocationISDCodeByBusinessKey" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationISDCodeByBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationISDCodeByBusinessKey:For BusinessId {0}", BusinessKey);
+                throw;
+            }
+        }
         /// <summary>
         ///Get Email Connect by Business ID for Grid
         /// </summary>
@@ -62,7 +111,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
             try
             {
                 var parameter = "?BusinessId=" + BusinessId;
-                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailConnect>>("Connect/GetEmailConnectbyBusinessID" + parameter);
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailConnect>>("EmailConnect/GetEmailConnectbyBusinessID" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -94,7 +143,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Connect/InsertOrUpdateEmailConnect", obj);
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailConnect/InsertOrUpdateEmailConnect", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -124,7 +173,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.status = status;
-                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Connect/ActiveOrDeActiveEmailConnect", obj);
+                var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailConnect/ActiveOrDeActiveEmailConnect", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
