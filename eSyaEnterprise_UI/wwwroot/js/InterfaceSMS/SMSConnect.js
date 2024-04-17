@@ -46,7 +46,7 @@ function fnLoadGridSMSConnect() {
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.BusinessLocation, localization.ServiceProvider, localization.ISDCode, localization.Api, localization.UserId, localization.Password, localization.SenderId, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
         colModel: [
-            { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: false },
+            { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ServiceProvider", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "Api", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
@@ -109,7 +109,7 @@ function BindLocationsbyBusinessID() {
 
     $("#cboBusinessKey").empty();
     $.ajax({
-        url: getBaseURL() + '/Connect/GetBusinessLocationByBusinessID?BusinessId=' + $("#cboBusinessEntity").val(),
+        url: getBaseURL() + '/InterfaceSMS/Connect/GetBusinessLocationByBusinessID?BusinessId=' + $("#cboBusinessEntity").val(),
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -145,10 +145,10 @@ function fnGetISDCodeByBusinessKey() {
 
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/Connect/GetLocationISDCodeByBusinessKey?BusinessKey=' + $("#cboBusinessKey").val(),
+        url: getBaseURL() + '/InterfaceSMS/Connect/GetLocationISDCodeByBusinessKey?BusinessKey=' + $("#cboBusinessKey").val(),
         success: function (response) {
             if (response !== null) {
-                debugger;
+               
                 $("#cbolocISD").val(response.Isdcode);
                 $("#cbolocISD").selectpicker('refresh');
                 $("#cbolocISD").trigger("change");

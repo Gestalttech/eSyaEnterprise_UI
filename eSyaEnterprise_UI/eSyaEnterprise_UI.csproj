@@ -247,7 +247,7 @@
     <Compile Include="Areas\InterfaceSMS\Controllers\ConnectController.cs" />
     <Compile Include="Areas\InterfaceSMS\Data\eSyaInterfaceSMSAPIServices.cs" />
     <Compile Include="Areas\InterfaceSMS\Data\IeSyaInterfaceSMSAPIServices.cs" />
-    <Compile Include="Areas\InterfaceSMS\Models\DO_EmailConnect.cs" />
+    <Compile Include="Areas\InterfaceSMS\Models\DO_BusinessEntity.cs" />
     <Compile Include="Areas\InterfaceSMS\Models\DO_SMSConnect.cs" />
   </ItemGroup>
   

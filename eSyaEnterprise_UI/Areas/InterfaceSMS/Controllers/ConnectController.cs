@@ -1,5 +1,4 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
-using eSyaEnterprise_UI.Areas.ConfigBusiness.Models;
 using eSyaEnterprise_UI.Areas.InterfaceSMS.Data;
 using eSyaEnterprise_UI.Areas.InterfaceSMS.Models;
 using eSyaEnterprise_UI.Areas.ProductSetup.Data;
@@ -31,7 +30,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("Connect/GetActiveEntites");
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("SMSConnect/GetActiveEntites");
                 if (serviceResponse.Status)
                 {
                     ViewBag.entity_list = serviceResponse.Data.Select(b => new SelectListItem
@@ -58,13 +57,14 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
         /// <summary>
         ///Get ISD Code by Business Key
         /// </summary>
+        [Area("InterfaceSMS")]
         [HttpPost]
         public async Task<JsonResult> GetLocationISDCodeByBusinessKey(int BusinessKey)
         {
             try
             {
                 var parameter = "?BusinessKey=" + BusinessKey;
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<DO_CountryCodes>("Connect/GetLocationISDCodeByBusinessKey" + parameter);
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<DO_CountryCodes>("SMSConnect/GetLocationISDCodeByBusinessKey" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -93,13 +93,14 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
         /// <summary>
         ///Get Business Locations  By Business ID
         /// </summary>
+        [Area("InterfaceSMS")]
         [HttpPost]
         public async Task<JsonResult> GetBusinessLocationByBusinessID(int BusinessId)
         {
 
             try
             {
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("Connect/GetBusinessLocationByBusinessID?BusinessId=" + BusinessId);
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("SMSConnect/GetBusinessLocationByBusinessID?BusinessId=" + BusinessId);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -127,7 +128,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
             try
             {
                 var parameter = "?BusinessId=" + BusinessId;
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSConnect>>("Connect/GetSMSConnectbyBusinessID" + parameter);
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSConnect>>("SMSConnect/GetSMSConnectbyBusinessID" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -166,7 +167,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
                 obj.User_ID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Connect/InsertOrUpdateSMSConnect", obj);
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSConnect/InsertOrUpdateSMSConnect", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -196,7 +197,7 @@ namespace eSyaEnterprise_UI.Areas.InterfaceSMS.Controllers
                 obj.User_ID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.status = status;
-                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Connect/ActiveOrDeActiveSMSConnect", obj);
+                var serviceResponse = await _eSyaInterfaceSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSConnect/ActiveOrDeActiveSMSConnect", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
