@@ -307,6 +307,7 @@ builder.Services.AddHttpClient<IeSyaDocumentControlAPIServices, eSyaDocumentCont
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+
 builder.Services.AddHttpClient<IeSyaConfigStoreAPIServices, eSyaConfigStoreAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigStores_API"));
@@ -324,6 +325,7 @@ builder.Services.AddHttpClient<IeSyaInterfaceEmailAPIServices, eSyaInterfaceEmai
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+
 builder.Services.AddHttpClient<IeSyaInterfaceSMSAPIServices, eSyaInterfaceSMSAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceSMS_API"));
