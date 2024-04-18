@@ -7,33 +7,34 @@ $(function () {
         selector: "#btnBusinessDocument",
         trigger: 'left',
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditBusinessDocument(event, 'edit') } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditBusinessDocument(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditBusinessDocument(event, 'delete') } },
+            jqgEdit: { name: localization.MapDocument, icon: "edit", callback: function (key, opt) { fnEditBusinessDocument(event, 'edit') } },
+          //  jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditBusinessDocument(event, 'view') } },
+           // jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditBusinessDocument(event, 'delete') } },
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.MapDocument + " </span>");
+   // $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+   // $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
    
 });
 
 
 function fnCalendarKey_onchange() {
+    
     var _calendarKey = $("#cboCalendarKey").val();
-    if (_calendarKey == 0) {
+    if (_calendarKey == "0") {
         $('#jstBusinessDocumentLink').css('display', 'none');
         $('#dvBusinessDocument').css('display', 'none');
-        
+        fnLoadDocumentsTree(_calendarKey);
     }
     else {
-        debugger;
+        $('#dvBusinessDocument').css('display', 'none');
         fnLoadDocumentsTree(_calendarKey);
     }
     
 }
 function fnLoadDocumentsTree(_calendarKey) {
-    
+    $("#jstBusinessDocumentLink").jstree('destroy');
          
     $.ajax({
         url: getBaseURL() + '/Document/GetBusinessLocationbyCalendarkeys?calendarkey='+_calendarKey,
@@ -62,7 +63,7 @@ function fnLoadDocumentsTree(_calendarKey) {
     });
 
     $('#jstBusinessDocumentLink').on("changed.jstree", function (e, data) {
-
+       
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -92,7 +93,7 @@ function fnLoadDocumentsTree(_calendarKey) {
 }
 
 function fnLoadGridBusinesssDocument(businesskey) {
-    debugger;
+   
     $("#jqgBusinesssDocumentLink").GridUnload();
     $("#jqgBusinesssDocumentLink").jqGrid({
         url: getBaseURL() + '/Document/GetDocumentFormlinkwithLocation?calendarkey=' + $("#cboCalendarKey").val() + '&businesskey=' + businesskey,
@@ -108,10 +109,10 @@ function fnLoadGridBusinesssDocument(businesskey) {
             { name: "FormName", width: 150, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
             { name: "DocumentName", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
             { name: "DocumentId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
-            { name: "SchemaId", width: 60, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "ComboId", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
-            { name: "UsageStatus", width: 40, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "ActiveStatus", width: 50, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "SchemaId", width: 60, editable: false, align: 'left', resizable: false, hidden: false },
+            { name: "ComboId", width: 40, editable: false, align: 'left', resizable: false, hidden: false },
+            { name: "UsageStatus", width: 40, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", width: 50, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 40, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
@@ -160,9 +161,76 @@ function fnEditBusinessDocument(e,actiontype) {
     $("#btnSaveBusinessDocument").html("<i class='fa fa-sync'></i>" + localization.Update);
 }
 
-function fnRefreshGridBusinessDocumentLink() { $("#jqgBusinesssDocumentLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid'); }
-function fnSaveBusinesssDocumentLink() {
+function fnRefreshGridBusinessDocumentLink()
+{ 
+ $("#jqgBusinesssDocumentLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
+function fnSaveBusinessDocument() {
+    
 
+    if (IsStringNullorEmpty(businesskey) || businesskey == '0') {
+
+        fnAlert("w", "EAD_02_00", "UI0179", "Please select Location");
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboCalendarKey").val()) || $("#cboCalendarKey").val() === 0 || $("#cboCalendarKey").val() === "0") {
+        fnAlert("w", "EAD_02_00", "UI0178", "Please select Calendar Key");
+        return;
+    }
+
+    var $grid = $("#jqgDocContManagement");
+    var r_doc = [];
+    var ids = jQuery("#jqgDocContManagement").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgDocContManagement').jqGrid('getRowData', rowId);
+
+        r_doc.push({
+            BusinessKey: businesskey,
+            CalendarKey: $("#cboCalendarKey").val(),
+            ComboId: rowData.ComboId,
+            FormId: rowData.FormId,
+            DocumentId: rowData.DocumentId,
+            SchemaId: rowData.SchemaId,
+            UsageStatus: rowData.UsageStatus,
+            //FreezeStatus: rowData.FreezeStatus,
+            ActiveStatus: rowData.ActiveStatus
+
+        });
+
+    }
+  
+    if (r_doc.length <= 0) {
+        fnAlert("w", "EAD_02_00", "UI0179", "Please select any Document control");
+        return;
+    }
+
+
+    $("#btnSaveBusinessDocument").attr('disabled', true);
+  
+    $("#btnSaveBusinessDocument").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Document/InsertOrUpdateBusinesswiseDocumentControl',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: r_doc },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSaveBusinessDocument").attr('disabled', false);
+                fnRefreshGridBusinessDocumentLink();
+                $('#PopupBusinessDocument').modal('hide');
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnSaveBusinessDocument").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveBusinessDocument").attr("disabled", false);
+        }
+    });
 }
 
 
@@ -179,8 +247,9 @@ function fnLoadPopupGridBusinessDocumentLink(formId)
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.InUse, localization.Active],
+        colNames: [localization.FormID,localization.DocumentId, localization.GenLogic, localization.CalendarType, localization.IsTransationMode, localization.IsStoreCode, localization.IsPaymentMode, localization.SchemaId, localization.ComboId, localization.DocumentDescription, localization.ShortDesc, localization.DocumentType, localization.InUse, localization.Active],
         colModel: [
+            { name: "FormId", index: "DocumentId", width: 90, editable: false, align: 'left', hidden: false },
             { name: "DocumentId",index: "DocumentId", width: 90, editable: false, align: 'left', hidden: false },
             { name: "GeneLogic", index: "GeneLogic", width: 90, editable: false, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "C:Continuous;Y:Yearwise;M:Monthwise;D:Datewise" } },
             { name: "CalendarType", index: "CalendarType", width: 90, editable: false, align: 'left', resizable: false, hidden: false, formatter: 'select', edittype: 'select', editoptions: { value: "NA:NotApplicable;FY:FinancialYear;CY:CalendarYear" } },
@@ -239,5 +308,5 @@ function fnRefreshDocumentControlGrid() {
 }
 
 function fnClearFields() {
-    $("#cboCalendarKey").val('0').selectpicker('refresh');
+    businesskey = '0'
 }

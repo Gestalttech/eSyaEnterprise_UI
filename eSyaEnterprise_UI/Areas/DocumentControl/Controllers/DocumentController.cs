@@ -147,13 +147,22 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
         /// Insert Or Update Business wise Document Control Link
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateBusinesswiseDocumentControl(DO_BusinessDocument_Link obj)
+        public async Task<JsonResult> InsertOrUpdateBusinesswiseDocumentControl(List<DO_BusinessDocument_Link> obj)
         {
 
             try
             {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    return true;
+                });
+                var truedocuments = obj.Where(x => x.ActiveStatus).ToList();
+                if (truedocuments.Count > 1)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please select only one Document" });
+                }
                 var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Document/InsertOrUpdateBusinesswiseDocumentControl", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
