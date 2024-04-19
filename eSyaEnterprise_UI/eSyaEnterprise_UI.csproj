@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <Compile Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
+    <Compile Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <Compile Remove="Areas\ConfigInventory\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
     <Compile Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -28,6 +29,7 @@
     <Compile Remove="wwwroot\js\ManageServices\**" />
     <Content Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <Content Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
+    <Content Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <Content Remove="Areas\ConfigInventory\**" />
     <Content Remove="Areas\ConfigProduct\**" />
     <Content Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -47,6 +49,7 @@
     <Content Remove="wwwroot\js\ManageServices\**" />
     <EmbeddedResource Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <EmbeddedResource Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
+    <EmbeddedResource Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
     <EmbeddedResource Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -66,6 +69,7 @@
     <EmbeddedResource Remove="wwwroot\js\ManageServices\**" />
     <None Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
     <None Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
+    <None Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <None Remove="Areas\ConfigInventory\**" />
     <None Remove="Areas\ConfigProduct\**" />
     <None Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -96,10 +100,18 @@
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessEntity.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_BusinessLocation.cs" />
     <Compile Remove="Areas\ConfigeSya\Models\DO_CountryCodes.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Controllers\SpecialtyController.cs" />
     <Compile Remove="Areas\ConfigFacilities\Controllers\SpecialtyTeachingController.cs" />
     <Compile Remove="Areas\ConfigFacilities\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_ApplicationCodes.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_CommonData.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_CountryCodes.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_ReturnParameter.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyBusiness.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyBusinessLink.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyClinicLink.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyCodes.cs" />
+    <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyParameter.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyUnit.cs" />
     <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigServicesController.cs" />
@@ -207,6 +219,8 @@
     <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
     <Content Remove="wwwroot\js\ConfigBusiness\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\ConfigBusiness\CalendarDetails.js" />
+    <Content Remove="wwwroot\js\ConfigFacilities\MapSpecialtiesToBusiness.js" />
+    <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyCodes.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
     <Content Remove="wwwroot\js\DocumentControl\BusinessCalendar.js" />

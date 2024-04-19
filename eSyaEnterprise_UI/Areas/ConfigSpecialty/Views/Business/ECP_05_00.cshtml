@@ -9,9 +9,9 @@
 
 <link rel="stylesheet" href="~/css/Common/jsTree.css" />
 
-@section scripts{
+@section scripts {
     <script src="~/js/Common/jsTree.js"></script>
-    <script src="~/js/ConfigFacilities/MapSpecialtiesToBusiness.js"></script>
+    <script src="~/js/ConfigSpecialty/MapSpecialtiesToBusiness.js"></script>
 }
 
 @{
@@ -40,7 +40,7 @@
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label class="">@Localizer["BusinessKey"]</label>
-            <select class="selectpicker" data-live-search="false" data-mobile="true" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
+            <select class="selectpicker" data-live-search="true" data-container="body" id="cboBusinessKey" title="Select" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadSpecialtyLink()"></select>
         </div>
         <label>@Localizer["Specialty"] </label>
         <div id="jstSpecialtyClinicLink"></div>
@@ -117,7 +117,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <p class="subheading">@Localizer["SpecialtyParameter"]</p>
                         <hr class="left" />
-                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = ViewBag.SpecialtyParameter })
+                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "1" })
                     </div>
                 </div>
                 <div class="row mar0 padbot10" hidden>

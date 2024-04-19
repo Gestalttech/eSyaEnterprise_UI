@@ -1,4 +1,4 @@
-﻿namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Models
+﻿namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Models
 {
     public class DO_SpecialtyClinicLink
     {

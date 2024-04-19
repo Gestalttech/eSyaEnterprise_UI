@@ -11,7 +11,7 @@ $(document).ready(function () {
 function fnLoadSpecialtyCode() {
 
     $.ajax({
-        url: getBaseURL() + '/Specialty/GetSpecialtyTree',
+        url: getBaseURL() + '/ConfigSpecialty/Specialty/GetSpecialtyTree',
         success: function (result) {
             $('#jstSpecialtyCode').jstree({
                 core: { 'data': result, 'check_callback': true, 'multiple': false }
@@ -42,7 +42,7 @@ function fnLoadSpecialtyCode() {
                         $("#btnSaveSpecialty").html('<i class="fa fa-plus"></i> ' + localization.Add);
                         $("#btnSaveSpecialty").attr("disabled", _userFormRole.IsInsert === false);
                         $("#pnlMainMenu").show();
-                        $("#btnSaveSpecialty").show(); 
+                        $("#btnSaveSpecialty").show();
                         fnLoadAgeRangeGrid();
                     });
                 }
@@ -62,7 +62,7 @@ function fnLoadSpecialtyCode() {
                         fnShowSpecialtyDetail(data.node.id);
                         fnLoadAgeRangeGrid();
                         $("#pnlMainMenu").show();
-                        
+
                     });
 
                     $('#Edit').on('click', function () {
@@ -92,7 +92,7 @@ function fnLoadSpecialtyCode() {
 function fnShowSpecialtyDetail(specialtyId) {
 
     $.ajax({
-        url: getBaseURL() + '/Specialty/GetSpecialtyCode?specialtyId=' + specialtyId,
+        url: getBaseURL() + '/ConfigSpecialty/Specialty/GetSpecialtyCode?specialtyId=' + specialtyId,
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -144,7 +144,7 @@ function fnDeleteNode() {
 
             $("#btnDeleteNode").attr("disabled", true);
             $.ajax({
-                url: getBaseURL() + '/Specialty/DeleteSpecialtyCodes',
+                url: getBaseURL() + '/ConfigSpecialty/Specialty/DeleteSpecialtyCodes',
                 type: 'POST',
                 datatype: 'json',
                 data: obj,
@@ -196,7 +196,7 @@ function fnSaveSpecialtyCodes() {
 
     $("#btnSaveSpecialty").attr('disabled', true);
 
-   
+
     $("#jqgAgeRange").jqGrid('editCell', 0, 0, false).attr("value");
     var _agelinks = [];
     var ids = jQuery("#jqgAgeRange").jqGrid('getDataIDs');
@@ -216,7 +216,7 @@ function fnSaveSpecialtyCodes() {
         });
 
     }
-   
+
     var obj =
     {
         SpecialtyID: $('#txtSpecialtyId').val(),
@@ -231,9 +231,9 @@ function fnSaveSpecialtyCodes() {
 
     var URL;
     if ($('#txtSpecialtyId').val() !== "")
-        URL = getBaseURL() + '/Specialty/UpdateSpecialtyCodes';
+        URL = getBaseURL() + '/ConfigSpecialty/Specialty/UpdateSpecialtyCodes';
     else
-        URL = getBaseURL() + '/Specialty/InsertSpecialtyCodes';
+        URL = getBaseURL() + '/ConfigSpecialty/Specialty/InsertSpecialtyCodes';
 
     //$("#btnSaveSpecialty").html('<i class="fa fa-spinner fa-spin"></i> ' + localization.wait);
     $("#btnSaveSpecialty").attr('disabled', true);
@@ -298,7 +298,7 @@ function fnSetControlStatus(isdisabled) {
 function fnValidateBeforeSave() {
 
     if ($('#txtSpecialtyDesc').val() === "" || $('#txtSpecialtyDesc').val() === null) {
-        fnAlert("w", "ECP_04_00","UI0124",errorMsg.SpecialtyCodeDesc_E8);
+        fnAlert("w", "ECP_04_00", "UI0124", errorMsg.SpecialtyCodeDesc_E8);
         $('#txtSpecialtyDesc').focus();
         return false;
     }
@@ -318,7 +318,7 @@ function fnValidateBeforeSave() {
         $('#cboSpecialtyGroup').focus();
         return false;
     }
-    
+
     if ($('#txtSpecialtyId').val() === "" && $('#chkActiveStatus').parent().hasClass("is-checked") === false) {
         fnAlert("w", "ECP_04_00", "UI0127", errorMsg.SelectStatus_E12);
         $('#chkActiveStatus').focus();
@@ -327,16 +327,16 @@ function fnValidateBeforeSave() {
     return true;
 }
 function fnLoadAgeRangeGrid() {
-    
+
     $("#jqgAgeRange").GridUnload();
     $('#btnSaveAgeRange').show();
 
     $("#jqgAgeRange").jqGrid({
-        url: getBaseURL() + '/Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
+        url: getBaseURL() + '/ConfigSpecialty/Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
         datatype: "json",
         mtype: 'POST',
         rownumbers: true,
-        
+
         colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom, localization.RangeFromPeriod, localization.AgeRangeTo, localization.RangeToPeriod, localization.ActiveStatus],
         colModel: [
             { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
@@ -378,7 +378,7 @@ function fnLoadAgeRangeGrid() {
             fnJqgridSmallScreen("jqgAgeRange");
         }
     });
-   
+
     fnTreeSize();
 
 }

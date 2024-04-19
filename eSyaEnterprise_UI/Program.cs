@@ -51,6 +51,7 @@ using eSyaEnterprise_UI.Areas.DocumentControl.Data;
 using eSyaEnterprise_UI.Areas.ConfigStores.Data;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Data;
 using eSyaEnterprise_UI.Areas.InterfaceSMS.Data;
+using eSyaEnterprise_UI.Areas.ConfigSpecialty.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -329,6 +330,15 @@ builder.Services.AddHttpClient<IeSyaInterfaceEmailAPIServices, eSyaInterfaceEmai
 builder.Services.AddHttpClient<IeSyaInterfaceSMSAPIServices, eSyaInterfaceSMSAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaInterfaceSMS_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
+builder.Services.AddHttpClient<IeSyaConfigSpecialtyAPIServices, eSyaConfigSpecialtyAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaConfigSpecialty_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));

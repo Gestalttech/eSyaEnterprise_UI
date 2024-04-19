@@ -17,7 +17,7 @@ function fnLoadSpecialtyLink() {
 function fnCreateSpecialtyTree() {
 
     $.ajax({
-        url: getBaseURL() + '/Specialty/GetSpecialtyLinkTree?businessKey=' + $('#cboBusinessKey').val(),
+        url: getBaseURL() + '/ConfigSpecialty/Business/GetSpecialtyLinkTree?businessKey=' + $('#cboBusinessKey').val(),
         success: function (result) {
 
             $('#jstSpecialtyClinicLink').jstree({
@@ -104,7 +104,7 @@ function fnSpecialtyParameter(specialtyId) {
     fnFillSpecialtyDetail(specialtyId);
     eSyaParams.ClearValue();
     $.ajax({
-        url: getBaseURL() + '/Specialty/GetSpecialtyParameter?businessKey=' + $('#cboBusinessKey').val() + '&specialtyId=' + specialtyId,
+        url: getBaseURL() + '/ConfigSpecialty/Business/GetSpecialtyParameter?businessKey=' + $('#cboBusinessKey').val() + '&specialtyId=' + specialtyId,
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -148,7 +148,7 @@ function fnSpecialtyParameter(specialtyId) {
 function fnFillSpecialtyDetail(specialtyId) {
 
     $.ajax({
-        url: getBaseURL() + '/Specialty/GetSpecialtyCode?specialtyId=' + specialtyId,
+        url: getBaseURL() + '/ConfigSpecialty/Business/GetSpecialtyCode?specialtyId=' + specialtyId,
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -160,7 +160,7 @@ function fnFillSpecialtyDetail(specialtyId) {
                 $('#cboGender').selectpicker('refresh');
                 $('#cboSpecialtyType').val(response.SpecialtyType);
                 $('#cboSpecialtyType').selectpicker('refresh');
-                $('#cboSpecialtyGroup').val(response.SpecialtyGroup); 
+                $('#cboSpecialtyGroup').val(response.SpecialtyGroup);
                 $('#cboSpecialtyGroup').selectpicker('refresh');
                 if (response.ActiveStatus === true)
                     $('#chkActiveStatus').parent().addClass("is-checked");
@@ -192,7 +192,7 @@ function fnSaveSpecialtyClinicLink() {
     var businessKey = $('#cboBusinessKey').val();
     $("#btnSaveSpecialty").attr('disabled', true);
     var URL;
-    URL = getBaseURL() + '/Specialty/InsertSpecialtyBusinessLinkList';
+    URL = getBaseURL() + '/ConfigSpecialty/Business/InsertSpecialtyBusinessLinkList';
     $.ajax({
         url: URL,
         type: 'POST',
