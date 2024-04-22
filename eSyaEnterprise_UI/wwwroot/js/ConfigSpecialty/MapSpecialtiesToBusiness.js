@@ -203,7 +203,7 @@ function fnSaveSpecialtyClinicLink() {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#pnlMainMenu").hide();
                 $("#btnSaveSpecialty").html('<i class="fa fa-spinner fa-spin"></i> ' + localization.wait);
-                //$("#btnSaveSpecialty").attr('disabled', false);
+                $("#btnSaveSpecialty").attr('disabled', false);
                 $('#jstSpecialtyClinicLink').jstree('destroy');
                 fnCreateSpecialtyTree();
                 fnClearFields();
