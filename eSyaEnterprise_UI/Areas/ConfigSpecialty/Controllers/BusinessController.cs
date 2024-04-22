@@ -24,9 +24,16 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         #region Business Specialty Link
 
         [Area("ConfigSpecialty")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECP_05_00()
         {
+            ViewBag.UserFormRole = new DO_UserFormRole
+            {
+                IsInsert = true,
+                IsEdit = true,
+                IsDelete = true,
+                IsView = true
+            };
             var responseBk = _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey").Result;
             if (responseBk.Status)
             {

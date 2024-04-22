@@ -47,7 +47,7 @@ function fnCreateSpecialtyTree() {
                             fnSpecialtyParameter(data.node.id.substring(1, 10));
                             $(".mdl-card__title-text").text(localization.AddSpecialtyLink);
                             $("#btnSaveSpecialty").html('<i class="fa fa-plus"></i> ' + localization.Save);
-                            //$("#btnSaveSpecialty").attr("disabled", _userFormRole.IsInsert === false);
+                            $("#btnSaveSpecialty").attr("disabled", _userFormRole.IsInsert === false);
                             $("#pnlMainMenu").show();
                             $("#btnSaveSpecialty").show();
                         });
@@ -77,7 +77,7 @@ function fnCreateSpecialtyTree() {
                             fnSpecialtyParameter(data.node.id.substring(1, 10));
                             $(".mdl-card__title-text").text(localization.EditSpecialtyLink);
                             $("#btnSaveSpecialty").html('<i class="fa fa-sync"></i> ' + localization.Update);
-                            //$("#btnSaveSpecialty").attr("disabled", _userFormRole.IsEdit === false);
+                            $("#btnSaveSpecialty").attr("disabled", _userFormRole.IsEdit === false);
                             $("#pnlMainMenu").show();
                             $("#btnSaveSpecialty").show();
                         });
