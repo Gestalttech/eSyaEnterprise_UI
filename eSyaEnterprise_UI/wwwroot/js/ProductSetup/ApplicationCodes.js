@@ -30,12 +30,13 @@ function fnGridLoadApplicationCodes() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ApplicationCode, "", localization.Description, localization.ShortCode, localization.DefaultStatus, localization.Active, localization.Actions],
+        colNames: [localization.ApplicationCode, "", localization.Description, localization.ShortCode, localization.Control, localization.DefaultStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "ApplicationCode", width: 50, editable: true, align: 'left', hidden: false },
             { name: "CodeType", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "CodeDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "ShortCode", width: 50, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 15 } },
+            { name: "CodeTypeControl", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "S: System Defined;U: User Defined" } },
             { name: "DefaultStatus", width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             {

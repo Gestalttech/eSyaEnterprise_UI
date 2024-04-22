@@ -29,23 +29,16 @@ function fnGridLoadApplicationCodes() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ApplicationCode, localization.CodeType, localization.Description, localization.ShortCode, localization.DefaultStatus, localization.Active, localization.Actions],
+        colNames: [localization.ApplicationCode, localization.CodeType, localization.Description, localization.ShortCode, localization.Control, localization.DefaultStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "ApplicationCode", width: 50, editable: true, align: 'left', hidden: false },
             { name: "CodeType", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "CodeDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "ShortCode", width: 50, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 15 } },
+            { name: "CodeTypeControl", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "S: System Defined;U: User Defined" } },
             { name: "DefaultStatus", width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            //{
-            //    name: 'edit', search: false, align: 'left', width: 78, sortable: false, resizable: false,
-            //    formatter: function (cellValue, options, rowdata, action) {
-            //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditApplicationCodes(event,\'edit\')"><i class="fas fa-pen"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnEditApplicationCodes(event,\'view\')"><i class="far fa-eye"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title = "Delete" id="jqgDelete" onclick = "return fnEditApplicationCodes(event,\'delete\')" > <i class="fas fa-trash"></i></button>'
-
-            //    }
-            //}
+           
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

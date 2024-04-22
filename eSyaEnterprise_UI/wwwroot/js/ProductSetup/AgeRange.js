@@ -217,6 +217,8 @@ function fnSaveAgeRange() {
                 $("#PopupAgeRange").modal('hide');
                 fnClearFields();
                 fnGridRefreshAgeRange();
+                $("#btnSaveAgeRange").attr("disabled", false);
+
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);

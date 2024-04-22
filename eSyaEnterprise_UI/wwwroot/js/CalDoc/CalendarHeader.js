@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+
     $("#txtyear").blur(function () {
         var year = $("#txtyear").val();
         $("#txtCalDefFRMDate").val(year + '-01-01');
@@ -6,13 +7,37 @@
     });
     fnGridLoadCalendarHeader();
 });
-
-$('#txtCalDefFRMDate').change(function () {
+function fnCalendarType_Onchange()
+{
     
+    var caltype = $("#cboCalendarType").val();
+    var year = $("#txtyear").val();
+    if (caltype == "CY" && year != "" && year != null)
+    {
+        $("#txtCalDefFRMDate").val(year + '-01-01');
+        $("#txtCalDefTillDate").val(year + '-12-31');
+    }
+    if (caltype == "FY" && year != "" && year != null) {
+        $("#txtCalDefFRMDate").val(year + '-04-01');
+        var myDate = document.getElementById(('txtCalDefFRMDate')).valueAsDate;
+        myDate.setFullYear(myDate.getFullYear() + 1, myDate.getMonth() - 1, myDate.getDate() + 30);
+        $('#txtCalDefTillDate')[0].valueAsDate = myDate;
+    }
+}
+//$('#txtCalDefFRMDate').change(function () {
+//    debugger;
+//    var myDate = this.valueAsDate;
+//    myDate.setFullYear(myDate.getFullYear() + 1, myDate.getMonth()+1, myDate.getDate()-1);
+//    $('#txtCalDefTillDate')[0].valueAsDate = myDate;
+//});
+$('#txtCalDefFRMDate').change(function () {
+   
     var myDate = this.valueAsDate;
-    myDate.setFullYear(myDate.getFullYear() + 1, myDate.getMonth()+1, myDate.getDate()-1);
+    myDate.setFullYear(myDate.getFullYear() + 1, myDate.getMonth() -1 , myDate.getDate() +30);
     $('#txtCalDefTillDate')[0].valueAsDate = myDate;
 });
+
+
 
 function fnGridLoadCalendarHeader() {
     $("#jqgCalendarHeader").jqGrid('GridUnload');
