@@ -166,7 +166,7 @@ function fnAddBusinessLocation() {
         $("#btnDeactivateBusinessLocation").hide();
         fnGetBusinessUnitType();
         fnLoadGridPreferredLanguage();
-
+        fnGridLoadPaymentMethodInfo();
     }
 }
 
@@ -184,6 +184,7 @@ function fnEditBusinessLocation(e, actiontype) {
     BindCities();
     BindTaxIdentification();
     BindCurrrencies();
+    fnGridLoadPaymentMethodInfo();
     $('#cboCityCode').val(rowData.CityCode).selectpicker('refresh');
     $('#cboCurrrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
 
@@ -915,6 +916,7 @@ function fnISDCountryCode_onChange() {
     BindCities();
     BindTaxIdentification();
     BindCurrrencies();
+    fnGridLoadPaymentMethodInfo();
 }
 
 
@@ -1104,7 +1106,7 @@ function fnTaxInfo() {
         url: getBaseURL() + '/Location/GetLocationLocationTaxInfo?BusinessKey=' + $("#txtBusinesskey").val(),
         success: function (response) {
             if (response !== null) {
-                debugger;
+               
                 BindTaxIdentification();
                 $('#cboTaxIdentification').val(response.TaxIdentificationId).selectpicker('refresh');
                 fnGetStateNamebyTaxCode();
@@ -1134,26 +1136,26 @@ $("#btnCancelTaxInfo").click(function () {
     fnClearFields();
 });
 
-
+/* Payment Method Business Link */
 function fnGridLoadPaymentMethodInfo() {
 
     $("#jqgPaymentInfo").jqGrid('GridUnload');
 
     $("#jqgPaymentInfo").jqGrid({
-        //url: getBaseURL() + '/PaymentMethod/GetPaymentMethodbyISDCode?ISDCode=' + ISDcountry,
+        url: getBaseURL() + '/Location/GetPaymentMethodInterfacebyISDCode?ISDCode=' + $("#cbolocISD").val() + '&BusinessKey=' + $("#txtBusinesskey").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, localization.PaymentMethod, localization.InstrumentType, localization.InterfaceReqd, localization.PaymentMethodDesc, localization.InstrumentTypeDesc, localization.Active],
+        colNames: [localization.ISDCode, localization.PaymentMethod, localization.InstrumentType, localization.PaymentMethod, localization.InstrumentType, localization.InterfaceReqd, localization.Active],
         colModel: [
             { name: "Isdcode", width: 50, editable: false, align: 'left', hidden: true },
             { name: "PaymentMethod", width: 80, editable: false, hidden: true, align: 'left', resizable: true },
-            { name: "InstrumentType", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "InterfaceReqd", width: 60, editable: false, hidden: false, align: 'left', resizable: true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: false } },
+            { name: "InstrumentType", width: 80, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "PaymentMethodDesc", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "InstrumentTypeDesc", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: true } },
+            { name: "InterfaceReqd", width: 40, editable: false, hidden: false, align: 'center', resizable: true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: false } },
+            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: false } },
             ],
 
         pager: "#jqpPaymentInfo",
@@ -1196,17 +1198,66 @@ function fnGridLoadPaymentMethodInfo() {
 
 }
 
+function fnSavePaymentIntefaceInfo() {
 
+    if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
+        fnAlert("w", "ECB_02_00", "UI0052", "First Add the Location");
+        return;
+    }
+    if ($("#cbolocISD").val() === '0' || $("#cbolocISD").val() === "0" || IsStringNullorEmpty($("#cbolocISD").val())) {
+        fnAlert("w", "ECB_02_00", "UI0056", errorMsg.ISDCode_E11);
+        return;
+    }
+
+    var paymentinfo = [];
+    var jqgpaymentinfo = jQuery("#jqgPaymentInfo").jqGrid('getRowData');
+    
+    for (var i = 0; i < jqgpaymentinfo.length; ++i) {
+      /*  if (jqgpaymentinfo[i].ActiveStatus == true) {*/
+            paymentinfo.push({
+                BusinessKey: $("#txtBusinesskey").val(),
+                Isdcode: $("#cbolocISD").val(),
+                PaymentMethod: jqgpaymentinfo[i]["PaymentMethod"],
+                InstrumentType: jqgpaymentinfo[i]["InstrumentType"],
+                InterfaceReqd: jqgpaymentinfo[i]["InterfaceReqd"],
+                ActiveStatus: jqgpaymentinfo[i]["ActiveStatus"]
+            });
+        /*}*/
+    }
+
+    $("#btnSavePaymentInfo").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/Location/InsertOrUpdatePaymentMethodInterfaceBusinessLink',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: paymentinfo },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSavePaymentInfo").attr("disabled", false);
+                fnGridRefreshPaymentMethod();
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSavePaymentInfo").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSavePaymentInfo").attr("disabled", false);
+        }
+    });
+}
 function fnGridRefreshPaymentMethod() {
     $("#jqgPaymentInfo").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
-
-
-
-
-
-
+$("#btnCancelPaymentInfo").click(function () {
+    $("#jqgPaymentInfo").jqGrid('resetSelection');
+    $('#PopupBusienssLocation').modal('hide');
+    fnClearFields();
+});
 /* End*/
 
 

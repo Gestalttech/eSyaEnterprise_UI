@@ -610,5 +610,66 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         }
         #endregion
 
+        #region Payment Method Business Link
+        /// <summary>
+        ///Payment Method Business Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetPaymentMethodInterfacebyISDCode(int ISDCode, int BusinessKey)
+        {
+            try
+            {
+                var parameter = "?ISDCode=" + ISDCode + "&BusinessKey=" + BusinessKey;
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_PaymentMethodBusinessLink>>("License/GetPaymentMethodInterfacebyISDCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    
+                 return Json(serviceResponse.Data);
+                    
+                    
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPaymentMethodInterfacebyISDCode:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPaymentMethodInterfacebyISDCode:For BusinessKey {0}", BusinessKey);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Payment Method Business Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdatePaymentMethodInterfaceBusinessLink(List<DO_PaymentMethodBusinessLink> obj)
+        {
+
+            try
+            {
+               
+                    obj.All(c =>
+                    {
+                        c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                        c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                        c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                        return true;
+                    });
+                    var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("License/InsertOrUpdatePaymentMethodInterfaceBusinessLink", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdatePaymentMethodInterfaceBusinessLink:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
     }
 }
