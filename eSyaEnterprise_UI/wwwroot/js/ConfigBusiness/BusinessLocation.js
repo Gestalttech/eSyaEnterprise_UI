@@ -1133,6 +1133,80 @@ $("#btnCancelTaxInfo").click(function () {
     $('#PopupBusienssLocation').modal('hide');
     fnClearFields();
 });
+
+
+function fnGridLoadPaymentMethodInfo() {
+
+    $("#jqgPaymentInfo").jqGrid('GridUnload');
+
+    $("#jqgPaymentInfo").jqGrid({
+        //url: getBaseURL() + '/PaymentMethod/GetPaymentMethodbyISDCode?ISDCode=' + ISDcountry,
+        mtype: 'Post',
+        datatype: 'json',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+        colNames: [localization.ISDCode, localization.PaymentMethod, localization.InstrumentType, localization.InterfaceReqd, localization.PaymentMethodDesc, localization.InstrumentTypeDesc, localization.Active],
+        colModel: [
+            { name: "Isdcode", width: 50, editable: false, align: 'left', hidden: true },
+            { name: "PaymentMethod", width: 80, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "InstrumentType", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "InterfaceReqd", width: 60, editable: false, hidden: false, align: 'left', resizable: true, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: false } },
+            { name: "PaymentMethodDesc", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "InstrumentTypeDesc", width: 80, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false", defaultValue: 'true' }, formatoptions: { disabled: true } },
+            ],
+
+        pager: "#jqpPaymentInfo",
+        rowNum: 10000,
+        rowList: [],
+        pgtext: null,
+        pgbuttons: false,
+        rownumWidth: '55',
+        loadonce: true,
+        viewrecords: false,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        align: "left",
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        cellEdit: true,
+        scrollOffset: 0,
+        caption: localization.PaymentMethod,
+        editurl: 'url',
+        cellsubmit: 'clientArray',
+        onSelectRow: function (id) {
+            if (id) { $('#jqgPaymentMethod').jqGrid('editRow', id, true); }
+        },
+        ondblClickRow: function (rowid) {
+            $("#jqgPaymentMethod_iledit").trigger('click');
+        },
+        loadComplete: function (data) {
+            SetGridControlByAction();
+            fnJqgridSmallScreen("jqgPaymentMethod");
+            fnGridRefreshPaymentMethod();
+        },
+    }).jqGrid('navGrid', '#jqpPaymentInfo', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpPaymentInfo', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshPaymentMethod
+    });
+
+    fnAddGridSerialNoHeading();
+
+}
+
+
+function fnGridRefreshPaymentMethod() {
+    $("#jqgPaymentInfo").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
+
+
+
+
+
+
+
 /* End*/
 
 
