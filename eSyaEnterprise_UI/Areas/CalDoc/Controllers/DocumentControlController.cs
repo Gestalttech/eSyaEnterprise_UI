@@ -44,7 +44,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("DocumentControl/GetDocumentControlMaster");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlStandard>>("DocumentControl/GetDocumentControlMaster");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -67,7 +67,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         /// Insert or Update Document Control
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> AddOrUpdateDocumentControl(DO_DocumentControlMaster obj)
+        public async Task<JsonResult> AddOrUpdateDocumentControl(DO_DocumentControlStandard obj)
         {
 
             try
