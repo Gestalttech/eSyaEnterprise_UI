@@ -68,7 +68,15 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 
             try
             {
-                obj.StartMonth = obj.FromDate.Month;
+                if (obj.CalenderType == "NA")
+                {
+                    obj.StartMonth = 0;
+                }
+                else
+                {
+                    obj.StartMonth = obj.FromDate.Month;
+                }
+                
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
