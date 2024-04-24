@@ -340,11 +340,11 @@ function fnLoadAgeRangeGrid() {
         colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom, localization.RangeFromPeriod, localization.AgeRangeTo, localization.RangeToPeriod, localization.ActiveStatus],
         colModel: [
             { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
-            { name: 'RangeDesc', index: 'RangeDesc', width: 200, sortable: false },
-            { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 90, sortable: false },
-            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 90, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
-            { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 90, sortable: false },
-            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 100, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            { name: 'RangeDesc', index: 'RangeDesc', width: 100, sortable: false },
+            { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 80, sortable: false },
+            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 80, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 60, sortable: false },
+            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 60, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
             {
                 name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
                 formatter: "checkbox", formatoptions: { disabled: false },
@@ -372,7 +372,7 @@ function fnLoadAgeRangeGrid() {
                 if (ids[i])
                     $('#jqgAgeRange').jqGrid('editRow', ids[i]);
             }
-            $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
+            $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', $("#pnlMainModuleHeading").width() - 20);
             var scrollPosition = 0
             jQuery("#jqgAgeRange").closest(".ui-jqgrid-bdiv").scrollTop(scrollPosition);
             fnJqgridSmallScreen("jqgAgeRange");

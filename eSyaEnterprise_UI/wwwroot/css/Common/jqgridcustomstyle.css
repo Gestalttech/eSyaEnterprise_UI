@@ -90,10 +90,12 @@ td:first-child.ui-state-default.jqgrid-rownum {
 }
 .ui-pg-div .svg-inline--fa {
     color: #6c6c6c !important; /*gold !important;*/ /*#1094f8 !important;*/
-    padding-right: 2px;
+    padding-right: 0px;
     padding-top: 2px;
-    margin-left: 8px;
+    margin-left: 6px;
     background-image: none;
+    height: 0.9rem;
+    width:auto;
 }
 .ui-widget-header .ui-icon {
     background-image: url(images/ui-icons_gold_256x240.png);
