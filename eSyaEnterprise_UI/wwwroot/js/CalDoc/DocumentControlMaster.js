@@ -218,8 +218,7 @@ function fnViewDocumentControlMaster(e) {
     $("#txtDocumentDesc").val(rowData.DocumentDesc);
          
     if (rowData.ActiveStatus === "true") {
-
-        $("#chkActiveStatus").parent().addClass("is-checked");
+   $("#chkActiveStatus").parent().addClass("is-checked");
     } else {
         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
