@@ -114,12 +114,12 @@ function fnEditDocumentControlMaster(e) {
     }
 
     $("#btnSaveDocumentControlMaster").show();
-    $("#btnDeactivateDocumentControlMaster").hide();
+    $("#btndeActiveDocumentControlMaster").hide();
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
     $("input[id*=chk]").attr('disabled', false);
     $("#txtDocumentId").prop('readonly', true);
-
+    $("#chkActiveStatus").attr('disabled', true);
     $("#PopupDocumentControlMaster").on('hidden.bs.modal', function () {
         $("#btnSaveDocumentControlMaster").show();
         $("input,textarea").attr('readonly', false);
@@ -127,6 +127,7 @@ function fnEditDocumentControlMaster(e) {
         $("input[id*=chk]").attr('disabled', false);
         $("#btnSaveDocumentControlMaster").attr('disabled', false);
     });
+
 }
 
 
@@ -157,18 +158,18 @@ function fnSaveDocumentControlMaster() {
                     $('#PopupDocumentControlMaster').modal('hide');
                     fnGridLoadDocumentcontrolMasters();
                     fnClearFields()
-                    $("#btnsaveDocumentControlMaster").attr('disabled', false);
+                    $("#btnSaveDocumentControlMaster").attr('disabled', false);
 
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
-                    $("#btnsaveDocumentControlMaster").attr('disabled', false);
+                    $("#btnSaveDocumentControlMaster").attr('disabled', false);
                     
                 }
             },
             error: function (error) {
                 fnAlert("e", "", error.StatusCode, error.statusText);
-                $("#btnsaveDocumentControlMaster").attr('disabled', false);
+                $("#btnSaveDocumentControlMaster").attr('disabled', false);
                
             }
         });
@@ -249,14 +250,13 @@ function fnClearFields() {
 }
 
 function fnDeleteDocumentControlMaster(e) {
-    if (_userFormRole.IsView === false) {
-        fnAlert("w", "ECD_02_00", "UIC04", errorMsg.vieweauth_E4);
+    if (_userFormRole.IsDelete === false) {
+        fnAlert("w", "ECD_05_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
     var rowid = $("#jqgDocumentControlMaster").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDocumentControlMaster').jqGrid('getRowData', rowid);
-    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
+   
     $("#txtDocumentId").val(rowData.DocumentId);
     $("#txtDocumentId").prop('readonly', true);
     $("#txtShortDesc").val(rowData.ShortDesc);
@@ -271,6 +271,12 @@ function fnDeleteDocumentControlMaster(e) {
         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
     Isadd = 0;
+    if (rowData.ActiveStatus == 'true') {
+        $("#btndeActiveDocumentControlMaster").html(localization.Deactivate);
+    }
+    else {
+        $("#btndeActiveDocumentControlMaster").html(localization.Activate);
+    }
     $('#PopupDocumentControlMaster').modal('show');
     $('#PopupDocumentControlMaster').find('.modal-title').text(localization.ViewDocumentControlMaster);
     $("#btnSaveDocumentControlMaster").hide();
@@ -305,8 +311,8 @@ function fnDeactivateDocumentControlMaster(e) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btndeActiveDocumentControlMaster").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $('#PopupDocumentControlMaster').modal('hide');
+                fnGridLoadDocumentcontrolMasters();
                 fnClearFields();
-                fnRefreshDocumentControlGrid();
                 $("#btndeActiveDocumentControlMaster").attr("disabled", false);
             }
             else {

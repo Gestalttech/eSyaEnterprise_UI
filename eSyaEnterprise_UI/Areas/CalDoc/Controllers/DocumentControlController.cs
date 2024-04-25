@@ -21,16 +21,30 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         #region Document Control
         [Area("CalDoc")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECD_02_00()
+        public async Task <IActionResult> ECD_02_00()
         {
             try
             {
-                return View();
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("DocumentControl/GetActiveDocumentControlMaster");
+                if (serviceResponse.Status)
+                {
+                    ViewBag.DocumentMaster = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.DocumentId.ToString(),
+                        Text = b.DocumentDesc,
+                    }).ToList();
 
+                    return View();
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveDocumentControlMaster");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:ECA_09_00");
+                _logger.LogError(ex, "UD:GetActiveDocumentControlMaster");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
@@ -44,7 +58,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlStandard>>("DocumentControl/GetDocumentControlMaster");
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlStandard>>("DocumentControl/GetDocumentControlStandardbyDocumentId?DocumentId="+ DocumentId);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -76,7 +90,7 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DocumentControl/AddOrUpdateDocumentControl", obj);
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DocumentControl/AddOrUpdateDocumentControlStandard", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -95,14 +109,14 @@ namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
         /// Activate or De Activate Document Control
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveDocumentControl(bool status, int documentId)
+        public async Task<JsonResult> ActiveOrDeActiveDocumentStandardControl(bool status, int documentId,int ComboId)
         {
 
             try
             {
 
-                var parameter = "?status=" + status + "&documentId=" + documentId;
-                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("DocumentControl/ActiveOrDeActiveDocumentControlMaster" + parameter);
+                var parameter = "?status=" + status + "&documentId=" + documentId + "&ComboId="+ ComboId;
+                var serviceResponse = await _eSyaCalDocAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("DocumentControl/ActiveOrDeActiveDocumentStandardControl" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

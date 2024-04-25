@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "ECD_02_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +9,7 @@
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section Scripts
 {
-    <script src="~/js/CalDoc/DocumentControl.js"></script>
+    <script src="~/js/CalDoc/DocumentControlStandard.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 }
 
@@ -40,11 +42,11 @@
         IsTransactionModeApplicable: '@Localizer["IsTransactionModeApplicable"]',
         IsCustomerGroupApplicable: '@Localizer["IsCustomerGroupApplicable"]',
         IsLinkToDashboard: '@Localizer["IsLinkToDashboard"]',
-        AddDocumentControl: '@Localizer["AddDocumentControl"]',
+        AddDocumentControlStandard: '@Localizer["AddDocumentControlStandard"]',
         Save: '@Localizer["Save"]',
-        UpdateDocumentControl: '@Localizer["UpdateDocumentControl"]',
+        UpdateDocumentControlStandard: '@Localizer["UpdateDocumentControlStandard"]',
         Update: '@Localizer["Update"]',
-        ViewDocumentControl: '@Localizer["ViewDocumentControl"]',
+        ViewDocumentControlStandard: '@Localizer["ViewDocumentControlStandard"]',
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
         Delete: '@Localizer["Delete"]',
@@ -77,6 +79,23 @@
     }
 </style>
 
+<div class="row">
+    <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="lable-color">@Localizer["DocumentMaster"] </label>
+            <div>
+                <select class="selectpicker" data-live-search="true" data-container="body" id="cboDocumentMaster" title="" data-size="8"
+                        asp-items="@ViewBag.DocumentMaster"
+                        onchange="fnGridLoadDocumentMaster()">
+                    <option value="0">Select</option>
+                </select>
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+
 <!--Document Grid-->
 <div class="row">
     <div class="col-lg-12">
@@ -101,16 +120,16 @@
                         <div class="row">
                             <input id="txtcomboId" class="form-control" type="text" autocomplete="off" style="display:none" />
 
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" hidden>
                                 <div class="form-group">
-                                    <label>@Localizer["DocumentID"]</label>
-                                    <input id="txtDocumentId" class="form-control numberonly" type="text" autocomplete="off" maxlength="9" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                                 
+                                    <input id="txtComboId" class="form-control numberonly" type="text" autocomplete="off" maxlength="9" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
 
                                 </div>
                             </div>
 
 
-                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                           @*  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>@Localizer["DocumentType"] </label>
                                     <input id="txtDocumentType" class="form-control" type="text" autocomplete="off" maxlength="1" />
@@ -124,7 +143,7 @@
                                     <input id="txtShortDesc" class="form-control" type="text" autocomplete="off" maxlength="4" />
 
                                 </div>
-                            </div>
+                            </div> *@
                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label>@Localizer["GenLogin"]</label>
@@ -155,12 +174,12 @@
                                     <input id="txtSchemaName" class="form-control" type="text" autocomplete="off" maxlength="10" />
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            @* <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label>@Localizer["DocumentDescription"] </label>
                                     <input id="txtDocumentDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
                                 </div>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xl-3 p-3 shadowLite border">
@@ -195,7 +214,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <button class="mdl-button  primary-button" id="btnsaveDocContrManagement" onclick="fnSaveDocumentControl()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateDocumentControl" onclick="fnDeleteDocumentControl()"><i class="fa-solid fa-ban"></i>  @Localizer["DeActivate"] </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateDocumentControl" onclick="fnActivateDocumentControl()"><i class="fa-solid fa-ban"></i>  @Localizer["DeActivate"] </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
                     </div>
                 </div>

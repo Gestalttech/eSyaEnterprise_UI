@@ -1,13 +1,10 @@
 ﻿var Isadd = 0;
-
+function fnGridLoadDocumentMaster() {
+    fnLoadDocumentCtrlGrid()
+}
 $(document).ready(function () {
 
     fnLoadDocumentCtrlGrid();
-
-    //var edit = _userFormRole.IsEdit;
-    //var edit = false;
-    //var vie = _userFormRole.IsView;
-    //var del = _userFormRole.IsDelete;
 
     $.contextMenu({
 
@@ -29,16 +26,13 @@ $(document).ready(function () {
 
             },
             jqgView: { name: localization.View, icon: "view", "id": "jqgView", callback: function (key, opt) { fnViewDocumentControl(event) } },
-            //jqgDelete:
-            //{
-            //    name: localization.Delete, icon: "delete", "id": "jqgDelete", callback: function (key, opt) {
-            //        fnPopUpDeleteDocumentControl(event)
-            //    }
-            //    ////,
-            //    ////visible: function () {
-            //    ////    return del;
-            //    ////}
-            //},
+            jqgDelete:
+            {
+                name: localization.Delete, icon: "delete", "id": "jqgDelete", callback: function (key, opt) {
+                    fnDeleteDocumentControl(event)
+                }
+                
+            },
 
         }
         // there's more, have a look at the demos and docs...
@@ -57,7 +51,7 @@ function fnLoadDocumentCtrlGrid() {
    
     $("#jqvDocContManagement").jqGrid({
 
-        url: getBaseURL() + '/CalendarControl/GetDocumentControlMaster',
+        url: getBaseURL() + '/DocumentControl/GetDocumentControlStandardbyDocumentId?DocumentId=' + $("#cboDocumentMaster").val(),
         mtype: 'GET',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -75,7 +69,7 @@ function fnLoadDocumentCtrlGrid() {
             { name: "DocumentDesc", width: 180, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "ShortDesc", width: 45, editable: true, align: 'left', resizable: false, hidden: true },
             { name: "DocumentType", width: 35, editable: true, align: 'left', resizable: false, hidden: true },
-            { name: "UsageStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "UsageStatus", width: 40, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", width: 30, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 30, sortable: false, resizable: false,
@@ -141,17 +135,21 @@ function fnLoadDocumentCtrlGrid() {
 
 function fnAddDocumentControl() {
     fnClearFields();
-    Isadd = 1;
-    $("#txtDocumentId").prop('readonly', false);
-    $('#PopupDocContrManagement').modal('show');
-    $('#PopupDocContrManagement').modal({ backdrop: 'static', keyboard: false });
-    $('#PopupDocContrManagement').find('.modal-title').text(localization.AddDocumentControl);
-    $("#chkActiveStatus").parent().addClass("is-checked");
-    $("#btnsaveDocContrManagement").html('<i class="fa fa-save"></i> ' + localization.Save);
-    $("#chkActiveStatus").prop('disabled', true);
-    $("#btnsaveDocContrManagement").show();
-    $("#btnDeactivateDocumentControl").hide();
-
+    var id = $("#cboDocumentMaster").val();
+    if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboDocumentMaster").val())) {
+        fnAlert("w", "ECD_02_00", "UI0178", "Please select Document Master");
+    }
+    else {
+        Isadd = 1;
+        $('#PopupDocContrManagement').modal('show');
+        $('#PopupDocContrManagement').modal({ backdrop: 'static', keyboard: false });
+        $('#PopupDocContrManagement').find('.modal-title').text(localization.AddDocumentControlStandard);
+        $("#chkActiveStatus").parent().addClass("is-checked");
+        $("#btnsaveDocContrManagement").html('<i class="fa fa-save"></i> ' + localization.Save);
+        $("#chkActiveStatus").prop('disabled', true);
+        $("#btnsaveDocContrManagement").show();
+        $("#btnDeactivateDocumentControl").hide();
+    }
 }
 
 function fnEditDocumentControl(e) {
@@ -162,20 +160,15 @@ function fnEditDocumentControl(e) {
 
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    
-    $("#txtDocumentId").val(rowData.DocumentId);
-    $("#txtDocumentId").prop('readonly', true);
-    $("#txtShortDesc").val(rowData.ShortDesc);
-    $("#txtDocumentType").val(rowData.DocumentType);
+    $("#cboDocumentMaster").val(rowData.DocumentId).selectpicker('refresh');
     $("#txtSchemaName").val(rowData.SchemaId);
-    $("#txtDocumentDesc").val(rowData.DocumentDesc);
     $("#cboGenLogin").val(rowData.GeneLogic).selectpicker('refresh');
     $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
     $("#txtcomboId").val(rowData.ComboId);
 
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
-    $('#PopupDocContrManagement').find('.modal-title').text(localization.UpdateDocumentControl);
+    $('#PopupDocContrManagement').find('.modal-title').text(localization.UpdateDocumentControlStandard);
     $("#btnsaveDocContrManagement").html('<i class="fa fa-sync"></i>' + localization.Update);
     $("#btnsaveDocContrManagement").attr('disabled', false);
     $("#btnsaveDocContrManagement").show();
@@ -215,7 +208,7 @@ function fnEditDocumentControl(e) {
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
     $("input[id*=chk]").attr('disabled', false);
-    $("#txtDocumentId").prop('readonly', true);
+    $("#chkActiveStatus").prop('disabled', true);
     $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
         $("#btnsaveDocContrManagement").show();
         $("input,textarea").attr('readonly', false);
@@ -233,25 +226,23 @@ function fnSaveDocumentControl() {
         return;
     }
     var obj = {
-        DocumentId: $("#txtDocumentId").val(),
+        DocumentId: $("#cboDocumentMaster").val(),
         GeneLogic: $("#cboGenLogin").val(),
         CalendarType: $("#cboCalendarType").val(),
-        DocumentType: $("#txtDocumentType").val(),
-        ShortDesc: $("#txtShortDesc").val(),
-        DocumentDesc: $("#txtDocumentDesc").val(),
         SchemaId: $("#txtSchemaName").val(),
+        ComboId: $("#txtcomboId").val(),
         IsTransationMode: $("#chkIsTransactionMode").parent().hasClass("is-checked"),
         IsStoreCode: $("#chkIsStoreCode").parent().hasClass("is-checked"),
         IsPaymentMode: $("#chkIsPaymentMode").parent().hasClass("is-checked"),
         UsageStatus: false,
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         Isadd: Isadd,
-        ComboId: $("#txtcomboId").val()
+        
     };
 
     $("#btnsaveDocContrManagement").attr('disabled', true);
     $.ajax({
-        url: getBaseURL() + '/CalendarControl/AddOrUpdateDocumentControl',
+        url: getBaseURL() + '/DocumentControl/AddOrUpdateDocumentControlStandard',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -282,19 +273,6 @@ function fnSaveDocumentControl() {
 
 function fnValidateDocumentControl() {
 
-    if (IsStringNullorEmpty($("#txtDocumentId").val())) {
-        fnAlert("w", "ECD_02_00", "UI0017", errorMsg.DocumentID_E1);
-        return false;
-    }
-
-    if (IsStringNullorEmpty($("#txtDocumentType").val())) {
-        fnAlert("w", "ECD_02_00", "UI0018", errorMsg.DocumenType_E2);
-        return false;
-    }
-    if (IsStringNullorEmpty($("#txtShortDesc").val())) {
-        fnAlert("w", "ECD_02_00", "UI0019", errorMsg.ShortDesc_E6);
-        return false;
-    }
     if ($("#cboGenLogin").val() == 0) {
         fnAlert("w", "ECD_02_00", "UI0304", errorMsg.GeneLogin_E9);
         return false;
@@ -307,12 +285,7 @@ function fnValidateDocumentControl() {
         fnAlert("w", "ECD_02_00", "UI0020", errorMsg.EnterSchema_E7);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtDocumentDesc").val())) {
-        fnAlert("w", "ECD_02_00", "UI0021", errorMsg.DocumentDesc_E8);
-        return false;
-    }
-
-
+   
 }
 
 function fnRefreshDocumentControlGrid() {
@@ -326,14 +299,9 @@ function fnViewDocumentControl(e) {
     }
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-    $("#txtDocumentId").val(rowData.DocumentId);
-    $("#txtDocumentId").prop('readonly', true);
-    $("#txtShortDesc").val(rowData.ShortDesc);
-    $("#txtDocumentType").val(rowData.DocumentType);
+    
+    $("#cboDocumentMaster").val(rowData.DocumentId).selectpicker('refresh');
     $("#txtSchemaName").val(rowData.SchemaId);
-    $("#txtDocumentDesc").val(rowData.DocumentDesc);
     $("#txtcomboId").val(rowData.ComboId);
     $("#cboGenLogin").val(rowData.GeneLogic).selectpicker('refresh');
     $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
@@ -365,7 +333,7 @@ function fnViewDocumentControl(e) {
     }
     Isadd = 0;
     $('#PopupDocContrManagement').modal('show');
-    $('#PopupDocContrManagement').find('.modal-title').text(localization.ViewDocumentControl);
+    $('#PopupDocContrManagement').find('.modal-title').text(localization.ViewDocumentControlStandard);
     $("#btnsaveDocContrManagement").hide();
     $("#btnDeactivateDocumentControl").hide();
     $("input,textarea").attr('readonly', true);
@@ -380,27 +348,81 @@ function fnViewDocumentControl(e) {
     });
 }
 
+function fnDeleteDocumentControl(e) {
+    if (_userFormRole.IsDelete === false) {
+        fnAlert("w", "ECD_05_00", "UIC04", errorMsg.deleteauth_E4);
+        return;
+    }
+    var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
 
+    $("#cboDocumentMaster").val(rowData.DocumentId).selectpicker('refresh');
+    $("#txtSchemaName").val(rowData.SchemaId);
+    $("#txtcomboId").val(rowData.ComboId);
+    $("#cboGenLogin").val(rowData.GeneLogic).selectpicker('refresh');
+    $("#cboCalendarType").val(rowData.CalendarType).selectpicker('refresh');
+    if (rowData.IsTransationMode === "true") {
+
+        $("#chkIsTransactionMode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsTransactionMode").parent().removeClass("is-checked");
+    }
+
+    if (rowData.IsStoreCode === "true") {
+
+        $("#chkIsStoreCode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsStoreCode").parent().removeClass("is-checked");
+    }
+
+    if (rowData.IsPaymentMode === "true") {
+
+        $("#chkIsPaymentMode").parent().addClass("is-checked");
+    } else {
+        $("#chkIsPaymentMode").parent().removeClass("is-checked");
+    }
+    if (rowData.ActiveStatus === "true") {
+
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    } else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
+    Isadd = 0;
+    if (rowData.ActiveStatus == 'true') {
+        $("#btnDeactivateDocumentControl").html(localization.Deactivate);
+    }
+    else {
+        $("#btnDeactivateDocumentControl").html(localization.Activate);
+    }
+    $('#PopupDocContrManagement').modal('show');
+    $('#PopupDocContrManagement').find('.modal-title').text(localization.ViewDocumentControlStandard);
+    $("#btnsaveDocContrManagement").hide();
+    $("#btnDeactivateDocumentControl").show();
+    $("input,textarea").attr('readonly', true);
+    $("select").next().attr('disabled', true);
+    $("input[id*=chk]").attr('disabled', true);
+    $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
+        $("#btnsaveDocContrManagement").show();
+        $("input,textarea").attr('readonly', false);
+        $("select").next().attr('disabled', false);
+        $("input[id*=chk]").attr('disabled', false);
+        $("#btnsaveDocContrManagement").attr('disabled', false);
+    });
+}
 function fnClearFields() {
     
     $("#txtcomboId").val('');
-    $("#txtDocumentId").val('');
-    $("#txtDocumentType").val('');
-    $("#txtShortDesc").val('');
     $("#txtSchemaName").val('');
-    $("#txtDocumentDesc").val('');
     $("#cboGenLogin").val('0').selectpicker('refresh');
     $("#cboCalendarType").val('0').selectpicker('refresh');
     $("#chkIsTransactionMode").parent().removeClass("is-checked");
     $("#chkIsStoreCode").parent().removeClass("is-checked");
     $("#chkIsPaymentMode").parent().removeClass("is-checked");
-
-    $("#chkUsageStatus").parent().removeClass("is-checked");
     $("#chkActiveStatus").parent().addClass("is-checked");
     $("#btnsaveDocContrManagement").attr('disabled', false);
 }
 
-function fnDeleteDocumentControl() {
+function fnActivateDocumentControl() {
 
     var a_status;
     //Activate or De Activate the status
@@ -412,7 +434,7 @@ function fnDeleteDocumentControl() {
     }
     $("#btnDeactivateDocumentControl").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/CalendarControl/ActiveOrDeActiveDocumentControl?status=' + a_status + '&documentId=' + $("#txtDocumentId").val(),
+        url: getBaseURL() + '/DocumentControl/ActiveOrDeActiveDocumentStandardControl?status=' + a_status + '&documentId=' + $("#cboDocumentMaster").val() + '&ComboId=' + $("#txtcomboId").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
@@ -447,50 +469,7 @@ function SetGridControlByAction() {
 }
 
 
-//function fnPopUpDeleteDocumentControl(e) {
-//    if (_userFormRole.IsDelete === false) {
-//        fnAlert("w", "ECD_02_00", "UIC03", errorMsg.deleteauth_E5);
-//        return;
-//    }
-//    var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
-//    var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-//    //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-//    //var rowData = $('#jqvDocContManagement').jqGrid('getRowData', rowid);
-//    $("#txtDocumentId").val(rowData.DocumentId);
-//    $("#txtDocumentId").prop('readonly', true);
-//    $("#txtShortDesc").val(rowData.ShortDesc);
-//    $("#txtDocumentType").val(rowData.DocumentType);
-//    $("#txtSchemaName").val(rowData.SchemeId);
-//    $("#txtDocumentDesc").val(rowData.DocumentDesc);
-//    if (rowData.UsageStatus === "true") {
 
-//        $("#chkUsageStatus").parent().addClass("is-checked");
-//    } else {
-//        $("#chkUsageStatus").parent().removeClass("is-checked");
-//    }
-//    if (rowData.ActiveStatus === "true") {
-
-//        $("#chkActiveStatus").parent().addClass("is-checked");
-//    } else {
-//        $("#chkActiveStatus").parent().removeClass("is-checked");
-//    }
-//    Isadd = 0;
-//    $('#PopupDocContrManagement').modal('show');
-//    $('#PopupDocContrManagement').find('.modal-title').text("Active/De Active Document Control");
-//    $("#btnsaveDocContrManagement").hide();
-//    $("#btnDeactivateDocumentControl").show();
-//    $("#chkActiveStatus").prop('disabled', true);
-//    $("input,textarea").attr('readonly', true);
-//    $("select").next().attr('disabled', true);
-//    $("input[id*=chk]").attr('disabled', true);
-//    $("#PopupDocContrManagement").on('hidden.bs.modal', function () {
-//        $("#btnsaveDocContrManagement").show();
-//        $("input,textarea").attr('readonly', false);
-//        $("select").next().attr('disabled', false);
-//        $("input[id*=chk]").attr('disabled', false);
-//        $("#btnsaveDocContrManagement").attr('disabled', false);
-//    });
-//}
 
 
 
