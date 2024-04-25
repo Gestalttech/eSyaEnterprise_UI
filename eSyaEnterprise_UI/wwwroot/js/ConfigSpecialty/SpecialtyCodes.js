@@ -327,8 +327,8 @@ function fnValidateBeforeSave() {
     return true;
 }
 function fnLoadAgeRangeGrid() {
-
-    $("#jqgAgeRange").GridUnload();
+    console.log(getBaseURL());
+    //$("#jqgAgeRange").GridUnload();
     $('#btnSaveAgeRange').show();
 
     $("#jqgAgeRange").jqGrid({
@@ -352,7 +352,7 @@ function fnLoadAgeRangeGrid() {
             },
         ],
         caption: localization.AgeRange,
-        height: '100',
+        height: 'auto',
         width: '200',
         rowNum: 100,
         viewrecords: true,

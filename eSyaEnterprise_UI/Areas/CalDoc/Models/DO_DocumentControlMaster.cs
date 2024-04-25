@@ -10,5 +10,7 @@
         public string FormId { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
+        public int Isadd { get; set; }
+
     }
 }

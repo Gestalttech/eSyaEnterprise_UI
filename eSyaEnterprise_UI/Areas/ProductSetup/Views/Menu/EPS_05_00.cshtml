@@ -27,6 +27,9 @@
         Delete: '@Localizer["Delete"]',
         EditForm: '@Localizer["EditForm"]',
         SubMenuName: '@Localizer["SubMenuName"]',
+        SaveSubMenu: '@Localizer["SaveSubMenu"]',
+        SaveForm: '@Localizer["SaveForm"]',
+        UpdateForm: '@Localizer["UpdateForm"]',
 
     };
     var errorMsg = {
@@ -501,10 +504,10 @@
                                 $("#rdoAddForm").prop({ 'checked': false });
                                 $('#pnlForm').hide();
 
-                                $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                                $('#btnSubMenuAdd').html('<i class="fa fa-plus"></i>' + localization.Add);
+                                $('#pnlSubMenuHeading > h5').text(localization.SaveSubMenu);
+                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.SaveSubMenu);
                                 $('#pnlFormMenuHeading > h5').text(localization.AddForm);
-                                $('#btnFormAdd').html('<i class="fa fa-plus"></i>' + localization.Add);
+                                $('#btnFormAdd').html('<i class="fa fa-save"></i>' + localization.SaveForm);
 
                                 $("#cboInternalForm").attr('disabled', false);
                                 fnClearControl();
@@ -576,9 +579,9 @@
                                 $('#pnlForm').hide();
 
                                 $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                                $('#btnSubMenuAdd').html('<i class="fa fa-sync"></i>' + localization.Add);
+                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.SaveSubMenu);
                                 $('#pnlFormMenuHeading > h5').text(localization.AddForm);
-                                $('#btnFormAdd').html('<i class="fa fa-sync"></i>' + localization.Add);
+                                $('#btnFormAdd').html('<i class="fa fa-save"></i>' + localization.SaveForm);
 
                                 $("#cboInternalForm").attr('disabled', false);
                                 fnClearControl();
@@ -628,7 +631,7 @@
                                 }
 
                                 $('#pnlFormMenuHeading > h5').text(localization.EditForm);
-                                $('#btnFormAdd').html('<i class="fa fa-sync"></i> ' + localization.Update);
+                                $('#btnFormAdd').html('<i class="fa fa-sync"></i> ' + localization.UpdateForm);
                                 $('#btnFormAdd').show();
 
                                 var mainMenuID = 0, menuItemID = 0, formID = 0;
@@ -838,7 +841,7 @@
                             $("#rdoAddForm").prop({ 'checked': false });
 
                             $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                            $('#btnSubMenuAdd').html('<i class="fa fa-sync"></i>' + localization.Add);
+                            $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.Save);
                         }
                     }
                     else {
@@ -898,7 +901,7 @@
                         fnGetMenuFormList();
 
                         $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                        $('#btnSubMenuAdd').html('<i class="fa fa-sync"></i>' + localization.Add);
+                        $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.Save);
                     }
                     else {
                         fnAlert("e", "", response.StatusCode, response.Message);
