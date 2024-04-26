@@ -47,15 +47,15 @@ function fnGridLoadCalendarHeader() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["",localization.CalendarType, localization.Year,"", localization.StartMonth, localization.CalenderKey, localization.FromDate, localization.TillDate, localization.Active],
+        colNames: [localization.CalendarType, localization.Year,localization.StartMonth, localization.CalendarKey, localization.FromDate, localization.TillDate, localization.Active],
         colModel: [
-            { name: "CalenderType", width: 70, editable: true, align: 'left', hidden: true },
-            { name: "CalenderType", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year;NA: Not Applicable" } },
+           { name: "CalenderType", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "FY: Financial Year;CY: Calendar Year;NA: Not Applicable" } },
 
             { name: "Year", width: 70, editable: true, align: 'left', hidden: false },
-            { name: "StartMonth", width: 70, editable: true, align: 'left', hidden: true },
+            
             { name: "StartMonth", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "1: January;2: February;3: March;4: April;5: May;6: June;7: July;8: Auguest;9: September;10: October;11: November;12: December" } },
-            { name: "CalenderKey", width: 70, editable: true, align: 'left', hidden: true },
+            
+            { name: "CalenderKey", width: 70, editable: true, align: 'left', hidden: false },
             {
                 name: 'FromDate', index: 'FromDate', width: 80, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }

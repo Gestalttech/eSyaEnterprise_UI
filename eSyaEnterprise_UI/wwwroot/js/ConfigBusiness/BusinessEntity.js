@@ -403,7 +403,7 @@ function fnGridLoadPreferredLanguage() {
             { name: "CultureCode", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "CultureDesc", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "Pldesc", width: 70, editable: true, editoptions: { disabled: false }, align: 'left' },
-            { name: "DefaultLanguage", editable: true, width: 70, align: 'left !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "DefaultLanguage", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
         ],

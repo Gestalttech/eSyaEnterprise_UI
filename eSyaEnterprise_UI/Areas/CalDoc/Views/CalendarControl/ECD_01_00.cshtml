@@ -26,7 +26,7 @@
         CalendarType: '@Localizer["CalendarType"]',
         CalendarHeader: '@Localizer["CalendarHeader"]',
         StartMonth: '@Localizer["StartMonth"]',
-        CalenderKey: '@Localizer["CalenderKey"]',
+        CalendarKey: '@Localizer["CalendarKey"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -61,7 +61,7 @@
 
             <div class="modal-body">
 
-                <div class="row padbot4">
+                <div class="row">
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
@@ -75,7 +75,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>@Localizer["CalendarType"]</label>
-                            <select class="selectpicker" id="cboCalendarType" onchange="fnCalendarType_Onchange()">
+                            <select class="selectpicker" id="cboCalendarType" data-container="body" data-size="4" onchange="fnCalendarType_Onchange()">
                                 <option value="0">Choose Calendar Type </option>
                                 <option value="FY">Financial Year</option>
                                 <option value="CY">Calendar Year</option>
