@@ -44,27 +44,17 @@
         <label>@Localizer["Specialty"] </label>
         <div id="jstSpecialtyClinicLink"></div>
     </div>
-    <div class="col-lg-1 col-md-2">
-    </div>
-    <div class="col-lg-7 col-md-6 col-sm-6">
-
-        @*<div class="demo-card-square mdl-card mdl-shadow--2dp" id="pnlrdoAddItem" style="width: 100%; display:none;min-height:unset;">
-        <div class="row" style="padding:15px 10px 15px 15px; background:#fff!important">
-        <div class="col-sm-3 col-6">
-        <div class="radio" style="margin:0px;"><label style="font-size:16px !important;color:#797172 !important"><input type="radio" name="rdoAddItem" id="rdoAddBusinessSpecialtyUnit" value="SM" /> @Localizer["AddSpecialty"]</label></div>
-        </div>
-        </div>
-        </div>*@
+  
+    <div class="col-lg-8 col-md-8 col-sm-6">
         <div class="demo-card-square mdl-card mdl-shadow--2dp" id="pnlMainMenu" style="width: 100%; display:none">
-
-            <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+            <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand d-block">
                 <h5 class="mdl-card__title-text">@Localizer["AddSpecialty"]</h5>
             </div>
-            <div class="mdl-card__supporting-text nopad fullwidth">
-                <div class="row mar0">
+            <div class="mdl-card__supporting-text fullwidth">
+                <div class="row ">
                     <input type="text" id="txtSpecialtyId" style="display:none" />
                 </div>
-                <div class="row mar0 padbot10 padtop15">
+                <div class="row  padbot10">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label class="lable-color">@Localizer["SpecialtyDescription"]</label>
@@ -84,7 +74,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["SpecialtyType"]</label>
+                            <label class="">@Localizer["SpecialtyType"]</label>
                             <select class="selectpicker" data-live-search="false" id="cboSpecialtyType" title="Select" disabled>
                                 <option value="G">General</option>
                                 <option value="S">Super Specialty</option>
@@ -93,7 +83,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["SpecialtyGroup"] </label>
+                            <label class="">@Localizer["SpecialtyGroup"] </label>
                             <select class="selectpicker" data-live-search="false" id="cboSpecialtyGroup" title="Select" disabled>
                                 <option value="0">Select Specialty Group</option>
                                 <option value="M">Medicine</option>
@@ -102,6 +92,18 @@
                                 <option value="D">Diagnostic</option>
                                 <option value="T">Diagnostic & Therapeutic</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 d-flex justify-content-center">
+                        <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="" data-bs-toggle="modal" data-bs-target="#PopupAgeRange">
+                            @Localizer["AgeRange"]
+                        </button>
+                        </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="">@Localizer["FocusArea"]</label>
+                            <textarea name="FocusArea" row="3" cols="10" value="" class="form-control" id="txtFocusArea" maxlength="2000"></textarea>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6">
@@ -113,12 +115,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mar0 padbot10">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                         <p class="subheading">@Localizer["SpecialtyParameter"]</p>
                         <hr class="left" />
                         @await Component.InvokeAsync("eSyaParameter", new { parameterType = "1" })
                     </div>
+                     
+                       
+                 
                 </div>
                 <div class="row mar0 padbot10" hidden>
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -133,6 +138,37 @@
                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSaveSpecialty" onclick="fnSaveSpecialtyClinicLink()">
                     @Localizer["Save"]
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade in" id="PopupAgeRange" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["ViewAgeRange"]</h4>
+            </div>
+
+            <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-12 form-group">
+                                <table id="jqgBSLAgeRange"></table>
+                                <div id="jqpBSLAgeRange"></div>
+                            </div>
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelActions"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                       
+                    </div>
+                </div>
             </div>
         </div>
     </div>

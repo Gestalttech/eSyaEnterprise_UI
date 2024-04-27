@@ -166,6 +166,7 @@ function fnFillSpecialtyDetail(specialtyId) {
                     $('#chkActiveStatus').parent().addClass("is-checked");
                 else
                     $('#chkActiveStatus').parent().removeClass("is-checked");
+                fnLoadAgeRangeGrid();
             }
             else {
                 fnClearFields();
@@ -226,4 +227,55 @@ function fnSaveSpecialtyClinicLink() {
 
 function fnClearFields() {
     eSyaParams.ClearValue();
+}
+
+function fnLoadAgeRangeGrid() {
+
+    $("#jqgBSLAgeRange").GridUnload();
+
+
+    $("#jqgBSLAgeRange").jqGrid({
+        url: getBaseURL() + '/ConfigSpecialty/Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
+        datatype: "json",
+        mtype: 'POST',
+        rownumbers: true,
+
+        colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom, localization.RangeFromPeriod, localization.AgeRangeTo, localization.RangeToPeriod, localization.ActiveStatus],
+        colModel: [
+            { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
+            { name: 'RangeDesc', index: 'RangeDesc', width: 80, sortable: false },
+            { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 40, sortable: false },
+            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 40, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 40, sortable: false },
+            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 40, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            {
+                name: 'ActiveStatus', index: 'ActiveStatus', width: 40, resizable: false, align: 'center',
+                formatter: "checkbox", formatoptions: { disabled: true },
+                edittype: "checkbox", editoptions: { value: "true:false" }
+            },
+        ],
+        caption: localization.AgeRange,
+        height: 'auto',
+        width: 'auto',
+        rowNum: 100,
+        viewrecords: true,
+        gridview: true,
+        loadonce: true,
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        cellEdit: true,
+        onSelectRow: function (id) {
+            },
+        
+        loadComplete: function () {
+            
+            $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100'+'%');
+            
+            fnJqgridSmallScreen("jqgBSLAgeRange");
+        }
+    });
+    fnAddGridSerialNoHeading();
+    fnTreeSize();
+
 }
