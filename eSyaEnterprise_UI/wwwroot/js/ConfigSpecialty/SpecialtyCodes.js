@@ -191,11 +191,10 @@ function fnTreeSize() {
 
 function fnSaveSpecialtyCodes() {
 
-    if (fnValidateBeforeSave() === false)
-        return;
-
     $("#btnSaveSpecialty").attr('disabled', true);
 
+    if (fnValidateBeforeSave() === false)
+        return;
 
     $("#jqgAgeRange").jqGrid('editCell', 0, 0, false).attr("value");
     var _agelinks = [];
@@ -236,7 +235,7 @@ function fnSaveSpecialtyCodes() {
         URL = getBaseURL() + '/ConfigSpecialty/Specialty/InsertSpecialtyCodes';
 
     //$("#btnSaveSpecialty").html('<i class="fa fa-spinner fa-spin"></i> ' + localization.wait);
-    $("#btnSaveSpecialty").attr('disabled', true);
+  
     $.ajax({
         url: URL,
         type: 'POST',
@@ -251,6 +250,7 @@ function fnSaveSpecialtyCodes() {
                     $('#jstSpecialtyCode').jstree("destroy");
                     fnLoadSpecialtyCode();
                     fnClearFields();
+                    $("#btnSaveSpecialty").attr('disabled', false);
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
@@ -327,9 +327,9 @@ function fnValidateBeforeSave() {
     return true;
 }
 function fnLoadAgeRangeGrid() {
-    console.log(getBaseURL());
-    //$("#jqgAgeRange").GridUnload();
-    $('#btnSaveAgeRange').show();
+
+    $("#jqgAgeRange").GridUnload();
+
 
     $("#jqgAgeRange").jqGrid({
         url: getBaseURL() + '/ConfigSpecialty/Specialty/GetAgeRangeMatrixLinkbySpecialtyId?specialtyId=' + $('#txtSpecialtyId').val(),
