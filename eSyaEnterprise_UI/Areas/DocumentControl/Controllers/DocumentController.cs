@@ -20,7 +20,7 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
             _logger = logger;
         }
 
-        #region Define Business - Document Link
+        #region Define Business - Document Link --new
         [Area("DocumentControl")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EDC_02_00()
@@ -43,11 +43,12 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
             }
             return View();
         }
+        
         /// <summary>
-        ///Get Locations with Calendar Key
+        ///Get All Active Locations 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetBusinessLocationbyCalendarkeys(string calendarkey)
+        public async Task<JsonResult> GetAllBusinessLocations()
         {
 
             try
@@ -65,7 +66,7 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("Document/GetBusinessLocationbyCalendarkeys?calendarkey=" + calendarkey);
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey");
 
                 if (serviceResponse.Status)
                 {
@@ -84,29 +85,29 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinesssbyCalendarkeys");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetBusinesssbyCalendarkeys");
+                _logger.LogError(ex, "UD:GetBusinessKey");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
 
         }
         /// <summary>
-        ///Get Document Link forms with Location
+        ///Get Menu forms  Linked  with Location
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetDocumentFormlinkwithLocation(string calendarkey, int businesskey)
+        public async Task<JsonResult> GetMenuFormslinkwithLocation(int businesskey)
         {
 
             try
             {
 
-                var parameter = "?calendarkey=" + calendarkey + "&businesskey=" + businesskey;
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_BusinessDocument_Link>>("Document/GetDocumentFormlinkwithLocation" + parameter);
+                var parameter = "?businesskey=" + businesskey;
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_FormBusinessLink>>("Document/GetMenuFormslinkwithLocation" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -115,17 +116,20 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetDocumentFormlinkwithLocation:For calendarkey {0} ", calendarkey);
+                _logger.LogError(ex, "UD:GetMenuFormslinkwithLocation:For businesskey {0} ", businesskey);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-
+        /// <summary>
+        ///Get Document Control Standard
+        /// </summary>
         [HttpGet]
-        public async Task<JsonResult> GetDocumentControlMaster(int formId)
+        public async Task<JsonResult> GetDocumentControlStandard(int formId,int businesskey)
         {
             try
             {
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlMaster>>("Document/GetDocumentControlMaster?formId="+ formId);
+                var parameter = "?formId=" + formId + "&businesskey=" + businesskey;
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.GetAsync<List<DO_DocumentControlStandard>>("Document/GetDocumentControlStandard"+ parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -143,19 +147,20 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+
         /// <summary>
         /// Insert Or Update Business wise Document Control Link
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateBusinesswiseDocumentControl(List<DO_BusinessDocument_Link> obj)
+        public async Task<JsonResult> InsertOrUpdateBusinesswiseDocumentControlLink(List<DO_BusinessDocument_Link> obj)
         {
-
             try
             {
                 obj.All(c =>
                 {
                     c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                     c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.CalendarKey = string.Empty;
                     return true;
                 });
                 var truedocuments = obj.Where(x => x.ActiveStatus).ToList();
@@ -163,7 +168,7 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
                 {
                     return Json(new DO_ReturnParameter() { Status = false, Message = "Please select only one Document" });
                 }
-                var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Document/InsertOrUpdateBusinesswiseDocumentControl", obj);
+                var serviceResponse = await _documentControlAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Document/InsertOrUpdateBusinesswiseDocumentControlLink", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -175,6 +180,7 @@ namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
                 _logger.LogError(ex, "UD:InsertOrUpdateBusinesswiseDocumentControl:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
+
         }
         #endregion
     }

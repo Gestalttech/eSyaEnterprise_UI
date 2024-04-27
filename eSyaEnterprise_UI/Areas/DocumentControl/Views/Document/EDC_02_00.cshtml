@@ -52,6 +52,8 @@
         IsPaymentMode: '@Localizer["IsPaymentMode"]',
         SchemaId: '@Localizer["SchemaId"]',
         MapDocument: '@Localizer["MapDocument"]',
+        FormCode: '@Localizer["FormCode"]',
+        DocumentType: '@Localizer["DocumentType"]',
     }
      var errorMsg ={
          SelectCalendarKey_E1:'@Localizer["UI0292"]'
@@ -61,14 +63,14 @@
 <div class="row">
     <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 pr-lg-0 pr-md-0">
       
-        <div class="form-group">
+       @*  <div class="form-group">
             <label class="">@Localizer["CalendarKey"] </label>
             <select class="selectpicker" data-live-search="true" id="cboCalendarKey" data-container="body" title="" data-size="8" asp-items="@ViewBag.CalenderKeys" onchange="fnCalendarKey_onchange()">
                 <option value="0">Select</option>
 
             </select>
 
-        </div>
+        </div> *@
         <div id="jstBusinessDocumentLink">
         </div>
         

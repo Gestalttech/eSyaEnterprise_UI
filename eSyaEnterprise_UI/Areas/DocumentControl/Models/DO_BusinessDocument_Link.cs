@@ -15,5 +15,15 @@
         public string TerminalID { get; set; }
         public string? FormName { get; set; }
         public string? DocumentName { get; set; }
+        public string CalendarType { get; set; }
+
+    }
+    public class DO_FormBusinessLink
+    {
+        public int BusinessKey { get; set; }
+        public int FormId { get; set; }
+        public string? FormCode { get; set; }
+        public string FormName { get; set; }
+        public bool ActiveStatus { get; set; }
     }
 }
