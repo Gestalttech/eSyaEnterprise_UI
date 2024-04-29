@@ -36,10 +36,10 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Department/GetUserDefinedCodeTypesList"+ ApplicationCodeTypeValues.DepartmentCategory);
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Department/GetDepartmentCategoriesbyCodeType?codetype=" + ApplicationCodeTypeValues.DepartmentCategory);
                 if (serviceResponse.Status)
                 {
-                    ViewBag.DepartmentCategory = serviceResponse.Data.Select(b => new SelectListItem
+                    ViewBag.DepartmentCategories = serviceResponse.Data.Select(b => new SelectListItem
                     {
                         Value = b.ApplicationCode.ToString(),
                         Text = b.CodeDesc,
@@ -49,42 +49,41 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUserDefinedCodeTypesList");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDepartmentCategoriesbyCodeType");
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetUserDefinedCodeTypesList");
+                _logger.LogError(ex, "UD:GetDepartmentCategoriesbyCodeType");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
         /// <summary>
-        ///Get Application Codes by code Type for Grid
+        ///Get Departments by categoryId for Grid
         /// </summary>
-        [Area("Admin")]
         [HttpPost]
-        public async Task<JsonResult> GetApplicationCodesByCodeType(int codeType)
+        public async Task<JsonResult> GetDepartmentsbycategoryId(int categoryId)
         {
 
             try
             {
-                var parameter = "?codeType=" + codeType;
-                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_Department>>("ApplicationCodes/GetApplicationCodesByCodeType" + parameter);
+                var parameter = "?categoryId=" + categoryId;
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<List<DO_Department>>("Department/GetDepartmentsbycategoryId" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApplicationCodesByCodeType:For codeType {0}", codeType);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDepartmentsbycategoryId:For categoryId {0}", categoryId);
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For codeType {0} ", codeType);
+                _logger.LogError(ex, "UD:GetDepartmentsbycategoryId:For categoryId {0} ", categoryId);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
 
@@ -93,9 +92,8 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         /// <summary>
         /// Insert or Update Application Codes 
         /// </summary>
-        [Area("Admin")]
         [HttpPost]
-        public async Task<JsonResult> InsertOrAudateApplicationCodes(DO_Department obj)
+        public async Task<JsonResult> InsertOrUpdateDepartmentCodes(DO_Department obj)
         {
 
             try
@@ -106,7 +104,7 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
 
                 if (obj.DeptId == 0)
                 {
-                    var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ApplicationCodes/InsertIntoApplicationCodes", obj);
+                    var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Department/InsertIntoDepartment", obj);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
@@ -115,7 +113,7 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
 
                 else
                 {
-                    var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ApplicationCodes/UpdateApplicationCodes", obj);
+                    var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Department/UpdateDepartment", obj);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
@@ -124,7 +122,7 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:InsertOrAudateApplicationCodes:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:InsertOrUpdateDepartmentCodes:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
@@ -132,16 +130,15 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         /// <summary>
         /// Activate or De Activate Application Codes
         /// </summary>
-        [Area("Admin")]
         [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveApplicationCode(bool status, int app_code)
+        public async Task<JsonResult> ActiveOrDeActiveDepartment(bool status, int categoryId, int deptId)
         {
 
             try
             {
 
-                var parameter = "?status=" + status + "&app_code=" + app_code;
-                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ApplicationCodes/ActiveOrDeActiveApplicationCode" + parameter);
+                var parameter = "?status=" + status + "&categoryId=" + categoryId + "&deptId=" + deptId;
+                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Department/ActiveOrDeActiveDepartment" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -150,7 +147,7 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:ActiveOrDeActiveApplicationCode:For codeType {0} ", app_code);
+                _logger.LogError(ex, "UD:ActiveOrDeActiveDepartment:For deptId {0} ", deptId);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }

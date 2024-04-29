@@ -69,7 +69,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Admin
-        public const int DepartmentCategory = 120;
+        //public const int DepartmentCategory = 120;
+        public const int DepartmentCategory = 82;
+
         #endregion
 
 

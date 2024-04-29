@@ -24,14 +24,14 @@ function fnGridLoadDepartmentCodes() {
     var departmentCategory = $("#cboDepartmentCategory").val();
     $("#jqgDepartmentCodes").jqGrid('GridUnload');
     $("#jqgDepartmentCodes").jqGrid({
-        url: getBaseURL() + '/Admin/Department/GetApplicationCodesByCodeType?codeType=' + departmentCategory,
+        url: getBaseURL() + '/Department/GetDepartmentsbycategoryId?categoryId=' + departmentCategory,
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.DepartmentCategory, localization.DepartmentID, localization.DepartmentDesc, localization.Active, localization.Actions],
         colModel: [
-            { name: "DeptCategory", width: 50, editable: true, align: 'left', hidden: false },
+            { name: "DeptCategory", width: 50, editable: true, align: 'left', hidden: true },
             { name: "DeptId", width: 50, editable: true, align: 'left', hidden: true },
             { name: "DeptDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -77,12 +77,13 @@ function fnGridLoadDepartmentCodes() {
 }
 
 function fnAddDepartmentCodes() {
-    fnClearFields();
+   
     var id = $("#cboDepartmentCategory").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboDepartmentCategory").val())) {
-        fnAlert("w", "EAD_07_00", "UI0178", errorMsg.selectCodeType_E6);
+        fnAlert("w", "EAD_07_00", "UI0178", "Please select Department Category");
     }
     else {
+       
         $('#PopupDepartmentCodes').modal('show');
         $('#PopupDepartmentCodes').modal({ backdrop: 'static', keyboard: false });
         $('#PopupDepartmentCodes').find('.modal-title').text(localization.AddDepartmentCode);
@@ -103,14 +104,10 @@ function fnEditDepartmentCodes(e, actiontype) {
     var firstRow = $("tr.ui-widget-content:first").offset();
     $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
 
-    $('#txtDepartmentCode').val(rowData.DepartmentCode);
-    $('#cboDepartmentCategory').val(rowData.CodeType).selectpicker('refresh');
-    $("#txtDepartmentCodeDescription").val(rowData.CodeDesc);
-    $("#txtShortCode").val(rowData.ShortCode);
-    if (rowData.DefaultStatus === "true") {
-        $("#chkDepartmentDefaultStatus").parent().addClass("is-checked");
-    }
-    else { $("#chkDepartmentDefaultStatus").parent().removeClass("is-checked"); }
+    $('#txtDepartmentId').val(rowData.DeptId);
+    $('#cboDepartmentCategory').val(rowData.DeptCategory).selectpicker('refresh');
+    $("#txtDepartmentDesc").val(rowData.DeptDesc);
+    
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
 
@@ -128,9 +125,7 @@ function fnEditDepartmentCodes(e, actiontype) {
         $('#PopupDepartmentCodes').modal('show').css({ top: firstRow.top + 31 });
 
         $('#PopupDepartmentCodes').find('.modal-title').text(localization.UpdateDepartmentCode);
-        //$("#chkActiveStatus").prop('disabled', false);
         $("#chkActiveStatus").prop('disabled', true);
-        $("#chkDepartmentDefaultStatus").prop('disabled', false);
         $("#btnSaveDepartmentCode").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnDeactivateDepartmentCode").hide();
         $("input,textarea").attr('readonly', false);
@@ -176,32 +171,31 @@ function fnEditDepartmentCodes(e, actiontype) {
 
 
 
-function fnSaveDepartmentCode() {
-    if (IsStringNullorEmpty($("#txtDepartmentCodeDescription").val())) {
-
-        fnAlert("w", "EAD_07_00", "UI0179", errorMsg.DepartmentCodeDesc_E7);
-        return;
-    }
+function fnSaveDepartmentCodes() {
     if ($("#cboDepartmentCategory").val() === 0 || $("#cboDepartmentCategory").val() === "0") {
-        fnAlert("w", "EAD_07_00", "UI0178", errorMsg.selectCodeType_E6);
+        fnAlert("w", "EAD_07_00", "UI0178", "Please select Department Category");
         return;
     }
+    if (IsStringNullorEmpty($("#txtDepartmentDesc").val())) {
+
+        fnAlert("w", "EAD_07_00", "UI0179", "Please Enter Department Description");
+        return;
+    }
+   
 
     $("#btnSaveDepartmentCode").attr('disabled', true);
-    app_codes = {
-        DepartmentCode: $("#txtDepartmentCode").val() === '' ? 0 : $("#txtDepartmentCode").val(),
-        CodeType: $("#cboDepartmentCategory").val(),
-        CodeDesc: $("#txtDepartmentCodeDescription").val(),
-        ShortCode: $("#txtShortCode").val(),
-        DefaultStatus: $('#chkDepartmentDefaultStatus').parent().hasClass("is-checked"),
+    obj = {
+        DeptId: $("#txtDepartmentId").val() === '' ? 0 : $("#txtDepartmentId").val(),
+        DeptCategory: $("#cboDepartmentCategory").val(),
+        DeptDesc: $("#txtDepartmentDesc").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     }
     $("#btnSaveDepartmentCode").attr('disabled', true);
     $.ajax({
-        url: getBaseURL() + '/Admin/Department/InsertOrAudateApplicationCodes',
+        url: getBaseURL() + '/Department/InsertOrUpdateDepartmentCodes',
         type: 'POST',
         datatype: 'json',
-        data: { app_codes },
+        data: { obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -233,14 +227,8 @@ $("#btnCancelDepartmentCode").click(function () {
 });
 
 function fnClearFields() {
-    $("#txtDepartmentCodeDescription").val("");
-    $('#chkDepartmentDefaultStatus').prop('checked', true);
-    $('#chkDepartmentDefaultStatus').parent().removeClass('is-checked');
-    $('#chkDepartmentDefaultStatus').prop('checked', false);
-    $("#chkActiveStatus").prop('disabled', false);
-    $("#chkDepartmentDefaultStatus").prop('disabled', false);
-    $("#txtShortCode").val("");
-    $("#txtDepartmentCode").val("");
+    $("#txtDepartmentDesc").val("");
+    $("#txtDepartmentId").val("");
     $("#btnSaveDepartmentCode").attr('disabled', false);
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
@@ -267,7 +255,7 @@ function fnDeleteDepartmentCodes() {
     }
     $("#btnDeactivateDepartmentCode").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Admin/DepartmentCodes/ActiveOrDeActiveDepartmentCode?status=' + a_status + '&app_code=' + $("#txtDepartmentCode").val(),
+        url: getBaseURL() + '/Department/ActiveOrDeActiveDepartment?status=' + a_status + '&categoryId=' + $("#cboDepartmentCategory").val() + '&deptId=' + $("#txtDepartmentId").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
@@ -292,109 +280,3 @@ function fnDeleteDepartmentCodes() {
     });
 }
 
-
-function fnExportToExcel() {
-    //JSONToCSVConvertor(JSON.stringify($('#jqgDepartmentCodes').jqGrid('getRowData')), 'Department Codes', true);
-    JSONToCSVConvertor(JSON.stringify($('#jqgDepartmentCodes').getGridParam('data')), 'Department Codes', true);
-
-}
-
-function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-
-    //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-
-
-    var CSV = '';
-    //Set Report title in first row or line
-
-    CSV += ReportTitle + '\r\n\n';
-
-    //This condition will generate the Label/Header
-    if (ShowLabel) {
-        var row = "";
-        //This loop will extract the label from 1st index of on array
-        for (var index in arrData[0]) {
-            //specific Columns headings are Removed
-            if (index !== "CodeType" && index !== "edit" && index !== "_id_") {
-                //Now convert each value to string and comma-seprated
-                if (index == "DepartmentCode") {
-                    index = "Department Code";
-                }
-                if (index == "CodeDesc") {
-                    index = "Description";
-                }
-                if (index == "ShortCode") {
-                    index = "Short Code";
-                }
-                if (index == "DefaultStatus") {
-                    index = "Default Status";
-                }
-                if (index == "ActiveStatus") {
-                    index = "Active Status";
-                }
-
-
-                row += index + ',';
-            }
-        }
-
-        row = row.slice(0, -1);
-
-        //append Label row with line break
-        CSV += row + '\r\n';
-    }
-
-    //1st loop is to extract each row
-    for (var i = 0; i < arrData.length; i++) {
-        var row = "";
-        //2nd loop will extract each column and convert it in string comma-seprated
-        for (var index in arrData[i]) {
-            //specific Columns data are Removed
-            if (index !== "CodeType" && index !== "edit" && index !== "_id_") {
-
-                row += '"' + arrData[i][index] + '",';
-            }
-        }
-
-        row.slice(0, row.length - 1);
-
-        //add a line break after each row
-        CSV += row + '\r\n';
-    }
-
-    if (CSV == '') {
-
-        fnAlert("w", "EAD_07_00", "UI093", errorMsg.InValidData_E8);
-        return;
-    }
-
-    //Generate a file name
-    var fileName = ReportTitle;
-    //var fileName = "ApplicationCodes";
-
-    //this will remove the blank-spaces from the title and replace it with an underscore
-    fileName += ReportTitle.replace(/ /g, "_");
-
-    //Initialize file format you want csv or xls
-    var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-
-    // Now the little tricky part.
-    // you can use either>> window.open(uri);
-    // but this will not work in some browsers
-    // or you will not get the correct file extension
-
-    //this trick will generate a temp <a /> tag
-    var link = document.createElement("a");
-    link.href = uri;
-
-    //set the visibility hidden so it will not effect on your web-layout
-    link.style = "visibility:hidden";
-    link.download = fileName + ".csv";
-
-    //this part will append the anchor tag and remove it after automatic click
-    console.log(document.body);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
