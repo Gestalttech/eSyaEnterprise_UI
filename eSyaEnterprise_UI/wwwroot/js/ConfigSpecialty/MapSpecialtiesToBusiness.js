@@ -162,6 +162,8 @@ function fnFillSpecialtyDetail(specialtyId) {
                 $('#cboSpecialtyType').selectpicker('refresh');
                 $('#cboSpecialtyGroup').val(response.SpecialtyGroup);
                 $('#cboSpecialtyGroup').selectpicker('refresh');
+                $('#txtFocusArea').val(response.FocusArea);
+                
                 if (response.ActiveStatus === true)
                     $('#chkActiveStatus').parent().addClass("is-checked");
                 else
