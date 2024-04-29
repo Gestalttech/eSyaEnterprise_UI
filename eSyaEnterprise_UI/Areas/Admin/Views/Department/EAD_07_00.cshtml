@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "EAD_07_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+@section scripts {
+    <script src="~/js/Admin/"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        DepartmentCategory: '@Localizer["DepartmentCategory"]',
+        DepartmentID: '@Localizer["DepartmentID"]',
+        DepartmentDesc: '@Localizer["DepartmentDesc"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        AddDepartmentCode: '@Localizer["AddDepartmentCode"]',
+        UpdateDepartmentCode: '@Localizer["UpdateDepartmentCode"]',
+        Update: '@Localizer["Update"]',
+        ViewDepartmentCode: '@Localizer["ViewDepartmentCode"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+         
+    }
+
+    var errorMsg = {
+        codeType_E1: '@Localizer["UI0001"]',
+        codedesc_E2: '@Localizer["UI0002"]',
+        editauth_E3: '@Localizer["UIC02"]',
+        vieweauth_E4: '@Localizer["UIC03"]',
+        deleteauth_E5: '@Localizer["UIC04"]',
+    };
+</script>
+
+<div class="row">
+    <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="">@Localizer["DepartmentCategory"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboDepartmentCategory" title="" data-size="8"
+                    asp-items="@ViewBag.DepartmentCategory"
+                        onchange="fnGridLoadApplicationCodes()">
+                    <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgDepartmentCodes"></table>
+        <div id="jpgDepartmentCodes"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="PopupDepartmentCodes" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close" title="Close" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["DepartmentCodes"]</h4>
+            </div>
+
+
+            <div class="modal-body">
+                <div class="row padbot4">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtDepartmentCodes" style="display:none">
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label> @Localizer["DepartmentDescription"]</label>
+                            <input id="txtDepartmentDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <div class="default-checkbox single">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="mdl-button  primary-button" title="Save" id="btnSaveDepartmentCode" onclick="fnSaveDepartmentCode()">
+                            <i class="fa fa-save"></i>   @Localizer["Save"]
+                        </button>
+                        <button type="button" title="Deactivate" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateDepartmentCode" onclick="fnDeleteDepartmentCodes()"><i class="fas fa-ban"></i>  @Localizer["Deactivate"] </button>
+
+                        <button type="button" title="Cancel" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal" onclick="fnClearFields()"><i class="fa fa-times"></i>  @Localizer["Cancel"] </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
