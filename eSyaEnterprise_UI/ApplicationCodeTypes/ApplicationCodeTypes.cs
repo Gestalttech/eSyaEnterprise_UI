@@ -69,11 +69,13 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Admin
-        //public const int DepartmentCategory = 120;
-        public const int DepartmentCategory = 82;
+        public const int DepartmentCategory = 62;
 
         #endregion
+        #region ConfigProduct
+        public const int ServiceCriteria = 91;
 
+        #endregion
 
         //public const int TasKList = 4;not used
         //public const int Religion = 52; not used

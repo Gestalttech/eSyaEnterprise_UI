@@ -66,11 +66,11 @@ namespace eSyaEnterprise_UI.Areas.ConfigStores.Controllers
         /// Get Store parameter
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetStoreParameterList(int StoreCode)
+        public async Task<JsonResult> GetStoreParameterList(int StoreCode,int StoreType)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigStoreAPIServices.HttpClientServices.GetAsync<DO_StoreMaster>("StoreMaster/GetStoreParameterList?StoreCode=" + StoreCode);
+                var serviceResponse = await _eSyaConfigStoreAPIServices.HttpClientServices.GetAsync<DO_StoreMaster>("StoreMaster/GetStoreParameterList?StoreCode=" + StoreCode + "&StoreType="+ StoreType);
 
                 if (serviceResponse.Status)
                 {
@@ -168,13 +168,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigStores.Controllers
         /// Activate or De Activate Store Code
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveStoreCode(bool status, int storecode)
+        public async Task<JsonResult> ActiveOrDeActiveStoreCode(bool status, int storecode,int StoreType)
         {
 
             try
             {
 
-                var parameter = "?status=" + status + "&storecode=" + storecode;
+                var parameter = "?status=" + status + "&storecode=" + storecode + "&StoreType=" + StoreType;
                 var serviceResponse = await _eSyaConfigStoreAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("StoreMaster/ActiveOrDeActiveStoreCode" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);

@@ -25,11 +25,12 @@ function fnGridLoadStoreCodes() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.StoreCodes, localization.StoreDescription, localization.Active, localization.Actions],
+        colNames: [localization.StoreCodes, localization.StoreType, localization.StoreDescription, localization.Active, localization.Actions],
 
         colModel: [
 
             { name: "StoreCode", width: 10, editable: true, align: 'left', editoptions: { maxlength: 25 }, hidden: true },
+            { name: "StoreType", width: 10, editable: true, align: 'left', editoptions: { maxlength: 25 }, hidden: true },
             {
                 name: "StoreDesc", width: 150, editable: true, editoptions: { size: "40", maxlength: "25" }, edittype: "text"
             },
@@ -90,6 +91,7 @@ function fnEditStoreCodes(e, actiontype) {
     var rowid = $("#jqgStoreMaster").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgStoreMaster').jqGrid('getRowData', rowid);
     $('#txtStoreCode').val(rowData.StoreCode);
+    $('#txtStoreType').val(rowData.StoreType);
     $("#txtStoreDescription").val(rowData.StoreDesc);
     if (rowData.ActiveStatus === "true") {
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -99,7 +101,7 @@ function fnEditStoreCodes(e, actiontype) {
 
     $.ajax({
         async: false,
-        url: getBaseURL() + "/Stores/GetStoreParameterList?StoreCode=" + $("#txtStoreCode").val(),
+        url: getBaseURL() + "/Stores/GetStoreParameterList?StoreCode=" + $("#txtStoreCode").val() + '&StoreType=' + $("#txtStoreType").val(),
         type: 'POST',
         datatype: 'json',
         success: function (result) {
@@ -189,6 +191,7 @@ function fnSaveStoreCodes() {
     storecodes = {
         StoreCode: $("#txtStoreCode").val() === '' ? 0 : $("#txtStoreCode").val(),
         StoreDesc: $("#txtStoreDescription").val(),
+        StoreType:0,
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
@@ -238,6 +241,7 @@ function fnGridRefreshStoreCodes() {
 
 function fnClearFields() {
     $("#txtStoreCode").val("");
+    $('#txtStoreType').val("");
     $("#txtStoreDescription").val("");
     $("#chkActiveStatus").parent().addClass("is-checked");
     eSyaParams.ClearValue();
@@ -264,7 +268,7 @@ function fnDeleteStoreMaster() {
     }
     $("#btnDeactivateStoreMaster").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/Stores/ActiveOrDeActiveStoreCode?status=' + a_status + '&storecode=' + $("#txtStoreCode").val(),
+        url: getBaseURL() + '/Stores/ActiveOrDeActiveStoreCode?status=' + a_status + '&storecode=' + $("#txtStoreCode").val() + '&StoreType=' + $("#txtStoreType").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {

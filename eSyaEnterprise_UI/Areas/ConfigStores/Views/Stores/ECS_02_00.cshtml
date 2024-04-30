@@ -115,12 +115,16 @@
             postData: {
                 formId: function () { return formID; },
             },
-            colNames: ["@Localizer["StoreCode"]", "@Localizer["Store"]", "@Localizer["ActiveStatus"]"],
+            colNames: ["@Localizer["StoreCode"]", "Store Type", "@Localizer["Store"]", "Store Type", "@Localizer["ActiveStatus"]"],
             colModel: [
 
                 { name: 'StoreCode', key: true, index: 'StoreCode', width: 0, sortable: false, hidden: true },
+                { name: 'StoreType', key: true, index: 'StoreType', width: 0, sortable: false, hidden: true },
                 { name: 'StoreDesc', index: 'StoreDesc', width: 300, sortable: false },
-                { name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
+                { name: 'StoreTypeDesc', index: 'StoreDesc', width: 100, sortable: false },
+                // { name: 'ActiveStatus', index: 'ActiveStatus', width: 75, align: 'center', sortable: false, formatter: 'checkbox', editable: true, edittype: "checkbox" }
+                { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+
             ],
             caption: "",
             height: 'auto',
@@ -159,13 +163,14 @@
     }
 
     function fnSaveFormStoreLink() {
+       
         var $grid = $("#jqgFormStoreLink")
         var l_FormStoreCodes = [];
         var ids = jQuery("#jqgFormStoreLink").jqGrid('getDataIDs');
         for (var i = 0; i < ids.length; i++) {
             var rowId = ids[i];
             var rowData = jQuery('#jqgFormStoreLink').jqGrid('getRowData', rowId);
-            if (rowData.ActiveStatus == "Yes") {
+            if (rowData.ActiveStatus == "true") {
                 l_FormStoreCodes.push({ FormId: _selectedFormId, StoreCode: rowData.StoreCode })
             }
         }
