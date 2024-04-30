@@ -91,7 +91,7 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
                             jsObj = new jsTreeObject
                             {
                                 id = "ST" + "T" + "_" + f.StoreCode.ToString(),
-                                text = f.StoreDesc + "(" + f.StoreTypeDesc + ")",
+                                text = f.StoreDesc +" "+ "(" + f.StoreTypeDesc + ")",
                                 GroupIndex = f.StoreCode.ToString(),
                                 parent = "MM",
                                 icon = baseURL + "/images/jsTree/checkedstate.jpg",
@@ -104,7 +104,7 @@ namespace eSyaEnterprise_UI.Areas.Stores.Controllers
                             jsObj = new jsTreeObject
                             {
                                 id = "ST" + "F" + "_" + f.StoreCode.ToString(),
-                                text = f.StoreDesc+"("+f.StoreTypeDesc+")",
+                                text = f.StoreDesc + " " + "(" +f.StoreTypeDesc+")",
                                 GroupIndex = f.StoreCode.ToString(),
                                 parent = "MM",
                                 state = new stateObject { opened = true, selected = false }
