@@ -48,11 +48,10 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #region Config Patient
 
         public const int PatientCategory = 59;
-        //Need To Remove later
-        public const int ConfigPatientRateType = 62; 
-        //Need To Remove later
+        public const int ConfigPatientRateType = 85; 
         public const int PatientType = 58;
-        //public const int Relationship = 56;not used   
+        public const int DocumentListforPatientTypeCategoryLink = 61;
+
         #endregion
 
         #region Config Pharma
@@ -72,9 +71,10 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int DepartmentCategory = 62;
 
         #endregion
+
         #region ConfigProduct
         public const int ServiceCriteria = 91;
-
+        public const int ServiceProvider = 81;
         #endregion
 
         //public const int TasKList = 4;not used
