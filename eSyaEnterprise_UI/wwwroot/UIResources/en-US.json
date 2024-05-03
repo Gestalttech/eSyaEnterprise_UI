@@ -244,8 +244,8 @@
   "UI0243": "Please Select Range To Period",
   "UI0244": "Please Select a WhatsApp ISD Code",
   "UI0245": "Please Enter the WhatsApp Number",
-  "UI0246": "Please Enter Budget Amount",
-  "UI0247": "Please Enter Commitment Amount",
+  "UI0246": "Please Enter the Budget Amount",
+  "UI0247": "Please Enter the Commitment Amount",
   "UI0248": "Please Enter the Token Type",
   "UI0249": "Please Enter the Token Description",
   "UI0250": "Please Enter the Token Prefix",
@@ -303,7 +303,11 @@
   "UI0302": "Please select a Store Class",
   "UI0303": "Please click any Business location from the grid",
   "UI0304": "Please select a Gen Logic",
-  
+  "UI0305": "Please select a Document Master",
+  "UI0306": "Please select a Department Category",
+  "UI0307": "Please Enter the Department Description",
+  "UI0308": "Please select any Document control",
+
 
 
   "UIC01": "You are not Authorized to Add",

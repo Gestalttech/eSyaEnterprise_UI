@@ -153,7 +153,7 @@ function fnSaveBusinessDocument() {
 
     if (IsStringNullorEmpty(businesskey) || businesskey == '0') {
 
-        fnAlert("w", "EAD_02_00", "UI0179", "Please select Location");
+        fnAlert("w", "EDC_02_00", "UI0064", errorMsg.Location_E1);
         return;
     }
    
@@ -183,7 +183,7 @@ function fnSaveBusinessDocument() {
     }
 
     if (r_doc.length <= 0) {
-        fnAlert("w", "EAD_02_00", "UI0179", "Please select any Document control");
+        fnAlert("w", "EDC_02_00", "UI0308", errorMsg.Documentcontrol_E3);
         return;
     }
 

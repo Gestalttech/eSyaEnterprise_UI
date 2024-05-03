@@ -56,77 +56,81 @@
             <i class="fas fa-arrow-down"></i>
         </button>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-12 div-menuform">
-        <div id="dvServiceType" style="display:none;">
-            <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddServiceType">
-                <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
-                    <h5 class="mdl-card__title-text">@Localizer["AddServiceType"] </h5>
-                </div>
-                <div class="mdl-card__supporting-text fullwidth padbot0">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <div class="form-group">
-                                <label>
-                                    @Localizer["ServiceTypeDescription"]
-                                </label>
-                                <input type="text" maxlength="50" class="form-control" id="txtServiceTypeDesc" />
+    <div class="col-lg-8 col-md-6 col-sm-12 div-menuform">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-6">
+                <div id="dvServiceType" style="display:none;">
+                    <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddServiceType">
+                        <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+                            <h5 class="mdl-card__title-text">@Localizer["AddServiceType"] </h5>
+                        </div>
+                        <div class="mdl-card__supporting-text fullwidth padbot0">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label>
+                                            @Localizer["ServiceTypeDescription"]
+                                        </label>
+                                        <input type="text" maxlength="50" class="form-control" id="txtServiceTypeDesc" />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col-lg-12 form-group">
-                            <label class="mdl-checkbox mdl-js-checkbox" for="chkSTActiveStatus">
-                                <input type="checkbox" id="chkSTActiveStatus"
-                                       class="mdl-checkbox__input">
-                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                            </label>
-                        </div>
-                    </div>
+                            <div class="row ">
+                                <div class="col-lg-12 form-group">
+                                    <label class="mdl-checkbox mdl-js-checkbox" for="chkSTActiveStatus">
+                                        <input type="checkbox" id="chkSTActiveStatus"
+                                               class="mdl-checkbox__input">
+                                        <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                                    </label>
+                                </div>
+                            </div>
 
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border text-center">
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSTAdd" onclick="fnAddOrUpdateServiceType()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mdl-card__actions mdl-card--border text-center">
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSTAdd" onclick="fnAddOrUpdateServiceType()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 divTreeActions">
+                <div class="card treeaction">
+                    <div class="card-header">
+                        <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+
+                            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDelete" onclick="fnDeleteNode()">
+                                <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveUp" onclick="fnMoveItemUpDown('U')">
+                                <i class="fas fa-arrow-up"></i>   @Localizer["MoveUp"]
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveDown" onclick="fnMoveItemUpDown('D')">
+                                <i class="fas fa-arrow-down"></i>   @Localizer["MoveDown"]
+                            </button>
+                        </li>
+                        <li class="list-group-item collapse">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                                <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                            </button>
+                        </li>
+                        <li class="list-group-item collapse">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                                <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 hide-in-smallscreen divTreeActions">
-      
         
-            <div class="card treeaction">
-                <div class="card-header">
-                    <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-            
-                <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDelete" onclick="fnDeleteNode()">
-                    <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
-                </button>
-            </li>
-                    <li class="list-group-item">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveUp" onclick="fnMoveItemUpDown('U')">
-                    <i class="fas fa-arrow-up"></i>   @Localizer["MoveUp"]
-                </button>
-            </li>
-                    <li class="list-group-item">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnMoveDown" onclick="fnMoveItemUpDown('D')">
-                    <i class="fas fa-arrow-down"></i>   @Localizer["MoveDown"]
-                </button>
-            </li>
-                    <li class="list-group-item collapse">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
-                    <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
-                </button>
-            </li>
-                    <li class="list-group-item collapse">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
-                    <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
-                </button>
-            </li>
-             </ul>
-        </div>
     </div>
+   
 
 
 </div>

@@ -43,7 +43,7 @@ function fnLoadItemCategoryTree() {
                         if (_userFormRole.IsInsert === false) {
                             $("#dvItemCategory").hide();
                             $("#dvItemSubCategory").hide();
-                            fnAlert("w", "ECS_05_00", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ESK_02_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
                         $("#pnlAddItemCategory .mdl-card__title-text").text(localization.AddItemCategory);
@@ -72,7 +72,7 @@ function fnLoadItemCategoryTree() {
                         if (_userFormRole.IsView === false) {
                             $("#dvItemCategory").hide();
                             $("#dvItemSubCategory").hide();
-                            fnAlert("w", "ECS_05_00", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ESK_02_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
 
@@ -90,7 +90,7 @@ function fnLoadItemCategoryTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "ECS_05_00", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ESK_02_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $('#dvItemSubCategory').hide();
@@ -140,15 +140,15 @@ function fnAddOrUpdateItemCategory() {
     //var txtBudgetAmount = $("#txtBudgetAmount").val();
     //var txtCommittmentAmount = $("#txtCommittmentAmount").val();
     if (txtItemCategoryDesc == "" || txtItemCategoryDesc == null || txtItemCategoryDesc == undefined) {
-        fnAlert("w", "ECS_05_00", "UI0184", errorMsg.ItemCategoryDesc_E6);
+        fnAlert("w", "ESK_02_00", "UI0184", errorMsg.ItemCategoryDesc_E6);
         return false;
     }
     //else if (txtBudgetAmount == "" || txtBudgetAmount == null || txtBudgetAmount == undefined) {
-    //    fnAlert("w", "ECS_05_00", "UI0185", errorMsg.BudgetAmount_E7);
+    //    fnAlert("w", "ESK_02_00", "UI0185", errorMsg.BudgetAmount_E7);
     //    return false;
     //}
     //else if (txtCommittmentAmount == "" || txtCommittmentAmount == null || txtCommittmentAmount == undefined) {
-    //    fnAlert("w", "ECS_05_00", "UI0186", errorMsg.Commitment_E8);
+    //    fnAlert("w", "ESK_02_00", "UI0186", errorMsg.Commitment_E8);
     //    return false;
     //}
     else {
@@ -167,26 +167,26 @@ function fnAddOrUpdateItemCategory() {
             success: function (response) {
                 if (response.Status == true) {
                     if (ItemCategoryID == "0") {
-                        fnAlert("s", "ECS_05_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                         $("#txtItemCategoryDesc").val('');
                         //$("#txtBudgetAmount").val('0');
                         //$("#txtCommittmentAmount").val('0');
                         $('#chkActiveStatus').parent().addClass("is-checked");
                     }
                     else {
-                        fnAlert("s", "ECS_05_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                     }
 
                     $("#ItemCategoryTree").jstree("destroy");
                     fnLoadItemCategoryTree();
                 }
                 else {
-                    fnAlert("e", "ECS_05_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnICAdd").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "ECS_05_00", error.StatusCode, error.statusText);
+                fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnICAdd").attr("disabled", false);
             }
         });

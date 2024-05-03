@@ -303,6 +303,10 @@
   "UI0302": "Please select a Store Class",
   "UI0303": "Please click any Business location from the grid",
   "UI0304": "Please select a Gen Logic",
+  "UI0305": "Please select a Document Master",
+  "UI0306": "Please select a Department Category",
+  "UI0307": "Please Enter the Department Description",
+  "UI0308": "Please select any Document control",
 
 
   "UIC01": "You are not Authorized to Add",

@@ -45,7 +45,7 @@ function fnLoadItemGroupCategoryTree() {
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $("#dvItemGroupCate").hide();
-                            fnAlert("w", "ECS_07_00", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ESK_04_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
                         flag = "0";
@@ -76,7 +76,7 @@ function fnLoadItemGroupCategoryTree() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#dvItemGroupCate').hide();
-                            fnAlert("w", "ECS_07_00", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ESK_04_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
 
@@ -101,7 +101,7 @@ function fnLoadItemGroupCategoryTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvItemGroupCate').hide();
-                            fnAlert("w", "ECS_07_00", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ESK_04_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         flag = "1";
@@ -177,23 +177,23 @@ function fnItemGroupCateSubCateMapping() {
     var txtBudgetAmount = $("#txtBudgetAmount").val();
     var txtCommittmentAmount = $("#txtCommittmentAmount").val();
     if (cboitemgroup == "0" || cboitemgroup == null || cboitemgroup == undefined) {
-        fnAlert("w", "ECS_07_00", "UI0189", errorMsg.SelectItem_E6);
+        fnAlert("w", "ESK_04_00", "UI0189", errorMsg.SelectItem_E6);
         return false;
     }
     else if (cboitemcategory == "0" || cboitemcategory == null || cboitemcategory == undefined) {
-        fnAlert("w", "ECS_07_00", "UI0190", errorMsg.ItemCategory_E7);
+        fnAlert("w", "ESK_04_00", "UI0190", errorMsg.ItemCategory_E7);
         return false;
     }
     else if (cboitemsubcategory == "0" || cboitemsubcategory == null || cboitemsubcategory == undefined) {
-        fnAlert("w", "ECS_07_00", "UI0191", errorMsg.ItemSubCategory_E8);
+        fnAlert("w", "ESK_04_00", "UI0191", errorMsg.ItemSubCategory_E8);
         return false;
     }
     else if (txtBudgetAmount == "" || txtBudgetAmount == null || txtBudgetAmount == undefined) {
-        fnAlert("w", "ECS_07_00", "UI0246", errorMsg.BudgetAmount_E9);
+        fnAlert("w", "ESK_04_00", "UI0246", errorMsg.BudgetAmount_E9);
         return false;
     }
     else if (txtCommittmentAmount == "" || txtCommittmentAmount == null || txtCommittmentAmount == undefined) {
-        fnAlert("w", "ECS_07_00", "UI0247", errorMsg.Commitment_E10);
+        fnAlert("w", "ESK_04_00", "UI0247", errorMsg.Commitment_E10);
         return false;
     }
     else {

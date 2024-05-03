@@ -40,7 +40,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSKU.Controllers
 
         [Area("ConfigSKU")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECS_04_00()
+        public IActionResult ESK_01_00()
         {
             return View();
         }
@@ -167,9 +167,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigSKU.Controllers
         /// Item Category
         /// </summary>
         /// <returns></returns>
+       
         [Area("ConfigSKU")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECS_05_00()
+        public IActionResult ESK_02_00()
         {
             return View();
         }
@@ -297,12 +298,15 @@ namespace eSyaEnterprise_UI.Areas.ConfigSKU.Controllers
         /// Item Sub Category
         /// </summary>
         /// <returns></returns>
+        
         [Area("ConfigSKU")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECS_06_00()
+        public IActionResult ESK_03_00()
         {
             return View();
         }
+
+
         public async Task<ActionResult> LoadItemSubCategoryTree()
         {
             try
@@ -541,9 +545,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigSKU.Controllers
         /// Item Group Category Link
         /// </summary>
         /// <returns></returns>
+        
         [Area("ConfigSKU")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> ECS_07_00()
+        public async Task<IActionResult> ESK_04_00()
         {
 
             var serviceResponse = await _eSyaConfigSKUAPIServices.HttpClientServices.GetAsync<List<DO_ItemCategory>>("ItemControl/GetItemCategory");
@@ -747,5 +752,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigSKU.Controllers
             }
         }
         #endregion
+
+
+
     }
 }

@@ -137,7 +137,7 @@ function fnAddDocumentControl() {
     fnClearFields();
     var id = $("#cboDocumentMaster").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboDocumentMaster").val())) {
-        fnAlert("w", "ECD_02_00", "UI0178", "Please select Document Master");
+        fnAlert("w", "ECD_02_00", "UI0305", errorMsg.DocumentMaster_E11);
     }
     else {
         Isadd = 1;
@@ -282,7 +282,7 @@ function fnValidateDocumentControl() {
         return false;
     }
     if (IsStringNullorEmpty($("#txtSchemaName").val())) {
-        fnAlert("w", "ECD_02_00", "UI0020", errorMsg.EnterSchema_E7);
+        fnAlert("w", "ECD_02_00", "UI0078", errorMsg.EnterSchema_E7);
         return false;
     }
    
@@ -294,7 +294,7 @@ function fnRefreshDocumentControlGrid() {
 
 function fnViewDocumentControl(e) {
     if (_userFormRole.IsView === false) {
-        fnAlert("w", "ECD_02_00", "UIC04", errorMsg.vieweauth_E4);
+        fnAlert("w", "ECD_02_00", "UIC03", errorMsg.vieweauth_E4);
         return;
     }
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
@@ -350,7 +350,7 @@ function fnViewDocumentControl(e) {
 
 function fnDeleteDocumentControl(e) {
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "ECD_05_00", "UIC04", errorMsg.deleteauth_E4);
+        fnAlert("w", "ECD_02_00", "UIC04", errorMsg.deleteauth_E5);
         return;
     }
     var rowid = $("#jqvDocContManagement").jqGrid('getGridParam', 'selrow');
@@ -464,6 +464,7 @@ function SetGridControlByAction() {
 
     if (_userFormRole.IsInsert === false) {
         $('#jqgAdd').addClass('ui-state-disabled');
+        
     }
 
 }

@@ -44,7 +44,7 @@ function fnLoadItemGroupTree() {
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "ECS_04_00", "UIC01", errorMsg.addauth_E1);
+                            fnAlert("w", "ESK_01_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
                         $("#pnlAddItemGroup .mdl-card__title-text").text(localization.AddItemGroup);
@@ -65,7 +65,7 @@ function fnLoadItemGroupTree() {
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "ECS_04_00", "UIC03", errorMsg.vieweauth_E3);
+                            fnAlert("w", "ESK_01_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         $("#pnlAddItemGroup .mdl-card__title-text").text(localization.ViewItemGroup);
@@ -81,7 +81,7 @@ function fnLoadItemGroupTree() {
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
                             $('#dvItemGroup').hide();
-                            fnAlert("w", "ECS_04_00", "UIC02", errorMsg.editauth_E2);
+                            fnAlert("w", "ESK_01_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         $("#pnlAddItemGroup .mdl-card__title-text").text(localization.EditItemGroup);
@@ -125,7 +125,7 @@ function fnFillItemGroupDetail(ItemGroupID) {
 function fnAddOrUpdateItemGroup() {
     var txtItemGroupDesc = $("#txtItemGroupDesc").val()
     if (txtItemGroupDesc == "" || txtItemGroupDesc == null || txtItemGroupDesc == undefined) {
-        fnAlert("w", "ECS_04_00", "UI0183", errorMsg.ItemGroupDesc_E6);
+        fnAlert("w", "ESK_01_00", "UI0183", errorMsg.ItemGroupDesc_E6);
         return false;
     }
     else {
@@ -142,24 +142,24 @@ function fnAddOrUpdateItemGroup() {
             success: function (response) {
                 if (response.Status == true) {
                     if (ItemGroupID == 0) {
-                        fnAlert("s", "ECS_04_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                         $("#txtItemGroupDesc").val('');
                         $('#chkActiveStatus').parent().addClass("is-checked");
                     }
                     else {
-                        fnAlert("s", "ECS_04_00", response.StatusCode, response.Message);
+                        fnAlert("s", "", response.StatusCode, response.Message);
                     }
                     $("#ItemGroupTree").jstree("destroy");
                     fnLoadItemGroupTree();
 
                 }
                 else {
-                    fnAlert("e", "ECS_04_00", response.StatusCode, response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnIGAdd").attr("disabled", false);
             },
             error: function (error) {
-                fnAlert("e", "ECS_04_00", error.StatusCode, error.statusText);
+                fnAlert("e", "ESK_01_00", error.StatusCode, error.statusText);
                 $("#btnIGAdd").attr("disabled", false);
             }
         });

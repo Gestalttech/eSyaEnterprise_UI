@@ -133,13 +133,13 @@
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <div class="form-group">
                                     <label> @Localizer["UnitofMeasure"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboUnitOfMeasure" title="Select" data-size="8" asp-items="@ViewBag.UOMList"></select>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboUnitOfMeasure" title="Select" data-size="8" asp-items="@ViewBag.UOMList"></select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label> @Localizer["PackUnit"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboPackUnit" title="Select" data-size="8" asp-items="@ViewBag.PackUnitList"></select>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboPackUnit" title="Select" data-size="8" asp-items="@ViewBag.PackUnitList"></select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 lbl-right">
@@ -152,9 +152,9 @@
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label> @Localizer["InventoryClass"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboInventoryClass" title="Choose Inventory Class" data-size="8">
-                                        <option value="S">Stockable</option>
-                                        <option value="N">Non-Stockable</option>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboInventoryClass" title="Choose Inventory Class" data-size="8">
+                                        <option value="S">@Localizer["Stockable"]</option>
+                                        <option value="N">@Localizer["Non-Stockable"]</option>
                                     </select>
 
                                 </div>
@@ -162,31 +162,31 @@
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label> @Localizer["ItemClass"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboItemClass" title="Choose Item Class" data-size="8">
-                                        <option value="B">Bought Out</option>
-                                        <option value="C">Consignment</option>
-                                        <option value="I">In-House</option>
-                                        <option value="S">Sub Contract</option>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemClass" title="Choose Item Class" data-size="8">
+                                        <option value="B">@Localizer["BoughtOut"]</option>
+                                        <option value="C">@Localizer["Consignment"]</option>
+                                        <option value="I">@Localizer["In-House"]</option>
+                                        <option value="S">@Localizer["SubContract"]</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label> @Localizer["ItemSource"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboItemSource" title="Choose Item Source" data-size="8">
-                                        <option value="L">Local</option>
-                                        <option value="I">Imported</option>
-                                        <option value="O">Out Station</option>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemSource" title="Choose Item Source" data-size="8">
+                                        <option value="L">@Localizer["Local"]</option>
+                                        <option value="I">@Localizer["Imported"]</option>
+                                        <option value="O">@Localizer["OutStation"]</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label> @Localizer["ItemCriticality"] </label>
-                                    <select class="selectpicker" data-live-search="true" id="cboItemCriticality" title="Choose Item Criticality" data-size="8">
-                                        <option value="D">Desirable</option>
-                                        <option value="E">Essential</option>
-                                        <option value="V">Vital</option>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemCriticality" title="Choose Item Criticality" data-size="8">
+                                        <option value="D">@Localizer["Desirable"]</option>
+                                        <option value="E">@Localizer["Essential"]</option>
+                                        <option value="V">@Localizer["Vital"]</option>
                                     </select>
                                 </div>
                             </div>

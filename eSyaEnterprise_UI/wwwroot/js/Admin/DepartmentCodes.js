@@ -80,7 +80,7 @@ function fnAddDepartmentCodes() {
    
     var id = $("#cboDepartmentCategory").val();
     if (id === 0 || id === "0" || IsStringNullorEmpty($("#cboDepartmentCategory").val())) {
-        fnAlert("w", "EAD_07_00", "UI0178", "Please select Department Category");
+        fnAlert("w", "EAD_07_00", "UI0306", errorMsg.DepartmentCategory_E6);
     }
     else {
        
@@ -151,12 +151,12 @@ function fnEditDepartmentCodes(e, actiontype) {
             return;
         }
         $('#PopupDepartmentCodes').modal('show');
-        $('#PopupDepartmentCodes').find('.modal-title').text("Active/De Active Department Codes");
+        $('#PopupDepartmentCodes').find('.modal-title').text(localization.ActDeactDeptCodes);
         if (rowData.ActiveStatus == 'true') {
             $("#btnDeactivateDepartmentCode").html(localization.Deactivate);
         }
         else {
-            $("#btnDeactivateDepartmentCode").html('Activate');
+            $("#btnDeactivateDepartmentCode").html(localization.Activate);
             $("#btnDeactivateDepartmentCode").html(localization.Activate);
         }
         $("#btnSaveDepartmentCode").hide();
@@ -173,12 +173,12 @@ function fnEditDepartmentCodes(e, actiontype) {
 
 function fnSaveDepartmentCodes() {
     if ($("#cboDepartmentCategory").val() === 0 || $("#cboDepartmentCategory").val() === "0") {
-        fnAlert("w", "EAD_07_00", "UI0178", "Please select Department Category");
+        fnAlert("w", "EAD_07_00", "UI0306", errorMsg.DepartmentCategory_E6);
         return;
     }
     if (IsStringNullorEmpty($("#txtDepartmentDesc").val())) {
 
-        fnAlert("w", "EAD_07_00", "UI0179", "Please Enter Department Description");
+        fnAlert("w", "EAD_07_00", "UI0307", errorMsg.DepartmentDescription_E7);
         return;
     }
    
@@ -199,7 +199,7 @@ function fnSaveDepartmentCodes() {
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveDepartmentCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveDepartmentCode").html('<i class="fa fa-spinner fa-spin"></i>' + localization.wait);
                 $("#btnSaveDepartmentCode").attr('disabled', false);
                 fnGridRefreshDepartmentCodes();
                 $('#PopupDepartmentCodes').modal('hide');
@@ -260,7 +260,7 @@ function fnDeleteDepartmentCodes() {
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnDeactivateDepartmentCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnDeactivateDepartmentCode").html('<i class="fa fa-spinner fa-spin"></i>' + localization.wait);
                 $('#PopupDepartmentCodes').modal('hide');
                 fnClearFields();
                 fnGridRefreshDepartmentCodes();
@@ -269,13 +269,13 @@ function fnDeleteDepartmentCodes() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnDeactivateDepartmentCode").attr("disabled", false);
-                $("#btnDeactivateDepartmentCode").html('De Activate');
+                $("#btnDeactivateDepartmentCode").html(localization.Deactivate);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnDeactivateDepartmentCode").attr("disabled", false);
-            $("#btnDeactivateDepartmentCode").html('De Activate');
+            $("#btnDeactivateDepartmentCode").html(localization.Deactivate);
         }
     });
 }

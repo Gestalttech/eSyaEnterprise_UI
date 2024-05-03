@@ -204,7 +204,7 @@ function fnRefreshDocumentControlMaster() {
 
 function fnViewDocumentControlMaster(e) {
     if (_userFormRole.IsView === false) {
-        fnAlert("w", "ECD_02_00", "UIC04", errorMsg.vieweauth_E4);
+        fnAlert("w", "ECD_05_00", "UIC03", errorMsg.vieweauth_E4);
         return;
     }
     var rowid = $("#jqgDocumentControlMaster").jqGrid('getGridParam', 'selrow');
