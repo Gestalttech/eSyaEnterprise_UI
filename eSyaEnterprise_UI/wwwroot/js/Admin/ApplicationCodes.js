@@ -160,12 +160,11 @@ function fnEditApplicationCodes(e, actiontype) {
             return;
         }
         $('#PopupApplicationCodes').modal('show');
-        $('#PopupApplicationCodes').find('.modal-title').text("Active/De Active Application Codes");
+        $('#PopupApplicationCodes').find('.modal-title').text(localization.ActiveOrDeactiveApplicationCodes);
         if (rowData.ActiveStatus == 'true') {
-            $("#btnDeactivateApplicationCode").html(localization.DActivate);
+            $("#btnDeactivateApplicationCode").html(localization.Deactivate);
         }
         else {
-            $("#btnDeactivateApplicationCode").html('Activate');
             $("#btnDeactivateApplicationCode").html(localization.Activate);
         }
         $("#btnSaveApplicationCode").hide();
@@ -209,7 +208,7 @@ function fnSaveApplicationCode() {
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveApplicationCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveApplicationCode").html('<i class="fa fa-spinner fa-spin"></i>'+localization.wait);
                 $("#btnSaveApplicationCode").attr('disabled', false);
                 fnGridRefreshApplicationCodes();
                 $('#PopupApplicationCodes').modal('hide');
@@ -276,7 +275,7 @@ function fnDeleteApplicationCodes() {
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnDeactivateApplicationCode").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnDeactivateApplicationCode").html('<i class="fa fa-spinner fa-spin"></i>'+localization.wait);
                 $('#PopupApplicationCodes').modal('hide');
                 fnClearFields();
                 fnGridRefreshApplicationCodes();
