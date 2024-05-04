@@ -27,9 +27,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         }
 
         #region Patient Types
+     
         [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPT_01_00()
+        public IActionResult EPM_01_00()
         {
             try
             {
@@ -38,7 +39,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 l_ac.Add(ApplicationCodeTypeValues.PatientCategory);
                 //l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
 
-            
+
                 var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
                 if (response.Status)
                 {
@@ -68,7 +69,6 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-
         /// <summary>
         ///Get Patient Types for Tree View
         /// </summary>

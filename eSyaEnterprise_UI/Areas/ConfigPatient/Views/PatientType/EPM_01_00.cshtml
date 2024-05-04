@@ -3,7 +3,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "EPT_01_00";
+    ViewData["Title"] = "EPM_01_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,18 +15,18 @@
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
     var localization = {
-        AddPatientCategory:       '@Localizer["AddPatientCategory"]',
-        PatientCategory:          '@Localizer["PatientCategory"]',
-        AddPatientCategory:       '@Localizer["AddPatientCategory"]',
-        ViewPatientCategory:      '@Localizer["ViewPatientCategory"]',
-        EditPatientCategory:      '@Localizer["EditPatientCategory"]',
-        Save:                     '@Localizer["Save"]',
-        Update:                   '@Localizer["Update"]',
-        SpecialtyDescription:     '@Localizer["SpecialtyDescription"]',
-        Active:                   '@Localizer["Active"]',
+        AddPatientCategory: '@Localizer["AddPatientCategory"]',
+        PatientCategory: '@Localizer["PatientCategory"]',
+        AddPatientCategory: '@Localizer["AddPatientCategory"]',
+        ViewPatientCategory: '@Localizer["ViewPatientCategory"]',
+        EditPatientCategory: '@Localizer["EditPatientCategory"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        SpecialtyDescription: '@Localizer["SpecialtyDescription"]',
+        Active: '@Localizer["Active"]',
         PatientDocumentsRequired: '@Localizer["PatientDocumentsRequired"]',
         LimittoSpecificSpecialty: '@Localizer["LimittoSpecificSpecialty"]',
-        ServiceTypeDescription:   '@Localizer["ServiceTypeDescription"]',
+        ServiceTypeDescription: '@Localizer["ServiceTypeDescription"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -59,7 +59,7 @@
                             <option value="0">@Localizer["Select"]  </option>
                         </select>
                     </div>
-                  
+
                     <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
@@ -93,30 +93,32 @@
             <div class="card-header">
                 <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
             </div>
-        
+
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
-                    <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
-                </button>
-            </li>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                        <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                    </button>
+                </li>
                 <li class="list-group-item">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
-                    <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
-                </button>
-            </li>
-             </ul>
-          </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                        <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                    </button>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
 
-@section scripts{
+@section scripts {
     <link rel="stylesheet" href="~/css/Common/jsTree.css" />
     <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/ConfigPatient/PatientTypes.js"></script>
 }
 
 <script>
-var RateTypes = (@Html.Raw(Json.Serialize(ViewBag.RateType)));
-</script>              
+    var RateTypes = (@Html.Raw(Json.Serialize(ViewBag.RateType)));
+</script>
+
+
