@@ -13,8 +13,8 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Models
         public int ItemSubCategory { get; set; }
         public string ItemDescription { get; set; }
         public int UnitOfMeasure { get; set; }
-        public int PackUnit { get; set; }
-        public string? PackUnitDesc { get; set; }
+        //public int PackUnit { get; set; }
+        //public string? PackUnitDesc { get; set; }
         public int PackSize { get; set; }
         public string InventoryClass { get; set; }
         public string ItemClass { get; set; }

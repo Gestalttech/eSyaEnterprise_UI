@@ -2,66 +2,6 @@
 
     fnLoadUnitofMeasureGrid();
 
-    $("#txtUOMPurchaseDesc").focus(function () {
-
-        if (!IsStringNullorEmpty($("#txtUOMPurchase").val())) {
-
-            $.ajax({
-                url: getBaseURL() + '/Admin/Rules/GetUOMPDescriptionbyUOMP?uomp=' + $("#txtUOMPurchase").val(),
-                type: 'POST',
-                datatype: 'json',
-                async: false,
-                success: function (response) {
-                    if (response !== null) {
-
-                        $("#txtUOMPurchaseDesc").val('');
-                        $("#txtUOMPurchaseDesc").val(response.Uompdesc);
-                        return true;
-                    }
-                    else {
-                        $("#txtUOMPurchaseDesc").val('');
-                        return false;
-                    }
-                },
-                error: function (error) {
-                    fnAlert("", "", error.StatusCode, error.statusText);
-                }
-            });
-
-        }
-
-    });
-
-    $("#txtUOMStackDesc").focus(function () {
-
-        if (!IsStringNullorEmpty($("#txtUOMStack").val())) {
-            $.ajax({
-                url: getBaseURL() + '/Admin/Rules/GetUOMSDescriptionbyUOMS?uoms=' + $("#txtUOMStack").val(),
-                type: 'POST',
-                datatype: 'json',
-                async: false,
-                success: function (response) {
-
-                    if (response !== null) {
-
-                        $("#txtUOMStackDesc").val('');
-                        $("#txtUOMStackDesc").val(response.Uomsdesc);
-                        return true;
-                    }
-                    else {
-                        $("#txtUOMStackDesc").val('');
-                        return false;
-                    }
-                },
-                error: function (error) {
-                    fnAlert("e", "", error.StatusCode, error.statusText);
-                }
-            });
-
-        }
-
-    });
-
     $.contextMenu({
         // define which elements trigger this menu
         selector: "#btnUnitofMeasure",
@@ -95,9 +35,9 @@ function fnLoadUnitofMeasureGrid() {
         colModel: [
 
             { name: "UnitOfMeasure", width: 40, editable: true, align: 'left', hidden: true },
-            { name: "Uompurchase", width: 80, editable: true, align: 'left', hidden: false },
+            { name: "Uompurchase", width: 80, editable: true, align: 'left', hidden: true },
             { name: "Uompdesc", width: 80, editable: true, align: 'left', hidden: false },
-            { name: "Uomstock", width: 30, editable: true, align: 'left', hidden: false },
+            { name: "Uomstock", width: 30, editable: true, align: 'left', hidden: true },
             { name: "Uomsdesc", width: 80, editable: true, align: 'left', hidden: false },
             { name: "UsageStatus", width: 30, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ConversionFactor", width: 45, editable: true, align: 'left', hidden: false },
@@ -138,11 +78,10 @@ function fnLoadUnitofMeasureGrid() {
     });
     fnAddGridSerialNoHeading();
 }
-function fnChangeuomPurchase() {
-    var _uomPurchase = $("#cboUOMPurchase").val();
-}
+
 function fnAddUnitofMeasure() {
     fnClearFields();
+    $("#txtUnitofMeasure").val('');
     $("#PopupUnitofMeasure").modal('show');
     $(".modal-title").text(localization.AddUnitofMeasure);
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -156,8 +95,10 @@ function fnEditUnitofMeasure(e, actiontype) {
     fnClearFields();
     var rowid = $("#jqgUnitofMeasure").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgUnitofMeasure').jqGrid('getRowData', rowid);
-    $("#cboUOMPurchase").val(rowData.Uompurchase).selctpicker('refresh');
-    $("#cboUOMStock").val(rowData.Uomstock).selctpicker('refresh');
+    
+    $("#txtUnitofMeasure").val(rowData.UnitOfMeasure)
+    $("#cboUOMPurchase").val(rowData.Uompurchase).selectpicker('refresh');
+    $("#cboUOMStock").val(rowData.Uomstock).selectpicker('refresh');
     $("#txtConversionFactor").val(rowData.ConversionFactor);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -221,10 +162,8 @@ function fnSaveUnitofMeasure() {
     }
     uoms = {
         UnitOfMeasure: $("#txtUnitofMeasure").val() === '' ? 0 : $("#txtUnitofMeasure").val(),
-        Uompurchase: $("#txtUOMPurchase").val(),
-        Uompdesc: $("#txtUOMPurchaseDesc").val(),
-        Uomstock: $("#txtUOMStack").val(),
-        Uomsdesc: $("#txtUOMStackDesc").val(),
+        Uompurchase: $("#cboUOMPurchase").val(),
+        Uomstock: $("#cboUOMStock").val(),
         UsageStatus:false,
         ConversionFactor: $("#txtConversionFactor").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
@@ -293,6 +232,8 @@ function fnClearFields() {
 function fnEnableUnitofMeasure(val) {
     $("input,textarea").attr('readonly', val);
     $("#chkActiveStatus").attr('disabled', val);
+    $("#cboUOMPurchase").attr('disabled', val).selectpicker('refresh');
+    $("#cboUOMStock").attr('disabled', val).selectpicker('refresh');
 }
 
 function SetGridControlByAction() {

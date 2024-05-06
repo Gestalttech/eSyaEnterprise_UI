@@ -50,15 +50,13 @@ function fnGetItemDetails() {
                     datatype: 'json',
                     ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
                     jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-                    colNames: [localization.ItemCode, localization.Skucode, localization.SkuId, localization.ItemDescription, localization.UnitOfMeasure, localization.PackUnit, localization.PackUnitDesc, localization.PackSize, localization.InventoryClass, localization.ItemClass, localization.ItemSource, localization.ItemCriticality, localization.BarcodeID, localization.Active, localization.Actions],
+                    colNames: [localization.ItemCode, localization.Skucode, localization.SkuId, localization.ItemDescription, localization.UnitOfMeasure, localization.PackSize, localization.InventoryClass, localization.ItemClass, localization.ItemSource, localization.ItemCriticality, localization.BarcodeID, localization.Active, localization.Actions],
                     colModel: [
                         { name: "ItemCode", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "Skuid", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "ItemDescription", width: 70, editable: true, align: 'left', hidden: false },
                         { name: "UnitOfMeasure", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
-                        { name: "PackUnit", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
-                        { name: "PackUnitDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
                         { name: "PackSize", width: 40, editable: true, align: 'left', hidden: false },
                         { name: "InventoryClass", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
                         { name: "ItemClass", width: 40, editable: true, align: 'left', hidden: false },
@@ -396,8 +394,6 @@ function fnEditItemMaster(e) {
     $('#txtItemDescription').val(rowData.ItemDescription);
     $("#cboUnitOfMeasure").val(rowData.UnitOfMeasure);
     $("#cboUnitOfMeasure").selectpicker('refresh');
-    $("#cboPackUnit").val(rowData.PackUnit);
-    $("#cboPackUnit").selectpicker('refresh');
     $('#txtPackSize').val(rowData.PackSize);
     $("#cboInventoryClass").val(rowData.InventoryClass.substring(0, 1));
     $("#cboInventoryClass").selectpicker('refresh');
@@ -452,8 +448,6 @@ function fnViewItemMaster(e) {
     $('#txtItemDescription').val(rowData.ItemDescription);
     $("#cboUnitOfMeasure").val(rowData.UnitOfMeasure);
     $("#cboUnitOfMeasure").selectpicker('refresh');
-    $("#cboPackUnit").val(rowData.PackUnit);
-    $("#cboPackUnit").selectpicker('refresh');
     $('#txtPackSize').val(rowData.PackSize);
     $("#cboInventoryClass").val(rowData.InventoryClass.substring(0, 1));
     $("#cboInventoryClass").selectpicker('refresh');
@@ -518,7 +512,6 @@ function fnSaveItemCreation() {
             ItemSubCategory: $("#cboItemSubCategory").val(),
             ItemDescription: $("#txtItemDescription").val(),
             UnitOfMeasure: $("#cboUnitOfMeasure").val(),
-            PackUnit: $("#cboPackUnit").val(),
             PackSize: $("#txtPackSize").val(),
             InventoryClass: $("#cboInventoryClass").val(),
             ItemClass: $("#cboItemClass").val(),
@@ -539,7 +532,6 @@ function fnSaveItemCreation() {
             ItemSubCategory: $("#cboItemSubCategory").val(),
             ItemDescription: $("#txtItemDescription").val(),
             UnitOfMeasure: $("#cboUnitOfMeasure").val(),
-            PackUnit: $("#cboPackUnit").val(),
             PackSize: $("#txtPackSize").val(),
             InventoryClass: $("#cboInventoryClass").val(),
             ItemClass: $("#cboItemClass").val(),
@@ -593,8 +585,6 @@ function fnClearFields() {
     $('#txtItemDescription').val('');
     $('#cboUnitOfMeasure').val('');
     $('#cboUnitOfMeasure').selectpicker('refresh');
-    $('#cboPackUnit').val('');
-    $('#cboPackUnit').selectpicker('refresh');
     $('#txtPackSize').val('');
     $('#cboInventoryClass').val('');
     $('#cboInventoryClass').selectpicker('refresh');
@@ -621,11 +611,7 @@ function validateItemMaster() {
         $('#cboUnitOfMeasure').focus();
         return false;
     }
-    if ($("#cboPackUnit").val() === "0" || $("#cboPackUnit").val() === "") {
-        fnAlert("w", "EMI_01_00", "UI0152", errorMsg.PackUnit_E11);
-        $('#cboPackUnit').focus();
-        return false;
-    }
+   
     if ($("#cboInventoryClass").val() === "0" || $("#cboInventoryClass").val() === "") {
         fnAlert("w", "EMI_01_00", "UI0153", errorMsg.InventoryClass_E12);
         $('#cboInventoryClass').focus();

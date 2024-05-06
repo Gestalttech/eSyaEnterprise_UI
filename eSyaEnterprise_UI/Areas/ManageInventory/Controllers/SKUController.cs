@@ -45,25 +45,17 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
             try
             {
                 
-                var pu_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Common/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.PackUnit);
                 var Um_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_UnitofMeasure>>("Common/GetUnitofMeasure");
                 var Ig_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemGroup>>("Common/GetItemGroup");
                 var Im_serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemCodes>>("ItemCodes/GetItemList");
 
-                if (pu_serviceResponse.Status && Um_serviceResponse.Status && Ig_serviceResponse.Status && Im_serviceResponse.Status)
+                if ( Um_serviceResponse.Status && Ig_serviceResponse.Status && Im_serviceResponse.Status)
                 {
-                    if (pu_serviceResponse.Data != null && Um_serviceResponse.Data != null && Ig_serviceResponse.Data != null && Im_serviceResponse.Data != null)
-                    {
-                        ViewBag.PackUnitList = pu_serviceResponse.Data.Select(b => new SelectListItem
-                        {
-                            Value = b.ApplicationCode.ToString(),
-                            Text = b.CodeDesc,
-                        }).ToList();
-
+                   
                         ViewBag.UOMList = Um_serviceResponse.Data.Select(b => new SelectListItem
                         {
                             Value = b.UnitOfMeasure.ToString(),
-                            Text = b.Uompdesc,
+                            Text = b.UnitOfMeasureDesc,
                         }).ToList();
 
                         ViewBag.ItemGroupList = Ig_serviceResponse.Data.Select(b => new SelectListItem
@@ -77,15 +69,11 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
                             Value = b.ItemCode.ToString(),
                             Text = b.ItemDescription,
                         }).ToList();
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(pu_serviceResponse.Message), "UD:ItemMaster");
-                    }
+                    
                 }
                 else
                 {
-                    _logger.LogError(new Exception(pu_serviceResponse.Message), "UD:ItemMaster");
+                    _logger.LogError(new Exception(Im_serviceResponse.Message), "UD:ItemMaster");
                 }
                 return View();
             }
@@ -297,10 +285,7 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
                 {
                     return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Unit of Measure" });
                 }
-                else if (string.IsNullOrEmpty(ItemCodes.PackUnit.ToString()) || ItemCodes.PackUnit == 0)
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Pack Unit" });
-                }
+                
                 else if (string.IsNullOrEmpty(ItemCodes.InventoryClass.ToString()))
                 {
                     return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Inventory Class" });

@@ -226,65 +226,6 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         }
 
         /// <summary>
-        ///Get Unit of Measure Purchase description by UOMP Code
-        /// </summary>
-        [Area("Admin")]
-        [HttpPost]
-        public async Task<JsonResult> GetUOMPDescriptionbyUOMP(string uomp)
-        {
-            try
-            {
-                var parameter = "?uomp=" + uomp;
-                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<DO_UnitofMeasure>("Rules/GetUOMPDescriptionbyUOMP" + parameter);
-
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUOMPDescriptionbyUOMP:For uomp {0}", uomp);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetUOMPDescriptionbyUOMP:For uomp {0}", uomp);
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        ///Get Unit of Measure Stock description by UOMS Code
-        /// </summary>
-        [Area("Admin")]
-        [HttpPost]
-        public async Task<JsonResult> GetUOMSDescriptionbyUOMS(string uoms)
-        {
-            try
-            {
-                var parameter = "?uoms=" + uoms;
-                var serviceResponse = await _eSyaAdminAPIServices.HttpClientServices.GetAsync<DO_UnitofMeasure>("Rules/GetUOMSDescriptionbyUOMS" + parameter);
-
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUOMSDescriptionbyUOMS:For uoms {0}", uoms);
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetUOMSDescriptionbyUOMS:For uoms {0}", uoms);
-                throw ex;
-            }
-        }
-        /// <summary>
         /// Activate or De Activate Unit of Measure
         /// </summary>
         [Area("Admin")]

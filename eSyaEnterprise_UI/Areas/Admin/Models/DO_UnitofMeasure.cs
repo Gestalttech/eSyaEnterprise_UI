@@ -12,8 +12,8 @@ namespace eSyaEnterprise_UI.Areas.Admin.Models
         public decimal ConversionFactor { get; set; }
         public bool UsageStatus { get; set; }
         public bool ActiveStatus { get; set; }
-        public string Uompdesc { get; set; }
-        public string Uomsdesc { get; set; }
+        public string? Uompdesc { get; set; }
+        public string? Uomsdesc { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
         public string FormId { get; set; }
