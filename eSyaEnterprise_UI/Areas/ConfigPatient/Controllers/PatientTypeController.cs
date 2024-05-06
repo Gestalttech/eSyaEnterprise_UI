@@ -28,6 +28,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
 
         #region Patient Types
      
+        //
         [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EPM_01_00()
