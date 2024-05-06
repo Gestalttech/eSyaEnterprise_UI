@@ -1,9 +1,12 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.Admin.Data;
 using eSyaEnterprise_UI.Areas.Admin.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
+using eSyaEssentials_UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.Admin.Controllers
@@ -125,9 +128,46 @@ namespace eSyaEnterprise_UI.Areas.Admin.Controllers
         //Unit of Measure
         [Area("Admin")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EAD_06_00()
+        public async Task <IActionResult> EAD_06_00()
         {
-            return View();
+            try
+            {
+                List<int> l_ac = new List<int>();
+                l_ac.Add(ApplicationCodeTypeValues.Uompurchase);
+                l_ac.Add(ApplicationCodeTypeValues.Uomstock);
+                var response = await _eSyaAdminAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("Rules/GetApplicationCodesByCodeTypeList", l_ac);
+
+                if (response.Status)
+                {
+                    List<DO_ApplicationCodes> app_codes = response.Data;
+
+                    ViewBag.Uompurchase = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.Uompurchase).Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc
+                    }).ToList();
+
+                    ViewBag.Uomstock = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.Uomstock).Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc
+                    }).ToList();
+                   
+                        return View();
+                    
+                    
+                }
+                else
+                {
+                    _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeTypeList");
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetApplicationCodesByCodeTypeList");
+                throw ex;
+            }
         }
 
         /// <summary>

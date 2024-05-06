@@ -91,7 +91,6 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Models\DO_InventoryRules.cs" />
-    <Compile Remove="Areas\Admin\Models\DO_UnitofMeasure.cs" />
     <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
     <Compile Remove="Areas\ConfigBusiness\Controllers\BusinessCalendarController.cs" />
     <Compile Remove="Areas\ConfigBusiness\Models\DO_BusinessCalendar.cs" />

@@ -27,14 +27,18 @@
         Edit: '@Localizer["Edit"]',
         View: '@Localizer["View"]',
         UnitofMeasure: '@Localizer["UnitofMeasure"]',
+        UompurchaseDescription: '@Localizer["UompurchaseDescription"]',
+        UomStockDescription: '@Localizer["UomStockDescription"]',
         AddUnitofMeasure: '@Localizer["AddUnitofMeasure"]',
         Save: '@Localizer["Save"]',
         EditUnitofMeasure: '@Localizer["EditUnitofMeasure"]',
         Update: '@Localizer["Update"]',
         ViewUnitofMeasure: '@Localizer["ViewUnitofMeasure"]',
         Delete: '@Localizer["Delete"]',
-        DeActivate: '@Localizer["DeActivate"]',
+        UsageStatus: '@Localizer["UsageStatus"]',
+        Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
+        ActiveOrDeactiveUnitofMeasure: '@Localizer["ActiveOrDeactiveUnitofMeasure"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -42,8 +46,8 @@
         deleteauth_E4: '@Localizer["UIC04"]',
         UnitOfPurchase_E6: '@Localizer["UI0170"]',
         UnitOfPurchaseDesc_E7: '@Localizer["UI0171"]',
-        UnitOfStack_E8: '@Localizer["UI0172"]',
-        UnitOfStackDesc_E9: '@Localizer["UI0173"]',
+        UnitOfStock_E8: '@Localizer["UI0172"]',
+        UnitOfStockDesc_E9: '@Localizer["UI0173"]',
         ConversionFactor_E10: '@Localizer["UI0174"]',
     }
 </script>
@@ -56,7 +60,8 @@
 </div>
 
 <div class="modal fade" id="PopupUnitofMeasure" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+    <div class="modal-dialog modal-m" role="document" style="box-shadow:none;">
+    <div class="modal-dialog modal-m" role="document" style="box-shadow:none;">
         <div class="modal-content">
             <div class="modal-header popupHeader">
                 <button type="button" class="close" data-bs-dismiss="modal" onclick="fnClearFields()"> <i class="fa fa-times"></i></button>
@@ -64,41 +69,36 @@
             </div>
 
             <div class="modal-body">
-                <div class="row padbot4">
+                <div class="row">
                     <div class="col-sm-12">
                         <input type="text" class="form-control" id="txtUnitofMeasure" style="display:none">
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>@Localizer["UnitofPurchase"] </label>
-                            <input id="txtUOMPurchase" class="form-control" type="text" autocomplete="off" maxlength="4" />
+                            <select id="cboUOMPurchase" class="selectpicker" data-container="body" asp-items="@ViewBag.Uompurchase" onchange="fnChangeuomPurchase()">
+                                <option value="0">@Localizer["All"]</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-12">
-                        <div class="form-group">
-                            <label>@Localizer["Description"] </label>
-                            <input id="txtUOMPurchaseDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>@Localizer["UOMStock"]  </label>
-                            <input id="txtUOMStack" class="form-control" type="text" autocomplete="off" maxlength="4" />
+                            <select id="cboUOMStock" class="selectpicker" data-container="body" asp-items="@ViewBag.Uomstock">
+                                <option value="0">@Localizer["All"]</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-12">
-                        <div class="form-group">
-                            <label>@Localizer["Description"]  </label>
-                            <input id="txtUOMStackDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    
+                   
+                    <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label>@Localizer["ConversionFactor"] </label>
                             <input id="txtConversionFactor" class="form-control" type="text" autocomplete="off" maxlength="7" />
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="default-checkbox">
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                                 <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">

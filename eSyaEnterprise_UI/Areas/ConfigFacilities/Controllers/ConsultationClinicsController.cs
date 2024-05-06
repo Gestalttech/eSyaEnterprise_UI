@@ -69,7 +69,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigFacilities.Controllers
                 {
                     id = "CL0",
                     parent = "#",
-                    text = "Clinics",
+                    text = "Consultation Type & Clinics",
                     //icon = "/images/jsTree/foldergroupicon.png",
                     state = new stateObject { opened = true, selected = false, checkbox_disabled = true, disabled = true }
                 };

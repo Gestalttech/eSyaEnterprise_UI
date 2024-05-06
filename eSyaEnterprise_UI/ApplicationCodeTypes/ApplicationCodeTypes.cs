@@ -68,7 +68,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
         #region Admin
         public const int DepartmentCategory = 62;
-        public const int UnitofMeasure = 102;
+        public const int Uompurchase = 102; 
+        public const int Uomstock = 102;
         #endregion
 
         #region ConfigProduct

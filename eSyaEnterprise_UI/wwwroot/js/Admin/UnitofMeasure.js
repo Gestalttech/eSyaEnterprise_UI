@@ -90,7 +90,7 @@ function fnLoadUnitofMeasureGrid() {
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.UnitofMeasure, localization.UnitofPurchase, localization.UompurchaseDescription, localization.UOMStock, localization.UomStockDescription, localization.ConvFactor, localization.Active, localization.Actions],
+        colNames: [localization.UnitofMeasure, localization.UnitofPurchase, localization.UompurchaseDescription, localization.UOMStock, localization.UomStockDescription, localization.UsageStatus,localization.ConvFactor, localization.Active, localization.Actions],
 
         colModel: [
 
@@ -99,7 +99,8 @@ function fnLoadUnitofMeasureGrid() {
             { name: "Uompdesc", width: 80, editable: true, align: 'left', hidden: false },
             { name: "Uomstock", width: 30, editable: true, align: 'left', hidden: false },
             { name: "Uomsdesc", width: 80, editable: true, align: 'left', hidden: false },
-            { name: "ConversionFactor", width: 35, editable: true, align: 'left', hidden: false },
+            { name: "UsageStatus", width: 30, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ConversionFactor", width: 45, editable: true, align: 'left', hidden: false },
             { name: "ActiveStatus", width: 30, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
             {
@@ -137,7 +138,9 @@ function fnLoadUnitofMeasureGrid() {
     });
     fnAddGridSerialNoHeading();
 }
-
+function fnChangeuomPurchase() {
+    var _uomPurchase = $("#cboUOMPurchase").val();
+}
 function fnAddUnitofMeasure() {
     fnClearFields();
     $("#PopupUnitofMeasure").modal('show');
@@ -153,21 +156,18 @@ function fnEditUnitofMeasure(e, actiontype) {
     fnClearFields();
     var rowid = $("#jqgUnitofMeasure").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgUnitofMeasure').jqGrid('getRowData', rowid);
-    $("#txtUnitofMeasure").val(rowData.UnitOfMeasure);
-    $("#txtUOMPurchase").val(rowData.Uompurchase);
-    $("#txtUOMPurchaseDesc").val(rowData.Uompdesc);
-    $("#txtUOMStack").val(rowData.Uomstock);
-    $("#txtUOMStackDesc").val(rowData.Uomsdesc);
+    $("#cboUOMPurchase").val(rowData.Uompurchase).selctpicker('refresh');
+    $("#cboUOMStock").val(rowData.Uomstock).selctpicker('refresh');
     $("#txtConversionFactor").val(rowData.ConversionFactor);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
-        $("#btnDeactivateUnitofMeasure").html(localization.DeActivate);
+        $("#btnDeactivateUnitofMeasure").html(localization.Deactivate);
     }
     else {
         $("#chkActiveStatus").parent().removeClass("is-checked");
         $("#btnDeactivateUnitofMeasure").html(localization.Activate);
     }
-
+    
     $("#chkActiveStatus").prop('disabled', false);
     $(".modal-title").text(localization.EditUnitofMeasure);
     $("#btnSaveUnitofMeasure").html('<i class="fa fa-sync"></i>' + localization.Update);
@@ -206,7 +206,7 @@ function fnEditUnitofMeasure(e, actiontype) {
         fnEnableUnitofMeasure(true);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnDeactivateUnitofMeasure").show();
-        $(".modal-title").text("Active / De Active Unit of Measure");
+        $(".modal-title").text(localization.ActiveOrDeactiveUnitofMeasure);
     }
     $("#PopupUnitofMeasure").on('hidden.bs.modal', function () {
         $("#btnSaveUnitofMeasure").show();
@@ -225,6 +225,7 @@ function fnSaveUnitofMeasure() {
         Uompdesc: $("#txtUOMPurchaseDesc").val(),
         Uomstock: $("#txtUOMStack").val(),
         Uomsdesc: $("#txtUOMStackDesc").val(),
+        UsageStatus:false,
         ConversionFactor: $("#txtConversionFactor").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
@@ -261,22 +262,15 @@ function fnSaveUnitofMeasure() {
 }
 
 function validationUnitofMeasure() {
-    if (IsStringNullorEmpty($("#txtUOMPurchase").val())) {
-        fnAlert("w", "EAD_06_00", "UI0170", errorMsg.UnitOfPurchase_E6);
+    if ($("#cboUOMPurchase").val() == 0 || $("#cboUOMPurchase").val() == '0' || IsStringNullorEmpty($("#cboUOMPurchase").val())) {
+        fnAlert("w", "EAD_06_00", "UI0170", errorMsg.UnitOfPurchase_E6)
         return false;
     }
-    if (IsStringNullorEmpty($("#txtUOMPurchaseDesc").val())) {
-        fnAlert("w", "EAD_06_00", "UI0171", errorMsg.UnitOfPurchaseDesc_E7);
+    if ($("#cboUOMStock").val() == 0 || $("#cboUOMStock").val() == '0' || IsStringNullorEmpty($("#cboUOMStock").val())) {
+        fnAlert("w", "EAD_06_00", "UI0172", errorMsg.UnitOfStock_E8)
         return false;
     }
-    if (IsStringNullorEmpty($("#txtUOMStack").val())) {
-        fnAlert("w", "EAD_06_00", "UI0172", errorMsg.UnitOfStack_E8);
-        return false;
-    }
-    if (IsStringNullorEmpty($("#txtUOMStackDesc").val())) {
-        fnAlert("w", "EAD_06_00", "UI0173", errorMsg.UnitOfStackDesc_E9);
-        return false;
-    }
+
     if (IsStringNullorEmpty($("#txtConversionFactor").val())) {
         fnAlert("w", "EAD_06_00", "UI0174", errorMsg.ConversionFactor_E10)
         return false;
@@ -289,11 +283,8 @@ function fnGridRefreshUnitofMeasure() {
 }
 
 function fnClearFields() {
-    $("#txtUnitofMeasure").val('');
-    $("#txtUOMPurchase").val('');
-    $("#txtUOMPurchaseDesc").val('');
-    $("#txtUOMStack").val('');
-    $("#txtUOMStackDesc").val('');
+    $("#cboUOMPurchase").val('0').selectpicker('refresh');
+    $("#cboUOMStock").val('0').selectpicker('refresh');
     $("#txtConversionFactor").val('');
     $("#chkActiveStatus").prop('disabled', false);
     $("#btnSaveUnitofMeasure").attr("disabled", false);
@@ -339,13 +330,13 @@ function fnDeleteUnitofMeasure() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnDeactivateUnitofMeasure").attr("disabled", false);
-                $("#btnDeactivateUnitofMeasure").html(localization.DeActivate);
+                $("#btnDeactivateUnitofMeasure").html(localization.Deactivate);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnDeactivateUnitofMeasure").attr("disabled", false);
-            $("#btnDeactivateUnitofMeasure").html(localization.DeActivate);
+            $("#btnDeactivateUnitofMeasure").html(localization.Deactivate);
         }
     });
 }
