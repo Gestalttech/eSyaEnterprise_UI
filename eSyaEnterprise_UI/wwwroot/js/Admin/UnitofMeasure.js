@@ -90,17 +90,17 @@ function fnLoadUnitofMeasureGrid() {
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.UnitofMeasure, localization.UnitofPurchase, localization.Description, localization.UOMStock, localization.Description, localization.ConvFactor, localization.Active, localization.Actions],
+        colNames: [localization.UnitofMeasure, localization.UnitofPurchase, localization.UompurchaseDescription, localization.UOMStock, localization.UomStockDescription, localization.ConvFactor, localization.Active, localization.Actions],
 
         colModel: [
 
-            { name: "UnitOfMeasure", width: 80, editable: true, align: 'left', hidden: true },
+            { name: "UnitOfMeasure", width: 40, editable: true, align: 'left', hidden: true },
             { name: "Uompurchase", width: 80, editable: true, align: 'left', hidden: false },
             { name: "Uompdesc", width: 80, editable: true, align: 'left', hidden: false },
-            { name: "Uomstock", width: 80, editable: true, align: 'left', hidden: false },
+            { name: "Uomstock", width: 30, editable: true, align: 'left', hidden: false },
             { name: "Uomsdesc", width: 80, editable: true, align: 'left', hidden: false },
-            { name: "ConversionFactor", width: 80, editable: true, align: 'left', hidden: false },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ConversionFactor", width: 35, editable: true, align: 'left', hidden: false },
+            { name: "ActiveStatus", width: 30, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
