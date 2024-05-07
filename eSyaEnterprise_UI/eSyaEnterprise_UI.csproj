@@ -91,6 +91,8 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Admin\Models\DO_InventoryRules.cs" />
+    <Compile Remove="Areas\Admin\Models\DO_PatientTypeCategoryBusinessLink.cs" />
+    <Compile Remove="Areas\Admin\Models\DO_PatientTypeCategoryDocumentLink.cs" />
     <Compile Remove="Areas\Appointment\Controllers\CLinic.cs" />
     <Compile Remove="Areas\ConfigBusiness\Controllers\BusinessCalendarController.cs" />
     <Compile Remove="Areas\ConfigBusiness\Models\DO_BusinessCalendar.cs" />
@@ -293,7 +295,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\ConfigPatient\Controllers\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
