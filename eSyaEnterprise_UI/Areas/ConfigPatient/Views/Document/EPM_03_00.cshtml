@@ -28,37 +28,49 @@
         RateType: '@Localizer["RateType"]',
         MapPatientCategoryDocument: '@Localizer["MapPatientCategoryDocument"]',
         PatientCategoryDocId: '@Localizer["PatientCategoryDocId"]',
+        Document: '@Localizer["Document"]',
+        Status: '@Localizer["Status"]',
     }
     var errorMsg = {
-        BusinessLocation_E1 = '@Localizer["UI0064"]',
+        BusinessLocation_E1 :'@Localizer["UI0064"]',
     }
 </script>
-@section scripts {
+ 
     <script src="~/js/ConfigPatient/MapPatientCategorytoDocument.js"></script>
-}
+ 
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
+
     </div>
-    <div class="col-lg-12 col-12 col-md-12 form-group">
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label>@Localizer["PatientTypes"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnBusinessKeyChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="col-lg-12 col-md-12 col-12 text-center">
         <table id="jqgMapPatientCategoryDocument"></table>
         <div id="jqpMapPatientCategoryDocument"></div>
     </div>
     <div class="col-lg-12 col-md-12 col-12 text-center">
         <hr />
-        <button type="button" class="mdl-button btn btn-primary mr-10" id="btnSavePatientCategoryBusinessLink" onclick="fnSavePatientCategoryBusinessLink()"> <i class="fa fa-save"></i> Save</button>
-        <button type="button" class="mdl-button btn btn-primary" id="btnCancelPatientCategoryBusinessLink" onclick="fnClearPatientCategoryBusinessLink()"><i class="fa fa-times"></i> Cancel</button>
+        <button type="button" class="mdl-button btn btn-primary mr-10" id="btnSavePatientCategoryDocumentLink" onclick="fnSavePatientCategoryDocumentLink()"> <i class="fa fa-save"></i> Save</button>
+        <button type="button" class="mdl-button btn btn-primary" id="btnCancelPatientCategoryDocumentLink" onclick="fnClearPatientCategoryDocumentLink()"><i class="fa fa-times"></i> Cancel</button>
     </div>
 </div>
 
 
 <script>
-    var RateTypes = (@Html.Raw(Json.Serialize(ViewBag.RateType)));
+    var DocumentSerializeList = (@Html.Raw(Json.Serialize(ViewBag.DocumentList)));
 </script>
 
 

@@ -323,6 +323,12 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     max-height: 252px !important;
     overflow-y: auto !important;
 }
+
+tr.ui-widget-content td select {
+    padding: 5px 2px;
+    border: none;
+    margin: 2px 0px 2px;
+}
 #lblGridView,#lblTreeView{
    font-size:14px !important;
    padding:7px 14px;

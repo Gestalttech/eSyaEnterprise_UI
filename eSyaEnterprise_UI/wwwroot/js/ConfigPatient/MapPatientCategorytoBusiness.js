@@ -5,34 +5,44 @@ $(document).ready(function () {
     RateTypelist.push(0 + ': Select');
     $.each(RateTypes, function (i, data) { RateTypelist.push(data.ApplicationCode + ':' + data.CodeDesc); })
     RateTypelist = RateTypelist.join(';')
-    fnLoadPatientTypeCategoryMapBusinessLink();
+   
 
 });
 
-function fnBusinessLocation_onChange() {
-    fnLoadPatientTypeCategoryMapBusinessLink();
+function fnBusinessKeyChange() {
+    var _businesskey = $("#cboBusinessKey").val();
+    var _patienttype = $("#cboPatientTypes").val();
+    if (_businesskey == 0 || _patienttype==0) {
+        $("#jqgMapPatientCategoryBusiness").jqGrid('GridUnload');
+    }
+    else {
+        fnLoadPatientTypeCategoryMapBusinessLink();
+    }
 }
 
 function fnLoadPatientTypeCategoryMapBusinessLink() {
     $("#jqgMapPatientCategoryBusiness").jqGrid('GridUnload');
     $("#jqgMapPatientCategoryBusiness").jqGrid({
-        url: getBaseURL() + '/Business/GetAllPatientCategoryBusinessLink?businesskey=' + $("#cboBusinessLocation").val(),
+        url: getBaseURL() + '/ConfigPatient/Business/GetAllPatientCategoryBusinessLink?businesskey=' + $("#cboBusinessKey").val() + '&patienttypeId=' + $("#cboPatientTypes").val(),
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessKey, localization.PatientTypeId, localization.PatientCategoryId, localization.PatientType, localization.PatientCategory, localization.RateType, localization.Select],
-        colModel: [
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+        colNames: [localization.BusinessKey, localization.PatientTypeId, localization.PatientCategoryId, localization.PatientType, localization.PatientCategory, localization.RateType, localization.Status],
+          colModel: [
             { name: "BusinessKey", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "PatientTypeId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "PatientCategoryId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
-            { name: "PatientTypeDesc", width: 250, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "PatientCategoryDesc", width: 250, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "RateType", editable: true, width: 150, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: RateTypelist } },
-            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "PatientTypeDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
+              { name: "PatientCategoryDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
+              { name: "RateType", editable: true, cellEdit:true, width: 100, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: RateTypelist } },
+              { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
         ],
-        rowNum: 10,
-        rowList: [10, 20, 50, 100],
+        rowNum: 100000,
+        pgtext: null,
+        pgbutton:null,
+        rownumWidth:'55',
         loadonce: true,
         pager: "#jqpMapPatientCategoryBusiness",
         viewrecords: true,
@@ -46,45 +56,57 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
         forceFit: true,
         scrollOffset: 0,
         cellEdit: true,
+        editurl: 'url',
         cellsubmit: 'clientArray',
-
+        
         onSelectRow: function (id) {
-
             if (id) { $('#jqgMapPatientCategoryBusiness').jqGrid('editRow', id, true); }
         },
-        caption: localization.MapPatientCategoryBusiness,
+        caption: "MapPatientCategoryBusiness",
         loadComplete: function () {
             fnJqgridSmallScreen("jqgMapPatientCategoryBusiness");
         },
     }).jqGrid('navGrid', '#jqpMapPatientCategoryBusiness', { add: false, edit: false, search: false, del: false, refresh: false });
+    fnAddGridSerialNoHeading();
 }
 
 function fnSavePatientCategoryBusinessLink() {
-    if (IsStringNullorEmpty($("#cboBusinessLocation").val()) || $('#cboBusinessLocation').val() == '' || $('#cboBusinessLocation').val() == '0') {
+    if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $('#cboBusinessKey').val() == '' || $('#cboBusinessKey').val() == '0') {
         fnAlert("w", "EPM_02_00", "UI0064", errorMsg.BusinessLocation_E1);
         return;
     }
-
-    $("#jqgMapPatientCategoryBusiness").jqGrid('editCell', 0, 0, false);
-
-    var obj = [];
-    var gvT = $('#jqgMapPatientCategoryBusiness').jqGrid('getRowData');
-    for (var i = 0; i < gvT.length; ++i) {
-        var blink = {
-            BusinessKey: $('#cboBusinessLocation').val(),
-            RateType: gvT[i]['RateType'],
-            PatientTypeId: gvT[i]['PatientTypeId'],
-            PatientCategoryId: gvT[i]['PatientCategoryId'],
-            ActiveStatus: gvT[i]['ActiveStatus']
-        }
-        obj.push(blink);
-
+    if (IsStringNullorEmpty($("#cboPatientTypes").val()) || $('#cboPatientTypes').val() == '' || $('#cboPatientTypes').val() == '0') {
+        fnAlert("w", "EPM_02_00", "UI0064", "Select Patient Type");
+        return;
     }
+  
+    $("#jqgMapPatientCategoryBusiness").jqGrid('editCell', 0, 0, false);
+  
+ 
+    var $grid = $("#jqgMapPatientCategoryBusiness");
+    var obj = [];
+    var ids = jQuery("#jqgMapPatientCategoryBusiness").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgMapPatientCategoryBusiness').jqGrid('getRowData', rowId);
+
+        if (rowData.RateType!="0") {
+            obj.push({
+                BusinessKey: $('#cboBusinessKey').val(),
+                PatientTypeId: $("#cboPatientTypes").val(),
+                RateType: rowData.RateType,
+                PatientCategoryId: rowData.PatientCategoryId,
+                ActiveStatus: rowData.ActiveStatus,
+
+            });
+        }
+    }
+
 
     $("#btnSavePatientCategoryBusinessLink").attr('disabled', true);
 
     $.ajax({
-        url: getBaseURL() + '/Business/InsertOrUpdatePatientCategoryBusinessLink',
+        url: getBaseURL() + '/ConfigPatient/Business/InsertOrUpdatePatientCategoryBusinessLink',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },

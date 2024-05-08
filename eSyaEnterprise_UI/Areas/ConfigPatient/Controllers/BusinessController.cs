@@ -5,6 +5,7 @@ using eSyaEnterprise_UI.Areas.ConfigPatient.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
@@ -23,7 +24,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         #region Map Patient Category to Document	
         [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPM_02_00()
+        public async Task<IActionResult> EPM_02_00()
         {
 
             try
@@ -32,12 +33,26 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 List<int> l_ac = new List<int>();
                 l_ac.Add(ApplicationCodeTypeValues.RateType);
 
-                var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("Master/GetApplicationCodesByCodeTypeList", l_ac).Result;
-                if (response.Status)
+                var response =_eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonMethod/GetBusinessKey");
+                var ptserviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientTypCategoryAttribute>>("CommonMethod/GetActivePatientTypes");
+                if (response.Status && serviceResponse.Status&& ptserviceResponse.Status)
                 {
                     List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.RateType).ToList();
                     ViewBag.RateType = prat;
 
+                    ViewBag.BusinessKeyList = serviceResponse.Data.Select(a => new SelectListItem
+                    {
+                       
+                        Value = a.BusinessKey.ToString(),
+                        Text = a.LocationDescription.ToString()
+                    });
+                    ViewBag.PatientTypeList = ptserviceResponse.Data.Select(a => new SelectListItem
+                    {
+
+                        Value = a.PatientTypeId.ToString(),
+                        Text = a.Description.ToString()
+                    });
                 }
                 else
                 {
@@ -54,6 +69,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         /// <summary>
         /// Insert Into Patient Category Business Link
         /// </summary>
+        [Area("ConfigPatient")]
         [HttpPost]
         public async Task<JsonResult> InsertOrUpdatePatientCategoryBusinessLink(List<DO_PatientCategoryTypeBusinessLink> obj)
         {
@@ -67,7 +83,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     return true;
                 });
 
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("PatientTypes/InsertOrUpdatePatientCategoryBusinessLink", obj);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Business/InsertOrUpdatePatientCategoryBusinessLink", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -86,12 +102,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         /// <summary>
         /// Get Patient Category Business Link
         /// </summary>
+        [Area("ConfigPatient")]
         [HttpPost]
-        public async Task<JsonResult> GetAllPatientCategoryBusinessLink(int businesskey)
+        public async Task<JsonResult> GetAllPatientCategoryBusinessLink(int businesskey, int patienttypeId)
         {
             try
             {
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientCategoryTypeBusinessLink>>("PatientTypes/GetAllPatientCategoryBusinessLink?businesskey=" + businesskey);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientCategoryTypeBusinessLink>>("Business/GetAllPatientCategoryBusinessLink?businesskey=" + businesskey+ "&patienttypeId="+ patienttypeId);
 
                 if (serviceResponse.Status)
                 {
