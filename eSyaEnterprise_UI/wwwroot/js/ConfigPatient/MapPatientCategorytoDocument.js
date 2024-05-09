@@ -126,8 +126,8 @@ function fnGridLoadPatientCategoryDocument(nodeID) {
         colNames: [localization.DocumentID, localization.DocumentDesc, localization.Active],
         colModel: [
             { name: "PatientCatgDocId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "PatientCatgoryDocumentDesc", width: 500, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "PatientCatgoryDocumentDesc", width: 150, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "ActiveStatus", editable: true, width: 50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         pager: "#jqpPatientCategoryDocument",
         rowNum: 10000,
@@ -151,6 +151,7 @@ function fnGridLoadPatientCategoryDocument(nodeID) {
                 $("#pnlMapPatientCategoryDocument").hide();
                 fnAlert("w", "EPM_03_00", "UI0310", errorMsg.NoDoc_E14);
             }
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
             fnJqgridSmallScreen("jqgPatientCategoryDocument");
         },
         loadBeforeSend: function () {

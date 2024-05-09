@@ -126,8 +126,8 @@ function fnGridLoadPatientCategorySpecialty(nodeID) {
         colNames: [localization.SpecialtyId, localization.SpecialtyDesc, localization.Active],
         colModel: [
             { name: "SpecialtyId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "SpecialtyDesc", width: 500, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "SpecialtyDesc", width: 150, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "ActiveStatus", editable: true, width: 50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
          ],
         pager: "#jqpPatientCategorySpecialty",
         rowNum: 10000,
@@ -151,6 +151,7 @@ function fnGridLoadPatientCategorySpecialty(nodeID) {
                 $("#pnlMapPatientCategorySpecialty").hide();
                 fnAlert("w", "EPM_04_00", "UI0309", errorMsg.RestrictedSpecialty_E6);
             } 
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
             fnJqgridSmallScreen("jqgPatientCategorySpecialty");
         },
         loadBeforeSend: function () {
