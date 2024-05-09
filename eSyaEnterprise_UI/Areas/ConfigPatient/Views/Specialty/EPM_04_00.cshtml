@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EPM_04_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Active: '@Localizer["Active"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        PatientType: '@Localizer["PatientType"]',
+        AddPatientCategory: '@Localizer["AddPatientCategory"]',
+        EditPatientCategory: '@Localizer["EditPatientCategory"]',
+        ViewPatientCategory: '@Localizer["ViewPatientCategory"]',
+    }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+   }
+    </script>
+ 
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label>@Localizer["BusinessLocation"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label>@Localizer["PatientTypes"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnBusinessKeyChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div id="jstMapPatientCategorySpecialty"></div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-6">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9">
+                <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlMapPatientCategorySpecialty" style="display:none">
+                    <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+                        <h5 class="mdl-card__title-text"> @Localizer["AddPatientCategory"]  </h5>
+                    </div>
+                    <div class="mdl-card__supporting-text fullwidth">
+                        <input id="txtPatientTypeId" class="form-control" maxlength="10" type="text" style="display:none" />
+                        <input id="txtPatientCategoryId" class="form-control" maxlength="10" type="text" style="display:none" />
+
+                        <div class="row" id="dvNavigateURL">
+                                 <div class="col-sm-12 col-md-12 col-lg-12">
+                                     <table id="jqgSpecialty"></table>
+                                     <div id="jqpSpecialty"></div>
+                                 </div>
+
+                            <div class="col-sm-12 col-md-12 col-lg-12" id="dvTable">
+                                <hr />
+                                 
+                                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnAddMapPatientCategorySpecialty" onclick="fnSaveMapPatientCategorySpecialty()">
+                                        @Localizer["Save"]
+                                    </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="card treeaction">
+                    <div class="card-header">
+                        <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
+                    </div>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                                <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                                <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <link rel="stylesheet" href="~/css/Common/jsTree.css" />
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/ConfigPatient/MapPatientCategorytoSpecialty.js"></script>
+}
