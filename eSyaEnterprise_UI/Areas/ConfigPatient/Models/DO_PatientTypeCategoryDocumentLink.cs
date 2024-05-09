@@ -10,7 +10,6 @@
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string? PatientTypeDesc { get; set; }
-        public string? PatientCategoryDesc { get; set; }
+        public string? PatientCatgoryDocumentDesc { get; set; }
     }
 }

@@ -30,6 +30,8 @@
         PatientCategoryDocId: '@Localizer["PatientCategoryDocId"]',
         Document: '@Localizer["Document"]',
         Status: '@Localizer["Status"]',
+        DocumentDesc: '@Localizer["DocumentDesc"]',
+        DocumentID: '@Localizer["DocumentID"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -39,18 +41,19 @@
         actDeact_E5: '@Localizer["UIC05"]',
         BusinessLocation_E11: '@Localizer["UI0064"]',
         PatientType_E12: '@Localizer["UI0274"]',
-        PatientCategory_E13: '@Localizer["UI0275"]'
-            NoDoc_E14: '@Localizer["UI0310"]'
+        PatientCategory_E13: '@Localizer["UI0275"]',
+        NoDoc_E14: '@Localizer["UI0310"]'
     }
 </script>
- 
-    <script src="~/js/ConfigPatient/MapPatientCategorytoDocument.js"></script>
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+<script src="~/js/Common/jsTree.js"></script>
+<script src="~/js/ConfigPatient/MapPatientCategorytoDocument.js"></script>
  
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKey_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -59,7 +62,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["PatientTypes"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnBusinessKeyChange()">
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>

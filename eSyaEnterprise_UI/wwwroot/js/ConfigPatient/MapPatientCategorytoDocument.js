@@ -123,15 +123,16 @@ function fnGridLoadPatientCategoryDocument(nodeID) {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.SpecialtyId, localization.SpecialtyDesc, localization.Active],
+        colNames: [localization.DocumentID, localization.DocumentDesc, localization.Active],
         colModel: [
-            { name: "SpecialtyId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "SpecialtyDesc", width: 500, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "PatientCatgDocId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
+            { name: "PatientCatgoryDocumentDesc", width: 500, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         pager: "#jqpPatientCategoryDocument",
-        rowNum: 10,
-        rowList: [10, 20, 50, 100],
+        rowNum: 10000,
+        pgtext: null,
+        pgbuttons:null,
         rownumWidth: '55',
         loadonce: true,
         viewrecords: true,
@@ -187,8 +188,8 @@ function fnSavePatientTypeCategoryDocumentLink() {
             BusinessKey: $("#cboBusinessKey").val(),
             PatientTypeId: $("#cboPatientTypes").val(),
             PatientCategoryId: NodeID,
-            SpecialtyId: gvT[i]['SpecialtyId'],
-            SpecialtyDesc: gvT[i]['SpecialtyDesc'],
+            PatientCatgDocId: gvT[i]['PatientCatgDocId'],
+            PatientCatgoryDocumentDesc: gvT[i]['PatientCatgoryDocumentDesc'],
             ActiveStatus: gvT[i]['ActiveStatus']
         };
         obj.push(_spec);
