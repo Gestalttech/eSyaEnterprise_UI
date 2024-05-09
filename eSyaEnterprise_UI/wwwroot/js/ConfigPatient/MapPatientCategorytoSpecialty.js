@@ -128,9 +128,7 @@ function fnGridLoadPatientCategorySpecialty(nodeID) {
             { name: "SpecialtyId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "SpecialtyDesc", width: 500, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
- 
-        ],
-
+         ],
         pager: "#jqpPatientCategorySpecialty",
         rowNum: 10,
         rowList: [10, 20, 50, 100],
@@ -165,7 +163,7 @@ function fnGridLoadPatientCategorySpecialty(nodeID) {
 
     $(window).on("resize", function () {
         var $grid = $("#jqgPatientCategorySpecialty"),
-            newWidth = $grid.closest(".Locationcontainer").parent().width();
+            newWidth = $grid.closest(".ui-jqgrid").parent().width();
         $grid.jqGrid("setGridWidth", newWidth, true);
     });
     fnAddGridSerialNoHeading();
@@ -226,16 +224,16 @@ function fnSavePatientTypeCategorySpecialtyLink() {
 function fnValidateSpecialtyLink() {
 
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $("#cboBusinessKey").val() == "0" || $("#cboBusinessKey").val()==0) {
-        fnAlert("w", "ECB_01_00", "UI0046", "Please Select Business Location");
+        fnAlert("w", "EPM_04_00", "UI0064",errorMsg.BusinessLocation_E11);
         return false;
     }
 
     if (IsStringNullorEmpty($("#cboPatientTypes").val()) || $("#cboPatientTypes").val() == "0" || $("#cboPatientTypes").val() == 0) {
-        fnAlert("w", "ECB_01_00", "UI0046", "Please Select Patient Type");
+        fnAlert("w", "EPM_04_00", "UI0274", errorMsg.PatientType_E12);
         return false;
     }
     if (IsStringNullorEmpty(NodeID) || NodeID == "0" || NodeID == 0) {
-        fnAlert("w", "ECB_01_00", "UI0046", "Please Select Patient Category");
+        fnAlert("w", "EPM_04_00", "UI0275", errorMsg.PatientCategory_E13);
         return false;
     }
 }
@@ -244,7 +242,6 @@ function fnExpandAll() {
 }
 
 function fnCollapseAll() {
-    
     $("#pnlMapPatientCategorySpecialty").hide();
     $('#jstMapPatientCategorySpecialty').jstree('close_all');
 }
