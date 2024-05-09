@@ -2,6 +2,7 @@
 {
     public class DO_PatientTypeCategorySpecialtyLink
     {
+        public int BusinessKey { get; set; }
         public int PatientTypeId { get; set; }
         public int PatientCategoryId { get; set; }
         public int SpecialtyId { get; set; }
@@ -9,6 +10,6 @@
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string ServiceTypeDesc { get; set; }
+        public string? SpecialtyDesc { get; set; }
     }
 }

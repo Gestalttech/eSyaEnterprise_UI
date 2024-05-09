@@ -22,6 +22,8 @@
         AddPatientCategory: '@Localizer["AddPatientCategory"]',
         EditPatientCategory: '@Localizer["EditPatientCategory"]',
         ViewPatientCategory: '@Localizer["ViewPatientCategory"]',
+        MapPatientCategorySpecialty: '@Localizer["MapPatientCategorySpecialty"]',
+        SpecialtyDesc: '@Localizer["SpecialtyDescription"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -29,14 +31,20 @@
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
+        RestrictedSpecialty_E6: '@Localizer["UI0309"]',
    }
     </script>
- 
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+@section scripts {
+
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/ConfigPatient/MapPatientCategorytoSpecialty.js"></script>
+}
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKey_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -45,7 +53,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["PatientTypes"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnBusinessKeyChange()">
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -66,17 +74,17 @@
                     <div class="mdl-card__supporting-text fullwidth">
                         <input id="txtPatientTypeId" class="form-control" maxlength="10" type="text" style="display:none" />
                         <input id="txtPatientCategoryId" class="form-control" maxlength="10" type="text" style="display:none" />
-
+                       
                         <div class="row" id="dvNavigateURL">
                                  <div class="col-sm-12 col-md-12 col-lg-12">
-                                     <table id="jqgSpecialty"></table>
-                                     <div id="jqpSpecialty"></div>
+                                     <table id="jqgPatientCategorySpecialty"></table>
+                                    <div id="jqpPatientCategorySpecialty"></div>
                                  </div>
 
-                            <div class="col-sm-12 col-md-12 col-lg-12" id="dvTable">
+                            <div class="col-sm-12 col-md-12 col-lg-12 text-center" id="dvTable">
                                 <hr />
-                                 
-                                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnAddMapPatientCategorySpecialty" onclick="fnSaveMapPatientCategorySpecialty()">
+
+                                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnAddMapPatientCategorySpecialty" onclick="fnSavePatientTypeCategorySpecialtyLink()">
                                         @Localizer["Save"]
                                     </button>
                                 
@@ -110,8 +118,3 @@
     </div>
 </div>
 
-@section scripts {
-    <link rel="stylesheet" href="~/css/Common/jsTree.css" />
-    <script src="~/js/Common/jsTree.js"></script>
-    <script src="~/js/ConfigPatient/MapPatientCategorytoSpecialty.js"></script>
-}
