@@ -1,7 +1,9 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ConfigPatient.Data;
 using eSyaEnterprise_UI.Areas.ConfigPatient.Models;
 using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -29,7 +31,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
 
                 var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonMethod/GetBusinessKey");
                 var ptserviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientTypCategoryAttribute>>("CommonMethod/GetActivePatientTypes");
-                if (serviceResponse.Status && ptserviceResponse.Status)
+                var rtserviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesbyCodeType?codetype="+ ApplicationCodeTypeValues.ConfigPatientRateType);
+                var stypeserviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientTypeCategoryServiceTypeLink>>("ServiceType/GetActiveServiceTypes");
+
+                if (serviceResponse.Status && ptserviceResponse.Status && rtserviceResponse.Status && stypeserviceResponse.Status)
                 {
 
                     ViewBag.BusinessKeyList = serviceResponse.Data.Select(a => new SelectListItem
@@ -43,6 +48,18 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
 
                         Value = a.PatientTypeId.ToString(),
                         Text = a.Description.ToString()
+                    });
+                    ViewBag.RateTypeList = rtserviceResponse.Data.Select(a => new SelectListItem
+                    {
+
+                        Value = a.ApplicationCode.ToString(),
+                        Text = a.CodeDesc.ToString()
+                    });
+                    ViewBag.ServiceTypeList = stypeserviceResponse.Data.Select(a => new SelectListItem
+                    {
+
+                        Value = a.ServiceType.ToString(),
+                        Text = a.ServiceTypeDesc.ToString()
                     });
                 }
                 else
@@ -76,7 +93,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 };
                 jsTree.Add(jsObj);
                 var parameter = "?PatientTypeId=" + PatientTypeId;
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientAttributes>("Specialty/GetPatientCategoriesforTreeViewbyPatientType" + parameter);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_PatientAttributes>("ServiceType/GetPatientCategoriesforTreeViewbyPatientType" + parameter);
                 if (serviceResponse.Status)
                 {
                     var PatientCategory = serviceResponse.Data;
@@ -109,6 +126,72 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             {
                 _logger.LogError(ex, "UD:GetPatientCategoriesforTreeViewbyPatientType");
                 throw ex;
+            }
+        }
+        [Area("ConfigPatient")]
+        [HttpPost]
+        public async Task<JsonResult> GetPatientTypeCategoryServiceTypeInfo(int businesskey, int PatientTypeId, int PatientCategoryId)
+        {
+            try
+            {
+                DO_PatientTypeCategoryServiceTypeLink obj = new DO_PatientTypeCategoryServiceTypeLink()
+                {
+                    BusinessKey = businesskey,
+                    PatientTypeId = PatientTypeId,
+                    PatientCategoryId = PatientCategoryId,
+                    FormID = string.Empty,
+                    TerminalID = string.Empty
+
+                };
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_PatientTypeCategoryServiceTypeLink>>("ServiceType/GetPatientTypeCategoryServiceTypeInfo", obj);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPatientTypeCategoryServiceTypeInfo:For PatientTypeId {0} with PatientCategoryId entered {1}", businesskey, PatientTypeId, PatientCategoryId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPatientTypeCategoryServiceTypeInfo:For PatientTypeId {0} with PatientCategoryId entered {1}", businesskey, PatientTypeId, PatientCategoryId);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get Patient Category Service Type Link
+        /// </summary>
+        [Area("ConfigPatient")]
+        [HttpPost]
+        public JsonResult InsertOrUpdatePatientTypeCategoryServiceTypeLink(DO_PatientTypeCategoryServiceTypeLink obj)
+        {
+            try
+            {
+
+                
+                    obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+
+                var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceType/InsertOrUpdatePatientTypeCategoryServiceTypeLink", obj).Result;
+                if (Insertresponse.Status)
+                {
+                    return Json(Insertresponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertOrUpdatePatientTypeCategoryServiceTypeLink:Params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdatePatientTypeCategoryServiceTypeLink:Params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
         #endregion
