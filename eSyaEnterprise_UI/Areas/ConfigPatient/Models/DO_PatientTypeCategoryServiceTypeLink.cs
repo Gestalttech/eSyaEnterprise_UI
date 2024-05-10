@@ -11,6 +11,7 @@
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string ServiceTypeDesc { get; set; }
+        public string? ServiceTypeDesc { get; set; }
+        public string? RateTypeDesc { get; set; }
     }
 }

@@ -471,6 +471,11 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
 .ui-state-hover button{
     border:1px solid var(--primary-color);
 }
+.ui-widget-content .ui-state-disabled, tr.ui-state-disabled td {
+    pointer-events: none;
+    opacity: 0.85;
+    cursor:none;
+}
 @media screen and (min-width:551px) and (max-width:991px) {
     .ui-jqgrid .ui-jqgrid-htable th div{
         font-size:11px;

@@ -31,14 +31,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             {
 
                 List<int> l_ac = new List<int>();
-                l_ac.Add(ApplicationCodeTypeValues.RateType);
+                l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
 
                 var response =_eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
                 var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonMethod/GetBusinessKey");
                 var ptserviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientTypCategoryAttribute>>("CommonMethod/GetActivePatientTypes");
                 if (response.Status && serviceResponse.Status&& ptserviceResponse.Status)
                 {
-                    List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.RateType).ToList();
+                    List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.ConfigPatientRateType).ToList();
                     ViewBag.RateType = prat;
 
                     ViewBag.BusinessKeyList = serviceResponse.Data.Select(a => new SelectListItem
@@ -56,13 +56,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.RateType);
+                    _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
                 }
                 return View();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.RateType);
+                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
                 return Json(new DO_ResponseParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }

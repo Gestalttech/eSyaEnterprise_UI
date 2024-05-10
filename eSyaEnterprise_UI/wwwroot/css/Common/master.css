@@ -327,6 +327,7 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     max-height: 390px !important;
     overflow-y: auto !important;
 }
+
 tr.ui-widget-content td select {
     padding: 5px 2px;
     border: none;

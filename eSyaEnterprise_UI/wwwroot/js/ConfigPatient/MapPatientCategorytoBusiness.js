@@ -14,6 +14,7 @@ function fnBusinessKeyChange() {
     var _patienttype = $("#cboPatientTypes").val();
     if (_businesskey == 0 || _patienttype==0) {
         $("#jqgMapPatientCategoryBusiness").jqGrid('GridUnload');
+        $("#divSaveSection").hide();
     }
     else {
         fnLoadPatientTypeCategoryMapBusinessLink();
@@ -41,7 +42,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
         ],
         rowNum: 100000,
         pgtext: null,
-        pgbutton:null,
+        pgbuttons:null,
         rownumWidth:'55',
         loadonce: true,
         pager: "#jqpMapPatientCategoryBusiness",
@@ -65,6 +66,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
         caption: "MapPatientCategoryBusiness",
         loadComplete: function () {
             fnJqgridSmallScreen("jqgMapPatientCategoryBusiness");
+            $("#divSaveSection").show();
         },
     }).jqGrid('navGrid', '#jqpMapPatientCategoryBusiness', { add: false, edit: false, search: false, del: false, refresh: false });
     fnAddGridSerialNoHeading();
@@ -76,7 +78,7 @@ function fnSavePatientCategoryBusinessLink() {
         return;
     }
     if (IsStringNullorEmpty($("#cboPatientTypes").val()) || $('#cboPatientTypes').val() == '' || $('#cboPatientTypes').val() == '0') {
-        fnAlert("w", "EPM_02_00", "UI0064", "Select Patient Type");
+        fnAlert("w", "EPM_02_00", "UI0274", errorMsg.PatientType_E2);
         return;
     }
   

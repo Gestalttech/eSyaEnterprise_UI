@@ -1,5 +1,8 @@
 ﻿var NodeID;
 var prevSelectedID;
+var __IsAddClicked = "";
+var __IsEditClicked = "";
+var __IsViewClicked = "";
 function fnBusinessKey_OnChange() {
     var _businesskey = $("#cboBusinessKey").val();
     var _patienttype = $("#cboPatientTypes").val();
@@ -68,6 +71,8 @@ function fnGetPatientCategory_Success(dataArray) {
                 else {
 
                     
+                    $('#View').remove();
+                    $('#Edit').remove();
                     $('#Add').remove();
 
                     $("#pnlMapPatientCategorySpecialty").hide();
@@ -76,10 +81,14 @@ function fnGetPatientCategory_Success(dataArray) {
                         $('#pnlMapPatientCategorySpecialty').hide();
                     }
                     else if (data.node.id.startsWith("FM")) {
-
+                        $('#View').remove();
+                        $('#Edit').remove();
+                        $('#Add').remove();
                         NodeID = 0;
                         NodeID = data.node.id.substring(2).split("_")[1];
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:0px;padding-right:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 fnAlert("w", "EPM_04_00", "UIC01", errorMsg.addauth_E1);
@@ -93,7 +102,40 @@ function fnGetPatientCategory_Success(dataArray) {
                             $(".mdl-card__title-text").text(localization.AddPatientCategory);
                             $("#btnAddMapPatientCategorySpecialty").show();
                             $("#btnAddMapPatientCategorySpecialty").html('<i class="fa fa-save"></i> ' + localization.Save);
+                            __IsAddClicked = 1; __IsEditClicked = 0; __IsViewClicked = 0;
 
+                        });
+
+                        $('#Edit').on('click', function () {
+                            if (_userFormRole.IsEdit === false) {
+                                fnAlert("w", "EPM_04_00", "UIC02", errorMsg.editauth_E2);
+                                return;
+                            }
+                            $('#pnlMapPatientCategorySpecialty').hide();
+
+                            fnGridLoadPatientCategorySpecialty(NodeID);
+
+                            $("#pnlMapPatientCategorySpecialty").show();
+                            $(".mdl-card__title-text").text(localization.EditPatientCategory);
+                            $("#btnAddMapPatientCategorySpecialty").show();
+                            $("#btnAddMapPatientCategorySpecialty").html('<i class="fa fa-sync"></i> ' + localization.Update);
+                            __IsAddClicked = 0; __IsEditClicked = 1; __IsViewClicked = 0;
+
+                        });
+
+                        $('#View').on('click', function () {
+                            if (_userFormRole.IsInsert === false) {
+                                fnAlert("w", "EPM_04_00", "UIC03", errorMsg.vieweauth_E3);
+                                return;
+                            }
+                            $('#pnlMapPatientCategorySpecialty').hide();
+
+                            fnGridLoadPatientCategorySpecialty(NodeID);
+
+                            $("#pnlMapPatientCategorySpecialty").show();
+                            $(".mdl-card__title-text").text(localization.AddPatientCategory);
+                            $("#btnAddMapPatientCategorySpecialty").hide();
+                            __IsAddClicked = 0; __IsEditClicked = 0; __IsViewClicked = 1;
 
                         });
                     }
@@ -145,6 +187,23 @@ function fnGridLoadPatientCategorySpecialty(nodeID) {
         shrinkToFit: true,
         forceFit: true,
         caption: localization.MapPatientCategorySpecialty,
+        rowattr: function (data) {
+            if (__IsAddClicked == 1) {
+                if (data.ActiveStatus == true) {
+                    return { "class": "ui-state-disabled" };
+                }
+            }
+            if (__IsEditClicked == 1) {
+                if (data.ActiveStatus == false) {
+                    return { "class": "ui-state-disabled" };
+                }
+            }
+            if (__IsViewClicked == 1) {
+                if ((data.ActiveStatus == false) || (data.ActiveStatus == true)) {
+                    return { "class": "ui-state-disabled" };
+                }
+            }
+        },
         loadComplete: function (data) {
             
             if (data == null) {
