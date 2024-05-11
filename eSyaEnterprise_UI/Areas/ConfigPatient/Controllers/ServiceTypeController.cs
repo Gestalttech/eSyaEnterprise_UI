@@ -166,7 +166,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         /// </summary>
         [Area("ConfigPatient")]
         [HttpPost]
-        public JsonResult InsertOrUpdatePatientTypeCategoryServiceTypeLink(DO_PatientTypeCategoryServiceTypeLink obj)
+        public JsonResult InsertOrUpdatePatientTypeCategoryServiceTypeLink(bool isInsert,DO_PatientTypeCategoryServiceTypeLink obj)
         {
             try
             {
@@ -175,16 +175,32 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                     obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                     obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-
-                var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceType/InsertOrUpdatePatientTypeCategoryServiceTypeLink", obj).Result;
-                if (Insertresponse.Status)
+                if (isInsert)
                 {
-                    return Json(Insertresponse.Data);
+                    var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceType/InsertPatientTypeCategoryServiceTypeLink", obj).Result;
+                    if (Insertresponse.Status)
+                    {
+                        return Json(Insertresponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertPatientTypeCategoryServiceTypeLink:Params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
+                    }
+
                 }
                 else
                 {
-                    _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertOrUpdatePatientTypeCategoryServiceTypeLink:Params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
+                    var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceType/UpdatePatientTypeCategoryServiceTypeLink", obj).Result;
+                    if (Insertresponse.Status)
+                    {
+                        return Json(Insertresponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(Insertresponse.Message), "UD:UpdatePatientTypeCategoryServiceTypeLink:Params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
+                    }
                 }
 
             }

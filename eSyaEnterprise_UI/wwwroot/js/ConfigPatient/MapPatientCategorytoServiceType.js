@@ -1,6 +1,22 @@
 ﻿var NodeID;
 var prevSelectedID;
-  
+
+
+$(document).ready(function () {
+     $.contextMenu({
+        selector: "#btnServiceType",
+        trigger: 'left',
+        items: {
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditServiceType(event, 'edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditServiceType(event, 'view') } },
+ 
+        },
+    });
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+});
+
+
 function fnBusinessKey_OnChange() {
     var _businesskey = $("#cboBusinessKey").val();
     var _patienttype = $("#cboPatientTypes").val();
@@ -85,9 +101,7 @@ function fnGetPatientCategory_Success(dataArray) {
                         NodeID = 0;
                         NodeID = data.node.id.substring(2).split("_")[1];
                         $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#Add').on('click', function () {
+                       $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 fnAlert("w", "EPM_05_00", "UIC01", errorMsg.addauth_E1);
                                 return;
@@ -161,7 +175,7 @@ function fnGridLoadPatientCategoryServiceType(nodeID) {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessKey, localization.PatientTypeId, localization.PatientCategoryId, localization.ServiceType, localization.RateType, localization.ServiceTypeDesc, localization.RateTypeDesc, localization.Active],
+        colNames: [localization.BusinessKey, localization.PatientTypeId, localization.PatientCategoryId, localization.ServiceType, localization.RateType, localization.ServiceType, localization.RateType, localization.Active ,localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "PatientTypeId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -169,8 +183,14 @@ function fnGridLoadPatientCategoryServiceType(nodeID) {
             { name: "ServiceType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "RateType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "ServiceTypeDesc", width: 150, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "RateTypeDesc", width: 150, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "RateTypeDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "ActiveStatus", editable: true, width: 50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            {
+                name: 'edit', search: false, align: 'left', width: 50, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnServiceType"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
         ],
         pager: "#jqpPatientCategoryServiceType",
         rowNum: 10000,
@@ -193,7 +213,7 @@ function fnGridLoadPatientCategoryServiceType(nodeID) {
 
             if (data == null) {
                 $("#pnlMapPatientCategoryServiceType").hide();
-                fnAlert("w", "EPM_05_00", "UI0310", errorMsg.NoDoc_E14);
+                fnAlert("w", "EPM_05_00", "UI0311", errorMsg.Noservice_E14);
             }
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
             fnJqgridSmallScreen("jqgPatientCategoryServiceType");
@@ -206,6 +226,7 @@ function fnGridLoadPatientCategoryServiceType(nodeID) {
         },
     }).jqGrid('navGrid', '#jqpPatientCategoryServiceType', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpPatientCategoryServiceType', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshPatientCategoryServiceType
+    }).jqGrid('navButtonAdd', '#jqpPatientCategoryServiceType', {caption: '<span class="fa fa-plus"></span> Add', buttonicon: "none", id: "custAdd", position: "first", onClickButton: fnAddPatientCategoryServiceType
     });
 
     $(window).on("resize", function () {
@@ -214,6 +235,76 @@ function fnGridLoadPatientCategoryServiceType(nodeID) {
         $grid.jqGrid("setGridWidth", newWidth, true);
     });
     fnAddGridSerialNoHeading();
+}
+var _isInsert = true;
+function fnAddPatientCategoryServiceType() {
+    _isInsert = true;
+    if (_userFormRole._isInsert === false) {
+        fnAlert("w", "EPM_05_00", "UIC01", errorMsg.addauth_E1);
+        return;
+    }
+    fnClearFields();
+   
+    $('#PopupServiceType').modal('show');
+    $("#chkActiveStatus").parent().addClass("is-checked");
+    $('#PopupServiceType').find('.modal-title').text(localization.AddServiceType);
+    $("#btnSaveServiceType").html('<i class="fa fa-save"></i> ' + localization.Save);
+    $("#chkActiveStatus").prop('disabled', true);
+    $("#btnSaveServiceType").show();
+    //$("#btndeActiveServiceType").hide();
+    $("#cboServiceType").next().attr('disabled', false);
+    $("#cboRateType").next().attr('disabled', false);
+}
+
+function fnEditServiceType(e, actiontype) {
+    var rowid = $("#jqgPatientCategoryServiceType").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgPatientCategoryServiceType').jqGrid('getRowData', rowid);
+    fnClearFields();
+    $("#cboServiceType").val(rowData.ServiceType).selectpicker('refresh');
+    $("#cboServiceType").next().attr('disabled', true);
+    $("#cboRateType").val(rowData.RateType).selectpicker('refresh');
+    $("#cboRateType").next().attr('disabled', true);
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
+    $("#btnSaveServiceType").attr("disabled", false);
+    _isInsert = false;
+
+    if (actiontype.trim() == "edit") {
+        if (_userFormRole.IsEdit === false) {
+            fnAlert("w", "EPM_05_00", "UIC02", errorMsg.editauth_E2);
+            return;
+        }
+        $('#PopupServiceType').modal('show');
+        $('#PopupServiceType').find('.modal-title').text(localization.UpdateServiceType);
+        $("#btnSaveServiceType").html('<i class="fa fa-sync"></i>' + localization.Update);
+        //$("#btndeActiveServiceType").hide();
+        $("#chkActiveStatus").prop('disabled', true);
+        $("#btnSaveServiceType").attr("disabled", false);
+    }
+
+    if (actiontype.trim() == "view") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "EPM_05_00", "UIC03", errorMsg.vieweauth_E3);
+            return;
+        }
+        $('#PopupServiceType').modal('show');
+        $('#PopupServiceType').find('.modal-title').text(localization.ViewServiceType);
+        $("#btnSaveServiceType").attr("disabled", false);
+        $("input,textarea").attr('readonly', true);
+        $("select").next().attr('disabled', true);
+        $("#btnSaveServiceType").hide();    
+        //$("#btndeActiveServiceType").hide();
+        $("#chkActiveStatus").prop('disabled', true);
+        $("#PopupServiceType").on('hidden.bs.modal', function () {
+            $("#btnSaveServiceType").show();
+            $("input,textarea").attr('readonly', false);
+            $("select").next().attr('disabled', false);
+        });
+    }
 }
 
 function fnSavePatientTypeCategoryServiceTypeLink() {
@@ -226,32 +317,31 @@ function fnSavePatientTypeCategoryServiceTypeLink() {
     $("#btnAddMapPatientCategoryServiceType").attr('disabled', true);
 
 
-    var obj = [];
-    var gvT = $('#jqgPatientCategoryServiceType').jqGrid('getRowData');
-    for (var i = 0; i < gvT.length; ++i) {
-
-        var _spec = {
+   
+    var obj = {
             BusinessKey: $("#cboBusinessKey").val(),
             PatientTypeId: $("#cboPatientTypes").val(),
             PatientCategoryId: NodeID,
-            PatientCatgDocId: gvT[i]['PatientCatgDocId'],
-            PatientCatgoryServiceTypeDesc: gvT[i]['PatientCatgoryServiceTypeDesc'],
-            ActiveStatus: gvT[i]['ActiveStatus']
+            ServiceType: $("#cboServiceType").val(),
+            RateType: $("#cboRateType").val(),
+            ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
         };
-        obj.push(_spec);
+       
 
-    }
+    
 
     $.ajax({
-        url: getBaseURL() + '/ConfigPatient/ServiceType/InsertOrUpdatePatientCategoryServiceTypeLink',
+        url: getBaseURL() + '/ConfigPatient/ServiceType/InsertOrUpdatePatientTypeCategoryServiceTypeLink',
         type: 'POST',
         datatype: 'json',
-        data: { obj },
+        data: { isInsert: _isInsert, obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $('#pnlMapPatientCategoryServiceType').hide();
+                fnGridRefreshPatientCategoryServiceType();
                 $("#btnAddMapPatientCategoryServiceType").attr('disabled', false);
+                $('#PopupServiceType').modal('hide');
+                fnClearFields();
                 return true;
             }
             else {
@@ -283,6 +373,15 @@ function fnValidateServiceTypeLink() {
         fnAlert("w", "EPM_05_00", "UI0275", errorMsg.PatientCategory_E13);
         return false;
     }
+    if (IsStringNullorEmpty($("#cboServiceType").val()) || $("#cboServiceType").val() == "0" || $("#cboServiceType").val() == 0) {
+        fnAlert("w", "EPM_05_00", "UI0064", "Please Select Service Type");
+        return false;
+    }
+
+    if (IsStringNullorEmpty($("#cboRateType").val()) || $("#cboRateType").val() == "0" || $("#cboRateType").val() == 0) {
+        fnAlert("w", "EPM_05_00", "UI0274", "Please Select Rate Type");
+        return false;
+    }
 }
 function fnExpandAll() {
     $('#jstMapPatientCategoryServiceType').jstree('open_all');
@@ -297,3 +396,8 @@ function fnGridRefreshPatientCategoryServiceType() {
     $("#jqgPatientCategoryServiceType").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
+function fnClearFields() {
+    $("#cboServiceType").val(0).selectpicker('refresh');
+    $("#cboRateType").val(0).selectpicker('refresh');
+   $("#btnSaveServiceType").attr("disabled", false);
+}
