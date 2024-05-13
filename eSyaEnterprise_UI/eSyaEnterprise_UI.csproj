@@ -229,6 +229,7 @@
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyCodes.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\SpecialtyUnits.js" />
     <Content Remove="wwwroot\js\ConfigProduct\AgeRange.js" />
+    <Content Remove="wwwroot\js\ConfigStores\MapItemtoBusinessStores.js" />
     <Content Remove="wwwroot\js\DocumentControl\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
     <Content Remove="wwwroot\js\ManageInventory\UnitofMeasure.js" />
