@@ -323,7 +323,30 @@
                 });
             }
         }
+        function fnTreeSizePopup(id) {
 
+            var _winWidth = $(window).width();
+            var _winHeight = $(window).height();
+            var _treeID = $(id);
+            var offset = _treeID.offset();
+            var _treeIDTop = offset.top;
+
+            if (_winWidth < 1025) {
+
+
+                $(id).css({
+                    'height': _winHeight / 2,
+                    'overflow': 'auto'
+                });
+            }
+            else {
+                $(id).css({
+                    'height': $(window).innerHeight() - _treeIDTop - 15 - 115,
+                    'overflow-y': 'auto',
+                    'overflow-x': 'hidden'
+                });
+            }
+        }
         //Jqgrid functions
         function fnAddGridSerialNoHeading() {
             $("[id^='jqgh'][id$='_rn']").empty();

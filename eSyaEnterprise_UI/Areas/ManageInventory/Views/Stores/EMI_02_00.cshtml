@@ -38,6 +38,8 @@
         Skucode: '@Localizer["Skucode"]',
         SkuId: '@Localizer["SkuId"]',
         BarcodeID: '@Localizer["BarcodeID"]',
+        PortfolioLink: '@Localizer["PortfolioLink"]',
+        PortfolioDescription: '@Localizer["PortfolioDescription"]',
     };
   
      var errorMsg = {
@@ -59,8 +61,10 @@
         PackSize_E16: '@Localizer["UI0157"]',
     }
 </script>
-
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
+<script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/ManageInventory/MapItemtoBusinessStores.js"></script>
+
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 
 
@@ -69,17 +73,19 @@
         <div class="form-group">
             <label> @Localizer["SelectItem"] </label>
             <select class="selectpicker" data-live-search="true" id="cboItemDesc" title="Select" data-size="8" asp-items="@ViewBag.ItemList" onchange="fnGetItemDetails()">
-                <option value="0">["Select"]</option>
+                <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row">           
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label> @Localizer["ItemGroup"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboItemGroup" title="Select" data-size="8" asp-items="@ViewBag.ItemGroupList" onchange="fnGetItemCategory()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboItemGroup" title="Select" data-size="8" asp-items="@ViewBag.ItemGroupList" onchange="fnGetItemCategory()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-6">
@@ -121,91 +127,16 @@
                         <input type="text" class="form-control" id="txtSkuCode" style="display:none">
                         <input type="text" class="form-control" id="txtSkuId" style="display:none">
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-12">
-                        <div class="row">
-                            <div class="col-lg-9 col-md-9 col-sm-6">
-                                <div class="form-group">
-                                    <label> @Localizer["ItemDescription"] </label>
-                                    <input type="text" class="form-control" autocomplete="off" maxlength="100" id="txtItemDescription" />
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="form-group">
-                                    <label> @Localizer["UnitofMeasure"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboUnitOfMeasure" title="Select" data-size="8" asp-items="@ViewBag.UOMList"></select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 lbl-right">
-                                <div class="form-group">
-                                    <label> @Localizer["PackSize"] </label>
-                                    <input id="txtPackSize" class="form-control numberonly" autocomplete="off" maxlength="4" value="1" />
-
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label> @Localizer["InventoryClass"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboInventoryClass" title="Choose Inventory Class" data-size="8">
-                                        <option value="S">@Localizer["Stockable"]</option>
-                                        <option value="N">@Localizer["Non-Stockable"]</option>
-                                    </select>
-
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label> @Localizer["ItemClass"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemClass" title="Choose Item Class" data-size="8">
-                                        <option value="B">@Localizer["BoughtOut"]</option>
-                                        <option value="C">@Localizer["Consignment"]</option>
-                                        <option value="I">@Localizer["In-House"]</option>
-                                        <option value="S">@Localizer["SubContract"]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label> @Localizer["ItemSource"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemSource" title="Choose Item Source" data-size="8">
-                                        <option value="L">@Localizer["Local"]</option>
-                                        <option value="I">@Localizer["Imported"]</option>
-                                        <option value="O">@Localizer["OutStation"]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label> @Localizer["ItemCriticality"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboItemCriticality" title="Choose Item Criticality" data-size="8">
-                                        <option value="D">@Localizer["Desirable"]</option>
-                                        <option value="E">@Localizer["Essential"]</option>
-                                        <option value="V">@Localizer["Vital"]</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label> @Localizer["BarcodeID"] </label>
-                                    <input type="text" class="form-control" autocomplete="off" maxlength="20" id="txtBarCodeID" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                                <div class="default-checkbox padbot15">
-                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                                        <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
-                                        <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6" id="jstLocation">
+                        <div id="jstBusinessLocation"></div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <p class="subheading">@Localizer["ItemParameter"]</p>
-                            <hr class="left" />
-                            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "4" })
-                        </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6" id="jstStores">
+                        <label>@Localizer["Stores"]</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6" id="">
+                       
+                        <table id="jqgPortfolioLink"></table>
+                        <div id="jqpPortfolioLink"></div>
 
                     </div>
 
@@ -227,3 +158,5 @@
         </div>
     </div>
 </div>
+
+                       
