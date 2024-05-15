@@ -13,6 +13,14 @@ $(document).ready(function () {
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnViewItemtoBusinessStores(event) } },
         }
     });
+    $.contextMenu({
+        selector: "#btnStores",
+        trigger: 'left',
+        items: {
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditStores(event) } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnViewStores(event) } },
+        }
+    });
 
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
@@ -29,18 +37,7 @@ $(document).ready(function () {
     });
     fnTreeSizePopup("#jstBusinessLocation");
 
-    $('#jstStores').jstree({
-        'core': {
-            'data': [
-
-                { "id": "ajson2", "parent": "#", "text": "Stores", state: { 'opened': true } },
-                { "id": "ajson3", "parent": "ajson2", "text": "Inventory Store" },
-                { "id": "ajson4", "parent": "ajson2", "text": "Material Store" },
-            ]
-        }
-    });
     
-    fnTreeSizePopup("#jstStores");
 });
 
 
@@ -227,22 +224,22 @@ function SetGridControlByAction() {
 function fnGridAddItemtoBusinessStores() {
     fnClearFields();
 
-    if ($("#cboItemGroup").val() === "0" || $("#cboItemGroup").val() === "") {
-        fnAlert("w", "EMI_02_00", "UI0147", errorMsg.ItemGroup_E6);
-        $('#cboItemGroup').focus();
-        return false;
-    }
-    if ($("#cboItemCategory").val() === "0" || $("#cboItemCategory").val() === "") {
-        fnAlert("w", "EMI_02_00", "UI0148", errorMsg.ItemCategory_E7);
-        $('#cboItemCategory').focus();
-        return false;
-    }
-    if (_isSubCategoryApplicable == 1 && ($("#cboItemSubCategory").val() === "0" || $("#cboItemSubCategory").val() === "")) {
-        fnAlert("w", "EMI_02_00", "UI0149", errorMsg.ItemSubCategory_E8);
-        $('#cboItemSubCategory').focus();
-        return false;
-    }
-
+    //if ($("#cboItemGroup").val() === "0" || $("#cboItemGroup").val() === "") {
+    //    fnAlert("w", "EMI_02_00", "UI0147", errorMsg.ItemGroup_E6);
+    //    $('#cboItemGroup').focus();
+    //    return false;
+    //}
+    //if ($("#cboItemCategory").val() === "0" || $("#cboItemCategory").val() === "") {
+    //    fnAlert("w", "EMI_02_00", "UI0148", errorMsg.ItemCategory_E7);
+    //    $('#cboItemCategory').focus();
+    //    return false;
+    //}
+    //if (_isSubCategoryApplicable == 1 && ($("#cboItemSubCategory").val() === "0" || $("#cboItemSubCategory").val() === "")) {
+    //    fnAlert("w", "EMI_02_00", "UI0149", errorMsg.ItemSubCategory_E8);
+    //    $('#cboItemSubCategory').focus();
+    //    return false;
+    //}
+    fnLoadGridStoreBusinessLink();
     $("#btnSaveItem").html(localization.Save);
     $('#PopupItemtoBusinessStores').modal('show');
     $('#PopupItemtoBusinessStores').find('.modal-title').text(localization.AddItem);
@@ -299,7 +296,72 @@ function fnClearFields() {
 }
 
 
+function fnLoadGridStoreBusinessLink() {
 
+    $("#jqgLinkedStores").GridUnload();
+    $("#jqgLinkedStores").jqGrid(
+
+        {
+            url: '',
+            //url: getBaseURL() + "/Stores/GetPortfolioStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
+            datatype: 'local',
+            mtype: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            colNames: [localization.BusinessKey, localization.StoreID, localization.StoreDescription, localization.Active,localization.Actions],
+            colModel: [
+                { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "StoreID", width: 70, editable: true, align: 'left', hidden: true },
+                { name: 'StoreDesc', width: 170, resizable: false },
+                {
+                    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
+                    formatter: "checkbox", formatoptions: { disabled: true },
+                    edittype: "checkbox", editoptions: { value: "true:false" }
+                },
+                {
+                    name: 'edit', search: false, align: 'left', width: 80, sortable: false, resizable: false,
+                    formatter: function (cellValue, options, rowdata, action) {
+                        return '<button class="mr-1 btn btn-outline" id="btnStores"><i class="fa fa-ellipsis-v"></i></button>'
+                    }
+                },
+            ],
+            rowNum: 100000,
+            pgtext: null,
+            pgbuttons: null,
+            loadonce: true,
+            rownumWidth: '55',
+            pager: "#jqpLinkedStores",
+            viewrecords: false,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            scroll: false, scrollOffset: 0,
+            caption: localization.LinkedStores,
+            onSelectRow: function (rowid) {
+            },
+            loadComplete: function (data) {
+
+            },
+        })
+        .jqGrid('navGrid', '#jqpLinkedStores', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpLinkedStores', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqpLinkedStores")
+        })
+    fnAddGridSerialNoHeading();
+ }
+
+function fnEditStores(e) {
+    var rowid = $("#jqgLinkedStores").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgLinkedStores').jqGrid('getRowData', rowid);
+}
+function fnViewStores(e) {
+    var rowid = $("#jqgLinkedStores").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgLinkedStores').jqGrid('getRowData', rowid);
+}
 function fnLoadPortfolioStoreBusinessLinkGrid() {
 
     $("#jqgPortfolioLink").GridUnload();

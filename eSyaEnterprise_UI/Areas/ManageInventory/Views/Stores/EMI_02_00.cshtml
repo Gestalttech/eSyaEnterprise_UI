@@ -40,6 +40,11 @@
         BarcodeID: '@Localizer["BarcodeID"]',
         PortfolioLink: '@Localizer["PortfolioLink"]',
         PortfolioDescription: '@Localizer["PortfolioDescription"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        StoreID: '@Localizer["StoreID"]',
+        StoreDescription: '@Localizer["StoreDescription"]',
+        LinkedStores: '@Localizer["LinkedStores"]',
+        
     };
   
      var errorMsg = {
@@ -130,8 +135,9 @@
                     <div class="col-lg-4 col-md-4 col-sm-6" id="jstLocation">
                         <div id="jstBusinessLocation"></div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6" id="jstStores">
-                        <label>@Localizer["Stores"]</label>
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <table id="jqgLinkedStores"></table>
+                        <div id="jqpLinkedStores"></div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6" id="">
                        
