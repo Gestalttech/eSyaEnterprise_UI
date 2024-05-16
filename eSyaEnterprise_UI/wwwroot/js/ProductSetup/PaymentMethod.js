@@ -28,7 +28,7 @@ function fnGridLoadPaymentMethod() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, localization.PaymentMethod, localization.InstrumentType, localization.PaymentMethodDesc, localization.InstrumentType,  localization.Active,localization.Actions],
+        colNames: [localization.ISDCode, localization.PaymentMethod, localization.InstrumentType, localization.PaymentMethodDesc, localization.InstrumentTypeDesc,  localization.Active,localization.Actions],
         colModel: [
             { name: "Isdcode", width: 50, editable: false, align: 'left', hidden: true },
             { name: "PaymentMethod", width: 80, editable: false, hidden: true, align: 'left', resizable: true },
