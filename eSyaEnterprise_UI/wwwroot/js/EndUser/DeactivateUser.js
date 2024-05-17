@@ -14,19 +14,20 @@ var data_up = [{ UserID: 100, LoginID: 11, LoginDesc: 'Arun kumar', EMailId: 'ar
 function fnGridLoadDeactivateUser() {
     $("#jqgDeactivateUser").jqGrid('GridUnload');
     $("#jqgDeactivateUser").jqGrid({
-        url: getBaseURL() + '/Deactivate/GetBlockedUsers',
+        url: getBaseURL() + '/Deactivate/GetActivatedUsers',
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.UserId, localization.loginId, localization.UserDesc, localization.EmailId, localization.UnsuccessfulAttempts, localization.LoginAttemptDate, localization.BlockSignIn, localization.Active, localization.Actions],
+        colNames: [localization.UserId, localization.loginId, localization.UserDesc, localization.EmailId, localization.UnsuccessfulAttempts,"Deactivation Reason", localization.LoginAttemptDate, localization.BlockSignIn, localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "LoginID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "LoginDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "EMailId", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "UnsuccessfulAttempt", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "DeactivationReason", width: 30, editable: false, editoptions: { disabled: true }, hidden: true, align: 'left' },
             { name: "LoginAttemptDate", width: 30, editable: false, align: 'left', editrules: { required: true } },
-            { name: "BlockSignIn", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsUserDeactivated", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 40, sortable: false, resizable: false,
@@ -93,6 +94,7 @@ function fnSaveUnBlockUser(userId, userName) {
             },
             callback: function (result) {
                 if (result) {
+                    $("#txtReasonForDeactivate").val('');
                     $("#PopupDeactivateReason").modal('show');
                 }
             }
@@ -102,20 +104,25 @@ function fnSaveUnBlockUser(userId, userName) {
     
 }
 
-function fnSaveDeactivateUser(objblock) {
+function fnSaveDeactivateUser() {
+   
+    var rowid = $("#jqgDeactivateUser").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgDeactivateUser').jqGrid('getRowData', rowid);
+    var userid= rowData.UserID;
+
     if ($("#txtReasonForDeactivate").val() == "" || $("#txtReasonForDeactivate").val() == null || $("#txtReasonForDeactivate").val() == undefined) {
         fnAlert("w", "EEU_11_00", "UI0135", errorMsg.Deactivate_E3);
         return false
     }
     else {
         var objblock = {
-            UserID: userId,
-            Reason: $("#txtReasonForDeactivate").val()
+            UserID: userid,
+            DeactivationReason: $("#txtReasonForDeactivate").val()
         };
 
         $.ajax({
             async: false,
-            url: getBaseURL() + '/Deactivate/UpdateBlockSignIn',
+            url: getBaseURL() + '/Deactivate/DeActivateUser',
             type: 'POST',
             data: {
                 obj: objblock,
@@ -126,6 +133,7 @@ function fnSaveDeactivateUser(objblock) {
                 if (response.Status) {
                     fnAlert("s", "", response.StatusCode, response.Message);
                     fnRefreshGridDeactivateUser();
+                    $("#PopupDeactivateReason").modal('hide');
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);

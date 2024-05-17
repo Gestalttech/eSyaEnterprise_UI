@@ -73,6 +73,7 @@ function fnGridLoadUnlockBlockedUser() {
 
 
 function fnUnBlockUser(e, actiontype) {
+   
     var rowid = $("#jqgUnlockBlockedUser").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgUnlockBlockedUser').jqGrid('getRowData', rowid); 
     fnSaveUnBlockUser(rowData.UserID, rowData.LoginDesc);
@@ -84,6 +85,7 @@ function fnSaveUnBlockUser(userId, userName) {
         return false;
     }
     else {
+      
         bootbox.confirm({
             message: "Are you sure you want to unblock this user " + userName + " ?",
             buttons: {

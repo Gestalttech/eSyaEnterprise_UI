@@ -7,7 +7,7 @@ $(document).ready(function () {
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnUnBlockUser(event) } },
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnAuthenticateUser(event) } },
         }
         // there's more, have a look at the demos and docs...
     });
@@ -17,7 +17,7 @@ $(document).ready(function () {
 function fnGridLoadUnlockAuthorizeUser() {
     $("#jqgAuthorizeUser").jqGrid('GridUnload');
     $("#jqgAuthorizeUser").jqGrid({
-        url: getBaseURL() + '/Authorize/GetBlockedUsers',
+        url: getBaseURL() + '/Authorize/GetUnAuthenticatedUsers',
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -29,7 +29,7 @@ function fnGridLoadUnlockAuthorizeUser() {
             { name: "EMailId", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "UnsuccessfulAttempt", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "LoginAttemptDate", width: 30, editable: false, align: 'left', editrules: { required: true } },
-            { name: "BlockSignIn", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "IsUserAuthenticated", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 40, sortable: false, resizable: false,
@@ -72,13 +72,13 @@ function fnGridLoadUnlockAuthorizeUser() {
 
 
 
-function fnUnBlockUser(e, actiontype) {
+function fnAuthenticateUser(e, actiontype) {
     var rowid = $("#jqgAuthorizeUser").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgAuthorizeUser').jqGrid('getRowData', rowid);
-    fnSaveUnBlockUser(rowData.UserID, rowData.LoginDesc);
+    fnSaveAuthenticateUser(rowData.UserID, rowData.LoginDesc);
 }
 
-function fnSaveUnBlockUser(userId,userName) {
+function fnSaveAuthenticateUser(userId,userName) {
     if (IsStringNullorEmpty(userId) || userId == '0' || userId == "0") {
         fnAlert("w", "EEU_05_00", "UI0208", error.EnterUserID_E2);
         return false;
@@ -106,7 +106,7 @@ function fnSaveUnBlockUser(userId,userName) {
 
                     $.ajax({
                         async: false,
-                        url: getBaseURL() + '/Authorize/UpdateBlockSignIn',
+                        url: getBaseURL() + '/Authorize/AuthenticateUser',
                         type: 'POST',
                         data: {
                             obj: objblock,

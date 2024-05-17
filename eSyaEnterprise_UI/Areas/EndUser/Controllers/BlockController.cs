@@ -51,7 +51,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         {
             try
             {
-
+                obj.BlockSignIn = false;
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.ModifiedBy= AppSessionVariables.GetSessionUserID(HttpContext);
                 var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Block/UpdateBlockSignIn", obj);
