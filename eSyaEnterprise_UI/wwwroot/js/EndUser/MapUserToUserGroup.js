@@ -26,7 +26,7 @@ function fnGridUserToUserGroup() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.UserID, localization.BusinessKey, localization.UserGroup, localization.UserRole, localization.Location, localization.UserGroup, localization.UserRole, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Save],
+        colNames: [localization.UserID, localization.BusinessKey, localization.UserGroup, localization.UserRole, localization.Location, localization.UserGroup, localization.UserRole, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 70, editable: true, align: 'left', hidden: true },
 
@@ -74,7 +74,6 @@ function fnGridUserToUserGroup() {
         caption: localization.MapUserToUserGroup,
         loadComplete: function (data) {
             SetGridControlByAction();
-            //fnSetGridWidth("jqpCalendarHeader");
             fnJqgridSmallScreen("jqgUserToUserGroup");
         },
     }).jqGrid('navGrid', '#jqpUserToUserGroup', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpUserToUserGroup', {

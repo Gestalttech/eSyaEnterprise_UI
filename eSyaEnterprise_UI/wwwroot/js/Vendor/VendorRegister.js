@@ -466,3 +466,7 @@ function fnSetSidebar() {
         $(".tab-content").css({ "height": _newTabH, "overflow-y": "auto" });
     }
 }
+
+$("[id*='ParamValue']").on('click', function () {
+    $("[id*='ParamValue']").not(this).prop('checked', false);
+});

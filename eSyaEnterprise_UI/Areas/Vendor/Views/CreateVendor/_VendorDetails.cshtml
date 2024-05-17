@@ -26,15 +26,14 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group lbl-right">
                     <label>@Localizer["CreditPeriod(indays)"] </label>
-                    <input id="txtCreditPeriod" class="form-control text-right" type="text" autocomplete="off" maxlength="2" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                    <input id="txtCreditPeriod" class="form-control text-right" type="text" autocomplete="off" maxlength="3" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">
                     <label>@Localizer["PreferredPaymentMode"] </label>
                   
-                    <select class="selectpicker" data-live-search="true" id="cboPayMode" title="" data-size="8"
-                            asp-items="@ViewBag.PaymentPreferredMode">
+                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboPayMode" title="" data-size="8" asp-items="@ViewBag.PaymentPreferredMode">
                         <option value="0">Select</option>
                     </select>
                 </div>
@@ -43,8 +42,7 @@
                 <div class="form-group">
                     <label>@Localizer["VendorClass"] </label>
                   
-                    <select class="selectpicker" data-live-search="true" id="cboVendorClass" title="" data-size="8"
-                            asp-items="@ViewBag.VendorClass">
+                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboVendorClass" title="" data-size="8" asp-items="@ViewBag.VendorClass">
                         <option value="0">Select</option>
                     </select>
                 </div>
@@ -53,7 +51,7 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="default-checkbox form-group">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsBlockList">
-                        <input type="checkbox" id="chkIsBlockList" class="mdl-checkbox__input">
+                        <input type="checkbox" id="chkIsBlockList" class="mdl-checkbox__input" disabled>
                         <span class="mdl-checkbox__label">@Localizer["IsBlackListed"] </span>
                     </label>
                 </div>
@@ -87,3 +85,6 @@
         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnCloseVendorDetails()"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
     </div>
 </div>
+
+
+    

@@ -170,10 +170,10 @@ function fnGetItemSubCategoryByItem(ItemCategory, ItemSubCategory) {
             }
             $("#cboItemSubCategory").val(ItemSubCategory);
             $("#cboItemSubCategory").selectpicker('refresh');
-        }
+            }
     });
 }
-
+    
 function fnGetItemCategory() {
     $('#cboItemDesc').val(0);
     $('#cboItemDesc').selectpicker('refresh');
