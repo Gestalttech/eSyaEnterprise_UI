@@ -17,12 +17,7 @@ $(document).ready(function () {
 //    fnGetUserRoleMenulist();
 });
 
-function fnTreeSize() {
-    $("#jstUserGroup").css({
-        'max-height': $(window).height() - 190,
-        'overflow': 'auto'
-    });
-}
+
 function fnGetUserRoleMenulist() {
     $('#jstUserGroup').jstree("destroy");
     $.ajax({
@@ -58,18 +53,17 @@ function fnGetUserRoleMenulist() {
     });
 }
 function fnSaveRoleMenulist() {
-   
-    if ($('#cboBusinessKey').val() == '' || $('#cboBusinessKey').val() == '0' || $('#cboBusinessKey').val() == 0) {
+     if ($('#cboBusinesskey').val() == '' || $('#cboBusinesskey').val() == null || $('#cboBusinesskey').val() == '0' || $('#cboBusinesskey').val() == 0) {
         fnAlert("w", "EEU_01_00", "UI0064", errorMsg.BusinessLocation_E1);
-        $('#cboBusinessKey').focus();
+        $('#cboBusinesskey').focus();
         return;
     }
-    if ($('#cboUsergroup').val() == '' || $('#cboUsergroup').val() == '0' || $('#cboUsergroup').val() == 0) {
+    if ($('#cboUsergroup').val() == '' || $('#cboUsergroup').val() == null ||  $('#cboUsergroup').val() == '0' || $('#cboUsergroup').val() == 0) {
         fnAlert("w", "EEU_01_00", "UI0130", errorMsg.UserGroup_E6);
         $('#cboUsergroup').focus();
         return;
     }
-    if ($('#cboUserRole').val() == '' || $('#cboUserRole').val() == '0' || $('#cboUserRole').val() == 0) {
+    if ($('#cboUserRole').val() == '' || $('#cboUserRole').val() == null || $('#cboUserRole').val() == '0' || $('#cboUserRole').val() == 0) {
         fnAlert("w", "EEU_01_00", "UI0132", errorMsg.UserRole_E7);
         $('#cboUserRole').focus();
         return;

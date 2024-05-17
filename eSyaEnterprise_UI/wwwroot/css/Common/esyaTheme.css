@@ -215,8 +215,8 @@ label {
     background:var(--primary-color) !important;
     color:var(--button-forecolor) !important;
 }
-    .modal-footer button .svg-inline--fa, button.close .svg-inline--fa{
-        color:var(--button-forecolor) !important;
+    .modal-footer button .svg-inline--fa, button.close .svg-inline--fa, .modal-header > .close {
+        color: var(--button-forecolor) !important;
     }
 .fc-time-grid .fc-event {
     /*background-color: var(--light-orange) !important;*/

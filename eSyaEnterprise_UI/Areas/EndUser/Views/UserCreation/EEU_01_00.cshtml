@@ -42,6 +42,7 @@
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
+        BusinessLocation_E1: '@Localizer["UI0064"]',
         UserGroup_E6: '@Localizer["UI0130"]',
         UserRole_E7: '@Localizer["UI0132"]'
     }
@@ -51,15 +52,15 @@
     <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/EndUser/UserGroup.js"></script>
 }
-<div class="row padbot10">
+<div class="row">
 
     
 
     <div class="col-lg-4 col-md-5 col-sm-6 col-6">
         <div class="form-group">
-            <label class="lable-color"> @Localizer["BusinessLocation"]</label>
+            <label> @Localizer["BusinessLocation"]</label>
 
-            <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="" data-size="8" onchange="fnOnChangeUserGroup()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="Select" data-size="8" onchange="fnOnChangeUserGroup()">
                 @foreach (var ut in ViewBag.Businesskeys)
                 {
                     <option value="@ut.BusinessKey">@ut.LocationDescription</option>
@@ -73,7 +74,7 @@
         <div class="form-group">
             <label class="lable-color"> @Localizer["UserGroup"]</label>
 
-            <select class="selectpicker" data-live-search="true" id="cboUsergroup" title="" data-size="8" onchange="fnOnChangeUserGroup()">
+            <select class="selectpicker" data-live-search="true" id="cboUsergroup" title="Select" data-size="8" onchange="fnOnChangeUserGroup()">
                 @foreach (var ug in ViewBag.UGappcodes)
                 {
                     <option value="@ug.ApplicationCode">@ug.CodeDesc</option>
@@ -89,8 +90,8 @@
         <div class="form-group">
             <label class="lable-color"> @Localizer["UserRole"]</label>
 
-            <select class="selectpicker" data-live-search="true" id="cboUserRole" title="" data-size="8" onchange="fnOnChangeUserGroup()">
-                @foreach (var ur in ViewBag.URappcodes)
+            <select class="selectpicker" data-live-search="true" id="cboUserRole" title="Select" data-size="8" onchange="fnOnChangeUserGroup()">
+                 @foreach (var ur in ViewBag.URappcodes)
                 {
                     <option value="@ur.ApplicationCode">@ur.CodeDesc</option>
                 }
