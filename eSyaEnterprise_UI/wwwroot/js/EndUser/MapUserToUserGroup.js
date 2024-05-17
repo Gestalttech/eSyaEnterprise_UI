@@ -14,7 +14,7 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-save'></i>" + localization.Save + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-save'></i>" + localization.Select + " </span>");
 
 });
 
