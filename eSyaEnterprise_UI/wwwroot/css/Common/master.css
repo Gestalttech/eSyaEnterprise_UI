@@ -1066,7 +1066,7 @@ button.close:hover {
     letter-spacing: normal;
     font-family: helvetica-Bold;
 }
-.user-logo {vertical-align: text-bottom;font-size: 24px !important;}
+.user-logo {vertical-align: text-bottom;font-size: 22px !important;}
 .modal-footer {
     margin: 0px !important;
     justify-content: center !important;
