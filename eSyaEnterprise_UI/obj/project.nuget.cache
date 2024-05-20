@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qw2dJhMU4AVzNpBrOUa0S0/q9kjoFYS8ZOts4LIuZyFMQOM9W4a3WPK4nIWn/C1vu7VIGzNzWvIAxILJKvjpKA==",
+  "dgSpecHash": "mWqWeUzavUwWMlNWRiRrtVM2Sawpg0sTI2KWAo7gFessl9VQQv2tOCBv2VHiGRgpfUcVqEv71ysYRZxljzByCA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+  "projectFilePath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lenovo\\.nuget\\packages\\closedxml\\0.102.1\\closedxml.0.102.1.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
@@ -245,6 +245,26 @@
     "C:\\Users\\lenovo\\.nuget\\packages\\xlparser\\1.5.2\\xlparser.1.5.2.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TinyMCE' 6.5.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-438c-3975-5x3f",
+      "libraryId": "TinyMCE",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TinyMCE' 6.5.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-5359-pvf2-pw78",
+      "libraryId": "TinyMCE",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
     {
       "code": "NU1902",
       "level": "Warning",

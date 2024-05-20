@@ -11817,11 +11817,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+      "projectUniqueName": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
       "projectName": "eSyaEnterprise_UI",
-      "projectPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
+      "projectPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\eSyaEnterprise_UI.csproj",
       "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterPrise_UI-GIT\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
+      "outputPath": "D:\\Projects\\eSyaProjects2022\\eSyaEnterprise_UI\\eSyaEnterprise_UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11938,6 +11938,26 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TinyMCE' 6.5.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-438c-3975-5x3f",
+      "libraryId": "TinyMCE",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'TinyMCE' 6.5.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-5359-pvf2-pw78",
+      "libraryId": "TinyMCE",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
     {
       "code": "NU1902",
       "level": "Warning",
