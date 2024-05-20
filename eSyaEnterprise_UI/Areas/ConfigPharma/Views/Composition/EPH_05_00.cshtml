@@ -149,7 +149,7 @@
                     @await Html.PartialAsync("~/Areas/ConfigPharma/Views/Composition/_DrugComposition.cshtml")
 
                     <div class="col-lg-12 col-12 col-sm-12">
-                        <p class="subheading">Drug Composition Parameter</p>
+                        <p class="subheading">Parameter table</p>
                         <hr class="left" />
                         @await Component.InvokeAsync("eSyaParameterType", new { parameterType = "27", id = "TreeParam" })
                     </div>
@@ -283,7 +283,7 @@
 
 
                 <div class="col-lg-5 col-md-5 col-sm-12  shadowLite p-4">
-                    <p class="subheading">Drug Composition Parameter</p>
+                    <p class="subheading">Parameter table</p>
                     <hr class="left" />
                     @await Component.InvokeAsync("eSyaParameterType", new { parameterType = "27", id = "PopupParam" })
 
