@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["ConsultationRates"]</h5>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboBusinessKey"> @Localizer["BusinessLocation"] </label>
+            <select class="w-100 selectpicker" id="cboBusinessKey" data-size="8" data-live-search="true" onchange="fnLoadGridDoctorConsultationRate()">
+                <option value="0">Select</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboClinicType"> @Localizer["ClinicType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGridDoctorConsultationRate()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboRateType"> @Localizer["RateType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboRateType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.RateType" onchange="fnLoadGridDoctorConsultationRate()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboCurrencyCode"> @Localizer["CurrencyCode"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboCurrencyCode" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.CurrencyCode" onchange="fnLoadGridDoctorConsultationRate()"></select>
+
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-12">
+        <table id="jqgConsultationRates"></table>
+        <div id="jqpConsultationRates"></div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorConsultationRate" onclick="fnSaveDoctorConsultationRate()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDoctor" onclick="fnLoadGridDoctorConsultationRate()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+    </div>
+</div>

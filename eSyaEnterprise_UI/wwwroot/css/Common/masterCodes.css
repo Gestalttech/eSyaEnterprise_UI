@@ -15,6 +15,42 @@
 /*.modal-body {
     padding: 15px 15px 15px 0px
 }*/
+div[role=tablist] {
+    width: 100%;
+    padding: 0px 0px 15px;
+}
+
+#v-pills-tab .nav-item .nav-link {
+    font-size: 12px;
+    padding: 7px 12px;
+    font-family: 'helvetica-bold';
+    color: #7d7d7d;
+    /* border: 1px dashed #cccccc; */
+    width: 100%;
+    border-radius: 0px !important;
+    background: #fff;
+    border-left: 5px solid transparent;
+    border-bottom: 1px solid #f1f1f1;
+    text-align: left;
+}
+
+    #v-pills-tab .nav-item .nav-link.active, #v-pills-tab .nav-item .show > .nav-link {
+        color: #000000;
+        background-color: #fffbea;
+        font-family: 'helvetica-bold';
+        border-left: 5px solid #f9d32b;
+        border-bottom-width: 0px;
+        border-bottom-color: transparent !important;
+    }
+
+#v-pills-tab li.nav-item {
+    border-bottom: 1px solid #ffffff
+}
+
+#v-pills-tab li a {
+    font-size: 12px;
+    border-color: transparent;
+}
 @-webkit-keyframes flash {
     from, 50%, to {
         opacity: 1;
@@ -57,6 +93,23 @@
 #imgSignatureblah{
     width:150px;
 }
+.tab-content-inner h5:first-child {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    margin: 0px 0px 15px -20px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #dedede;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: helvetica-bold,sans-serif;
+    background: linear-gradient(to right,#fffcec,#fff3dc);
+    box-shadow:none;
+}
+.tab-content-inner{
+    overflow: hidden auto;
+}
 @media only screen and (min-width:300px) and (max-width:1099px) {
     .sidebarSmall {
         width: 100%;
@@ -80,7 +133,7 @@
             border-bottom: 1px solid #efecec;
             padding: 5px 0px 5px 0px;
             font-size: 12px;
-            letter-spacing: 1px;
+            letter-spacing: 0px;
             color: #54494a;
             line-height: 16px;
             position: relative;
@@ -117,7 +170,7 @@
             border-bottom: 1px solid #efecec;
             padding: 8px 0px 8px 0px;
             font-size: 12px;
-            letter-spacing: 1px;
+            letter-spacing: 0px;
             color: #808080;
             line-height: 16px;
             position: relative;

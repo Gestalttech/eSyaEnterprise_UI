@@ -1,0 +1,286 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "ESP_01_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<script>
+
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        DoctorId: '@Localizer["DoctorId"]',
+        DoctorRegistrationNo: '@Localizer["DoctorRegistrationNo"]',
+        DoctorShortName: '@Localizer["DoctorShortName"]',
+        DoctorName: '@Localizer["DoctorName"]',
+        Gender: '@Localizer["Gender"]',
+        Qualification: '@Localizer["Qualification"]',
+        MobileNumber: '@Localizer["MobileNumber"]',
+        EmailID: '@Localizer["EmailID"]',
+        SeniorityLvl: '@Localizer["SeniorityLevel"]',
+        SeniorityLevelD: '@Localizer["SeniorityLevelDescription"]',
+        DoctorClass: '@Localizer["DoctorClass"]',
+        DoctorCategory: '@Localizer["DoctorCategory"]',
+        Password: '@Localizer["Password"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        AddDoctor: '@Localizer["AddDoctor"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        wait: '@Localizer["wait"]',
+        SegmentDescription: '@Localizer["SegmentDescription"]',
+        Businesslocation: '@Localizer["BusinessLocation"]',
+        Select: '@Localizer["Select"]',
+        Specialty: '@Localizer["Specialty"]',
+        Clinic: '@Localizer["Clinic"]',
+        ConsultationType: '@Localizer["ConsultationType"]',
+        Dayoftheweek: '@Localizer["Dayoftheweek"]',
+        NumberofPatients: '@Localizer["NumberofPatients"]',
+        Week1: '@Localizer["Week1"]',
+        Week2: '@Localizer["Week2"]',
+        Week3: '@Localizer["Week3"]',
+        Week4: '@Localizer["Week4"]',
+        Week5: '@Localizer["Week5"]',
+        FromTime: '@Localizer["FromTime"]',
+        ToTime: '@Localizer["ToTime"]',
+        ScheduleDate: '@Localizer["ScheduleDate"]',
+        DoctorClassCode: '@Localizer["DoctorClassCode"]',
+        DoctorCategoryCode: '@Localizer["DoctorCategoryCode"]',
+        TimeSlotInMins: '@Localizer["TimeSlotInMins"]',
+        PatientPerHour: '@Localizer["PatientPerHour"]',
+        AllowConsultation: '@Localizer["AllowConsultation"]',
+        AllowSMS: '@Localizer["AllowSMS"]',
+        IsRevenueShareAppicable: '@Localizer["IsRevenueShareAppicable"]',
+        TariffFrom: '@Localizer["TariffFrom"]',
+        LanguageKnown: '@Localizer["LanguageKnown"]',
+        Experience: '@Localizer["Experience"]',
+        DoctorRemarks: '@Localizer["DoctorRemarks"]',
+        DeActivate: '@Localizer["DeActivate"]',
+        Activate: '@Localizer["Activate"]',
+        TimeSlotInMintues: '@Localizer["TimeSlotInMintues"]',
+        ClinicType: '@Localizer["ClinicType"]',
+        CurrencyCode: '@Localizer["CurrencyCode"]',
+        RateType: '@Localizer["RateType"]',
+        ConsultationType: '@Localizer["ConsultationType"]',
+        ServiceDescription: '@Localizer["ServiceDescription"]',
+        EFFRate: '@Localizer["EFFRate"]',
+        Tariff: '@Localizer["Tariff"]',
+        Photo: '@Localizer["Photo"]',
+        Signature: '@Localizer["Signature"]',
+        ISDCode: '@Localizer["ISDCode"]',
+        IsdCode: '@Localizer["IsdCode"]',
+        StatutoryCode: '@Localizer["StatutoryCode"]',
+        StatutoryDescription: '@Localizer["StatutoryDescription"]',
+        TaxPercentage: '@Localizer["TaxPercentage"]',
+        ServiceRule: '@Localizer["ServiceRule"]',
+        DoctorPercentage: '@Localizer["DoctorPercentage"]',
+        HCPPercentage: '@Localizer["HCPPercentage"]',
+        EFFFrom: '@Localizer["EFFFrom"]',
+        Till: '@Localizer["Till"]',
+        Location: '@Localizer["Location"]',
+        SpecialtyID: '@Localizer["SpecialtyID"]',
+
+    };
+    var localization_dp = {
+        DoctorId: '@Localizer["DoctorId"]',
+        DoctorShortName: '@Localizer["DoctorShortName"]',
+        DoctorName: '@Localizer["DoctorName"]',
+        DoctorRegistrationNo: '@Localizer["DoctorRegistrationNo"]',
+        Gender: '@Localizer["Gender"]',
+        DoctorClassCode: '@Localizer["DoctorClassCode"]',
+        DoctorClass: '@Localizer["DoctorClass"]',
+        DoctorCategoryCode: '@Localizer["DoctorCategoryCode"]',
+        DoctorCategory: '@Localizer["DoctorCategory"]',
+        SeniorityLvl: '@Localizer["SeniorityLvl"]',
+        SeniorityLevelD: '@Localizer["SeniorityLevelD"]',
+        EmailID: '@Localizer["EmailID"]',
+        TariffFrom: '@Localizer["TariffFrom"]',
+        IsdCode: '@Localizer["IsdCode"]',
+        MobileNumber: '@Localizer["MobileNumber"]',
+        Password: '@Localizer["Password"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]'
+
+    }
+    var loalization_bl = {
+        BusinessKey: '@Localizer["BusinessKey"]',
+        Businesslocation: '@Localizer["Businesslocation"]'
+    }
+    var localization_dl = {
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        LeaveFrom: '@Localizer["LeaveFrom"]',
+        LeaveTill: '@Localizer["LeaveTill"]',
+        NumberOfDays: '@Localizer["NumberOfDays"]',
+        ActiveStatus: '@Localizer["ActiveStatus"]',
+    }
+    var localization_sl = {
+        BusinessKey: '@Localizer["BusinessKey"]',
+        BusinessLocation: '@Localizer["BusinessLocation"]',
+        SpecialtyID: '@Localizer["SpecialtyID"]',
+        Specialty: '@Localizer["Specialty"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]'
+    }
+
+</script>
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+<link href="~/css/Common/masterCodes.css" rel="stylesheet" />
+<link href="~/css/Common/bootstrap-timepicker.css" rel="stylesheet" />
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
+<script src="~/js/Common/tinymce/tinymce.min.js"></script>
+
+@section scripts{
+    <script src="~/js/bootstrap-timepicker.js"></script>
+    <script src="~/js/ServiceProvider/DoctorProfile.js"></script>
+}
+<script>
+
+    var _cnfISDCode = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("ISDCode").Value);
+
+</script>
+
+<section id="divGrid">
+    <div class="row form-group">
+        <div class="col-lg-12 col-xl-12 col-sm-12">
+            <p class="m-0">@Localizer["ChooseDoctorbyalphabets"]</p>
+            <span class="dot">A</span>
+            <span class="dot">B</span>
+            <span class="dot">C</span>
+            <span class="dot">D</span>
+            <span class="dot">E</span>
+            <span class="dot">F</span>
+            <span class="dot">G</span>
+            <span class="dot">H</span>
+            <span class="dot">I</span>
+            <span class="dot">J</span>
+            <span class="dot">K</span>
+            <span class="dot">L</span>
+            <span class="dot">M</span>
+            <span class="dot">N</span>
+            <span class="dot">O</span>
+            <span class="dot">P</span>
+            <span class="dot">Q</span>
+            <span class="dot">R</span>
+            <span class="dot">S</span>
+            <span class="dot">T</span>
+            <span class="dot">U</span>
+            <span class="dot">V</span>
+            <span class="dot">W</span>
+            <span class="dot">X</span>
+            <span class="dot">Y</span>
+            <span class="dot">Z</span>
+            <span class="dot">All</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <table id="jqgDoctorProfile"></table>
+            <div id="jqpDoctorProfile"></div>
+        </div>
+    </div>
+</section>
+
+<section id="divDoctorProfileForm" style="display:none;">
+    <div class="row">
+        <div class="col-md-3 col-lg-2 col-xl-2 col-sm-3 p-lg-0 p-md-0">
+            <nav class="sidebar h-100 flex-column align-items-stretch border-end" id="navbar-Doctor">
+                <div class="sidebar-sticky">
+                        <ul class="nav nav-pills flex-column  shadowLite" id="v-pills-tab">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active position-relative" href="#divDoctorProfile">@Localizer["DoctorProfile"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divAboutDoctor">@Localizer["AboutDoctor"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divPhotoAndSignature">@Localizer["PhotoAndSignature"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divAddress"> @Localizer["Address"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divStatutoryDetails">@Localizer["StatutoryDetails"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divBusinessLink">@Localizer["BusinessLink"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divSpecialtyLink">@Localizer["SpecialtyLink"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divClinicLink">@Localizer["ClinicLink"] </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divConsultationRates">@Localizer["ConsultationRates"] </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+         <div class="col-lg-10 col-md-10 col-sm-10 col-xl-10 tab-content bg-white animated fadeIn delay-1s ps-0 mainbarSmall" data-bs-spy="scroll" data-bs-target="#navbar-Doctor" data-bs-root-margin="0px 0px -40%" data-bs-offset="90" data-bs-smooth-scroll="true" tabindex="0">
+                <div class="tab-content-inner ps-3" id="divDoctorProfile">
+                    @await Html.PartialAsync("_DoctorProfile")
+                </div>
+                <div class="tab-content-inner ps-3" id="divAboutDoctor">
+                    @await Html.PartialAsync("_AboutDoctor")
+                </div>
+                <div class="tab-content-inner ps-3" id="divPhotoAndSignature">
+                    @await Html.PartialAsync("_PhotoAndSignature")
+                </div>
+                <div class="tab-content-inner ps-3" id="divAddress">
+                    @await Html.PartialAsync("_Address")
+                </div>
+                <div class="tab-content-inner ps-3" id="divStatutoryDetails">
+                    @await Html.PartialAsync("_StatutoryDetails")
+                </div>
+                <div class="tab-content-inner ps-3" id="divBusinessLink">
+                    @await Html.PartialAsync("_BusinessLink")
+                </div>
+                <div class="tab-content-inner ps-3" id="divSpecialtyLink">
+                    @await Html.PartialAsync("_SpecialtyLink")
+                </div>
+                <div class="tab-content-inner ps-3" id="divClinicLink">
+                    @await Html.PartialAsync("_ClinicLink")
+                </div>
+                <div class="tab-content-inner ps-3" id="divConsultationRates">
+                    @await Html.PartialAsync("_ConsultationRates")
+                </div>
+         </div>
+    </div>
+</section>
+            <script>
+                $(function(){
+                    fnSetSidebar();
+                    const dataSpyList = document.querySelectorAll('[data-bs-spy="scroll"]')
+                    dataSpyList.forEach(dataSpyEl => {
+                        bootstrap.ScrollSpy.getInstance(dataSpyEl).refresh()
+                    })
+                   })
+                function fnSetSidebar() {
+                    var _tabcontent = $(".tab-content").offset();
+                    var _fullH = $(window).height();
+                    var _newTabH = (_fullH - _tabcontent.top - 15);
+                    var windW = $(window).width();
+                    if (windW > 1099) {
+                        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
+                        $(".tab-content-inner").css({ "height": _newTabH});
+                    }
+                    else {
+                        $(".tab-content-inner").css({ "height": _newTabH, "overflow-y": "auto" });
+                    }
+                }
+            </script>

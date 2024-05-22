@@ -1,0 +1,68 @@
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["Address"]</h5>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboLocation">@Localizer["BusinessLocation"]</label>
+        <select class="w-100 selectpicker" id="cboLocation" data-size="8" data-live-search="true" onchange="fncboLocation_change()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboIsdcode">@Localizer["ISD-Code"]</label>
+        <select class="selectpicker" data-container="body" data-live-search="true" id="cboIsdcode" title="" data-size="8" onchange="fnISD_change(this)"></select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboState">@Localizer["State"]</label>
+        <select class="w-100 selectpicker" id="cboState" data-size="8" data-live-search="true" onchange="fncboState_change()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboCity">@Localizer["City/Town"]</label>
+        <select class="w-100 selectpicker" id="cboCity" data-size="8" data-live-search="true" onchange="fncboCity_change()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboZipDesc">@Localizer["ZipDescription"]</label>
+        <select class="w-100 selectpicker" id="cboZipDesc" data-size="8" data-live-search="true" onchange="fncboZipDesc_change()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="txtZipCode">@Localizer["ZipCode"]</label>
+        <input type="text" name="zipcode" value="" id="txtZipCode" class="form-control" />
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <label for="cboArea">@Localizer["Area"]</label>
+        <select class="w-100 selectpicker" id="cboArea" data-size="8" data-live-search="true">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="form-group">
+            <label for="txtAddress">@Localizer["Address"]</label>
+            <textarea id="txtAddress" rows="3" class="form-control"></textarea>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorProfileAddress" onclick="fnSaveDoctorProfileAddress()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDoctorAddress" onclick="fnClearDoctorAddress()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+    </div>
+</div>

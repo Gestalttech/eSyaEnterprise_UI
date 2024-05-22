@@ -300,6 +300,7 @@
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
     <Folder Include="Areas\ProductSetup\Views\Control\" />
+    <Folder Include="Areas\ServiceProvider\Data\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />

@@ -1,0 +1,239 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section scripts {
+  <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+<form enctype="multipart/form-data" method="post">
+    <div class="row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <h5>@Localizer["AboutDoctor"]</h5>
+        </div>
+        @*<input type="text" id="txtdoctorId" style="display:none" />*@
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="form-group">
+                <label for="txtLanguagesKnown">@Localizer["LanguagesKnown"] </label>
+                <textarea id="txtLanguagesKnown" class="form-control" rows="2" cols="4" maxlength="150" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="form-group">
+                <label for="txtExperience">@Localizer["Experience"] </label>
+                <textarea id="txtExperience" class="form-control" rows="2" cols="4" maxlength="500" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label for="txtCertification">@Localizer["Certification"] </label>
+                <input type="text" id="txtCertification" class="form-control" maxlength="500" autocomplete="off" />
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group">
+                <label for="txtAboutDoctor">@Localizer["AboutDoctor"] </label>
+                <textarea id="txtAboutDoctor" class="form-control" rows="1" cols="4" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-10 col-md-9 col-sm-6">
+            <div class="form-group">
+                <label for="txtDoctorRemarks">@Localizer["DoctorRemarks"] </label>
+                <textarea id="txtDoctorRemarks" class="form-control" rows="1" cols="4" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+            
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                    <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                </label>
+            
+        </div>
+    </div>
+
+    <div class="row  form-group">
+        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <hr />
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveAboutDoctor" onclick="fnSaveDoctorAboutDetails()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearAboutDoctor" onclick="fnClearDoctorAboutDetails()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    $(document).ready(function () {
+        tinymceinit();
+    })
+    function tinymceinit() {
+        tinymce.init({
+            selector: 'textarea#txtAboutDoctor',
+            height: 120,
+            menubar: true,
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            plugins: ' image textpattern textcolor colorpicker insertdatetime lists table tabfocus searchreplace hr visualblocks ',
+            toolbar: ' undo redo | fontselect fontsizeselect formatselect | link image | bold underline | alignleft aligncenter alignright | forecolor backcolor | insertdatetime | bullist numlist | table | searchreplace | hr',
+            insertdatetime_formats: ["%H:%M:%S", "%d-%m-%Y", "%I:%M:%S %p", "%D"],
+            image_title: true,
+            automatic_uploads: true,
+
+            file_picker_types: 'image',
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                input.click();
+            },
+            init_instance_callback: function (editor) {
+                var freeTiny = document.querySelector('.tox .tox-notification--in');
+                //freeTiny.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<script>
+    $(function () {
+
+    })
+    function fnGridLoadAboutDoctor() {
+        $("#jqgAboutDoctor").jqGrid('GridUnload');
+        $("#jqgAboutDoctor").jqGrid({
+            url: '',
+            datatype: 'json',
+            mtype: 'Get',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            jsonReader: { repeatDoctors: false, root: "rows", page: "page", total: "total", records: "records" },
+            ignoreCase: true,
+            colNames: ["Doctor Id", localization.DoctorShortName, localization.DoctorName, "Doctor Registration No", localization.Gender, localization.Qualification, localization.MobileNumber, localization.DoctorClassCode, localization.DoctorClass, localization.DoctorCategoryCode, localization.DoctorCategory, localization.PatientPerHour, localization.AllowConsultation, localization.AllowSMS, localization.IsRevenueShareAppicable, localization.TariffFrom, localization.DoctorRemarks, localization.TimeSlotInMintues, localization.Active, localization.Actions],
+            colModel: [
+                { name: "DoctorId", width: 40, editable: true, align: 'left', hidden: true },
+                { name: "DoctorShortName", width: 110, editable: true, align: 'left', hidden: false },
+                { name: "DoctorName", width: 120, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "DoctorRegnNo", width: 110, editable: false, hidden: true, align: 'left', resizable: true },
+                { name: "Gender", width: 55, editable: true, align: 'left', hidden: false, editoptions: { value: "M: Male;F: Female" } },
+                { name: "Qualification", width: 160, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "MobileNumber", width: 110, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "DoctorClass", width: 80, editable: false, hidden: true, align: 'left', resizable: true },
+                { name: "DoctorClassDesc", width: 140, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "DoctorCategory", width: 60, editable: false, hidden: true, align: 'left', resizable: true },
+                { name: "DoctorCategoryDesc", width: 140, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "PatientPerHour", width: 120, editable: false, hidden: false, align: 'left', resizable: true },
+                { name: "AllowConsultation", width: 80, editable: true, align: 'left', hidden: true },
+                { name: "AllowSMS", width: 50, editable: false, hidden: true, align: 'left', resizable: true },
+                { name: "IsRevenueShareAppicable", width: 40, editable: true, align: 'left', hidden: true },
+                { name: "TraiffFrom", width: 10, editable: true, align: 'left', hidden: true, editoptions: { value: "N: None;R: Service Rate;S: Specialty;D: Doctor" } },
+                //{name: "LanguageKnown", width: 70, editable: true, align: 'left', hidden: true },
+                //{name: "Experience", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "DoctorRemarks", width: 120, editable: true, align: 'left', hidden: false },
+                { name: "TimeSlotInMintues", width: 10, editable: true, align: 'left', hidden: true, editoptions: { value: "5: 5 Minutes;10: 10 Minutes;15: 15 Minutes;20: 20 Minutes;25: 25 Minutes;30: 30 Minutes;45: 45 Minutes;60: 60 Minutes" } },
+                { name: "ActiveStatus", editable: true, width: 70, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+                //{
+                //    name: 'Action', search: false, align: 'left', width: 100, sortable: false, resizable: false,
+                //    formatter: function (cellValue, options, rowdata, action) {
+                //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgDMEdit" onclick="return fnEditAboutDoctor(event)"><i class="fas fa-pen"></i> ' + localization.Edit + ' </button>' +
+                //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title = "View" id="jqgDMView" onclick = "return fnViewAboutDoctor(event)" > <i class="far fa-eye"></i> ' + localization.View + ' </button > ' +
+                //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid cancel-button" id="jqgDMDelete", onclick="return fnDeActivateAboutDoctor(event)"><i class="fas fa-trash"></i>' + localization.DeActivate + '</button>'
+
+                //    }
+                //}
+                {
+                    name: 'edit', search: false, align: 'left', width: 135, sortable: false, resizable: false,
+                    formatter: function (cellValue, options, rowdata, action) {
+                        return '<button class="mr-1 btn btn-outline" id="btnAboutDoctor"><i class="fa fa-ellipsis-v"></i></button>'
+                    }
+                },
+
+            ],
+            pager: "#jqpAboutDoctor",
+            rowNum: 10,
+            rowList: [10, 20, 50, 100],
+            rownumWidth: 55,
+            loadonce: true,
+            viewrecords: true,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            align: "left",
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            scrollOffset: 0,
+            loadComplete: function (data) {
+                SetDoctorMasterGridControlByAction();
+                fnJqgridSmallScreen('jqgAboutDoctor');
+            },
+
+            onSelectRow: function (rowid, status, e) {
+                var $self = $(this), $target = $(e.target),
+                    p = $self.jqGrid("getGridParam"),
+                    rowData = $self.jqGrid("getLocalRow", rowid),
+                    $td = $target.closest("tr.jqgrow>td"),
+                    iCol = $td.length > 0 ? $td[0].cellIndex : -1,
+                    cmName = iCol >= 0 ? p.colModel[iCol].name : "";
+
+                switch (cmName) {
+                    case "id":
+                        if ($target.hasClass("myedit")) {
+                            alert("edit icon is clicked in the row with rowid=" + rowid);
+                        } else if ($target.hasClass("mydelete")) {
+                            alert("delete icon is clicked in the row with rowid=" + rowid);
+                        }
+                        break;
+                    case "serial":
+                        if ($target.hasClass("mylink")) {
+                            alert("link icon is clicked in the row with rowid=" + rowid);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            },
+
+        }).jqGrid('navGrid', '#jqpAboutDoctor', { add: false, edit: false, search: true, del: false, refresh: false }, {}, {}, {}, {
+            closeOnEscape: true,
+            caption: "Search...",
+            multipleSearch: true,
+            Find: "Find",
+            Reset: "Reset",
+            odata: [{ oper: 'eq', text: 'Match' }, { oper: 'cn', text: 'Contains' }, { oper: 'bw', text: 'Begins With' }, { oper: 'ew', text: 'Ends With' }]
+        }).jqGrid('navButtonAdd', '#jqpAboutDoctor', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshAboutDoctor
+        })
+            .jqGrid('navButtonAdd', '#jqpAboutDoctor', {
+                caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgDMAdd', position: 'first', onClickButton: fnGridAddAboutDoctor
+            });
+
+        fnAddGridSerialNoHeading();
+    }
+    function fnGridRefreshAboutDoctor() {
+
+    }
+    function fnGridAddAboutDoctor() {
+
+    }
+</script>

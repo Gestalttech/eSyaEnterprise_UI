@@ -1,0 +1,109 @@
+﻿
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["DoctorProfile"]</h5>
+    </div>
+ </div>
+<div class="row">
+   
+    <input type="hidden" id="hdvDoctorId" value="" />
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="row padbot4">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="txtDoctorShortName"> @Localizer["DoctorShortName"]</label>
+                    <input class="form-control" type="text" autocomplete="off" maxlength="10" id="txtDoctorShortName" />
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="txtDoctorName"> @Localizer["DoctorName"]</label>
+                    <input class="form-control" type="text" autocomplete="off" maxlength="50" id="txtDoctorName" />
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="cboGender" class="lable-color"> @Localizer["Gender"]</label>
+                    <select class="selectpicker" data-live-search="false" title="" id="cboGender">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-8 col-sm-6">
+                <div class="form-group">
+                    <label for="txtDoctorRegnNo"> @Localizer["Doctor Registration Number"]</label>
+                    <input class="form-control" type="text" autocomplete="off" maxlength="25" id="txtDoctorRegnNo" />
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-8 col-sm-6">
+                <div class="form-group">
+                    <label for="cboDoctorMobile"> @Localizer["MobileNumber"]</label>
+                    @await Component.InvokeAsync("IsdMobileInput", new { id = "DoctorMobile" })
+                            </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="txtEMailId"> @Localizer["EmailID"]</label>
+                    <input class="form-control" type="text" autocomplete="off" maxlength="50" id="txtEMailId" />
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="cboDoctorClass" class="lable-color"> @Localizer["DoctorClass"]</label>
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorClass" asp-items="@ViewBag.doctorClassList"></select>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="cboDoctorCategory" class="lable-color"> @Localizer["DoctorCategory"]</label>
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorCategory" asp-items="@ViewBag.doctorCategoryList"></select>
+                </div>
+            </div>
+           
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label class="lable-color" for="cboTraiffFrom"> @Localizer["TariffFrom"]</label>
+                    <select class="selectpicker" data-live-search="true" title="" id="cboTraiffFrom">
+                        <option value="C">Clinic Service Rates</option>
+                        <option value="S">Specialty</option>
+                        <option value="D">Doctor</option>
+                    </select>
+                </div>
+            </div>
+           <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="cboSeniorityLevel" class="lable-color"> @Localizer["SeniorityLevel"]</label>
+                    <select class="selectpicker" data-live-search="true" title="" id="cboSeniorityLevel" asp-items="@ViewBag.seniorityLevelList"></select>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="dvDoctorProfileParameters" class="col-lg-6 col-md-6 col-sm-12 form-group">
+            <p class="subheading">
+                @Localizer["DoctorParameters"]
+            </p>
+            <hr class="left" />
+            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "19" })
+        </div>
+    </div>
+
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorProfile" onclick="fnSaveDoctorProfile()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDoctor" onclick="fnClearFields()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+    </div>
+</div>
+

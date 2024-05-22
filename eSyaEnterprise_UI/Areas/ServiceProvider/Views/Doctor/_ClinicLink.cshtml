@@ -1,0 +1,249 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@*<link href="~/css/jsTree.css" rel="stylesheet" />*@
+@*@section scripts{
+    @*<script src="~/js/eSyaClinicalServices/ClinicDoctorLink.js"></script
+    <script src="~/js/jsTree.js"></script>
+}*@
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+@* @using eSyaEnterprise_UI.Areas.eSyaClinicalServices.Models *@
+
+
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+</script>
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["ClinicLink"]</h5>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="form-group">
+            <label class="lable-color" for="cboClinicBusinessLocation">@Localizer["BusinessLocation"]</label>
+            <select class="selectpicker" data-live-search="false" id="cboClinicBusinessLocation" title="" onchange="fnLoadClinicSpecialty()"></select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4">
+        <div class="form-group">
+            <label class="lable-color" for="cboClinicSpecialty">@Localizer["Specialty"]</label>
+            <select class="selectpicker" data-live-search="false" id="cboClinicSpecialty" title="" data-size="8" onchange="fnLoadClinicConsultantTree()"></select>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-lg-6 col-md-6">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlLinkClinics">
+            <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+                <h6 class="mdl-card__title-text">@Localizer["ClinicConsultation"] </h6>
+            </div>
+            <div class="mdl-card__supporting-text fullwidth">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <p class="m-0">  @Localizer["ClinicsInfo"]</p>
+                        <div id="jstClinicConsultantTree"></div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="mdl-card__actions text-center pad0 form-group padtop9">
+                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSave" onclick="fnSaveClinicDoctorLink()" @(userFormRole.IsInsert ? "" : "disabled")><i class="fa fa-save"></i> @Localizer["Save"] </button>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 offset-lg-4 offset-md-4">
+        <h5>Action</h5>
+
+        <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+            <i class="fas fa-expand" style="color:#fff !important"></i>   @Localizer["ExpandAll"]
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+            <i class="fas fa-compress" style="color:#fff !important"></i>   @Localizer["CollapseAll"]
+        </button>
+    </div>
+</div>
+
+
+<script>
+
+    function fnLoadClinicBusinessList() {
+        $('#cboClinicBusinessLocation').selectpicker('refresh');
+        $('#jstClinicConsultantTree').jstree("destroy");
+
+        $.ajax({
+            url: getBaseURL() + '/Doctors/GetDoctorLocationbyDoctorId?doctorId=' + $('#txtDoctorId').val(),
+            type: 'POST',
+            datatype: 'json',
+            async: false,
+            success: function (data) {
+                var options = $("#cboClinicBusinessLocation");
+                $("#cboClinicBusinessLocation").empty();
+                $("#cboClinicBusinessLocation").append($("<option value='0'>Choose Location</option>"));
+                $.each(data, function () {
+                    options.append($("<option />").val(this.BusinessKey).text(this.LocationDescription));
+                });
+                if ($('#cboClinicBusinessLocation option').length == 2) {
+                    $('#cboClinicBusinessLocation').prop('selectedIndex', 1);
+                    $('#cboClinicBusinessLocation').selectpicker('refresh');
+                } else {
+
+                    $("#cboClinicBusinessLocation").val($('#cboClinicBusinessLocation option:first').val());
+                    $('#cboClinicBusinessLocation').selectpicker('refresh');
+                }
+
+                fnLoadClinicSpecialty();
+
+            },
+            error: function (error) {
+                toastr.error(error.statusText);
+
+            }
+        });
+    }
+
+    function fnLoadClinicSpecialty() {
+        $('#cboClinicSpecialty').selectpicker('refresh');
+
+        $.ajax({
+            url: getBaseURL() + '/Doctors/GetSpecialtyListByBKeyDoctorId?businessKey=' + $('#cboClinicBusinessLocation').val() + '&doctorId=' + $('#txtDoctorId').val(),
+            type: 'POST',
+            datatype: 'json',
+            async: false,
+            success: function (response) {
+                var opt = $("#cboClinicSpecialty");
+                $("#cboClinicSpecialty").empty();
+                $("#cboClinicSpecialty").append($("<option value='0'>Choose Specialty</option>"));
+                $.each(response, function () {
+                    opt.append($("<option />").val(this.SpecialtyID).text(this.SpecialtyDesc));
+                });
+
+                if ($('#cboClinicSpecialty option').length == 2) {
+                    $('#cboClinicSpecialty').prop('selectedIndex', 1);
+                    $('#cboClinicSpecialty').selectpicker('refresh');
+                } else {
+
+                    $("#cboClinicSpecialty").val($('#cboClinicSpecialty option:first').val());
+                    $('#cboClinicSpecialty').selectpicker('refresh');
+                }
+
+
+
+                fnLoadClinicConsultantTree();
+            },
+            error: function (error) {
+                toastr.error(error.statusText);
+
+            }
+        });
+    }
+
+    function fnLoadClinicConsultantTree() {
+        $('#jstClinicConsultantTree').jstree("destroy");
+        $.ajax({
+            url: getBaseURL() + '/Doctors/GetClinicConsultantTreeList?businessKey=' + $("#cboClinicBusinessLocation").val() + '&specialtyId=' + $('#cboClinicSpecialty').val() + '&doctorId=' + $('#txtDoctorId').val(),
+            success: function (result) {
+
+                $('#jstClinicConsultantTree').jstree({
+                    core: { 'data': result, 'check_callback': true, 'multiple': true, 'expand_selected_onload': false },
+                    "plugins": ["checkbox"],
+                    "checkbox": {
+                        "keep_selected_style": false
+                    },
+                });
+            },
+            error: function (error) {
+                toastr.error(error.status);
+            }
+        });
+    }
+
+    function fnSaveClinicDoctorLink() {
+
+        if (IsStringNullorEmpty($('#cboClinicBusinessLocation').val()) || $('#cboClinicBusinessLocation').val() == '0') {
+            toastr.warning("Please Select Business Location");
+            $('#cboClinicBusinessLocation').focus();
+            return;
+        }
+
+        if (IsStringNullorEmpty($('#cboClinicSpecialty').val()) || $('#cboClinicSpecialty').val() == '0') {
+            toastr.warning("Please Select Specialty");
+            $('#cboClinicSpecialty').focus();
+            return;
+        }
+
+        if (IsStringNullorEmpty($('#txtDoctorId').val())) {
+            toastr.warning("Please Select Doctor");
+            return;
+        }
+
+        var obj = [];
+
+        var treeUNodes = $('#jstClinicConsultantTree').jstree(true).get_json('#', { 'flat': true });
+        $.each(treeUNodes, function () {
+            if (this.parent != "#" && this.parent != "CL0") {
+                var node_ids = this.id.split("_");
+                var dc = {
+                    BusinessKey: $('#cboClinicBusinessLocation').val(),
+                    SpecialtyId: $('#cboClinicSpecialty').val(),
+                    DoctorId: $('#txtDoctorId').val(),
+                    //ClinicId: node_ids[0],
+                    //ConsultationId: node_ids[2],
+                    ClinicId: node_ids[2],
+                    ConsultationId: node_ids[0],
+                    ActiveStatus: this.state.selected
+                }
+                obj.push(dc);
+            }
+        });
+
+
+        $("#btnSave").attr('disabled', true);
+
+        var URL;
+        URL = getBaseURL() + '/Doctors/InsertUpdateDoctorClinicLink';
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            datatype: 'json',
+            data: { do_cl: obj },
+            success: function (response) {
+                if (response.Status) {
+                    toastr.success(response.Message);
+
+                }
+                else {
+                    toastr.error(response.Message);
+                    $("#btnSave").attr('disabled', false);
+                    $("#btnSave").html('<i class="fa fa-save"></i> ' + localization.Save);
+                    fnLoadClinicConsultantTree();
+                }
+
+                $("#btnSave").html('<i class="fa fa-save"></i> ' + localization.Save);
+                $("#btnSave").attr('disabled', false);
+            },
+            error: function (error) {
+                toastr.error(error.statusText);
+                $("#btnSave").attr("disabled", false);
+                $("#btnSave").html('<i class="fa fa-save"></i> ' + localization.Save);
+            }
+        });
+    }
+
+    function fnExpandAll() {
+        $('#jstClinicConsultantTree').jstree('open_all');
+    }
+
+    function fnCollapseAll() {
+        $('#jstClinicConsultantTree').jstree('close_all');
+    }
+</script>
+ 

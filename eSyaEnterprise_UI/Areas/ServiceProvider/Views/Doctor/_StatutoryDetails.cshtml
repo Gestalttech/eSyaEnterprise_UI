@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["StatutoryDetails"]</h5>
+    </div>
+    @*<div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+    <label for="cboLocation">BusinessLocation</label>
+    <select class="w-100 selectpicker" id="cboBusinessLocation" data-size="8" data-live-search="true" onchange="fncboBusinessKey_change()">
+    <option value="0">Select</option>
+    </select>
+    </div>*@
+
+    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+       
+        <div class="form-group">
+            <label class="lable-color" for="cboStatutoryDetailsIsdcode">ISD Code </label>
+            <div>
+
+                @*<select id="cboISDCodes" class="selectpicker" onchange="fnCboISDCodes_change()">
+                <option value="0">Select</option>
+                </select>*@
+                <select class="selectpicker" data-container="body" data-live-search="true" id="cboStatutoryDetailsIsdcode" title="" data-size="8" onchange="fnCboISDCodes_change(this)"></select>
+
+                @*<select name="cboISDCodes" class="selectpicker" data-container="body" data-live-search="true" id="cboIsdcode" title="" data-size="8" onchange="fnCboISDCodes_change(this)">
+                <option value="0">select</option>
+                @if (ViewBag.ISDCodes != null)
+                {
+                foreach (var c in ViewBag.ISDCodes)
+                {
+                <option value=@c.Isdcode data-mobilepattern=@c.MobileNumberPattern
+                title="<span class='text' style='padding-left:5px'><img src='@ViewBag.DomainName/@c.CountryFlag' alt=@c.CountryCode /> (+@c.Isdcode) </span>&#x200E;"
+                data-content="<span><img src='@ViewBag.DomainName/@c.CountryFlag' alt=''></span> @c.CountryName (+@c.Isdcode) &#x200E;"></option>
+                }
+                }
+                </select>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgDoctorProfileStatutoryDetails"></table>
+        <div id="jqpDoctorProfileStatutoryDetails"></div>
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorStatutoryDetails" onclick="fnSaveDoctorStatutoryDetails()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDoctor" onclick="fnClearBusinessStatutory()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+    </div>
+</div>
+
+

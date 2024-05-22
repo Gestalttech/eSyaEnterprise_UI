@@ -1,0 +1,144 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<style>
+    #canvas {
+        width: 200px;
+        height: 200px;
+        /*border:1px dashed #ccc;*/
+    }
+
+    .imagedig {
+        border: 1px dashed #d7d4d4;
+        padding-bottom: 5px;
+        background: transparent;
+        padding: 10px;
+    }
+
+    button[id='click-photo'] {
+        width: 75px;
+    }
+</style>
+<div class="row">
+    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+        <h5>@Localizer["PhotoAndSignature"]</h5>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 border-left">
+        <div class="form-group">
+            <p class="subheading"> Photo </p> <hr class="left" />
+            <span class="lblInfo"> 1. Only Jpg & png format </span>
+            <span class="lblInfo"> 2. Photo size should be less than 50KB</span>
+            <span class="lblInfo pb-2"> 3. Please enable your browser Camera access permission for Capture Photo</span>
+            <div class="p-2 mb-3 d-flex justify-content-center" style="background:#fffbea;">
+                <button id="btnUploadPhoto" class="btn btn-primary btn-xs mr-10"><i class="fa fa-upload"></i> Upload</button>
+                <span class="mr-10"> (or)</span>
+                <button id="btnCapturePhoto" class="btn btn-primary btn-xs"><i class="fa fa-camera"></i> Capture</button>
+            </div>
+
+        </div>
+        <div class="form-group" id="divUploadPhoto">
+            <div class="imagedig" style="border:thin; padding-bottom:5px;  display:none" id="imgPhoto">
+                <img id="imgPhotoimageblah" src="" title="">
+                <input class="mdl-textfield__input fullwidth FileUpload" id="Photoimage" type="file" name="file" onchange="readPhotoimage(this);" accept='image/*' enctype="multipart/form-data" style="border-bottom:none !important;visibility:hidden" />
+                <button id="btnRemoveUploadPhoto" class="btn btn-primary d-flex justify-content-end"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="form-group" id="divCapturePhoto" style="display:none">
+            @*<iframe src="" frameborder="0" allow="camera" id="iframePhoto" sandbox="allow-same-origin"> </iframe>*@
+            <video id="video" width="200" height="200" autoplay></video>
+            <canvas id="canvas" width="200" height="200" style="display:none"></canvas>
+
+            @*<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCABkAGQDASIAAhEBAxEB/8QAHQAAAQQDAQEAAAAAAAAAAAAABgAEBQgBAwcCCf/EAEAQAAEDAwICCAMGAwUJAAAAAAECAwQABRESIQYxBwgTIkFRYYEjcZEUFTKhscEkM0IWJWKy0WOCg5Kio7PC8f/EABoBAAMBAQEBAAAAAAAAAAAAAAIDBAUGAQD/xAArEQACAQMDBAEBCQAAAAAAAAAAAQIDESEEEjEFBkFRE7EiIyUyM1JxoeH/2gAMAwEAAhEDEQA/ALD9aVpti18TqjjSu325Tg9VJg6v/YVVJcVMeNCYDZbDcVlvSfDS2ASPmQT71aXrV3dP3DxZeGmP5kpdsKTy0lxuIT9Bmq43yA5CmKt0ganYYEZZ81NjST9Umu17hl+GaWEubf3ZXOX6DmvXkuL2IVyOiTGCFj4jA7hI/Ejy9q1C3NkaCjY86kksrCdaU7p3+fpW9tltQCkjY1xDOpTBi328MPOwdJy0cp25pNTLdrUQPgKwcDJGBRBb7e0X1uhsZwBqxUu7FHYLAT4A0Fw7ga/wsSNS1JHtnFN0cMMg95alfIYo4kRu76CmKmQVEkVRB4AbZCs8PwUpJ7HV86x91RW/wxkj2ohQhOk4wOWaayUBJz5jFNiA5Mhlw0p2S0kADyryYw5+XkKcSpcdgfEdSmmD15hMg/EJHoKbZnm5mHYySvYYpVGSOJISXCAFkUqLaN3P2Ww6xTaJHDM+NIOEXC9oSrPIBc5Kv2rgV9XIn3J+ZJKFPPOKcdKRhJWTk4HgMmrAdOjrM/hu2GWj4l0uMVTaf9rqU9j6INcFmNlchas8jmt/uaf3dGHpP6/4cr25mNWfuQxQzg7Dakywpp/QfwK3Tty9KkEM7ZxzrYYvbJxyUNwR51x7OoWR9bIoKFqIwdqd3ILjWyTIaRqU20pSQfHArbamFCKFOoIKjvTy5MZtr+2QWzQIJoFI16bmRUSSlWHBkBCCa1yJK0cozp/3cV0zgDgyzXPhSFImQlOLcU4SoOrRgJcUkAaSNsAUXL4P4aAbK7Bb1KZ/AtcZClA+eojOfXNWUUTVJ5sV6Nxc7RLALaFqOEpKxqPyFZft90dcDRjvhZGdPYq/UjFWBnRmsD4ae4MDbkKHLkhIBqtRb8iN9nwcJf4emzXltiO8tTWQrJCQDyx86Zr4UngE/Y2kEbYde5/8oNdAcKIcyfuO+6VD3JP71FSZHaEqBoo01LkN1JJ2QEL4Vez8UxEK8kgqH1OKVEEhSe0OpQzSovggMVR2LLdM0WNcInCsUvBCodzTOG+MpYhSFKHvkD3rhbqNTqvE5rs3S/C7a/WcuSA03Hh3VZBOApXYJQn81Y964+W8LKsZq/uOd6sILwvq2Y/b1Nw0t35bMNNjA8zTmO2M4xXlCDg5FOmU45+Fcw0dAlcmIrWGkJNbrq1i3SMD+jwrZFb7re2OVe7u2Pu6RqGQE53+dAxiWA16LUI/sXABxsXv/MuiSYW0pztQRwBMVH4bhshWw7Q/VxR/eiF+Ut0bn86spRvZkVTDGNzfQkHBoPvErIUB9aI52VBWaGri0DqOKujHBPe7AS6IWp91eeZz+QqIcOnIJFEVya0ylgDmkGh6cNGSrbxr2GLpnr5RCS3vjncUqYznv4lWCNqVNuOXBaPptjMrvcRb6u6zCkqbTkj4heYx/wBIX9K5IeZO21dK6abit3jKTbVNq7NiFFfbVnYKUp8Ee4SPpXMyvvZxtXnWHfUZ9Ij6THbpII2oxjIp1GG4yd6ZBW+CcU7hq7wz51iSNaPIUxkjS3Wb4nFqkn/CP1FZjEZbB9KxflAWmTk42H+YUp8jk8XJbg6K8nh2C8EHS4HDn/iKH7UQhpWPw10Hoj4RhXToW4euikAvOCXk48pbwH6UE9LPEHD/AEYWdy83yS21rcDEZpTiUKfeVnCElRA8CSSQAASarpPgjqxdyEmtrwRp3+VDtxbVgnFc1a62XBtunzIXSA/AtKmW23GxDkmbuobt6kJwsjnkADBxjIydcLrUdBvEKnG43GKIqkYH8ZHcYCieQGpO/wD8q6M15ZM4S9E5d0kSwTtlP+tDF2QrvbUSTLpbbsiNPtc1iVGfB0OsuBaFbjkRtUHdxsRjamxy2DLwA0wKD5zg7eVKtkrBeJJGaVEMVrFiOmN5DvGE19D+6cRVoHk2lKkn/urFc6KwCRn0op6SHWnuKrtLSO+t8gqyd8AY9KDS7k6s786V1N7q8mDoIuFCMR4HRo9TtTyC5lSaiO0HmAOYzT63O5WgDz3rKki9BpHWNbY9K88Qr/ueQD5J/wAwrRHdw4g15vboNqk+YTn8xS2hqdi2fV7aQ50DcOuLIShCJiiScAD7U8Sa+PfXU6w03pp6W7mi2zwrhixSXYdobaV8N1CTpVIODhRWQSD4JIA8Sbc9Zvp74h6Mup5wXwPwlOcizuLk3JEt1pWl1MREtwK0nHI5KVYwcKG48fl5JdLrnaHfNUSW2KEK7bYlyFryVKJ+ZrT2ihvqpKGNjyrQsnwoGFYM+jfpGvPAPEsS7RZ0n7KhwfaWEr7rzZPeSU8jyHuBV47XxNZeMbDHv1imokRZSNSVA7g+KVDwIOxB8a+dKVgDc5NWI6pl6zMvlielkHsm5LLXgrcpWfbufWq9LUe7YyevBNbjucpA7ZW1Ktc5wiSoDO3rSq3axUeDq3Gsku3OY4T+J5VCgfwCQfepjiqTqkvKJzlxRz70KOSwARrqXWScqjY6grQSH65IA/FuBin1rl/FSM7ZoVcnJAOTvyO9TvCDP3tckRwvSEgrUfQVFtc2oooWFcOY8n4qRq8KxdpQNrkhR/p/em8xkxF5bBKgNjvUDcrlNW05HyAlYwe7VD0NQH5Ykr1sOjqx8R9Qnh3pEdhOLunDcp1mO+2nOht64LSoLPgnc/NRT6V8wkjU6hJ5E719FelPpL48uXV3u/QpEeYXZXGVLDP2ZJcUUvCRjWd/5icjH6VQGz2VU9KpRWlKGnNGM+POvq8JJRTPKayM5EVIdLYTgncZpi9EcSo4T41NzOydnHsVhQTtt41pcBJqFys2WqkpRIoQl8ztR/1fn34/SlbexkqaSUupdwrAWgpPdI8cnT74PhQc4FZyaJei+3LVxG7c0FaVQ2wptSVY0rVkfoDTdPJ/ImxdeirWj5Laz5CftKsqA96VcocuFxUrUuS6Tjf4h/1pVqOvngmWkf7ixHFEh1SnCVb6zQZLlPDYK2pUqm1T+2z6isIipE1/YaqNeiiW+u9OFS+UZR/MUqVK0/60f5GP8rD+5yHTr72PlQjcnnCokqO9KlW7LgjXIIcQTH/sL51/0H9KpmuU4hmYtkJaCpBOhAwkZHIelKlWXr8WK6RAOOuNL7RCiDn2p+iS6ttLiiMnalSrLn4KqHLRHS5TynSCrA9KM+imW8m8S4+ruLjBRHqlQx+ppUqbTw0Be83c6gt5ernSpUqoHRWD/9k" alt="Alternate Text" />*@
+            <div class="d-inline-b" id="divbtnCapturePhoto">
+                <button id="click-photo" class="btn btn-primary btn-outline mr-10 mb-10 d-block"><span class="d-block mb-1"><i class="fa fa-camera f-16"></i></span> Take Photo</button>
+                <button id="remove-photo" class="btn btn-primary btn-outline d-block"><span class="d-block mb-1"><i class="fa fa-times f-16"></i></span> Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 border-left">
+        <div class="form-group">
+            <p class="subheading"> @Localizer["Signature"]</p>
+            <hr class="left" />
+            <span class="lblInfo"> 1. Only Jpg & png format</span>
+            <span class="lblInfo pb-4"> 2. Signature Image size should be less than 50KB</span>
+
+            <div class="p-2 mb-3 d-flex justify-content-center" style="background:#fffbea;">
+                <button id="btnUploadSignature" class="btn btn-primary btn-xs mr-10"><i class="fa fa-upload"></i> Upload</button>
+            </div>
+            <div class="imagedig" style="border:thin; padding-bottom:5px;" id="divUploadSignature">
+                <img id="imgSignatureblah" src="" title="">
+                <input class="mdl-textfield__input fullwidth FileUpload" id="imgSignature" type="file" name="file" onchange="readSinatureimage(this);" accept='image/*' enctype="multipart/form-data" style="border-bottom:none !important" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+
+        <hr />
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorProfile()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorProfileImage" onclick="fnSaveDoctorProfileImage()"><i class="far fa-save"></i> @Localizer["Save"]</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnClearDoctor" onclick=""><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    var sizeLimit = 50 * 1024;
+    function readPhotoimage(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+
+            var sizeInMb = input.files[0].size;
+
+            if (!(input.files[0].type.match(/image.*/))) {
+                toastr.warning("Invalid format file uploaded");
+                input.value = null;
+                return;
+            }
+            if (sizeInMb > sizeLimit) {
+                toastr.warning("User Photo file size should be smaller than 50 KB");
+                input.value = null;
+                return false;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgPhotoimageblah').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readSinatureimage(input) {
+        if (input.files && input.files[0]) {
+
+            var sizeInMb = input.files[0].size;
+
+            if (!(input.files[0].type.match(/image.*/))) {
+                toastr.warning("Invalid format file uploaded");
+                input.value = null;
+                return;
+            }
+            if (sizeInMb > sizeLimit) {
+                toastr.warning("User Signature file size should be smaller than 50 KB");
+                input.value = null;
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('imgSignatureblah').src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
