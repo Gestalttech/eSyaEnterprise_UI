@@ -41,13 +41,13 @@
         PortfolioLink: '@Localizer["PortfolioLink"]',
         PortfolioDescription: '@Localizer["PortfolioDescription"]',
         BusinessKey: '@Localizer["BusinessKey"]',
-        StoreID: '@Localizer["StoreID"]',
-        StoreDescription: '@Localizer["StoreDescription"]',
+        StoreCode: '@Localizer["StoreID"]',
+        StoreDesc: '@Localizer["StoreDescription"]',
         LinkedStores: '@Localizer["LinkedStores"]',
-        
+
     };
-  
-     var errorMsg = {
+
+    var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
         vieweauth_E3: '@Localizer["UIC03"]',
@@ -68,9 +68,9 @@
 </script>
 <link href="~/css/Common/jsTree.css" rel="stylesheet" />
 <script src="~/js/Common/jsTree.js"></script>
-    <script src="~/js/ManageInventory/MapItemtoBusinessStores.js"></script>
+<script src="~/js/ManageInventory/MapItemtoBusinessStores.js"></script>
 
-    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+<script src="~/js/Common/jquery.contextMenu.min.js"></script>
 
 
 <div class="row">
@@ -84,7 +84,7 @@
     </div>
 </div>
 
-<div class="row">           
+<div class="row">
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label> @Localizer["ItemGroup"] </label>
@@ -129,8 +129,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <input type="text" class="form-control" id="txtItemCode" style="display:none">
-                        <input type="text" class="form-control" id="txtSkuCode" style="display:none">
-                        <input type="text" class="form-control" id="txtSkuId" style="display:none">
+                        <input type="text" class="form-control" id="txtStoreCode" style="display:none">
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6" id="jstLocation">
                         <div id="jstBusinessLocation"></div>
@@ -140,7 +139,7 @@
                         <div id="jqpLinkedStores"></div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6" id="">
-                       
+
                         <table id="jqgPortfolioLink"></table>
                         <div id="jqpPortfolioLink"></div>
 
@@ -153,7 +152,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveItem" onclick="fnSaveItemCreation()">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveItem" onclick="fnSaveBusinessItemStoreLink()">
                             @Localizer["Save"]
                         </button>
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal"> @Localizer["Cancel"]</button>
@@ -164,5 +163,3 @@
         </div>
     </div>
 </div>
-
-                       

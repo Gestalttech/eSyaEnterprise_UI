@@ -1,6 +1,7 @@
 ﻿
 var _isSubCategoryApplicable = 0;
-
+var businesskey = '0';
+var prevSelectedID = '';
 $(document).ready(function () {
     _isSubCategoryApplicable = 0;
     fnGridLoadItemtoBusinessStores();
@@ -13,34 +14,10 @@ $(document).ready(function () {
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnViewItemtoBusinessStores(event) } },
         }
     });
-    $.contextMenu({
-        selector: "#btnStores",
-        trigger: 'left',
-        items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditStores(event) } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnViewStores(event) } },
-        }
-    });
 
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-
-    $('#jstBusinessLocation').jstree({
-        'core': {
-            'data': [
-                
-                { "id": "ajson2", "parent": "#", "text": "Location", state: { 'opened': true } },
-                { "id": "ajson3", "parent": "ajson2", "text": "Bengaluru" },
-                { "id": "ajson4", "parent": "ajson2", "text": "Chennai" },
-            ]
-        }
-    });
-    fnTreeSizePopup("#jstBusinessLocation");
-
-    
 });
-
-
 
 function fnGetItemCategoryByItem(ItemCategory) {
     $("#cboItemCategory").empty().selectpicker('refresh');
@@ -50,7 +27,7 @@ function fnGetItemCategoryByItem(ItemCategory) {
     var ItemGroup = $("#cboItemGroup").val();
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/SKU/GetItemCategory?ItemGroup=' + ItemGroup,
+        url: getBaseURL() + '/Stores/GetItemCategory?ItemGroup=' + ItemGroup,
         success: function (result) {
             $("#cboItemCategory").append($("<option value='0'>Select</option>"));
             if (result != null) {
@@ -74,7 +51,7 @@ function fnGetItemCategory() {
     var ItemGroup = $("#cboItemGroup").val();
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/SKU/GetItemCategory?ItemGroup=' + ItemGroup,
+        url: getBaseURL() + '/Stores/GetItemCategory?ItemGroup=' + ItemGroup,
         success: function (result) {
             $("#cboItemCategory").append($("<option value='0'>Select</option>"));
             if (result != null) {
@@ -99,7 +76,7 @@ function fnGetItemSubCategory() {
     var ItemCategory = $("#cboItemCategory").val();
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/SKU/GetItemSubCategory?ItemCategory=' + ItemCategory,
+        url: getBaseURL() + '/Stores/GetItemSubCategory?ItemCategory=' + ItemCategory,
         success: function (result) {
             $("#cboItemSubCategory").append($("<option value='0'>Select</option>"));
             if (result != null) {
@@ -126,16 +103,16 @@ function fnItemSubCategoryOnChanges() {
 }
 
 function fnGridLoadItemtoBusinessStores() {
+
     var ItemGroup = $("#cboItemGroup").val();
     var ItemCategory = $("#cboItemCategory").val();
     var ItemSubCategory = $("#cboItemSubCategory").val();
-    var URL = getBaseURL() + '/SKU/GetItemMaster?ItemGroup=' + ItemGroup + '&ItemCategory=' + ItemCategory + '&ItemSubCategory=' + ItemSubCategory;
+    var URL = getBaseURL() + '/Stores/GetItemMaster?ItemGroup=' + ItemGroup + '&ItemCategory=' + ItemCategory + '&ItemSubCategory=' + ItemSubCategory;
     $("#jqgItemtoBusinessStores").jqGrid('GridUnload');
     $("#jqgItemtoBusinessStores").jqGrid({
-        //url: URL,
-        url:'',
+        url: URL,
         mtype: 'Post',
-        datatype: 'local',
+        datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.ItemCode, localization.Skucode, localization.SkuId, localization.ItemDescription, localization.UnitOfMeasure, localization.PackUnit, localization.PackUnitDesc, localization.PackSize, localization.InventoryClass, localization.ItemClass, localization.ItemSource, localization.ItemCriticality, localization.BarcodeID, localization.Active, localization.Actions],
@@ -208,8 +185,6 @@ function fnGridLoadItemtoBusinessStores() {
         },
     }).jqGrid('navGrid', '#jqpItemtoBusinessStores', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpItemtoBusinessStores', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid('#jqgItemtoBusinessStores')
-    }).jqGrid('navButtonAdd', '#jqpItemtoBusinessStores', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnGridAddItemtoBusinessStores
     });
 }
 
@@ -217,41 +192,11 @@ function SetGridControlByAction() {
     if (_userFormRole.IsInsert === false) {
         $('#jqgAdd').addClass('ui-state-disabled');
     }
-
 }
-
-
-function fnGridAddItemtoBusinessStores() {
-    fnClearFields();
-
-    //if ($("#cboItemGroup").val() === "0" || $("#cboItemGroup").val() === "") {
-    //    fnAlert("w", "EMI_02_00", "UI0147", errorMsg.ItemGroup_E6);
-    //    $('#cboItemGroup').focus();
-    //    return false;
-    //}
-    //if ($("#cboItemCategory").val() === "0" || $("#cboItemCategory").val() === "") {
-    //    fnAlert("w", "EMI_02_00", "UI0148", errorMsg.ItemCategory_E7);
-    //    $('#cboItemCategory').focus();
-    //    return false;
-    //}
-    //if (_isSubCategoryApplicable == 1 && ($("#cboItemSubCategory").val() === "0" || $("#cboItemSubCategory").val() === "")) {
-    //    fnAlert("w", "EMI_02_00", "UI0149", errorMsg.ItemSubCategory_E8);
-    //    $('#cboItemSubCategory').focus();
-    //    return false;
-    //}
-    fnLoadGridStoreBusinessLink();
-    $("#btnSaveItem").html(localization.Save);
-    $('#PopupItemtoBusinessStores').modal('show');
-    $('#PopupItemtoBusinessStores').find('.modal-title').text(localization.AddItem);
-    $("input[type=checkbox]").attr('disabled', false);
-    fnLoadPortfolioStoreBusinessLinkGrid()
-    $("#PopupItemtoBusinessStores").on('hidden.bs.modal', function () {
-        $("input[type=checkbox]").attr('disabled', true);
-    });
-}
-
 
 function fnEditItemtoBusinessStores(e) {
+    fnClearFields();
+    fnRefreshGridData();
     var rowid = $("#jqgItemtoBusinessStores").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgItemtoBusinessStores').jqGrid('getRowData', rowid);
 
@@ -261,8 +206,14 @@ function fnEditItemtoBusinessStores(e) {
     }
     $('#PopupItemtoBusinessStores').find('.modal-title').text(localization.EditItem);
     $('#PopupItemtoBusinessStores').modal('show');
+
+    $('#txtItemCode').val(rowData.ItemCode);
+    fnLoadBusinessTree();
 }
+
 function fnViewItemtoBusinessStores(e) {
+    fnClearFields();
+    fnRefreshGridData();
     var rowid = $("#jqgItemtoBusinessStores").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgItemtoBusinessStores').jqGrid('getRowData', rowid);
 
@@ -273,56 +224,90 @@ function fnViewItemtoBusinessStores(e) {
     $('#PopupItemtoBusinessStores').modal('show');
     $('#PopupItemtoBusinessStores').find('.modal-title').text(localization.ViewItem);
     $('#PopupItemtoBusinessStores').modal('show');
-}
-function fnClearFields() {
-    $("#txtItemCode").val('');
-    $("#txtSkuCode").val('');
-    $("#txtSkuId").val('');
-    $('#txtItemDescription').val('');
-    $('#cboUnitOfMeasure').val('');
-    $('#cboUnitOfMeasure').selectpicker('refresh');
-    $('#txtPackSize').val('');
-    $('#cboInventoryClass').val('');
-    $('#cboInventoryClass').selectpicker('refresh');
-    $('#cboItemClass').val('');
-    $('#cboItemClass').selectpicker('refresh');
-    $('#cboItemSource').val('');
-    $('#cboItemSource').selectpicker('refresh');
-    $('#cboItemCriticality').val('');
-    $('#cboItemCriticality').selectpicker('refresh');
-    $('#txtBarCodeID').val('');
-    $("#chkActiveStatus").parent().addClass("is-checked");
-    //eSyaParams.ClearValue();
+
+    $('#txtItemCode').val(rowData.ItemCode);
+    fnLoadBusinessTree();
+    $("#btnSaveItem").hide();
 }
 
+function fnLoadBusinessTree() {
+    $("#jstBusinessLocation").jstree('destroy');
 
-function fnLoadGridStoreBusinessLink() {
+    $.ajax({
+        url: getBaseURL() + '/Stores/GetAllBusinessLocations',
+        type: 'Post',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            $("#jstBusinessLocation").jstree('destroy');
+            $("#jstBusinessLocation").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstBusinessLocation");
+            $('#jstBusinessLocation').css('display', 'block');
 
+            $(window).on('resize', function () {
+                fnTreeSize("#jstBusinessLocation");
+            })
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#dvBusinessDocument").css('display', 'none');
+        }
+    });
+
+    $("#jstBusinessLocation").on('loaded.jstree', function () {
+        $("#jstBusinessLocation").jstree()._open_to(prevSelectedID);
+        $('#jstBusinessLocation').jstree().select_node(prevSelectedID);
+    });
+
+    $('#jstBusinessLocation').on("changed.jstree", function (e, data) {
+
+        if (data.node != undefined) {
+            if (prevSelectedID != data.node.id) {
+                prevSelectedID = data.node.id;
+
+                var parentNode = $("#jstBusinessLocation").jstree(true).get_parent(data.node.id);
+
+                if (parentNode == "FM") {
+
+                    businesskey = data.node.id;
+                    fnLoadGridStoreBusinessLink(businesskey);
+                    fnRefreshGridData();
+                }
+                else {
+                    $("#dvBusinessDocument").css('display', 'none');
+                }
+
+            }
+        }
+    });
+    $('#jstBusinessLocation').on("close_node.jstree", function (node) {
+        var closingNode = node.handleObj.handler.arguments[1].node;
+        $('#jstBusinessLocation').jstree().deselect_node(closingNode.children);
+    });
+}
+
+function fnLoadGridStoreBusinessLink(businesskey) {
+    var ItemCode = $("#txtItemCode").val();
+    var URL = getBaseURL() + '/Stores/GetBusinessItemStoreLink?BusinessKey=' + businesskey + '&ItemCode=' + ItemCode;
     $("#jqgLinkedStores").GridUnload();
     $("#jqgLinkedStores").jqGrid(
 
         {
-            url: '',
-            //url: getBaseURL() + "/Stores/GetPortfolioStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
-            datatype: 'local',
-            mtype: 'POST',
+            url: URL,
+            mtype: 'Post',
+            datatype: 'json',
             contentType: 'application/json; charset=utf-8',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-            colNames: [localization.BusinessKey, localization.StoreID, localization.StoreDescription, localization.Active,localization.Actions],
+            colNames: [localization.BusinessKey, localization.ItemCode, localization.StoreCode, localization.StoreDesc, localization.Active],
             colModel: [
                 { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
-                { name: "StoreID", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "ItemCode", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "StoreCode", width: 70, editable: true, align: 'left', hidden: true },
                 { name: 'StoreDesc', width: 170, resizable: false },
                 {
-                    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
-                    formatter: "checkbox", formatoptions: { disabled: true },
+                    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center', editable: true,
+                    formatter: "checkbox", formatoptions: { disabled: false },
                     edittype: "checkbox", editoptions: { value: "true:false" }
-                },
-                {
-                    name: 'edit', search: false, align: 'left', width: 80, sortable: false, resizable: false,
-                    formatter: function (cellValue, options, rowdata, action) {
-                        return '<button class="mr-1 btn btn-outline" id="btnStores"><i class="fa fa-ellipsis-v"></i></button>'
-                    }
                 },
             ],
             rowNum: 100000,
@@ -342,6 +327,7 @@ function fnLoadGridStoreBusinessLink() {
             scroll: false, scrollOffset: 0,
             caption: localization.LinkedStores,
             onSelectRow: function (rowid) {
+                fnLoadPortfolioStoreBusinessLinkGrid();
             },
             loadComplete: function (data) {
 
@@ -351,75 +337,131 @@ function fnLoadGridStoreBusinessLink() {
         .jqGrid('navButtonAdd', '#jqpLinkedStores', {
             caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqpLinkedStores")
         })
-    fnAddGridSerialNoHeading();
- }
+}
 
-function fnEditStores(e) {
-    var rowid = $("#jqgLinkedStores").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqgLinkedStores').jqGrid('getRowData', rowid);
-}
-function fnViewStores(e) {
-    var rowid = $("#jqgLinkedStores").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqgLinkedStores').jqGrid('getRowData', rowid);
-}
 function fnLoadPortfolioStoreBusinessLinkGrid() {
+    var rowid = $("#jqgLinkedStores").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgLinkedStores').jqGrid('getRowData', rowid);
+    $('#txtStoreCode').val(rowData.StoreCode);
+    var StoreCode = $("#txtStoreCode").val();
+    var URL = getBaseURL() + '/Stores/GetPortfolioStoreInfo?BusinessKey=' + businesskey + '&StoreCode=' + StoreCode;
 
     $("#jqgPortfolioLink").GridUnload();
-
-       $("#jqgPortfolioLink").jqGrid(
-
-            {
-                url: '',
-                //url: getBaseURL() + "/Stores/GetPortfolioStoreBusinessLinkInfo?BusinessKey=" + $("#cboBusinessLocation").val() + "&StoreCode=" + $("#txtStoreCode").val(),
-                datatype: 'local',
-                mtype: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-                colNames: [localization.PortfolioId, localization.PortfolioDescription, localization.Active],
-                colModel: [
-                    { name: "PortfolioId", width: 70, editable: true, align: 'left', hidden: true },
-                    { name: 'PortfolioDesc', index: 'StoreClassDescription', width: 270, resizable: false },
-                    {
-                        name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
-                        formatter: "checkbox", formatoptions: { disabled: true },
-                        edittype: "checkbox", editoptions: { value: "true:false" }
-                    },
-                ],
-                rowNum: 100000,
-                pgtext: null,
-                pgbuttons: null,
-                loadonce: true,
-                rownumWidth:'55',
-                pager: "#jqpPortfolioLink",
-                viewrecords: false,
-                gridview: true,
-                rownumbers: true,
-                height: 'auto',
-                width: 'auto',
-                autowidth: true,
-                shrinkToFit: true,
-                forceFit: true,
-                scroll: false, scrollOffset: 0,
-                caption: localization.PortfolioLink,
-                onSelectRow: function (rowid) {
-                    //BusinessKey = $("#jqgBusinessLink").jqGrid('getCell', rowid, 'BusinessKey');
-
+    $("#jqgPortfolioLink").jqGrid(
+        {
+            url: URL,
+            mtype: 'Post',
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            colNames: [localization.PortfolioId, localization.PortfolioDescription, localization.Active],
+            colModel: [
+                { name: "PortfolioId", width: 70, editable: true, align: 'left', hidden: true },
+                { name: 'PortfolioDesc', width: 270, resizable: false },
+                {
+                    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
+                    formatter: "checkbox", formatoptions: { disabled: true },
+                    edittype: "checkbox", editoptions: { value: "true:false" }
                 },
-                loadComplete: function (data) {
-                    
-                },
-            })
+            ],
+            rowNum: 100000,
+            pgtext: null,
+            pgbuttons: null,
+            loadonce: true,
+            rownumWidth: '55',
+            pager: "#jqpPortfolioLink",
+            viewrecords: false,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            scroll: false, scrollOffset: 0,
+            caption: localization.PortfolioLink,
+            onSelectRow: function (rowid) {
 
-            .jqGrid('navGrid', '#jqpPortfolioLink', { add: false, edit: false, search: false, del: false, refresh: false })
-            .jqGrid('navButtonAdd', '#jqpPortfolioLink', {
-                caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqgPortfolioLink")
-            });
-        fnAddGridSerialNoHeading();
-   
+            },
+            loadComplete: function (data) {
+
+            },
+        })
+
+        .jqGrid('navGrid', '#jqpPortfolioLink', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpPortfolioLink', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqgPortfolioLink")
+        });
+}
+
+function fnSaveBusinessItemStoreLink() {
+    if (IsStringNullorEmpty(businesskey) || businesskey == '0') {
+
+        fnAlert("w", "EDC_02_00", "UI0064", errorMsg.Location_E1);
+        return;
+    }
+    if ($("#txtItemCode").val().trim().length <= 0) {
+        fnAlert("w", "EMI_01_00", "UI0150", errorMsg.ItemDesc_E9);
+        return;
+    }
+
+    var r_doc = [];
+    var ids = jQuery("#jqgLinkedStores").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgLinkedStores').jqGrid('getRowData', rowId);
+
+        r_doc.push({
+            BusinessKey: rowData.BusinessKey,
+            ItemCode: rowData.ItemCode,
+            StoreCode: rowData.StoreCode,
+            ActiveStatus: rowData.ActiveStatus
+        });
+    }
+
+    if (r_doc.length <= 0) {
+        fnAlert("w", "EDC_02_00", "UI0308", errorMsg.Documentcontrol_E3);
+        return;
+    }
+
+    $("#btnSaveItem").attr('disabled', true);
+
+    $("#btnSaveItem").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Stores/InsertOrUpdateBusinessItemStoreLink',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: r_doc },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSaveItem").attr('disabled', false);
+                fnRefreshGridData();
+                $('#btnSaveItem').modal('hide');
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnSaveItem").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveItem").attr("disabled", false);
+        }
+    });
+}
+
+function fnClearFields() {
+    $("#txtItemCode").val('');
+    $("#txtStoreCode").val('');
+}
+
+function fnRefreshGridData() {
+    $("#jqgLinkedStores").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#jqgLinkedStores").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
 function fnRefreshGrid(id) {
     $(id).setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
- 
