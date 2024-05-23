@@ -134,7 +134,12 @@
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]'
     }
-
+    var errorMsg_bl={
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        CreateDoctorProfile_E4: '@Localizer["UI0314"]',
+    }
 </script>
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 <link href="~/css/Common/masterCodes.css" rel="stylesheet" />
@@ -145,6 +150,16 @@
 @section scripts{
     <script src="~/js/bootstrap-timepicker.js"></script>
     <script src="~/js/ServiceProvider/DoctorProfile.js"></script>
+    <script src="~/js/ServiceProvider/AboutDoctor.js"></script>
+    <script src="~/js/ServiceProvider/PhotoAndSignature.js"></script>
+    <script src="~/js/ServiceProvider/Address.js"></script>
+    <script src="~/js/ServiceProvider/StatutoryDetails.js"></script>
+    <script src="~/js/ServiceProvider/BusinessLink.js"></script>
+    <script src="~/js/ServiceProvider/SpecialtyLink.js"></script>
+    <script src="~/js/ServiceProvider/ClinicLink.js"></script>
+    
+   
+    
 }
 <script>
 
@@ -284,3 +299,76 @@
                     }
                 }
             </script>
+
+
+<div class="modal fade in" id="PopupConsulationRates" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddConsulationRates"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="txtClinicType">@Localizer["ClinicType"] </label>
+                            <input class="form-control" type="text" maxlength="8" id="txtClinicType" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row padbot4">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="txtConsultationType"> @Localizer["ConsultationType"]</label>
+                            <input id="txtConsultationType" class="form-control" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="txtServiceDescription"> @Localizer["ServiceDescription"]</label>
+                            <textarea id="txtServiceDescription" class="form-control" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <div>
+                                <label for="txtEFFRate">@Localizer["EFFRate"] </label>
+                                <input id="txtEFFRate" class="form-control" maxlength="50" type="text" />
+                            </div>
+                        </div>
+                    </div><div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtTariff">@Localizer["Tariff"] </label>
+                            <input id="txtTariff" class="form-control" maxlength="50" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="mdl-button primary-button" id="btnSaveConsulationRates">
+                            <i class="fa fa-save"></i> @Localizer[" Save "]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="btnCancelConsulationRates">
+                            <i class="fa fa-times"></i> @Localizer["Cancel"]
+                        </button>
+                        @*<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveConsulationRates">
+                        <i class="fa fa-times"></i> @Localizer["DeActivate"]
+                        </button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    

@@ -1,6 +1,8 @@
 ﻿var RuleID = "0";
 var ProcessID = "0";
 var prevSelectedID = '';
+var _IsEditClicked = '';
+var _IsViewClicked = '';
 $(document).ready(function () {
     fnLoadServiceBusinessLocationTree();
     $('#chkActiveStatus').parent().addClass("is-checked");
@@ -74,7 +76,7 @@ function fnLoadServiceBusinessLocationTree() {
 
                         fnFillGridMappedRuleswithLocation(ProcessID, RuleID);
                         $("#dvMapRuleWithLocation").css('display', 'block');
-
+                        _IsViewClicked = 1; _IsEditClicked = 0;
 
                     });
 
@@ -92,7 +94,7 @@ function fnLoadServiceBusinessLocationTree() {
 
                         fnFillGridMappedRuleswithLocation(ProcessID, RuleID);
                         $("#dvMapRuleWithLocation").css('display', 'block');
-
+                        _IsViewClicked = 0; _IsEditClicked = 1;
 
                     });
 
@@ -111,11 +113,11 @@ function fnLoadServiceBusinessLocationTree() {
 function fnSaveRuleswithLocations() {
 
     if (ProcessID == "0" || ProcessID == null || ProcessID == undefined) {
-        fnAlert("w", "ECB_07_00", "UI0072", errorMsg.ProcessId_E4);
+        fnAlert("w", "ECB_05_00", "UI0072", errorMsg.ProcessId_E4);
         return;
     }
     if (RuleID == "0" || RuleID == null || RuleID == undefined) {
-        fnAlert("w", "ECB_07_00", "UI0075", errorMsg.RuleID_E15);
+        fnAlert("w", "ECB_05_00", "UI0075", errorMsg.RuleID_E15);
         return;
     }
 
@@ -184,8 +186,8 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
         colModel: [
 
             { name: "BusinessKey", width: 180, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "LocationDescription", width: 500, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "ActiveStatus", width: 120, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "LocationDescription", width: 250, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "ActiveStatus", width: 80, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         pager: "#jqpMapRuleswithLocation",
         rowNum: 10,
@@ -204,11 +206,20 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
         caption: localization.MapRuleswithLocation,
         loadComplete: function (data) {
             fnJqgridSmallScreen("jqgMapRuleswithLocation");
-        },
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 
+        },
+        rowattr: function (data) {
+            if (_IsViewClicked == 1) {
+                if ((data.ActiveStatus == false) || (data.ActiveStatus == true)) {
+                    return { "class": "ui-state-disabled" };
+                }
+            }
+        },
         onSelectRow: function (id) {
             if (id) { $('#jqgMapRuleswithLocation').jqGrid('editRow', id, true); }
         },
 
     }).jqGrid('navGrid', '#jqpMapRuleswithLocation', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' });
+    fnAddGridSerialNoHeading();
 }
