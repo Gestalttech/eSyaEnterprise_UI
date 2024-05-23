@@ -310,6 +310,8 @@
   "UI0309": "There is no Restricted Specialties for Selected Patient Type and Category",
   "UI0310": "There is no Document Submission required for Selected Patient Type and Category",
   "UI0311": "There is no Service Type wise Rate Type for Selected Patient Type and Category",
+  "UI0312": "Please Select a Method Of Administration",
+  "UI0313": "Please enter the Method Of Volume",
 
 
 

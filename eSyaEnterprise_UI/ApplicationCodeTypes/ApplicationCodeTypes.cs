@@ -59,6 +59,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
         //public const int TherapueticClass = 202; changed to getting  from Master
         public const int PharmacyGroup = 203;
+        public const int DrugForms = 204;
+        public const int MethodOfAdministration = 205;
         //public const int PharmacyGroup = 1;
         #endregion
 
