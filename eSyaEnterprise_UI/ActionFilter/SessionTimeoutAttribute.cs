@@ -36,6 +36,11 @@ namespace eSyaEnterprise_UI.ActionFilter
                 context.Result = new RedirectResult("~/Account/Logout");
                 return;
             }
+            //if (AppSessionVariables.GetCurrentSessionUserID(context.HttpContext) == 0)
+            //{
+            //    context.Result = new RedirectResult("~/Account/Logout");
+            //    return;
+            //}
             base.OnActionExecuting(context);
         }
     }

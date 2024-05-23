@@ -15,6 +15,7 @@ using eSyaEnterprise_UI.Areas.ConfigPharma.Models;
 
 namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 {
+    [SessionTimeout]
     public class VendorController : Controller
     {
         private readonly IeSyaConfigPharmaAPIServices _eSyapharmaAPIServices;
