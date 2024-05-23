@@ -197,6 +197,8 @@ function SetGridControlByAction() {
 function fnEditItemtoBusinessStores(e) {
     fnClearFields();
     fnRefreshGridData();
+    $("#jqgLinkedStores").hide();
+    $("#jqgPortfolioLink").hide();
     var rowid = $("#jqgItemtoBusinessStores").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgItemtoBusinessStores').jqGrid('getRowData', rowid);
 
@@ -214,6 +216,8 @@ function fnEditItemtoBusinessStores(e) {
 function fnViewItemtoBusinessStores(e) {
     fnClearFields();
     fnRefreshGridData();
+    $("#jqgLinkedStores").hide();
+    $("#jqgPortfolioLink").hide();
     var rowid = $("#jqgItemtoBusinessStores").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgItemtoBusinessStores').jqGrid('getRowData', rowid);
 
@@ -270,8 +274,8 @@ function fnLoadBusinessTree() {
                 if (parentNode == "FM") {
 
                     businesskey = data.node.id;
+                    $("#jqgLinkedStores").show();
                     fnLoadGridStoreBusinessLink(businesskey);
-                    fnRefreshGridData();
                 }
                 else {
                     $("#dvBusinessDocument").css('display', 'none');
@@ -327,6 +331,7 @@ function fnLoadGridStoreBusinessLink(businesskey) {
             scroll: false, scrollOffset: 0,
             caption: localization.LinkedStores,
             onSelectRow: function (rowid) {
+                $("#jqgPortfolioLink").show();
                 fnLoadPortfolioStoreBusinessLinkGrid();
             },
             loadComplete: function (data) {
