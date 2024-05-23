@@ -68,34 +68,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
         }
 
-        /// <summary>
-        /// Getting Composition List By Prefix
-        /// </summary>
-        [HttpGet]
-        public async Task<JsonResult> GetCompositionByPrefix(string prefix)
-        {
-            try
-            {
-                var parameter = "?prefix=" + prefix;
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("DrugComposition/GetCompositionByPrefix" + parameter);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetCompositionByPrefix :For prefix {0} ", prefix);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+      
 
         /// <summary>
         /// Getting Composition List For tree
         /// </summary>
         [HttpGet]
-        public async Task<ActionResult> GetCompositionForTree(string prefix)
+        public async Task<ActionResult> GetActiveCompositionforTreeview(string prefix)
         {
             try
             {
@@ -110,7 +89,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 treeView.Add(jsObj);
 
                 var parameter = "?prefix=" + prefix;
-                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("DrugComposition/GetCompositionByPrefix" + parameter);
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_Composition>>("DrugFormulation/GetActiveCompositionforTreeview" + parameter);
 
                 if (serviceResponse.Status)
                 {
@@ -130,23 +109,67 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCompositionForTree :For prefix {0} ", prefix);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActiveCompositionforTreeview :For prefix {0} ", prefix);
                 }
 
                 return Json(treeView);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetCompositionForTree :For prefix {0} ", prefix);
+                _logger.LogError(ex, "UD:GetActiveCompositionforTreeview :For prefix {0} ", prefix);
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
+        /// <summary>
+        /// Getting Composition By ID
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetDrugFormulationInfobyCompositionID(int composId)
+        {
+            try
+            {
+                var parameter = "?composId=" + composId;
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugFormulation>>("DrugFormulation/GetDrugFormulationInfobyCompositionID" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDrugFormulationInfobyCompositionID :For composId {0} ", composId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
 
         /// <summary>
+        /// Getting Composition By ID
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetDrugFormulationParamsbyFormulationID(int composId, int formulationId)
+        {
+            try
+            {
+                var parameter = "?composId=" + composId + "&formulationId="+ formulationId;
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<DO_DrugFormulation>("DrugFormulation/GetDrugFormulationParamsbyFormulationID" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDrugFormulationInfobyCompositionID :For composId {0} ", composId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        /// <summary>
         /// Insert Formulation
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateFormulation(DO_DrugFormulation obj)
+        public async Task<JsonResult> InsertOrUpdateDrugFormulation(DO_DrugFormulation obj)
         {
 
             try
@@ -156,23 +179,23 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 if (obj.FormulationId == 0)
                 {
-                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugFormulation/InsertFormulation", obj);
+                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugFormulation/InsertIntoDrugFormulation", obj);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateFormulation:params:" + JsonConvert.SerializeObject(obj));
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateDrugFormulation:params:" + JsonConvert.SerializeObject(obj));
                         return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                     }
                 }
                 else
                 {
-                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugFormulation/UpdateFormulation", obj);
+                    var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugFormulation/UpdateDrugFormulation", obj);
                     if (serviceResponse.Status)
                         return Json(serviceResponse.Data);
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateFormulation:params:" + JsonConvert.SerializeObject(obj));
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateDrugFormulation:params:" + JsonConvert.SerializeObject(obj));
                         return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                     }
                 }
@@ -181,7 +204,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:AddOrUpdateFormulation:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:InsertOrUpdateDrugFormulation:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }

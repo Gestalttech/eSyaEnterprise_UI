@@ -37,11 +37,15 @@
                         }
                         @if (p.ParameterValueType == "V")
                         {
-                            <input id='ParamValue_@(p.ParameterId)' class="form-control integerFormat" />
+                            <input id='ParamValue_@(p.ParameterId)' class="form-control numberonly" />
                         }
                         @if (p.ParameterValueType == "T")
                         {
                             <input id='ParamValue_@(p.ParameterId)' class="form-control" />
+                        }
+                        @if (p.ParameterValueType == "D")
+                        {
+                            <input id='ParamValue_@(p.ParameterId)' class="form-control" name="alphanumeric" />
                         }
                     </td>
                 </tr>
@@ -128,6 +132,7 @@
             },
 
             GetJSONValue: function (result) {
+                debugger;
                 var fmParams = [];
                 $.each(eSyaParams.GetValue(), function (key, value) {
                     fmParams.push({

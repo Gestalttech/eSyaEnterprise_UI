@@ -42,6 +42,12 @@
         ViewFormulation: '@Localizer["ViewFormulation"]',
         EditFormulation: '@Localizer["EditFormulation"]',
         DrugFormulation: '@Localizer["DrugFormulation"]',
+        FormulationDesc: '@Localizer["FormulationDescription"]',
+        DrugForm: '@Localizer["DrugForm"]',
+        DrugFormDesc: '@Localizer["DrugFormDescription"]',
+        Volume: '@Localizer["Volume"]',
+        MethodOfAdministration: '@Localizer["MethodOfAdministration"]',
+        MethodOfAdministrationDesc: '@Localizer["MethodOfAdministrationDesc"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -160,32 +166,39 @@
                 <div class="row">
                     <div class="col-lg-12 collapse">
                         <div class="form-group">
-                            <label for="txtCompositionId"> @Localizer["CompositionId"]</label>
-                            <input id="txtCompositionId" class="form-control" maxlength="10" type="text" />
+                            <label for="txtFormulationId"> @Localizer["CompositionId"]</label>
+                            <input id="txtFormulationId" class="form-control" maxlength="10" type="text" />
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtFormulationDesc"> @Localizer["FormulationDesc"]</label>
+                            <input id="txtFormulationDesc" class="form-control" maxlength="100" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label> @Localizer["FormsList"] </label>
-                            <select class="selectpicker" data-live-search="true" id="cboFormsList" title="Select" data-size="8" asp-items="@ViewBag.DrugFormsList" onchange="fnGetDrugFormsList()">
+                            <select class="selectpicker" data-live-search="true" id="cboDrugForms" title="Select" data-container="body" data-size="5" asp-items="@ViewBag.DrugFormsList">
                                 <option value="0"> Select</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label> @Localizer["MethodOfAdministration"] </label>
-                            <select class="selectpicker" data-live-search="true" id="cboMethodOfAdministration" title="Select" data-size="8" asp-items="@ViewBag.MethodOfAdministrationList" onchange="fnGetMethodOfAdministration()">
+                            <select class="selectpicker" data-live-search="true" id="cboMethodOfAdministration" data-container="body" title="Select" data-size="5" asp-items="@ViewBag.MethodOfAdministrationList">
                                 <option value="0"> Select</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label for="txtVolume"> @Localizer["Volume"]</label>
-                            <input type="text" id="txtVolume" class="form-control numberonly" maxlength="5" />
+                            <input type="text" id="txtVolume" class="form-control" maxlength="10" />
                         </div>
                     </div>
+
                     <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12">
                         <div class="default-checkbox padbot15">
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
@@ -194,11 +207,12 @@
                             </label>
                         </div>
                     </div>
-
+                </div>
+                <div class="row">
                     <div class="col-lg-6 col-6 col-sm-6">
-                        <p class="subheading">@Localizer["Parametertable"]</p>
+                        <p class="subheading">@Localizer["DrugFormulationParameters"]</p>
                         <hr class="left" />
-                        @await Component.InvokeAsync("eSyaParameterType", new { parameterType = "28", id = "TreeParam" })
+                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "28" })
                     </div>
                 </div>
             </div>

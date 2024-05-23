@@ -196,12 +196,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
                             return true;
                         });
 
-                        int defaultlang = businessentity.l_Preferredlang.Where(x => x.DefaultLanguage).Count();
+                        //int defaultlang = businessentity.l_Preferredlang.Where(x => x.DefaultLanguage).Count();
 
-                        if (defaultlang > 1)
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Defalt Language should not be more than one Language" });
-                        }
+                        //if (defaultlang > 1)
+                        //{
+                        //    return Json(new DO_ReturnParameter() { Status = false, Message = "Defalt Language should not be more than one Language" });
+                        //}
 
                     }
                     businessentity.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
