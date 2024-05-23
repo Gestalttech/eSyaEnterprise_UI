@@ -18,6 +18,7 @@ using System.Reflection.Emit;
 
 namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 {
+    [SessionTimeout]
     public class CompositionController : Controller
     {
         private readonly IeSyaConfigPharmaAPIServices _eSyapharmaAPIServices;
