@@ -182,12 +182,12 @@ function fnSaveDoctorConsultationRate() {
                 $("#jqgConsultationRates").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
             }
             $("#btnSaveDoctorConsultationRate").attr("disabled", false);
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveDoctorConsultationRate").attr("disabled", false);
         }
     });

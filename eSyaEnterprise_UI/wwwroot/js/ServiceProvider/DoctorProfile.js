@@ -280,7 +280,7 @@ function fnGetDoctorMasterProfile(data) {
 
             },
             error: function (error) {
-                toastr.error(error.statusText);
+                fnAlert("e", "", response.StatusCode, response.Message);;
 
             }
         });
@@ -359,58 +359,54 @@ function fnSaveDoctorProfile() {
     //var file = '';
 
     if (IsStringNullorEmpty($('#txtDoctorShortName').val())) {
-        toastr.warning("Please Enter the Doctor Short Name");
-        $('#txtDoctorShortName').focus();
+        fnAlert("w", "ESP_01_00", "UI0315", errorMsg_dp.doctorshortname_E1);
+        document.getElementById("txtDoctorShortName").focus();
         return;
     }
     if (IsStringNullorEmpty($('#txtDoctorName').val())) {
-        toastr.warning("Please Enter the Doctor Name");
-        $('#txtDoctorName').focus();
+        fnAlert("w", "ESP_01_00", "UI0316", errorMsg_dp.doctorName_E2);
+        document.getElementById('txtDoctorName').focus();
         return;
     }
     if (IsStringNullorEmpty($('#cboGender').val())) {
-        toastr.warning("Please Select a Gender");
-        $('#cboGender').focus();
+        fnAlert("w", "ESP_01_00", "UI0125", errorMsg_dp.Gender_E3);
+        document.getElementById("cboGender").focus();
         return;
     }
     if (IsStringNullorEmpty($('#txtDoctorRegnNo').val())) {
-        toastr.warning("Please Enter the Doctor Registration Number");
-        $('#txtDoctorRegnNo').focus();
+        fnAlert("w", "ESP_01_00", "UI0317", errorMsg_dp.DoctorRegisterNo_E4);
+        document.getElementById("txtDoctorRegnNo").focus();
         return;
     }
 
-
     if (IsStringNullorEmpty($('#cboDoctorMobile').val())) {
-        toastr.warning("Please Select a ISD Code");
-        $('#cboISDCode').focus();
+        fnAlert("w", "ESP_01_00", "UI0056", errorMsg_dp.ISDCode_E5);
+        document.getElementById("cboDoctorMobile").focus();
         return;
     }
     if (IsStringNullorEmpty($('#txtDoctorMobile').val())) {
-        toastr.warning("Please Enter the Mobile Number");
-        $('#txtMobileNumber').focus();
+        fnAlert("w", "ESP_01_00", "UI0111", errorMsg_dp.MobileNo_E6);
+        document.getElementById('txtMobileNumber').focus();
         return;
     }
     if (IsStringNullorEmpty($('#cboDoctorClass').val())) {
-        toastr.warning("Please Select a Doctor Class");
-        $('#cboDoctorClass').focus();
+        fnAlert("w", "ESP_01_00", "UI0318", errorMsg_dp.DoctorClass_E7);
+        document.getElementById('cboDoctorClass').focus();
         return;
     }
     if (IsStringNullorEmpty($('#cboDoctorCategory').val())) {
-        toastr.warning("Please Select a Doctor Category");
-        $('#cboDoctorCategory').focus();
+        fnAlert("w", "ESP_01_00", "UI0319", errorMsg_dp.DoctorCategory_E8);
+        document.getElementById('cboDoctorCategory').focus();
         return;
     }
-    //if (IsStringNullorEmpty($('#cboPayoutType').val())) {
-    //    toastr.warning("Please Select a Payout Type");
-    //    $('#cboPayoutType').focus();
-    //    return;
-    //}
+   
     if (IsStringNullorEmpty($('#cboTraiffFrom').val())) {
-        toastr.warning("Please Select a Tariff From");
-        $('#cboTraiffFrom').focus();
+        fnAlert("w", "ESP_01_00", "UI0320", errorMsg_dp.TariffFrom_E9);
+       $('#cboTraiffFrom').focus();
         return;
     }
     if (IsStringNullorEmpty($('#cboSeniorityLevel').val())) {
+        fnAlert("w", "ESP_01_00", "",);
         toastr.warning("Please Select a Seniority Level");
         $('#cboSeniorityLevel').focus();
         return;
@@ -418,6 +414,7 @@ function fnSaveDoctorProfile() {
 
 
     if (IsStringNullorEmpty($("#cboDoctorMobile").val()) || $("#cboDoctorMobile").val() <= 0) {
+        fnAlert("w", "ESP_01_00", "",);
         toastr.warning("Please Select a ISD");
         $('#cboDoctorMobile').focus();
         return;
@@ -425,6 +422,7 @@ function fnSaveDoctorProfile() {
 
 
     if ($("#txtDoctorMobile").inputmask("isComplete") === false) {
+        fnAlert("w", "ESP_01_00", "",);
         toastr.warning("Please Enter the mobile no.");
         $('#txtDoctorMobile').focus();
         return;
@@ -482,23 +480,23 @@ function fnSaveDoctorProfile() {
         success: function (response) {
             if (response !== null) {
                 if (response.Status) {
-                    toastr.success(response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
                     $('#txtDoctorId').val(response.ID);
                     $('#hdDoctorName').html($('#txtDoctorName').val());
                     $("#btnSaveDoctorProfile").attr('disabled', false);
                 }
                 else {
-                    toastr.error(response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                     $("#btnSaveDoctorProfile").attr('disabled', false);
                 }
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnSaveDoctorProfile").attr('disabled', false);
             }
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveDoctorProfile").attr("disabled", false);
         }
     });
@@ -645,11 +643,11 @@ function fnCloseDoctorProfile() {
 //                    success: function (response) {
 
 //                        if (response.Status) {
-//                            toastr.success(response.Message);
+//                            fnAlert("s", "", response.StatusCode, response.Message);
 //                            fnGridRefreshDoctorProfile();
 //                        }
 //                        else {
-//                            toastr.error(response.Message);
+//                            fnAlert("e", "", response.StatusCode, response.Message);
 //                        }
 //                        fnGridRefreshDoctorProfile();
 //                    },
@@ -676,7 +674,7 @@ function fnLoadDoctorParameters() {
             }
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", response.StatusCode, response.Message);;
         }
     });
 

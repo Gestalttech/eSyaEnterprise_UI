@@ -18,7 +18,7 @@
 
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
 
         }
     });
@@ -126,21 +126,21 @@ function fnSaveDoctorAboutDetails() {
         success: function (response) {
             if (response !== null) {
                 if (response.Status) {
-                    toastr.success(response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
                     $("#btnSaveAboutDoctor").attr('disabled', false);
                 }
                 else {
-                    toastr.error(response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                     $("#btnSaveAboutDoctor").attr('disabled', false);
                 }
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnSaveAboutDoctor").attr('disabled', false);
             }
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", response.StatusCode, response.Message);;
             $("#btnSaveAboutDoctor").attr("disabled", false);
         }
     });

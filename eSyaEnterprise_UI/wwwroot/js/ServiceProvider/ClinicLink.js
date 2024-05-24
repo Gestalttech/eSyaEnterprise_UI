@@ -27,7 +27,7 @@
 
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
 
         }
     });

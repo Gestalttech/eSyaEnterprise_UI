@@ -134,6 +134,24 @@
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]'
     }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+    }
+
+    var errorMsg_dp = {
+        doctorshortname_E1: '@Localizer["UI0315"]',
+        doctorName_E2: '@Localizer["UI0316"]',
+        Gender_E3: '@Localizer["UI0125"]',
+        DoctorRegisterNo_E4: '@Localizer["UI0317"]',
+        ISDCode_E5: '@Localizer["UI0056"]',
+        MobileNo_E6: '@Localizer["UI0111"]',
+        DoctorClass_E7: '@Localizer["UI0318"]',
+        DoctorCategory_E8: '@Localizer["UI0319"]',
+        TariffFrom_E9: '@Localizer["UI0320"]',
+
+    }
     var errorMsg_bl={
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
@@ -150,17 +168,18 @@
 @section scripts{
     <script src="~/js/bootstrap-timepicker.js"></script>
     <script src="~/js/ServiceProvider/DoctorProfile.js"></script>
-    <script src="~/js/ServiceProvider/AboutDoctor.js"></script>
+    @* <script src="~/js/ServiceProvider/AboutDoctor.js"></script>
     <script src="~/js/ServiceProvider/PhotoAndSignature.js"></script>
     <script src="~/js/ServiceProvider/Address.js"></script>
     <script src="~/js/ServiceProvider/StatutoryDetails.js"></script>
     <script src="~/js/ServiceProvider/BusinessLink.js"></script>
     <script src="~/js/ServiceProvider/SpecialtyLink.js"></script>
     <script src="~/js/ServiceProvider/ClinicLink.js"></script>
-    
-   
-    
-}
+    <script src="~/js/ServiceProvider/ConsultationRates.js"></script> *@
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+    <script src="~/js/tinymce/tinymce.js"></script>
+   }
 <script>
 
     var _cnfISDCode = @Json.Serialize(@Configuration.GetSection("cnf").GetSection("ISDCode").Value);

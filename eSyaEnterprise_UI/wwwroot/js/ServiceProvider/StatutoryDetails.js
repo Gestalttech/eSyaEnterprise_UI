@@ -151,15 +151,15 @@ function fnSaveDoctorStatutoryDetails() {
         success: function (response) {
             if (response.Status === true) {
 
-                toastr.success(response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
                 fnGridRefresh();
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
             }
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveDoctorStatutoryDetails").attr("disabled", false);
         }
     });
