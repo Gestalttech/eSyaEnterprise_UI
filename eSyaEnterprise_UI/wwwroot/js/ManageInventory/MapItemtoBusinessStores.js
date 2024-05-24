@@ -19,6 +19,113 @@ $(document).ready(function () {
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
 });
 
+function fnGetItemDetails() {
+    $('#cboItemGroup').val('');
+    $('#cboItemGroup').selectpicker('refresh');
+    $('#cboItemCategory').val('');
+    $('#cboItemCategory').selectpicker('refresh');
+    $('#cboItemSubCategory').val('');
+    $('#cboItemSubCategory').selectpicker('refresh');
+    $("#jqgItemtoBusinessStores").jqGrid("clearGridData");
+    var ItemCode = $("#cboItemDesc").val();
+
+    var URL = getBaseURL() + '/Stores/GetItemDetails?ItemCode=' + ItemCode
+    $.ajax({
+        type: 'POST',
+        url: URL,
+        success: function (result) {
+            if (result.length > 0) {
+                $("#cboItemGroup").val(result[0]["ItemGroup"]);
+                $("#cboItemGroup").selectpicker('refresh');
+                fnGetItemCategoryByItem(result[0]["ItemCategory"]);
+
+                fnGetItemSubCategoryByItem(result[0]["ItemCategory"], result[0]["ItemSubCategory"]);
+
+                $("#jqgItemtoBusinessStores").jqGrid('GridUnload');
+                $("#jqgItemtoBusinessStores").jqGrid({
+                    url: URL,
+                    mtype: 'Post',
+                    datatype: 'json',
+                    ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+                    jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
+                    colNames: [localization.ItemCode, localization.Skucode, localization.SkuId, localization.ItemDescription, localization.UnitOfMeasure, localization.PackSize, localization.InventoryClass, localization.ItemClass, localization.ItemSource, localization.ItemCriticality, localization.BarcodeID, localization.Active, localization.Actions],
+                    colModel: [
+                        { name: "ItemCode", width: 70, editable: true, align: 'left', hidden: true },
+                        { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
+                        { name: "Skuid", width: 70, editable: true, align: 'left', hidden: true },
+                        { name: "ItemDescription", width: 70, editable: true, align: 'left', hidden: false },
+                        { name: "UnitOfMeasure", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+                        { name: "PackSize", width: 40, editable: true, align: 'left', hidden: false },
+                        { name: "InventoryClass", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+                        { name: "ItemClass", width: 40, editable: true, align: 'left', hidden: false },
+                        { name: "ItemSource", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+                        { name: "ItemCriticality", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+                        { name: "BarCodeID", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+                        { name: "ActiveStatus", editable: false, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+                        {
+                            name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                            formatter: function (cellValue, options, rowdata, action) {
+                                return '<button class="mr-1 btn btn-outline" id="btnItemtoBusinessStores"><i class="fa fa-ellipsis-v"></i></button>'
+                            }
+                        },
+                    ],
+                    pager: "#jqgItemtoBusinessStores",
+                    rowNum: 10,
+                    rowList: [10, 20, 50, 100],
+                    rownumWidth: 55,
+                    loadonce: true,
+                    viewrecords: true,
+                    gridview: true,
+                    rownumbers: true,
+                    height: 'auto',
+                    align: "left",
+                    width: 'auto',
+                    autowidth: true,
+                    shrinkToFit: true,
+                    forceFit: true,
+                    scrollOffset: 0,
+                    caption: localization.ItemMaster,
+                    loadComplete: function (data) {
+                        SetGridControlByAction();
+                    },
+
+                    onSelectRow: function (rowid, status, e) {
+                        var $self = $(this), $target = $(e.target),
+                            p = $self.jqGrid("getGridParam"),
+                            rowData = $self.jqGrid("getLocalRow", rowid),
+                            $td = $target.closest("tr.jqgrow>td"),
+                            iCol = $td.length > 0 ? $td[0].cellIndex : -1,
+                            cmName = iCol >= 0 ? p.colModel[iCol].name : "";
+
+                        switch (cmName) {
+                            case "id":
+                                if ($target.hasClass("myedit")) {
+                                    alert("edit icon is clicked in the row with rowid=" + rowid);
+                                } else if ($target.hasClass("mydelete")) {
+                                    alert("delete icon is clicked in the row with rowid=" + rowid);
+                                }
+                                break;
+                            case "serial":
+                                if ($target.hasClass("mylink")) {
+                                    alert("link icon is clicked in the row with rowid=" + rowid);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+
+                    },
+
+                }).jqGrid('navGrid', '#jqgItemtoBusinessStores', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqgItemtoBusinessStores', {
+                    caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid('#jqgItemtoBusinessStores')
+                });
+            }
+            else
+                jqgItemMaster.jqGrid().trigger('reloadGrid', [{ page: 1 }]);
+        }
+    });
+}
+
 function fnGetItemCategoryByItem(ItemCategory) {
     $("#cboItemCategory").empty().selectpicker('refresh');
     $("#cboItemSubCategory").empty().selectpicker('refresh');
@@ -27,7 +134,7 @@ function fnGetItemCategoryByItem(ItemCategory) {
     var ItemGroup = $("#cboItemGroup").val();
     $.ajax({
         type: 'POST',
-        url: getBaseURL() + '/Stores/GetItemCategory?ItemGroup=' + ItemGroup,
+        url: getBaseURL() + '/SKU/GetItemCategory?ItemGroup=' + ItemGroup,
         success: function (result) {
             $("#cboItemCategory").append($("<option value='0'>Select</option>"));
             if (result != null) {
@@ -40,6 +147,49 @@ function fnGetItemCategoryByItem(ItemCategory) {
         }
     });
 }
+
+function fnGetItemSubCategoryByItem(ItemCategory, ItemSubCategory) {
+    $("#cboItemSubCategory").empty().selectpicker('refresh');
+    _isSubCategoryApplicable = 0;
+
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + '/Stores/GetItemSubCategory?ItemCategory=' + ItemCategory,
+        success: function (result) {
+            $("#cboItemSubCategory").append($("<option value='0'>Select</option>"));
+            if (result != null) {
+                for (var i = 0; i < result.length; i++) {
+                    $('#cboItemSubCategory').append('<option value="' + result[i]["ItemSubCategory"] + '">' + result[i]["ItemSubCategoryDesc"] + '</option>');
+                }
+                _isSubCategoryApplicable = 1;
+            }
+            $("#cboItemSubCategory").val(ItemSubCategory);
+            $("#cboItemSubCategory").selectpicker('refresh');
+        }
+    });
+}
+
+//function fnGetItemCategoryByItem() {
+//    $("#cboItemCategory").empty().selectpicker('refresh');
+//    $("#cboItemSubCategory").empty().selectpicker('refresh');
+
+//    _isSubCategoryApplicable = 0;
+//    var ItemGroup = $("#cboItemGroup").val();
+//    $.ajax({
+//        type: 'POST',
+//        url: getBaseURL() + '/Stores/GetItemCategory?ItemGroup=' + ItemGroup,
+//        success: function (result) {
+//            $("#cboItemCategory").append($("<option value='0'>Select</option>"));
+//            if (result != null) {
+//                for (var i = 0; i < result.length; i++) {
+//                    $('#cboItemCategory').append('<option value="' + result[i]["ItemCategory"] + '">' + result[i]["ItemCategoryDesc"] + '</option>');
+//                }
+//            }
+//            $("#cboItemCategory").val(ItemCategory);
+//            $("#cboItemCategory").selectpicker('refresh');
+//        }
+//    });
+//}
 
 function fnGetItemCategory() {
     $('#cboItemDesc').val(0);

@@ -70,6 +70,41 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
         }
 
         /// <summary>
+        ///Get Item Codes Details
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> GetItemDetails(int ItemCode)
+        {
+            try
+            {
+                var parameter = "?ItemCode=" + ItemCode;
+                var serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemCodes>>("ItemCodes/GetItemDetails" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetItemDetails:For ItemCode {0}", ItemCode);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetItemDetails:For ItemCode {0}", ItemCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetItemDetails:For ItemCode {0}", ItemCode);
+                throw ex;
+            }
+        }
+
+        /// <summary>
         ///Get Item Category
         /// </summary>
         [HttpPost]
@@ -230,7 +265,7 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
         }
 
         /// <summary>
-        ///Get Business Item Store Link
+        ///Get Business Item Stores Link
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> GetBusinessItemStoreLink(int BusinessKey, int ItemCode)
