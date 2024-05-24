@@ -51,6 +51,7 @@ using eSyaEnterprise_UI.Areas.ConfigStores.Data;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Data;
 using eSyaEnterprise_UI.Areas.InterfaceSMS.Data;
 using eSyaEnterprise_UI.Areas.ConfigSpecialty.Data;
+using eSyaEnterprise_UI.Areas.ServiceProvider.Data;
 //using eSyaEnterprise_UI.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -351,6 +352,15 @@ builder.Services.AddHttpClient<IeSyaSMSAPIServices, eSyaSMSAPIServices>(p =>
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+builder.Services.AddHttpClient<IeSyaServiceProviderAPIServices, eSyaServiceProviderAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaServiceProvider_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
 builder.Services.AddSingleton<ISmsServices, SmsServices>();

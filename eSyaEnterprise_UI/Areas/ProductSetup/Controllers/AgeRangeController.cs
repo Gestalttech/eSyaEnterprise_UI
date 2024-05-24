@@ -5,6 +5,8 @@ using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 {
@@ -21,9 +23,25 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region Age Range
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPS_10_00()
+        public async Task<IActionResult> EPS_10_00()
         {
-            return View();
+            var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.RangePeriod);
+            if (serviceResponse.Data != null)
+            {
+                if (serviceResponse.Status)
+                {
+                    ViewBag.RangePeriod = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
+                    }).ToList();
+                }
+                return View();
+            }
+            else
+            {
+                return View();
+            }
         }
         /// <summary>
         ///Get Age Range for Grid

@@ -1,11 +1,26 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using Microsoft.AspNetCore.Mvc;
+using eSyaEnterprise_UI.Areas.ServiceProvider.Data;
+using eSyaEnterprise_UI.DataServices;
 
 namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
 {
     [SessionTimeout]
     public class DoctorController : Controller
     {
+        private readonly ILogger<DoctorController> _logger;
+        private readonly IeSyaServiceProviderAPIServices _eSyaServiceProviderAPIServices;
+        private readonly IeSyaGatewayServices _eSyaGatewayServices;
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _appEnvironment;
+        public DoctorController(IeSyaServiceProviderAPIServices eSyaServiceProviderAPIServices, ILogger<DoctorController> logger, IWebHostEnvironment hostingEnvironment, IeSyaGatewayServices eSyaGatewayServices, IConfiguration configuration)
+        {
+            _logger = logger;
+            _appEnvironment = hostingEnvironment;
+            _eSyaGatewayServices = eSyaGatewayServices;
+            _configuration = configuration;
+            _eSyaServiceProviderAPIServices = eSyaServiceProviderAPIServices;
+        }
 
         #region Manage Doctor
         [Area("ServiceProvider")]

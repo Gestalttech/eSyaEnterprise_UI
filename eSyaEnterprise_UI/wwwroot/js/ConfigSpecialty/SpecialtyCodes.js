@@ -337,14 +337,16 @@ function fnLoadAgeRangeGrid() {
         mtype: 'POST',
         rownumbers: true,
 
-        colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom, localization.RangeFromPeriod, localization.AgeRangeTo, localization.RangeToPeriod, localization.ActiveStatus],
+        colNames: [localization.AgeRangeId, localization.RangeDesc, localization.AgeRangeFrom,"", localization.RangeFromPeriod, localization.AgeRangeTo,"",localization.RangeToPeriod, localization.ActiveStatus],
         colModel: [
             { name: 'AgeRangeId', key: true, index: 'AgeRangeId', width: 0, sortable: false, hidden: true },
             { name: 'RangeDesc', index: 'RangeDesc', width: 100, sortable: false },
             { name: 'AgeRangeFrom', index: 'AgeRangeFrom', width: 80, sortable: false },
-            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 80, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            { name: 'RangeFromPeriod', index: 'RangeFromPeriod', width: 80, sortable: false, hidden: true },
+            { name: 'RangeFromPeriodDesc', index: 'RangeFromPeriodDesc', width: 50, sortable: false },
             { name: 'AgeRangeTo', index: 'AgeRangeTo', width: 60, sortable: false },
-            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 60, sortable: false, formatter: 'select', editoptions: { value: "Y: Year;D: Day" } },
+            { name: 'RangeToPeriod', index: 'RangeToPeriod', width: 60, sortable: false, hidden: true },
+            { name: 'RangeToPeriodDesc', index: 'RangeToPeriodDesc', width: 50, sortable: false },
             {
                 name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
                 formatter: "checkbox", formatoptions: { disabled: false },
