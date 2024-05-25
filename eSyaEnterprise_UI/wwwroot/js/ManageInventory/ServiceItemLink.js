@@ -29,12 +29,13 @@ function fnGridLoadServiceItemLink() {
         datatype: 'local',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.ServiceClass, localization.ServiceID, localization.ItemDescription, localization.Active],
+        colNames: [localization.BusinessKey, localization.ServiceClass, localization.ServiceID, localization.ItemDescription,localization.Quantity, localization.Active],
         colModel: [
             { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
             { name: "ServiceClass", width: 70, editable: true, align: 'left', hidden: true },
             { name: "ServiceID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "ItemDescription", width: 270, editable: true, align: 'left', hidden: false },
+            { name: "Quantity", width: 90, editable: true, align: 'left', hidden: false },
             { name: "ActiveStatus", editable: false, width: 100, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
         ],
