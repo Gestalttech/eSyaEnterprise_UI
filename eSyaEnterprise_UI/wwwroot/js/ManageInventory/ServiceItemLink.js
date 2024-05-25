@@ -1,24 +1,124 @@
-﻿ 
+﻿var prevSelectedID;
 
 $(document).ready(function () {
+    $("#dvServiceItemLink").hide();
+    //fnGridLoadServiceItemLink();
+
+    //$('#jstServiceItemLink').jstree({
+    //    'core': {
+    //        'data': [
+
+    //            { "id": "ajson2", "parent": "#", "text": "Services", state: { 'opened': true } },
+    //            { "id": "ajson3", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - New" },
+    //            { "id": "ajson4", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Established" },
+    //            { "id": "ajson5", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Revisit" },
+    //            { "id": "ajson6", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Followup" },
+    //        ]
+    //    }
+    //});
+    //fnTreeSize("#jstServiceItemLink");
+});
+
+function fnLoadServiceLink() {
     
-    fnGridLoadServiceItemLink();
+    $('#jstServiceItemLink').jstree('destroy');
+    if ($('#cboBusinessKey').val() === '')
+        return;
+    if ($('#cboServiceClass').val() === '')
+        return;
+    fnCreateServiceTree();
+}
 
-    $('#jstServiceItemLink').jstree({
-        'core': {
-            'data': [
+function fnCreateServiceTree() {
+    var BusinessKey = $("#cboBusinessKey").val();
+    var ServiceClass = $("#cboServiceClass").val();
 
-                { "id": "ajson2", "parent": "#", "text": "Services", state: { 'opened': true } },
-                { "id": "ajson3", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - New" },
-                { "id": "ajson4", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Established" },
-                { "id": "ajson5", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Revisit" },
-                { "id": "ajson6", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Followup" },
-            ]
+    $.ajax({
+        url: getBaseURL() + '/Item/GetServiceItemLinkTree?BusinessKey=' + BusinessKey + '&ServiceClassId=' + ServiceClass,
+        type: 'Post',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            
+            $('#jstServiceItemLink').jstree({
+                core: { 'data': result, 'check_callback': true, 'multiple': true }
+            });
         }
     });
-    fnTreeSize("#jstServiceItemLink");
-});
-function fnGridLoadServiceItemLink() {
+
+    $("#jstServiceItemLink").on('loaded.jstree', function () {
+        $("#jstServiceItemLink").jstree('open_all');
+    });
+
+    $('#jstServiceItemLink').on("changed.jstree", function (e, data) {
+        if (data.node !== undefined) {
+            if (prevSelectedID !== data.node.id) {
+                prevSelectedID = data.node.id;
+                $('#View').remove();
+                $('#Edit').remove();
+                $('#Add').remove();
+                //$("#dvServiceItemLink").Show();
+                if (data.node.parent === "FM") {
+                    //if (data.node.id.startsWith("N")) {
+                    //    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
+                    //    $('#Add').on('click', function () {
+                    //        fnGridLoadServiceItemLink(data.node.id);
+                    //        $(".mdl-card__title-text").text(localization.AddSpecialtyLink);
+                    //        $("#btnSaveServiceItem").html('<i class="fa fa-plus"></i> ' + localization.Save);
+                    //        $("#btnSaveServiceItem").attr("disabled", _userFormRole.IsInsert === false);
+                    //        $("#dvServiceItemLink").show();
+                    //        $("#btnSaveServiceItem").show();
+                    //    });
+                    //}
+                    //else {
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>');
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>');
+
+                    $('#View').on('click', function () {
+                        if (_userFormRole.IsView === false) {
+                            $('#dvServiceItemLink').hide();
+                            fnAlert("w", "ECP_05_00", "UIC03", errorMsg.vieweauth_E3);
+                            return;
+                        }
+                        fnGridLoadServiceItemLink(data.node.id);
+
+                        $(".mdl-card__title-text").text(localization.ViewItem);
+                        $("#btnSaveServiceItem").hide();
+                        $("#dvServiceItemLink").show();
+                    });
+
+                    $('#Edit').on('click', function () {
+                        if (_userFormRole.IsEdit === false) {
+                            $('#dvServiceItemLink').hide();
+                            fnAlert("w", "ECP_05_00", "UIC02", errorMsg.editauth_E2);
+                            return;
+                        }
+                        fnGridLoadServiceItemLink(data.node.id);
+
+                        $(".mdl-card__title-text").text(localization.EditItem);
+                        $("#btnSaveServiceItem").html('<i class="fa fa-sync"></i> ' + localization.Update);
+                        $("#btnSaveServiceItem").attr("disabled", _userFormRole.IsEdit === false);
+                        $("#dvServiceItemLink").show();
+                        $("#btnSaveSpecialty").show();
+                    });
+                    //}
+                }
+                else {
+                    $("#dvServiceItemLink").hide();
+                    fnClearFields();
+                }
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+function fnGridLoadServiceItemLink(ServiceId) {
    
    
     $("#jqgServiceItemLink").jqGrid('GridUnload');

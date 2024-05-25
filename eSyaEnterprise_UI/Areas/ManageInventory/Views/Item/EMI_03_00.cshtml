@@ -50,7 +50,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>@Localizer["BusinessKey"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" data-container="body" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKey_OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" data-container="body" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadServiceLink()">
                             <option value="0">@Localizer["Select"]</option>
                         </select>
                     </div>
@@ -58,7 +58,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>@Localizer["ServiceClass"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboServiceClass" title="" data-size="8" data-container="body">
+            <select class="selectpicker" data-live-search="true" id="cboServiceClass" title="" data-size="8" asp-items="@ViewBag.ServiceClassList" data-container="body" onchange="fnLoadServiceLink()">
                             <option value="0">@Localizer["Select"]</option>
                         </select>
                     </div>
@@ -85,7 +85,7 @@
                                         </div>
                                     </div>
                                     <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
-                                        <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="">
+                        <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSaveServiceItem" onclick="fnSaveServiceItemLink()">
                                            <i class="fa fa-save"></i> @Localizer["Save"]
                                         </button>
                                         <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="">
