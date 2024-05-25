@@ -182,7 +182,7 @@ function fnGridRefreshDoctorProfile() {
 function fnEditDoctorProfile(e) {
 
     if (_userFormRole.IsEdit === false) {
-        toastr.warning("You are not Authorized to Edit");
+        fnAlert("w", "ESP_01_00", "UIC02", errorMsg.editauth_E2);
         return;
     }
     $("#btnSaveDoctorProfile,#btnSaveAboutDoctor,#btnSaveDoctorProfileImage, #btnSaveDoctorProfileBusinessLink, #btnSaveDoctorProfileAddress, #btnSaveDoctorStatutoryDetails,#btnSaveDoctorConsultationRate").html("<i class='fa fa-sync'></i>  Update");
@@ -221,7 +221,7 @@ function fnEditDoctorProfile(e) {
 function fnViewDoctorProfile(e) {
 
     if (_userFormRole.IsEdit === false) {
-        toastr.warning("You are not authorized to View");
+        fnAlert("w", "ESK_02_00", "UIC03", errorMsg.vieweauth_E3);
         return;
     }
 
@@ -402,36 +402,33 @@ function fnSaveDoctorProfile() {
    
     if (IsStringNullorEmpty($('#cboTraiffFrom').val())) {
         fnAlert("w", "ESP_01_00", "UI0320", errorMsg_dp.TariffFrom_E9);
-       $('#cboTraiffFrom').focus();
+        document.getElementById('cboTraiffFrom').focus();
         return;
     }
     if (IsStringNullorEmpty($('#cboSeniorityLevel').val())) {
-        fnAlert("w", "ESP_01_00", "",);
-        toastr.warning("Please Select a Seniority Level");
-        $('#cboSeniorityLevel').focus();
+        fnAlert("w", "ESP_01_00", "UI0321", errorMsg_dp.SeneiorityLevel_E10);
+        document.getElementById('cboSeniorityLevel').focus();
         return;
     }
 
 
     if (IsStringNullorEmpty($("#cboDoctorMobile").val()) || $("#cboDoctorMobile").val() <= 0) {
-        fnAlert("w", "ESP_01_00", "",);
-        toastr.warning("Please Select a ISD");
-        $('#cboDoctorMobile').focus();
+        fnAlert("w", "ESP_01_00", "UI0137", errorMsg_dp.SelectISD_E11);
+        document.getElementById('cboDoctorMobile').focus();
         return;
     }
 
 
     if ($("#txtDoctorMobile").inputmask("isComplete") === false) {
-        fnAlert("w", "ESP_01_00", "",);
-        toastr.warning("Please Enter the mobile no.");
-        $('#txtDoctorMobile').focus();
+         fnAlert("w", "ESP_01_00", "UI0111", errorMsg_dp.MobileNo_E6);
+        document.getElementById('txtDoctorMobile').focus();
         return;
     }
 
     if (IsStringNullorEmpty($('#txtEMailId').val())) {
         if (!IsValidateEmail($('#txtEMailId').val())) {
-            toastr.warning("Please Enter a Valid Email Id");
-            $('#txtEMailId').focus();
+            fnAlert("w", "ESP_01_00", "UI0139", errorMsg_dp.EmailId_E12);
+            document.getElementById('txtEMailId').focus();
             return;
         }
     }
