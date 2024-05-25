@@ -92,19 +92,21 @@ function fnLoadClinicConsultantTree() {
 function fnSaveClinicDoctorLink() {
 
     if (IsStringNullorEmpty($('#cboClinicBusinessLocation').val()) || $('#cboClinicBusinessLocation').val() == '0') {
-        toastr.warning("Please Select Business Location");
+        
+        fnAlert("w", "ESP_01_00", "UI0330", errorMsg_cl.Location_E1);
         $('#cboClinicBusinessLocation').focus();
         return;
     }
 
     if (IsStringNullorEmpty($('#cboClinicSpecialty').val()) || $('#cboClinicSpecialty').val() == '0') {
-        toastr.warning("Please Select Specialty");
+        fnAlert("w", "ESP_01_00", "UI0200", errorMsg_cl.Specialty_E2);
         $('#cboClinicSpecialty').focus();
         return;
     }
 
     if (IsStringNullorEmpty($('#txtDoctorId').val())) {
-        toastr.warning("Please Select Doctor");
+        
+        fnAlert("w", "ESP_01_00", "UI0141", errorMsg_cl.SelectDoctor_E3);
         return;
     }
 

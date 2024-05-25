@@ -113,11 +113,11 @@ function GetDoctorStatutoryDetails() {
 
 function fnSaveDoctorStatutoryDetails() {
     if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-        toastr.warning("Please Create a Doctor First");
+        fnAlert("w", "ESP_01_00", "UI0314", errorMsg_std.DoctorProfile_E2);
         return;
     }
     if ($('#cboStatutoryDetailsIsdcode').val() == '' || $('#cboStatutoryDetailsIsdcode').val() == '0') {
-        toastr.warning("Please select a ISD Code");
+        fnAlert("w", "ESP_01_00", "UI0034", errorMsg_std.ISDCode_E1);
         return;
     }
     $("#jqgDoctorProfileStatutoryDetails").jqGrid('editCell', 0, 0, false);
@@ -184,8 +184,8 @@ function fnBindDoctorStatutoryISDBusinessLink() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         //success: function (response, data) {
         success: function (data) {
@@ -223,8 +223,8 @@ function fnBindDoctorStatutoryISDBusinessLink() {
 //        type: 'GET',
 //        dataType: 'json',
 //        contentType: 'application/json; charset=utf-8',
-//        error: function (xhr) {
-//            toastr.error('Error: ' + xhr.statusText);
+//        error: function (error) {
+//           fnAlert("e", "", error.StatusCode, error.statusText);
 //        },
 
 //        success: function (data) {

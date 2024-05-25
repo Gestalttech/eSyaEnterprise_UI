@@ -16,8 +16,8 @@ function fnGetDoctorAddressbyDoctorId() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response) {
             if (response != null) {
@@ -84,8 +84,8 @@ function BindStates() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
             if (response != null) {
@@ -119,8 +119,8 @@ function BindCities() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
             if (response != null) {
@@ -158,8 +158,8 @@ function BindZipDescriptions() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
 
@@ -197,8 +197,8 @@ function fnBindZipCodeAndArea() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
 
@@ -304,20 +304,20 @@ function fnSaveDoctorProfileAddress() {
         data: { obj },
         success: function (response) {
             if (response.Status) {
-                toastr.success(response.Message);
+                fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveDoctorProfileAddress").attr('disabled', false);
                 fnClearDoctorAddress();
                 return true;
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnSaveDoctorProfileAddress").attr('disabled', false);
                 return false;
             }
 
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveDoctorProfileAddress").attr('disabled', false);
         }
     });
@@ -327,33 +327,33 @@ function fnSaveDoctorProfileAddress() {
 function IsValidSaveDoctorAddress() {
 
     if (IsStringNullorEmpty($("#cboLocation").val()) || $("#cboLocation").val() === "0" || $("#cboLocation").val() == '0') {
-        toastr.warning("Please select a Location");
+        fnAlert("w", "ESP_01_00", "UI0330", errorMsg_add.Location_E1);
         return false;
     }
     if (IsStringNullorEmpty($("#cboIsdcode").val()) || $("#cboIsdcode").val() === "0" || $("#cboIsdcode").val() == '0') {
-        toastr.warning("Please Enter the ISD Code");
+        fnAlert("w", "ESP_01_00", "UI0034", errorMsg_add.ISDCode_E2);
         return false;
     }
     if (IsStringNullorEmpty($("#txtDoctorId").val()) || $("#txtDoctorId").val() === "0") {
-        toastr.warning("Please create the Doctor First");
+        fnAlert("w", "ESP_01_00", "UI0322", errorMsg_add.DoctorDetails_E3);
         return false;
     }
 
 
     if (IsStringNullorEmpty($("#cboState").val()) || $("#cboState").val() == '0' || $("#cboState").val() == "0") {
-        toastr.warning("Please Select a State");
+        fnAlert("w", "ESP_01_00", "UI0161", errorMsg_add.State_E4);
         return false;
     }
     if (IsStringNullorEmpty($("#cboCity").val()) || $("#cboCity").val() == '0' || $("#cboCity").val() == "0") {
-        toastr.warning("Please Select a City");
+        fnAlert("w", "ESP_01_00", "UI0162", errorMsg_add.City_E5);
         return false;
     }
     if (IsStringNullorEmpty($("#cboZipDesc").val()) || $("#cboZipDesc").val() == '0' || $("#cboZipDesc").val() == "0") {
-        toastr.warning("Please Select a Zip");
+        fnAlert("w", "ESP_01_00", "UI0163", errorMsg_add.Zip_E6);
         return false;
     }
     if (IsStringNullorEmpty($("#cboArea").val()) || $("#cboArea").val() == '0' || $("#cboArea").val() == "0") {
-        toastr.warning("Please Select a Area");
+        fnAlert("w", "ESP_01_00", "UI0331", errorMsg_add.Area_E7);
         return false;
     }
 }
@@ -366,8 +366,8 @@ function fnBindISDCodes() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
 
         success: function (data) {
@@ -412,8 +412,8 @@ function fnBindDoctorBusinessLinkList() {
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
             if (response != null) {

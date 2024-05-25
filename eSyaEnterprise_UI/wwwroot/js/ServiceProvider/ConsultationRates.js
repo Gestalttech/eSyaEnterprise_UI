@@ -178,7 +178,7 @@ function fnSaveDoctorConsultationRate() {
         data: { obj: Clinic_VR },
         success: function (response) {
             if (response.Status === true) {
-                toastr.success("Data Saved");
+                fnAlert("s", "", response.StatusCode, response.Message);
                 $("#jqgConsultationRates").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
             }
             else {
@@ -204,7 +204,7 @@ function fnBindDoctorConsultationBusinessLink() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         error: function (xhr) {
-            toastr.error('Error: ' + xhr.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
         },
         success: function (response, data) {
             if (response != null) {

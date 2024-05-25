@@ -180,24 +180,24 @@ function fnLoadSpecialty() {
 
 function fnSaveDoctorSpecialtyLink() {
     if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-        toastr.warning("Please Select Doctor");
+        fnAlert("w", "ESP_01_00", "UI0314", errorMsg_sl.DoctorProfile_E1);
         return;
     }
     if ($('#cbospecialtyLocation').val() == '' || $('#cbospecialtyLocation').val() == '0') {
-        toastr.warning("Please Select Location");
+        fnAlert("w", "ESP_01_00", "UI0330", errorMsg_sl.Location_E3);
         $('#cbospecialtyLocation').focus();
         return;
     }
     if ($('#cboSpecialty').val() == '' || $('#cboSpecialty').val() == '0') {
-        toastr.warning("Please Select Specialty");
+        fnAlert("w", "ESP_01_00", "UI0200", errorMsg_sl.Specialty_E4);
         $('#cboSpecialty').focus();
         return;
     }
-    if ($('#chkSpecialtyActiveStatus').parent().hasClass("is-checked") == false) {
-        toastr.warning("Please Select Active Status");
-        $('#chkSpecialtyActiveStatus').focus();
-        return;
-    }
+    //if ($('#chkSpecialtyActiveStatus').parent().hasClass("is-checked") == false) {
+    //    toastr.warning("Please Select Active Status");
+    //    $('#chkSpecialtyActiveStatus').focus();
+    //    return;
+    //}
     //alert($('#chkSpecialtyActiveStatus').parent().hasClass("is-checked"));
 
     $("#btnDoctorSpecialtySave").attr("disabled", true);

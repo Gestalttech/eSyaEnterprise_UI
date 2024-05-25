@@ -85,7 +85,7 @@ function fnGetDoctorProfileImage() {
 
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
 
@@ -106,7 +106,7 @@ function fnFillDoctorImageData(data) {
 
 function fnSaveDoctorProfileImage() {
     if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-        toastr.warning("Please Create Doctor First");
+        fnAlert("w", "ESP_01_00", "UI0314", errorMsg_ps.DoctorProfile_E1);
         return;
     }
 
@@ -121,11 +121,11 @@ function fnSaveDoctorProfileImage() {
         sigfile = ($('#divUploadSignature img').attr('src').indexOf('TakePicture.jpg') > 0) ? null : $('#divUploadSignature img').attr('src');// Data URI
     }
     if (Imagefile == '' || Imagefile.trim() == 'undefined') {
-        toastr.warning("Please Upload Or Capture Doctor Image");
+        fnAlert("w", "ESP_01_00", "UI0328", errorMsg_ps.UploadCapture_E2);
         return;
     }
     if (sigfile == '' || sigfile.trim() == 'undefined') {
-        toastr.warning("Please Upload Doctor Signature");
+        fnAlert("w", "ESP_01_00", "UI0329", errorMsg_ps.UploadDoctorSignature_E3);
         return;
     }
 
@@ -147,22 +147,22 @@ function fnSaveDoctorProfileImage() {
         success: function (response) {
             if (response !== null) {
                 if (response.Status) {
-                    toastr.success(response.Message);
+                    fnAlert("s", "", response.StatusCode, response.Message);
 
                     $("#btnSaveDoctorProfileImage").attr('disabled', false);
                 }
                 else {
-                    toastr.error(response.Message);
+                    fnAlert("e", "", response.StatusCode, response.Message);
                     $("#btnSaveDoctorProfileImage").attr('disabled', false);
                 }
             }
             else {
-                toastr.error(response.Message);
+                fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnSaveDoctorProfileImage").attr('disabled', false);
             }
         },
         error: function (error) {
-            toastr.error(error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnSaveDoctorProfileImage").attr("disabled", false);
         }
     });

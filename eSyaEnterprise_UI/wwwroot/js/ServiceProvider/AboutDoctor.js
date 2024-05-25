@@ -76,31 +76,31 @@ function fnClearDoctorAboutDetails() {
 function fnSaveDoctorAboutDetails() {
 
     if (IsStringNullorEmpty($("#txtDoctorId").val())) {
-        toastr.warning("Please add the Doctor details");
+        fnAlert("w", "ESP_01_00", "UI0322", errorMsg_ad.DoctorDetails_E1);
         return;
     }
     if ($("#txtDoctorId").val() === 0 || $("#txtDoctorId").val() === "0") {
-        toastr.warning("Please add the Doctor details");
+        fnAlert("w", "ESP_01_00", "UI0322", errorMsg_ad.DoctorDetails_E1);
         return;
     }
     if (IsStringNullorEmpty($("#txtLanguagesKnown").val())) {
-        toastr.warning("Please Enter the Language Known");
+        fnAlert("w", "ESP_01_00", "UI0323", errorMsg_ad.LanguageKnown_E2);
         return;
     }
     if (IsStringNullorEmpty($("#txtExperience").val())) {
-        toastr.warning("Please Enter the Experience");
+        fnAlert("w", "ESP_01_00", "UI0324", errorMsg_ad.Experience_E3);
         return;
     }
     if (IsStringNullorEmpty($("#txtCertification").val())) {
-        toastr.warning("Please Enter the Certification");
+        fnAlert("w", "ESP_01_00", "UI0325", errorMsg_ad.Certification_E4);
         return;
     }
     if (IsStringNullorEmpty(tinyMCE.get('txtAboutDoctor').getContent())) {
-        toastr.warning("Please Enter the About Doctor");
+        fnAlert("w", "ESP_01_00", "UI0326", errorMsg_ad.AboutDoctor_E5);
         return;
     }
     if (IsStringNullorEmpty($("#txtDoctorRemarks").val())) {
-        toastr.warning("Please Enter the Doctor Remarks");
+        fnAlert("w", "ESP_01_00", "UI0327", errorMsg_ad.DoctorRemarks_E6);
         return;
     }
 
