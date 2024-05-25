@@ -90,6 +90,13 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         //public const int ServiceProviderCategoryforDoctor = 82; not used
         //public const int BillSuspendType = 86; not used
 
+        #region ServiceProvider
+        public const int Gender = 270;
+        public const int TraiffFrom = 271;
+        public const int DoctorClass = 272;
+        public const int DoctorCategory = 273;
+        public const int SeniorityLevel = 274;
+        #endregion
 
     }
 }

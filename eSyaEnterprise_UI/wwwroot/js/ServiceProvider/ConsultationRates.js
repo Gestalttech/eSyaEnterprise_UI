@@ -34,8 +34,7 @@ function fnLoadDoctorConsultationRate() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["Clinic ID", "Consultation ID", "Service ID", "Clinic Type", "Consultation Type", "Service Description", "Effective Date", "Effective Till", "Tariff", "Active"],
-
+        colNames: [localization_cr.ClinicId, localization_cr.ConsultationID, localization_cr.ServiceID, localization_cr.ClinicType, localization_cr.ConsultationType, localization_cr.ServiceDescription, localization_cr.EffectiveDate, localization_cr.EffectiveTill, localization_cr.Tariff, localization_cr.Active],
         colModel: [
 
             { name: "ClinicId", width: 10, editable: false, align: 'left', hidden: true },
@@ -132,19 +131,20 @@ function SetGridControlByAction() {
 
 function fnSaveDoctorConsultationRate() {
     if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-        toastr.warning("Please Create a Doctor First");
+        fnAlert("w", "ESP_01_00", "UI0314", errorMsg_cr.DoctorProfile_E1);
+        
         return;
     }
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $('#cboBusinessKey').val() == '0') {
-        toastr.warning("Please select a Business Location");
+        fnAlert("w", "ESP_01_00", "UI0064", errorMsg_cr.BusinessLocation_E2);
         return;
     }
     if (IsStringNullorEmpty($("#cboCurrencyCode").val())) {
-        toastr.warning("Please select a Currency Code");
+        fnAlert("w", "ESP_01_00", "UI0022", errorMsg_cr.CurrencyCode_E3);
         return;
     }
     if (IsStringNullorEmpty($("#cboRateType").val())) {
-        toastr.warning("Please select a Rate Type");
+        fnAlert("w", "ESP_01_00", "UI0198", errorMsg_cr.RateType_E4);
         return;
     }
     $("#jqgConsultationRates").jqGrid('editCell', 0, 0, false);

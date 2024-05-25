@@ -15,7 +15,7 @@ function fnGridDoctorProfileBusinessLink() {
             datatype: 'json',
             mtype: 'POST',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-            colNames: [loalization_bl.BusinessKey, loalization_bl.Businesslocation, 'Time Slot In Mins', 'Patient Per Hour', 'Select'],
+            colNames: [loalization_bl.BusinessKey, loalization_bl.Businesslocation, loalization_bl.TimeSlotInMins,loalization_bl.PatientPerHour, localization_bl.Active],
             colModel: [
                 { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
                 { name: 'BusinessLocation', index: 'LocationDescription', width: '850', resizable: false, hidden: false },
@@ -76,7 +76,7 @@ function fnGridDoctorProfileBusinessLink() {
             scrollOffset: 0,
             cellEdit: true,
             cellsubmit: 'clientArray',
-            caption: localization.BusinessLink,
+            caption: loalization_bl.BusinessLink,
             onSelectRow: function (id) {
 
                 if (id) { $('#jqgDoctorProfileBusinessLink').jqGrid('editRow', id, true); }
