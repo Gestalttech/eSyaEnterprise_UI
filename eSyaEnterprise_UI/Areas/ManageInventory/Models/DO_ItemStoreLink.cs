@@ -17,6 +17,5 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Models
         public string? FormId { get; set; }
         public int UserID { get; set; }
         public string? TerminalID { get; set; }
-        //public List<DO_ItemStoreLink>? lst_itemStoreLink { get; set; }
     }
 }
