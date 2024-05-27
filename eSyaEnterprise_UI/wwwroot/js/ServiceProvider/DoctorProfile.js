@@ -34,7 +34,20 @@ $(document).ready(function () {
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     //$(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
-
+function fnSetSidebar() {
+    var _renderBodycontent = $(".renderBody").offset();
+    var _fullH = $(window).innerHeight();
+    var _newTabH = (_fullH - _renderBodycontent.top);
+    var windW = $(window).width();
+    
+    if (windW > 1099) {
+        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
+        $(".tab-content-inner").css({ "height": _newTabH });
+    }
+    else {
+        $(".tab-content-inner").css({ "height": _newTabH, "overflow-y": "auto" });
+    }
+}
 function fnGridLoadDoctorProfile(doctorPrefix) {
     $("#jqgDoctorProfile").jqGrid('GridUnload');
     $("#jqgDoctorProfile").jqGrid({
@@ -137,7 +150,7 @@ function fnGridLoadDoctorProfile(doctorPrefix) {
 }
 
 function fnGridAddDoctorProfile() {
-
+    
     $("#btnSaveDoctorProfile").html('<i class="far fa-save"></i> ' + localization.Save);
     $("#btnClearDoctor").show();
     $("#divGrid").hide();
@@ -146,7 +159,7 @@ function fnGridAddDoctorProfile() {
     _formDelete = true;
     fnClearFields();
 
-
+    fnSetSidebar()
     //$('#Photoimage').val('');
     //$('#imgPhotoimageblah').removeAttr('src');
 
@@ -160,10 +173,10 @@ function fnGridAddDoctorProfile() {
     //$('#Photoimage').val('');
     //$('#imgPhotoimageblah').removeAttr('src');
 
-    fnLoadDoctorParameters();
-    fnGridDoctorProfileBusinessLink();
-    fnGridDoctorSpecialtyLink();
-    fnLoadDoctorLeaveGrid();
+    //fnLoadDoctorParameters();
+    ////fnGridDoctorProfileBusinessLink();
+    //fnGridDoctorSpecialtyLink();
+    //fnLoadDoctorLeaveGrid();
 
     //fnGetDoctorAddressbyDoctorId();
     //fnBindDoctorBusinessLinkList();

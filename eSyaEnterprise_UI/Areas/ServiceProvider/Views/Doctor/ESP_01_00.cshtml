@@ -364,25 +364,13 @@
 </section>
             <script>
                 $(function(){
-                    fnSetSidebar();
-                    const dataSpyList = document.querySelectorAll('[data-bs-spy="scroll"]')
-                    dataSpyList.forEach(dataSpyEl => {
-                        bootstrap.ScrollSpy.getInstance(dataSpyEl).refresh()
-                    })
+                     
+                    // const dataSpyList = document.querySelectorAll('[data-bs-spy="scroll"]')
+                    // dataSpyList.forEach(dataSpyEl => {
+                    //     bootstrap.ScrollSpy.getInstance(dataSpyEl).refresh()
+                    // })
                    })
-                function fnSetSidebar() {
-                    var _tabcontent = $(".tab-content").offset();
-                    var _fullH = $(window).height();
-                    var _newTabH = (_fullH - _tabcontent.top - 15);
-                    var windW = $(window).width();
-                    if (windW > 1099) {
-                        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
-                        $(".tab-content-inner").css({ "height": _newTabH});
-                    }
-                    else {
-                        $(".tab-content-inner").css({ "height": _newTabH, "overflow-y": "auto" });
-                    }
-                }
+                
             </script>
 
 
