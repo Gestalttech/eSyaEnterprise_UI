@@ -51,20 +51,20 @@ function fnSetSidebar() {
 function fnGridLoadDoctorProfile(doctorPrefix) {
     $("#jqgDoctorProfile").jqGrid('GridUnload');
     $("#jqgDoctorProfile").jqGrid({
-        url:'',
-        //url: getBaseURL() + '/Doctors/GetDoctorMasterList?doctorNamePrefix=' + doctorPrefix,
+        url: getBaseURL() + '/Doctor/GetDoctorMasterListForPrefix?doctorNamePrefix=' + doctorPrefix,
         datatype: 'json',
         mtype: 'Get',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         ignoreCase: true,
-        colNames: [localization_dp.DoctorId, localization_dp.DoctorShortName, localization_dp.DoctorName, localization_dp.DoctorRegistrationNo, localization_dp.Gender, localization_dp.DoctorClassCode, localization_dp.DoctorClass, localization_dp.DoctorCategoryCode, localization_dp.DoctorCategory, localization_dp.SeniorityLvl, localization_dp.SeniorityLevelD, localization_dp.EmailID, localization_dp.TariffFrom, localization_dp.IsdCode, localization_dp.MobileNumber, localization_dp.Password, localization_dp.Active, localization_dp.Actions],
+        colNames: [localization_dp.DoctorId, localization_dp.DoctorShortName, localization_dp.DoctorName, localization_dp.DoctorRegistrationNo,"", localization_dp.Gender, localization_dp.DoctorClassCode, localization_dp.DoctorClass, localization_dp.DoctorCategoryCode, localization_dp.DoctorCategory, localization_dp.SeniorityLvl, localization_dp.SeniorityLevelD, localization_dp.EmailID,"", localization_dp.TariffFrom, localization_dp.IsdCode, localization_dp.MobileNumber, localization_dp.Password, localization_dp.Active, localization_dp.Actions],
         colModel: [
             { name: "DoctorId", width: 40, editable: true, align: 'left', hidden: true },
             { name: "DoctorShortName", width: 35, editable: true, align: 'left', hidden: true },
             { name: "DoctorName", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "DoctorRegnNo", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
-            { name: "Gender", width: 25, editable: true, align: 'left', hidden: false, editoptions: { value: "M: Male;F: Female" } },
+            { name: "Gender", width: 25, editable: true, align: 'left', hidden: false },
+            { name: "GenderDesc", width: 25, editable: true, align: 'left', hidden: false },
             { name: "DoctorClass", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "DoctorClassDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "DoctorCategory", width: 60, editable: false, hidden: true, align: 'left', resizable: true },
@@ -72,7 +72,8 @@ function fnGridLoadDoctorProfile(doctorPrefix) {
             { name: "SeniorityLevel", width: 35, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "SeniorityLevelDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "EmailId", width: 40, editable: true, align: 'left', hidden: true },
-            { name: "TraiffFrom", width: 10, editable: true, align: 'left', hidden: true, editoptions: { value: "N: None;R: Service Rate;S: Specialty;D: Doctor" } },
+            { name: "TraiffFrom", width: 10, editable: true, align: 'left', hidden: true },
+            { name: "TraiffFromDesc", width: 40, editable: true, align: 'left', hidden: false },
             { name: "Isdcode", width: 70, editable: true, align: 'left', hidden: true },
             { name: "MobileNumber", width: 70, editable: true, align: 'left', hidden: true },
             { name: "Password", width: 70, editable: true, align: 'left', hidden: true },
@@ -157,9 +158,10 @@ function fnGridAddDoctorProfile() {
     $('#divDoctorProfileForm').css('display', 'block');
     _formEdit = true;
     _formDelete = true;
+    fnSetSidebar();
     fnClearFields();
+    fnClearDoctorAboutDetails();
 
-    fnSetSidebar()
     //$('#Photoimage').val('');
     //$('#imgPhotoimageblah').removeAttr('src');
 
@@ -186,7 +188,7 @@ function fnGridAddDoctorProfile() {
     //fnLoadDoctorSchedulerGrid();
     //fnLoadDoctorScheduleChangeGrid();
 
-    //$("#chkActiveStatus").attr('disabled', true);
+    $("#chkActiveStatus").attr('disabled', true);
 }
 function fnGridRefreshDoctorProfile() {
     $("#jqgDoctorProfile").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -273,16 +275,15 @@ function fnViewDoctorProfile(e) {
 }
 
 function fnGetDoctorMasterProfile(data) {
-    //alert(JSON.stringify(data));
+  
     if (data != null) {
-        //alert(data.DoctorId);
+      
         $.ajax({
             url:'',
-            //url: getBaseURL() + '/Doctors/GetDoctorMaster?doctorId=' + data.DoctorId,
+            url: getBaseURL() + '/Doctor/GetDoctorMaster?doctorId=' + data.DoctorId,
             type: 'POST',
             datatype: 'json',
             success: function (response) {
-                //alert(js.stringify(response));
                 if (response != null) {
                     fnFillDataMasterData(response);
                 }
@@ -322,34 +323,15 @@ function fnFillDataMasterData(data) {
     $('#cboDoctorClass').selectpicker('refresh');
     $('#cboDoctorCategory').val(data.DoctorCategory);
     $('#cboDoctorCategory').selectpicker('refresh');
-    //$('#cboPayoutType').val(data.PayoutType);
-    //$('#cboPayoutType').selectpicker('refresh');
     $('#cboSeniorityLevel').val(data.SeniorityLevel);
     $('#cboSeniorityLevel').selectpicker('refresh');
-    //if (data.userimage !== null && data.userimage !== "") {
-    //    document.getElementById('imgPhoto').innerHTML = '<img id="imgPhotoimageblah" src=" ' + data.userimage + '"  alt=" &nbsp; User Image"   /> <input class="fileInput" id="FileUpload1" type="file" name="file" onchange="readPhotoimage(this);" accept="image/*" enctype="multipart/form-data" />';
-    //}
-
-    $('#txtPassword').val(data.Password);
-    //if (data.AllowConsultation === true)
-    //    $('#chkAllowConsultation').parent().addClass("is-checked");
-    //else
-    //    $('#chkAllowConsultation').parent().removeClass("is-checked");
-
-    //if (data.AllowSMS == true)
-    //    $('#chkAllowSMS').parent().addClass("is-checked");
-    //else
-    //    $('#chkAllowSMS').parent().removeClass("is-checked");
-    //if (data.ActiveStatus == true)
-    //    $('#chkActiveStatus').parent().addClass("is-checked");
-    //else
-    //    $('#chkActiveStatus').parent().removeClass("is-checked");
-
     $('#cboTraiffFrom').val(data.TraiffFrom).selectpicker('refresh');
 
     fnLoadDoctorParameters();
-    fnGridDoctorSpecialtyLink();
-    fnLoadDoctorLeaveGrid();
+    fnGetDoctorProfileAboutDetails();
+
+    //fnGridDoctorSpecialtyLink();
+    //fnLoadDoctorLeaveGrid();
 
     //fnLoadDoctorParameters();
     //fnGridDoctorProfileBusinessLink();
@@ -369,6 +351,7 @@ function fnFillDataMasterData(data) {
 }
 
 function fnSaveDoctorProfile() {
+   
     //var file = '';
 
     if (IsStringNullorEmpty($('#txtDoctorShortName').val())) {
@@ -381,7 +364,7 @@ function fnSaveDoctorProfile() {
         document.getElementById('txtDoctorName').focus();
         return;
     }
-    if (IsStringNullorEmpty($('#cboGender').val())) {
+    if (IsStringNullorEmpty($('#cboGender').val()) || $('#cboGender').val() == "0" || $('#cboGender').val()=='0') {
         fnAlert("w", "ESP_01_00", "UI0125", errorMsg_dp.Gender_E3);
         document.getElementById("cboGender").focus();
         return;
@@ -402,23 +385,23 @@ function fnSaveDoctorProfile() {
         document.getElementById('txtMobileNumber').focus();
         return;
     }
-    if (IsStringNullorEmpty($('#cboDoctorClass').val())) {
+    if (IsStringNullorEmpty($('#cboDoctorClass').val()) || $('#cboDoctorClass').val() == "0" || $('#cboDoctorClass').val() == '0') {
         fnAlert("w", "ESP_01_00", "UI0318", errorMsg_dp.DoctorClass_E7);
         document.getElementById('cboDoctorClass').focus();
         return;
     }
-    if (IsStringNullorEmpty($('#cboDoctorCategory').val())) {
+    if (IsStringNullorEmpty($('#cboDoctorCategory').val()) || $('#cboDoctorCategory').val() == "0" || $('#cboDoctorCategory').val() == '0') {
         fnAlert("w", "ESP_01_00", "UI0319", errorMsg_dp.DoctorCategory_E8);
         document.getElementById('cboDoctorCategory').focus();
         return;
     }
    
-    if (IsStringNullorEmpty($('#cboTraiffFrom').val())) {
+    if (IsStringNullorEmpty($('#cboTraiffFrom').val()) || $('#cboTraiffFrom').val() == "0" || $('#cboTraiffFrom').val() == '0') {
         fnAlert("w", "ESP_01_00", "UI0320", errorMsg_dp.TariffFrom_E9);
         document.getElementById('cboTraiffFrom').focus();
         return;
     }
-    if (IsStringNullorEmpty($('#cboSeniorityLevel').val())) {
+    if (IsStringNullorEmpty($('#cboSeniorityLevel').val()) || $('#cboSeniorityLevel').val() == "0" || $('#cboSeniorityLevel').val() == '0') {
         fnAlert("w", "ESP_01_00", "UI0321", errorMsg_dp.SeneiorityLevel_E10);
         document.getElementById('cboSeniorityLevel').focus();
         return;
@@ -438,9 +421,9 @@ function fnSaveDoctorProfile() {
         return;
     }
 
-    if (IsStringNullorEmpty($('#txtEMailId').val())) {
-        if (!IsValidateEmail($('#txtEMailId').val())) {
-            fnAlert("w", "ESP_01_00", "UI0139", errorMsg_dp.EmailId_E12);
+    if (!IsStringNullorEmpty($('#txtEMailId').val())) {
+        if (!IsValidateEmail($('#txtEMailId').val())==true) {
+            fnAlert("w", "ESP_01_00", "UI0139", "Invalid Email ID");
             document.getElementById('txtEMailId').focus();
             return;
         }
@@ -464,26 +447,21 @@ function fnSaveDoctorProfile() {
         EMailId: $('#txtEMailId').val(),
         DoctorClass: $('#cboDoctorClass').val(),
         DoctorCategory: $('#cboDoctorCategory').val(),
-        //AllowConsultation: $('#chkAllowConsultation').parent().hasClass("is-checked"),
-        //PayoutType: $('#cboPayoutType').val(),
         SeniorityLevel: $('#cboSeniorityLevel').val(),
-        //AllowSMS: $('#chkAllowSMS').parent().hasClass("is-checked"),
         TraiffFrom: $('#cboTraiffFrom').val(),
-        ActiveStatus: true,
-        Password: $('#txtPassword').val(),
+        ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked"),
         l_DoctorParameter: eSyaParams.GetJSONValue()
 
     };
 
     var Url;
     if ($('#hdvDoctorId').val() === null || $('#hdvDoctorId').val() === '')
-        Url = getBaseURL() + '/Doctors/InsertDoctorMaster';
+        Url = getBaseURL() + '/Doctor/InsertDoctorMaster';
     else
-        Url = getBaseURL() + '/Doctors/UpdateDoctorMaster';
+        Url = getBaseURL() + '/Doctor/UpdateDoctorMaster';
 
     $.ajax({
-        //url: Url,
-        url:'',
+        url: Url,
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -524,33 +502,21 @@ function fnClearFields() {
     $('#txtDoctorRegnNo').val('');
     $('#txtEMailId').val('');
     $('#txtDoctorMobile').val('');
-    $('#cboDoctorClass').val('');
+    $('#cboDoctorClass').val('0');
     $('#cboDoctorClass').selectpicker('refresh');
-    $('#cboDoctorCategory').val('');
-    $('#cboDoctorCategory').selectpicker('refresh');
-    //$('#cboPayoutType').val('');
-    //$('#cboPayoutType').selectpicker('refresh'); 
-    $('#cboGender').val('');
+    $('#cboDoctorCategory').val('0');
+    $('#cboDoctorCategory').selectpicker('refresh'); 
+    $('#cboGender').val('0');
     $('#cboGender').selectpicker('refresh');
-    $('#cboSeniorityLevel').val('');
+    $('#cboSeniorityLevel').val('0');
     $('#cboSeniorityLevel').selectpicker('refresh');
-    //$('#chkAllowConsultation').parent().removeClass("is-checked");
-    //$('#chkAllowSMS').parent().removeClass("is-checked");
-    //$('#chkActiveStatus').parent().addClass("is-checked");
-    $('#txtPassword').val('');
     $("#btnSaveDoctorProfile").html('<i class="far fa-save"></i> ' + localization.Save);
-    $('#cboTraiffFrom').val('').selectpicker('refresh');;
+    $('#cboTraiffFrom').val('0').selectpicker('refresh');;
     $('#cboTimeSlotInMintues').val('0').selectpicker('refresh');;
     $('#divCapturePhoto,#divUploadPhoto').css('display', 'none');
-
     $("#imgPhotoimageblah,#imgSignatureblah").attr('src', '');
-    //$('#Photoimage').val('');
-    //$('#imgPhotoimage').removeAttr('src');
-    //$('#imgPhotoimageblah').attr('src', '');
-    //document.getElementById('Photoimage').value="";
     $("button[id^=btnSave],button[id^=btnClear]").css('display', 'inline-block');
     eSyaParams.ClearValue();
-
     $("#cboLocation").empty();
     $("#cboLocation").append($("<option value='0'> Select </option>")).selectpicker('refresh');
     $("#txtIsdcode").empty();
@@ -671,11 +637,11 @@ function fnCloseDoctorProfile() {
 //}
 
 function fnLoadDoctorParameters() {
-
+ 
     eSyaParams.ClearValue();
     $.ajax({
-        //url: getBaseURL() + '/Doctors/GetDoctorParameterList?doctorId=' + $('#hdvDoctorId').val(),
-        url:'',
+        url: getBaseURL() + '/Doctor/GetDoctorParameterList?doctorId=' + $('#hdvDoctorId').val(),
+      
         type: 'POST',
         datatype: 'json',
         success: function (response) {

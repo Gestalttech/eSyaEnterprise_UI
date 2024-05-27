@@ -31,10 +31,11 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="cboGender" class="lable-color"> @Localizer["Gender"]</label>
-                    <select class="selectpicker" data-live-search="false" title="" id="cboGender">
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
+                  
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboGender" asp-items="@ViewBag.GenderList">
+                        <option value="0">@Localizer["Select"]</option>
                     </select>
+
                 </div>
             </div>
             <div class="col-lg-6 col-md-8 col-sm-6">
@@ -60,31 +61,46 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="cboDoctorClass" class="lable-color"> @Localizer["DoctorClass"]</label>
-                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorClass" asp-items="@ViewBag.doctorClassList"></select>
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorClass" asp-items="@ViewBag.doctorClassList">
+                        <option value="0">@Localizer["Select"]</option>
+                    </select>
                 </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="cboDoctorCategory" class="lable-color"> @Localizer["DoctorCategory"]</label>
-                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorCategory" asp-items="@ViewBag.doctorCategoryList"></select>
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboDoctorCategory" asp-items="@ViewBag.doctorCategoryList">
+                        <option value="0">@Localizer["Select"]</option>
+                    </select>
                 </div>
             </div>
            
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label class="lable-color" for="cboTraiffFrom"> @Localizer["TariffFrom"]</label>
-                    <select class="selectpicker" data-live-search="true" title="" id="cboTraiffFrom">
-                        <option value="C">Clinic Service Rates</option>
-                        <option value="S">Specialty</option>
-                        <option value="D">Doctor</option>
+                   
+                    <select class="selectpicker" data-live-search="true" data-size="10" title="" id="cboTraiffFrom" asp-items="@ViewBag.TraiffFromList">
+                        <option value="0">@Localizer["Select"]</option>
                     </select>
                 </div>
             </div>
            <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="form-group">
                     <label for="cboSeniorityLevel" class="lable-color"> @Localizer["SeniorityLevel"]</label>
-                    <select class="selectpicker" data-live-search="true" title="" id="cboSeniorityLevel" asp-items="@ViewBag.seniorityLevelList"></select>
+                    <select class="selectpicker" data-live-search="true" title="" id="cboSeniorityLevel" asp-items="@ViewBag.seniorityLevelList">
+                        <option value="0">@Localizer["Select"]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4">
+                <div class="form-group">
+                    <div>
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

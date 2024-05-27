@@ -1,8 +1,8 @@
 ﻿function fnGetDoctorProfileAboutDetails() {
 
-
+    debugger;
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetDoctordetailsbydoctorId?doctorId=' + $('#txtDoctorId').val(),
+        url: getBaseURL() + '/Doctor/GetAboutDoctorbydoctorId?doctorId=' + $('#txtDoctorId').val(),
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -66,8 +66,6 @@ function fnClearDoctorAboutDetails() {
     $('#txtCertification').val('');
     $('#txtDoctorRemarks').val('');
     tinyMCE.activeEditor.setContent('');
-    //$('#imgPhotoimageblah').attr('src', '');
-    //document.getElementById('Photoimage').value="";
     $('#chkActiveStatus').parent().addClass("is-checked");
     $("#btnSaveAboutDoctor").html('<i class="far fa-save"></i> ' + localization.Save);
 
@@ -106,8 +104,7 @@ function fnSaveDoctorAboutDetails() {
 
 
     var obj = new FormData();
-    //appending image file object
-    //obj.append("Imagefile", $("#Photoimage").get(0).files[0]);
+    
     obj.append("DoctorId", document.getElementById("txtDoctorId").value);
     obj.append("LanguageKnown", document.getElementById("txtLanguagesKnown").value);
     obj.append("Experience", document.getElementById("txtExperience").value);
@@ -117,7 +114,7 @@ function fnSaveDoctorAboutDetails() {
     obj.append("ActiveStatus", $('#chkActiveStatus').parent().hasClass("is-checked"));
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/InsertOrUpdateIntoDoctordetails',
+        url: getBaseURL() + '/Doctor/InsertOrUpdateIntoAboutDoctor',
         type: "POST",
         data: obj,
         dataType: "json",
