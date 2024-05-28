@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using eSyaEnterprise_UI.Utility;
 using eSyaEssentials_UI;
 using Newtonsoft.Json;
+using System.Text;
+using System.Text.RegularExpressions;
 namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
 {
     [SessionTimeout]
@@ -341,12 +343,140 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         }
         #endregion
 
-
         #region PhotoAndSignature
         [Area("ServiceProvider")]
         public IActionResult _PhotoAndSignature()
         {
             return View();
+        }
+        /// <summary>
+        /// Get Doctor Image & Signature 
+        /// </summary>
+        [HttpPost]
+        public JsonResult GetDoctorProfileImagebyDoctorId(int doctorId)
+        {
+            try
+            {
+                var response = _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<DO_DoctorImage>("DoctorMaster/GetDoctorProfileImagebyDoctorId?doctorId=" + doctorId).Result;
+                if (response.Status)
+                {
+                   
+                    if (response.Data != null)
+                    {
+                        var resdata = response.Data;
+
+                        string doctorimageURI = string.Empty;
+                        string doctorsignURI = string.Empty;
+                        if (resdata.DoctorProfileImage != null)
+                            doctorimageURI = ConvertByteArraytoImageURI(resdata.DoctorProfileImage);
+                        resdata.DoctorProfileTitle = doctorimageURI;
+
+                        if (resdata.DoctorSignatureImage != null)
+                            doctorsignURI = ConvertByteArraytoImageURI(resdata.DoctorSignatureImage);
+                        resdata.DoctorSignatureTitle = doctorsignURI;
+                        return Json(resdata);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(response.Message), "UD:GetDoctorProfileImagebyDoctorId:For doctorId {0}", doctorId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = response.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert Doctor Master
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertIntoDoctorProfileImage(DO_DoctorImage obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                if (obj.DoctorProfileTitle != null && obj.DoctorSignatureTitle != null)
+                {
+
+                    string doctorImagebase64 = obj.DoctorProfileTitle;// load base 64 code to this variable from js 
+                    string doctorSignbase64 = obj.DoctorSignatureTitle;// load base 64 code to this variable from js 
+
+                    Byte[] doctorImagebitmapData = new Byte[doctorImagebase64.Length];
+                    Byte[] doctorSignbitmapData = new Byte[doctorSignbase64.Length];
+                    doctorImagebitmapData = Convert.FromBase64String(FixBase64ForImage(doctorImagebase64));
+                    doctorSignbitmapData = Convert.FromBase64String(FixBase64ForImage(doctorSignbase64));
+                    if (doctorImagebitmapData.Length > 2 * 1024 * 1024)
+                    {
+                        return Json(new DO_ReturnParameter() { Status = false, Message = "Doctor Photo file size should be smaller than 2 MB" });
+                    }
+                    if (doctorSignbitmapData.Length > 2 * 1024 * 1024)
+                    {
+                        return Json(new DO_ReturnParameter() { Status = false, Message = "Doctor Signature file size should be smaller than 2 MB" });
+                    }
+                    obj.DoctorProfileImage = doctorImagebitmapData;
+                    obj.DoctorSignatureImage = doctorSignbitmapData;
+                }
+                else
+                {
+                    byte[] emptyByte = { };
+                    obj.DoctorProfileImage = emptyByte;
+                    obj.DoctorSignatureImage = emptyByte;
+                }
+                var serviceresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertIntoDoctorProfileImage", obj).Result;
+                if (serviceresponse.Status)
+                {
+                    return Json(serviceresponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceresponse.Message), "UD:InsertIntoDoctorProfileImage:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceresponse.Message });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertIntoDoctorProfileImage:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        public static string FixBase64ForImage(string image)
+        {
+
+            var regex = new Regex(@"data:(?<mime>[\w/\-\.]+);(?<encoding>\w+),(?<data>.*)", RegexOptions.Compiled);
+            var match = regex.Match(image);
+            var mime = match.Groups["mime"].Value;
+            var encoding = match.Groups["encoding"].Value;
+            var data = match.Groups["data"].Value;
+            return data;
+        }
+        public static string ConvertByteArraytoImageURI(Byte[] image)
+        {
+
+            StringBuilder ImageURI = new StringBuilder();
+            ImageURI.Append("data:");
+            string image_data = Convert.ToBase64String(image);
+            string mime = "image/jpeg";
+            string encoding = "base64";
+            ImageURI.Append(mime);
+            ImageURI.Append(";");
+            ImageURI.Append(encoding);
+            ImageURI.Append(",");
+            ImageURI.Append(image_data);
+            return Convert.ToString(ImageURI);
         }
         #endregion
 

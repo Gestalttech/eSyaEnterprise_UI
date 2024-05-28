@@ -329,7 +329,7 @@ function fnFillDataMasterData(data) {
 
     fnLoadDoctorParameters();
     fnGetDoctorProfileAboutDetails();
-
+    fnGetDoctorProfileImage();
     //fnGridDoctorSpecialtyLink();
     //fnLoadDoctorLeaveGrid();
 

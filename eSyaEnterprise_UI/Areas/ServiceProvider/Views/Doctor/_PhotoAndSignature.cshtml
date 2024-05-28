@@ -23,16 +23,14 @@
     }
 </style>
 <div class="row">
-    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
-        <h5>@Localizer["PhotoAndSignature"]</h5>
-    </div>
+
     <div class="col-lg-6 col-md-6 col-sm-6 border-left">
         <div class="form-group">
             <p class="subheading"> Photo </p> <hr class="left" />
             <span class="lblInfo"> 1. Only Jpg & png format </span>
             <span class="lblInfo"> 2. Photo size should be less than 50KB</span>
             <span class="lblInfo pb-2"> 3. Please enable your browser Camera access permission for Capture Photo</span>
-            <div class="p-2 mb-3 d-flex justify-content-center" style="background:#fffbea;">
+            <div class="p-2 mb-3 border d-flex justify-content-center" style="border-style:dashed;background:#ffffe3;">
                 <button id="btnUploadPhoto" class="btn btn-primary btn-xs mr-10"><i class="fa fa-upload"></i> Upload</button>
                 <span class="mr-10"> (or)</span>
                 <button id="btnCapturePhoto" class="btn btn-primary btn-xs"><i class="fa fa-camera"></i> Capture</button>
@@ -66,7 +64,7 @@
             <span class="lblInfo"> 1. Only Jpg & png format</span>
             <span class="lblInfo pb-4"> 2. Signature Image size should be less than 50KB</span>
 
-            <div class="p-2 mb-3 d-flex justify-content-center" style="background:#fffbea;">
+            <div class="p-2 mb-3 border d-flex justify-content-center" style="border-style:dashed;background:#ffffe3;">
                 <button id="btnUploadSignature" class="btn btn-primary btn-xs mr-10"><i class="fa fa-upload"></i> Upload</button>
             </div>
             <div class="imagedig" style="border:thin; padding-bottom:5px;" id="divUploadSignature">
@@ -100,12 +98,13 @@
             var sizeInMb = input.files[0].size;
 
             if (!(input.files[0].type.match(/image.*/))) {
-                toastr.warning("Invalid format file uploaded");
+                fnAlert("w","ESP_01_00","","Invalid format file uploaded");
                 input.value = null;
                 return;
             }
             if (sizeInMb > sizeLimit) {
-                toastr.warning("User Photo file size should be smaller than 50 KB");
+                fnAlert("w", "ESP_01_00", "","User Photo file size should be smaller than 50 KB");
+                
                 input.value = null;
                 return false;
             }
