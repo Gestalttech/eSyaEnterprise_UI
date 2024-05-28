@@ -168,29 +168,6 @@ function fnGetItemSubCategoryByItem(ItemCategory, ItemSubCategory) {
         }
     });
 }
-
-//function fnGetItemCategoryByItem() {
-//    $("#cboItemCategory").empty().selectpicker('refresh');
-//    $("#cboItemSubCategory").empty().selectpicker('refresh');
-
-//    _isSubCategoryApplicable = 0;
-//    var ItemGroup = $("#cboItemGroup").val();
-//    $.ajax({
-//        type: 'POST',
-//        url: getBaseURL() + '/Stores/GetItemCategory?ItemGroup=' + ItemGroup,
-//        success: function (result) {
-//            $("#cboItemCategory").append($("<option value='0'>Select</option>"));
-//            if (result != null) {
-//                for (var i = 0; i < result.length; i++) {
-//                    $('#cboItemCategory').append('<option value="' + result[i]["ItemCategory"] + '">' + result[i]["ItemCategoryDesc"] + '</option>');
-//                }
-//            }
-//            $("#cboItemCategory").val(ItemCategory);
-//            $("#cboItemCategory").selectpicker('refresh');
-//        }
-//    });
-//}
-
 function fnGetItemCategory() {
     $('#cboItemDesc').val(0);
     $('#cboItemDesc').selectpicker('refresh');
@@ -552,11 +529,11 @@ function fnLoadPortfolioStoreBusinessLinkGrid() {
 function fnSaveBusinessItemStoreLink() {
     if (IsStringNullorEmpty(businesskey) || businesskey == '0') {
 
-        fnAlert("w", "EDC_02_00", "UI0064", errorMsg.Location_E1);
+        fnAlert("w", "EMI_02_00", "UI0064", errorMsg.Location_E1);
         return;
     }
     if ($("#txtItemCode").val().trim().length <= 0) {
-        fnAlert("w", "EMI_01_00", "UI0150", errorMsg.ItemDesc_E9);
+        fnAlert("w", "EMI_02_00", "UI0150", errorMsg.ItemDesc_E9);
         return;
     }
 
@@ -575,11 +552,9 @@ function fnSaveBusinessItemStoreLink() {
     }
 
     if (r_doc.length <= 0) {
-        fnAlert("w", "EDC_02_00", "UI0308", errorMsg.Documentcontrol_E3);
+        fnAlert("w", "EMI_02_00", "UI0308", errorMsg.Documentcontrol_E3);
         return;
     }
-
-    $("#btnSaveItem").attr('disabled', true);
 
     $("#btnSaveItem").attr('disabled', true);
     $.ajax({

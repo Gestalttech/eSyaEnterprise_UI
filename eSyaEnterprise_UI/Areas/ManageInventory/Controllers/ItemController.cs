@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using eSyaEnterprise_UI.Areas.ManageInventory.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEssentials_UI;
+using eSyaEnterprise_UI.Utility;
+using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
 {
@@ -105,9 +107,74 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
                 _logger.LogError(ex, "UD:GetServiceItemLinkTree:For BusinessKey {0} With ServiceClass {1}", BusinessKey, ServiceClassId);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
-
         }
 
+        /// <summary>
+        ///Get Service Item Link
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> GetServiceItemLinkInfo(int BusinessKey, int ServiceClass, int ServiceId)
+        {
+            try
+            {
+                var parameter = "?BusinessKey=" + BusinessKey + "&ServiceClass=" + ServiceClass + "&ServiceId=" + ServiceId;
+                var serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.GetAsync<List<DO_ItemServiceLink>>("ItemCodes/GetServiceItemLinkInfo" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceItemLinkInfo:For BusinessKey {0}, ServiceClass {1} With ServiceId {2}", BusinessKey, ServiceClass, ServiceId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceItemLinkInfo:For BusinessKey {0}, ServiceClass {1} With ServiceId {2}", BusinessKey, ServiceClass, ServiceId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetServiceItemLinkInfo:For BusinessKey {0}, ServiceClass {1} With ServiceId {2}", BusinessKey, ServiceClass, ServiceId);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Service Item Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateServiceItemLink(List<DO_ItemServiceLink> obj)
+        {
+            try
+            {
+                obj.All(c =>
+                {
+                    c.ActiveStatus = true;
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaInventoryAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ItemCodes/InsertOrUpdateServiceItemLink", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateServiceItemLink:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
+            }
+
+        }
         #endregion
     }
 }
