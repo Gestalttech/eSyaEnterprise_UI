@@ -41,8 +41,11 @@ function fnSetSidebar() {
     var windW = $(window).width();
     
     if (windW > 1099) {
-        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
+        $("#v-pills-tab").css({ "min-height": _newTabH, "overflow-y": "auto" });
+        $(".tab-content").css({ "height": _newTabH, "overflow-y": "auto" });
         $(".tab-content-inner").css({ "height": _newTabH });
+        $(".mainbarSmall").scrollTop(0);
+
     }
     else {
         $(".tab-content-inner").css({ "height": _newTabH, "overflow-y": "auto" });
@@ -195,7 +198,7 @@ function fnGridRefreshDoctorProfile() {
 }
 
 function fnEditDoctorProfile(e) {
-
+    fnSetSidebar();
     if (_userFormRole.IsEdit === false) {
         fnAlert("w", "ESP_01_00", "UIC02", errorMsg.editauth_E2);
         return;
@@ -234,7 +237,7 @@ function fnEditDoctorProfile(e) {
 }
 
 function fnViewDoctorProfile(e) {
-
+    fnSetSidebar();
     if (_userFormRole.IsEdit === false) {
         fnAlert("w", "ESK_02_00", "UIC03", errorMsg.vieweauth_E3);
         return;
