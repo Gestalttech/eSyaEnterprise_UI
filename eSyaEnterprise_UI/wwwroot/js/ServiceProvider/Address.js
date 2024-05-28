@@ -399,7 +399,7 @@ function fnBindISDCodes() {
 
 }
 
-function fnISD_change() {
+function fnISDCountryCode_onChange() {
     BindStates();
 }
 

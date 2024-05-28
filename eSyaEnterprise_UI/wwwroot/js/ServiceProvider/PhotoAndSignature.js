@@ -74,7 +74,7 @@ function fnClearDoctorImageFields() {
 }
 
 function fnGetDoctorProfileImage() {
-    debugger;
+   
     fnClearDoctorImageFields();
     $.ajax({
         url: getBaseURL() + '/Doctor/GetDoctorProfileImagebyDoctorId?doctorId=' + $('#txtDoctorId').val(),

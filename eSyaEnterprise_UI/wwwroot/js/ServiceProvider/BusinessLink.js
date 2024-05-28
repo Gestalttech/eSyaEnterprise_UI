@@ -8,20 +8,21 @@ $(function () {
     fnGridDoctorProfileBusinessLink();
 })
 function fnGridDoctorProfileBusinessLink() {
+ 
     $("#jqgDoctorProfileBusinessLink").jqGrid('GridUnload');
     $("#jqgDoctorProfileBusinessLink").jqGrid(
         {
-            //url: getBaseURL() + '/Doctors/GetDoctorBusinessLinkList?doctorId=' + $('#txtDoctorId').val(),
+            url: getBaseURL() + '/Doctor/GetDoctorBusinessLinkList?doctorId=' + $('#txtDoctorId').val(),
             datatype: 'json',
             mtype: 'POST',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-            colNames: [loalization_bl.BusinessKey, loalization_bl.Businesslocation, loalization_bl.TimeSlotInMins,loalization_bl.PatientPerHour, localization_bl.Active],
+            colNames: [localization_bl.BusinessKey, localization_bl.Businesslocation, localization_bl.TimeSlotInMins, localization_bl.PatientPerHour, localization_bl.Active],
             colModel: [
                 { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
-                { name: 'BusinessLocation', index: 'LocationDescription', width: '850', resizable: false, hidden: false },
+                { name: 'BusinessLocation', width: '850', resizable: false, hidden: false },
 
                 {
-                    name: 'TimeSlotInMins', index: 'TimeSlotInMins', editable: true, edittype: "text", width: 110,
+                    name: 'TimeSlotInMins', editable: true, edittype: "text", width: 110,
                     editoptions: { maxlength: 2, onkeypress: 'return OnlyNumeric(event)' },
                 },
 
@@ -49,12 +50,12 @@ function fnGridDoctorProfileBusinessLink() {
                 //},
 
                 {
-                    name: 'PatientCountPerHour', index: 'PatientCountPerHour', editable: true, edittype: "text", width: 110,
+                    name: 'PatientCountPerHour', editable: true, edittype: "text", width: 110,
                     editoptions: { maxlength: 2, onkeypress: 'return OnlyNumeric(event)' },
                     //editrules: { custom: true, custom_func: fncalculateTimeslotinMins }
                 },
                 {
-                    name: 'ActiveStatus', index: 'ActiveStatus', width: 100, resizable: false, align: 'center',
+                    name: 'ActiveStatus', width: 100, resizable: false, align: 'center',
                     formatter: "checkbox", formatoptions: { disabled: false },
                     edittype: "checkbox", editoptions: { value: "true:false" }
                 },
@@ -76,7 +77,7 @@ function fnGridDoctorProfileBusinessLink() {
             scrollOffset: 0,
             cellEdit: true,
             cellsubmit: 'clientArray',
-            caption: loalization_bl.BusinessLink,
+            caption: localization_bl.BusinessLink,
             onSelectRow: function (id) {
 
                 if (id) { $('#jqgDoctorProfileBusinessLink').jqGrid('editRow', id, true); }
@@ -257,7 +258,8 @@ function fnGridRefreshDoctorProfileBusinessLinkGrid() {
     $("#jqgDoctorProfileBusinessLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
 }
 
-function fnSaveDoctorProfileBusinessLink() {
+function fnSaveDoctorBusinessLink() {
+    debugger;
     if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
         fnAlert("w", "ESP_01_00", "UI0314", errorMsg_bl.CreateDoctorProfile_E4);
         return;
@@ -283,7 +285,7 @@ function fnSaveDoctorProfileBusinessLink() {
     }
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/InsertIntoDoctorBusinessLink',
+        url: getBaseURL() + '/Doctor/InsertIntoDoctorBusinessLink',
         type: 'POST',
         datatype: 'json',
         data: { obj },

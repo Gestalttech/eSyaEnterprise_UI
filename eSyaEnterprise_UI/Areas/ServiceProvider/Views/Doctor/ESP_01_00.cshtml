@@ -114,7 +114,7 @@
         Actions: '@Localizer["Actions"]'
 
     }
-    var loalization_bl = {
+    var localization_bl = {
         BusinessLink: '@Localizer["BusinessLink"]',
         BusinessKey: '@Localizer["BusinessKey"]',
         Businesslocation: '@Localizer["Businesslocation"]',
@@ -236,12 +236,12 @@
     <script src="~/js/ServiceProvider/DoctorProfile.js"></script>
     <script src="~/js/ServiceProvider/AboutDoctor.js"></script>
     <script src="~/js/ServiceProvider/PhotoAndSignature.js"></script>
-    @* <script src="~/js/ServiceProvider/Address.js"></script>
+    <script src="~/js/ServiceProvider/BusinessLink.js"></script>
+    <script src="~/js/ServiceProvider/Address.js"></script>
     <script src="~/js/ServiceProvider/StatutoryDetails.js"></script>
-   <script src="~/js/ServiceProvider/BusinessLink.js"></script>
     <script src="~/js/ServiceProvider/SpecialtyLink.js"></script>
     <script src="~/js/ServiceProvider/ClinicLink.js"></script>
-   <script src="~/js/ServiceProvider/ConsultationRates.js"></script> *@
+   <script src="~/js/ServiceProvider/ConsultationRates.js"></script>
     <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
     <script src="~/js/tinymce/tinymce.js"></script>
@@ -314,13 +314,14 @@
                             <a class="nav-link position-relative" href="#divPhotoAndSignature">@Localizer["PhotoAndSignature"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
+                            <a class="nav-link position-relative" href="#divBusinessLink">@Localizer["BusinessLink"] </a>
+                        </li>
+                      
+                        <li class="nav-item" role="presentation">
                             <a class="nav-link position-relative" href="#divAddress"> @Localizer["Address"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link position-relative" href="#divStatutoryDetails">@Localizer["StatutoryDetails"] </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divBusinessLink">@Localizer["BusinessLink"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link position-relative" href="#divSpecialtyLink">@Localizer["SpecialtyLink"] </a>
@@ -345,15 +346,15 @@
                 <div class="tab-content-inner ps-3" id="divPhotoAndSignature">
                     @await Html.PartialAsync("_PhotoAndSignature")
                 </div>
-                <div class="tab-content-inner ps-3" id="divAddress">
-                    @await Html.PartialAsync("_Address")
-                </div>
-                <div class="tab-content-inner ps-3" id="divStatutoryDetails">
-                    @await Html.PartialAsync("_StatutoryDetails")
-                </div>
                 <div class="tab-content-inner ps-3" id="divBusinessLink">
                     @await Html.PartialAsync("_BusinessLink")
                 </div>
+                <div class="tab-content-inner ps-3" id="divAddress">
+                    @await Html.PartialAsync("_Address")
+               </div> 
+            <div class="tab-content-inner ps-3" id="divStatutoryDetails">
+                @await Html.PartialAsync("_StatutoryDetails")
+            </div>
                 <div class="tab-content-inner ps-3" id="divSpecialtyLink">
                     @await Html.PartialAsync("_SpecialtyLink")
                 </div>

@@ -63,7 +63,7 @@ function fnGridLoadDoctorProfile(doctorPrefix) {
             { name: "DoctorShortName", width: 35, editable: true, align: 'left', hidden: true },
             { name: "DoctorName", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "DoctorRegnNo", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
-            { name: "Gender", width: 25, editable: true, align: 'left', hidden: false },
+            { name: "Gender", width: 25, editable: true, align: 'left', hidden: true },
             { name: "GenderDesc", width: 25, editable: true, align: 'left', hidden: false },
             { name: "DoctorClass", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "DoctorClassDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
@@ -161,7 +161,7 @@ function fnGridAddDoctorProfile() {
     fnSetSidebar();
     fnClearFields();
     fnClearDoctorAboutDetails();
-
+    fnGridDoctorProfileBusinessLink();
     //$('#Photoimage').val('');
     //$('#imgPhotoimageblah').removeAttr('src');
 
@@ -330,6 +330,7 @@ function fnFillDataMasterData(data) {
     fnLoadDoctorParameters();
     fnGetDoctorProfileAboutDetails();
     fnGetDoctorProfileImage();
+    fnGridDoctorProfileBusinessLink();
     //fnGridDoctorSpecialtyLink();
     //fnLoadDoctorLeaveGrid();
 

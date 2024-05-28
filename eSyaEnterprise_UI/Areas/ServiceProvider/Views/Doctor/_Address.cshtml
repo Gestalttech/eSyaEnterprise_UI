@@ -13,10 +13,17 @@
         </select>
     </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+  @*   <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
         <label for="cboIsdcode">@Localizer["ISD-Code"]</label>
         <select class="selectpicker" data-container="body" data-live-search="true" id="cboIsdcode" title="" data-size="8" onchange="fnISD_change(this)"></select>
+    </div> *@
+    <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+        <div class="form-group">
+            <label class="lable-color">@Localizer["ISDCodes"] </label>
+            @await Component.InvokeAsync("IsdCountryInput", new { id = "Isdcode" })
+        </div>
     </div>
+
 
     <div class="col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
         <label for="cboState">@Localizer["State"]</label>

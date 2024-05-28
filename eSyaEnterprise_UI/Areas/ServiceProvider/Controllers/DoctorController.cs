@@ -480,7 +480,6 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         }
         #endregion
 
-
         #region Address
 
         [Area("ServiceProvider")]
@@ -505,8 +504,60 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         {
             return View();
         }
-        #endregion
+        /// <summary>
+        /// Get Business Location List
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDoctorBusinessLinkList(int doctorId)
+        {
+            try
+            {
+                var serviceresponse =await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorBusinessLink>>("DoctorMaster/GetDoctorBusinessLinkList?doctorId=" + doctorId);
+                if (serviceresponse.Status)
+                {
+                    return Json(serviceresponse.Data);
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = serviceresponse.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
 
+        /// <summary>
+        /// Insert Doctor Business Link
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertIntoDoctorBusinessLink(List<DO_DoctorBusinessLink> obj)
+        {
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    return true;
+                });
+
+                var serviceresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertOrUpdateDoctorBusinessLink", obj).Result;
+                return Json(serviceresponse.Data);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
 
         #region Specialty Link
         [Area("ServiceProvider")]

@@ -10,8 +10,8 @@
         <h5>@Localizer["BusinessLink"]</h5>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <table id="jqgDoctorBusinessLink"> </table>
-        <div id="jqpDoctorBusinessLink"></div>
+        <table id="jqgDoctorProfileBusinessLink"> </table>
+        <div id="jqpDoctorProfileBusinessLink"></div>
     </div>
 </div>
 
@@ -19,119 +19,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
         <hr />
         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10 c-white" onclick="fnCloseDoctorMaster()"><i class="fas fa-chevron-left"></i> @Localizer["Back"]</button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorBusinessLink" onclick="fnSaveDoctorBusinessLink()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorProfileBusinessLink" onclick="fnSaveDoctorBusinessLink()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorBusinessLink" onclick="fnGridRefreshDoctorBusinessLinkGrid()"><i class="fa fa-redo"></i> @Localizer["Clear"]</button>
     </div>
 </div>
 
-<script>
-
-    function fnGridDoctorBusinessLink() {
-        $("#jqgDoctorBusinessLink").jqGrid('GridUnload');
-        $("#jqgDoctorBusinessLink").jqGrid(
-            {
-                url: getBaseURL() + '/Doctors/GetBusinessLocationDoctorList?doctorId=' + $('#txtDoctorId').val(),
-                datatype: 'json',
-                mtype: 'POST',
-                //ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-                colNames: ['Business Key', localization.BusinessLocation, /*localization.SegmentDescription,*/ localization.BusinessLocation, localization.Select],
-                colModel: [
-                    { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
-                    { name: 'SegmentDesc', index: 'SegmentDesc', width: '270', resizable: false },
-                    { name: 'LocationDescription', index: 'LocationDescription', width: '228', resizable: false, hidden: true },
-                    {
-                        name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center',
-                        formatter: "checkbox", formatoptions: { disabled: false },
-                        edittype: "checkbox", editoptions: { value: "true:false" }
-                    },
-                ],
-                rowNum: 10,
-                rowList: [10, 20, 50, 100],
-                rownumWidth: '55',
-                loadonce: true,
-                pager: "#jqpDoctorBusinessLink",
-                viewrecords: true,
-                gridview: true,
-                rownumbers: true,
-                height: 'auto',
-                width: 'auto',
-                autowidth: true,
-                shrinkToFit: true,
-                forceFit: true,
-                scroll: false,
-                scrollOffset: 0,
-                cellEdit: true,
-                cellsubmit: 'clientArray',
-                onSelectRow: function (id) {
-                    if (id) { $('#jqpDoctorBusinessLink').jqGrid('editRow', id, true); }
-                },
-                rowattr: function (item) {
-                    if (_formEdit === false) {
-                        return { "class": "ui-state-disabled ui-jqgrid-disablePointerEvents" };
-                    }
-                },
-                beforeSelectRow: function (rowid, e) {
-                    if ($(e.target).closest("tr.jqgrow").hasClass("ui-state-disabled")) {
-                        return false;
-                    }
-                    return true;
-                }
-            }).jqGrid('navGrid', '#jqpDoctorBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false });
-    }
-
-
-
-    function fnGridRefreshDoctorBusinessLinkGrid() {
-        $("#jqgDoctorBusinessLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
-    }
-
-    function fnSaveDoctorBusinessLink() {
-        if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-            toastr.warning("Please Select Doctor");
-            return;
-        }
-
-        $("#btnSaveDoctorBusinessLink").attr('disabled', false);
-
-        var obj = [];
-        var rowData = $('#jqgDoctorBusinessLink').jqGrid('getRowData');
-
-        for (var i = 0; i < rowData.length; i++) {
-            var sp =
-            {
-                BusinessKey: rowData[i]['BusinessKey'],
-                DoctorId: $('#txtDoctorId').val(),
-                ActiveStatus: rowData[i]['ActiveStatus']
-            };
-            obj.push(sp);
-        }
-
-        $.ajax({
-            url: getBaseURL() + '/Doctors/InsertUpdateDoctorBusinessLink',
-            type: 'POST',
-            datatype: 'json',
-            data: { obj },
-            success: function (response) {
-                if (response != null) {
-                    if (response.Status) {
-                        toastr.success(response.Message);
-                        fnGridDoctorBusinessLink();
-                        $("#btnSaveDoctorBusinessLink").attr('disabled', false);
-                    }
-                    else {
-                        toastr.error(response.Message);
-                        $("#btnSaveDoctorBusinessLink").attr('disabled', false);
-                    }
-                }
-                else {
-                    toastr.error(response.Message);
-                    $("#btnSaveDoctorBusinessLink").attr('disabled', false);
-                }
-            },
-            error: function (error) {
-                toastr.error(error.statusText);
-                $("#btnSaveDoctorBusinessLink").attr("disabled", false);
-            }
-        });
-    }
-</script>
