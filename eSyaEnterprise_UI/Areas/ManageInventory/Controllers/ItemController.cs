@@ -154,7 +154,7 @@ namespace eSyaEnterprise_UI.Areas.ManageInventory.Controllers
             {
                 obj.All(c =>
                 {
-                    c.ActiveStatus = true;
+                    c.ActiveStatus = true;                    
                     c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                     c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                     c.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();

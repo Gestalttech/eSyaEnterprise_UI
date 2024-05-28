@@ -14,22 +14,7 @@ function CheckDigits(e) {
 
 }
 $(document).ready(function () {
-    $("#dvServiceItemLink").hide();
-    //fnGridLoadServiceItemLink();
-
-    //$('#jstServiceItemLink').jstree({
-    //    'core': {
-    //        'data': [
-
-    //            { "id": "ajson2", "parent": "#", "text": "Services", state: { 'opened': true } },
-    //            { "id": "ajson3", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - New" },
-    //            { "id": "ajson4", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Established" },
-    //            { "id": "ajson5", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Revisit" },
-    //            { "id": "ajson6", "parent": "ajson2", "text": "O.P Doctor Consultation(Clinic) - Followup" },
-    //        ]
-    //    }
-    //});
-    //fnTreeSize("#jstServiceItemLink");
+    $("#pnlServiceItemLink").hide();
 });
 
 function fnLoadServiceLink() {
@@ -39,6 +24,7 @@ function fnLoadServiceLink() {
         return;
     if ($('#cboServiceClass').val() === '')
         return;
+    $('#pnlServiceItemLink').hide();
     fnCreateServiceTree();
 }
 
@@ -70,27 +56,14 @@ function fnCreateServiceTree() {
                 $('#View').remove();
                 $('#Edit').remove();
                 ServiceId = '0';
-                //$("#dvServiceItemLink").Show();
                 if (data.node.parent === "FM") {
-                    //if (data.node.id.startsWith("N")) {
-                    //    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
-                    //    $('#Add').on('click', function () {
-                    //        fnGridLoadServiceItemLink(data.node.id);
-                    //        $(".mdl-card__title-text").text(localization.AddSpecialtyLink);
-                    //        $("#btnSaveServiceItem").html('<i class="fa fa-plus"></i> ' + localization.Save);
-                    //        $("#btnSaveServiceItem").attr("disabled", _userFormRole.IsInsert === false);
-                    //        $("#dvServiceItemLink").show();
-                    //        $("#btnSaveServiceItem").show();
-                    //    });
-                    //}
-                    //else {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>');
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>');
 
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
-                            $('#dvServiceItemLink').hide();
-                            fnAlert("w", "ECP_05_00", "UIC03", errorMsg.vieweauth_E3);
+                            $('#pnlServiceItemLink').hide();
+                            fnAlert("w", "EMI_03_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
                         ServiceId = data.node.id;
@@ -98,13 +71,13 @@ function fnCreateServiceTree() {
 
                         $(".mdl-card__title-text").text(localization.ViewItem);
                         $("#btnSaveServiceItem").hide();
-                        $("#dvServiceItemLink").show();
+                        $("#pnlServiceItemLink").show();
                     });
 
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
-                            $('#dvServiceItemLink').hide();
-                            fnAlert("w", "ECP_05_00", "UIC02", errorMsg.editauth_E2);
+                            $('#pnlServiceItemLink').hide();
+                            fnAlert("w", "EMI_03_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
                         ServiceId = data.node.id;
@@ -112,21 +85,18 @@ function fnCreateServiceTree() {
 
                         $(".mdl-card__title-text").text(localization.EditItem);
                         $("#btnSaveServiceItem").html('<i class="fa fa-sync"></i> ' + localization.Update);
-                        $("#btnSaveServiceItem").attr("disabled", _userFormRole.IsEdit === false);
-                        $("#dvServiceItemLink").show();
-                        $("#btnSaveSpecialty").show();
+                        $("#btnSaveServiceItem").attr("disabled", _userFormRole.IsEdit === false);  
+                        $("#pnlServiceItemLink").show();
+                        $("#btnSaveServiceItem").show();
                     });
-                    //}
                 }
                 else {
-                    $("#dvServiceItemLink").hide();
-                    fnClearFields();
+                    $("#pnlServiceItemLink").hide();
                 }
             }
         }
     });
 }
-
 
 function fnGridLoadServiceItemLink(ServiceId) {
 
@@ -138,102 +108,83 @@ function fnGridLoadServiceItemLink(ServiceId) {
     $("#jqgServiceItemLink").jqGrid('GridUnload');
     $("#jqgServiceItemLink").jqGrid({
         url: URL,
-        mtype: 'Post',
         datatype: 'json',
-        contentType: 'application/json; charset=utf-8',
+        mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.ServiceClass, localization.ServiceId, localization.SKUID, localization.ItemDescription,localization.Quantity, localization.Active],
+        colNames: [localization.BusinessKey, localization.ServiceClass, localization.ServiceId, localization.SKUID, localization.SKUType, localization.ItemDescription,localization.Quantity, localization.Active],
         colModel: [
             { name: "BusinessKey", width: 70, editable: false, align: 'left', hidden: true },
             { name: "ServiceClass", width: 70, editable: false, align: 'left', hidden: true },
             { name: "ServiceID", width: 70, editable: false, align: 'left', hidden: true },
             { name: "SKUID", width: 70, editable: false, align: 'left', hidden: true },
+            { name: "SKUType", width: 70, editable: false, align: 'left', hidden: true },
             { name: "ItemDescription", width: 270, editable: false, align: 'left', hidden: false },
-            //{ name: "Quantity", width: 90, editable: true, align: 'left', hidden: false, disabled: false },
             {
                 name: 'Quantity', index: 'Quantity', editable: true, edittype: "text", width: 150,
                 editoptions: { maxlength: 10, onkeypress: 'return CheckDigits(event)' }
             },
             { name: "ActiveStatus", editable: false, width: 100, align: 'center', hidden: true, resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center', editable: true,
-            //    formatter: "checkbox", formatoptions: { disabled: false },
-            //    edittype: "checkbox", editoptions: { value: "true:false" }
-            //},
         ],
-        pager: "#jqpServiceItemLink",
         rowNum: 10,
-        rowList: [10, 20, 50, 100],
-        rownumWidth: 55,
-        loadonce: true,
+        rowList: [10, 20, 30, 50],
+        emptyrecords: "No records to Veiw",
+        pager: "#jqpServiceItemLink",
         viewrecords: true,
         gridview: true,
-        rownumbers: true,
+        rownumbers: false,
         height: 'auto',
-        align: "left",
         width: 'auto',
+        scroll: false,
         autowidth: true,
         shrinkToFit: true,
-        scrollOffset: 0,
+        forceFit: true,
+        loadonce: true,
         cellEdit: true,
         editurl: 'url',
         cellsubmit: 'clientArray',
-        caption: localization.ServiceItemLink,
         loadComplete: function (data) {
-            //SetGridControlByAction();
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         },
         onSelectRow: function (rowid, status, e) {
         },
     }).jqGrid('navGrid', '#jqpServiceItemLink', { add: false, edit: false, search: false, del: false, refresh: false });
-    //}).jqGrid('navGrid', '#jqpServiceItemLink', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpServiceItemLink', {
-    //    caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid('#jqgServiceItemLink')
-    //});
-    //fnAddGridSerialNoHeading();
 }
 
-//function SetGridControlByAction() {
-//    if (_userFormRole.IsInsert === false) {
-//        $('#jqgAdd').addClass('ui-state-disabled');
-//    }
-
-//}
-
-
 function fnSaveServiceItemLink() {
+    //debugger;
     if (IsStringNullorEmpty($("#cboBusinessKey").val()) || $('#cboBusinessKey').val() == '0') {
-        fnAlert("w", "EMI_03_00", "UI0064", errorMsg_cr.BusinessLocation_E2);
+        fnAlert("w", "EMI_03_00", "UI0064", errorMsg.BusinessLocation_E4);
         return;
     }
     if (IsStringNullorEmpty($("#cboServiceClass").val()) || $('#cboServiceClass').val() == '0') {
-        fnAlert("w", "EMI_03_00", "UI0064", errorMsg_cr.BusinessLocation_E2);
+        fnAlert("w", "EMI_03_00", "UI0332", errorMsg.serviceclass_E5);
         return;
     }
     if (ServiceId == '0') {
-        fnAlert("w", "EMI_03_00", "UI0064", errorMsg_cr.BusinessLocation_E2);
+        fnAlert("w", "EMI_03_00", "UI0333", errorMsg.service_E6);
         return;
     }
-    $("#jqpServiceItemLink").jqGrid('editCell', 0, 0, false);
+    $("#jqgServiceItemLink").jqGrid('editCell', 0, 0, false);
     var r_doc = [];
-    var ids = jQuery("#jqpServiceItemLink").jqGrid('getDataIDs');
+    var ids = '';
+    ids = jQuery("#jqgServiceItemLink").jqGrid('getDataIDs');
     for (var i = 0; i < ids.length; i++) {
         var rowId = ids[i];
-        var rowData = jQuery('#jqpServiceItemLink').jqGrid('getRowData', rowId);
+        var rowData = jQuery('#jqgServiceItemLink').jqGrid('getRowData', rowId);
 
         r_doc.push({
             BusinessKey: rowData.BusinessKey,
-            ServiceClass: rowData.ItemCode,
-            ServiceId: rowData.StoreCode,
-            Skuid: rowData.Skuid,
-            Skutype: rowData.Skutype,
+            ServiceClass: rowData.ServiceClass,
+            ServiceID: rowData.ServiceID,
+            SKUID: rowData.SKUID,
+            SKUType: rowData.SKUType,
             Quantity: rowData.Quantity,
-            ActiveStatus: rowData.ActiveStatus
         });
     }
 
     if (r_doc.length <= 0) {
-        fnAlert("w", "EMI_03_00", "UI0308", errorMsg.Documentcontrol_E3);
+        fnAlert("w", "EMI_03_00", "UI0334", errorMsg.gridItem_E7);
         return;
     }
 
@@ -267,9 +218,22 @@ function fnClearFields() {
     $('#cboBusinessKey').selectpicker('refresh');
     $('#cboServiceClass').val('');
     $('#cboServiceClass').selectpicker('refresh');
-    //eSyaParams.ClearValue();
+    
+    $('#jstServiceItemLink').jstree('destroy');
 }
 
+function fnExpandAll() {
+    $('#jstServiceItemLink').jstree('open_all');
+}
+
+function fnCollapseAll() {
+    $("#pnlServiceItemLink").hide();
+    $('#jstServiceItemLink').jstree('close_all');
+}
+
+function fnRefreshGridData() {
+    $("#jstServiceItemLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
 
 function fnRefreshGrid(id) {
     $(id).setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');

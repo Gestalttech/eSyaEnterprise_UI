@@ -529,7 +529,7 @@ function fnLoadPortfolioStoreBusinessLinkGrid() {
 function fnSaveBusinessItemStoreLink() {
     if (IsStringNullorEmpty(businesskey) || businesskey == '0') {
 
-        fnAlert("w", "EMI_02_00", "UI0064", errorMsg.Location_E1);
+        fnAlert("w", "EMI_02_00", "UI0064", errorMsg.BusinessLocation_E10);
         return;
     }
     if ($("#txtItemCode").val().trim().length <= 0) {
@@ -552,7 +552,7 @@ function fnSaveBusinessItemStoreLink() {
     }
 
     if (r_doc.length <= 0) {
-        fnAlert("w", "EMI_02_00", "UI0308", errorMsg.Documentcontrol_E3);
+        fnAlert("w", "EMI_02_00", "UI0335", errorMsg.gridStore_E11);
         return;
     }
 
