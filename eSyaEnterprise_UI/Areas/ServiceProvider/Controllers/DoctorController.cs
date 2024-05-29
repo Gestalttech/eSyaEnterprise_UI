@@ -480,24 +480,6 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         }
         #endregion
 
-        #region Address
-
-        [Area("ServiceProvider")]
-        public IActionResult _Address()
-        {
-            return View();
-        }
-        #endregion
-
-        #region Statutory Details
-        [Area("ServiceProvider")]
-        public IActionResult _StatutoryDetails()
-        {
-            return View();
-        }
-
-        #endregion
-
         #region Business Link
         [Area("ServiceProvider")]
         public IActionResult _BusinessLink()
@@ -557,6 +539,289 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+        #endregion
+
+        #region Address
+
+        [Area("ServiceProvider")]
+        public IActionResult _Address()
+        {
+            return View();
+        }
+        /// <summary>
+        /// Get Doctor Linked Business Location DDL
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDoctorLinkWithBusinessLocation(int doctorId)
+        {
+            try
+            {
+                var response =await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorBusinessLink>>("DoctorMaster/GetDoctorLinkWithBusinessLocation?doctorId=" + doctorId);
+                if (response.Status)
+                {
+                    return Json(response.Data);
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = response.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get ISD Code by Business key.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetISDCodesbyBusinessKey(int businessKey)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyBusinessKey?businessKey=" + businessKey);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data.Count > 0)
+                    {
+                        foreach (var i in serviceResponse.Data)
+                        {
+
+                            //i.CountryName = "<div  style=\"float: left;\"><img src='" + this.Request.PathBase + '/' + i.CountryFlag + "'/></div>" + '(' + '+' + i.Isdcode + ')' + i.CountryName;
+                            i.CountryFlag = this.Request.PathBase + "/" +i.CountryFlag;
+                            i.CountryName = i.CountryName;
+                            i.Isdcode = i.Isdcode;
+
+                        }
+                        var res = serviceResponse.Data.GroupBy(x => x.Isdcode).Select(y => y.First()).Distinct();
+                        return Json(res);
+
+                    }
+                    else
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodesbyBusinessKey:For businessKey ", businessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetISDCodesbyBusinessKey:For isdCode ", businessKey);
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Get States by ISD Code.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetStatesbyIsdCode(int Isdcode)
+        {
+            try
+            {
+                var parameter = "?Isdcode=" + Isdcode;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorProfileAddress>>("DoctorMaster/GetStatesbyIsdCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetStatesbyIsdCode:For isdCode ", Isdcode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetStatesbyIsdCode:For isdCode ", Isdcode);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get City List by isdCode and stateCode.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetCitiesbyStateCode(int Isdcode, int statecode)
+        {
+            try
+            {
+                var parameter = "?Isdcode=" + Isdcode + "&statecode=" + statecode;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorProfileAddress>>("DoctorMaster/GetCitiesbyStateCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCitiesbyStateCode:For isdCode {0} with stateCode entered {1}", Isdcode, statecode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCitiesbyStateCode:For isdCode {0} with stateCode entered {1}", Isdcode, statecode);
+                throw ex;
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<JsonResult> GetZipDescriptionbyCityCode(int Isdcode, int statecode, int citycode)
+        {
+            try
+            {
+                var parameter = "?Isdcode=" + Isdcode + "&statecode=" + statecode + "&citycode=" + citycode;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorProfileAddress>>("DoctorMaster/GetZipDescriptionbyCityCode" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetZipDescriptionbyCityCode:For isdCode {0} with stateCode entered {1}", Isdcode, statecode, citycode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetZipDescriptionbyCityCode:For isdCode {0} with stateCode entered {1}", Isdcode, statecode, citycode);
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// Get Area  details and Zip Code by Serial Number
+        /// UI Reffered - Doctor Profile Master
+        [HttpGet]
+        public async Task<JsonResult> GetZipCodeAndArea(int Isdcode, string zipcode)
+        {
+            try
+            {
+                var parameter = "?Isdcode=" + Isdcode + "&zipcode=" + zipcode;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorProfileAddress>>("DoctorMaster/GetZipCodeAndArea" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetZipCodeAndArea:For isdCode {0} with stateCode entered {1}", Isdcode, zipcode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetZipCodeAndArea:For isdCode {0} with stateCode entered {1}", Isdcode, zipcode);
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// Get Doctor Area details for select by default dropdown values based on  pincode Text box
+        /// UI Reffered - Doctor Profile Master
+        [HttpGet]
+        public async Task<JsonResult> FillCoumbosbyZipCode(int Isdcode, string zipcode)
+        {
+            try
+            {
+                var parameter = "?Isdcode=" + Isdcode + "&zipcode=" + zipcode;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<DO_DoctorProfileAddress>("DoctorMaster/FillCoumbosbyZipCode" + parameter);
+                if (serviceResponse.Status)
+                {
+
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:FillCoumbosbyZipCode:For isdCode {0} with stateCode cityCode pincode entered {1} ", Isdcode, zipcode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetAreaDetailsbyPincode:For isdCode {0} with  pincode entered {1} }", Isdcode, zipcode);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get Business Address by businessKey.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetDoctorAddressDoctorId(int doctorId)
+        {
+            try
+            {
+                //var parameter = "?Isdcode=" + Isdcode + "&doctorId=" + doctorId + "&businesskey=" + AppSessionVariables.GetSessionBusinessKey(HttpContext);
+
+                var parameter = "?doctorId=" + doctorId;
+
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<DO_DoctorProfileAddress>("DoctorMaster/GetDoctorAddressDoctorId" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDoctorAddressDoctorId:For doctorId ");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDoctorAddressDoctorId:For doctorId ");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Business Address
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateIntoDoctorProfileAddress(DO_DoctorProfileAddress obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertOrUpdateIntoDoctorProfileAddress", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateIntoDoctorProfileAddress:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
+
+        #region Statutory Details
+        [Area("ServiceProvider")]
+        public IActionResult _StatutoryDetails()
+        {
+            return View();
+        }
+
         #endregion
 
         #region Specialty Link

@@ -1,9 +1,10 @@
 ﻿
 function fncboLocation_change() {
-    fnClearDoctorAddress();
     fnBindISDCodes();
 }
-
+function fnISD_change() {
+    BindStates();
+}
 $('input[name="zipcode"]').keyup(function (e) {
     if (/\D/g.test(this.value)) {
         this.value = this.value.replace(/\D/g, '');
@@ -12,7 +13,7 @@ $('input[name="zipcode"]').keyup(function (e) {
 
 function fnGetDoctorAddressbyDoctorId() {
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetDoctorAddressDoctorId?Isdcode=' + $("#cboIsdcode").val() + '&doctorId=' + $("#txtDoctorId").val(),
+        url: getBaseURL() + '/Doctor/GetDoctorAddressDoctorId?Isdcode=' + $("#cboIsdcode").val() + '&doctorId=' + $("#txtDoctorId").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -80,7 +81,7 @@ function BindStates() {
     $("#cboState").empty();
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetStatesbyIsdCode?Isdcode=' + $("#cboIsdcode").val(),
+        url: getBaseURL() + '/Doctor/GetStatesbyIsdCode?Isdcode=' + $("#cboIsdcode").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -115,7 +116,7 @@ function BindCities() {
 
     $("#cboCity").empty();
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetCitiesbyStateCode?Isdcode=' + $("#cboIsdcode").val() + '&statecode=' + $("#cboState").val(),
+        url: getBaseURL() + '/Doctor/GetCitiesbyStateCode?Isdcode=' + $("#cboIsdcode").val() + '&statecode=' + $("#cboState").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -153,7 +154,7 @@ function BindZipDescriptions() {
     $("#cboZipDesc").empty();
     $.ajax({
 
-        url: getBaseURL() + '/Doctors/GetZipDescriptionbyCityCode?Isdcode=' + $("#cboIsdcode").val() + "&StateCode=" + $('#cboState').val()
+        url: getBaseURL() + '/Doctor/GetZipDescriptionbyCityCode?Isdcode=' + $("#cboIsdcode").val() + "&StateCode=" + $('#cboState').val()
             + "&CityCode=" + $('#cboCity').val(),
         type: 'GET',
         dataType: 'json',
@@ -192,7 +193,7 @@ function fnBindZipCodeAndArea() {
 
     $("#cboArea").empty();
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetZipCodeAndArea?Isdcode=' + $("#cboIsdcode").val()
+        url: getBaseURL() + '/Doctor/GetZipCodeAndArea?Isdcode=' + $("#cboIsdcode").val()
             + "&zipcode=" + $('#cboZipDesc').val(),
         type: 'GET',
         dataType: 'json',
@@ -228,7 +229,7 @@ $('#txtZipCode').blur(function () {
 
     if (!IsStringNullorEmpty($("#txtZipCode").val()) && $("#txtZipCode").val() !== '0') {
         $.ajax({
-            url: getBaseURL() + '/Doctors/FillCoumbosbyZipCode?Isdcode=' + $("#cboIsdcode").val() + '&zipcode=' + $("#txtZipCode").val(),
+            url: getBaseURL() + '/Doctor/FillCoumbosbyZipCode?Isdcode=' + $("#cboIsdcode").val() + '&zipcode=' + $("#txtZipCode").val(),
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -298,7 +299,7 @@ function fnSaveDoctorProfileAddress() {
     };
     $("#btnSaveDoctorProfileAddress").attr('disabled', true);
     $.ajax({
-        url: getBaseURL() + '/Doctors/InsertOrUpdateIntoDoctorProfileAddress',
+        url: getBaseURL() + '/Doctor/InsertOrUpdateIntoDoctorProfileAddress',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -362,7 +363,7 @@ function fnBindISDCodes() {
     $("#cboIsdcode").empty();
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetISDCodesbyBusinessKey?businessKey=' + $("#cboLocation").val(),
+        url: getBaseURL() + '/Doctor/GetISDCodesbyBusinessKey?businessKey=' + $("#cboLocation").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -375,15 +376,19 @@ function fnBindISDCodes() {
                 //refresh each time
                 $("#cboIsdcode").empty();
                 $("#cboIsdcode").append($("<option value='0'> Select </option>"));
-                for (var i = 0; i < data.length; i++) {
+                var $select = $("#cboIsdcode");
 
-                    $("#cboIsdcode").append($("<option></option>").val(data[i]["Isdcode"]).html(data[i]["CountryName"]));
+                data.forEach(function (item) {
+                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
+                    $select.append($('<option></option>')
+                        .val(item["Isdcode"])
+                        .attr('data-content', optionContent)
+                        .text(item["CountryName"] +'  (+'+ item["Isdcode"] + ')'));
+                });
 
-                    //$("#cboIsdcode").append($("<option></option>").val(data[i]["Isdcode"]).text(data[i]["Isdcode"] + '-' + data[i]["CountryName"]));
-                }
-                $("#cboIsdcode").val(_cnfISDCode);
-                $("#cboIsdcode").val('0');
-                $('#cboIsdcode').selectpicker('refresh');
+                // Refresh the selectpicker to apply changes
+                $select.selectpicker('refresh');
+
             }
             else {
                 $("#cboIsdcode").empty();
@@ -408,7 +413,7 @@ function fnBindDoctorBusinessLinkList() {
     $("#cboLocation").empty();
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetDoctorLinkWithBusinessLocation?doctorId=' + $("#txtDoctorId").val(),
+        url: getBaseURL() + '/Doctor/GetDoctorLinkWithBusinessLocation?doctorId=' + $("#txtDoctorId").val(),
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
