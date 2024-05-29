@@ -105,7 +105,10 @@ div[role=tablist] {
     font-size: 13px;
     font-family: helvetica-bold,sans-serif;
     background: linear-gradient(to right,#fffcec,#fff3dc);
-    box-shadow:none;
+    box-shadow: none;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 98;
 }
 .tab-content-inner{
     overflow: hidden auto;

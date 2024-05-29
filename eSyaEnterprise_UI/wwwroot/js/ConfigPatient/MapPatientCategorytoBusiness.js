@@ -57,6 +57,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
         forceFit: true,
         scrollOffset: 0,
         cellEdit: true,
+        caption: localization.MapPatientCategoryBusiness,
         editurl: 'url',
         cellsubmit: 'clientArray',
         

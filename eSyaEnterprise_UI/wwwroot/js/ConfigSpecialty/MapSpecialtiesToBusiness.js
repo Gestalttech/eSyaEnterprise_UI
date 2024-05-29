@@ -3,7 +3,7 @@ var prevSelectedID;
 
 $(document).ready(function () {
     $("#pnlMainMenu").hide();
-    fnTreeSize();
+    
 });
 
 function fnLoadSpecialtyLink() {
@@ -23,6 +23,7 @@ function fnCreateSpecialtyTree() {
             $('#jstSpecialtyClinicLink').jstree({
                 core: { 'data': result, 'check_callback': true, 'multiple': true }
             });
+            fnTreeSize("#jstSpecialtyClinicLink");
         }
     });
 
@@ -92,14 +93,7 @@ function fnCreateSpecialtyTree() {
     });
 }
 
-function fnTreeSize() {
-    $("#jstSpecialtyClinicLink").css({
-        'height': $(window).innerHeight() - 136,
-        'overflow': 'auto'
-    });
-}
-
-function fnSpecialtyParameter(specialtyId) {
+ function fnSpecialtyParameter(specialtyId) {
 
     fnFillSpecialtyDetail(specialtyId);
     eSyaParams.ClearValue();
@@ -278,6 +272,6 @@ function fnLoadAgeRangeGrid() {
         }
     });
     fnAddGridSerialNoHeading();
-    fnTreeSize();
+    fnTreeSize("#jstSpecialtyClinicLink");
 
 }

@@ -3,7 +3,6 @@ var prevSelectedID;
 
 $(document).ready(function () {
     $("#pnlMainMenu").hide();
-    fnTreeSize();
     fnLoadSpecialtyCode();
     $('#chkActiveStatus').parent().addClass("is-checked");
 });
@@ -16,6 +15,7 @@ function fnLoadSpecialtyCode() {
             $('#jstSpecialtyCode').jstree({
                 core: { 'data': result, 'check_callback': true, 'multiple': false }
             });
+            fnTreeSize("#jstSpecialtyCode");
         }
     });
 
@@ -381,6 +381,6 @@ function fnLoadAgeRangeGrid() {
         }
     });
 
-    fnTreeSize();
+    fnTreeSize("#jstSpecialtyCode");
 
 }
