@@ -21,7 +21,7 @@ function fnCboISDCodes_change() {
 function GetDoctorStatutoryDetails() {
     $("#jqgDoctorProfileStatutoryDetails").jqGrid('GridUnload');
     $("#jqgDoctorProfileStatutoryDetails").jqGrid({
-        url: getBaseURL() + '/Doctors/GetDoctorStatutoryDetails?doctorId=' + $("#txtDoctorId").val() + '&isdCode=' + $("#cboStatutoryDetailsIsdcode").val(),
+        url: getBaseURL() + '/Doctor/GetDoctorStatutoryDetails?doctorId=' + $("#txtDoctorId").val() + '&isdCode=' + $("#cboStatutoryDetailsIsdcode").val(),
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -133,8 +133,8 @@ function fnSaveDoctorStatutoryDetails() {
                 StatutoryCode: gvT[i]['StatutoryCode'],
                 StatutoryValue: gvT[i]['StatutoryValue'],
                 TaxPerc: gvT[i]['TaxPerc'],
-                EffectiveFrom: gvT[i]['EffectiveFrom'],
-                EffectiveTill: gvT[i]['EffectiveTill'],
+                EffectiveFrom: GetGridDate(gvT[i]['EffectiveFrom']),
+                EffectiveTill: GetGridDate(gvT[i]['EffectiveTill']),
                 ActiveStatus: gvT[i]['ActiveStatus']
             }
             obj.push(bu_bd);
@@ -144,7 +144,7 @@ function fnSaveDoctorStatutoryDetails() {
     $("#btnSaveDoctorStatutoryDetails").attr('disabled', true);
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/InsertOrUpdateDoctorStatutoryDetails',
+        url: getBaseURL() + '/Doctor/InsertOrUpdateDoctorStatutoryDetails',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -180,7 +180,7 @@ function fnBindDoctorStatutoryISDBusinessLink() {
     $("#cboStatutoryDetailsIsdcode").empty();
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetISDCodesbyDoctorId?doctorId=' + $("#txtDoctorId").val(),
+        url: getBaseURL() + '/Doctor/GetISDCodesbyDoctorId?doctorId=' + $("#txtDoctorId").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -189,21 +189,30 @@ function fnBindDoctorStatutoryISDBusinessLink() {
         },
         //success: function (response, data) {
         success: function (data) {
+           
             if (data != null) {
                 //refresh each time
                 $("#cboStatutoryDetailsIsdcode").empty();
                 $("#cboStatutoryDetailsIsdcode").append($("<option value='0'> Select </option>"));
-                for (var i = 0; i < data.length; i++) {
+                var $select = $("#cboStatutoryDetailsIsdcode");
 
-                    $("#cboStatutoryDetailsIsdcode").append($("<option></option>").val(data[i]["Isdcode"]).html(data[i]["CountryName"]));
+                data.forEach(function (item) {
+                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
+                    $select.append($('<option></option>')
+                        .val(item["Isdcode"])
+                        .attr('data-content', optionContent)
+                        .text(item["CountryName"] + '  (+' + item["Isdcode"] + ')'));
+                });
 
+                // Refresh the selectpicker to apply changes
+                $select.selectpicker('refresh');
 
-                }
-                $('#cboStatutoryDetailsIsdcode').selectpicker('refresh');
             }
             else {
                 $("#cboStatutoryDetailsIsdcode").empty();
                 $("#cboStatutoryDetailsIsdcode").append($("<option value='0'> Select </option>"));
+                $("#cboStatutoryDetailsIsdcode").val(_cnfISDCode);
+                $("#cboStatutoryDetailsIsdcode").val('0');
                 $('#cboStatutoryDetailsIsdcode').selectpicker('refresh');
             }
         },
@@ -213,40 +222,3 @@ function fnBindDoctorStatutoryISDBusinessLink() {
 
 
 }
-
-
-//function fncboBusinessKey_change() {
-//    $("#cboStatutoryDetailsIsdcode").empty();
-
-//    $.ajax({
-//        url: getBaseURL() + '/Doctors/GetISDCodesbyBusinessKey?businessKey=' + $("#cboBusinessLocation").val(),
-//        type: 'GET',
-//        dataType: 'json',
-//        contentType: 'application/json; charset=utf-8',
-//        error: function (error) {
-//           fnAlert("e", "", error.StatusCode, error.statusText);
-//        },
-
-//        success: function (data) {
-//            if (data != null) {
-//                //refresh each time
-//                $("#cboStatutoryDetailsIsdcode").empty();
-//                $("#cboStatutoryDetailsIsdcode").append($("<option value='0'> Select </option>"));
-//                for (var i = 0; i < data.length; i++) {
-
-//                    $("#cboStatutoryDetailsIsdcode").append($("<option></option>").val(data[i]["Isdcode"]).text(data[i]["Isdcode"] + '-'+ data[i]["CountryName"]));
-//                }
-//                $('#cboStatutoryDetailsIsdcode').selectpicker('refresh');
-//            }
-//            else {
-//                $("#cboStatutoryDetailsIsdcode").empty();
-//                $("#cboStatutoryDetailsIsdcode").append($("<option value='0'> Select </option>"));
-//                $('#cboStatutoryDetailsIsdcode').selectpicker('refresh');
-//            }
-//        },
-//        async: false,
-//        processData: false
-//    });
-
-
-//}

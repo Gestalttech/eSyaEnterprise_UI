@@ -821,6 +821,148 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         {
             return View();
         }
+        /// <summary>
+        ///Get Doctor Statutory details by IsdCode
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDoctorStatutoryDetails(int doctorId, int isdCode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorStatutoryDetails>>("DoctorMaster/GetDoctorStatutoryDetails?doctorId=" + doctorId + "&isdCode=" + isdCode);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDoctorStatutoryDetails:For doctorId {0} and ISDCode {1}", doctorId, isdCode);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDoctorStatutoryDetails:For BusinessKey {0} and ISDCode {1}", doctorId, isdCode);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Insert Into Doctor Statutory details
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateDoctorStatutoryDetails(List<DO_DoctorStatutoryDetails> obj)
+        {
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertOrUpdateDoctorStatutoryDetails", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateDoctorStatutoryDetails:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateDoctorStatutoryDetails:params:" + JsonConvert.SerializeObject(obj));
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get ISD Code by Doctor Id.
+        /// </summary>
+        [HttpGet]
+        public async Task<JsonResult> GetISDCodesbyDoctorId(int doctorId)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyDoctorId?doctorId=" + doctorId);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data.Count > 0)
+                    {
+                        foreach (var i in serviceResponse.Data)
+                        {
+                            //i.CountryName = "<div  style=\"float: left;\"><img src='" + this.Request.PathBase + '/' + i.CountryFlag + "'/></div>" + '(' + '+' + i.Isdcode + ')' + i.CountryName;
+
+                            //i.DomainName = this.Request.PathBase;
+                            i.CountryFlag = this.Request.PathBase + "/" + i.CountryFlag;
+                            i.CountryName = i.CountryName;
+                            i.Isdcode = i.Isdcode;
+                        }
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodesbyDoctorId:For DoctorId ", doctorId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetISDCodesbyDoctorId:For DoctorId ", doctorId);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get ISD Code by Business key.
+        /// </summary>
+        //[HttpGet]
+        //public async Task<JsonResult> GetISDCodesbyBusinessKey(int businessKey)
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyBusinessKey?businessKey=" + businessKey);
+
+        //        if (serviceResponse.Status)
+        //        {
+        //            if (serviceResponse.Data.Count > 0)
+        //            {
+        //                foreach (var i in serviceResponse.Data)
+        //                {
+
+        //                    i.CountryName = "<div  style=\"float: left;\"><img src='" + this.Request.PathBase + '/' + i.CountryFlag + "'/></div>" + '(' + '+' + i.Isdcode + ')' + i.CountryName;
+
+        //                    i.DomainName = this.Request.PathBase;
+        //                }
+        //                var res = serviceResponse.Data.GroupBy(x => x.Isdcode).Select(y => y.First()).Distinct();
+        //                return Json(res);
+
+        //            }
+        //            else
+        //            {
+        //                return Json(serviceResponse.Data);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodesbyBusinessKey:For businessKey ", businessKey);
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetISDCodesbyBusinessKey:For isdCode ", businessKey);
+        //        throw ex;
+        //    }
+        //}
 
         #endregion
 
