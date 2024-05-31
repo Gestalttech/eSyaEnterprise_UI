@@ -13,7 +13,7 @@
         public string TerminalID { get; set; }
         public int IsdCode { get; set; }
     }
-    public class DO_ISDCodes
+    public class DO_CountryISDCodes
     {
         public int Isdcode { get; set; }
         public string MobileNumberPattern { get; set; }

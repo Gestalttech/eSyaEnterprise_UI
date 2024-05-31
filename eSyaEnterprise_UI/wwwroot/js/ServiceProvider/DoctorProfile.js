@@ -168,6 +168,9 @@ function fnGridAddDoctorProfile() {
     fnBindDoctorBusinessLinkList();
     fnGetDoctorAddressbyDoctorId();
     fnBindDoctorStatutoryISDBusinessLink();
+    fnBindDoctorLocationbyDoctorId();
+    fnGridDoctorSpecialtyLink();
+    fnLoadClinicBusinessList();
     //$('#Photoimage').val('');
     //$('#imgPhotoimageblah').removeAttr('src');
 
@@ -340,7 +343,12 @@ function fnFillDataMasterData(data) {
     fnBindDoctorBusinessLinkList();
     fnGetDoctorAddressbyDoctorId();
     fnBindDoctorStatutoryISDBusinessLink();
-    //fnGridDoctorSpecialtyLink();
+    fnBindDoctorLocationbyDoctorId();
+    fnGridDoctorSpecialtyLink();
+    fnLoadClinicBusinessList();
+    //need to uncomment
+    //fnLoadClinicBusinessList();
+
     //fnLoadDoctorLeaveGrid();
 
     //fnLoadDoctorParameters();

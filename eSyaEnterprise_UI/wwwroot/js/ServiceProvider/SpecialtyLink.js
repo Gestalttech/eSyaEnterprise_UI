@@ -8,7 +8,7 @@
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgDelete: { name: "D-Activate", icon: "delete", callback: function (key, opt) { fnDeleteSpecialty(event) } },
+            jqgDelete: { name: "D-Activate", icon: "delete", callback: function (key, opt) { fnUpdateSpecialty(event) } },
         }
         // there's more, have a look at the demos and docs...
     });
@@ -19,10 +19,9 @@ function fnGridDoctorSpecialtyLink() {
     $("#jqgDoctorSpecialtyLink").jqGrid('GridUnload');
     $("#jqgDoctorSpecialtyLink").jqGrid(
         {
-            url: getBaseURL() + '/Doctors/GetSpecialtyListByDoctorId?doctorId=' + $('#txtDoctorId').val(),
+            url: getBaseURL() + '/Doctor/GetSpecialtyListByDoctorId?doctorId=' + $('#txtDoctorId').val(),
             datatype: 'json',
             mtype: 'POST',
-            //ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
             colNames: [localization_sl.BusinessKey, localization_sl.BusinessLocation, localization_sl.SpecialtyID, localization_sl.Specialty, localization_sl.Active, localization_sl.Actions],
             colModel: [
                 { name: "BusinessKey", width: 170, editable: true, align: 'left', hidden: true },
@@ -32,12 +31,7 @@ function fnGridDoctorSpecialtyLink() {
                 {
                     name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center', formatter: "checkbox", edittype: "checkbox", editoptions: { value: "true:false" }
                 },
-                //{
-                //    name: 'delete', search: false, align: 'center', width: 100, sortable: false, resizable: false,
-                //    formatter: function (cellValue, options, rowdata, action) {
-                //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid cancel-button" id="jqgDSPDelete", onclick="return fnDeleteSpecialty(event)"><i class="far fa-trash-alt"></i> ' + localization.Delete + ' </button>'
-                //    }
-                //},
+               
                 {
                     name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                     formatter: function (cellValue, options, rowdata, action) {
@@ -62,7 +56,7 @@ function fnGridDoctorSpecialtyLink() {
             scrollOffset: 0,
 
             loadComplete: function (data) {
-                SetDoctorSpecialtyGridControlByAction("jqgDoctorSpecialtyLink");
+              
                 $(".ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-hdiv,.ui-jqgrid-bdiv,.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-pager").css('width', '100%');
             },
 
@@ -99,7 +93,7 @@ function fnGridRefreshDoctorSpecialtyLinkGrid() {
     $("#jqgDoctorSpecialtyLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
 }
 
-function fnDeleteSpecialty(e) {
+function fnUpdateSpecialty(e) {
 
     var rowid = $("#jqgDoctorSpecialtyLink").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDoctorSpecialtyLink').jqGrid('getRowData', rowid);
@@ -114,7 +108,7 @@ function fnDeleteSpecialty(e) {
         }
 
         $.ajax({
-            url: getBaseURL() + '/Doctors/UpdateDoctorSpecialtyLink',
+            url: getBaseURL() + '/Doctor/UpdateDoctorSpecialtyLink',
             type: 'POST',
             datatype: 'json',
             data: { obj },
@@ -146,7 +140,7 @@ function fnDeleteSpecialty(e) {
 function fnLoadSpecialty() {
     $('#cboSpecialty').selectpicker('refresh');
     $.ajax({
-        url: getBaseURL() + '/Facilities/Specialty/GetSpecialtyListForBusinessKey?businessKey=' + $('#cbospecialtyLocation').val(),
+        url: getBaseURL() + '/Doctor/GetSpecialtyListForBusinessKey?businessKey=' + $('#cbospecialtyLocation').val(),
         type: 'POST',
         datatype: 'json',
         async: false,
@@ -210,7 +204,7 @@ function fnSaveDoctorSpecialtyLink() {
     }
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/InsertDoctorSpecialtyLink',
+        url: getBaseURL() + '/Doctor/InsertDoctorSpecialtyLink',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -240,25 +234,11 @@ function fnSaveDoctorSpecialtyLink() {
     });
 }
 
-function SetDoctorSpecialtyGridControlByAction(jqg) {
-
-
-    if (_formDelete === false) {
-        var eleDisable = document.querySelectorAll('#jqgDSPDelete');
-        for (var i = 0; i < eleDisable.length; i++) {
-            eleDisable[i].disabled = true;
-            eleDisable[i].className = "ui-state-disabled";
-        }
-
-    }
-}
-
-
 function fnBindDoctorLocationbyDoctorId() {
     $('#cbospecialtyLocation').selectpicker('refresh');
     $.ajax({
         type: "Post",
-        url: getBaseURL() + '/Doctors/GetDoctorLinkWithBusinessLocation?doctorId=' + $('#txtDoctorId').val(),
+        url: getBaseURL() + '/Doctor/GetDoctorLinkWithBusinessLocation?doctorId=' + $('#txtDoctorId').val(),
         dataType: "json",
         success: function (response, data) {
 

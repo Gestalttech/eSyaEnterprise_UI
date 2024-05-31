@@ -14,7 +14,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #region Config Facalities
 
         public const int Clinic = 83;
-        //public const int ConsultationType = 84; not used
+        public const int ConsultationType = 84; 
         #endregion
 
         #region Manage Inventory

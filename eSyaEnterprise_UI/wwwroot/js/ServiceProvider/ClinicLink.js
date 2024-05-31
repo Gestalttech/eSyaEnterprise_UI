@@ -3,16 +3,18 @@
     $('#jstClinicConsultantTree').jstree("destroy");
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetDoctorLocationbyDoctorId?doctorId=' + $('#txtDoctorId').val(),
+        //url: getBaseURL() + '/Doctors/GetDoctorLocationbyDoctorId?doctorId=' + $('#txtDoctorId').val(),
+        url: getBaseURL() + '/Doctor/GetDoctorLinkWithBusinessLocation?doctorId=' + $('#txtDoctorId').val(),
         type: 'POST',
         datatype: 'json',
         async: false,
         success: function (data) {
+           
             var options = $("#cboClinicBusinessLocation");
             $("#cboClinicBusinessLocation").empty();
             $("#cboClinicBusinessLocation").append($("<option value='0'>Choose Location</option>"));
             $.each(data, function () {
-                options.append($("<option />").val(this.BusinessKey).text(this.LocationDescription));
+                options.append($("<option />").val(this.BusinessKey).text(this.BusinessLocation));
             });
             if ($('#cboClinicBusinessLocation option').length == 2) {
                 $('#cboClinicBusinessLocation').prop('selectedIndex', 1);
@@ -37,7 +39,7 @@ function fnLoadClinicSpecialty() {
     $('#cboClinicSpecialty').selectpicker('refresh');
 
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetSpecialtyListByBKeyDoctorId?businessKey=' + $('#cboClinicBusinessLocation').val() + '&doctorId=' + $('#txtDoctorId').val(),
+        url: getBaseURL() + '/Doctor/GetSpecialtyListByBKeyDoctorId?businessKey=' + $('#cboClinicBusinessLocation').val() + '&doctorId=' + $('#txtDoctorId').val(),
         type: 'POST',
         datatype: 'json',
         async: false,
@@ -72,7 +74,7 @@ function fnLoadClinicSpecialty() {
 function fnLoadClinicConsultantTree() {
     $('#jstClinicConsultantTree').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/Doctors/GetClinicConsultantTreeList?businessKey=' + $("#cboClinicBusinessLocation").val() + '&specialtyId=' + $('#cboClinicSpecialty').val() + '&doctorId=' + $('#txtDoctorId').val(),
+        url: getBaseURL() + '/Doctor/GetClinicConsultantTreeList?businessKey=' + $("#cboClinicBusinessLocation").val() + '&specialtyId=' + $('#cboClinicSpecialty').val() + '&doctorId=' + $('#txtDoctorId').val(),
         success: function (result) {
 
             $('#jstClinicConsultantTree').jstree({
@@ -134,7 +136,7 @@ function fnSaveClinicDoctorLink() {
     $("#btnSave").attr('disabled', true);
 
     var URL;
-    URL = getBaseURL() + '/Doctors/InsertUpdateDoctorClinicLink';
+    URL = getBaseURL() + '/Doctor/InsertUpdateDoctorClinicLink';
     $.ajax({
         url: URL,
         type: 'POST',

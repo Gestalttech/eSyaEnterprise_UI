@@ -10,6 +10,7 @@ using eSyaEssentials_UI;
 using Newtonsoft.Json;
 using System.Text;
 using System.Text.RegularExpressions;
+using eSyaEnterprise_UI.Models;
 namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
 {
     [SessionTimeout]
@@ -584,7 +585,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyBusinessKey?businessKey=" + businessKey);
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_CountryISDCodes>>("DoctorMaster/GetISDCodesbyBusinessKey?businessKey=" + businessKey);
 
                 if (serviceResponse.Status)
                 {
@@ -885,7 +886,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyDoctorId?doctorId=" + doctorId);
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_CountryISDCodes>>("DoctorMaster/GetISDCodesbyDoctorId?doctorId=" + doctorId);
 
                 if (serviceResponse.Status)
                 {
@@ -921,48 +922,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
             }
         }
 
-        /// <summary>
-        /// Get ISD Code by Business key.
-        /// </summary>
-        //[HttpGet]
-        //public async Task<JsonResult> GetISDCodesbyBusinessKey(int businessKey)
-        //{
-        //    try
-        //    {
-        //        var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("DoctorMaster/GetISDCodesbyBusinessKey?businessKey=" + businessKey);
-
-        //        if (serviceResponse.Status)
-        //        {
-        //            if (serviceResponse.Data.Count > 0)
-        //            {
-        //                foreach (var i in serviceResponse.Data)
-        //                {
-
-        //                    i.CountryName = "<div  style=\"float: left;\"><img src='" + this.Request.PathBase + '/' + i.CountryFlag + "'/></div>" + '(' + '+' + i.Isdcode + ')' + i.CountryName;
-
-        //                    i.DomainName = this.Request.PathBase;
-        //                }
-        //                var res = serviceResponse.Data.GroupBy(x => x.Isdcode).Select(y => y.First()).Distinct();
-        //                return Json(res);
-
-        //            }
-        //            else
-        //            {
-        //                return Json(serviceResponse.Data);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodesbyBusinessKey:For businessKey ", businessKey);
-        //            return Json(new { Status = false, StatusCode = "500" });
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "UD:GetISDCodesbyBusinessKey:For isdCode ", businessKey);
-        //        throw ex;
-        //    }
-        //}
+      
 
         #endregion
 
@@ -973,6 +933,97 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
             return View();
 
         }
+        /// <summary>
+        /// Get Specialty List From Specialty Business Link
+        /// </summary>
+       
+        [HttpPost]
+        public async Task<JsonResult> GetSpecialtyListForBusinessKey(int businessKey)
+        {
+            try
+            {
+                var response =await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyDoctorLink>>("DoctorMaster/GetSpecialtyListForBusinessKey?businessKey=" + businessKey);
+                return Json(response.Data);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        /// <summary>
+        /// Get Business Location List
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetSpecialtyListByDoctorId(int doctorId)
+        {
+            try
+            {
+                var response =await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyDoctorLink>>("DoctorMaster/GetSpecialtyListByDoctorId?doctorId=" + doctorId);
+                if (response.Status)
+                {
+                    return Json(response.Data);
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = response.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert Specialty Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertDoctorSpecialtyLink(DO_SpecialtyDoctorLink obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+
+                var Insertresponse =await _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertDoctorSpecialtyLink", obj);
+                return Json(Insertresponse.Data);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert Specialty Link
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> UpdateDoctorSpecialtyLink(DO_SpecialtyDoctorLink obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+
+                var Insertresponse =await _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/UpdateDoctorSpecialtyLink", obj);
+                return Json(Insertresponse.Data);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+
         #endregion
 
         #region ClinicLink
@@ -982,17 +1033,158 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
             return View();
 
         }
-        #endregion
-
-
-        #region ConsultationRates
-        [Area("ServiceProvider")]
-        public IActionResult _ConsultationRates()
+        /// <summary>
+        /// Get Specialty List
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetSpecialtyListByBKeyDoctorId(int businessKey, int doctorId)
         {
-            return View();
+            try
+            {
+                var response =await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyDoctorLink>>("DoctorMaster/GetSpecialtyListByBKeyDoctorId?businessKey=" + businessKey + "&doctorId=" + doctorId);
+                if (response.Status)
+                {
+                    return Json(response.Data);
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter()
+                    {
+                        Status = false,
+                        StatusCode = response.StatusCode.ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
 
+        [Produces("application/json")]
+        [HttpGet]
+        public async Task<JsonResult> GetClinicConsultantTreeList(int businessKey, int specialtyId, int doctorId)
+        {
+            try
+            {
+                List<jsTreeObject> ClinicConsultantTree = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "CL0",
+                    parent = "#",
+                    text = "Clinics",
+                    //icon = "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false, checkbox_disabled = true, disabled = true }
+                };
+                ClinicConsultantTree.Add(jsObj);
+
+                var clinicResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorClinic>>("DoctorMaster/GetDoctorClinicLinkList?businessKey=" + businessKey + "&specialtyId=" + specialtyId + "&doctorId=" + doctorId);
+                if (clinicResponse.Status)
+                {
+                    if (clinicResponse.Data != null)
+                    {
+                        List<DO_OPClinic> clinic_list = clinicResponse.Data.Select(x => new DO_OPClinic { ConsultationId = x.ConsultationId, ConsultationDesc = x.ConsultationDesc }).GroupBy(y => y.ConsultationId, (key, grp) => grp.FirstOrDefault()).ToList();
+                        foreach (DO_OPClinic cl in clinic_list)
+                        {
+                            jsObj = new jsTreeObject
+                            {
+                                id = cl.ConsultationId.ToString(),
+                                text = cl.ConsultationDesc.ToString(),
+                                //icon = "/images/jsTree/openfolder.png",
+                                parent = "CL0",
+                                state = new stateObject { opened = true, selected = false, checkbox_disabled = true, disabled = true },
+                            };
+                            ClinicConsultantTree.Add(jsObj);
+                        }
+
+                        var conusltant_list = clinicResponse.Data;
+                        foreach (var co in conusltant_list.Where(w => conusltant_list.Any(f => f.ConsultationId == w.ConsultationId)))
+                        {
+                            jsObj = new jsTreeObject
+                            {
+                                text = co.ClinicDesc,
+                                parent = co.ConsultationId.ToString()
+
+                            };
+                            if (co.BusinessKey > 0)
+                            {
+                                jsObj.id = co.ConsultationId.ToString() + "_" + "Y" + "_" + co.ClinicId;
+                                //jsObj.icon = "/images/jsTree/checkedstate.jpg";
+                                if (co.ActiveStatus)
+                                    jsObj.state = new stateObject { opened = true, selected = true, Checked = true };
+                                else
+                                    jsObj.state = new stateObject { opened = true, selected = false, Checked = false };
+                            }
+                            else
+                            {
+                                jsObj.id = co.ConsultationId.ToString() + "_" + "N" + "_" + co.ClinicId;
+                                //jsObj.icon = "/images/jsTree/fileIcon.png";
+                                jsObj.state = new stateObject { opened = true, selected = false, Checked = false };
+                            }
+
+                            ClinicConsultantTree.Add(jsObj);
+                        }
+                    }
+
+                    return Json(ClinicConsultantTree);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(clinicResponse.Message), "UD:GetClinicConsultantTreeList:For BusinessId {0} , SpecialtyId {1} and DoctorId entered {2}", businessKey, specialtyId, doctorId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetClinicConsultantTreeList:For BusinessId {0} , SpecialtyId {1} and DoctorId entered {2}", businessKey, specialtyId, doctorId);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Insert / Update Doctor Clinic
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertUpdateDoctorClinicLink(List<DO_DoctorClinic> do_cl)
+        {
+            try
+            {
+                do_cl.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    return true;
+                });
+
+                var Insertresponse = await _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/InsertUpdateDoctorClinicLink", do_cl);
+                if (Insertresponse.Status)
+                    return Json(Insertresponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertUpdateDoctorClinicLink:params:" + JsonConvert.SerializeObject(do_cl));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertUpdateDoctorClinicLink:params:" + JsonConvert.SerializeObject(do_cl));
+                throw ex;
+            }
         }
         #endregion
+
+
+        //#region ConsultationRates
+        //[Area("ServiceProvider")]
+        //public IActionResult _ConsultationRates()
+        //{
+        //    return View();
+
+        //}
+        //#endregion
 
         #endregion
     }

@@ -148,6 +148,7 @@
     <Compile Remove="Areas\ProductSetup\Models\DO_SMSConnect.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\ServiceProvider\Controllers\ClinicServiceController.cs" />
+    <Compile Remove="Areas\ServiceProvider\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\Stores\Controllers\ConfigStoresController.cs" />
     <Compile Remove="Areas\Stores\Controllers\RulesController.cs" />
     <Compile Remove="Areas\Stores\Data\DO_eSyaParameter.cs" />
