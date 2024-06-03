@@ -13,7 +13,7 @@ function fnLoadMappedSpecialty() {
         success: function (response) {
             var options = $("#cboSpecialty");
             $("#cboSpecialty").empty();
-            $("#cboSpecialty").append($("<option value='0'>Choose Specialty</option>"));
+            $("#cboSpecialty").append($("<option value='0'> " +localization.Select+ " </option>"));
             $.each(response, function () {
                 options.append($("<option />").val(this.SpecialtyID).text(this.SpecialtyDesc));
             });
@@ -63,7 +63,7 @@ function fnSaveMapSpecialtyClinic() {
         return;
     }
     if ($('#cboSpecialty').val() == '' || $('#cboSpecialty').val() == '0' || $('#cboSpecialty').val() == "0") {
-        fnAlert("w", "ECP_07_00", "UI0064", "Please Select Specialty");
+        fnAlert("w", "ECP_07_00", "UI0200", erorMsg.Specialty_E2);
         $('#cboSpecialty').focus();
         return;
     }
@@ -102,7 +102,7 @@ function fnSaveMapSpecialtyClinic() {
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveMapSpecialtyClinic").html('<i class="fa fa-save"></i> Save');
+                $("#btnSaveMapSpecialtyClinic").html('<i class="fa fa-save"></i>' + localization.Save);
                 $("#btnSaveMapSpecialtyClinic").attr('disabled', false);
             }
 
