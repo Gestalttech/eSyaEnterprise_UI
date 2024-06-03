@@ -3,11 +3,41 @@ $(document).ready(function () {
     
     
 });
+function fnLoadMappedSpecialty() {
+    $('#cboSpecialty').selectpicker('refresh');
+    $.ajax({
+        url: getBaseURL() + '/Clinic/GetSpecialtyListForBusinessKey?businessKey=' + $('#cboBusinesskey').val(),
+        type: 'POST',
+        datatype: 'json',
+        async: false,
+        success: function (response) {
+            var options = $("#cboSpecialty");
+            $("#cboSpecialty").empty();
+            $("#cboSpecialty").append($("<option value='0'>Choose Specialty</option>"));
+            $.each(response, function () {
+                options.append($("<option />").val(this.SpecialtyID).text(this.SpecialtyDesc));
+            });
 
-function fnLoadMapSpecialtyClinic() {
+            if ($('#cboSpecialty option').length == 2) {
+                $('#cboSpecialty').prop('selectedIndex', 1);
+                $('#cboSpecialty').selectpicker('refresh');
+            } else {
+
+                $("#cboSpecialty").val($('#cboSpecialty option:first').val());
+                $('#cboSpecialty').selectpicker('refresh');
+            }
+            fnLoadMapedSpecialtyClinicConsultationType();
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+
+        }
+    });
+}
+function fnLoadMapedSpecialtyClinicConsultationType() {
     $('#jstMapSpecialtyClinic').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/ConsultationClinics/GetClinicConsultantTreeList?businessKey=' + $("#cboBusinessLocation").val(),
+        url: getBaseURL() + '/Clinic/GetMapedSpecialtyClinicConsultationTypeBySpecialtyID?businessKey=' + $("#cboBusinesskey").val() + '&specialtyId=' + $("#cboSpecialty").val(),
         success: function (result) {
 
             $('#jstMapSpecialtyClinic').jstree({
@@ -27,12 +57,16 @@ function fnLoadMapSpecialtyClinic() {
 
 function fnSaveMapSpecialtyClinic() {
 
-    if ($('#cboBusinessLocation').val() == '') {
+    if ($('#cboBusinesskey').val() == '' || $('#cboBusinesskey').val() == '0' || $('#cboBusinesskey').val() == "0") {
         fnAlert("w", "ECP_07_00", "UI0064", errorMsg.BusinessLocation_E1);
-        $('#cboBusinessLocation').focus();
+        $('#cboBusinesskey').focus();
         return;
     }
-
+    if ($('#cboSpecialty').val() == '' || $('#cboSpecialty').val() == '0' || $('#cboSpecialty').val() == "0") {
+        fnAlert("w", "ECP_07_00", "UI0064", "Please Select Specialty");
+        $('#cboSpecialty').focus();
+        return;
+    }
     var obj = [];
 
     var treeUNodes = $('#jstMapSpecialtyClinic').jstree(true).get_json('#', { 'flat': true });
@@ -40,8 +74,8 @@ function fnSaveMapSpecialtyClinic() {
         if (this.parent != "#" && this.parent != "CL0") {
             var node_ids = this.id.split("_");
             var cc = {
-                BusinessKey: $('#cboBusinessLocation').val(),
-
+                BusinessKey: $('#cboBusinesskey').val(),
+                SpecialtyId: $('#cboSpecialty').val(),
                 //ClinicId: node_ids[0],
                 //ConsultationId: node_ids[2],
                 ConsultationId: node_ids[0],
@@ -55,16 +89,16 @@ function fnSaveMapSpecialtyClinic() {
     $("#btnSaveMapSpecialtyClinic").attr('disabled', true);
 
     var URL;
-    URL = getBaseURL() + '/ConsultationClinics/InsertUpdateOPClinicLink';
+    URL = getBaseURL() + '/Clinic/InsertUpdateDoctorClinicLink';
     $.ajax({
         url: URL,
         type: 'POST',
         datatype: 'json',
-        data: { op_cl: obj },
+        data: { do_cl: obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnLoadClinicConsultantTree();
+                fnLoadMapedSpecialtyClinicConsultationType();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
