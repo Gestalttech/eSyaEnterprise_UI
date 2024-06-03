@@ -57,7 +57,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         {
             try
             {
-                var response = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyBusinessLink>>("DoctorMaster/GetMappedSpecialtyListbyBusinessKey?businessKey=" + businessKey);
+                var response = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyBusinessLink>>("Clinic/GetMappedSpecialtyListbyBusinessKey?businessKey=" + businessKey);
                 return Json(response.Data);
 
             }
@@ -85,7 +85,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
                 };
                 ClinicConsultantTree.Add(jsObj);
 
-                var clinicResponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_MapSpecialtyClinicConsultationType>>("DoctorMaster/GetDoctorClinicLinkList?businessKey=" + businessKey + "&specialtyId=" + specialtyId + "&doctorId=" + doctorId);
+                var clinicResponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_MapSpecialtyClinicConsultationType>>("Clinic/GetDoctorClinicLinkList?businessKey=" + businessKey + "&specialtyId=" + specialtyId + "&doctorId=" + doctorId);
                 if (clinicResponse.Status)
                 {
                     if (clinicResponse.Data != null)
@@ -137,13 +137,13 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(clinicResponse.Message), "UD:GetMapedSpecialtyClinicConsultationTypeBySpecialtyID:For BusinessId {0} , SpecialtyId {1} and DoctorId entered {2}", businessKey, specialtyId, doctorId);
+                    _logger.LogError(new Exception(clinicResponse.Message), "UD:GetMapedSpecialtyClinicConsultationTypeBySpecialtyID:For BusinessId {0} , SpecialtyId {1} and Specialty ID entered {2}", businessKey, specialtyId);
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetMapedSpecialtyClinicConsultationTypeBySpecialtyID:For BusinessId {0} , SpecialtyId {1} and DoctorId entered {2}", businessKey, specialtyId, doctorId);
+                _logger.LogError(ex, "UD:GetMapedSpecialtyClinicConsultationTypeBySpecialtyID:For BusinessId {0} , SpecialtyId {1}", businessKey, specialtyId);
                 throw ex;
             }
         }
@@ -152,7 +152,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         /// Insert / Update Doctor Clinic
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertUpdateDoctorClinicLink(List<DO_MapSpecialtyClinicConsultationType> do_cl)
+        public async Task<JsonResult> InsertUpdateSpecialtyClinicConsultationTypeLink(List<DO_MapSpecialtyClinicConsultationType> do_cl)
         {
             try
             {
@@ -164,19 +164,19 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
                     return true;
                 });
 
-                var Insertresponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorMaster/DO_MapSpecialtyClinicConsultationType", do_cl);
+                var Insertresponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Clinic/InsertUpdateSpecialtyClinicConsultationTypeLink", do_cl);
                 if (Insertresponse.Status)
                     return Json(Insertresponse.Data);
                 else
                 {
-                    _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertUpdateDoctorClinicLink:params:" + JsonConvert.SerializeObject(do_cl));
+                    _logger.LogError(new Exception(Insertresponse.Message), "UD:InsertUpdateSpecialtyClinicConsultationTypeLink:params:" + JsonConvert.SerializeObject(do_cl));
                     return Json(new DO_ReturnParameter() { Status = false, Message = Insertresponse.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:DO_MapSpecialtyClinicConsultationType:params:" + JsonConvert.SerializeObject(do_cl));
+                _logger.LogError(ex, "UD:InsertUpdateSpecialtyClinicConsultationTypeLink:params:" + JsonConvert.SerializeObject(do_cl));
                 throw ex;
             }
         }

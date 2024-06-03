@@ -89,7 +89,7 @@ function fnSaveMapSpecialtyClinic() {
     $("#btnSaveMapSpecialtyClinic").attr('disabled', true);
 
     var URL;
-    URL = getBaseURL() + '/Clinic/InsertUpdateDoctorClinicLink';
+    URL = getBaseURL() + '/Clinic/InsertUpdateSpecialtyClinicConsultationTypeLink';
     $.ajax({
         url: URL,
         type: 'POST',
