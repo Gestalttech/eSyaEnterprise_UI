@@ -28,15 +28,16 @@
     <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
         <div class="form-group">
             <label class="">@Localizer["BusinessLocation"] </label>
-                <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="" data-size="8"
-                        asp-items="@ViewBag.Businesskey"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadMappedSpecialty()">
+                <option value="0"> @Localizer["Select"]</option>
+                </select>
        </div>
     </div>
 
     <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
         <div class="form-group">
             <label class="">@Localizer["Specialty"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="" data-size="8" onchange="">
+            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="" data-size="8" onchange="fnLoadMapedSpecialtyClinicConsultationType()">
                  </select>
         </div>
     </div>
