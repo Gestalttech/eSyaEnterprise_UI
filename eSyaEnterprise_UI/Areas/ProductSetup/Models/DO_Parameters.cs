@@ -12,5 +12,11 @@
         public int UserID { get; set; }
         public string FormId { get; set; }
         public string TerminalID { get; set; }
+        //public List<DropdownKeyValuePair>? lstDropdown { get; set;}
     }
+    //public class DropdownKeyValuePair
+    //{
+    //    public int Key { get; set; }
+    //    public string? Value { get; set; }
+    //}
 }
