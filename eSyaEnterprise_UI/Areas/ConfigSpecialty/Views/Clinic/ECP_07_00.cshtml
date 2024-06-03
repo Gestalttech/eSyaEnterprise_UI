@@ -1,0 +1,76 @@
+﻿  @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ECP_07_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+@section scripts {
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/ConfigSpecialty/MapSpecialtyClinic.js"></script>
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        wait: '@Localizer["wait"]',
+        Save: '@Localizer["Save"]',
+    }
+    var errorMsg = {
+        BusinessLocation_E1: '@Localizer["UI0064"]'
+    }
+</script>
+
+<div class="row">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="">@Localizer["BusinessLocation"] </label>
+                <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="" data-size="8"
+                        asp-items="@ViewBag.Businesskey"></select>
+       </div>
+    </div>
+
+    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label class="">@Localizer["Specialty"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="" data-size="8"
+                     onchange=""></select>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div id="jstMapSpecialtyClinic"></div>
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-6">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnSaveMapSpecialtyClinic" @(userFormRole.IsInsert ? "" : "disabled") onclick="fnSaveMapSpecialtyClinic()">
+                        <i class="fas fa-save"></i> @Localizer["Save"]
+                    </button>
+                </li>
+
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                        <i class="fas fa-expand"></i> @Localizer["ExpandAll"]
+                    </button>
+                </li>
+
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                        <i class="fas fa-compress"></i> @Localizer["CollapseAll"]
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
