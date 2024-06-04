@@ -3,10 +3,10 @@ $(document).ready(function () {
     
     
 });
-function fnLoadMappedSpecialty() {
+function GetMappedSpecialtyListbyBusinessKey() {
     $('#cboSpecialty').selectpicker('refresh');
     $.ajax({
-        url: getBaseURL() + '/Clinic/GetSpecialtyListForBusinessKey?businessKey=' + $('#cboBusinesskey').val(),
+        url: getBaseURL() + '/ConfigSpecialty/Clinic/GetMappedSpecialtyListbyBusinessKey?businessKey=' + $('#cboBusinesskey').val(),
         type: 'POST',
         datatype: 'json',
         async: false,
@@ -37,7 +37,7 @@ function fnLoadMappedSpecialty() {
 function fnLoadMapedSpecialtyClinicConsultationType() {
     $('#jstMapSpecialtyClinic').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/Clinic/GetMapedSpecialtyClinicConsultationTypeBySpecialtyID?businessKey=' + $("#cboBusinesskey").val() + '&specialtyId=' + $("#cboSpecialty").val(),
+        url: getBaseURL() + '/ConfigSpecialty/Clinic/GetMapedSpecialtyClinicConsultationTypeBySpecialtyID?businessKey=' + $("#cboBusinesskey").val() + '&specialtyId=' + $("#cboSpecialty").val(),
         success: function (result) {
 
             $('#jstMapSpecialtyClinic').jstree({
@@ -89,7 +89,7 @@ function fnSaveMapSpecialtyClinic() {
     $("#btnSaveMapSpecialtyClinic").attr('disabled', true);
 
     var URL;
-    URL = getBaseURL() + '/Clinic/InsertUpdateSpecialtyClinicConsultationTypeLink';
+    URL = getBaseURL() + '/ConfigSpecialty/Clinic/InsertUpdateSpecialtyClinicConsultationTypeLink';
     $.ajax({
         url: URL,
         type: 'POST',

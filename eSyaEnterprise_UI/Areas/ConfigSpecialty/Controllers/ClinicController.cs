@@ -51,7 +51,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         /// <summary>
         /// Get Specialty List From Specialty Business Link
         /// </summary>
-
+        [Area("ConfigSpecialty")]
         [HttpPost]
         public async Task<JsonResult> GetMappedSpecialtyListbyBusinessKey(int businessKey)
         {
@@ -66,7 +66,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-
+        [Area("ConfigSpecialty")]
         [Produces("application/json")]
         [HttpGet]
         public async Task<JsonResult> GetMapedSpecialtyClinicConsultationTypeBySpecialtyID(int businessKey, int specialtyId)
@@ -85,7 +85,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
                 };
                 ClinicConsultantTree.Add(jsObj);
 
-                var clinicResponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_MapSpecialtyClinicConsultationType>>("Clinic/GetDoctorClinicLinkList?businessKey=" + businessKey + "&specialtyId=" + specialtyId + "&doctorId=" + doctorId);
+                var clinicResponse = await _eSyaConfigSpecialtyAPIServices.HttpClientServices.GetAsync<List<DO_MapSpecialtyClinicConsultationType>>("Clinic/GetMapedSpecialtyClinicConsultationTypeBySpecialtyID?businessKey=" + businessKey + "&specialtyId=" + specialtyId );
                 if (clinicResponse.Status)
                 {
                     if (clinicResponse.Data != null)
@@ -151,6 +151,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         /// <summary>
         /// Insert / Update Doctor Clinic
         /// </summary>
+        [Area("ConfigSpecialty")]
         [HttpPost]
         public async Task<JsonResult> InsertUpdateSpecialtyClinicConsultationTypeLink(List<DO_MapSpecialtyClinicConsultationType> do_cl)
         {
