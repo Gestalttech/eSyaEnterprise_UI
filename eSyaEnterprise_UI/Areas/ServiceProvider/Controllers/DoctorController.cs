@@ -379,8 +379,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(response.Message), "UD:GetDoctorProfileImagebyDoctorId:For doctorId {0}", doctorId);
-                        return Json(new { Status = false, StatusCode = "500" });
+                        return Json(response.Data);
                     }
                 }
                 else

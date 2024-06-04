@@ -308,26 +308,26 @@
                             <a class="nav-link active position-relative" href="#divDoctorProfile">@Localizer["DoctorProfile"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divAboutDoctor">@Localizer["AboutDoctor"] </a>
+                            <a class="nav-link position-relative" href="#divAboutDoctor" onclick="fnGetDoctorProfileAboutDetails()">@Localizer["AboutDoctor"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divPhotoAndSignature">@Localizer["PhotoAndSignature"] </a>
+                            <a class="nav-link position-relative" href="#divPhotoAndSignature" onclick=" fnGetDoctorProfileImage()">@Localizer["PhotoAndSignature"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divBusinessLink">@Localizer["BusinessLink"] </a>
+                            <a class="nav-link position-relative" href="#divBusinessLink" onclick="fnGridDoctorProfileBusinessLink()">@Localizer["BusinessLink"] </a>
                         </li>
                       
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divAddress"> @Localizer["Address"] </a>
+                            <a class="nav-link position-relative" href="#divAddress" onclick="fnGetDoctorAddressbyDoctorId()"> @Localizer["Address"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divStatutoryDetails">@Localizer["StatutoryDetails"] </a>
+                            <a class="nav-link position-relative" href="#divStatutoryDetails" onclick="fnBindDoctorStatutoryISDBusinessLink()">@Localizer["StatutoryDetails"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divSpecialtyLink">@Localizer["SpecialtyLink"] </a>
+                            <a class="nav-link position-relative" href="#divSpecialtyLink" onclick="fnBindDoctorLocationbyDoctorId()">@Localizer["SpecialtyLink"] </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link position-relative" href="#divClinicLink">@Localizer["ClinicLink"] </a>
+                            <a class="nav-link position-relative" href="#divClinicLink" onclick="fnLoadClinicBusinessList()">@Localizer["ClinicLink"] </a>
                         </li>
                        @*  <li class="nav-item" role="presentation">
                             <a class="nav-link position-relative" href="#divConsultationRates">@Localizer["ConsultationRates"] </a>

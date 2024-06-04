@@ -95,6 +95,7 @@ function fnGetDoctorProfileImage() {
 
 function fnFillDoctorImageData(data) {
     fnClearDoctorImageFields();
+    debugger;
     if (data.DoctorProfileImage !== null && data.DoctorProfileImage !== "") {
         document.getElementById('imgPhoto').style.display = "inline-block";
         document.getElementById('imgPhoto').innerHTML = '<img id="imgPhotoimageblah" src=" ' + data.DoctorProfileTitle + '"  alt=" &nbsp; Doctor Image" class="img-thumbnail"   /> <input class="fileInput" id="FileUpload1" type="file" name="file" onchange="readPhotoimage(this);" accept="image/*" enctype="multipart/form-data" style="visibility:hidden" />';
