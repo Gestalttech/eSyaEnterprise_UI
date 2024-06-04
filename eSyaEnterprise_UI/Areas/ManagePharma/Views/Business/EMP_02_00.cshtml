@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EMP_02_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        ItemDescription: '@Localizer["ItemDescription"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Save: '@Localizer["Save"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        CompositionID: '@Localizer["CompositionID"]',
+        FormulationID: '@Localizer["FormulationID"]',
+        TradeID: '@Localizer["TradeID"]',
+        TradeName: '@Localizer["TradeName"]',
+        PackSize: '@Localizer["PackSize"]',
+        Packing: '@Localizer["Packing"]',
+        ManufacturerID: '@Localizer["ManufacturerID"]',
+        ISDCode: '@Localizer["ISDCode"]',
+        BarCodeID: '@Localizer["BarCodeID"]',
+        AddMapDrugBusiness: '@Localizer["AddMapDrugBusiness"]',
+        EditMapDrugBusiness: '@Localizer["EditMapDrugBusiness"]',
+        ViewMapDrugBusiness: '@Localizer["ViewMapDrugBusiness"]',
+        MapDrugBusiness: '@Localizer["MapDrugBusiness"]',
+
+    }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        TradeName_E5: '@Localizer["UI0336"]',
+        PackSize_E6: '@Localizer["UI0157"]',
+        SelectPackSize_E7: '@Localizer["UI0337"]',
+        SelectManufacturer_E8: '@Localizer["UI0338"]',
+        SelectISDCode_E9: '@Localizer["UI0056"]',
+    }
+</script>
+
+@section scripts {
+    <script src="~/js/ManagePharma/MapDrugBusiness.js "></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+
+<div class="row">
+
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label> @Localizer["Drugs&Consumables"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboDrugConsumables" title="Select" data-size="8" asp-items="@ViewBag.ItemList" onchange="fnGetItemDetails()">
+                <option value="0"> Select</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <table id="jqgMapDrugBusiness"></table>
+        <div id="jqpMapDrugBusiness"></div>
+    </div>
+</div>
+
+<div class="modal fullscreen fade" id="PopupMapDrugBusiness" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title"> @Localizer["AddMapDrugBusiness"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <div id="jstBusinessLocation"> </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-6">
+                        <table id="jqgLinkedStores"></table>
+                        <div id="jqpLinkedStores"></div>
+                    </div>
+                     
+                  
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveMapDrugBusiness" onclick="fnSaveMapDrugBusiness()">
+                            @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal"> @Localizer["Cancel"]</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
