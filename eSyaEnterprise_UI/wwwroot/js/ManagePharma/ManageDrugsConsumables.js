@@ -26,7 +26,7 @@ function fnGridLoadDrugsConsumables() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.ManufacturerID, localization.ISDCode, localization.BarCodeID, localization.Active, localization.Actions],
+        colNames: [localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.Manufacturer, localization.ISDCode, localization.BarCodeID, localization.Active, localization.Actions],
         colModel: [
             { name: "CompositionID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormulationID", width: 70, editable: true, align: 'left', hidden: true },
