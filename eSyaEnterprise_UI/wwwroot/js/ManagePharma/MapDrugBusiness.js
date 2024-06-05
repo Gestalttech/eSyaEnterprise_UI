@@ -80,6 +80,7 @@ function SetGridControlByAction() {
  
 function fnGridRefreshMapDrugBusiness() {
     $("#jqgMapDrugBusiness").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $('#PopupMapDrugBusiness').modal('show');
 }
 
 function fnEditMapDrugBusiness(e) {
@@ -171,4 +172,120 @@ function fnValidateMapDrugBusiness() {
     
 
 }
+$(".modal").on('bs.modal.shown', function (e) {
+    fnLoadGridStoreBusinessLink();
+});
 
+
+function fnLoadBusinessTree() {
+    $("#jstBusinessLocation").jstree('destroy');
+
+    $.ajax({
+        url: getBaseURL() + '/Stores/GetAllBusinessLocations',
+        type: 'Post',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            $("#jstBusinessLocation").jstree('destroy');
+            $("#jstBusinessLocation").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstBusinessLocation");
+            $('#jstBusinessLocation').css('display', 'block');
+
+            $(window).on('resize', function () {
+                fnTreeSize("#jstBusinessLocation");
+            })
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#dvBusinessDocument").css('display', 'none');
+        }
+    });
+
+    $("#jstBusinessLocation").on('loaded.jstree', function () {
+        $("#jstBusinessLocation").jstree()._open_to(prevSelectedID);
+        $('#jstBusinessLocation').jstree().select_node(prevSelectedID);
+    });
+
+    $('#jstBusinessLocation').on("changed.jstree", function (e, data) {
+
+        if (data.node != undefined) {
+            if (prevSelectedID != data.node.id) {
+                prevSelectedID = data.node.id;
+
+                var parentNode = $("#jstBusinessLocation").jstree(true).get_parent(data.node.id);
+
+                if (parentNode == "FM") {
+
+                    businesskey = data.node.id;
+                    $("#jqgLinkedStores").show();
+                    fnLoadGridStoreBusinessLink(businesskey);
+                }
+                else {
+                    $("#dvBusinessDocument").css('display', 'none');
+                }
+
+            }
+        }
+    });
+    $('#jstBusinessLocation').on("close_node.jstree", function (node) {
+        var closingNode = node.handleObj.handler.arguments[1].node;
+        $('#jstBusinessLocation').jstree().deselect_node(closingNode.children);
+    });
+}
+
+function fnLoadGridStoreBusinessLink() {
+   
+    $("#jqgLinkedStores").GridUnload();
+    $("#jqgLinkedStores").jqGrid(
+        {
+            url: '',
+            mtype: 'Post',
+            datatype: 'local',
+            contentType: 'application/json; charset=utf-8',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+            colNames: [localization.BusinessKey, localization.ItemCode, localization.StoreCode, localization.StoreDesc, localization.Active],
+            colModel: [
+                { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "ItemCode", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "StoreCode", width: 70, editable: true, align: 'left', hidden: true },
+                { name: "StoreDesc", width: 170, resizable: false,hidden:false },
+                {
+                    name: 'ActiveStatus', index: 'ActiveStatus', width: 70, resizable: false, align: 'center', editable: true,
+                    formatter: "checkbox", formatoptions: { disabled: false },
+                    edittype: "checkbox", editoptions: { value: "true:false" }
+                },
+            ],
+            rowNum: 100000,
+            pgtext: null,
+            pgbuttons: null,
+            loadonce: true,
+            rownumWidth: '55',
+            pager: "#jqpLinkedStores",
+            viewrecords: false,
+            gridview: true,
+            rownumbers: true,
+            height: 'auto',
+            width: 'auto',
+            autowidth: true,
+            shrinkToFit: true,
+            forceFit: true,
+            scroll: false, scrollOffset: 0,
+            caption: localization.LinkedStores,
+            onSelectRow: function (rowid) {
+
+               /* fnLoadPortfolioStoreBusinessLinkGrid();*/
+            },
+            loadComplete: function (data) {
+
+            },
+        })
+        .jqGrid('navGrid', '#jqpLinkedStores', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpLinkedStores', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqgLinkedStores")
+        });
+    fnAddGridSerialNoHeading();
+}
+
+function fnRefreshGrid(id) {
+    $(id).setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}

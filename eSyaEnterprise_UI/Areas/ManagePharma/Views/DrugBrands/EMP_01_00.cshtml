@@ -27,7 +27,7 @@
         TradeName: '@Localizer["TradeName"]',
         PackSize: '@Localizer["PackSize"]',
         Packing: '@Localizer["Packing"]',
-        ManufacturerID: '@Localizer["ManufacturerID"]',
+        Manufacturer: '@Localizer["Manufacturer"]',
         ISDCode: '@Localizer["ISDCode"]',
         BarCodeID: '@Localizer["BarCodeID"]',
         AddDrugsConsumables: '@Localizer["AddDrugsConsumables"]',
@@ -46,11 +46,14 @@
         SelectPackSize_E7: '@Localizer["UI0337"]',
         SelectManufacturer_E8: '@Localizer["UI0338"]',
         SelectISDCode_E9: '@Localizer["UI0056"]',
+        SelectDrugConsumables_E10:'@Localizer["UI0339"]',
+        SelectDrugComposition_E11: '@Localizer["UI0340"]',
+        SelectDrugFormulation_E12: '@Localizer["UI0341"]',
     }
 </script>
 
 @section scripts{
-    <script src="~/js/ManagePharma/ManageDrugsConsumables.js "></script>
+    <script src="~/js/ManagePharma/ManageDrugsConsumables.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 }
 
@@ -65,7 +68,23 @@
             </select>
         </div>
     </div>
+     <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label> @Localizer["DrugComposition"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboDrugComposition" title="Select" data-size="8" asp-items="@ViewBag.ItemList" onchange="fnGetItemDetails()">
+                <option value="0"> Select</option>
+            </select>
+        </div>
+    </div>
 
+    <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label> @Localizer["DrugsFormulations"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboDrugsFormulations" title="Select" data-size="8" asp-items="@ViewBag.ItemList" onchange="fnGetItemDetails()">
+                <option value="0"> Select</option>
+            </select>
+        </div>
+    </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
         <table id="jqgDrugsConsumables"></table>
@@ -82,48 +101,50 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                      <div class="col-lg-9 col-md-9 col-sm-12">
+                      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
                                 <div class="form-group">
                                     <label> @Localizer["TradeName"] </label>
                                     <input type="text" class="form-control" autocomplete="off" maxlength="75" id="txtTradeName" />
                                 </div>
                             </div>
                           
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-xl-1 col-lg-1 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label> @Localizer["PackSize"] </label>
                                     <input type="text" id="txtPackSize" class="form-control numberonly" autocomplete="off" maxlength="4" value="1" />
 
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label> @Localizer["Packing"] </label>
-                            <select class="selectpicker" data-container="body" data-live-search="true" id="cboPacking" title="" data-size="8">
+                            <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboPacking" data-size="8">
                                         <option value="0">@Localizer["Select"]</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-xl-3 col-lg-4 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label> @Localizer["ManufacturerID"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" id="cboManufacturerID" title="" data-size="8">
+                                    <label> @Localizer["Manufacturer"] </label>
+                                    <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboManufacturer" data-size="8">
                                         <option value="0">@Localizer["Select"]</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
                                 <label for="cboIsdcode">@Localizer["ISD-Code"]</label>
-                                <select class="selectpicker" data-container="body" data-live-search="true" id="cboIsdcode" title="" data-size="8" onchange="fnISD_change(this)"></select>
+                                <select class="selectpicker" data-container="body" title="Select" data-live-search="true" id="cboIsdcode" data-size="8" onchange="fnISD_change(this)">
+
+                                </select>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-xl-3 col-lg-4 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label> @Localizer["BarcodeID"] </label>
                                     <input type="text" id="txtBarcodeID" class="form-control" autocomplete="off" maxlength="20" />
 
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 form-group">
+                            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 form-group d-flex align-items-end">
                                 <div class="">
                                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                                         <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">

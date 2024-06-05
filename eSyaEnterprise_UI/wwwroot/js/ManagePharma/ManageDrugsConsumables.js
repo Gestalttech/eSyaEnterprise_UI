@@ -84,11 +84,21 @@ function fnGridAddDrugsConsumables() {
     fnClearFields();
 
     if ($("#cboDrugConsumables").val() == "0" || $("#cboDrugConsumables").val() == "") {
-        fnAlert("w", "EMP_01_00", "UI0147", errorMsg.ItemGroup_E6);
+        fnAlert("w", "EMP_01_00", "UI0339", errorMsg.SelectDrugConsumables_E10);
         $('#cboDrugConsumables').focus();
         return false;
     }
+    if ($("#cboDrugComposition").val() == "0" || $("#cboDrugComposition").val() == "") {
+        fnAlert("w", "EMP_01_00", "UI0340", errorMsg.SelectDrugComposition_E11);
+        $('#cboDrugComposition').focus();
+        return false;
+    }
 
+    if ($("#cboDrugsFormulations").val() == "0" || $("#cboDrugsFormulations").val() == "") {
+        fnAlert("w", "EMP_01_00", "UI0341", errorMsg.SelectDrugFormulation_E12);
+        $('#cboDrugsFormulations').focus();
+        return false;
+    }
     $("#btnSaveDrugsConsumables").html(localization.Save);
     $('#PopupDrugsConsumables').modal('show');
     $('#PopupDrugsConsumables').find('.modal-title').text(localization.AddDrugsConsumables);
@@ -127,8 +137,8 @@ function fnEditDrugsConsumables(e) {
     
     $("#cboPacking").val(rowData.Packing);
     $("#cboPacking").selectpicker('refresh');
-    $("#cboManufacturerID").val(rowData.ManufacturerID);
-    $("#cboManufacturerID").selectpicker('refresh');
+    $("#cboManufacturer").val(rowData.ManufacturerID);
+    $("#cboManufacturer").selectpicker('refresh');
     $("#cboIsdcode").val(rowData.ISDCode);
     $("#cboIsdcode").selectpicker('refresh');
     $('#txtBarcodeID').val(rowData.BarcodeID);
@@ -175,8 +185,8 @@ function fnViewDrugsConsumables(e) {
 
     $("#cboPacking").val(rowData.Packing);
     $("#cboPacking").selectpicker('refresh');
-    $("#cboManufacturerID").val(rowData.ManufacturerID);
-    $("#cboManufacturerID").selectpicker('refresh');
+    $("#cboManufacturer").val(rowData.ManufacturerID);
+    $("#cboManufacturer").selectpicker('refresh');
     $("#cboIsdcode").val(rowData.ISDCode);
     $("#cboIsdcode").selectpicker('refresh');
     $('#txtBarcodeID').val(rowData.BarcodeID);
@@ -227,8 +237,8 @@ function fnClearFields() {
     
     $('#cboPacking').val('');
     $('#cboPacking').selectpicker('refresh');
-    $('#cboManufacturerID').val('');
-    $('#cboManufacturerID').selectpicker('refresh');
+    $('#cboManufacturer').val('');
+    $('#cboManufacturer').selectpicker('refresh');
 
 
     $('#cboIsdcode').val('');
@@ -257,9 +267,9 @@ function fnValidateDrugsConsumables() {
         return false;
     }
 
-    if ($("#cboManufacturerID").val() == "0" || $("#cboManufacturerID").val() == "") {
+    if ($("#cboManufacturer").val() == "0" || $("#cboManufacturer").val() == "") {
         fnAlert("w", "EMP_01_00", "UI0338", errorMsg.SelectManufacturer_E8);
-        $('#cboManufacturerID').focus();
+        $('#cboManufacturer').focus();
         return false;
     }
     if ($("#cboIsdcode").val() === "0" || $("#cboIsdcode").val() === "") {
