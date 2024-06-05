@@ -1,7 +1,8 @@
-﻿$(document).ready(function () {
+﻿var prevSelectedID = "";
+$(document).ready(function () {
 
     fnGridLoadMapDrugBusiness();
-
+    fnLoadGridStoreBusinessLink();
     $.contextMenu({
         selector: "#btnMapDrugBusiness",
         trigger: 'left',
@@ -12,6 +13,8 @@
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    
+    fnLoadBusinessTree();
 });
 
 
@@ -95,7 +98,7 @@ function fnEditMapDrugBusiness(e) {
     $("#btnSaveMapDrugBusiness").html(localization.Update);
     $('#PopupMapDrugBusiness').find('.modal-title').text(localization.EditMapDrugBusiness);
     $('#PopupMapDrugBusiness').modal('show');
-        
+    fnLoadBusinessTree(); 
     eSyaParams.ClearValue();
     $.ajax({
         url:'',
@@ -111,7 +114,7 @@ function fnEditMapDrugBusiness(e) {
             fnAlert("e", "", error.StatusCode, error.statusText);
 
         }
-    });
+    }); 
 
     $("#btnSaveMapDrugBusiness").attr('disabled', false);
 }
@@ -172,8 +175,9 @@ function fnValidateMapDrugBusiness() {
     
 
 }
-$(".modal").on('bs.modal.shown', function (e) {
+$(".modal").on('show.bs.modal', function (e) {
     fnLoadGridStoreBusinessLink();
+    fnTreeSizePopup("#jstBusinessLocation");
 });
 
 
@@ -276,11 +280,9 @@ function fnLoadGridStoreBusinessLink() {
                /* fnLoadPortfolioStoreBusinessLinkGrid();*/
             },
             loadComplete: function (data) {
-
+                $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
             },
-        })
-        .jqGrid('navGrid', '#jqpLinkedStores', { add: false, edit: false, search: false, del: false, refresh: false })
-        .jqGrid('navButtonAdd', '#jqpLinkedStores', {
+        }).jqGrid('navGrid', '#jqpLinkedStores', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpLinkedStores', {
             caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshGrid("#jqgLinkedStores")
         });
     fnAddGridSerialNoHeading();
