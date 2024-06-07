@@ -36,7 +36,7 @@ function fnLoadSpecialtyServiceRateGrid() {
             { name: "ServiceDesc", width: 100, editable: false, align: 'left' },
             //{ name: "DoctorDesc", width: 100, editable: false, align: 'left' },
             {
-                name: 'EffectiveDate', index: 'EffectiveDate', width: 90, sorttype: "date", formatter: "date", formatoptions:
+                name: 'EffectiveDate', index: 'EffectiveDate', width: 40, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
                     /*{ dateFormat: "dd/M/yy" },*/
                 editable: true, editoptions: {
@@ -49,17 +49,18 @@ function fnLoadSpecialtyServiceRateGrid() {
                     //}
                 }
             },
-            { name: "Tariff", width: 50, editable: true, align: 'left', edittype: 'text' },
+            { name: "Tariff", width: 40, editable: true, align: 'left', edittype: 'text' },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: 'checkbox', formatter: 'checkbox', editoptions: { value: "true:false" } },
 
         ],
         rowNum: 10,
         rowList: [10, 20, 30, 50],
+        rownumWidth:'55',
         emptyrecords: "No records to Veiw",
         pager: "#jqpSpecialtyServiceRate",
         viewrecords: true,
         gridview: true,
-        rownumbers: false,
+        rownumbers: true,
         height: 'auto',
         width: 'auto',
         scroll: false,
@@ -95,6 +96,7 @@ function fnLoadSpecialtyServiceRateGrid() {
         }
     }).jqGrid('navGrid', '#jqpSpecialtyServiceRate', { add: false, edit: false, search: false, del: false, refresh: false });
     $("#btnSave").show();
+    fnAddGridSerialNoHeading();
 }
 
 function SetGridControlByAction() {
@@ -110,10 +112,12 @@ function fnSaveSpecialtyServiceRate() {
         fnAlert("w", "EMR_04_00", "UI0064", errorMsg.SelectLocation_E1);
         return;
     }
-    if (IsStringNullorEmpty($("#cboSpecialty").val())) {
-        fnAlert("w", "EMR_04_00", "UI0200", errorMsg.SelectLocation_E4);
+    if (IsStringNullorEmpty($("#cboClinicType").val())) {
+        fnAlert("w", "EMR_04_00", "UI0194", errorMsg.ClinicType_E6);
         return;
     }
+
+    
     if (IsStringNullorEmpty($("#cboRateType").val())) {
         fnAlert("w", "EMR_04_00", "UI0198", errorMsg.SelectRateType_E2);
         return;
@@ -122,7 +126,10 @@ function fnSaveSpecialtyServiceRate() {
         fnAlert("w", "EMR_04_00", "UI0199", errorMsg.CurrencyCode_E3);
         return;
     }
-
+    if (IsStringNullorEmpty($("#cboSpecialty").val())) {
+        fnAlert("w", "EMR_04_00", "UI0200", errorMsg.SelectSpecialty_E5);
+        return;
+    }
     $("#jqgSpecialtyServiceRate").jqGrid('editCell', 0, 0, false);
     var Clinic_VR = [];
     var id_list = jQuery("#jqgSpecialtyServiceRate").jqGrid('getDataIDs');

@@ -25,11 +25,11 @@ function fnLoadClinicVisitRate() {
             { name: "ClinicId", width: 10, editable: false, align: 'left', hidden: true },
             { name: "ConsultationId", width: 10, editable: false, align: 'left', hidden: true },
             { name: "ServiceId", width: 10, editable: false, align: 'left', hidden: true },
-            { name: "ClinicDesc", width: 100, editable: false, align: 'left' },
-            { name: "ConsultationDesc", width: 100, editable: false, align: 'left' },
+            { name: "ClinicDesc", width: 60, editable: false, align: 'left' },
+            { name: "ConsultationDesc", width: 60, editable: false, align: 'left' },
             { name: "ServiceDesc", width: 100, editable: false, align: 'left' },
             {
-                name: 'EffectiveDate', index: 'EffectiveDate', width: 90, sorttype: "date", formatter: "date", formatoptions:
+                name: 'EffectiveDate', index: 'EffectiveDate', width: 40, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
                 editable: true, editoptions: {
                     size: 20,
@@ -38,17 +38,18 @@ function fnLoadClinicVisitRate() {
                     }
                 }
             },
-            { name: "Tariff", width: 50, editable: true, align: 'left', edittype: 'text' },
+            { name: "Tariff", width: 40, editable: true, align: 'left', edittype: 'text' },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: 'checkbox', formatter: 'checkbox', editoptions: { value: "true:false" } },
 
         ],
         rowNum: 10,
         rowList: [10, 20, 30, 50],
+        rownumWidth:'55',
         emptyrecords: "No records to Veiw",
         pager: "#jqpClinicVisitRate",
         viewrecords: true,
         gridview: true,
-        rownumbers: false,
+        rownumbers: true,
         height: 'auto',
         width: 'auto',
         scroll: false,
@@ -81,6 +82,7 @@ function fnLoadClinicVisitRate() {
         }
     }).jqGrid('navGrid', '#jqpClinicVisitRate', { add: false, edit: false, search: false, del: false, refresh: false });
     $("#btnSave").show();
+    fnAddGridSerialNoHeading();
 }
 
 function SetGridControlByAction() {

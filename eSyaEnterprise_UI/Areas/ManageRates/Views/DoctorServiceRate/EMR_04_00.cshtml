@@ -35,7 +35,7 @@
      CurrencyCode_E3: '@Localizer["UI0199"]',
      SelectDoctor_E4: '@Localizer["UI0141"]',
      SelectSpecialty_E5: '@Localizer["UI0200"]',
-
+        ClinicType_E6: '@Localizer["UI0194"]',
  }
 </script>
 @section scripts{
@@ -50,14 +50,35 @@
             <label class="lable-color"> @Localizer["BusinessLocation"]</label>
             @await Component.InvokeAsync("UserBusinessLocation")
         </div>
-
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
+
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["ClinicType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+        </div>
+    </div>
+
+   @*  <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["Service"] </label>
             <select class="selectpicker" data-live-search="true" id="cboService" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.Services" onchange="fnLoadGrid()"></select>
         </div>
 
+    </div> *@
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["RateType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboRateType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.RateType" onchange="fnLoadGrid()"></select>
+
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["CurrencyCode"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboCurrencyCode" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.CurrencyCode" onchange="fnLoadGrid()"></select>
+
+        </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
@@ -67,22 +88,10 @@
         </div>
     </div>
 
-    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
-        <div class="form-group">
-            <label> @Localizer["RateType"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboRateType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.RateType" onchange="fnLoadGrid()"></select>
-
-        </div>
-    </div>
 
 
-    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
-        <div class="form-group">
-            <label> @Localizer["CurrencyCode"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboCurrencyCode" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.CurrencyCode" onchange="fnLoadGrid()"></select>
 
-        </div>
-    </div>
+   
 
 </div>
 <div class="row padbot10">

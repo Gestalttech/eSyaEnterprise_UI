@@ -110,10 +110,11 @@ function fnSaveDoctorServiceRate() {
         fnAlert("w", "EMR_03_00", "UI0064", errorMsg.SelectLocation_E1);
         return;
     }
-    if (IsStringNullorEmpty($("#cboDoctor").val())) {
-        fnAlert("w", "EMR_03_00", "UI0141", errorMsg.SelectDoctor_E4);
+    if (IsStringNullorEmpty($("#cboClinicType").val())) {
+        fnAlert("w", "EMR_03_00", "UI0194", errorMsg.ClinicType_E6);
         return;
     }
+    
     if (IsStringNullorEmpty($("#cboRateType").val())) {
         fnAlert("w", "EMR_03_00", "UI0198", errorMsg.SelectRateType_E2);
         return;
@@ -122,7 +123,14 @@ function fnSaveDoctorServiceRate() {
         fnAlert("w", "EMR_03_00", "UI0199", errorMsg.CurrencyCode_E3);
         return;
     }
-
+    if (IsStringNullorEmpty($("#cboDoctor").val())) {
+        fnAlert("w", "EMR_03_00", "UI0141", errorMsg.SelectDoctor_E4);
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboSpecialty").val())) {
+        fnAlert("w", "EMR_03_00", "UI0200", errorMsg.Specialty_E5);
+        return;
+    }
     $("#jqgDoctorServiceRate").jqGrid('editCell', 0, 0, false);
     var Clinic_VR = [];
     var id_list = jQuery("#jqgDoctorServiceRate").jqGrid('getDataIDs');
