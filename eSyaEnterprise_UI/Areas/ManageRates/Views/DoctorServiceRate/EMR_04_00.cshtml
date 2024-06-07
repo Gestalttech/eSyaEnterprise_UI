@@ -36,6 +36,7 @@
      SelectDoctor_E4: '@Localizer["UI0141"]',
      SelectSpecialty_E5: '@Localizer["UI0200"]',
         ClinicType_E6: '@Localizer["UI0194"]',
+        ConsultationType_E7: '@Localizer["UI0195"]',
  }
 </script>
 @section scripts{
@@ -58,7 +59,12 @@
             <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
         </div>
     </div>
-
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["ConsultationType"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboConsultationType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+        </div>
+    </div>
    @*  <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["Service"] </label>

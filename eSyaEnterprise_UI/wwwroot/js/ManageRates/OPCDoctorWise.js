@@ -114,6 +114,10 @@ function fnSaveDoctorServiceRate() {
         fnAlert("w", "EMR_03_00", "UI0194", errorMsg.ClinicType_E6);
         return;
     }
+    if (IsStringNullorEmpty($("#cboConsultationType").val())) {
+        fnAlert("w", "EMR_03_00", "UI0195", errorMsg.ConsultationType_E7);
+        return;
+    }
     
     if (IsStringNullorEmpty($("#cboRateType").val())) {
         fnAlert("w", "EMR_03_00", "UI0198", errorMsg.SelectRateType_E2);
