@@ -1,7 +1,12 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.Areas.ManagePharma.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using eSyaEnterprise_UI.Areas.ManagePharma.Models;
+using eSyaEnterprise_UI.Models;
+using eSyaEssentials_UI;
+using eSyaEnterprise_UI.Utility;
+using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
 {
@@ -16,11 +21,181 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
             _eSyaPharmaAPIServices = eSyaPharmaAPIServices;
             _logger = logger;
         }
+
+        #region Drug Brands
         [Area("ManagePharma")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EMP_01_00()
+        public async Task<IActionResult> EMP_01_00()
         {
+            var responseDB = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandList");
+            var responseDC = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugComposition>>("Common/GetComposition");
+                        
+            if (responseDB.Status && responseDC.Status)
+            {
+                if (responseDB.Data != null)
+                {
+                    ViewBag.DrugList = responseDB.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.TradeName,
+                        Value = a.TradeID.ToString()
+                    });
+                }
+
+                if (responseDC.Data != null)
+                {
+                    ViewBag.DrugCompositionList = responseDC.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.DrugCompDesc,
+                        Value = a.CompositionId.ToString()
+                    });
+                }
+            }
+
+            ViewBag.formName = "Drug Brands";
             return View();
         }
+
+        /// <summary>
+        ///Get Drug Formulation
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDrugFormulation(int CompositionId)
+        {
+            try
+            {
+                var parameter = "?CompositionId=" + CompositionId;
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugComposition>>("Common/GetDrugFormulation" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///Get Manufacturers
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetManufacturers(int CompositionId, int FormulationID)
+        {
+            try
+            {
+                var parameter = "?CompositionId=" + CompositionId + "&FormulationID=" + FormulationID;
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugComposition>>("Common/GetManufacturers" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetManufacturers:For CompositionId {0} FormulationID {1}", CompositionId, FormulationID);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetManufacturers:For CompositionId {0} FormulationID {1}", CompositionId, FormulationID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetManufacturers:For CompositionId {0} FormulationID {1}", CompositionId, FormulationID);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///Get Drug Brand List By Trade ID
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDrugBrandListByTradeID(int TradeID)
+        {
+            try
+            {
+                var parameter = "?TradeID=" + TradeID;
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandListByTradeID" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByTradeID:For TradeID {0}", TradeID);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByTradeID:For TradeID {0}", TradeID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDrugBrandListByTradeID:For ItemGroup {0}", TradeID);
+                throw ex;
+                //return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        ///Get Drug Brand List By Trade ID
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID)
+        {
+            try
+            {
+                var parameter = "?CompositionID=" + CompositionID + "&FormulationID=" + FormulationID + "&ManufacturerID=" + ManufacturerID;
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandListByGroup" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByGroup:For CompositionID {0} FormulationID {1} with ManufacturerID {2}", CompositionID, FormulationID, ManufacturerID);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByGroup:For CompositionID {0} FormulationID {1} with ManufacturerID {2}", CompositionID, FormulationID, ManufacturerID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDrugBrandListByGroup:For CompositionID {0} FormulationID {1} with ManufacturerID {2}", CompositionID, FormulationID, ManufacturerID);
+                throw ex;
+            }
+        }
+
+        #endregion Drug Brands
     }
 }

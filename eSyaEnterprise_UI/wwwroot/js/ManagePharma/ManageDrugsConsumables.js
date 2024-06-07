@@ -18,16 +18,29 @@
 
 function fnGridLoadDrugsConsumables() {
     
-    $("#jqgDrugsConsumables").jqGrid('GridUnload');
-    $("#jqgDrugsConsumables").jqGrid({
-        //url: URL,
-        url: '',
-        mtype: 'Post',
-        datatype: 'json',
-        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+    //$("#jqgDrugsConsumables").jqGrid('GridUnload');
+    //$("#jqgDrugsConsumables").jqGrid({
+    //    //url: URL,
+    //    url: '',
+    //    mtype: 'Post',
+    //    datatype: 'json',
+    //    ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+
+    var CompositionID = $("#cboItemGroup").val();
+    var FormulationID = $("#cboItemCategory").val();
+    var ManufacturerID = $("#cboItemSubCategory").val();
+    var URL = getBaseURL() + '/DrugBrands/GetDrugBrandListByGroup?CompositionID=' + CompositionID + '&FormulationID=' + FormulationID + '&ManufacturerID=' + ManufacturerID;
+        $("#jqgDrugsConsumables").jqGrid('GridUnload');
+        $("#jqgDrugsConsumables").jqGrid({
+            url: URL,
+            mtype: 'Post',
+            datatype: 'json',
+            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.Manufacturer, localization.ISDCode, localization.BarCodeID, localization.Active, localization.Actions],
         colModel: [
+
             { name: "CompositionID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormulationID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "TradeID", width: 70, editable: true, align: 'left', hidden: true },
@@ -71,7 +84,7 @@ function fnGridLoadDrugsConsumables() {
     }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
         caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnGridAddDrugsConsumables
     });
-    fnAddGridSerialNoHeading();
+    //fnAddGridSerialNoHeading();
 }
 
 function SetGridControlByAction() {

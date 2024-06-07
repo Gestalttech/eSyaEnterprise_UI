@@ -63,16 +63,16 @@
     <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label> @Localizer["Drugs&Consumables"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboDrugConsumables" title="Select" data-size="8">
-                <option value="0"> Select</option>
+            <select class="selectpicker" data-live-search="true" id="cboDrugConsumables" title="Select" data-size="8" asp-items="@ViewBag.DrugList" onchange="fnGetDrugDetails()">
+                <option value="0"> @Localizer["Select"]</option>
             </select>
         </div>
     </div>
     <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label> @Localizer["DrugComposition"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboDrugComposition" title="Select" data-size="8">
-                <option value="0"> Select</option>
+            <select class="selectpicker" data-live-search="true" id="cboDrugComposition" title="Select" data-size="8" asp-items="@ViewBag.DrugCompositionList" onchange="fnGetDrugComposition()">
+                <option value="0"> @Localizer["Select"]</option>
             </select>
         </div>
     </div>
