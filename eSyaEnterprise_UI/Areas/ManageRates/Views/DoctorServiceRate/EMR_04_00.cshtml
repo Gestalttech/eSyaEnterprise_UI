@@ -46,23 +46,29 @@
 }
 <div class="row padbot10">
 
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 ">
+   @*  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 ">
         <div class="form-group">
             <label class="lable-color"> @Localizer["BusinessLocation"]</label>
             @await Component.InvokeAsync("UserBusinessLocation")
         </div>
-    </div>
+    </div> *@
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["BusinessLocation"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadClinTypes()"></select>
 
+        </div>
+    </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["ClinicType"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" onchange="fnLoadConsultationTypes()"></select>
         </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["ConsultationType"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboConsultationType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboConsultationType" title="@Localizer["Select"]" data-size="8" onchange="fnLoadGrid()"></select>
         </div>
     </div>
    @*  <div class="col-lg-3 col-md-4 col-sm-8 col-xs-12">
@@ -89,8 +95,7 @@
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["Specialty"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.Specialties" onchange="fnLoadGrid()"></select>
-
+            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="@Localizer["Select"]" data-size="8" onchange="fnLoadGrid()"></select>
         </div>
     </div>
 

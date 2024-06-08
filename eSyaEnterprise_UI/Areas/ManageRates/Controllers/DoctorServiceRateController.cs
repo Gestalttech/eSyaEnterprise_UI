@@ -312,24 +312,39 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
 
         public async Task<IActionResult> EMR_04_00()
         {
-           
-            var serviceResponse1 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
-            if (serviceResponse1.Status)
+
+            //var serviceResponse1 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
+            //if (serviceResponse1.Status)
+            //{
+            //    if (serviceResponse1.Data != null)
+            //    {
+            //        ViewBag.Services = serviceResponse1.Data.Select(s => new SelectListItem
+            //        {
+            //            Value = s.ServiceId.ToString(),
+            //            Text = s.ServiceDesc,
+            //        }).ToList();
+            //    }
+            //}
+            //else
+            //{
+            //    _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1517_00:GetServicesPerformedByDoctor");
+            //}
+            var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonMethod/GetBusinessKey");
+            if (serviceResponse.Status)
             {
-                if (serviceResponse1.Data != null)
+                if (serviceResponse.Data != null)
                 {
-                    ViewBag.Services = serviceResponse1.Data.Select(s => new SelectListItem
+                    ViewBag.BusinessKey = serviceResponse.Data.Select(b => new SelectListItem
                     {
-                        Value = s.ServiceId.ToString(),
-                        Text = s.ServiceDesc,
+                        Value = b.BusinessKey.ToString(),
+                        Text = b.LocationDescription,
                     }).ToList();
                 }
             }
             else
             {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1517_00:GetServicesPerformedByDoctor");
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:EMR_03_00:GetBusinessKey");
             }
-
             var serviceResponse2 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.RateType);
             if (serviceResponse2.Status)
             {
@@ -344,7 +359,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             }
             else
             {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1518_00:GetApplicationCodesByCodeType: CodeType {0} 62");
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1518_00:GetBusinessKey: CodeType {0} 62");
             }
 
             var serviceResponse3 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyCode>>("CommonMethod/GetCurrencyCodes");
@@ -362,7 +377,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             }
             else
             {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1518_00:GetApplicationCodesByCodeType: CodeType {0} 62");
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1518_00:GetBusinessKey: CodeType {0} 62");
             }
 
 
@@ -373,7 +388,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyCodes>>("ClinicServices/GetSpecialitesbyBusinessKey?businesskey=" + businesskey);
+                var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyCodes>>("DoctorServiceRate/GetSpecialitesbyBusinessKey?businesskey=" + businesskey);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -401,12 +416,13 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
         /// <summary>
         /// Get Doctor Service Rate by Business Key Service Id Currency Code Rate Type and Doctor Id
         /// </summary>
-        public async Task<ActionResult> GetSpecialtyServiceRateByBKeyServiceIdCurrCodeRateType(int businessKey, int serviceId, int specialtyId, string currencycode, int ratetype)
+        public async Task<ActionResult> GetSpecialtyServiceRateByBKeyServiceIdCurrCodeRateType(int businessKey, int clinicId, int consultationId, int specialtyId, string currencycode, int ratetype)
         {
             try
             {
                 var param = "?businessKey=" + businessKey;
-                param += "&serviceId=" + serviceId;
+                param += "&clinicId=" + clinicId;
+                param += "&consultationId=" + consultationId;
                 param += "&specialtyId=" + specialtyId;
                 param += "&currencycode=" + currencycode;
                 param += "&ratetype=" + ratetype;

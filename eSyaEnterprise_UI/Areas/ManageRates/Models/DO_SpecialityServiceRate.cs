@@ -7,6 +7,8 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Models
     public class DO_SpecialityServiceRate
     {
         public int BusinessKey { get; set; }
+        public int ClinicId { get; set; }
+        public int ConsultationId { get; set; }
         public int ServiceId { get; set; }
         public int RateType { get; set; }
         public int SpecialtyId { get; set; }

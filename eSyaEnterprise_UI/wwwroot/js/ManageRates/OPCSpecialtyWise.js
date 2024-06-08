@@ -6,22 +6,138 @@
     })
 });
 
-function fnBusinessLocation_onChange() {
+function fnLoadClinTypes() {
 
-    fnLoadGrid();
+    if ($('#cboBusinessKey').val() != '') {
+        BindClinicTypes();
+        BindSpecialties();
+        fnLoadGrid();
+    }
 }
+function fnLoadConsultationTypes() {
+    if ($('#cboBusinessKey').val() != '' && $('#cboClinicType').val() != '') {
+        BindConsultationTypes();
+        fnLoadGrid();
+    }
+}
+function BindClinicTypes() {
 
+    $("#cboClinicType").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/DoctorServiceRate/GetClinicTypesbyBusinessKey?businesskey=' + $("#cboBusinessKey").val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboClinicType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboClinicType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboClinicType').selectpicker('refresh');
+            }
+            else {
+                $("#cboClinicType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $('#cboClinicType').selectpicker('refresh');
+            }
+            BindConsultationTypes();
+
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+function BindConsultationTypes() {
+
+    $("#cboConsultationType").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/DoctorServiceRate/GetConsultationbyClinicID?businesskey=' + $("#cboBusinessKey").val() + '&clinicId=' + $("#cboClinicType").val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboConsultationType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboConsultationType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboConsultationType').selectpicker('refresh');
+            }
+            else {
+                $("#cboConsultationType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $('#cboConsultationType').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+function BindSpecialties() {
+
+    $("#cboSpecialty").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/DoctorServiceRate/GetSpecialitesbyBusinessKey?businesskey=' + $("#cboBusinessKey").val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboSpecialty").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboSpecialty").append($("<option></option>").val(response[i]["SpecialtyID"]).html(response[i]["SpecialtyDesc"]));
+                }
+                $('#cboSpecialty').selectpicker('refresh');
+            }
+            else {
+                $("#cboSpecialty").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $('#cboSpecialty').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
 function fnLoadGrid() {
 
-    if ($('#cboBusinessLocation').val() != '' && $('#cboSpecialty').val() != '' && $('#cboService').val() != '' && $('#cboRateType').val() != '' && $('#cboCurrencyCode').val() != '') {
+    //if ($('#cboBusinessKey').val() != '' && $('#cboSpecialty').val() != '' && $('#cboService').val() != '' && $('#cboRateType').val() != '' && $('#cboCurrencyCode').val() != '') {
         fnLoadSpecialtyServiceRateGrid();
-    }
+    /*}*/
 
 }
 function fnLoadSpecialtyServiceRateGrid() {
     $("#jqgSpecialtyServiceRate").jqGrid('GridUnload');
     $("#jqgSpecialtyServiceRate").jqGrid({
-        url: getBaseURL() + '/DoctorServiceRate/GetSpecialtyServiceRateByBKeyServiceIdCurrCodeRateType?businessKey=' + $('#cboBusinessLocation').val() + '&serviceId=' + $('#cboService').val() + '&specialtyId=' + $('#cboSpecialty').val() + '&currencycode=' + $('#cboCurrencyCode').val()
+        url: getBaseURL() + '/DoctorServiceRate/GetSpecialtyServiceRateByBKeyServiceIdCurrCodeRateType?businessKey=' + $('#cboBusinessKey').val() + '&clinicId=' + $('#cboClinicType').val() + '&consultationId=' + $('#cboConsultationType').val() + '&specialtyId=' + $('#cboSpecialty').val() + '&currencycode=' + $('#cboCurrencyCode').val()
             + '&ratetype=' + $('#cboRateType').val(),
         datatype: 'json',
         mtype: 'GET',
@@ -108,7 +224,7 @@ function SetGridControlByAction() {
 
 function fnSaveSpecialtyServiceRate() {
 
-    if (IsStringNullorEmpty($("#cboBusinessLocation").val())) {
+    if (IsStringNullorEmpty($("#cboBusinessKey").val())) {
         fnAlert("w", "EMR_04_00", "UI0064", errorMsg.SelectLocation_E1);
         return;
     }
@@ -141,7 +257,9 @@ function fnSaveSpecialtyServiceRate() {
         var rowData = jQuery('#jqgSpecialtyServiceRate').jqGrid('getRowData', rowId);
 
         Clinic_VR.push({
-            BusinessKey: $("#cboBusinessLocation").val(),
+            BusinessKey: $("#cboBusinessKey").val(),
+            ClinicId: $("#cboClinicType").val(),
+            ConsultationId: $("#cboConsultationType").val(),
             CurrencyCode: $("#cboCurrencyCode").val(),
             RateType: $("#cboRateType").val(),
             SpecialtyId: $("#cboSpecialty").val(),
