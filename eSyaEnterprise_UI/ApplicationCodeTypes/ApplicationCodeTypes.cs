@@ -98,5 +98,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int SeniorityLevel = 274;
         #endregion
 
+        #region Manage Pharma
+        public const int DrugPacking = 206;
+        #endregion
     }
 }
