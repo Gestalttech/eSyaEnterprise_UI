@@ -129,6 +129,7 @@ function BindSpecialties() {
 }
 function fnLoadGrid() {
 
+
     //if ($('#cboBusinessKey').val() != '' && $('#cboSpecialty').val() != '' && $('#cboService').val() != '' && $('#cboRateType').val() != '' && $('#cboCurrencyCode').val() != '') {
         fnLoadSpecialtyServiceRateGrid();
     /*}*/
