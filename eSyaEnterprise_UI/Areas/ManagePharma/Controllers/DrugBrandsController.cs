@@ -7,6 +7,7 @@ using eSyaEnterprise_UI.Models;
 using eSyaEssentials_UI;
 using eSyaEnterprise_UI.Utility;
 using Newtonsoft.Json;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 
 namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
 {
@@ -29,8 +30,10 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
         {
             var responseDB = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandList");
             var responseDC = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugComposition>>("Common/GetComposition");
-                        
-            if (responseDB.Status && responseDC.Status)
+            var responsePK = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Common/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.DrugPacking);
+
+
+            if (responseDB.Status && responseDC.Status && responsePK.Status)
             {
                 if (responseDB.Data != null)
                 {
@@ -48,6 +51,15 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
                         Text = a.DrugCompDesc,
                         Value = a.CompositionId.ToString()
                     });
+                }
+
+                if (responsePK.Data != null)
+                {
+                    ViewBag.Packing = responsePK.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
+                    }).ToList();
                 }
             }
 
@@ -193,6 +205,85 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
             {
                 _logger.LogError(ex, "UD:GetDrugBrandListByGroup:For CompositionID {0} FormulationID {1} with ManufacturerID {2}", CompositionID, FormulationID, ManufacturerID);
                 throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Item Codes
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateDrugBrands(DO_DrugBrands DrugBrands)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(DrugBrands.CompositionID.ToString()) || DrugBrands.CompositionID == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Drug Composition" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.FormulationID.ToString()))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Formulation" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.ManufacturerID.ToString()))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Manufacturer" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.TradeName))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Trade Name" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.Packing.ToString()))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Packing" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.PackSize.ToString()) || DrugBrands.PackSize == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Enter Pack Size" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.ISDCode.ToString()))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select ISD Code" });
+                }
+                else if (string.IsNullOrEmpty(DrugBrands.BarcodeID.ToString()))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Please Select Barcode Id" });
+                }
+                
+                else
+                {
+                    DrugBrands.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    DrugBrands.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    DrugBrands.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
+                    DrugBrands.Skutype = "D";
+                    if (DrugBrands.TradeID == 0)
+                    {
+                        var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugBrands/InsertDrugBrands", DrugBrands);
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertDrugBrands:params:" + JsonConvert.SerializeObject(DrugBrands));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                    else
+                    {
+                        var serviceResponse = _eSyaPharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugBrands/UpdateDrugBrands", DrugBrands).Result;
+                        if (serviceResponse.Status)
+                            return Json(serviceResponse.Data);
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateDrugBrands:params:" + JsonConvert.SerializeObject(DrugBrands));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateDrugBrands:params:" + JsonConvert.SerializeObject(DrugBrands));
+                return Json(new { Status = false, Message = ex.ToString() });
             }
         }
 
