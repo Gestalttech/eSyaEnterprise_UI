@@ -33,24 +33,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
 
         public async Task<IActionResult> EMR_03_00()
         {
-            var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_DoctorMaster>>("DoctorServiceRate/GetActiveDoctos");
-            if (serviceResponse.Status)
-            {
-                if (serviceResponse.Data != null)
-                {
-                    ViewBag.Doctors = serviceResponse.Data.Select(b => new SelectListItem
-                    {
-                        Value = b.DoctorId.ToString(),
-                        Text = b.DoctorName,
-                    }).ToList();
-                }
-
-            }
-            else
-            {
-                _logger.LogError(new Exception(serviceResponse.Message), "UD:EFM_10_00:GetBusinessKey");
-            }
-
+           
             var serviceResponse1 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
             if (serviceResponse1.Status)
             {
@@ -106,7 +89,34 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
 
             return View();
         }
+        public async Task<ActionResult> GetDoctosbyBusinessKey(int businesskey)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyCodes>>("DoctorServiceRate/GetDoctosbyBusinessKey?businesskey=" + businesskey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var ClinicVisitRate_list = serviceResponse.Data;
+                        return Json(ClinicVisitRate_list);
+                    }
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDoctosbyBusinessKey:For BusinessKey {0} ", businesskey);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
 
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDoctosbyBusinessKey:For BusinessKey {0}", businesskey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
         /// <summary>
         /// Get Doctor Service Rate by Business Key Service Id Currency Code Rate Type and Doctor Id
         /// </summary>
@@ -196,24 +206,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
 
         public async Task<IActionResult> EMR_04_00()
         {
-            var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyCodes>>("DoctorServiceRate/GetActiveSpecialites");
-            if (serviceResponse.Status)
-            {
-                if (serviceResponse.Data != null)
-                {
-                    ViewBag.Specialties = serviceResponse.Data.Select(b => new SelectListItem
-                    {
-                        Value = b.SpecialtyID.ToString(),
-                        Text = b.SpecialtyDesc,
-                    }).ToList();
-                }
-
-            }
-            else
-            {
-                _logger.LogError(new Exception(serviceResponse.Message), "UD:EFM_11_00:GetActiveSpecialites");
-            }
-
+           
             var serviceResponse1 = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetServicesPerformedByDoctor");
             if (serviceResponse1.Status)
             {
@@ -270,7 +263,34 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             return View();
         }
 
+        public async Task<ActionResult> GetSpecialitesbyBusinessKey(int businesskey)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaManageRateAPIServices.HttpClientServices.GetAsync<List<DO_SpecialtyCodes>>("ClinicServices/GetSpecialitesbyBusinessKey?businesskey=" + businesskey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var ClinicVisitRate_list = serviceResponse.Data;
+                        return Json(ClinicVisitRate_list);
+                    }
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetClinicTypesbyBusinessKey:For BusinessKey {0} ", businesskey);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
 
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetClinicTypesbyBusinessKey:For BusinessKey {0}", businesskey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
 
         /// <summary>
         /// Get Doctor Service Rate by Business Key Service Id Currency Code Rate Type and Doctor Id
