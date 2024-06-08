@@ -52,22 +52,6 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             {
                 _logger.LogError(new Exception(serviceResponse.Message), "UD:V_1518_00:GetBusinessKey");
             }
-            var serviceResponse1 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonMethod/GetApplicationCodesByCodeType?codetype="+ ApplicationCodeTypeValues.Clinic);
-            if (serviceResponse1.Status)
-            {
-                if (serviceResponse1.Data != null)
-                {
-                    ViewBag.ClinicType = serviceResponse1.Data.Select(r => new SelectListItem
-                    {
-                        Value = r.ApplicationCode.ToString(),
-                        Text = r.CodeDesc,
-                    }).ToList();
-                }
-            }
-            else
-            {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1518_00:GetApplicationCodesByCodeType: CodeType {0} 61");
-            }
             var serviceResponse2 = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyCode>>("CommonMethod/GetCurrencyCodes");
             if (serviceResponse2.Status)
             {
@@ -98,13 +82,40 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
             }
             else
             {
-                _logger.LogError(new Exception(serviceResponse1.Message), "UD:V_1518_00:GetApplicationCodesByCodeType: CodeType {0} 62");
+                _logger.LogError(new Exception(serviceResponse3.Message), "UD:V_1518_00:GetApplicationCodesByCodeType: CodeType {0} 62");
             }
 
             return View();
 
         }
+        public async Task<ActionResult> GetClinicTypesbyBusinessKey(int businesskey)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("DoctorServiceRate/GetClinicTypesbyBusinessKey?businesskey=" + businesskey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var ClinicVisitRate_list = serviceResponse.Data;
+                        return Json(ClinicVisitRate_list);
+                    }
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetClinicTypesbyBusinessKey:For BusinessKey {0} ", businesskey);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
 
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetClinicTypesbyBusinessKey:For BusinessKey {0}", businesskey);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
+            }
+        }
         public async Task<ActionResult> GetClinicVisitRateByBKeyClinicTypeCurrCodeRateType(int businessKey, int clinictype, string currencycode, int ratetype)
         {
             try
