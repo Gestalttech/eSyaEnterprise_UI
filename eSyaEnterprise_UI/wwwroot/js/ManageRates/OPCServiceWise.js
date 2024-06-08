@@ -5,10 +5,54 @@
         }
     })
 });
-function fnLoadGrid() {
-    if ($('#cboBusinessKey').val() != '' && $('#cboRateType').val() != '' && $('#cboCurrencyCode').val() != '') {
-        fnLoadClinicVisitRate();
+function fnLoadClinTypesGrid() {
+    if ($('#cboBusinessKey').val() != '') {
+        BindClinicTypes();
+        fnLoadGrid();
     }
+}
+
+function fnLoadGrid() {
+  
+    if ($('#cboBusinessKey').val() != '' && $('#cboRateType').val() != '' && $('#cboCurrencyCode').val() != '' && $('#cboClinicType').val() != '') {
+        fnLoadClinicVisitRate();
+    } 
+}
+
+function BindClinicTypes() {
+
+    $("#cboClinicType").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/ClinicService/GetClinicTypesbyBusinessKey?businesskey=' + $("#cboBusinessKey").val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboClinicType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboClinicType").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboClinicType').selectpicker('refresh');
+            }
+            else {
+                $("#cboClinicType").empty();
+                //$("#cboClinicType").append($("<option value='0'> Select </option>"));
+                $('#cboClinicType').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
 }
 function fnLoadClinicVisitRate() {
     $("#jqgClinicVisitRate").jqGrid('GridUnload');

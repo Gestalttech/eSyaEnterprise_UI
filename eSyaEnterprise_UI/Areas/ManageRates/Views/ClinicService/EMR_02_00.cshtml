@@ -40,26 +40,15 @@
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["BusinessLocation"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadGrid()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnLoadClinTypesGrid()"></select>
 
         </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["ClinicType"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.ClinicType" onchange="fnLoadGrid()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboClinicType" title="@Localizer["Select"]" data-size="8"  onchange="fnLoadGrid()"></select>
 
-            @*<select class="selectpicker" data-live-search="true" id="cboClinicType" title="" data-size="8" onchange="fnLoadGrid()">
-                    <option value="0" selected> @Localizer["Select"]</option>
-                    @if (ViewBag.ClinicType != null)
-                    {
-                        foreach (var c in ViewBag.ClinicType)
-                        {
-                            <option value="@c.Value">@c.Text</option>
-                        }
-
-                    }
-                </select>*@
         </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">

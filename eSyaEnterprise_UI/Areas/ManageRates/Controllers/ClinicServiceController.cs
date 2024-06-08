@@ -92,7 +92,7 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("ClinicServices/GetClinicTypesbyBusinessKey?businesskey=" + businesskey);
+                var serviceResponse = await _eSyaManageRatesAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("DoctorServiceRate/GetClinicTypesbyBusinessKey?businesskey=" + businesskey);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
