@@ -141,13 +141,15 @@
                                 <div class="form-group">
                                     <label> @Localizer["Manufacturer"] </label>
                                     <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboManufacturer" data-size="8">
-                                        <option value="0">@Localizer["Select"]</option>
+                                        @* <option value="0">@Localizer["Select"]</option> *@
                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+
                         <label> @Localizer["ISDCode"] </label>
-                        @await Component.InvokeAsync("IsdCountryInput", new { id = "CountryCode" })
+                        @await Component.InvokeAsync("IsdCountryInput", new { id = "locISD" })
+
                                 @* <label for="cboIsdcode">@Localizer["ISD-Code"]</label>
                                 <select class="selectpicker" data-container="body" title="Select" data-live-search="true" id="cboIsdcode" data-size="8" onchange="fnISD_change(this)">
 

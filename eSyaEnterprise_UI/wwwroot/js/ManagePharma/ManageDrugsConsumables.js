@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     
     fnGridLoadDrugsConsumables();
+    //fnBindISDCodes();
 
     $.contextMenu({
         selector: "#btnDrugsConsumables",
@@ -14,20 +15,65 @@
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
 });
 
+//function fnBindISDCodes() {
+//    $("#cboIsdcode").empty();
+
+//    $.ajax({
+//        url: getBaseURL() + '/DrugBrands/GetISDCodesbyBusinessKey?businessKey=' + $("#cboLocation").val(),
+//        type: 'GET',
+//        dataType: 'json',
+//        contentType: 'application/json; charset=utf-8',
+//        error: function (error) {
+//            fnAlert("e", "", error.StatusCode, error.statusText);
+//        },
+
+//        success: function (data) {
+//            if (data != null) {
+//                //refresh each time
+//                $("#cboIsdcode").empty();
+//                $("#cboIsdcode").append($("<option value='0'> Select </option>"));
+//                var $select = $("#cboIsdcode");
+
+//                data.forEach(function (item) {
+//                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
+//                    $select.append($('<option></option>')
+//                        .val(item["Isdcode"])
+//                        .attr('data-content', optionContent)
+//                        .text(item["CountryName"] + '  (+' + item["Isdcode"] + ')'));
+//                });
+
+//                // Refresh the selectpicker to apply changes
+//                $select.selectpicker('refresh');
+
+//            }
+//            else {
+//                $("#cboIsdcode").empty();
+//                $("#cboIsdcode").append($("<option value='0'> Select </option>"));
+//                $("#cboIsdcode").val(_cnfISDCode);
+//                $("#cboIsdcode").val('0');
+//                $('#cboIsdcode').selectpicker('refresh');
+//            }
+//        },
+//        async: false,
+//        processData: false
+//    });
+
+//}
+
 function fnGridLoadDrugsConsumables() {
     var CompositionID = $("#cboDrugComposition").val();
     var FormulationID = $("#cboDrugsFormulations").val();
     var ManufacturerID = $("#cboDrugsManufacturer").val();
     var URL = getBaseURL() + '/DrugBrands/GetDrugBrandListByGroup?CompositionID=' + CompositionID + '&FormulationID=' + FormulationID + '&ManufacturerID=' + ManufacturerID;
-        $("#jqgDrugsConsumables").jqGrid('GridUnload');
-        $("#jqgDrugsConsumables").jqGrid({
-            url: URL,
-            mtype: 'Post',
-            datatype: 'json',
-            ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+    $("#jqgDrugsConsumables").jqGrid('GridUnload');
+    $("#jqgDrugsConsumables").jqGrid({
+        url: URL,
+        mtype: 'Post',
+        datatype: 'json',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-            colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
+        colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
         colModel: [
             { name: "Skutype", width: 70, editable: true, align: 'left', hidden: true },
             { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
@@ -65,11 +111,11 @@ function fnGridLoadDrugsConsumables() {
         scrollOffset: 0,
         caption: localization.DrugsConsumables,
         loadComplete: function (data) {
-            SetGridControlByAction(); 
+            SetGridControlByAction();
         },
         onSelectRow: function (rowid, status, e) {
-            
-         },
+
+        },
     }).jqGrid('navGrid', '#jqpDrugsConsumables', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshDrugsConsumables
     }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
@@ -101,7 +147,7 @@ function fnGetDrugDetails() {
 
                 fnGetDrugFormulation(result[0]["FormulationID"]);
 
-                fnGetManufacturer(result[0]["FormulationID"], result[0]["ManufacturerId"]);
+                fnGetManufacturer(result[0]["CompositionID"], result[0]["FormulationID"], result[0]["ManufacturerID"]);
 
                 $("#jqgDrugsConsumables").jqGrid('GridUnload');
                 $("#jqgDrugsConsumables").jqGrid({
@@ -205,15 +251,20 @@ function fnGetDrugFormulationONChanged() {
         url: getBaseURL() + '/DrugBrands/GetManufacturers?CompositionId=' + CompositionId + '&FormulationID=' + FormulationID,
         success: function (result) {
             $("#cboDrugsManufacturer").append($("<option value='0'>Select</option>"));
+            $("#cboManufacturer").append($("<option value='0'>Select</option>"));
+            
             if (result != null) {
                 for (var i = 0; i < result.length; i++) {
 
                     $("#cboDrugsManufacturer").append($("<option></option>").val(result[i]["ManufacturerId"]).html(result[i]["ManufacturerName"]));
+                    $("#cboManufacturer").append($("<option></option>").val(result[i]["ManufacturerId"]).html(result[i]["ManufacturerName"]));
                 }
-                _isSubCategoryApplicable = 1;
             }
             $('#cboDrugsManufacturer').val($("#cboDrugsManufacturer option:first").val());
             $('#cboDrugsManufacturer').selectpicker('refresh');
+
+            $('#cboManufacturer').val($("#cboManufacturer option:first").val());
+            $('#cboManufacturer').selectpicker('refresh');
 
             fnGridLoadDrugsConsumables();
         }
@@ -237,27 +288,32 @@ function fnGetDrugFormulation(FormulationID) {
             }
             $("#cboDrugsFormulations").val(FormulationID);
             $("#cboDrugsFormulations").selectpicker('refresh');
+            fnGridLoadDrugsConsumables();
         }
     });
 }
 
-function fnGetManufacturer(FormulationID, ManufacturerId) {
+function fnGetManufacturer(CompositionId, FormulationID, ManufacturerId) {
     $("#cboDrugsManufacturer").empty().selectpicker('refresh');
-    _isSubCategoryApplicable = 0;
-
+    $("#cboManufacturer").empty().selectpicker('refresh');
     $.ajax({
         type: 'POST',
         url: getBaseURL() + '/DrugBrands/GetManufacturers?CompositionId=' + CompositionId + '&FormulationID=' + FormulationID,
         success: function (result) {
             $("#cboDrugsManufacturer").append($("<option value='0'>Select</option>"));
+            $("#cboManufacturer").append($("<option value='0'>Select</option>"));
             if (result != null) {
                 for (var i = 0; i < result.length; i++) {
                     $('#cboDrugsManufacturer').append('<option value="' + result[i]["ManufacturerId"] + '">' + result[i]["ManufacturerName"] + '</option>');
+                    $('#cboManufacturer').append('<option value="' + result[i]["ManufacturerId"] + '">' + result[i]["ManufacturerName"] + '</option>');
                 }
                 _isSubCategoryApplicable = 1;
             }
             $("#cboDrugsManufacturer").val(ManufacturerId);
             $("#cboDrugsManufacturer").selectpicker('refresh');
+
+            $("#cboManufacturer").val(ManufacturerId);
+            $("#cboManufacturer").selectpicker('refresh');
         }
     });
 }
@@ -290,6 +346,10 @@ function fnGridAddDrugsConsumables() {
     $("#btnSaveDrugsConsumables").html(localization.Save);
     $('#PopupDrugsConsumables').modal('show');
     $('#PopupDrugsConsumables').find('.modal-title').text(localization.AddDrugsConsumables);
+
+    $("#cboManufacturer").val($("#cboDrugsManufacturer").val());
+    $("#cboManufacturer").selectpicker('refresh');
+
     $("input[type=checkbox]").attr('disabled', false);
 
     $("#PopupDrugsConsumables").on('hidden.bs.modal', function () {
@@ -427,14 +487,14 @@ function fnSaveDrugsConsumables() {
             TradeID: 0,
             Skucode: 0,
             Skuid: 0,
-            CompositionID: $("#cboItemGroup").val(),
-            FormulationID: $("#cboItemCategory").val(),
-            TradeName: $("#cboItemSubCategory").val(),
-            PackSize: $("#txtItemDescription").val(),
-            Packing: $("#cboUnitOfMeasure").val(),
-            ManufacturerID: $("#txtPackSize").val(),
-            ISDCode: $("#cboInventoryClass").val(),
-            BarcodeID: $("#cboItemClass").val(),
+            CompositionID: $("#cboDrugComposition").val(),
+            FormulationID: $("#cboDrugsFormulations").val(),
+            TradeName: $("#txtTradeName").val(),
+            PackSize: $("#txtPackSize").val(),
+            Packing: $("#cboPacking").val(),
+            ManufacturerID: $("#cboManufacturer").val(),
+            ISDCode: $("#cbolocISD").val(),
+            BarcodeID: $("#txtBarcodeID").val(),
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
         }
     }
@@ -443,14 +503,14 @@ function fnSaveDrugsConsumables() {
             TradeID: tradeID,
             Skucode: $("#txtSkuCode").val(),
             Skuid: $("#txtSkuId").val(),
-            CompositionID: $("#cboItemGroup").val(),
-            FormulationID: $("#cboItemCategory").val(),
-            TradeName: $("#cboItemSubCategory").val(),
-            PackSize: $("#txtItemDescription").val(),
-            Packing: $("#cboUnitOfMeasure").val(),
-            ManufacturerID: $("#txtPackSize").val(),
-            ISDCode: $("#cboInventoryClass").val(),
-            BarcodeID: $("#cboItemClass").val(),
+            CompositionID: $("#cboDrugComposition").val(),
+            FormulationID: $("#cboDrugsFormulations").val(),
+            TradeName: $("#txtTradeName").val(),
+            PackSize: $("#txtPackSize").val(),
+            Packing: $("#cboPacking").val(),
+            ManufacturerID: $("#cboManufacturer").val(),
+            ISDCode: $("#cbolocISD").val(),
+            BarcodeID: $("#txtBarcodeID").val(),
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
         }
     }
@@ -460,32 +520,35 @@ function fnSaveDrugsConsumables() {
 
     $.ajax({
         //async: false,
-        url: getBaseURL() + '/DrugBrands/InsertOrUpdateItemCodes',
+        url: getBaseURL() + '/DrugBrands/InsertOrUpdateDrugBrands',
         type: 'POST',
         data: {
-            ItemCodes
+            DrugBrands
         },
         datatype: 'json',
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveItem").attr('disabled', true);
-                $("#btnSaveItem").hide();
+                $("#btnSaveDrugsConsumables").attr('disabled', true);
+                $("#btnSaveDrugsConsumables").hide();
                 $("#PopupItemMaster").modal('hide');
-                fnGridRefreshItemMaster();
+                fnGridRefreshDrugsConsumables();
                 eSyaParams.ClearValue();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
             }
-            $("#btnSaveItem").attr('disabled', false);
-            $("#btnSaveItem").show();
+            $("#btnSaveDrugsConsumables").attr('disabled', false);
+            $("#btnSaveDrugsConsumables").show();
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveItem").attr("disabled", false);
+            $("#btnSaveDrugsConsumables").attr("disabled", false);
         }
     });
+}
+
+function fnISDCountryCode_onChange() {
 
 }
 
@@ -499,8 +562,7 @@ function fnClearFields() {
     $('#cboManufacturer').selectpicker('refresh');
 
 
-    $('#cboIsdcode').val('');
-    $('#cboIsdcode').selectpicker('refresh');
+    $("#cbolocISD").val('0').selectpicker('refresh');
     
     $('#txtBarCodeID').val('');
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -530,10 +592,9 @@ function fnValidateDrugsConsumables() {
         $('#cboManufacturer').focus();
         return false;
     }
-    if ($("#cboIsdcode").val() === "0" || $("#cboIsdcode").val() === "") {
-        fnAlert("w", "EMP_01_00", "UI0056", errorMsg.SelectISDCode_E9);
-        $('#cboIsdcode').focus();
-        return false;
+    if ($("#cbolocISD").val() === '0' || $("#cbolocISD").val() === "0" || IsStringNullorEmpty($("#cbolocISD").val())) {
+        fnAlert("w", "ECB_02_00", "UI0056", errorMsg.SelectISDCode_E9);
+        return;
     }
       
 }
