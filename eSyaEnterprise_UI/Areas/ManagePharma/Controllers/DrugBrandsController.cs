@@ -357,6 +357,58 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
             }
         }
 
+        /// <summary>
+        ///Get All Active Locations 
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetAllBusinessLocations()
+        {
+
+            try
+            {
+                string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "FM",
+                    parent = "#",
+                    text = "eSya Business Locations",
+                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                treeView.Add(jsObj);
+
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("Common/GetBusinessKey");
+
+                if (serviceResponse.Status)
+                {
+                    foreach (var fm in serviceResponse.Data)
+                    {
+                        jsObj = new jsTreeObject
+                        {
+                            id = fm.BusinessKey.ToString(),
+                            text = fm.BusinessKey.ToString() + '.' + fm.LocationDescription,
+                            icon = baseURL + "/images/jsTree/openfolder.png",
+                            parent = "FM"
+                        };
+                        treeView.Add(jsObj);
+                    }
+                    return Json(treeView);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessKey");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
         #endregion Drug Brands
     }
 }
