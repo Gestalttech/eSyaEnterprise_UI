@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
     
     fnGridLoadDrugsConsumables();
-    //fnBindISDCodes();
 
     $.contextMenu({
         selector: "#btnDrugsConsumables",
@@ -14,51 +13,6 @@
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
 });
-
-//function fnBindISDCodes() {
-//    $("#cboIsdcode").empty();
-
-//    $.ajax({
-//        url: getBaseURL() + '/DrugBrands/GetISDCodesbyBusinessKey?businessKey=' + $("#cboLocation").val(),
-//        type: 'GET',
-//        dataType: 'json',
-//        contentType: 'application/json; charset=utf-8',
-//        error: function (error) {
-//            fnAlert("e", "", error.StatusCode, error.statusText);
-//        },
-
-//        success: function (data) {
-//            if (data != null) {
-//                //refresh each time
-//                $("#cboIsdcode").empty();
-//                $("#cboIsdcode").append($("<option value='0'> Select </option>"));
-//                var $select = $("#cboIsdcode");
-
-//                data.forEach(function (item) {
-//                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
-//                    $select.append($('<option></option>')
-//                        .val(item["Isdcode"])
-//                        .attr('data-content', optionContent)
-//                        .text(item["CountryName"] + '  (+' + item["Isdcode"] + ')'));
-//                });
-
-//                // Refresh the selectpicker to apply changes
-//                $select.selectpicker('refresh');
-
-//            }
-//            else {
-//                $("#cboIsdcode").empty();
-//                $("#cboIsdcode").append($("<option value='0'> Select </option>"));
-//                $("#cboIsdcode").val(_cnfISDCode);
-//                $("#cboIsdcode").val('0');
-//                $('#cboIsdcode').selectpicker('refresh');
-//            }
-//        },
-//        async: false,
-//        processData: false
-//    });
-
-//}
 
 function fnGridLoadDrugsConsumables() {
     var CompositionID = $("#cboDrugComposition").val();
@@ -73,7 +27,7 @@ function fnGridLoadDrugsConsumables() {
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
+        colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDesc, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
         colModel: [
             { name: "Skutype", width: 70, editable: true, align: 'left', hidden: true },
             { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
@@ -83,7 +37,8 @@ function fnGridLoadDrugsConsumables() {
             { name: "TradeID", width: 170, editable: true, align: 'left', hidden: true },
             { name: "TradeName", width: 170, editable: true, align: 'left', hidden: false },
             { name: "PackSize", width: 40, editable: true, align: 'left', hidden: false },
-            { name: "Packing", width: 40, editable: true, align: 'left', hidden: false },
+            { name: "Packing", width: 40, editable: true, align: 'left', hidden: true },
+            { name: "PackingDesc", width: 40, editable: true, align: 'left', hidden: false },
             { name: "ManufacturerID", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "BarcodeID", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
@@ -114,14 +69,13 @@ function fnGridLoadDrugsConsumables() {
             SetGridControlByAction();
         },
         onSelectRow: function (rowid, status, e) {
-
+            
         },
     }).jqGrid('navGrid', '#jqpDrugsConsumables', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshDrugsConsumables
     }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
         caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnGridAddDrugsConsumables
     });
-    //fnAddGridSerialNoHeading();
 }
 
 function fnGetDrugDetails() {
@@ -157,7 +111,7 @@ function fnGetDrugDetails() {
                     ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
                     jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-                    colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
+                    colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDesc, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
                     colModel: [
                         { name: "Skutype", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
@@ -166,7 +120,8 @@ function fnGetDrugDetails() {
                         { name: "FormulationID", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "TradeID", width: 170, editable: true, align: 'left', hidden: true },
                         { name: "TradeName", width: 170, editable: true, align: 'left', hidden: false },
-                        { name: "PackSize", width: 40, editable: true, align: 'left', hidden: false },
+                        { name: "PackSize", width: 40, editable: true, align: 'left', hidden: true },
+                        { name: "PackingDesc", width: 40, editable: true, align: 'left', hidden: false },
                         { name: "Packing", width: 40, editable: true, align: 'left', hidden: false },
                         { name: "ManufacturerID", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
                         { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
@@ -198,7 +153,7 @@ function fnGetDrugDetails() {
                         SetGridControlByAction();
                     },
                     onSelectRow: function (rowid, status, e) {
-
+                       
                     },
                 }).jqGrid('navGrid', '#jqpDrugsConsumables', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
                     caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshDrugsConsumables
@@ -293,6 +248,27 @@ function fnGetDrugFormulation(FormulationID) {
     });
 }
 
+function fnGetDrugFormulationonEdit(FormulationID) {
+    $("#cboDrugsFormulations").empty().selectpicker('refresh');
+    $("#cboDrugsManufacturer").empty().selectpicker('refresh');
+
+    var CompositionId = $("#cboDrugComposition").val();
+    $.ajax({
+        type: 'POST',
+        url: getBaseURL() + '/DrugBrands/GetDrugFormulation?CompositionId=' + CompositionId,
+        success: function (result) {
+            $("#cboDrugsFormulations").append($("<option value='0'>Select</option>"));
+            if (result != null) {
+                for (var i = 0; i < result.length; i++) {
+                    $('#cboDrugsFormulations').append('<option value="' + result[i]["FormulationID"] + '">' + result[i]["FormulationDesc"] + '</option>');
+                }
+            }
+            $("#cboDrugsFormulations").val(FormulationID);
+            $("#cboDrugsFormulations").selectpicker('refresh');
+        }
+    });
+}
+
 function fnGetManufacturer(CompositionId, FormulationID, ManufacturerId) {
     $("#cboDrugsManufacturer").empty().selectpicker('refresh');
     $("#cboManufacturer").empty().selectpicker('refresh');
@@ -307,7 +283,6 @@ function fnGetManufacturer(CompositionId, FormulationID, ManufacturerId) {
                     $('#cboDrugsManufacturer').append('<option value="' + result[i]["ManufacturerId"] + '">' + result[i]["ManufacturerName"] + '</option>');
                     $('#cboManufacturer').append('<option value="' + result[i]["ManufacturerId"] + '">' + result[i]["ManufacturerName"] + '</option>');
                 }
-                _isSubCategoryApplicable = 1;
             }
             $("#cboDrugsManufacturer").val(ManufacturerId);
             $("#cboDrugsManufacturer").selectpicker('refresh');
@@ -327,11 +302,6 @@ function SetGridControlByAction() {
 function fnGridAddDrugsConsumables() {
     fnClearFields();
 
-    //if ($("#cboDrugConsumables").val() == "0" || $("#cboDrugConsumables").val() == "") {
-    //    fnAlert("w", "EMP_01_00", "UI0339", errorMsg.SelectDrugConsumables_E10);
-    //    $('#cboDrugConsumables').focus();
-    //    return false;
-    //}
     if ($("#cboDrugComposition").val() == "0" || $("#cboDrugComposition").val() == "") {
         fnAlert("w", "EMP_01_00", "UI0340", errorMsg.SelectDrugComposition_E11);
         $('#cboDrugComposition').focus();
@@ -343,12 +313,20 @@ function fnGridAddDrugsConsumables() {
         $('#cboDrugsFormulations').focus();
         return false;
     }
+    if ($("#cboDrugsManufacturer").val() == "0" || $("#cboDrugsManufacturer").val() == "") {
+        fnAlert("w", "EMP_01_00", "UI0342", errorMsg.SelectDrugManufacturer_E13);
+        $('#cboDrugsManufacturer').focus();
+        return false;
+    }
     $("#btnSaveDrugsConsumables").html(localization.Save);
     $('#PopupDrugsConsumables').modal('show');
     $('#PopupDrugsConsumables').find('.modal-title').text(localization.AddDrugsConsumables);
 
     $("#cboManufacturer").val($("#cboDrugsManufacturer").val());
     $("#cboManufacturer").selectpicker('refresh');
+
+    $('#txtCompositionID').val($("#cboDrugComposition").val());
+    $('#txtFormulationID').val($("#cboDrugsFormulations").val());
 
     $("input[type=checkbox]").attr('disabled', false);
 
@@ -380,15 +358,27 @@ function fnEditDrugsConsumables(e) {
         $("input[type=checkbox]").attr('disabled', true);
     });
 
+    $("#cboDrugComposition").val(rowData.CompositionID);
+    $("#cboDrugComposition").selectpicker('refresh');
+
+    fnGetDrugFormulationonEdit(rowData.FormulationID);
+
+    fnGetManufacturer(rowData.CompositionID, rowData.FormulationID, rowData.ManufacturerID);
+
+    $("#cboDrugsManufacturer").val(rowData.ManufacturerID);
+    $("#cboDrugsManufacturer").selectpicker('refresh');
+
+    $('#txtTradeID').val(rowData.TradeID);
+    $('#txtSkuCode').val(rowData.Skucode);
+    $('#txtSkuId').val(rowData.Skuid);
     $('#txtTradeName').val(rowData.TradeName);
     $('#txtPackSize').val(rowData.PackSize);
-    
     $("#cboPacking").val(rowData.Packing);
     $("#cboPacking").selectpicker('refresh');
     $("#cboManufacturer").val(rowData.ManufacturerID);
     $("#cboManufacturer").selectpicker('refresh');
-    $("#cboIsdcode").val(rowData.ISDCode);
-    $("#cboIsdcode").selectpicker('refresh');
+    $("#cbolocISD").val(rowData.ISDCode);
+    $("#cbolocISD").selectpicker('refresh');
     $('#txtBarcodeID').val(rowData.BarcodeID);
 
      
@@ -398,7 +388,7 @@ function fnEditDrugsConsumables(e) {
     else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
     eSyaParams.ClearValue();
     $.ajax({
-        url: getBaseURL() + '/SKU/GetItemParameterList?ItemCode=' + $('#txtItemCode').val(),
+        url: getBaseURL() + '/DrugBrands/GetDrugBrandParameterList?TradeID=' + $('#txtTradeID').val(),
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -428,15 +418,30 @@ function fnViewDrugsConsumables(e) {
     $('#PopupDrugsConsumables').find('.modal-title').text(localization.ViewDrugsConsumables);
     $('#PopupDrugsConsumables').modal('show');
 
+    $("#cboDrugComposition").val(rowData.CompositionID);
+    $("#cboDrugComposition").selectpicker('refresh');
+
+    fnGetDrugFormulationonEdit(rowData.FormulationID);
+
+    $("#cboDrugsFormulations").val(rowData.FormulationID);
+    $("#cboDrugsFormulations").selectpicker('refresh');
+
+    fnGetManufacturer(rowData.CompositionID, rowData.FormulationID, rowData.ManufacturerID);
+
+    $("#cboDrugsManufacturer").val(rowData.ManufacturerID);
+    $("#cboDrugsManufacturer").selectpicker('refresh');
+
+    $('#txtTradeID').val(rowData.TradeID);
+    $('#txtSkuCode').val(rowData.Skucode);
+    $('#txtSkuId').val(rowData.Skuid);
     $('#txtTradeName').val(rowData.TradeName);
     $('#txtPackSize').val(rowData.PackSize);
-
     $("#cboPacking").val(rowData.Packing);
     $("#cboPacking").selectpicker('refresh');
     $("#cboManufacturer").val(rowData.ManufacturerID);
     $("#cboManufacturer").selectpicker('refresh');
-    $("#cboIsdcode").val(rowData.ISDCode);
-    $("#cboIsdcode").selectpicker('refresh');
+    $("#cbolocISD").val(rowData.ISDCode);
+    $("#cbolocISD").selectpicker('refresh');
     $('#txtBarcodeID').val(rowData.BarcodeID);
 
     if (rowData.ActiveStatus === "true") {
@@ -446,7 +451,7 @@ function fnViewDrugsConsumables(e) {
 
     eSyaParams.ClearValue();
     $.ajax({
-        url: getBaseURL() + '/SKU/GetItemParameterList?ItemCode=' + $('#txtItemCode').val(),
+        url: getBaseURL() + '/DrugBrands/GetDrugBrandParameterList?TradeID=' + $('#txtTradeID').val(),
         type: 'POST',
         datatype: 'json',
         success: function (response) {
@@ -476,14 +481,14 @@ function fnSaveDrugsConsumables() {
         return;
     }
 
-    var DrugBrands;
+    var obj;
 
     $("#btnSaveDrugsConsumables").attr('disabled', true);
 
     var tradeID = $("#txtTradeID").val();
 
     if (tradeID == null || tradeID == "") {
-        DrugBrands = {
+        obj = {
             TradeID: 0,
             Skucode: 0,
             Skuid: 0,
@@ -499,7 +504,7 @@ function fnSaveDrugsConsumables() {
         }
     }
     else {
-        DrugBrands = {
+        obj = {
             TradeID: tradeID,
             Skucode: $("#txtSkuCode").val(),
             Skuid: $("#txtSkuId").val(),
@@ -516,14 +521,14 @@ function fnSaveDrugsConsumables() {
     }
 
     var fmParams = eSyaParams.GetJSONValue();
-    DrugBrands.l_FormParameter = fmParams;
+    obj.l_FormParameter = fmParams;
 
     $.ajax({
         //async: false,
         url: getBaseURL() + '/DrugBrands/InsertOrUpdateDrugBrands',
         type: 'POST',
         data: {
-            DrugBrands
+            obj
         },
         datatype: 'json',
         success: function (response) {
@@ -553,9 +558,11 @@ function fnISDCountryCode_onChange() {
 }
 
 function fnClearFields() {
+    $("#txtTradeID").val('');
+    $("#txtSkuCode").val('');
+    $("#txtSkuId").val('');
     $("#txtTradeName").val('');
     $("#txtPackSize").val('');
-    
     $('#cboPacking').val('');
     $('#cboPacking').selectpicker('refresh');
     $('#cboManufacturer').val('');

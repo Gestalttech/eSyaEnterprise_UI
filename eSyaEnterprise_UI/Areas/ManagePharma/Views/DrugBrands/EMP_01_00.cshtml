@@ -15,7 +15,6 @@
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
     var localization = {
-        ItemDescription: '@Localizer["ItemDescription"]',
         Active: '@Localizer["Active"]',
         Actions: '@Localizer["Actions"]',
         Save: '@Localizer["Save"]',
@@ -27,14 +26,18 @@
         TradeName: '@Localizer["TradeName"]',
         PackSize: '@Localizer["PackSize"]',
         Packing: '@Localizer["Packing"]',
+        PackingDesc: '@Localizer["PackingDesc"]',
         Manufacturer: '@Localizer["Manufacturer"]',
         ISDCode: '@Localizer["ISDCode"]',
-        BarCodeID: '@Localizer["BarCodeID"]',
+        BarcodeID: '@Localizer["BarcodeID"]',
         AddDrugsConsumables: '@Localizer["AddDrugsConsumables"]',
         EditDrugsConsumables: '@Localizer["EditDrugsConsumables"]',
         ViewDrugsConsumables: '@Localizer["ViewDrugsConsumables"]',
         DrugsConsumables: '@Localizer["DrugsConsumables"]',
-
+        Skutype: '@Localizer["Skutype"]',
+        Skucode: '@Localizer["Skucode"]',
+        SkuId: '@Localizer["SkuId"]',
+        ManufacturerID: '@Localizer["ManufacturerID"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -49,6 +52,7 @@
         SelectDrugConsumables_E10:'@Localizer["UI0339"]',
         SelectDrugComposition_E11: '@Localizer["UI0340"]',
         SelectDrugFormulation_E12: '@Localizer["UI0341"]',
+        SelectDrugManufacturer_E13: '@Localizer["UI0342"]',
     }
 </script>
 
@@ -88,7 +92,7 @@
     <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label> @Localizer["DrugsManufacturer"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboDrugsManufacturer" title="Select" data-size="8">
+            <select class="selectpicker" data-live-search="true" id="cboDrugsManufacturer" title="Select" data-size="8" onchange = "fnGridLoadDrugsConsumables()">
                 <option value="0"> Select</option>
             </select>
         </div>
