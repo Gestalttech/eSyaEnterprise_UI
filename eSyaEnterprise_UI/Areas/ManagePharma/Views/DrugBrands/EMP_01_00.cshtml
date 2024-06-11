@@ -55,6 +55,8 @@
         SelectDrugManufacturer_E13: '@Localizer["UI0342"]',
     }
 </script>
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
+<script src="~/js/Common/jsTree.js"></script>
 
 @section scripts{
     <script src="~/js/ManagePharma/ManageDrugsConsumables.js"></script>
@@ -111,60 +113,60 @@
                 <h4 class="modal-title"> @Localizer["AddDrugsConsumables"]</h4>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row form-group border-bottom">
 
                     <div class="col-sm-12">
                         <input type="text" class="form-control" id="txtTradeID" style="display:none">
                         <input type="text" class="form-control" id="txtSkuCode" style="display:none">
                         <input type="text" class="form-control" id="txtSkuId" style="display:none">
                     </div>
+                   
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label> @Localizer["TradeName"] </label>
+                            <input type="text" class="form-control" autocomplete="off" maxlength="75" id="txtTradeName" />
+                        </div>
+                    </div>
 
-                      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
-                                <div class="form-group">
-                                    <label> @Localizer["TradeName"] </label>
-                                    <input type="text" class="form-control" autocomplete="off" maxlength="75" id="txtTradeName" />
-                                </div>
-                            </div>
-                          
-                            <div class="col-xl-1 col-lg-1 col-md-2 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label> @Localizer["PackSize"] </label>
-                                    <input type="text" id="txtPackSize" class="form-control numberonly" autocomplete="off" maxlength="4" value="1" />
+                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label> @Localizer["PackSize"] </label>
+                            <input type="text" id="txtPackSize" class="form-control numberonly" autocomplete="off" maxlength="4" value="1" />
 
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label> @Localizer["Packing"] </label>
+                        </div>
+                    </div>
+                    <div class="col-xl-1 col-lg-1 col-md-2 col-sm-4 col-xs-12">
+                        <div class="form-group">
+                            <label> @Localizer["Packing"] </label>
                             <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboPacking" data-size="8" asp-items="@ViewBag.Packing">
-                                        <option value="0">@Localizer["Select"]</option>
-                                    </select>
-                                </div>
+                                <option value="0">@Localizer["Select"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4  col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label> @Localizer["Manufacturer"] </label>
+                                <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboManufacturer" data-size="8">
+                                    @* <option value="0">@Localizer["Select"]</option> *@
+                                </select>
                             </div>
-                            <div class="col-xl-3 col-lg-4 col-md-3 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label> @Localizer["Manufacturer"] </label>
-                                    <select class="selectpicker" data-container="body" data-live-search="true" title="Select" id="cboManufacturer" data-size="8">
-                                        @* <option value="0">@Localizer["Select"]</option> *@
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 form-group d-flex justify-content-end flex-column">
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 form-group d-flex justify-content-end flex-column">
 
-                        <label> @Localizer["ISDCode"] </label>
-                        @await Component.InvokeAsync("IsdCountryInput", new { id = "locISD" })
+                                <label> @Localizer["ISDCode"] </label>
+                                @await Component.InvokeAsync("IsdCountryInput", new { id = "locISD" })
 
                                 @* <label for="cboIsdcode">@Localizer["ISD-Code"]</label>
                                 <select class="selectpicker" data-container="body" title="Select" data-live-search="true" id="cboIsdcode" data-size="8" onchange="fnISD_change(this)">
 
                                 </select> *@
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-3 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label> @Localizer["BarcodeID"] </label>
-                                    <input type="text" id="txtBarcodeID" class="form-control" autocomplete="off" maxlength="20" />
+                        </div>
+                            <div class="col-xl-3 col-lg-3 col-md-4  col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label> @Localizer["BarcodeID"] </label>
+                                        <input type="text" id="txtBarcodeID" class="form-control" autocomplete="off" maxlength="20" />
 
-                                </div>
+                                    </div>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 form-group d-flex align-items-end">
                                 <div class="">
@@ -174,29 +176,20 @@
                                     </label>
                                 </div>
                             </div>
-                          </div>
-                              <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12">
-                                    <hr/>
-                                      <p class="subheading">@Localizer["DrugParameter"]</p>
-                                        <hr class="left" />
-                                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "11" })
-                                    </div>
-                              </div>
-
-
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div id="jstBusinessLocation"> </div>
                         </div>
-
+                        <div class="row">
+                                <div class="col-lg-5 col-md-5 col-sm-6">
+                                    <p class="subheading">@Localizer["DrugParameter"]</p>
+                                    <hr class="left" />
+                                    @await Component.InvokeAsync("eSyaParameter", new { parameterType = "11" })
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-6">
+                                    <div id="jstBusinessLocation"> </div>
+                                </div>
+                        </div>
                 </div>
-
-            </div>
-
-
-            <div class="modal-footer">
+           
+    <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveDrugsConsumables" onclick="fnSaveDrugsConsumables()">
