@@ -25,6 +25,8 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Models
         public int UserID { get; set; }
         public DateTime CreatedOn { get; set; }
         public string TerminalID { get; set; }
+        public int BusinessKey { get; set; }
+        public string LocationDescription { get; set; }
         public List<DO_eSyaParameter> l_FormParameter { get; set; }
     }
 }

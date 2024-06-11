@@ -361,7 +361,7 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
         ///Get All Active Locations 
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetAllBusinessLocations()
+        public async Task<JsonResult> GetAllBusinessLocations(int TradeId)
         {
 
             try
@@ -374,12 +374,11 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
                     id = "FM",
                     parent = "#",
                     text = "eSya Business Locations",
-                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
-                    state = new stateObject { opened = true, selected = false }
+                    state = new stateObject { opened = true, selected = false, checkbox_disabled = true, disabled = true }
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("Common/GetBusinessKey");
+                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("DrugBrands/GetBusinessKey?TradeID=" + TradeId);
 
                 if (serviceResponse.Status)
                 {
@@ -387,24 +386,31 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
                     {
                         jsObj = new jsTreeObject
                         {
-                            id = fm.BusinessKey.ToString(),
                             text = fm.BusinessKey.ToString() + '.' + fm.LocationDescription,
-                            icon = baseURL + "/images/jsTree/openfolder.png",
-                            parent = "FM"
+                            parent = "FM",
+
                         };
+
+                        jsObj.id = fm.BusinessKey.ToString();
+
+                        if (fm.ActiveStatus)
+                            jsObj.state = new stateObject { opened = true, selected = true, Checked = true };
+                        else
+                            jsObj.state = new stateObject { opened = true, selected = false, Checked = false };
+
                         treeView.Add(jsObj);
                     }
                     return Json(treeView);
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey:For CompositionID {0}", TradeId);
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetBusinessKey");
+                _logger.LogError(ex, "UD:GetBusinessKey:For CompositionID {0}", TradeId);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
 

@@ -616,37 +616,57 @@ function fnValidateDrugsConsumables() {
 
 function fnLoadBusinessTree() {
     $("#jstBusinessLocation").jstree('destroy');
-
+    var TradeId = $("#txtTradeID").val();
     $.ajax({
-        url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations',
+        url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations?TradeId=' + TradeId,
         type: 'Post',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#jstBusinessLocation").jstree('destroy');
-            $("#jstBusinessLocation").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#jstBusinessLocation");
-            $('#jstBusinessLocation').css('display', 'block');
 
-            $(window).on('resize', function () {
-                fnTreeSize("#jstBusinessLocation");
-            })
+            $('#jstBusinessLocation').jstree({
+                core: { 'data': result, 'check_callback': true, 'multiple': true, 'expand_selected_onload': false },
+                "plugins": ["checkbox"],
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+            });
+            fnTreeSize("#jstBusinessLocation");
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            //$("#dvBusinessDocument").css('display', 'none');
         }
     });
+    //$.ajax({
+    //    url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations',
+    //    type: 'Post',
+    //    datatype: 'json',
+    //    contentType: 'application/json; charset=utf-8',
+    //    success: function (result) {
+    //        $("#jstBusinessLocation").jstree('destroy');
+    //        $("#jstBusinessLocation").jstree({ core: { data: result, multiple: false } });
+    //        fnTreeSize("#jstBusinessLocation");
+    //        $('#jstBusinessLocation').css('display', 'block');
 
-    $("#jstBusinessLocation").on('loaded.jstree', function () {
-        $("#jstBusinessLocation").jstree()._open_to(prevSelectedID);
-        $('#jstBusinessLocation').jstree().select_node(prevSelectedID);
-    });
+    //        $(window).on('resize', function () {
+    //            fnTreeSize("#jstBusinessLocation");
+    //        })
+    //    },
+    //    error: function (error) {
+    //        fnAlert("e", "", error.StatusCode, error.statusText);
+    //        //$("#dvBusinessDocument").css('display', 'none');
+    //    }
+    //});
 
-    $('#jstBusinessLocation').on("close_node.jstree", function (node) {
-        var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#jstBusinessLocation').jstree().deselect_node(closingNode.children);
-    });
+    //$("#jstBusinessLocation").on('loaded.jstree', function () {
+    //    $("#jstBusinessLocation").jstree()._open_to(prevSelectedID);
+    //    $('#jstBusinessLocation').jstree().select_node(prevSelectedID);
+    //});
+
+    //$('#jstBusinessLocation').on("close_node.jstree", function (node) {
+    //    var closingNode = node.handleObj.handler.arguments[1].node;
+    //    $('#jstBusinessLocation').jstree().deselect_node(closingNode.children);
+    //});
 }
 function fnTreeSize() {
     $("#jstBusinessLocation").css({
