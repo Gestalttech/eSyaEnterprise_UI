@@ -103,7 +103,7 @@ function fnGetDrugDetails() {
 
                 fnGetDrugFormulation(result[0]["FormulationID"]);
 
-                fnGetManufacturer(result[0]["CompositionID"], result[0]["FormulationID"], result[0]["ManufacturerID"]);
+                //fnGetManufacturer(result[0]["CompositionID"], result[0]["FormulationID"], result[0]["ManufacturerID"]);
 
                 $("#jqgDrugsConsumables").jqGrid('GridUnload');
                 $("#jqgDrugsConsumables").jqGrid({
@@ -245,7 +245,7 @@ function fnGetDrugFormulation(FormulationID) {
             }
             $("#cboDrugsFormulations").val(FormulationID);
             $("#cboDrugsFormulations").selectpicker('refresh');
-            fnGridLoadDrugsConsumables();
+            //fnGridLoadDrugsConsumables();
         }
     });
 }
@@ -339,12 +339,37 @@ function fnGridAddDrugsConsumables() {
     });
 }
 
+
+function fnLoadBusinessTree() {
+    $("#jstBusinessLocation").jstree('destroy');
+    var TradeId = $("#txtTradeID").val();
+    $.ajax({
+        url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations?TradeId=' + TradeId,
+        type: 'Post',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+
+            $('#jstBusinessLocation').jstree({
+                core: { 'data': result, 'check_callback': true, 'multiple': true, 'expand_selected_onload': false },
+                "plugins": ["checkbox"],
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+            });
+            fnTreeSize("#jstBusinessLocation");
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        }
+    });
+}
 function fnGridRefreshDrugsConsumables() {
     $("#jqgDrugsConsumables").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
 function fnEditDrugsConsumables(e) {
-
+    fnClearFields();
     var rowid = $("#jqgDrugsConsumables").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDrugsConsumables').jqGrid('getRowData', rowid);
 
@@ -412,6 +437,7 @@ function fnEditDrugsConsumables(e) {
 }
 
 function fnViewDrugsConsumables(e) {
+    fnClearFields();
     var rowid = $("#jqgDrugsConsumables").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDrugsConsumables').jqGrid('getRowData', rowid);
 
@@ -530,6 +556,20 @@ function fnSaveDrugsConsumables() {
     var fmParams = eSyaParams.GetJSONValue();
     obj.l_FormParameter = fmParams;
 
+    var objtc=[];
+    var treeUNodes = $('#jstBusinessLocation').jstree(true).get_json('#', { 'flat': true });
+    $.each(treeUNodes, function () {
+        if (this.parent != "#") {
+            var tc = {
+                BusinessKey: this.id,
+                ActiveStatus: this.state.selected
+            }
+            objtc.push(tc);
+        }
+    });
+
+    obj.l_BusinessLocation = objtc;
+
     $.ajax({
         //async: false,
         url: getBaseURL() + '/DrugBrands/InsertOrUpdateDrugBrands',
@@ -543,7 +583,7 @@ function fnSaveDrugsConsumables() {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveDrugsConsumables").attr('disabled', true);
                 $("#btnSaveDrugsConsumables").hide();
-                $("#PopupItemMaster").modal('hide');
+                $("#PopupDrugsConsumables").modal('hide');
                 fnGridRefreshDrugsConsumables();
                 eSyaParams.ClearValue();
             }
@@ -610,64 +650,9 @@ function fnValidateDrugsConsumables() {
         fnAlert("w", "ECB_02_00", "UI0056", errorMsg.SelectISDCode_E9);
         return;
     }
-
-
 }
 
-function fnLoadBusinessTree() {
-    $("#jstBusinessLocation").jstree('destroy');
-    var TradeId = $("#txtTradeID").val();
-    $.ajax({
-        url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations?TradeId=' + TradeId,
-        type: 'Post',
-        datatype: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function (result) {
 
-            $('#jstBusinessLocation').jstree({
-                core: { 'data': result, 'check_callback': true, 'multiple': true, 'expand_selected_onload': false },
-                "plugins": ["checkbox"],
-                "checkbox": {
-                    "keep_selected_style": false
-                },
-            });
-            fnTreeSize("#jstBusinessLocation");
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-        }
-    });
-    //$.ajax({
-    //    url: getBaseURL() + '/DrugBrands/GetAllBusinessLocations',
-    //    type: 'Post',
-    //    datatype: 'json',
-    //    contentType: 'application/json; charset=utf-8',
-    //    success: function (result) {
-    //        $("#jstBusinessLocation").jstree('destroy');
-    //        $("#jstBusinessLocation").jstree({ core: { data: result, multiple: false } });
-    //        fnTreeSize("#jstBusinessLocation");
-    //        $('#jstBusinessLocation').css('display', 'block');
-
-    //        $(window).on('resize', function () {
-    //            fnTreeSize("#jstBusinessLocation");
-    //        })
-    //    },
-    //    error: function (error) {
-    //        fnAlert("e", "", error.StatusCode, error.statusText);
-    //        //$("#dvBusinessDocument").css('display', 'none');
-    //    }
-    //});
-
-    //$("#jstBusinessLocation").on('loaded.jstree', function () {
-    //    $("#jstBusinessLocation").jstree()._open_to(prevSelectedID);
-    //    $('#jstBusinessLocation').jstree().select_node(prevSelectedID);
-    //});
-
-    //$('#jstBusinessLocation').on("close_node.jstree", function (node) {
-    //    var closingNode = node.handleObj.handler.arguments[1].node;
-    //    $('#jstBusinessLocation').jstree().deselect_node(closingNode.children);
-    //});
-}
 function fnTreeSize() {
     $("#jstBusinessLocation").css({
         'max-height': $(window).height() - 190,

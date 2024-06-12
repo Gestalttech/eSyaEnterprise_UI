@@ -154,24 +154,48 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
         {
             try
             {
-                var parameter = "?TradeID=" + TradeID;
-                var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandListByTradeID" + parameter);
-                if (serviceResponse.Status)
+                if (TradeID == 0)
                 {
-                    if (serviceResponse.Data != null)
+                    var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetFullDrugBrandList");
+                    if (serviceResponse.Status)
                     {
-                        return Json(serviceResponse.Data);
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByGroup");
+                            return Json(new { Status = false, StatusCode = "500" });
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByGroup");
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    var parameter = "?TradeID=" + TradeID;
+                    var serviceResponse = await _eSyaPharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugBrands>>("DrugBrands/GetDrugBrandListByTradeID" + parameter);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByTradeID:For TradeID {0}", TradeID);
+                            return Json(new { Status = false, StatusCode = "500" });
+                        }
                     }
                     else
                     {
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByTradeID:For TradeID {0}", TradeID);
                         return Json(new { Status = false, StatusCode = "500" });
                     }
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugBrandListByTradeID:For TradeID {0}", TradeID);
-                    return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
