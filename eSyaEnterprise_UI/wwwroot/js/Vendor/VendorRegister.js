@@ -2,7 +2,7 @@
 var activeTabName = "";
 $(document).ready(function () {
     $("#lblDisplayNames").val('');
-
+     
     $.contextMenu({
         // define which elements trigger this menu
         selector: "#btnVendorMaster",
@@ -151,7 +151,7 @@ $('#v-pills-tab button').on('click', function (e) {
 function fnAddVendor() {
     fnEnableVendorRegister(false);
     $('#txtVendorCode').val('');
-    
+    $('.selectpicker').selectpicker('refresh');
     $("#divForm").css("display", "block");
     $("#divGrid").hide();
     $("#chkActiveStatus").parent().addClass("is-checked");
