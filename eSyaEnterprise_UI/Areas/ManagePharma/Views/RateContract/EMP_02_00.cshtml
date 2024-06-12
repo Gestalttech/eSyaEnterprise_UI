@@ -1,0 +1,65 @@
+﻿  @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EMP_02_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Save: '@Localizer["Save"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        TradeID: '@Localizer["TradeID"]',
+        TradeName: '@Localizer["TradeName"]',
+        EffectiveFrom: '@Localizer["EffectiveFrom"]',
+        PurchaseRate: '@Localizer["PurchaseRate"]',
+        MRP: '@Localizer["MRP"]',
+        LastMRP: '@Localizer["LastMRP"]',
+        Active: '@Localizer["Active"]',
+        RateContract: '@Localizer["RateContract"]',
+    }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+    }
+</script>
+@section scripts {
+    <script src="~/js/ManagePharma/RateContract.js"></script>
+}
+
+<div class="row">
+     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["BusinessLocation"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadManufacturer()"></select>
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
+        <div class="form-group">
+            <label> @Localizer["Manufacturer"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboManufacturer" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadGridRateContract()"></select>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <table id="jqgRateContract"></table>
+        <div id="jqpRateContract"></div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center">
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSaveRateContract" onclick="fnSaveRateContract()"><i class="fa fa-save"></i> @Localizer["Save"]  </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelRateContract" onclick="fnClearRateContract()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+    </div>
+</div>
+
+

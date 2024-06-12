@@ -15,6 +15,7 @@
     <Compile Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <Compile Remove="Areas\InterfaceSMS\**" />
     <Compile Remove="Areas\ManageInventory\Views\Rules\**" />
+    <Compile Remove="Areas\ManagePharma\Views\Business\**" />
     <Compile Remove="Areas\ManageServices\**" />
     <Compile Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Compile Remove="Areas\ProductSetup\Views\Connect\**" />
@@ -36,6 +37,7 @@
     <Content Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <Content Remove="Areas\InterfaceSMS\**" />
     <Content Remove="Areas\ManageInventory\Views\Rules\**" />
+    <Content Remove="Areas\ManagePharma\Views\Business\**" />
     <Content Remove="Areas\ManageServices\**" />
     <Content Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Content Remove="Areas\ProductSetup\Views\Connect\**" />
@@ -57,6 +59,7 @@
     <EmbeddedResource Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <EmbeddedResource Remove="Areas\InterfaceSMS\**" />
     <EmbeddedResource Remove="Areas\ManageInventory\Views\Rules\**" />
+    <EmbeddedResource Remove="Areas\ManagePharma\Views\Business\**" />
     <EmbeddedResource Remove="Areas\ManageServices\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\Connect\**" />
@@ -78,6 +81,7 @@
     <None Remove="Areas\DocumentControl\Views\DocumentControl\**" />
     <None Remove="Areas\InterfaceSMS\**" />
     <None Remove="Areas\ManageInventory\Views\Rules\**" />
+    <None Remove="Areas\ManagePharma\Views\Business\**" />
     <None Remove="Areas\ManageServices\**" />
     <None Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <None Remove="Areas\ProductSetup\Views\Connect\**" />
@@ -129,6 +133,7 @@
     <Compile Remove="Areas\Localize\Models\DO_UserCreation.cs" />
     <Compile Remove="Areas\ManageInventory\Controllers\RulesController.cs" />
     <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
+    <Compile Remove="Areas\ManagePharma\Controllers\BusinessController.cs" />
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ProductSetup\Controllers\BusinessCalendarController.cs" />
     <Compile Remove="Areas\ProductSetup\Controllers\ConnectController.cs" />
