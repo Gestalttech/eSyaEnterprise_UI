@@ -134,6 +134,7 @@
     <Compile Remove="Areas\ManageInventory\Controllers\RulesController.cs" />
     <Compile Remove="Areas\ManageInventory\Data\CodeTypeValues.cs" />
     <Compile Remove="Areas\ManagePharma\Controllers\BusinessController.cs" />
+    <Compile Remove="Areas\ManageRates\Controllers\VendorLinkController.cs" />
     <Compile Remove="Areas\ManageRates\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ProductSetup\Controllers\BusinessCalendarController.cs" />
     <Compile Remove="Areas\ProductSetup\Controllers\ConnectController.cs" />
