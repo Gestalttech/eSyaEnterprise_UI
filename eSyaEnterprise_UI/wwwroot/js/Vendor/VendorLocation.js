@@ -169,23 +169,26 @@ function IsValidLocation() {
         fnAlert("w", "EVN_01_00", "UI0138", errorMsg.MobileNo_E20);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtwhatsappnumber").val())) {
-        fnAlert("w", "EVN_01_00", "UI0245", errorMsg.WhatsAppNumber_E27);
-        return false;
-    }
-    if (IsStringNullorEmpty($("#txtvendoremailid").val())) {
-        fnAlert("w", "EVN_01_00", "UI0139", errorMsg.EmailID_E12);
-        return false;
-    }
     if ($("#cboStateCode").val() == 0 || $("#cboStateCode").val() == "0" || IsStringNullorEmpty($("#cboStateCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0067", errorMsg.StateCode_E28);
         return false;
     }
+
+    if (IsStringNullorEmpty($("#txtvendoremailid").val())) {
+        fnAlert("w", "EVN_01_00", "UI0139", errorMsg.EmailID_E12);
+        return false;
+    }
+   
     var validemail = IsValidateEmail($("#txtvendoremailid").val());
     if (validemail == false) {
         fnAlert("w", "EVN_01_00", "UI0140", errorMsg.ValidEmailID_E13);
         return false;
     } 
+
+    if (IsStringNullorEmpty($("#txtwhatsappnumber").val())) {
+        fnAlert("w", "EVN_01_00", "UI0245", errorMsg.WhatsAppNumber_E27);
+        return false;
+    }
     if (IsStringNullorEmpty($("#txtaddress").val())) {
         fnAlert("w", "EVN_01_00", "UI0229", errorMsg.Address_E21);
         return false;
