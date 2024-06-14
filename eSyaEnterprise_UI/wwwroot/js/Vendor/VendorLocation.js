@@ -28,7 +28,7 @@ function fnloadvendorLocationGrid() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.VendorId, localization.VendorLocationId, localization.Isdcode, localization.StateCode, localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.WhatsAppNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorLocationId, localization.Isdcode, localization.StateCode, localization.VendorLocation, localization.VendorAddress, localization.ContactPerson, localization.MobileNumber, localization.ISDCodeWhatsAppNumber, localization.WhatsAppNumber, localization.EmailID, localization.DefaultLocation, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorLocationId", width: 70, editable: true, align: 'left', hidden: true },
@@ -38,6 +38,7 @@ function fnloadvendorLocationGrid() {
             { name: "VendorAddress", width: 150, editable: true, align: 'left', hidden: false },
             { name: "ContactPerson", width: 110, editable: true, align: 'left', },
             { name: "MobileNumber", width: 120, editable: true, align: 'left' },
+            { name: "WIsdcode", width: 70, editable: true, align: 'left', hidden: true },
             { name: "WhatsappNumber", width: 120, editable: true, align: 'left', resizable: true },
             { name: "EMailId", width: 170, editable: true, align: 'left' },
             { name: "IsLocationDefault", width: 100, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
@@ -89,7 +90,8 @@ function fnSaveLocation() {
             Isdcode: $("#cboVendorMobile").val(),
             ContactPerson: $("#txtcontactperson").val(),
             MobileNumber: $("#txtVendorMobile").val(),
-            WhatsappNumber: $("#txtwhatsappnumber").val(),
+            WIsdcode: $("#cboVendorWhatsAppNumber").val(),
+            WhatsappNumber: $("#txtVendorWhatsAppNumber").val(),
             StateCode: $("#cboStateCode").val(),
             EMailId: $("#txtvendoremailid").val(),
             ActiveStatus: $("#chklocationstatus").parent().hasClass("is-checked")
@@ -131,7 +133,11 @@ function fnEditLocation(e) {
     $('#cboStateCode').val(rowData.StateCode).selectpicker('refresh');
     $("#txtcontactperson").val(rowData.ContactPerson);
     $('#txtVendorMobile').val(rowData.MobileNumber);
-    $('#txtwhatsappnumber').val(rowData.WhatsappNumber);
+    
+    $('#cboVendorWhatsAppNumber').val(rowData.WIsdcode);
+    $('#cboVendorWhatsAppNumber').selectpicker('refresh');
+
+    $('#txtVendorWhatsAppNumber').val(rowData.WhatsappNumber);
     $('#txtaddress').val(rowData.VendorAddress);
     $('#txtvendorlocation').val(rowData.VendorLocation);
     $('#txtvendoremailid').val(rowData.EMailId);
@@ -184,8 +190,11 @@ function IsValidLocation() {
         fnAlert("w", "EVN_01_00", "UI0140", errorMsg.ValidEmailID_E13);
         return false;
     } 
-
-    if (IsStringNullorEmpty($("#txtwhatsappnumber").val())) {
+    if ($("#cboVendorWhatsAppNumber").val() == 0 || $("#cboVendorWhatsAppNumber").val() == "0" || IsStringNullorEmpty($("#cboVendorWhatsAppNumber").val())) {
+        fnAlert("w", "EVN_01_00", "UI0244", errorMsg.VendorWhatsAppNumber_E29);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtVendorWhatsAppNumber").val())) {
         fnAlert("w", "EVN_01_00", "UI0245", errorMsg.WhatsAppNumber_E27);
         return false;
     }
@@ -215,7 +224,9 @@ function fnClearLocationfields () {
     $("#txtvendorlocation").val('');
     $("#txtcontactperson").val(''),
     $("#txtVendorMobile").val('');
-    $("#txtwhatsappnumber").val('');
+    $("#cboVendorWhatsAppNumber").val("0");
+    $('#cboVendorWhatsAppNumber').selectpicker('refresh');
+    $("#txtVendorWhatsAppNumber").val('');
     $("#txtvendoremailid").val('');
     $("#chklocationstatus").parent().addClass("is-checked");
     $("#btnlocationsave").html("<i class='fa fa-save'></i> " +localization.Save);
