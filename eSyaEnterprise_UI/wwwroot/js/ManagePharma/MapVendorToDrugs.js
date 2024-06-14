@@ -1,5 +1,5 @@
 ﻿$(function () {
-    fnLoadGridRateContract()
+   
 });
 
 function fnLoadManufacturer() {
@@ -65,7 +65,14 @@ function fnLoadGridRateContract() {
 }
 
 function fnSaveMapVendorDrugs() {
-  
+    if (IsStringNullorEmpty($("#cboBusinessLocation").val() == "0" || $("#cboBusinessLocation").val() == "")) {
+        fnAlert("w", "EMR_03_00", "UI0064", errorMsg.BusinessLocation_E5);
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboVendor").val() == "0" || $("#cboVendor").val() == "")) {
+        fnAlert("w", "EMR_03_00", "UI0342", errorMsg.SelectVendor_E6);
+        return;
+    }
 }
 
 function fnClearMapVendorDrugs() {
