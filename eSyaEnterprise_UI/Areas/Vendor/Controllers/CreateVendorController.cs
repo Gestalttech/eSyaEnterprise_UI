@@ -557,6 +557,10 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
                                 }
 
                             }
+                            else
+                            {
+                                obj.ActiveStatus = false;
+                            }
                         }
                         else
                         {
