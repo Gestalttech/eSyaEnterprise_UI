@@ -13,19 +13,26 @@ function fnBindManufacturer() {
 }
 
 function fnLoadGridRateContract() {
+    var BusinessKey = $("#cboBusinessLocation").val();
+    var ManufacturerID = $("#cboManufacturer").val();
+    var URL = getBaseURL() + '/RateContract/GetDrugManufacturerLink?BusinessKey=' + BusinessKey + '&ManufacturerID=' + ManufacturerID;
+
     $("#jqgRateContract").jqGrid('GridUnload');
     $("#jqgRateContract").jqGrid({
         //url: getBaseURL() + '/RateContract/GetTradeNameByBusinessKeyAndManufacturer?businessKey=' + $('#cboBusinessLocation').val() + '&cboManufacturer=' + $('#cboManufacturer').val(),
+        url: URL,
+        mtype: 'Post',
         datatype: 'json',
-        mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.TradeID, localization.TradeName, localization.EffectiveFrom, localization.PurchaseRate, localization.MRP,localization.LastMRP,localization.Active],
+        colNames: [localization.TradeID, localization.TradeName, localization.EffectiveFrom, localization.PurchaseRate, localization.MRP,localization.LastMRPDate,localization.Active],
         colModel: [
+            //{ name: "BusinessKey", width: 170, editable: true, align: 'left', hidden: true },
+            //{ name: "ManufacturerID", width: 170, editable: true, align: 'left', hidden: true },
             { name: "TradeID", width: 170, editable: true, align: 'left', hidden: true },
-            { name: "TradeName", width: 170, editable: true, align: 'left', hidden: false },
+            { name: "TradeName", width: 170, editable: false, align: 'left', hidden: false },
             {
-                name: 'EffectiveFrom', index: 'EffectiveDate', width: 90, sorttype: "date", formatter: "date", formatoptions:
+                name: 'EffectiveFrom', index: 'EffectiveFrom', width: 90, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
                 /*{ dateFormat: "dd/M/yy" },*/
                 editable: true, editoptions: {
@@ -39,8 +46,24 @@ function fnLoadGridRateContract() {
                 }
             },
             { name: "PurchaseRate", width: 50, editable: true, align: 'left', edittype: 'text' },
-            { name: "MRP", width: 50, editable: true, align: 'left', edittype: 'text' },
-            { name: "LastMRP", width: 50, editable: true, align: 'left', edittype: 'text' },
+            { name: "MRP", width: 50, editable: false, align: 'left', edittype: 'text' },
+
+            {
+                name: 'LastMRPDate', index: 'LastMRPDate', width: 90, sorttype: "date", formatter: "date", formatoptions:
+                    { newformat: _cnfjqgDateFormat },
+                /*{ dateFormat: "dd/M/yy" },*/
+                editable: false, editoptions: {
+                    size: 20,
+                    dataInit: function (el) {
+                        $(el).datepicker({ dateFormat: _cnfDateFormat });
+                    }
+                    //dataInit: function (el) {
+                    //    $(el).datepicker({ dateFormat: "dd/M/yy" });
+                    //}
+                }
+            },
+
+            //{ name: "LastMRP", width: 50, editable: true, align: 'left', edittype: 'text' },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: 'checkbox', formatter: 'checkbox', editoptions: { value: "true:false" } },
 
         ],
@@ -76,14 +99,53 @@ function fnLoadGridRateContract() {
 }
 
 function fnSaveRateContract() {
-    if (IsStringNullorEmpty($("#cboDrugComposition").val() == "0" || $("#cboDrugComposition").val() == "")) {
+    if (IsStringNullorEmpty($("#cboBusinessLocation").val() == "0" || $("#cboBusinessLocation").val() == "")) {
         fnAlert("w", "EMR_03_00", "UI0064", errorMsg.SelectLocation_E1);
         return;
     }
-    if (IsStringNullorEmpty($("#cboDrugComposition").val() == "0" || $("#cboDrugComposition").val() == "")) {
-        fnAlert("w", "EMR_03_00", "UI0194", errorMsg.ClinicType_E6);
+    if (IsStringNullorEmpty($("#cboManufacturer").val() == "0" || $("#cboManufacturer").val() == "")) {
+        fnAlert("w", "EMP_01_00", "UI0338", errorMsg.SelectManufacturer_E8);
         return;
     }
+
+    $("#jqgRateContract").jqGrid('editCell', 0, 0, false);
+    var Rate_CR = [];
+    var id_list = jQuery("#jqgRateContract").jqGrid('getDataIDs');
+    for (var i = 0; i < id_list.length; i++) {
+        var rowId = id_list[i];
+        var rowData = jQuery('#jqgRateContract').jqGrid('getRowData', rowId);
+
+        Rate_CR.push({
+            BusinessKey: $("#cboBusinessLocation").val(),
+            ManufacturerID: $("#cboManufacturer").val(),
+            TradeID: rowData.TradeID,
+            EffectiveFrom: GetGridDate(rowData.EffectiveFrom),
+            PurchaseRate: rowData.PurchaseRate,
+            ActiveStatus: rowData.ActiveStatus
+        });
+    }
+
+    $("#btnSaveRateContract").attr("disabled", true);
+    $.ajax({
+        url: getBaseURL() + '/RateContract/AddOrUpdateDrugManufacturer',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: Rate_CR },
+        success: function (response) {
+            if (response.Status === true) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#jqgRateContract").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+            }
+            $("#btnSaveRateContract").attr("disabled", false);
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveRateContract").attr("disabled", false);
+        }
+    });
 }
 
 function fnClearRateContract() {

@@ -22,7 +22,7 @@
         EffectiveFrom: '@Localizer["EffectiveFrom"]',
         PurchaseRate: '@Localizer["PurchaseRate"]',
         MRP: '@Localizer["MRP"]',
-        LastMRP: '@Localizer["LastMRP"]',
+        LastMRPDate: '@Localizer["LastMRPDate"]',
         Active: '@Localizer["Active"]',
         RateContract: '@Localizer["RateContract"]',
     }
@@ -41,13 +41,13 @@
      <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["BusinessLocation"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadManufacturer()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadGridRateContract()"></select>
         </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["Manufacturer"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboManufacturer" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadGridRateContract()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboManufacturer" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.Manufacturer" onchange="fnLoadGridRateContract()"></select>
         </div>
     </div>
 </div>
