@@ -317,7 +317,6 @@
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />
     <Folder Include="ResourcesExtention\" />
-    <Folder Include="wwwroot\css\Login\" />
     <Folder Include="wwwroot\js\Common\tinymce\" />
     <Folder Include="wwwroot\js\Vendor\" />
     <Folder Include="wwwroot\UIResources\" />

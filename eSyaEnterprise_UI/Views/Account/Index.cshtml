@@ -33,12 +33,15 @@
     <script src="~/js/jquery.inputmask/inputmask.js"></script>
     <script src="~/js/jquery.inputmask/jquery.inputmask.min.js"></script>
     <script src="~/js/jquery.inputmask/bindings/inputmask.binding.js"></script>
+    <script src="~/js/Common/toastr.js"></script>
+    <script src="~/js/Common/eSyaMessageNotification.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/common/animate.css" rel="stylesheet" />
     <link href="~/css/common/all.min.css" rel="stylesheet" />
     <link href="~/css/common/bootstrap-select.css" rel="stylesheet" />
     <link href="~/css/common/material.min.css" rel="stylesheet" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/login/login.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/login/eSyaOTP.css" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyafonts.css" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyatheme.css" />
 </head>
@@ -86,7 +89,7 @@
                                             }
                                             <div class="form-group animated fadeIn">
                                                 <label class="">@Localizer["UserID"]</label>
-                                                <input class="form-control" type="text" asp-for="@Model.UserName" maxlength="40" tabindex="1" required>
+                                                <input class="form-control" type="text" asp-for="@Model.UserName" autocomplete="off"  name="UserID" maxlength="40" tabindex="1" required>
                                             </div>
                                             @*  @if (ViewBag.IsGetUser)
                                             { *@
@@ -183,6 +186,102 @@
 
         </div>
     </div>
+
+
+    <div class="modal fullscreen fade in" id="PopupChangePassword" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:80px">
+            <div class="modal-content ">
+                <div class="modal-header popupHeader">
+                    <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["CreatePassword"]</h4>
+               </div>
+
+                <div class="modal-body">
+                    <div class="row padbot4 resetPasswordSection">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>@Localizer["LoginID"]</label>
+                                <label for="" id="lblLogInID" class="font-weight-bold"> </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="txtNewPassword">@Localizer["NewPassword"]</label>
+                                <input id="txtNewPassword" class="form-control" maxlength="50" type="password" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="txtConfirmPassword">@Localizer["ConfirmPassword"]</label>
+                                <input id="txtConfirmPassword" class="form-control" maxlength="50" type="password" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveChangePassword" onclick="fnSaveChangePassword();">
+                                <i class="fa fa-save"></i> @Localizer[" Save "]
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fullscreen fade in" id="PopupOTP" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:80px">
+            <div class="modal-content ">
+                <div class="modal-header popupHeader">
+                    <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["OTP"]</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row innerSection">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p>Your code was sent to you via email</p>
+
+                            <div class="otp-field mb-4">
+                                <input type="number" />
+                                <input type="number" disabled />
+                                <input type="number" disabled />
+                                <input type="number" disabled />
+                                <input type="number" disabled />
+                                <input type="number" disabled />
+                            </div>
+
+                          @*   <button class="btn btn-primary mb-3">
+                                Verify
+                            </button> *@
+
+                            <p class="resend text-muted mb-0">
+                                Didn't receive code? <a href="">Request again</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveChangePassword" onclick="fnSaveChangePassword();">
+                                <i class="fa fa-save"></i> @Localizer[" Save "]
+                            </button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveChangePassword" onclick="fnSaveChangePassword();">
+                                <i class="fa fa-times"></i> @Localizer[" Cancel "]
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <style>
         .errorMessages {
             display: none;
@@ -204,15 +303,15 @@
 
         var _IsMobileLogin = '@ViewBag.IsMobileLogin';
         var _cnfISDCode = @Configuration.GetSection("cnf").GetSection("ISDCode").Value;
-       
-       
-                 
-        $(document).ready(function () {
 
+
+
+        $(document).ready(function (event) {
+            event.stopPropagation();
             $('#LoginWithForMobile').submit(function () {
                 if ($('#txtOTP').val() == "") {
                     $("#dvOTPError").html("<ul><li>please enter OTP</li></ul>");
-                         alert(1,'warning','0100','warning')
+                    alert(1, 'warning', '0100', 'warning')
                     return false;
                 }
                 return fnValidateOTP();
@@ -224,9 +323,12 @@
             fnSetTheProductImage();
 
         });
+
         $(window).on('resize', function () {
             fnSetTheProductImage();
         });
+
+
         function getBaseURL() {
             var url = window.location.href.split('/');
             var baseUrl = url[0] + '//' + url[2] + '@Url.Content("~")';
@@ -361,7 +463,176 @@
             $("#divMobileNumber").addClass('hide');
             $("#txtUserMobile").val('');
         }
+        //change password popup open functionality
 
+        $("[name='UserID']").on('focusin', function (event) {
+            event.stopPropagation();
+        });
+        $("[name='UserID']").on('focusout', function () {
+            fncheckPasswordWithLoginID()
+        });
+
+        function fncheckPasswordWithLoginID() {
+
+            var logInId = $("[name='UserID']").val();
+
+            $("#lblLogInID").text(logInId);
+
+            if (logInId !== null || logInId !== "") {
+                logInId = logInId.trim();
+            }
+            $.ajax({
+                //url: getBaseURL() + '/Account/ChkIsPasswordChanged?loginId=' + logInId,
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                error: function (xhr) {
+                    fnAlert("e", "", "", xhr.statusText);
+                },
+                success: function (response) {
+                    if (response.StatusCode === "1") {
+                        $("#PopupChangePassword").modal('show');
+
+                    }
+                    else {
+                        $("#PopupChangePassword").modal('hide');
+
+                    }
+                },
+                //async: false,
+                //processData: false
+            });
+
+
+        };
+
+        function fnSaveChangePassword() {
+
+            var PasswordPattern = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@@#$%!&*]).{8,20})");
+
+            if ($("#txtNewPassword").val().trim().length <= 0) {
+                toastr.warning("Please Enter New Password");
+                return;
+            }
+            if (!PasswordPattern.test($("#txtNewPassword").val())) {
+                toastr.warning("Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.");
+                return;
+            }
+            if ($("#txtConfirmPassword").val().trim().length <= 0) {
+                toastr.warning("Please Enter New Confirm Password");
+                return;
+            }
+
+            if ($("#txtNewPassword").val() !== $("#txtConfirmPassword").val()) {
+                toastr.warning("Password and Confirm Password should be same");
+                return;
+            }
+
+            $("#btnSaveChangePassword").attr("disabled", true);
+            $.ajax({
+                url: getBaseURL() + '/Account/ForceToChangeUserPasswordfromLogin?loginId=' + $("#lblLogInID").text() + '&newPassword=' + $("#txtNewPassword").val() + '&confirmPassword=' + $("#txtConfirmPassword").val(),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: false,
+                success: function (response) {
+
+                    if (response.Status) {
+                        fnAlert("s", "", "", response.Message);
+                        fnClearChangePasswordfromLogin();
+                    }
+                    else {
+                        fnAlert("e", "", "", response.Message);
+                    }
+                    $("#btnSaveChangePassword").attr("disabled", false);
+                },
+                error: function (error) {
+                    fnAlert("e", "", "", error.statusText);
+                    $("#btnSaveChangePassword").attr("disabled", false);
+                }
+            });
+        }
+
+        function fnClearChangePasswordfromLogin() {
+            $("#lblLogInID").text("");
+            $("#txtNewPassword").val("");
+            $("#txtConfirmPassword").val("");
+            $("#btnSaveChangePassword").attr("disabled", false);
+            $("#PopupChangePassword").modal('hide');
+        }
+
+
+        // otp scripts
+        const inputs = document.querySelectorAll(".otp-field > input");
+        const button = document.querySelector(".btn");
+
+        window.addEventListener("load", () => inputs[0].focus());
+
+
+        inputs[0].addEventListener("paste", function (event) {
+            event.preventDefault();
+
+            const pastedValue = (event.clipboardData || window.clipboardData).getData(
+                "text"
+            );
+            const otpLength = inputs.length;
+
+            for (let i = 0; i < otpLength; i++) {
+                if (i < pastedValue.length) {
+                    inputs[i].value = pastedValue[i];
+
+                    inputs[i].focus;
+                } else {
+                    inputs[i].value = ""; // Clear any remaining inputs
+                    inputs[i].focus;
+                }
+            }
+        });
+
+        inputs.forEach((input, index1) => {
+            input.addEventListener("keyup", (e) => {
+                const currentInput = input;
+                const nextInput = input.nextElementSibling;
+                const prevInput = input.previousElementSibling;
+
+                if (currentInput.value.length > 1) {
+                    currentInput.value = "";
+                    return;
+                }
+
+                if (
+                    nextInput &&
+                    nextInput.hasAttribute("disabled") &&
+                    currentInput.value !== ""
+                ) {
+                    nextInput.removeAttribute("disabled");
+                    nextInput.focus();
+                }
+
+                if (e.key === "Backspace") {
+                    inputs.forEach((input, index2) => {
+                        if (index1 <= index2 && prevInput) {
+                            input.setAttribute("disabled", true);
+                            input.value = "";
+                            prevInput.focus();
+                        }
+                    });
+                }
+
+                button.classList.remove("active");
+
+
+                const inputsNo = inputs.length;
+                if (!inputs[inputsNo - 1].disabled && inputs[inputsNo - 1].value !== "") {
+                    button.classList.add("active");
+
+
+                    return;
+                }
+            });
+        });
+
+        
     </script>
 </body>
 </html>

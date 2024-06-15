@@ -1,0 +1,40 @@
+﻿.otp-field {
+    flex-direction: row;
+    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .otp-field input {
+        width: 62px;
+        border-radius: 0px;
+        outline: none;
+        font-size: 2rem;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-family: helvetica-Bold;
+        padding: 12px 5px 0px;
+        border: none;
+        border-bottom: 2px solid #ccc;
+    }
+
+        .otp-field input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .otp-field input::-webkit-inner-spin-button,
+        .otp-field input::-webkit-outer-spin-button {
+            display: none;
+        }
+
+.resend {
+    font-size: 12px;
+}
+
+ 
+
+    .footer a {
+        color: black;
+        text-decoration: none;
+    }
