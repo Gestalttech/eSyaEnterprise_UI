@@ -45,13 +45,17 @@
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
             <label> @Localizer["BusinessLocation"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnLoadVendor()"></select>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange="fnBindVendor()"></select>
         </div>
     </div>
     <div class="col-lg-3  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
+            @* <label> @Localizer["Vendor"] </label>
+            <select class="selectpicker" data-live-search="true" id="cboVendor" title="@Localizer["Select"]" data-size="8" onchange="fnLoadGridVendorLink()"></select> *@
             <label> @Localizer["Vendor"] </label>
-            <select class="selectpicker" data-live-search="true" id="cboVendor" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessLocation" onchange=""></select>
+            <select class="selectpicker" data-live-search="true" id="cboVendor" title="Select" data-size="8" onchange="fnLoadGridVendorLink()">
+                <option value="0"> Select</option>
+            </select>
         </div>
     </div>
 </div>
@@ -61,8 +65,8 @@
         <div id="jqpMapVendorDrugs"></div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 form-group text-center">
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSaveRateContract" onclick="fnSaveMapVendorDrugs()"><i class="fa fa-save"></i> @Localizer["Save"]  </button>
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelRateContract" onclick="fnClearMapVendorDrugs()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnSaveVendorDrugLink" onclick="fnSaveMapVendorDrugs()"><i class="fa fa-save"></i> @Localizer["Save"]  </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelVendorDrugLink" onclick="fnClearMapVendorDrugs()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
     </div>
 </div>
 

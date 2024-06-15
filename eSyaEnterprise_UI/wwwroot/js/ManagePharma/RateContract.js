@@ -1,5 +1,5 @@
 ﻿$(function () {
-    fnLoadGridRateContract()
+    fnLoadGridRateContract();
 });
 
 function fnLoadManufacturer() {

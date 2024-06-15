@@ -94,19 +94,19 @@ namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For CompositionId {0}", CompositionId);
                         return Json(new { Status = false, StatusCode = "500" });
                     }
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDrugFormulation:For CompositionId {0}", CompositionId);
                     return Json(new { Status = false, StatusCode = "500" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetDrugFormulation:For ItemGroup {0}", CompositionId);
+                _logger.LogError(ex, "UD:GetDrugFormulation:For CompositionId {0}", CompositionId);
                 throw ex;
             }
         }

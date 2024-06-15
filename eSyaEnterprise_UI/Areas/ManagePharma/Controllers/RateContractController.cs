@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ManagePharma.Controllers
 {
+    [SessionTimeout]
     public class RateContractController : Controller
     {
         private readonly IeSyaPharmaAPIServices _eSyaPharmaAPIServices;
