@@ -23,7 +23,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
 
         #region Map Specialty clinic
         [Area("ConfigSpecialty")]
-        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECP_07_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole

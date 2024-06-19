@@ -25,6 +25,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
         #region  UploadUser photo
         [Area("EndUser")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EEU_07_00()
         {
             return View();

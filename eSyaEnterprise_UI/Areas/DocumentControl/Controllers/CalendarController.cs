@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
 {
+    [SessionTimeout]
     public class CalendarController : Controller
     {
         private readonly IeSyaDocumentControlAPIServices _documentControlAPIServices;

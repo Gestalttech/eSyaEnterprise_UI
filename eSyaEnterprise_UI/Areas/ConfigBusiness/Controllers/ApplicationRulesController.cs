@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
 {
+    [SessionTimeout]
     public class ApplicationRulesController : Controller
     {
         private readonly IeSyaConfigBusinessAPIServices _eSyaConfigBusinessAPIServices;

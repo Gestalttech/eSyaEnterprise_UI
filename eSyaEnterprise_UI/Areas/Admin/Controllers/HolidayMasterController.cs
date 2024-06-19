@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 
 namespace eSyaEnterprise_UI.Areas.Admin.Controllers
 {
+    [SessionTimeout]
     public class HolidayMasterController : Controller
     {
         private readonly IeSyaAdminAPIServices _eSyaAdminAPIServices;

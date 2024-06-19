@@ -31,7 +31,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         /// <returns></returns>
 
         [Area("ConfigServices")]
-        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_01_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };
@@ -270,7 +270,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         /// </summary>
         /// <returns></returns>
         [Area("ConfigServices")]
-        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_02_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole { IsInsert = true, IsEdit = true, IsView = true, IsDelete = true };

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ConfigStores.Controllers
 {
+    [SessionTimeout]
     public class StoresController : Controller
     {
         private readonly IeSyaConfigStoreAPIServices _eSyaConfigStoreAPIServices;

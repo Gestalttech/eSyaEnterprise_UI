@@ -24,7 +24,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigSpecialty.Controllers
         #region Business Specialty Link
 
         [Area("ConfigSpecialty")]
-        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECP_05_00()
         {
             ViewBag.UserFormRole = new DO_UserFormRole

@@ -36,6 +36,7 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
             return View();
         }
         [Area("GenerateToken")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ETM_08_00()
         {
             try

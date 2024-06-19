@@ -21,6 +21,7 @@ using eSyaEnterprise_UI.Areas.GenerateToken.Controllers;
 
 namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
 {
+    [SessionTimeout]
     public class AddonController : Controller
     {
         private readonly IeSyaGenerateTokenAPIServices _eSyaGenerateTokenAPIServices;

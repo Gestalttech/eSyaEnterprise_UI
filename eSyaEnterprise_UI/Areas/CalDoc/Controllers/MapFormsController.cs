@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 {
+    [SessionTimeout]
     public class MapFormsController : Controller
     {
         private readonly IeSyaCalDocAPIServices _eSyaCalDocAPIServices;

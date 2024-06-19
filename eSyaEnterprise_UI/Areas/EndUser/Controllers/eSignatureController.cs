@@ -24,6 +24,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
         #region eSignature
         [Area("EndUser")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EEU_08_00()
         {
             return View();

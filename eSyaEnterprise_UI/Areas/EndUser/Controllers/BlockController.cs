@@ -21,6 +21,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
         #region BlockUser
         [Area("EndUser")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EEU_09_00()
         {
             return View();

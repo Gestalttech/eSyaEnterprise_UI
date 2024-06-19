@@ -21,6 +21,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
         #region Deactivate a  User
         [Area("EndUser")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EEU_11_00()
         {
             return View();

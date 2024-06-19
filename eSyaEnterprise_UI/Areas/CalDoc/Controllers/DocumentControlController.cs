@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.CalDoc.Controllers
 {
+    [SessionTimeout]
     public class DocumentControlController : Controller
     {
         private readonly IeSyaCalDocAPIServices _eSyaCalDocAPIServices;

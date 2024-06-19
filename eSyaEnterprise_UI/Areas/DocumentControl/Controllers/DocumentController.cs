@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.DocumentControl.Controllers
+
 {
+    [SessionTimeout]
     public class DocumentController : Controller
     {
         private readonly IeSyaDocumentControlAPIServices _documentControlAPIServices;

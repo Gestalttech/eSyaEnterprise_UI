@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
 {
+    [SessionTimeout]
     public class LocationMenuController : Controller
     {
         private readonly IeSyaConfigBusinessAPIServices _eSyaConfigBusinessAPIServices;
