@@ -258,7 +258,7 @@ input[name="UserID"]:focus .btn-clear > .svg-inline--fa {
     border-radius: 50%;
     border: 1px solid #000;
 }
-label {font-size: 0.82rem !important;top: 4px;display: block;margin-bottom: 0px;font-weight: 200 !important;color: #797172;}
+label {font-size: 0.82rem;top: 4px;display: block;margin-bottom: 0px;font-weight: 200 !important;color: #797172;}
 .form-control{background:transparent !important;}
 .mdl-textfield__label {margin-bottom: 0px !important;}
 .selectpicker + .btn,
@@ -328,7 +328,7 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
 .socialIconsaligment {text-align: center;}
 .imgSocialIcons:hover { opacity: 0.4;}
 .getUserId {
-    display: block;
+    display: inline-block;
     font-size: 0.82rem;
     text-transform: capitalize;
     color: #c47e00;
@@ -346,7 +346,16 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     text-decoration: underline;
 }
 .mdl-textfield {width:100% !important;max-width: 100% !important;}
-
+.fixedText {
+    color: var(--color-primary);
+    font-size: 13px;
+    background: linear-gradient(to bottom,var(--color-white),#ffecaa);
+    border: 1px dotted #ccc;
+    padding: 4px 6px;
+    font-family: helvetica-Bold;
+    width: auto;
+    display: block;
+}
 #viewPassword {
     position: absolute;
     bottom: 30px;

@@ -99,7 +99,7 @@ function fnLoadVendorGrid(_manufId) {
 }
 
 function fnSaveManufacturerVendorLink() {
-    debugger;
+   
     if (manufId == "" || manufId == "0") {
         fnAlert("w", "EPH_02_00", "UI0273", errorMsg.nodeadd_E6);
         return;

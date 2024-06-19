@@ -5,6 +5,7 @@
         public int CompositionId { get; set; }
         public int FormulationId { get; set; }
         public int ManufacturerId { get; set; }
+        public string? ManufacturerName { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormID { get; set; }
         public int UserID { get; set; }
