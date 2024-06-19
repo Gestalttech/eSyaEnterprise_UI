@@ -223,7 +223,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 
                 if (serviceresponse.Status)
                 {
-                    ViewBag.DrugClassList = serviceresponse.Data.Select(a => new SelectListItem
+                    ViewBag.DrugFormulationList = serviceresponse.Data.Select(a => new SelectListItem
                     {
                         Text = a.FormulationDesc,
                         Value = a.FormulationId.ToString()
