@@ -21,6 +21,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             _eSyapharmaAPIServices = pharmacyAPIServices;
             _logger = logger;
         }
+
+        #region Drug Formulation
         [Area("ConfigPharma")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EPH_06_00()
@@ -35,9 +37,9 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
 
                 var response = _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeTypeList", l_codeType).Result;
 
-                if (response.Status )
+                if (response.Status)
                 {
-                   
+
 
                     List<DO_ApplicationCodes> DrugForms = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DrugForms).ToList();
                     List<DO_ApplicationCodes> Methdofadmn = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.MethodOfAdministration).ToList();
@@ -68,7 +70,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
         }
 
-      
+
 
         /// <summary>
         /// Getting Composition List For tree
@@ -151,7 +153,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
         {
             try
             {
-                var parameter = "?composId=" + composId + "&formulationId="+ formulationId;
+                var parameter = "?composId=" + composId + "&formulationId=" + formulationId;
                 var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<DO_DrugFormulation>("DrugFormulation/GetDrugFormulationParamsbyFormulationID" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
@@ -208,13 +210,124 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+        #endregion
 
+        #region Map Formulation to Manufacturer
         [Area("ConfigPharma")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPH_07_00()
+        public async Task<IActionResult> EPH_07_00()
         {
-            return View();
+            try
+            {
+                var serviceresponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugFormulation>>("DrugFormulation/GetActiveFormulations");
+
+                if (serviceresponse.Status)
+                {
+                    ViewBag.DrugClassList = serviceresponse.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.FormulationDesc,
+                        Value = a.FormulationId.ToString()
+                    });
+
+                    return View();
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetActiveFormulations");
+                }
+                return View();
+            }
+
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActiveFormulations");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
         }
 
+        [HttpPost]
+        public async Task<JsonResult> GetCompositionbyFormulationID(int formulationId)
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<DO_Composition>("DrugFormulation/GetCompositionbyFormulationID?formulationId=" + formulationId);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCompositionbyFormulationID");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCompositionbyFormulationID");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+       
+        [HttpPost]
+        public async Task<JsonResult> GetLinkedManufacturerwithFormulation(int formulationId, int compositionId)
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_MapFormulationManufacturer>>("DrugFormulation/GetLinkedManufacturerwithFormulation?formulationId=" + formulationId+ "&compositionId="+ compositionId);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLinkedManufacturerwithFormulation");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLinkedManufacturerwithFormulation");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateManufacturerLinkwithFormulation(DO_MapFormulationManufacturer obj)
+        {
+
+            try
+            {
+
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                foreach (var m in obj.manfctlist)
+                {
+                    m.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    m.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    m.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                }
+
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DrugFormulation/InsertOrUpdateManufacturerLinkwithFormulation", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateManufacturerLinkwithFormulation:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
     }
 }
