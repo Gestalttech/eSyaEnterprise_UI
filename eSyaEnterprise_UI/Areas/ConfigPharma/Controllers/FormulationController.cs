@@ -209,5 +209,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
             }
         }
 
+        [Area("ConfigPharma")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult EPH_07_00()
+        {
+            return View();
+        }
+
     }
 }
