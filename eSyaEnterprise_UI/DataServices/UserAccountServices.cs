@@ -23,6 +23,7 @@ namespace eSyaEnterprise_UI.DataServices
         {
             try
             {
+                // if login with Gestalt User It has to get all menu items esyagateway has to removed after freezed
                 //var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_MainMenu>>("UserAccount/GeteSyaMenulist");
                 var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_MainMenu>>("eSyaUserAccount/GeteSyaMenulist");
                 return serviceResponse.Data;
@@ -58,6 +59,7 @@ namespace eSyaEnterprise_UI.DataServices
                 var navigationURL = area + "/" + controllerName + "/" + actionName;
 
                 var param = "?navigationURL=" + navigationURL;
+                // if login with Gestalt User It has to get all Actions from esyagateway has to removed after freezed
                 //var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserFormRole>("UserAccount/GetFormAction" + param);
                 var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<DO_UserFormRole>("eSyaUserAccount/GetFormAction" + param);
 

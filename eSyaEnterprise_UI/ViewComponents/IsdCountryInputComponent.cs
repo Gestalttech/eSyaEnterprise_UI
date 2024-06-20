@@ -22,8 +22,8 @@ namespace eSyaEnterprise_UI.ViewComponents
         {
             ViewBag.cboID = "cbo" + id;
             ViewBag.DomainName = this.Request.PathBase;
-            //var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("Common/GetISDCodes");
-            var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_ISDCodes>>("eSyaUserAccount/GetISDCodes");
+            var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("Common/GetISDCodes");
+            //var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_ISDCodes>>("eSyaUserAccount/GetISDCodes");
 
             ViewBag.ISDCodes = serviceResponse.Data;
 

@@ -24,8 +24,8 @@ namespace eSyaEnterprise_UI.ViewComponents
             ViewBag.txtID = "txt" + id;
             ViewBag.DomainName = this.Request.PathBase;
             ViewBag.value = value;
-            //var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("Common/GetISDCodes");
-            var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_ISDCodes>>("eSyaUserAccount/GetISDCodes");
+            var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_ISDCodes>>("Common/GetISDCodes");
+            //var serviceResponse = await _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_ISDCodes>>("eSyaUserAccount/GetISDCodes");
 
             ViewBag.ISDCodes = serviceResponse.Data;
 

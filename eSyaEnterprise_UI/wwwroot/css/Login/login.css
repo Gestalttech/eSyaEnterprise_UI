@@ -368,8 +368,13 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     #viewPassword .svg-inline--fa.fa-w-20{
         color:grey;
     }
-    
-body.arabic input{text-align:right;}
+.bgUserTips{
+    background:#efefef;
+    padding:10px;
+}
+body.arabic input {
+    text-align: right;
+}
 body.arabic label{float:right;}
 body.arabic h4{text-align:right;}
 body.arabic .getUserId {text-align: left !important;}

@@ -71,8 +71,8 @@ namespace eSyaEnterprise_UI.ResourcesExtention
             {
                 var param = "?culture=" + CultureInfo.CurrentUICulture.Name;
                 param += "&resourceName=" + resourceName;
-                //var serviceResponse = _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_LocalizationResource>>("LocalizationResource/GetLocalizationResourceString" + param).Result;
-                var serviceResponse = _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_LocalizationResource>>("eSyaUserAccount/GetLocalizationResourceString" + param).Result;
+                var serviceResponse = _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_LocalizationResource>>("LocalizationResource/GetLocalizationResourceString" + param).Result;
+                //var serviceResponse = _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_LocalizationResource>>("eSyaUserAccount/GetLocalizationResourceString" + param).Result;
 
                 localization = serviceResponse.Data;
             }

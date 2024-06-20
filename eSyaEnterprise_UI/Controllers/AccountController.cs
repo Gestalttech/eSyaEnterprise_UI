@@ -95,38 +95,8 @@ namespace eSyaEnterprise_UI.Controllers
 
             try
             {
-                var isValid = (model.UserName == "esya" && model.Password == "esya@123");
-                if (isValid)
-                {
-                    AppSessionVariables.SetSessionUserID(HttpContext, 0);
-                    AppSessionVariables.SetSessionFinancialYear(HttpContext, 0);
+            
 
-                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("eSyaUser/GetBusinessLocation");
-                    if (serviceResponse.Status)
-                    {
-                        //if (l_bk.Count > 0)
-                        //{
-                        //    AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_bk.FirstOrDefault().Value);
-                        //    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
-                        //}
-                        var l_bk = serviceResponse.Data.l_BusinessKey;
-
-                        AppSessionVariables.SetSessionBusinessKey(HttpContext, l_bk.FirstOrDefault().Key);
-                        AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_bk.FirstOrDefault().Value);
-                        AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
-                    }
-
-                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.UserName));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
-                    var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
-
-
-                    return new RedirectToActionResult("Index", "Home", null);
-                }
-
-               
                 var obj = new DO_UserLogIn()
                 {
                     LoginID = model.UserName,
@@ -136,9 +106,7 @@ namespace eSyaEnterprise_UI.Controllers
                     UnLockLoginInHours = _passwordStrength.UnLockLoginInHours,
                     PasswordValidity = _passwordStrength.PasswordValidity,
                 };
-                //if (ModelState.IsValid)
-                if (obj.LoginID!= "esya")
-                {
+                
                     //var obj = new { LoginID = model.UserName, model.Password, _passwordStrength.UnsuccessfulLoginAttempt, _passwordStrength.UnLockLoginInHours };
                     var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_UserAccount>("UserAccount/ValidateUserPassword", obj);
                     if (serviceResponse.Status)
@@ -201,7 +169,7 @@ namespace eSyaEnterprise_UI.Controllers
                         {
 
                             AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
-                            //   AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+                            AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
 
                             AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
 
@@ -215,13 +183,6 @@ namespace eSyaEnterprise_UI.Controllers
                         SetLoginApplicationRuleInViewBag();
                         return View("Index");
                     }
-
-                }
-                else
-                {
-                    SetLoginApplicationRuleInViewBag();
-                    return View("Index");
-                }
         }
             catch (Exception ex)
             {
@@ -690,5 +651,87 @@ namespace eSyaEnterprise_UI.Controllers
         {
             return View();
         }
+        #region Change password
+
+        [HttpGet]
+        public async Task<JsonResult> ValidateCreateUserOTP(int userId, string otp)
+        {
+            try
+            {
+                var parameter = "?userId=" + userId+ "&otp="+ otp;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("UserAccount/ValidateCreateUserOTP" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateCreateUserOTP:For UserID {0} with OTP entered {1}", otp);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateCreateUserOTP:For UserID {0} with OTP entered {1}", otp);
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ChkIsCreatePasswordInNextSignIn(string loginId)
+        {
+            try
+            {
+                var parameter = "?loginId=" + loginId;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with BusinessKey entered {1}", loginId);
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> CreateUserPasswordINNextSignIn(int userId, string password,string confirmPassword)
+        {
+            try
+            {
+
+
+                if (password != confirmPassword)
+                {
+                    return Json(new DO_ReturnParameter { Status = false, Message = "Password and Confirm Password should be same" });
+                }
+
+                var parameter = "?userId=" + userId + "&password=" + password ;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/CreateUserPasswordINNextSignIn" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:CreateUserPasswordINNextSignIn:params:" + JsonConvert.SerializeObject(password));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:CreateUserPasswordINNextSignIn:params:" + JsonConvert.SerializeObject(password));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        #endregion
     }
 }

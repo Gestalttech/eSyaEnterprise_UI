@@ -25,10 +25,11 @@ namespace eSyaEnterprise_UI.Models
         public int SelectedBusinessKey { get; set; }
         public int SelectedFinancialYear { get; set; }
         public int? DoctorID { get; set; }
+        public string? LoginDesc { get; set; }
     }
     public class DO_UserLogIn
     {
-        public string LoginID { get; set; }
+        public string? LoginID { get; set; }
 
         public string Password { get; set; }
         public string ePassword { get; set; }
