@@ -684,6 +684,7 @@ namespace eSyaEnterprise_UI.Controllers
             try
             {
                 var parameter = "?loginId=" + loginId;
+
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
                 if (serviceResponse.Status)
                 {
