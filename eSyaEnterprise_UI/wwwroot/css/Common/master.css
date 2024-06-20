@@ -1702,7 +1702,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     to {bottom: 0;opacity: 1}
 }
 #myDiv {display: none;text-align: center;}
-@media only screen and (max-width: 767px) and (min-width: 551px) {
+@media only screen and (max-width: 767px) and (min-width: 576px) {
     #imgPhotoimageblah {
         width: 240px;
         height: auto;
@@ -1875,7 +1875,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     }
 }
 
-    @media screen and (min-width:300px) and (max-width:550px) {
+    @media screen and (min-width:300px) and (max-width:575px) {
         #imgPhotoimageblah {
             width: 240px;
             height: auto;

@@ -284,7 +284,7 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     background-repeat: no-repeat;background-position: right;
 }
 .login-form h4{margin:0px !important;text-align:center;padding:30px 0px 20px 0px !important;}
-    .login-form .mdl-layout__content{overflow-y:hidden !important}
+    .login-form .mdl-layout__content{overflow-y:hidden !important; padding-top:1rem;}
     .loginHeading {
         margin: 24px 0px;
     }
@@ -331,12 +331,14 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     display: inline-block;
     font-size: 0.82rem;
     text-transform: capitalize;
-    color: #c47e00;
+    color: var(--color-primary);
     text-decoration: underline;
     position: relative;
     top: -12px;
     text-align: left;
     outline:0px !important;
+    letter-spacing:0.25px;
+    font-family:Arial, Helvetica, sans-serif;
 }
 .getPassword.mdl-layout__tab, .getUserID.mdl-layout__tab {
     padding-top: 12px !important;
