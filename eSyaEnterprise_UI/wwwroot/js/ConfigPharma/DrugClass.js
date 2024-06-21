@@ -36,10 +36,9 @@ function fnGridLoadDrugClass() {
                 }
             },],
         pager: "#jpgDrugClass",
-        rowNum: 10000,
+        rowList:[10,20,50,100],
+        rowNum: 10,
         rownumWidth: '55',
-        pgtext: null,
-        pgbuttons: null,
         loadonce: true,
         viewrecords: true,
         gridview: true,
