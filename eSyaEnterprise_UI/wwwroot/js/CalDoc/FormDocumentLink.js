@@ -100,7 +100,7 @@ function fnLoadDocumentGrid(_formID) {
 
 
     })
-
+    fnAddGridSerialNoHeading();
 }
 
 function fnSaveFormDocumentLink() {

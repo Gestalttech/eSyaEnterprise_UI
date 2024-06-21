@@ -401,14 +401,15 @@ function fnGridLoadPreferredLanguage() {
         colModel: [
             { name: "BusinessId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "CultureCode", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "CultureDesc", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "CultureDesc", width: 50, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "Pldesc", width: 70, editable: true, editoptions: { disabled: false }, align: 'left' },
-            { name: "DefaultLanguage", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "DefaultLanguage", editable: true, width: 50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
 
         ],
         rowNum: 10,
         rowList: [10, 20, 50, 100],
+        rownumWidth:'55',
         loadonce: true,
         pager: "#jqpPreferredLanguageLink",
         viewrecords: true,
@@ -432,5 +433,6 @@ function fnGridLoadPreferredLanguage() {
             fnJqgridSmallScreen("jqgPreferredLanguageLink");
         },
     }).jqGrid('navGrid', '#jqpPreferredLanguageLink', { add: false, edit: false, search: false, del: false, refresh: false });
+    fnAddGridSerialNoHeading();
 }
 

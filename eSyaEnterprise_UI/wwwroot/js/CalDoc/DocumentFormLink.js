@@ -102,7 +102,7 @@ function fnLoadDocumentGrid(_documentID) {
 
 
     })
-
+    fnAddGridSerialNoHeading();
 }
 
 function fnSaveDocumentFormLink() {
