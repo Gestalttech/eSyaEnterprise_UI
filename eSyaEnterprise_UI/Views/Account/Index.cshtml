@@ -99,7 +99,7 @@
                                             </div>
                                             @* } *@
                                             <div class="form-group animated fadeIn">
-                                                <label onclick="fnOpenModal()">@Localizer["Password"]</label>
+                                                <label>@Localizer["Password"]</label>
                                                 <input class="form-control" type="password" asp-for="@Model.Password" id="txtLoginPassword" autocomplete="off" maxlength="50" tabindex="2" required>
                                                 <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
@@ -307,20 +307,22 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                             <p class="small text-muted bgUserTips">Select your secret question and Password. You can use it when you forget your password.</p>
                             <label>@Localizer["SelectYourSecretQuestion"]</label>
-                            <select class="selectpicker form-control" data-size="8" data-container="body">
-                                <option value="0">Select</option>
-                            </select>
+                    
+                            <select class="selectpicker" data-live-search="true" data-container="body" id="cboQuestionId" title="" data-size="8" asp-items="@ViewBag.QuestionList">
+                             <option value="0">@Localizer["Select"]</option>
+                             </select>
+
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                             <label>@Localizer["EnterYourAnswer"]</label>
-                            <input type="text" class="form-control" maxlength="250"/>
+                            <input type="text" id="txtAnswerId" class="form-control" maxlength="250"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnCheckOTP">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
                                 <i class="fa fa-save"></i> @Localizer["Save"]
                             </button>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
@@ -351,9 +353,7 @@
             }
     </style>
     <script>
-        function fnOpenModal() {
-            $("#PopupSecretQuestion").modal('show');
-        }
+       
         var _IsMobileLogin = '@ViewBag.IsMobileLogin';
         var _cnfISDCode = @Configuration.GetSection("cnf").GetSection("ISDCode").Value;
 
@@ -644,8 +644,18 @@
                 success: function (response) {
 
                     if (response.Status) {
+                        $("#txtloginUserId").val('');
+                        $("#txtloginUserId").val(response.ID);
+
+                        $("#PopupChangePassword").modal('hide');
+
                         fnAlert("s", "", "", response.Message);
-                        fnClearChangePasswordfromLogin();
+
+                        
+
+                        setTimeout(function () {
+                            $("#PopupSecretQuestion").modal('show');
+                        }, 2000);
                     }
                     else {
                         fnAlert("e", "", "", response.Message);
@@ -665,10 +675,54 @@
             $("#txtpassword").val("");
             $("#txtConfirmPassword").val("");
             $("#btnSaveChangePassword").attr("disabled", false);
-            $("#PopupChangePassword").modal('hide');
+            $("#cboQuestionId").val('0').selectpicker('refresh');
+            $("#txtAnswerId").val('');
         }
 
+        function fnSaveUserQuestionAnswer() {
 
+            if ($("#cboQuestionId").val() == "0" || $("#cboQuestionId").val() == 0 || $("#cboQuestionId").val() == "") {
+                fnAlert("w", "", "", "Please select Your Question");
+                return;
+            }
+
+            if ($("#txtAnswerId").val().trim().length <= 0) {
+                fnAlert("w", "", "", "Please Enter Your Answer");
+                return;
+            }
+            obj = {
+                UserId: $("#txtloginUserId").val(),
+                SecurityQuestionId: $("#cboQuestionId").val(),
+                SecurityAnswer: $("#txtAnswerId").val(),
+                ActiveStatus: true,
+            };
+           
+
+            $("#btnSaveQuestion").attr("disabled", true);
+            $.ajax({
+                url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
+                type: 'POST',
+                datatype: 'json',
+                data: { obj },
+                success: function (response) {
+
+                    if (response.Status) {
+                        fnAlert("s", "", "", response.Message);
+                        $("#PopupSecretQuestion").modal('hide');
+                        fnClearChangePasswordfromLogin();
+                       
+                    }
+                    else {
+                        fnAlert("e", "", "", response.Message);
+                    }
+                    $("#btnSaveQuestion").attr("disabled", false);
+                },
+                error: function (error) {
+                    fnAlert("e", "", "", error.statusText);
+                    $("#btnSaveQuestion").attr("disabled", false);
+                }
+            });
+        }
         // otp scripts
       
         $("#PopupOTP").on('show.bs.modal',function(){

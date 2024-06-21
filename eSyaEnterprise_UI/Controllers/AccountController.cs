@@ -1,4 +1,4 @@
-﻿
+﻿using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
@@ -50,7 +50,7 @@ namespace eSyaEnterprise_UI.Controllers
             _passwordPolicy = passwordPolicy;
             _passwordStrength = passwordStrength.Value;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -58,7 +58,25 @@ namespace eSyaEnterprise_UI.Controllers
 
                 SetLoginApplicationRuleInViewBag();
 
-                return View();
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_AppCodes>>("Common/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.SecurityQuestions);
+                if (serviceResponse.Status)
+                {
+                    ViewBag.QuestionList = serviceResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
+                    }).ToList();
+
+                    return View();
+                }
+                else
+                {
+                   
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApplicationCodesByCodeType");
+                    return View();
+                }
+               
+               
             }
             catch (Exception ex)
             {
@@ -731,6 +749,36 @@ namespace eSyaEnterprise_UI.Controllers
             {
                 _logger.LogError(ex, "UD:CreateUserPasswordINNextSignIn:params:" + JsonConvert.SerializeObject(password));
                 return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        #endregion
+
+        #region User Security Question
+        [HttpPost]
+        public async Task<JsonResult> InsertUserSecurityQuestion(DO_UserSecurityQuestions obj)
+        {
+            try
+            {
+                obj.FormID = "0";
+                obj.TerminalID = "0";
+                obj.EffectiveFrom = DateTime.Now;
+
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("UserAccount/InsertUserSecurityQuestion",obj);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertUserSecurityQuestion", obj);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertUserSecurityQuestion", obj);
+                throw ex;
             }
         }
         #endregion

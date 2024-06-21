@@ -34,7 +34,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         //public const int PreferredLanguage = 8; not used
         public const int UserGroup = 1;
         public const int UserRole = 2;
-        //public const int SecurityQuestions = 3;not used
+        public const int SecurityQuestions = 3; 
         #endregion
 
         #region Token System
@@ -101,5 +101,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #region Manage Pharma
         public const int DrugPacking = 206;
         #endregion
+
+        
     }
 }
