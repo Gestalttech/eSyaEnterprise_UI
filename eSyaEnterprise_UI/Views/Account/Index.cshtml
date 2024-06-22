@@ -95,7 +95,8 @@
                                             @*  @if (ViewBag.IsGetUser)
                                             { *@
                                             <div class="animated fadeIn form-group">
-                                                <a href="@Url.Action("GetUserId", "Account")" class="getUserId" tabindex="7">@Localizer["ForgotUserID"]</a>
+                                               @*  <a href="@Url.Action("GetUserId", "Account")" data-bs-modal="toggle" data-bs-target="#PopupGetUserID" class="getUserId" tabindex="7">@Localizer["ForgotUserID"]</a> *@
+                                                <button type="button" class="btn btn-outlink getUserId" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID"]</button>
                                             </div>
                                             @* } *@
                                             <div class="form-group animated fadeIn">
@@ -331,6 +332,53 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fullscreen fade in" id="PopupGetUserID" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;top:80px">
+            <div class="modal-content ">
+                <div class="modal-header popupHeader">
+                    <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["GetUserID"]</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12 form-group">
+                            <label class="lable-color">@Localizer["MobileNumber"]</label>
+                            @await Component.InvokeAsync("IsdMobileInput", new { id = "RegisteredMobileNo" })
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6 form-group">
+                            <div style="margin-bottom:15px;">
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
+                                    <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
+                                    <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom:15px;">
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
+                                    <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
+                                    <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-6"></div>
+                    </div>
+                </div>
+                        <div class="modal-footer justify-content-center">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
+                                        <i class="fa fa-save"></i> @Localizer["Save"]
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
+                                        <i class="fa fa-times"></i> @Localizer["Cancel"]
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
             </div>
         </div>
     </div>
