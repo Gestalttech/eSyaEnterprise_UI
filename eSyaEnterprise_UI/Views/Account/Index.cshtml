@@ -96,7 +96,7 @@
                                             { *@
                                             <div class="animated fadeIn form-group">
                                                @*  <a href="@Url.Action("GetUserId", "Account")" data-bs-modal="toggle" data-bs-target="#PopupGetUserID" class="getUserId" tabindex="7">@Localizer["ForgotUserID"]</a> *@
-                                                <button type="button" class="btn btn-outlink getUserId" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID"]</button>
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID"]</button>
                                             </div>
                                             @* } *@
                                             <div class="form-group animated fadeIn">
@@ -107,7 +107,8 @@
                                             @*  @if (ViewBag.IsGetPassword)
                                             { *@
                                             <div class=" animated fadeIn form-group">
-                                                <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a>
+                                                @* <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a> *@
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupForgotPassword" tabindex="7">@Localizer["ForgotPassword"]</button>
                                             </div>
                                             @*  } *@
                                             <div>
@@ -345,32 +346,34 @@
                     <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["GetUserID"]</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-12 form-group">
-                            <label class="lable-color">@Localizer["MobileNumber"]</label>
+                    <div class="row form-group border-bottom">
+                        <div class="col-lg-4 col-md-4 col-12 form-group">
+                            <label>@Localizer["MobileNumber"]</label>
                             @await Component.InvokeAsync("IsdMobileInput", new { id = "RegisteredMobileNo" })
                         </div>
-                        <div class="col-lg-6 col-md-6 col-6 form-group">
-                            <div style="margin-bottom:15px;">
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
-                                    <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
-                                    <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
-                                </label>
+                   
+                            <div class="col-lg-5 col-md-5 col-6 form-group">
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
+                                        <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
+                                        <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
+                                    </label>
+
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
+                                <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
+                                <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
+                            </label>
                             </div>
-                            <div style="margin-bottom:15px;">
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
-                                    <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
-                                    <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
-                                </label>
+                            <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnGetUserIDSendOTP">
+                                <i class="fa fa-save"></i> @Localizer["SendOTP"]
+                            </button>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-6"></div>
-                    </div>
                 </div>
                         <div class="modal-footer justify-content-center">
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
+                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btn">
                                         <i class="fa fa-save"></i> @Localizer["Save"]
                                     </button>
                                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
@@ -379,6 +382,54 @@
                                 </div>
                             </div>
                         </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fullscreen fade in" id="PopupForgotPassword" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;top:80px">
+            <div class="modal-content ">
+                <div class="modal-header popupHeader">
+                    <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["GetForgotPassword"]</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group border-bottom">
+                        <div class="col-lg-4 col-md-4 col-12 form-group">
+                            <label>@Localizer["MobileNumber"]</label>
+                            @await Component.InvokeAsync("IsdMobileInput", new { id = "GetForgotPasswordMobileNo" })
+                        </div>
+
+                        <div class="col-lg-5 col-md-5 col-6 form-group">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
+                                <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
+                                <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
+                            </label>
+
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
+                                <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
+                                <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
+                                <i class="fa fa-save"></i> @Localizer["SendOTP"]
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
+                                <i class="fa fa-save"></i> @Localizer["Save"]
+                            </button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
+                                <i class="fa fa-times"></i> @Localizer["Cancel"]
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -20,8 +20,78 @@
 }
 
 <script>
-
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
-
+    var localization = {
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Delete: '@Localizer["Delete"]',
+        Activate: '@Localizer["Activate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        Active: '@Localizer["Active"]',
+        PurchaseOrder: '@Localizer["PurchaseOrder"]',
+    }
+    var errorMsg = {
+        UnAuthorised_edit_E1: '@Localizer["UIC02"]',
+        UnAuthorised_view_E2: '@Localizer["UIC03"]',
+        UnAuthorised_delete_E3: '@Localizer["UIC04"]',
+        ActionDesc_E4: '@Localizer["UI0201"]',
+    };
 </script>
 
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <table id="jqgPurchaseOrder"></table>
+            <div id="jqpPurchaseOrder"></div>
+        </div>
+    </div>
+
+
+<div class="modal fullscreen fade in" id="PopupPurchaseOrder" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddPurchaseOrder"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="txtPurchaseOrderId" style="display:none">
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="txtActionDesc"> @Localizer["ActionDescription"]</label>
+                            <input id="txtActionDesc" class="form-control" maxlength="50" type="text" placeholder="Enter the alpha numeric description" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group">
+                        <label>@Localizer["DisplaySequence"]</label>
+                        <input type="text" class="form-control numberonly" maxlength="2" id="txtDisplaySequence" />
+                    </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveActions" onclick="fnSaveActions();">
+                            <i class="fa fa-save"></i> @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelActions"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveActions" onclick="fnDeleteActions();"><i class="fa fa-times"></i> @Localizer["Deactivate"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
