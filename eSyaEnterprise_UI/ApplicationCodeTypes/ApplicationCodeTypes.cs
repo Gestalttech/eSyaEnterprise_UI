@@ -34,14 +34,13 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         //public const int PreferredLanguage = 8; not used
         public const int UserGroup = 1;
         public const int UserRole = 2;
-        public const int SecurityQuestions = 3; 
+        public const int SecurityQuestions = 3;
         #endregion
 
         #region Token System
-        //lIVE
-        //public const int FloorId = 5;
+        
+        public const int FloorId = 5;
 
-        public const int FloorId = 301;
 
         #endregion
 
