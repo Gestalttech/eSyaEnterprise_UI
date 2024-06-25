@@ -258,6 +258,20 @@ input[name="UserID"]:focus .btn-clear > .svg-inline--fa {
     border-radius: 50%;
     border: 1px solid #000;
 }
+.bgTimer {
+    background: #f7f7f7;
+    font-size: 20px;
+    text-align: center;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    font-family: helvetica-Bold;
+    border: 1px solid #ccc;
+    margin: 0px;
+    padding: 5px;
+    align-items: center;
+}
+
 label {font-size: 0.82rem;top: 4px;display: block;margin-bottom: 0px;font-weight: 200 !important;color: #797172;}
 .form-control{background:transparent !important;}
 .mdl-textfield__label {margin-bottom: 0px !important;}

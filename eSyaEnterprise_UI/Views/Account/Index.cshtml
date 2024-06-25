@@ -35,6 +35,7 @@
     <script src="~/js/Common/toast.js"></script>
     <script src="~/js/Common/toastr.js"></script>
     <script src="~/js/Common/eSyaMessageNotification.js"></script>
+    
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/common/animate.css" rel="stylesheet" />
     <link href="~/css/common/all.min.css" rel="stylesheet" />
@@ -265,7 +266,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                             <p class="bgUserTips small"> You are logging in eSya for the first time.</p>
                             <label>@Localizer["PleaseEnterYourOTP"]</label>
-                            <div class="otp-form">
+                            <div id="divCreatePwdOTP" class="otp-form">
                                 <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
                                 <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
                                 <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
@@ -274,7 +275,7 @@
                                 <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
 
                                 <!-- Store OTP Value -->
-                                <input class="otp-value" type="hidden" name="opt-value">
+                                <input class="otp-value" id="txtCreatePwdOTP" type="hidden" name="opt-value">
                                
                             </div>
                         </div>
@@ -349,17 +350,17 @@
                     <div class="row form-group border-bottom">
                         <div class="col-lg-4 col-md-4 col-12 form-group">
                             <label>@Localizer["MobileNumber"]</label>
-                            @await Component.InvokeAsync("IsdMobileInput", new { id = "RegisteredMobileNo" })
+                            @await Component.InvokeAsync("IsdMobileInput", new { id = "ForgotUIDOTPMobileNo" })
                         </div>
                    
                             <div class="col-lg-5 col-md-5 col-6 form-group">
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
-                                        <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoSendOTPMob">
+                                <input type="radio" id="rdoSendOTPMob" class="mdl-radio__button" name="uid" value="1">
                                         <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
                                     </label>
 
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
-                                <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoSendOTPEmailID">
+                                <input type="radio" id="rdoSendOTPEmailID" class="mdl-radio__button" name="uid" value="2">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
                             </label>
                             </div>
@@ -367,14 +368,39 @@
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnGetUserIDSendOTP">
                                 <i class="fa fa-save"></i> @Localizer["SendOTP"]
                             </button>
+
+
+                            
+                        </div>
+                </div>
+                <div class="row" id="divForgotUIDOTPSec" style="display:none;">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label>@Localizer["PleaseEnterYourOTP"]</label>
+                            <div id="divForgotUIDOTP" class="otp-form">
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+
+                                <!-- Store OTP Value -->
+                                <input class="otp-value" id="txtForgotUIDOTP" type="hidden" name="opt-value">
                             </div>
                         </div>
+                        <div class="col-lg-2 col-md-2 col-sm-6 d-flex flex-column justify-content-end">
+                            <p id="lblForgotUIDOTPtimer" class="text-left bgTimer bold me-2"></p>
+                       </div>
+                        <div class="col-lg-2 col-md-2 col-sm-6 d-flex flex-column justify-content-end">
+                           <button type="button" id="btnForgotUIDResendOTP" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" onclick="">@Localizer["ResendOTP"]</button>
+                        </div>
+                    </div>
                 </div>
                         <div class="modal-footer justify-content-center">
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btn">
-                                        <i class="fa fa-save"></i> @Localizer["Save"]
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnValidateForgotUIDOTP">
+                                <i class="fa fa-save"></i> @Localizer["ValidateOTP"]
                                     </button>
                                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
                                         <i class="fa fa-times"></i> @Localizer["Cancel"]
@@ -396,33 +422,56 @@
                 <div class="modal-body">
                     <div class="row form-group border-bottom">
                         <div class="col-lg-4 col-md-4 col-12 form-group">
-                            <label>@Localizer["MobileNumber"]</label>
-                            @await Component.InvokeAsync("IsdMobileInput", new { id = "GetForgotPasswordMobileNo" })
+                            <label for="cboGetFPMobileNo">@Localizer["MobileNumber"]</label>
+                            @await Component.InvokeAsync("IsdMobileInput", new { id = "GetFPMobileNo" })
                         </div>
 
                         <div class="col-lg-5 col-md-5 col-6 form-group">
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="mobileNumber">
-                                <input type="radio" id="mobileNumber" class="mdl-radio__button" name="options" value="1" onchange="fnCheckradioMobile()">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoFPOTPtoMob">
+                                <input type="radio" id="rdoFPOTPtoMob" class="mdl-radio__button" name="FPoptions" value="1">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
                             </label>
 
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="emailID">
-                                <input type="radio" id="emailID" class="mdl-radio__button" name="options" value="2" onchange="fnCheckradioEmail()">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoFPOTPtoEmailID">
+                                <input type="radio" id="rdoFPOTPtoEmailID" class="mdl-radio__button" name="FPoptions" value="2">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
                             </label>
                         </div>
                         <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnFPSendOTP" onclick="">
                                 <i class="fa fa-save"></i> @Localizer["SendOTP"]
                             </button>
+                        </div>
+                    </div>
+
+                    <div class="row" id="divForgotPWOTPSec" style="display:none;">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label>@Localizer["PleaseEnterYourOTP"]</label>
+                            <div id="divForgotPWOTPSec" class="otp-form">
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+                                <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
+
+                                <!-- Store OTP Value -->
+                                <input class="otp-value" id="txtForgotPWOTP" type="hidden" name="opt-value">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-6 d-flex flex-column justify-content-end">
+                            <p id="lblForgotPWOTPtimer" class="text-left bgTimer bold me-2"></p>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-6 d-flex flex-column justify-content-end">
+                            <button type="button" id="btnForgotPWResendOTP" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" onclick="">@Localizer["ResendOTP"]</button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnSaveQuestion" onclick="fnSaveUserQuestionAnswer()">
-                                <i class="fa fa-save"></i> @Localizer["Save"]
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnValidateForgotPWOTP" onclick="">
+                                <i class="fa fa-save"></i> @Localizer["ValidateOTP"]
                             </button>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent cancel-button" data-bs-dismiss="modal">
                                 <i class="fa fa-times"></i> @Localizer["Cancel"]
@@ -472,15 +521,15 @@
                 $('#divOTP').css('display', 'none');
                 $('#divMobileNumber').css('display', 'block');
             });
-            fnSetTheProductImage();
+           // fnSetTheProductImage();
 
         });
 
         $(window).on('resize', function () {
-            fnSetTheProductImage();
+           // fnSetTheProductImage();
         });
 
-
+       
         function getBaseURL() {
             var url = window.location.href.split('/');
             var baseUrl = url[0] + '//' + url[2] + '@Url.Content("~")';
@@ -505,7 +554,7 @@
         var timeLeft = 60;
         var timerElem = document.getElementById('timer');
         var myTimer;
-        function startTimer(duration, display) {
+        function fnStartTimer(duration, timerElementID, btnID) {
 
             if (myTimer !== null)
                 clearInterval(myTimer);
@@ -526,11 +575,11 @@
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                display.textContent = minutes + ":" + seconds;
-
+                //display.textContent = minutes + ":" + seconds;
+                $(timerElementID).text(minutes + ":" + seconds);
                 if (diff <= 0) {
                     clearInterval(myTimer);
-                    $('#btnAuthenticateOTP').prop('disabled', true);
+                    $(btnID).prop('disabled', false);
                     return;
                 }
             };
@@ -554,7 +603,8 @@
                         $('#txtOTP').val("");
                         $('#btnAuthenticateOTP').prop('disabled', false);
                         var waitMinutes = 60 * 5;
-                        startTimer(waitMinutes, timerElem);
+                        //startTimer(waitMinutes, timerElem);
+                        startTimer(waitMinutes, '#timer', '#btnAuthenticateOTP');
                         $('#divOTP').css('display', 'block');
                         $('#divMobileNumber').css('display', 'none');
                     }
@@ -615,261 +665,59 @@
             $("#divMobileNumber").addClass('hide');
             $("#txtUserMobile").val('');
         }
-        //change password popup open functionality
-
-       
-        $("#txtUserID").on('focusout', function () {
-            fncheckPasswordWithLoginID()
-        });
-        $("#txtLoginPassword").on('focusin', function () {
-            fncheckPasswordWithLoginID()
-        });
         
-        function fncheckPasswordWithLoginID() {
-
-            var logInId = $("#txtUserID").val();
-
-            // $("#lblLogInID").text(logInId);
-            if (logInId == null || logInId == "")
-            {
-                return;
-            }
-            if (logInId !== null || logInId !== "") {
-                logInId = logInId.trim();
-            }
-            $.ajax({
-                url: getBaseURL() + '/Account/ChkIsCreatePasswordInNextSignIn?loginId=' + logInId,
-                type: 'GET',
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    fnAlert("e", "", "", xhr.statusText);
-                },
-                success: function (response) {
-                    if (response.StatusCode === "1") {
-                        // $("#lblLogInID").text("Welcome "+response.Key);
-                        $("#txtloginUserId").val(response.ID);
-                        $("#PopupOTP").modal('show');
-
-                    }
-                    else {
-                        // $("#lblLogInID").text("");
-                        // $("#txtloginUserId").val("");
-                        $("#PopupOTP").modal('hide');
-
-                    }
-                },
-                //async: false,
-                //processData: false
-            });
-
-
-        }
-        function fnValidateUserOTP() {
-           
-
-            var otpval = $("[name='opt-value']").val();
-
-            if ($("#txtloginUserId").val() == null || $("#txtloginUserId").val() == "") {
-                return;
-            } 
-            if (otpval == null || otpval == "") {
-                return;
-            }
-           
-            $.ajax({
-                url: getBaseURL() + '/Account/ValidateCreateUserOTP?userId=' + $("#txtloginUserId").val() + '&otp=' + otpval,
-                type: 'GET',
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                error: function (xhr) {
-                    fnAlert("e", "", "", xhr.statusText);
-                },
-                success: function (response) {
-                   
-                    if (response.IsSucceeded==true) {
-                        $("#lblLogInID").text('');
-                        $("#txtloginUserId").val('');
-                        $("#PopupOTP").modal('hide');
-                        fnAlert("s", "", "", response.Message);
-                        $("#lblLogInID").text("Welcome "+response.LoginDesc);
-                        $("#txtloginUserId").val(response.UserID);
-                       
-                        setTimeout(function () {
-                            $("#PopupChangePassword").modal('show');
-                        }, 2000);
-                    }
-                    else {
-                        $("#lblLogInID").text("");
-                        $("#txtloginUserId").val(response.UserID);
-                        fnAlert("w","","",response.Message);
-                    }
-                },
-                //async: false,
-                //processData: false
-            });
-
-
-        }
-        function fnSaveChangePassword() {
-
-            var PasswordPattern = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@@#$%!&*]).{8,20})");
-
-            if ($("#txtpassword").val().trim().length <= 0) {
-                fnAlert("w","","","Please Enter New Password");
-                return;
-            }
-            if (!PasswordPattern.test($("#txtpassword").val())) {
-                fnAlert("w", "", "", "Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.");
-                return;
-            }
-            if ($("#txtConfirmPassword").val().trim().length <= 0) {
-                fnAlert("w", "", "", "Please Enter New Confirm Password");
-                return;
-            }
-
-            if ($("#txtpassword").val() !== $("#txtConfirmPassword").val()) {
-                fnAlert("w", "", "", "Password and Confirm Password should be same");
-                return;
-            }
-
-            $("#btnSaveChangePassword").attr("disabled", true);
-            $.ajax({
-                url: getBaseURL() + '/Account/CreateUserPasswordINNextSignIn?userId=' + $("#txtloginUserId").val() + '&password=' + $("#txtpassword").val() + '&confirmPassword=' + $("#txtConfirmPassword").val(),
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                async: false,
-                success: function (response) {
-
-                    if (response.Status) {
-                        $("#txtloginUserId").val('');
-                        $("#txtloginUserId").val(response.ID);
-
-                        $("#PopupChangePassword").modal('hide');
-
-                        fnAlert("s", "", "", response.Message);
-
-                        
-
-                        setTimeout(function () {
-                            $("#PopupSecretQuestion").modal('show');
-                        }, 2000);
-                    }
-                    else {
-                        fnAlert("e", "", "", response.Message);
-                    }
-                    $("#btnSaveChangePassword").attr("disabled", false);
-                },
-                error: function (error) {
-                    fnAlert("e", "", "", error.statusText);
-                    $("#btnSaveChangePassword").attr("disabled", false);
-                }
-            });
-        }
-
-        function fnClearChangePasswordfromLogin() {
-            $("#lblLogInID").text("");
-            $("#txtloginUserId").val("");
-            $("#txtpassword").val("");
-            $("#txtConfirmPassword").val("");
-            $("#btnSaveChangePassword").attr("disabled", false);
-            $("#cboQuestionId").val('0').selectpicker('refresh');
-            $("#txtAnswerId").val('');
-        }
-
-        function fnSaveUserQuestionAnswer() {
-
-            if ($("#cboQuestionId").val() == "0" || $("#cboQuestionId").val() == 0 || $("#cboQuestionId").val() == "") {
-                fnAlert("w", "", "", "Please select Your Question");
-                return;
-            }
-
-            if ($("#txtAnswerId").val().trim().length <= 0) {
-                fnAlert("w", "", "", "Please Enter Your Answer");
-                return;
-            }
-            obj = {
-                UserId: $("#txtloginUserId").val(),
-                SecurityQuestionId: $("#cboQuestionId").val(),
-                SecurityAnswer: $("#txtAnswerId").val(),
-                ActiveStatus: true,
-            };
-           
-
-            $("#btnSaveQuestion").attr("disabled", true);
-            $.ajax({
-                url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
-                type: 'POST',
-                datatype: 'json',
-                data: { obj },
-                success: function (response) {
-
-                    if (response.Status) {
-                        fnAlert("s", "", "", response.Message);
-                        $("#PopupSecretQuestion").modal('hide');
-                        fnClearChangePasswordfromLogin();
-                       
-                    }
-                    else {
-                        fnAlert("e", "", "", response.Message);
-                    }
-                    $("#btnSaveQuestion").attr("disabled", false);
-                },
-                error: function (error) {
-                    fnAlert("e", "", "", error.statusText);
-                    $("#btnSaveQuestion").attr("disabled", false);
-                }
-            });
-        }
-        // otp scripts
-      
-        $("#PopupOTP").on('show.bs.modal',function(){
-             $("#btnCheckOTP").attr('disabled', true);
+        function fneSyaOTP(noOfDigits,divID,txtID,btnID) {
+            debugger;
             $(".otp-field").val('');
-                    
-            $(".otp-form *:input[type!=hidden]:first").focus();
-            let otp_fields = $(".otp-form .otp-field"),
-                    otp_value_field = $(".otp-form .otp-value");
-                otp_fields
-                    .on("input", function (e) {
-                        $(this).val(
-                            $(this)
-                                .val()
-                                .replace(/[^0-9]/g, "")
-                        );
-                        let opt_value = "";
-                        otp_fields.each(function () {
-                            let field_value = $(this).val();
-                            if (field_value != "") opt_value += field_value;
-                        });
-                        otp_value_field.val(opt_value);
-                        if (opt_value.length == 6){
-                        $("#btnCheckOTP").attr('disabled', false);
-                        }
-                        else{
-                        $("#btnCheckOTP").attr('disabled', true);
-                        }
-                    })
-                    .on("keyup", function (e) {
-                        let key = e.keyCode || e.charCode;
-                        if (key == 8 || key == 46 || key == 37 || key == 40) {
-                             $(this).prev().focus();
-                           
-                        } else if (key == 38 || key == 39 || $(this).val() != "") {
-                            $(this).next().focus();
-                           
-                        }
-                    })
-                    .on("paste", function (e) {
-                        let paste_data = e.originalEvent.clipboardData.getData("text");
-                        let paste_data_splitted = paste_data.split("");
-                        $.each(paste_data_splitted, function (index, value) {
-                            otp_fields.eq(index).val(value);
-                        });
+
+            $(divID +".otp-form *:input[type!=hidden]:first").focus();
+            let otp_fields = $(divID +".otp-form .otp-field"),
+               // otp_value_field = $(".otp-form .otp-value");
+                otp_value_field = $(txtID);
+            otp_fields
+                .on("input", function (e) {
+                    $(this).val(
+                        $(this)
+                            .val()
+                            .replace(/[^0-9]/g, "")
+                    );
+                    let opt_value = "";
+                    otp_fields.each(function () {
+                        let field_value = $(this).val();
+                        if (field_value != "") opt_value += field_value;
                     });
-        })
-        
+                    otp_value_field.val(opt_value);
+                    if (opt_value.length == noOfDigits) {
+                        $(btnID).attr('disabled', false);
+                    }
+                    else {
+                        $(btnID).attr('disabled', true);
+                    }
+                })
+                .on("keyup", function (e) {
+                    let key = e.keyCode || e.charCode;
+                    if (key == 8 || key == 46 || key == 37 || key == 40) {
+                        $(this).prev().focus();
+
+                    } else if (key == 38 || key == 39 || $(this).val() != "") {
+                        $(this).next().focus();
+
+                    }
+                })
+                .on("paste", function (e) {
+                    let paste_data = e.originalEvent.clipboardData.getData("text");
+                    let paste_data_splitted = paste_data.split("");
+                    $.each(paste_data_splitted, function (index, value) {
+                        otp_fields.eq(index).val(value);
+                    });
+                });
+        }
+
+                
+       
     </script>
+    <script src="~/js/login/eSyaCreatePassword.js"></script>
+    <script src="~/js/login/eSyaForgotUserID.js"></script>
+    <script src="~/js/login/eSyaForgotPassword.js"></script>
 </body>
 </html>
