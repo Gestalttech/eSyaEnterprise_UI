@@ -12,5 +12,7 @@ namespace eSyaEnterprise_UI.Areas.Purchase.Controllers
         {
             return View();
         }
+
+
     }
 }

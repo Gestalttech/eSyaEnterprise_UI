@@ -98,6 +98,8 @@ function fnAddTermsAndConditions() {
 
 
 
+
+
 function fnGridRefreshTermsAndConditions() {
     $("#jqgTermsAndConditions").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
