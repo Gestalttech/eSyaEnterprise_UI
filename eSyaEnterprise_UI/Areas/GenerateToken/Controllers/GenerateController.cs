@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
 {
-    [SessionTimeout]
+   
     public class GenerateController : Controller
     {
         private readonly IeSyaGenerateTokenAPIServices _eSyaGenerateTokenAPIServices;
@@ -46,13 +46,14 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
 
             return View();
         }
+
         [Area("GenerateToken")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
         [AllowAnonymous]
         public IActionResult ETM_06_00(int businessKey)
         {
 
-            ViewBag.businessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+            //ViewBag.businessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+            ViewBag.businessKey = 11;
             return View();
         }
 
