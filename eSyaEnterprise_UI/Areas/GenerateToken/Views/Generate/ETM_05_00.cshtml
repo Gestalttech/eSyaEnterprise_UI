@@ -76,7 +76,7 @@
                 var _content = "";
                 $.each(result, function (key, data) {
                     // _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenType + "')> <span>" + data.TokenDesc + "</span> <span class='position-absolute top-100 start-50 translate-middle fs-6 translate-middle badge pill bg-warning text-bg-warning'>Last Generated Token:9999</span></button></div>";
-                    _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenPrefix + "')> <span>" + data.TokenDesc + "</span></button></div>";
+                    _content += "<div class='col-xl-4 col-lg-4 col-md-4 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenPrefix + "')> <span>" + data.TokenDesc + "</span></button></div>";
 
                 });
                 $("#dvMain").html(_content); 
