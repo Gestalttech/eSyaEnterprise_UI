@@ -58,7 +58,8 @@ namespace eSyaEnterprise_UI.Areas.GenerateToken.Controllers
         }
 
         [Area("GenerateToken")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [AllowAnonymous]
         public IActionResult ETM_07_00()
         {
             return View();
