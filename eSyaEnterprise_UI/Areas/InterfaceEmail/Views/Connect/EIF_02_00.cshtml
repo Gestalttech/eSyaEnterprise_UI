@@ -115,11 +115,11 @@
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label>@Localizer["EmailType"]</label>
-                            @* <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnEntityOnchange()"></select> *@
-                            <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8">
-                                <option>0</option>
-                                <option value="1">Reg mail</option>
+                            <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8" asp-items="@ViewBag.EmailType_list">
+                             <option value="0">Select</option>
                             </select>
+                           
+                              
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">

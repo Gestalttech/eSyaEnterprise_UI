@@ -32,13 +32,14 @@ function fnLoadGridEmailConnect() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port, localization.EmailType, localization.SenderEmailId, localization.UserId, localization.Password, localization.PassKey, localization.Active, localization.Actions],
+        colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port,"", localization.EmailType, localization.SenderEmailId, localization.UserId, localization.Password, localization.PassKey, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "OutgoingMailServer", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "Port", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "EmailType", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "EmailType", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "EmailTypeDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "SenderEmailId", width: 120, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "UserName", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "Password", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
@@ -392,10 +393,15 @@ function fnDeleteEmailConnect() {
     $("#btndeActiveEmailConnect").attr("disabled", true);
 
     objdel = {
+
         BusinessKey: $("#cboBusinessKey").val(),
         OutgoingMailServer: $("#txtOutgoingMailServer").val(),
         Port: $("#txtPort").val(),
         ISDCode: $("#cbolocISD").val(),
+        EmailType: $("#cboEmailType").val(),
+        SenderEmailId: $("#txtSenderEmailId").val(),
+        UserName: $("#txtUserName").val(),
+        Password: $("#txtPassword").val(),
         status: a_status
     }
     $.ajax({

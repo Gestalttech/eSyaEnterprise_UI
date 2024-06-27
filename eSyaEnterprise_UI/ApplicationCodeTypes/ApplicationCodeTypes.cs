@@ -39,8 +39,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
         #region Token System
         
-        public const int FloorId = 5;
-
+        //public const int FloorId = 5;
+        public const int FloorId = 301;
 
         #endregion
 
@@ -101,6 +101,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int DrugPacking = 206;
         #endregion
 
-        
+        #region Interface Email
+        public const int EMailType = 62;
+        #endregion
+
     }
 }

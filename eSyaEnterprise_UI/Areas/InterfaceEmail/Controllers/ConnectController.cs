@@ -1,4 +1,6 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
+
 //using eSyaEnterprise_UI.Areas.ConfigBusiness.Models;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Data;
 using eSyaEnterprise_UI.Areas.InterfaceEmail.Models;
@@ -30,14 +32,19 @@ namespace eSyaEnterprise_UI.Areas.InterfaceEmail.Controllers
             try
             {
                 var serviceResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessEntity>>("EmailConnect/GetActiveEntites");
-                if (serviceResponse.Status)
+                var emailtypeResponse = await _eSyaInterfaceEmailAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.EMailType);
+                if (serviceResponse.Status && emailtypeResponse.Status)
                 {
                     ViewBag.entity_list = serviceResponse.Data.Select(b => new SelectListItem
                     {
                         Value = b.BusinessId.ToString(),
                         Text = b.BusinessDesc,
                     }).ToList();
-
+                    ViewBag.EmailType_list = emailtypeResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
+                    }).ToList();
                     return View();
                 }
                 else
