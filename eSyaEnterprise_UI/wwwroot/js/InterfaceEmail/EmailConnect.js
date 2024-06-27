@@ -32,12 +32,17 @@ function fnLoadGridEmailConnect() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port, localization.Active, localization.Actions],
+        colNames: [localization.BusinessLocation, localization.ISDCode, localization.OutgoingMailServer, localization.Port, localization.EmailType, localization.SenderEmailId, localization.UserId, localization.Password, localization.PassKey, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "OutgoingMailServer", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "Port", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "EmailType", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "SenderEmailId", width: 120, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "UserName", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "Password", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "PassKey", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -174,6 +179,14 @@ function fnEditEmailConnect(e, actiontype) {
     fnGetISDCodeByBusinessKey();
     $('#txtOutgoingMailServer').val(rowData.OutgoingMailServer);
     $('#txtPort').val(rowData.Port);
+    
+    
+    $("#cboEmailType").val(rowData.EmailType);
+    $("#cboEmailType").selectpicker('refresh');
+    $('#txtSenderEmailId').val(rowData.SenderEmailId);
+    $('#txtUserName').val(rowData.UserName);
+    $('#txtPassword').val(rowData.Password);
+    $('#txtPassKey').val(rowData.PassKey);
     $('#locISD').val(rowData.ISDCode).selectpicker('refresh');
     if (rowData.ActiveStatus === "true") {
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -198,6 +211,7 @@ function fnEditEmailConnect(e, actiontype) {
         $("#btnSaveEmailConnect").show();
         $("#txtOutgoingMailServer").attr('readonly', true);
         $("#cboBusinessKey").next().attr('disabled', true);
+        $("#cboEmailType").next().attr('disabled', true);
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
@@ -259,9 +273,13 @@ function fnSaveEmailConnect() {
             OutgoingMailServer: $("#txtOutgoingMailServer").val(),
             Port: $("#txtPort").val(),
             ISDCode: $("#cbolocISD").val(),
+            EmailType: $("#cboEmailType").val(),
+            SenderEmailId: $("#txtSenderEmailId").val(),
+            UserName: $("#txtUserName").val(),
+            Password: $("#txtPassword").val(),
+            PassKey: $("#txtPassKey").val(),
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
-
-        }
+           }
         $("#btnSaveEmailConnect").attr('disabled', true);
         $.ajax({
             url: getBaseURL() + '/Connect/InsertOrUpdateEmailConnect',
@@ -297,28 +315,50 @@ function fnValidateEmailConnect() {
         fnAlert("w", "EIF_02_00", "UI0064", errorMsg.BusinessLocation_E6);
         return false;
     }
-
+    if ($("#cboEmailType").val() === 0 || $("#cboEmailType").val() === "0" || $("#cboEmailType").val() === null) {
+        fnAlert("w", "EIF_02_00", "UI0343", errorMsg.EmailType_E20);
+        return false;
+    }
 
     if (IsStringNullorEmpty($("#txtOutgoingMailServer").val())) {
         fnAlert("w", "EIF_02_00", "UI0211", errorMsg.OutgoingMailServer_E16);
         return false;
     }
+
     if (IsStringNullorEmpty($("#txtPort").val())) {
         fnAlert("w", "EIF_02_00", "UI0212", errorMsg.Port_E17);
         return false;
     }
+   
+    if (IsStringNullorEmpty($("#txtSenderEmailId").val())) {
+        fnAlert("w", "EIF_02_00", "UI0139", errorMsg.EmailID_E18);
+        return false;
+    }
+    if (!IsValidateEmail($("#txtSenderEmailId").val())) {
+        fnAlert("w", "EIF_02_00", "UI0140", errorMsg.ValidEmailID_E19);
+        return false;
+    } 
 
-
-
+    if (IsStringNullorEmpty($("#txtUserName").val())) {
+        fnAlert("w", "EIF_02_00", "UI0344", errorMsg.UserName_E17);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtPassword").val())) {
+        fnAlert("w", "EIF_02_00", "UI0136", errorMsg.Password_E19);
+        return false;
+    }
+    
 }
 
 function fnClearFields() {
     $("#cboBusinessKey").val('0').selectpicker('refresh');
+    $("#cboEmailType").val('0').selectpicker('refresh');
     $("#cbolocISD").val('0').selectpicker('refresh');
     $("#cbolocISD").trigger("change");
     $('#txtOutgoingMailServer').val('');
-    $('#txtPort').val('');
+    $('#txtPort,#txtOutgoingMailServer,#txtSenderEmailId,#txtUserName,#txtPassword,#txtPassKey').val('');
     $("#cboBusinessEntity").next().attr('disabled', false);
+    $("#cboEmailType").next().attr('disabled', false);
     $("#txtOutgoingMailServer").attr('readonly', false);
     $("#cboBusinessKey").next().attr('disabled', false);
 }

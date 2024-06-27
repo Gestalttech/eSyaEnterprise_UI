@@ -25,6 +25,11 @@
         BusinessKey: '@Localizer["BusinessKey"]',
         BusinessLocation: '@Localizer["BusinessLocation"]',
         Port: '@Localizer["Port"]',
+        EmailType: '@Localizer["EmailType"]',
+        SenderEmailId: '@Localizer["SenderEmailId"]',
+        UserId: '@Localizer["UserId"]',
+        Password: '@Localizer["Password"]',
+        PassKey: '@Localizer["PassKey"]',
         OutgoingMailServer: '@Localizer["OutgoingMailServer"]',
         ISDCode: '@Localizer["ISDCode"]',
         Active: '@Localizer["Active"]',
@@ -60,6 +65,12 @@
         BusinessEntity_E15: '@Localizer["UI0049"]',
         OutgoingMailServer_E16: '@Localizer["UI0211"]',
         Port_E17: '@Localizer["UI0212"]',
+        UserName_E17: '@Localizer["UI0344"]',
+        EmailID_E18: '@Localizer["UI0139"]',
+        ValidEmailID_E19: '@Localizer["UI0140"]',
+        Password_E19: '@Localizer["UI0136"]',
+        EmailType_E20: '@Localizer["UI0343"]',
+       
         
 
     }
@@ -70,6 +81,7 @@
             <label>@Localizer["BusinessEntity"]</label>
             <select class="selectpicker" data-live-search="true" id="cboBusinessEntity" title="ChooseBusinessEntity" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnEntityOnchange()"></select>
         </div>
+        
     </div>
     <div class="col-lg-12 co-md-12 col-12">
         <table id="jqgEmailConnect"></table>
@@ -100,6 +112,16 @@
                             @await Component.InvokeAsync("IsdCountryInput",new{id="locISD"})
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label>@Localizer["EmailType"]</label>
+                            @* <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8" asp-items="@ViewBag.entity_list" onchange="fnEntityOnchange()"></select> *@
+                            <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8">
+                                <option>0</option>
+                                <option value="1">Reg mail</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>@Localizer["OutgoingMailServer"]</label>
@@ -109,7 +131,31 @@
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>@Localizer["Port"]</label>
-                            <input type="text" class="form-control numberonly" id="txtPort" />
+                            <input type="text" class="form-control numberonly" id="txtPort" maxlength="5" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["SenderEmailId"]</label>
+                            <input type="text" name="emailid" class="form-control" id="txtSenderEmailId" />
+                        </div>
+                    </div> 
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["UserName"]</label>
+                            <input type="text" class="form-control" id="txtUserName" />
+                        </div>
+                    </div> 
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["Password"]</label>
+                            <input type="password" class="form-control" id="txtPassword" />
+                        </div>
+                    </div> 
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>@Localizer["PassKey"]</label>
+                            <input type="text" class="form-control" id="txtPassKey" />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
