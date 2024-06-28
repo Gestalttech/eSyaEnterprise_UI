@@ -29,7 +29,7 @@ function fnGridLoadDrugsConsumables() {
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDesc, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
+        colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDescription, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
         colModel: [
             { name: "Skutype", width: 70, editable: true, align: 'left', hidden: true },
             { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
@@ -78,6 +78,7 @@ function fnGridLoadDrugsConsumables() {
     }).jqGrid('navButtonAdd', '#jqpDrugsConsumables', {
         caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnGridAddDrugsConsumables
     });
+    fnAddGridSerialNoHeading();
 }
 
 function fnGetDrugDetails() {
@@ -113,7 +114,7 @@ function fnGetDrugDetails() {
                     ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
                     jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-                    colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDesc, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
+                    colNames: [localization.Skutype, localization.Skucode, localization.Skuid, localization.CompositionID, localization.FormulationID, localization.TradeID, localization.TradeName, localization.PackSize, localization.Packing, localization.PackingDescription, localization.ManufacturerID, localization.ISDCode, localization.BarcodeID, localization.Active, localization.Actions],
                     colModel: [
                         { name: "Skutype", width: 70, editable: true, align: 'left', hidden: true },
                         { name: "Skucode", width: 70, editable: true, align: 'left', hidden: true },
@@ -152,7 +153,7 @@ function fnGetDrugDetails() {
                     scrollOffset: 0,
                     caption: localization.DrugsConsumables,
                     loadComplete: function (data) {
-                        SetGridControlByAction();
+                        SetGridControlByAction(); fnAddGridSerialNoHeading();
                     },
                     onSelectRow: function (rowid, status, e) {
                        
@@ -168,6 +169,7 @@ function fnGetDrugDetails() {
                 jqpDrugsConsumables.jqGrid().trigger('reloadGrid', [{ page: 1 }]);
         }
     });
+    
 }
 
 function fnGetDrugCompositionONChanged() {
