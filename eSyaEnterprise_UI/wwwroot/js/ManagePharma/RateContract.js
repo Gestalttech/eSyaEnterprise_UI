@@ -2,17 +2,7 @@
     fnLoadGridRateContract();
 });
 
-function fnLoadManufacturer() {
-    if ($('#cboBusinessLocation').val() != '') {
-        fnBindManufacturer();
-    }
-}
-
-function fnBindManufacturer() {
-
-}
-
-function fnLoadGridRateContract() {
+ function fnLoadGridRateContract() {
     var BusinessKey = $("#cboBusinessLocation").val();
     var ManufacturerID = $("#cboManufacturer").val();
     var URL = getBaseURL() + '/RateContract/GetDrugManufacturerLink?BusinessKey=' + BusinessKey + '&ManufacturerID=' + ManufacturerID;
@@ -73,7 +63,8 @@ function fnLoadGridRateContract() {
         pager: "#jqpRateContract",
         viewrecords: true,
         gridview: true,
-        rownumbers: false,
+        rownumbers: true,
+        rownumWidth:'55',
         height: 'auto',
         width: 'auto',
         scroll: false,
@@ -94,8 +85,12 @@ function fnLoadGridRateContract() {
             $("#jqgRateContract").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
             fnJqgridSmallScreen('jqgRateContract');
         }
-    }).jqGrid('navGrid', '#jqpRateContract', { add: false, edit: false, search: false, del: false, refresh: false });
+    }).jqGrid('navGrid', '#jqpRateContract', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navGrid', '#jqpRateContract', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpRateContract', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshRateContract
+        })
     $("#btnSave").show();
+    fnAddGridSerialNoHeading();
 }
 
 function fnSaveRateContract() {
@@ -150,4 +145,8 @@ function fnSaveRateContract() {
 
 function fnClearRateContract() {
 
+}
+
+function fnGridRefreshRateContract() {
+    $("#jqgRateContract").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
