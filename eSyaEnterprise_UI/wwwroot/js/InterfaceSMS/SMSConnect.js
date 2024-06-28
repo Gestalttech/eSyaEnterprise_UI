@@ -1,9 +1,8 @@
 ﻿var isEdit = 0;
 $(function () {
     fnLoadGridSMSConnect();
-    var dateToday = new Date();
     $("#txtEffectiveFRMDate").datepicker({
-        minDate: 0,
+    
         dateFormat: _cnfDateFormat,
     });
     $("#txtEffectiveTillDate").datepicker({
@@ -187,10 +186,11 @@ function fnAddSMSConnect() {
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
     document.getElementById("txtEffectiveFRMDate").disabled = false;
+   
 }
 
 function fnEditSMSConnect(e, actiontype) {
-
+   
     var rowid = $("#jqgSMSConnect").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgSMSConnect').jqGrid('getRowData', rowid);
     var _selectedRow = $("#" + rowid).offset();
@@ -262,7 +262,7 @@ function fnEditSMSConnect(e, actiontype) {
             return;
         }
         $('#PopupSMSConnect').modal('show');
-        $('#PopupSMSConnect').find('.modal-title').text("Active/De Active Application Codes");
+        $('#PopupSMSConnect').find('.modal-title').text("Active/De Active SMS Connect");
         if (rowData.ActiveStatus == 'true') {
             $("#btndeActiveSMSConnect").html(localization.DActivate);
         }
