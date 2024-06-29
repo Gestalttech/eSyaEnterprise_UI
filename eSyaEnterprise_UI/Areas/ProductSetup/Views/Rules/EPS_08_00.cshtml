@@ -124,8 +124,8 @@
                     newrowid = rowid;
                 },
                 loadComplete: function (data) {
-                    $("#gvProcessRule .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
-                    $("#gvProcessRule .jqgrow:odd").css({ background: '#e4edf5' });
+                    // $("#gvProcessRule .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
+                    // $("#gvProcessRule .jqgrow:odd").css({ background: '#e4edf5' });
                     $("#pgProcessRule .ui-pg-div:first").css({ 'border-left': "none" });
                     $("#gvProcessRule .jqgrow").hover(function () {
                         if (!$(this).hasClass('ui-state-highlight')) {
@@ -163,7 +163,7 @@
                     };
                     var subGridTableId;
                     var subGridDivId;
-                    var subGridWidth = grid.width() - 51;
+                    var subGridWidth = grid.width() - 200;
                     subGridTableId = subId + "_t";
                     subGridIdGlobal = subGridTableId;
                     subGridDivId = subId + "_d";
@@ -174,7 +174,7 @@
                         colModel: [
                             { name: "ProcessId", hidden: true },
                             {
-                                name: "RuleId", hidden: false, editable: true, width: "30px", align: 'right', formatter: 'integer', editoptions: {
+                                name: "RuleId", hidden: false, editable: true, width: "30", align: 'right', formatter: 'integer', editoptions: {
                                     dataInit: function (element) {
                                         $(element).keypress(function (e) {
                                             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
@@ -184,15 +184,15 @@
                                     }
                                 }
                             },
-                            { name: "RuleDesc", editable: true, width: "250px" },
-                            { name: "Notes", editable: true, width: "250px" },
-                            { name: "ActiveStatus", editable: true, width: "60px", edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
+                            { name: "RuleDesc", editable: true, width: "90px" },
+                            { name: "Notes", editable: true, width: "90px" },
+                            { name: "ActiveStatus", editable: true, width: "30px", align: 'center', edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
                         ],
                         pager: "#" + subGridDivId,
                         rowNum: 20,
                         rowList: [20, 40],
+                        rownumWidth:'55',
                         viewrecords: true,
-                        recordtext: "Showing records {0} to {1} of {2}",
                         gridview: true,
                         rownumbers: true,
                         datatype: 'local',
@@ -212,9 +212,8 @@
                         loadComplete: function () {
 
                             setTimeout(function () {
+                                $(".ui-pager-control tr").css('background', '#fff');
                                 $("#jqgh_" + subGridTableId + "_RuleId").css({ 'text-align': 'right' });
-                                $("#" + subGridTableId + " .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
-                                $("#" + subGridTableId + " .jqgrow:odd").css({ background: '#e4edf5' });
                                 $("#" + subGridDivId + " .ui-pg-div:first").css({ 'border-left': "none" });
                                 $("#" + subGridTableId + " .jqgrow").hover(function () {
                                     if (!$(this).hasClass('ui-state-highlight')) {

@@ -124,9 +124,9 @@
                     newrowid = rowid;
                 },
                 loadComplete: function (data) {
-                    $("#gvProcessRule .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
-                    $("#gvProcessRule .jqgrow:odd").css({ background: '#e4edf5' });
+                  
                     $("#pgProcessRule .ui-pg-div:first").css({ 'border-left': "none" });
+                    
                     $("#gvProcessRule .jqgrow").hover(function () {
                         if (!$(this).hasClass('ui-state-highlight')) {
                             $(this).css({ 'background': "rgb(139, 157, 239)", color: 'white' })
@@ -161,7 +161,7 @@
                     };
                     var subGridTableId;
                     var subGridDivId;
-                    var subGridWidth = grid.width() - 51;
+                    var subGridWidth = grid.width() - 200;
                     subGridTableId = subId + "_t";
                     subGridIdGlobal = subGridTableId;
                     subGridDivId = subId + "_d";
@@ -172,7 +172,7 @@
                         colModel: [
                             { name: "ProcessId", hidden: true },
                             {
-                                name: "RuleId", hidden: false, editable: true, width: "50px", align: 'right', formatter: 'integer', editoptions: {
+                                name: "RuleId", hidden: false, editable: true, width: "40", align: 'right', formatter: 'integer', editoptions: {
                                     dataInit: function (element) {
                                         $(element).keypress(function (e) {
                                             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
@@ -182,14 +182,13 @@
                                     }
                                 }
                             },
-                            { name: "RuleDesc", editable: true, width: "300px" },
-                            { name: "ActiveStatus", editable: true, width: "50px", edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
+                            { name: "RuleDesc", editable: true, width: "80" },
+                            { name: "ActiveStatus", editable: true, width: "50", align: 'center', edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" } }
                         ],
                         pager: "#" + subGridDivId,
                         rowNum: 20,
                         rowList: [20, 40],
                         viewrecords: true,
-                        recordtext: "Showing records {0} to {1} of {2}",
                         gridview: true,
                         rownumbers: true,
                         datatype: 'local',
@@ -209,9 +208,8 @@
                         loadComplete: function () {
 
                             setTimeout(function () {
+                                $(".ui-pager-control tr").css('background', '#fff');
                                 $("#jqgh_" + subGridTableId + "_RuleId").css({ 'text-align': 'right' });
-                                $("#" + subGridTableId + " .jqgrid-rownum:odd").css({ 'background': "#e4edf5" });
-                                $("#" + subGridTableId + " .jqgrow:odd").css({ background: '#e4edf5' });
                                 $("#" + subGridDivId + " .ui-pg-div:first").css({ 'border-left': "none" });
                                 $("#" + subGridTableId + " .jqgrow").hover(function () {
                                     if (!$(this).hasClass('ui-state-highlight')) {

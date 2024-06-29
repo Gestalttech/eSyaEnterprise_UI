@@ -8,9 +8,9 @@ $(document).ready(function () {
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditActions(event, 'edit') } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditActions(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditActions(event, 'delete') } },
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditActions('edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditActions('view') } },
+            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditActions('delete') } },
         }
         // there's more, have a look at the demos and docs...
     });
@@ -118,7 +118,7 @@ function fnAddActions() {
     $('#txtActionId').val('');
 }
 
-function fnEditActions(e, actiontype) {
+function fnEditActions(actiontype) {
     var rowid = $("#jqgActions").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgActions').jqGrid('getRowData', rowid);
     $('#txtActionId').val(rowData.ActionId);
