@@ -26,6 +26,11 @@
         SelectItemSubCategory: '@Localizer["SelectItemSubCategory"]',
         Save: '@Localizer["Save"]',
         Update: '@Localizer["Update"]',
+        ItemGroupCategoryLink: '@Localizer["ItemGroupCategoryLink"]',
+        AddItemGroupAndCategoryLink: '@Localizer["AddItemGroupAndCategoryLink"]',
+        EditItemGroupAndCategoryLink: '@Localizer["EditItemGroupAndCategoryLink"]',
+        ViewItemGroupAndCategoryLink: '@Localizer["ViewItemGroupAndCategoryLink"]',
+
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -91,20 +96,18 @@
 
 <div class="row row-bottom-pad">
     <div class="col-sm-4 col-md-4 col-lg-4" id="divItemGroupCategoryTree">
-
-        <div id="ItemGroupCategoryTree">
-        </div>
-    </div>
-
-    <div class="col-sm-1 col-md-1 col-lg-1">
+        <div id="jstItemGroupCategoryTree"></div>
     </div>
 
 
-    <div id="dvItemGroupCate" class="col-lg-7 col-md-7 col-sm-7 f-right" style="display:none;">
+    <div  class="col-lg-8 col-md-8 col-sm-8 f-right" >
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9">
+            <div id="dvItemGroupCate" style="display:none;">
 
-        <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddItemGroupCate">
+                     <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddItemGroupCate">
             <div class="mdl-card__title mdl-card--expand padleft0 padtop0 h-60 d-block">
-                <h5 class="mdl-card__title-text"> @Localizer["ItemGroup&CategoryLink"] </h5>
+                <h5 class="mdl-card__title-text"> @Localizer["ItemGroupCategoryLink"] </h5>
             </div>
             <div class="mdl-card__supporting-text fullwidth">
                 <div class="row ">
@@ -114,7 +117,7 @@
                                 @Localizer["ItemGroup"]
                             </label>
                             <div>
-                                <select class="selectpicker" data-live-search="true" id="cboitemgroup" title="">
+                                <select class="selectpicker" data-live-search="true" data-size="6" id="cboitemgroup" title="">
                                     <option value="0">
                                         @Localizer["SelectItemGroup"]
                                     </option>
@@ -136,7 +139,7 @@
                                 @Localizer["ItemCategory"]
                             </label>
                             <div>
-                                <select class="selectpicker" data-live-search="true" id="cboitemcategory" title="" onchange="fnloadSubCategoryCbo()">
+                                <select class="selectpicker" data-live-search="true" id="cboitemcategory" data-size="6" title="" onchange="fnloadSubCategoryCbo()">
                                     <option value="0">
                                         @Localizer["SelectItemCategory"]
                                     </option>
@@ -158,7 +161,7 @@
                                 @Localizer["ItemSubCategory"]
                             </label>
                             <div>
-                                <select class="selectpicker" data-live-search="true" id="cboitemsubcategory" title="" onchange="">
+                                            <select class="selectpicker" data-live-search="true" id="cboitemsubcategory" data-size="6" title="" onchange="">
                                     <option value="0"> @Localizer["SelectItemSubCategory"] </option>
                                 </select>
 
@@ -169,7 +172,7 @@
                 <div class="row ">
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label>
+                                        <label class="lbl-right">
                                 @Localizer["BudgetAmount"]
                             </label>
                             <input type="number" min="0" class="form-control currencyFormat" id="txtBudgetAmount" />
@@ -178,7 +181,7 @@
 
                     <div class="col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
-                            <label>
+                                        <label class="lbl-right">
                                 @Localizer["CommittmentAmount"]
                             </label>
                             <input type="number" disabled="disabled" class="form-control" id="txtCommittmentAmount" />
@@ -186,27 +189,62 @@
                     </div>
                 </div>
                 <div class="row ">
-                    <div class="col-lg-12" style="margin-bottom: 15px;">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
                         <label class="mdl-checkbox mdl-js-checkbox" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus"
                                    class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                         </label>
                     </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" style="pointer-events:none">
+                        <div class="form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkFAStatus">
+                                <input type="checkbox" id="chkFAStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["FAStatus"] </span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
 
                 <hr />
-                <div class="mdl-card__actions text-center vertical-center pad0">
+                <div class="mdl-card__actions text-center vertical-center border-top pb-0">
 
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnIGCAdd" onclick="fnItemGroupCateSubCateMapping()"><i class="fa fa-plus"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect me-2" id="btnIGCAdd" onclick="fnItemGroupCateSubCateMapping()"><i class="fa fa-plus"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnIGCCancel" onclick="fnClosetheForm()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
 
                 </div>
             </div>
         </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="card treeaction">
+                    <div class="card-header">
+                        <h6 class="m-0 p-0 c-secondary"> Action</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                                <i class="fas fa-expand"></i> @Localizer["ExpandAll"]
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                                <i class="fas fa-compress"></i> @Localizer["CollapseAll"]
+                            </button>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </div>
-
 
 
 
