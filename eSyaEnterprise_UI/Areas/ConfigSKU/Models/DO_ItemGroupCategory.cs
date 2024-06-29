@@ -8,6 +8,7 @@
         public int ItemSubCategory { get; set; }
         public decimal BudgetAmount { get; set; }
         public decimal CommittmentAmount { get; set; }
+        public bool Fastatus { get; set; }
         public bool? ActiveStatus { get; set; }
         public string FormID { get; set; }
         public int UserID { get; set; }
