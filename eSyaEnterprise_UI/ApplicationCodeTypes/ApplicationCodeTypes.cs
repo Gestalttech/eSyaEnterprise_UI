@@ -38,9 +38,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Token System
-        
-        //public const int FloorId = 5;
-        public const int FloorId = 301;
+
+        public const int FloorId = 5;
+        //public const int FloorId = 301;
 
         #endregion
 
@@ -102,7 +102,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region Interface Email
-        public const int EMailType = 62;
+        public const int EMailType = 300;
         #endregion
 
     }
