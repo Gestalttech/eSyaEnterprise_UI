@@ -54,6 +54,7 @@ using eSyaEnterprise_UI.Areas.ConfigSpecialty.Data;
 using eSyaEnterprise_UI.Areas.ServiceProvider.Data;
 //using eSyaEnterprise_UI.Localization;
 using eSyaEnterprise_UI.Areas.ManagePharma.Data;
+using eSyaEnterprise_UI.Areas.ConfigFAsset.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -365,6 +366,15 @@ builder.Services.AddHttpClient<IeSyaServiceProviderAPIServices, eSyaServiceProvi
 builder.Services.AddHttpClient<IeSyaPharmaAPIServices, eSyaPharmaAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaPharmacy_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+
+});
+builder.Services.AddHttpClient<IeSyFixedAssetAPIServices, eSyFixedAssetAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaFixedAsset_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));

@@ -68,6 +68,8 @@ function fnLoadItemGroupCategoryTree() {
                         $("#btnIGCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnIGCAdd").show();
                         $("#dvItemGroupCate").show();
+                        $('#chkFAStatus').parent().removeClass("is-checked");
+
                     });
                 }
                 // If Link node is selected
@@ -251,7 +253,7 @@ function fnItemGroupCateSubCateMapping() {
     }
 }
 function fnGetMappingRecord() {
-    debugger;
+   
     $("#btnIGCAdd").attr("disabled", false);
     $.ajax({
         url: getBaseURL() + '/Grouping/GetMappingRecord',

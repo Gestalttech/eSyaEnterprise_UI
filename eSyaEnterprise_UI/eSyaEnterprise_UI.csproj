@@ -276,6 +276,10 @@
     
     <Compile Include="Areas\ConfigFAsset\Controllers\AssetGroupController.cs" />
     
+    <Compile Include="Areas\ConfigFAsset\Data\eSyFixedAssetAPIServices.cs" />
+    
+    <Compile Include="Areas\ConfigFAsset\Data\IeSyFixedAssetAPIServices.cs" />
+    
     <Compile Include="Areas\ConfigFAsset\Models\DO_ConfigFixedAssetGroup.cs" />
     
     <Compile Include="Areas\ConfigFAsset\Models\DO_ReturnParameter.cs" />
@@ -319,7 +323,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\ConfigFAsset\Data\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
