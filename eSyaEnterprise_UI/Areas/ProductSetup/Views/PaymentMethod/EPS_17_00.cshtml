@@ -84,8 +84,11 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="cboPaymentMethod">@Localizer["PaymentMethod"] </label>
-                                <select class="selectpicker" data-live-search="true" id="cboPaymentMethod" data-container="body" title="Choose Payment Method" data-size="8" asp-items="@ViewBag.PaymentMethod"></select>
-
+                                <select class="selectpicker" data-live-search="true" id="cboPaymentMethod" data-container="body" title="Choose Payment Method">
+                                    <option value="0">@Localizer["Select"]</option>
+                                    <option value="B">@Localizer["Bank"]</option>
+                                    <option value="C">@Localizer["Cash"]</option>
+                                </select>
                             </div>
                         </div>
                     </div>

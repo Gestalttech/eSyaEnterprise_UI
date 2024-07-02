@@ -110,7 +110,7 @@ function fnAddPaymentMethod() {
     $("#chkActiveStatus").prop('disabled', true);
     $("#btnSavePaymentMethod").show();
     $("#cboInstrumentType").val('').selectpicker('refresh');
-    $("#cboPaymentMethod").val('').selectpicker('refresh');
+    $("#cboPaymentMethod").val('0').selectpicker('refresh');
     $("select").next().attr('disabled', false);
 }
 function fnEditPaymentMethod(e, actiontype) {
