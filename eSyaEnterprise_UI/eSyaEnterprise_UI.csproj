@@ -323,7 +323,6 @@
   <ItemGroup>
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
-    <Folder Include="Areas\ConfigFin\Models\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
@@ -335,7 +334,6 @@
     <Folder Include="Extension\" />
     <Folder Include="ResourcesExtention\" />
     <Folder Include="wwwroot\js\Common\tinymce\" />
-    <Folder Include="wwwroot\js\ConfigFinance\" />
     <Folder Include="wwwroot\js\Vendor\" />
     <Folder Include="wwwroot\UIResources\" />
   </ItemGroup>
