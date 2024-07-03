@@ -38,7 +38,7 @@ function fnCreateBookTypeTree() {
                 $('#Edit').remove();
                 $('#Add').remove();
                 $("#divBookTypes").hide();
-                debugger;
+               
                 var parentNode = $("#jstBookTypes").jstree(true).get_parent(data.node.id);
                 if (parentNode == "#") {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
@@ -52,6 +52,10 @@ function fnCreateBookTypeTree() {
                         $("#btnSaveBookTypes").show();
 
                         $("#chkActiveStatus").parent().addClass("is-checked");
+                        $("#chkActiveStatus").attr("disabled", true);
+                        $("#chkPaymentMethodLinkReq").attr("disabled", false);
+                        $("#txtBookType").attr("disabled", false); 
+                        $("#txtBookTypeDescription").attr("disabled", false); 
                     });
                 }
                 else if (parentNode == "BT") {
@@ -72,6 +76,10 @@ function fnCreateBookTypeTree() {
                      
                         BookTypeID = data.node.id;
                         fnFillBookTypeDetail(BookTypeID);
+                        $("#txtBookType").attr("disabled", true); 
+                        $("#chkActiveStatus").attr("disabled", true);
+                        $("#chkPaymentMethodLinkReq").attr("disabled", true);
+                        $("#txtBookTypeDescription").attr("disabled", true); 
                     });
 
                     $('#Edit').on('click', function () {
@@ -89,6 +97,10 @@ function fnCreateBookTypeTree() {
                          
                         BookTypeID = data.node.id;
                         fnFillBookTypeDetail(BookTypeID);
+                        $("#txtBookType").attr("disabled", true); 
+                        $("#chkActiveStatus").attr("disabled", true);
+                        $("#chkPaymentMethodLinkReq").attr("disabled", false);
+                        $("#txtBookTypeDescription").attr("disabled", false); 
                     });
                 }
 
@@ -151,9 +163,9 @@ function fnAddOrUpdateBookType() {
             },
             success: function (response) {
                 if (response.Status == true) {
-                     
+                    fnAlert("s", "", response.StatusCode, response.Message);  
                     $("#jstServiceTypeTree").jstree("destroy");
-                    fnLoadSpecialtyLink();
+                    fnLoadBookType();
 
                 }
                 else {
@@ -180,6 +192,7 @@ function fnCloseTheBookType() {
     $("#divBookTypes").hide();
 }
 function fnClearFields() {
+    $("#txtBookType").val('');
     $("#txtBookTypeDescription").val('');
     $("#chkActiveStatus").parent().addClass("is-checked");
     $("#chkPaymentMethodLinkReq").parent().removeClass("is-checked");
