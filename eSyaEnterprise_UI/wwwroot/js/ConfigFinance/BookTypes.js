@@ -1,9 +1,10 @@
 ﻿var formID;
 var prevSelectedID;
+var _IsInser = false;
 $(function () {
-    fnLoadSpecialtyLink();
+    fnLoadBookType();
 })
-function fnLoadSpecialtyLink() {
+function fnLoadBookType() {
     $("#divBookTypes").hide();
     $('#jstBookTypes').jstree('destroy');
     fnCreateBookTypeTree();
@@ -12,8 +13,10 @@ function fnLoadSpecialtyLink() {
 function fnCreateBookTypeTree() {
 
     $.ajax({
-       // url: getBaseURL() + '/ConfigSpecialty/Business/GetSpecialtyLinkTree?businessKey=' + $('#cboBusinessKey').val(),
-       url: '',
+        url: getBaseURL() + '/BookType/GetBookTypes',
+        type: 'GET',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
         success: function (result) {
 
             $('#jstBookTypes').jstree({
@@ -35,60 +38,60 @@ function fnCreateBookTypeTree() {
                 $('#Edit').remove();
                 $('#Add').remove();
                 $("#divBookTypes").hide();
+                debugger;
+                var parentNode = $("#jstBookTypes").jstree(true).get_parent(data.node.id);
+                if (parentNode == "#") {
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
+                    $('#Add').on('click', function () {
+                        fnClearFields();
+                        _IsInser = true;
+                        $(".mdl-card__title-text").text(localization.AddBookTypes);
+                        $("#btnSaveBookTypes").html('<i class="fa fa-save"></i> ' + localization.Save);
+                        $("#btnSaveBookTypes").attr("disabled", _userFormRole.IsInsert === false);
+                        $("#divBookTypes").show();
+                        $("#btnSaveBookTypes").show();
 
-                if (data.node.parent === "#") {
-                    if (data.node.id.startsWith("N")) {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
-                        $('#Add').on('click', function () {
-                            fnClearFields();
-                          
-                            $(".mdl-card__title-text").text(localization.AddBookTypes);
-                            $("#btnSaveBookTypes").html('<i class="fa fa-save"></i> ' + localization.Save);
-                            $("#btnSaveBookTypes").attr("disabled", _userFormRole.IsInsert === false);
-                            $("#divBookTypes").show();
-                            $("#btnSaveBookTypes").show();
-                      
-                            $("#chkActiveStatus").parent().addClass("is-checked");
-                        });
-                    }
-                    else {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>');
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>');
-
-                        $('#View').on('click', function () {
-                            if (_userFormRole.IsView === false) {
-                                $('#divBookTypes').hide();
-                                fnAlert("w", "EAC_01_00", "UIC03", errorMsg.vieweauth_E3);
-                                return;
-                            }
-                            fnSpecialtyParameter(data.node.id.substring(1, 10));
-                            $(".mdl-card__title-text").text(localization.ViewBookTypes);
-                            $("#btnSaveBookTypes").hide();
-                            $("#divBookTypes").show();
-                            if (rowData.ActiveStatus == 'true')
-                                $("#chkActiveStatus").parent().addClass("is-checked");
-                            else
-                                $("#chkActiveStatus").parent().removeClass("is-checked");
-                        });
-
-                        $('#Edit').on('click', function () {
-                            if (_userFormRole.IsEdit === false) {
-                                $('#divBookTypes').hide();
-                                fnAlert("w", "EAC_01_00", "UIC02", errorMsg.editauth_E2);
-                                return;
-                            }
-                            $(".mdl-card__title-text").text(localization.EditBookTypes);
-                            $("#btnSaveBookTypes").html('<i class="fa fa-sync"></i> ' + localization.Update);
-                            $("#btnSaveBookTypes").attr("disabled", _userFormRole.IsEdit === false);
-                            $("#divBookTypes").show();
-                            $("#btnSaveBookTypes").show();
-                            if (rowData.ActiveStatus == 'true')
-                                $("#chkActiveStatus").parent().addClass("is-checked");
-                            else
-                                $("#chkActiveStatus").parent().removeClass("is-checked");
-                        });
-                    }
+                        $("#chkActiveStatus").parent().addClass("is-checked");
+                    });
                 }
+                else if (parentNode == "BT") {
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>');
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>');
+
+                    $('#View').on('click', function () {
+                        if (_userFormRole.IsView === false) {
+                            $('#divBookTypes').hide();
+                            fnAlert("w", "EAC_01_00", "UIC03", errorMsg.vieweauth_E3);
+                            return;
+                        }
+                        _IsInser = false;
+
+                        $(".mdl-card__title-text").text(localization.ViewBookTypes);
+                        $("#btnSaveBookTypes").hide();
+                        $("#divBookTypes").show();
+                     
+                        BookTypeID = data.node.id;
+                        fnFillBookTypeDetail(BookTypeID);
+                    });
+
+                    $('#Edit').on('click', function () {
+                        if (_userFormRole.IsEdit === false) {
+                            $('#divBookTypes').hide();
+                            fnAlert("w", "EAC_01_00", "UIC02", errorMsg.editauth_E2);
+                            return;
+                        }
+                        _IsInser = false;
+                        $(".mdl-card__title-text").text(localization.EditBookTypes);
+                        $("#btnSaveBookTypes").html('<i class="fa fa-sync"></i> ' + localization.Update);
+                        $("#btnSaveBookTypes").attr("disabled", _userFormRole.IsEdit === false);
+                        $("#divBookTypes").show();
+                        $("#btnSaveBookTypes").show();
+                         
+                        BookTypeID = data.node.id;
+                        fnFillBookTypeDetail(BookTypeID);
+                    });
+                }
+
                 else {
                     $("#divBookTypes").hide();
                     fnClearFields();
@@ -98,6 +101,73 @@ function fnCreateBookTypeTree() {
     });
 }
 
+function fnFillBookTypeDetail(BookTypeID) {
+    $.ajax({
+        url: getBaseURL() + '/BookType/GetBooksbyType',
+        data: {
+            booktype: BookTypeID
+        },
+        success: function (result) {
+            $("#txtBookType").val(result.BookType);
+            $("#txtBookTypeDescription").val(result.BookTypeDesc);
+
+            if (result.PaymentMethodLinkReq == true)
+                $('#chkPaymentMethodLinkReq').parent().addClass("is-checked");
+            else
+                $('#chkPaymentMethodLinkReq').parent().removeClass("is-checked");
+
+
+            if (result.ActiveStatus == true)
+                $('#chkSTActiveStatus').parent().addClass("is-checked");
+            else
+                $('#chkSTActiveStatus').parent().removeClass("is-checked");
+        }
+    });
+}
+function fnAddOrUpdateBookType() {
+    var txtBookType = $("#txtBookType").val();
+    var txtBookTypeDescription = $("#txtBookTypeDescription").val();
+     
+    if (txtBookType == "" || txtBookType == null || txtBookType == undefined) {
+        fnAlert("w", "EAC_01_00", "UI0345", errorMsg.BookType_E3);
+        return false;
+    }
+    else if (txtBookTypeDescription == "" || txtBookTypeDescription == null || txtBookTypeDescription == undefined) {
+        fnAlert("w", "EAC_01_00", "UI0346", errorMsg.BookTypeDescription_E4);
+        return false;
+    }
+    else {
+        $("#btnSaveBookTypes").attr("disabled", true);
+        $.ajax({
+            url: getBaseURL() + '/BookType/InsertOrUpdateIntoBookType',
+            type: 'POST',
+            datatype: 'json',
+            data: {
+                BookType: $("#txtBookType").val()  ,
+                BookTypeDesc: $("#txtBookTypeDescription").val(),
+                PaymentMethodLinkReq: $("#chkPaymentMethodLinkReq").parent().hasClass("is-checked"),
+                IsInser: _IsInser,
+                ActiveStatus: $("#chkSTActiveStatus").parent().hasClass("is-checked")
+            },
+            success: function (response) {
+                if (response.Status == true) {
+                     
+                    $("#jstServiceTypeTree").jstree("destroy");
+                    fnLoadSpecialtyLink();
+
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+                $("#btnSaveBookTypes").attr("disabled", false);
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+                $("#btnSaveBookTypes").attr("disabled", false);
+            }
+        });
+    }
+} 
 function fnExpandAll() {
     $('#jstBookTypes').jstree('open_all');
 }
