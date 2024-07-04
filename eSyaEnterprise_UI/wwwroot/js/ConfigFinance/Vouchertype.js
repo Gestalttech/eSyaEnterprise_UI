@@ -3,8 +3,6 @@ var prevSelectedID;
 var _IsInser = false;
 $(function () {
     fnLoadVoucherType();
-    fnGridVoucherType();
-    fnGridLoadInstrumentType()
     $.contextMenu({
         selector: "#btnVoucherType",
         trigger: 'left',
@@ -29,7 +27,7 @@ function fnLoadVoucherType() {
 function fnCreateBookTypeTree() {
 
     $.ajax({
-        url: getBaseURL() + '/BookType/GetBookTypes',
+        url: getBaseURL() + '/VoucherType/GetActiveBookTypes',
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -54,7 +52,7 @@ function fnCreateBookTypeTree() {
                 $('#Edit').remove();
                 $('#Add').remove();
                 $("#divVoucherTypes").hide();
-                debugger;
+               
                 var parentNode = $("#jstVoucherTypes").jstree(true).get_parent(data.node.id);
                 if (parentNode == "#") {
                    
@@ -87,7 +85,7 @@ function fnCreateBookTypeTree() {
                         $("#divVoucherTypes").show();
 
                         BookTypeID = data.node.id;
-                        fnFillBookTypeDetail(BookTypeID);
+                        fnGridVoucherType(BookTypeID);
                     });
 
                     $('#Edit').on('click', function () {
@@ -104,7 +102,7 @@ function fnCreateBookTypeTree() {
                         $("#btnSaveBookTypes").show();
 
                         BookTypeID = data.node.id;
-                        fnFillBookTypeDetail(BookTypeID);
+                        fnGridVoucherType(BookTypeID);
                     });
                 }
 
@@ -118,26 +116,25 @@ function fnCreateBookTypeTree() {
 }
 
 
-function fnGridVoucherType() {
+function fnGridVoucherType(BookTypeID) {
     $("#jqgVoucherType").GridUnload();
 
     $("#jqgVoucherType").jqGrid({
-        //url: getBaseURL() + '/Actions/GetAllActions',
-        url:'',
+        url: getBaseURL() + '/VoucherType/GetVoucherTypesbyBookType?booktype=' + BookTypeID,
         datatype: 'json',
-        mtype: 'POST',
+        mtype: 'GET',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.VoucherType, localization.VoucherTypeDesc, localization.Active, localization.Actions],
         colModel: [
             { name: "VoucherType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "VoucherTypeDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "VoucherTypeDesc", width: 280, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline" id="btnActions"><i class="fa fa-ellipsis-v"></i></button>'
+                    return '<button class="mr-1 btn btn-outline" id="btnVoucherType"><i class="fa fa-ellipsis-v"></i></button>'
                 }
             },
         ],
@@ -157,7 +154,7 @@ function fnGridVoucherType() {
         shrinkToFit: true,
         forceFit: true, caption: localization.Actions,
         loadComplete: function (data) {
-            SetGridControlByAction();
+            //SetGridControlByAction();
             fnJqgridSmallScreen("jqgVoucherType");
         },
         onSelectRow: function (rowid, status, e) {},
@@ -176,30 +173,76 @@ function fnGridVoucherType() {
 }
 
 function fnAddVoucherType() {
-
+    $("#PopupVoucherType").modal('show');
+    $("#txtVoucherType").attr('disabled', false);
+    fnGridLoadInstrumentType();
+    fnSHInstrumentType();
+    $("#chkActiveStatus").prop('disabled', true);
+    $("#chkActiveStatus").parent().addClass("is-checked");
+    fnClearFields();
 }
 
-function fnEditVoucherType() {
-
+function fnEditVoucherType(actiontype) {
+    fnSHInstrumentType();
+    var rowid = $("#jqgVoucherType").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgVoucherType').jqGrid('getRowData', rowid);
+    $("#txtVoucherType").val(rowData.VoucherType).attr('disabled', true);
+    $("#txtVoucherTypeDescription").val(rowData.VoucherTypeDesc);
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkActiveStatus").parent().addClass("is-checked");
+        }
+    else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
+    if (actiontype.trim() == "edit") {
+        $("input,textarea").attr('readonly', false);
+        $("select").next().attr('disabled', false);
+        $("#btnSaveVoucherType").show();
+    }
+    if (actiontype.trim() == "view") {
+        $("input,textarea").attr('readonly', true);
+        $("select").next().attr('disabled', true);
+        $("#btnSaveVoucherType").hide();
+    }
+    $("#PopupVoucherType").modal('show');
+    fnGridLoadInstrumentType();
 }
 function fnGridRefreshVoucherType() {
 
 }
+function fnSHInstrumentType() {
+
+    $.ajax({
+        url: getBaseURL() + '/VoucherType/ChkBookTypePaymentMethodLinkRequried?booktype=' + BookTypeID,
+        type: 'GET',
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            if (result == true) {
+                $("#divInstrumentType").show();
+            }
+            else {
+                $("#divInstrumentType").hide();
+            }
 
 
+        }
+    });
+}
+ 
+ 
 function fnGridLoadInstrumentType() {
     $("#jqgInstrumentType").jqGrid('GridUnload');
     $("#jqgInstrumentType").jqGrid({
-        //url: getBaseURL() + '/Admin/License/GetStatutoryInformation?BusinessKey=' + $("#cboBusinessKey").val() + '&isdCode=' + ISDCode,
-        url:'',
+        url: getBaseURL() + '/VoucherType/GetBookTypePaymentMethods?booktype=' + BookTypeID + '&vouchertype=' + $("#txtVoucherType").val(),
         datatype: 'json',
-        mtype: 'POST',
+        mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.InstrumentType, localization.InstrumentTypeDescription,localization.Active],
         colModel: [
             { name: "InstrumentType", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
-            { name: "InstrumentTypeDescription", width: 250, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "ActiveStatus", editable: true, width: 50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "InstrumentTypeDesc", width: 250, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         rowNum: 10,
         rownumWidth: 55,
@@ -231,6 +274,78 @@ function fnGridLoadInstrumentType() {
 }
 
 
-function fnClearFields() {
+function fnSaveVoucherType() {
+ 
+   
+    if (BookTypeID === '0' || BookTypeID === "0" || IsStringNullorEmpty(BookTypeID)) {
+        fnAlert("w", "ECB_02_00", "UI0052", "Please select Book Type");
+        return;
+    }
 
+    if (IsStringNullorEmpty($("#txtVoucherType").val())) {
+        fnAlert("w", "ECB_02_00", "UI0206","Pleasse Enyer Voucher Type");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtVoucherTypeDescription").val())) {
+        fnAlert("w", "ECB_02_00", "UI0053", "Please Enter Voucher Description");
+        return;
+    }
+   
+    objins = {
+        BookType: BookTypeID,
+        VoucherType: $("#txtVoucherType").val(),
+        VoucherTypeDesc: $("#txtVoucherTypeDescription").val(),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+        InstrumentType:0
+    };
+
+    //
+    var Instruments = [];
+    var jqgInstruments = jQuery("#jqgInstrumentType").jqGrid('getRowData');
+
+    for (var i = 0; i < jqgInstruments.length; ++i) {
+       
+        Instruments.push({
+            InstrumentType:jqgInstruments[i]["InstrumentType"],
+            ActiveStatus:jqgInstruments[i]["ActiveStatus"]
+         });
+      
+    }
+    objins.lstVoucherType = Instruments;
+   
+    $("#btnSaveVoucherType").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/VoucherType/InsertOrUpdateVoucherType',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: objins },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#PopupVoucherType").modal('hide');
+                fnClearFields();
+                fnGridVoucherType(BookTypeID);
+                $("#btnSaveVoucherType").attr("disabled", false);
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveVoucherType").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveVoucherType").attr("disabled", false);
+        }
+    });
 }
+
+function fnClearFields() {
+    $("#txtVoucherType").val("").attr('disabled', false);
+    $("#txtVoucherTypeDescription").val("");
+    $("input,textarea").attr('readonly', false);
+    $("select").next().attr('disabled', false);
+    $("#btnSaveVoucherType").show();
+    $("#btnSaveVoucherType").attr("disabled", false);
+}
+

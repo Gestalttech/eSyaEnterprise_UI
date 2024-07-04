@@ -14,7 +14,9 @@
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
     var localization = {
+        Edit: '@Localizer["Edit"]',
         Save: '@Localizer["Save"]',
+        View: '@Localizer["View"]',
         Update: '@Localizer["Update"]',
         Active: '@Localizer["Active"]',
         Select: '@Localizer["Select"]',
@@ -69,8 +71,7 @@
                             
 
                                 <div class="mdl-card__actions text-center vertical-center border-top pb-0">
-                                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect me-2" id="btnSaveBookTypes" onclick="fnAddOrUpdateVoucherType()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
-                                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelBookTypes" onclick="fnLoadBookType()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnCancelBookTypes" onclick="fnLoadVoucherType()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                                 </div>
                             </div>
                         </div>
@@ -99,9 +100,9 @@
         </div>
     </div>
 
- </div>
+ 
 
-<div class="modal fullscreen fade in" id="PopupVoucherType" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fade in" id="PopupVoucherType" data-bs-keyboard="false" data-bs-backdrop="static">
         <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
             <div class="modal-content ">
                 <div class="modal-header popupHeader">
@@ -131,7 +132,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12  shadowLite p-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12" id="divInstrumentType" style="display:none;">
                             <table id="jqgInstrumentType"></table>
                             <div id="jqpInstrumentType"></div>
                         </div>
@@ -142,10 +143,10 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-lg-12">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveDrugComposition_p" onclick="fnSaveDrugComposition('Grid')">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveVoucherType" onclick="fnSaveVoucherType()">
                                 <i class="fa fa-save"></i> @Localizer["Save"]
                             </button>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelDrugComposition_p" onclick="fnCancelDrugCompositionPopup()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" id="btnCancelVoucherType" data-bs-dismiss="modal" onclick="fnCancelVoucherType()"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
 
 
                         </div>

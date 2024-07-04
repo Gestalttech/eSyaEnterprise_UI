@@ -11,5 +11,8 @@
         public int UserID { get; set; }
         public string TerminalID { get; set; }
         public string? InstrumentTypeDesc { get; set; }
+        public List<KeyValuePair<int, bool>>? lstInstruments { get; set; }
+        public List<DO_VoucherType>? lstVoucherType { get; set; }
+
     }
 }

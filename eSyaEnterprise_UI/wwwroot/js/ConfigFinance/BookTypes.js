@@ -130,9 +130,9 @@ function fnFillBookTypeDetail(BookTypeID) {
 
 
             if (result.ActiveStatus == true)
-                $('#chkSTActiveStatus').parent().addClass("is-checked");
+                $('#chkActiveStatus').parent().addClass("is-checked");
             else
-                $('#chkSTActiveStatus').parent().removeClass("is-checked");
+                $('#chkActiveStatus').parent().removeClass("is-checked");
         }
     });
 }
@@ -159,7 +159,7 @@ function fnAddOrUpdateBookType() {
                 BookTypeDesc: $("#txtBookTypeDescription").val(),
                 PaymentMethodLinkReq: $("#chkPaymentMethodLinkReq").parent().hasClass("is-checked"),
                 IsInser: _IsInser,
-                ActiveStatus: $("#chkSTActiveStatus").parent().hasClass("is-checked")
+                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
             },
             success: function (response) {
                 if (response.Status == true) {
