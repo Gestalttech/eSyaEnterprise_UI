@@ -175,7 +175,7 @@ function fnGridVoucherType(BookTypeID) {
 function fnAddVoucherType() {
     $("#PopupVoucherType").modal('show');
     $("#txtVoucherType").attr('disabled', false);
-    fnGridLoadInstrumentType();
+    
     fnSHInstrumentType();
     $("#chkActiveStatus").prop('disabled', true);
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -188,7 +188,7 @@ function fnEditVoucherType(actiontype) {
     var rowData = $('#jqgVoucherType').jqGrid('getRowData', rowid);
     $("#txtVoucherType").val(rowData.VoucherType).attr('disabled', true);
     $("#txtVoucherTypeDescription").val(rowData.VoucherTypeDesc);
-    if (rowData.ActiveStatus == 'true') {
+    if (rowData.ActiveStatus == true) {
         $("#chkActiveStatus").parent().addClass("is-checked");
         }
     else {
@@ -208,7 +208,7 @@ function fnEditVoucherType(actiontype) {
     fnGridLoadInstrumentType();
 }
 function fnGridRefreshVoucherType() {
-
+    $("#jqgVoucherType").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 function fnSHInstrumentType() {
 
@@ -219,6 +219,7 @@ function fnSHInstrumentType() {
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
             if (result == true) {
+                fnGridLoadInstrumentType();
                 $("#divInstrumentType").show();
             }
             else {
@@ -230,7 +231,9 @@ function fnSHInstrumentType() {
     });
 }
  
- 
+$("#PopupVoucherType").on('hidden.bs.modal', function () {
+    fnGridRefreshVoucherType();
+});
 function fnGridLoadInstrumentType() {
     $("#jqgInstrumentType").jqGrid('GridUnload');
     $("#jqgInstrumentType").jqGrid({
@@ -278,16 +281,16 @@ function fnSaveVoucherType() {
  
    
     if (BookTypeID === '0' || BookTypeID === "0" || IsStringNullorEmpty(BookTypeID)) {
-        fnAlert("w", "ECB_02_00", "UI0052", "Please select Book Type");
+        fnAlert("w", "EAC_02_00", "UI0345", errorMsg.BookType_E3);
         return;
     }
 
     if (IsStringNullorEmpty($("#txtVoucherType").val())) {
-        fnAlert("w", "ECB_02_00", "UI0206","Pleasse Enyer Voucher Type");
+        fnAlert("w", "EAC_02_00", "UI0347", errorMsg.VoucherType_E5);
         return;
     }
     if (IsStringNullorEmpty($("#txtVoucherTypeDescription").val())) {
-        fnAlert("w", "ECB_02_00", "UI0053", "Please Enter Voucher Description");
+        fnAlert("w", "EAC_02_00", "UI0348", errorMsg.VoucherTypeDescription_E4);
         return;
     }
    
