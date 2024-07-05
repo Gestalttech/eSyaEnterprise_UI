@@ -352,3 +352,12 @@ function fnClearFields() {
     $("#btnSaveVoucherType").attr("disabled", false);
 }
 
+function fnExpandAll() {
+    $('#jstVoucherTypes').jstree('open_all');
+}
+
+function fnCollapseAll() {
+    fnClearFields();
+    $("#divVoucherTypes").hide();
+    $('#jstVoucherTypes').jstree('close_all');
+}
