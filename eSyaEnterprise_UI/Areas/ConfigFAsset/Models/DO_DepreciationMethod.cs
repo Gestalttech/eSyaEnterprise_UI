@@ -11,8 +11,8 @@
         public int UsefulYears { get; set; }
         public DateTime? EffectiveTill { get; set; }
         public bool ActiveStatus { get; set; }
-        public int AssetGroupDesc { get; set; }
-        public int AssetSubGroupDesc { get; set; }
+        public string? AssetGroupDesc { get; set; }
+        public string? AssetSubGroupDesc { get; set; }
         public string? DepreciationMethodDesc { get; set; }
         public string FormID { get; set; }
         public int UserID { get; set; }
