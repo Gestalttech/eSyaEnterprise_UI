@@ -105,5 +105,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int EMailType = 300;
         #endregion
 
+        #region ConfigFAsset
+        public const int DepreciationMethod = 270;
+        #endregion
+
     }
 }
