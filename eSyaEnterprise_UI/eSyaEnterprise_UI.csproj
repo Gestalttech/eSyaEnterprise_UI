@@ -282,6 +282,8 @@
     
     <Compile Include="Areas\ConfigFAsset\Models\DO_ConfigFixedAssetGroup.cs" />
     
+    <Compile Include="Areas\ConfigFAsset\Models\DO_DepreciationMethod.cs" />
+    
     <Compile Include="Areas\ConfigFAsset\Models\DO_ReturnParameter.cs" />
     
     <Compile Include="Areas\ConfigProduct\Controllers\ServicesController.cs" />
