@@ -78,7 +78,7 @@ function fnLoadServiceClassTree() {
                 }
                 // If Service Class node is selected
                 else {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i> </span>')
+                    /*$('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i> </span>')*/
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:5px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i> </span>')
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:5px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i> </span>')
                     $('#Add').on('click', function () {
