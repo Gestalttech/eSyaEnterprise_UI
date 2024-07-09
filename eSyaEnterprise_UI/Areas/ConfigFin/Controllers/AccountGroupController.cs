@@ -133,5 +133,140 @@ namespace eSyaEnterprise_UI.Areas.ConfigFin.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> UpdateAccountGroup(DO_AccountGroup obj)
+        {
+            try
+            {
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
+
+                var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("AccountGroup/UpdateAccountGroup", obj);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateAccountGroup:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateAccountGroup:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:UpdateAccountGroup:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> DeleteAccountGroup(string groupcode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("AccountGroup/DeleteAccountGroup?groupcode=" + groupcode);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var data = serviceResponse.Data;
+                        return Json(data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteAccountGroup:For groupcode {0}", groupcode);
+                        return Json(new { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteAccountGroup:For groupcode {0}", groupcode);
+                    return Json(new { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:DeleteAccountGroup:For groupcode {0}", groupcode);
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAccountGroupsbyGroupCode(string groupcode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.GetAsync<DO_AccountGroup>("AccountGroup/GetAccountGroupsbyGroupCode?groupcode=" + groupcode);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var data = serviceResponse.Data;
+                        return Json(data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetAccountGroupsbyGroupCode:For groupcode {0}", groupcode);
+                        return Json(new { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetAccountGroupsbyGroupCode:For groupcode {0}", groupcode);
+                    return Json(new { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetAccountGroupsbyGroupCode:For groupcode {0}", groupcode);
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> AccountGroupMoveUpDown(string GroupCode, string ParentID, short GroupIndex, bool moveUp)
+        {
+            try
+            {
+                var parameter = "?GroupCode=" + GroupCode + "&ParentID=" + ParentID + "&GroupIndex=" + GroupIndex + "&moveUp=" + moveUp;
+                var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("AccountGroup/AccountGroupMoveUpDown" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var data = serviceResponse.Data;
+                        return Json(data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:AccountGroupMoveUpDown:For GroupCode {0}", GroupCode);
+                        return Json(new { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AccountGroupMoveUpDown:For GroupCode {0}", GroupCode);
+                    return Json(new { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:AccountGroupMoveUpDown:For GroupCode {0}", GroupCode);
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
     }
 }
