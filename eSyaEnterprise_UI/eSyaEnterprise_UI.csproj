@@ -350,7 +350,7 @@
     <Content Include="Areas\ConfigProduct\Views\Services\ECP_03_00.cshtml" />
 	<Content Include="Areas\InterfaceSMS\Views\Connect\EIF_01_00.cshtml" />
     <Content Include="Areas\ConfigFAsset\Views\AssetGroup\EFC_01_00.cshtml" />
-    <None Include="Areas\ConfigFAsset\Views\Depreciation\EFC_03_00.cshtml" />
+    <Content Include="Areas\ConfigFAsset\Views\Depreciation\EFC_03_00.cshtml" />
     <None Include="Views\Shared\Components\eSyaBusinessLocation\_esyaBusinessLocation.cshtml" />
     <None Include="Views\Shared\Components\eSyaParameter\_eSyaParameter.cshtml" />
     <None Include="Views\Shared\Components\IsdCountryInput\_IsdCountryInput.cshtml" />
