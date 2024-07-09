@@ -282,6 +282,8 @@
     
     <Compile Include="Areas\ConfigFAsset\Data\IeSyFixedAssetAPIServices.cs" />
     
+    <Compile Include="Areas\ConfigFAsset\Models\DO_ApplicationCodes.cs" />
+    
     <Compile Include="Areas\ConfigFAsset\Models\DO_ConfigFixedAssetGroup.cs" />
     
     <Compile Include="Areas\ConfigFAsset\Models\DO_DepreciationMethod.cs" />

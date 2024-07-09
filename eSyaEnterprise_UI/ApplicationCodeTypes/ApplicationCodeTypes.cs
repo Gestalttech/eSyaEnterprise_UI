@@ -106,7 +106,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region ConfigFAsset
-        public const int DepreciationMethod = 270;
+        public const int DepreciationMethod = 411;
+
         #endregion
 
     }

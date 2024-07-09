@@ -1,8 +1,8 @@
 ﻿$(function () {
-    $("#txtEffectiveFRMDate").datepicker({
+    $("#txtEffectiveFRM").datepicker({
         dateFormat: _cnfDateFormat,
     });
-    $("#txtEffectiveTillDate").datepicker({
+    $("#txtEffectiveTill").datepicker({
         minDate: 0,
         dateFormat: _cnfDateFormat,
     });
@@ -23,19 +23,20 @@
 function fnLoadGridDepreciationMethod() {
     $("#jqgDepreciationMethod").jqGrid('GridUnload');
     $("#jqgDepreciationMethod").jqGrid({
-        url: getBaseURL() + '/Depreciation/?BusinessId=' + $("#cboISDCode").val(),
+        url: getBaseURL() + '/Depreciation/GetDepreciationMethodbyISDCode?ISDCode=' + $("#cboISDCode").val(),
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.Isdcode, localization.AssetGroup, localization.AssetSubGroup, localization.DepreciationMethod, localization.DepreciationMethodDesc, localization.DepreciationPercentage, localization.UsefulYears, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
+        colNames: [localization.AssetGroup,localization.AssetGroup, localization.AssetSubGroup,localization.AssetSubGroup, localization.DepreciationMethod, localization.DepreciationMethod, localization.DepreciationPercentage, localization.UsefulYears, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
         colModel: [
-            { name: "ISDCode", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "AssetGroup", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "AssetSubGroup", width: 170, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "AssetGroup", width: 170, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "AssetGroupDesc", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "AssetSubGroup", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "AssetSubGroupDesc", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
            
-            { name: "DepreciationMethod", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "DepreciationMethodDesc", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "DepreciationMethod", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "DepreciationMethodDesc", width: 200, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "DepreciationPercentage", width: 40, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "UsefulYears", width: 40, editable: false, hidden: false, align: 'left', resizable: true },
             {
@@ -85,9 +86,44 @@ function fnLoadGridDepreciationMethod() {
     fnAddGridSerialNoHeading();
 }
 
+
+function fnLoadAssetSubGroup() {
+    var assetgroup = $("#cboAssetGroup").val();
+    $("#cboAssetSubGroup").empty();
+    $.ajax({
+        url: getBaseURL() + '/Depreciation/GetActiveFixedAssetSubGroupbyGroupId?groupId=' + assetgroup,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboAssetSubGroup").empty();
+
+                $("#cboAssetSubGroup").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboAssetSubGroup").append($("<option></option>").val(response[i]["AssetSubGroup"]).html(response[i]["AssetSubGroupDesc"]));
+                }
+                $('#cboAssetSubGroup').selectpicker('refresh');
+            }
+            else {
+                $("#cboAssetSubGroup").empty();
+                $("#cboAssetSubGroup").append($("<option value='0'> Select </option>"));
+                $('#cboAssetSubGroup').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+}
+
 function fnAddDepreciationMethod() {
     if ($("#cboISDCode").val() === "0" || $("#cboISDCode").val() === "") {
-        fnAlert("w", "EFC_01_00", "UI0213", errorMsg.BusinessEntity_E16);
+        fnAlert("w", "EFC_01_00", "UI0056", errorMsg.ISDCode_E5);
         return false;
     }
     fnClearFields();
@@ -96,28 +132,33 @@ function fnAddDepreciationMethod() {
     $('#PopupDepreciationMethod').find('.modal-title').text(localization.AddDepreciationMethod);
     $("#chkActiveStatus").parent().addClass("is-checked");
     $("#chkActiveStatus").prop('disabled', true);
+    $("#cboISDCode").prop('disabled', false);
     $("#btnSaveDepreciationMethod").html('<i class="fa fa-save"></i> ' + localization.Save);
     $("#btnSaveDepreciationMethod").show();
     $("#btnDeactiveDepreciationMethod").hide();
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
+    $('#txtEffectiveFRM').attr('disabled', false);
     $("#cboAssetGroup").attr('disabled', false); 
-    $("#cboAssetSubGroup").attr('disabled', false);;
-    $("#cboDepreciationMethod").attr('disabled', false);;
+    $("#cboAssetSubGroup").attr('disabled', false);
+    $("#cboDepreciationMethod").attr('disabled', false);
 }
 function fnEditDepreciationMethod(e, actiontype) {
+   
     var rowid = $("#jqgDepreciationMethod").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDepreciationMethod').jqGrid('getRowData', rowid);
-    $("#cboAssetGroup").val(rowData.AssetGroup);
-    $("#cboAssetGroup").attr('disabled',true);
-    $("#cboAssetSubGroup").val(rowData.AssetSubGroup);
-    $("#cboAssetSubGroup").attr('disabled', true);
-    $("#cboAssetSubGroup").attr('disabled', true);
-    $("#txtEffectiveFRM").val(rowData.EffectiveFrom);
-    $("#cboDepreciationMethod").val(rowData.DepreciationMethod);
+    $("#cboAssetGroup").val(rowData.AssetGroup).selectpicker("refresh");
+    $("#cboAssetGroup").next().attr('disabled', true).selectpicker("refresh");
+    fnLoadAssetSubGroup();
+    $("#cboAssetSubGroup").val(rowData.AssetSubGroup).selectpicker("refresh");
+    $("#cboAssetSubGroup").next().attr('disabled', true).selectpicker("refresh");
+    
+    $("#cboDepreciationMethod").val(rowData.DepreciationMethod).selectpicker("refresh");
+    $("#cboDepreciationMethod").next().attr('disabled', true).selectpicker("refresh");
+
     $("#txtDepreciationPercentage").val(rowData.DepreciationPercentage);
     $("#txtUsefulYears").val(rowData.UsefulYears);
-    $("#txtEffectiveTill").val(rowData.EffectiveTill);
+    
     if (rowData.EffectiveFrom !== null) {
         setDate($('#txtEffectiveFRM'), fnGetDateFormat(rowData.EffectiveFrom));
     }
@@ -126,28 +167,29 @@ function fnEditDepreciationMethod(e, actiontype) {
     }
     document.getElementById("txtEffectiveFRM").disabled = true;
     if (rowData.EffectiveTill !== null) {
-        setDate($('#txtEffectiveTillDate'), fnGetDateFormat(rowData.EffectiveTill));
+        setDate($('#txtEffectiveTill'), fnGetDateFormat(rowData.EffectiveTill));
     }
     else {
-        $('#txtEffectiveTillDate').val('');
+        $('#txtEffectiveTill').val('');
     }
-    if (rowData.ActiveStatus == true) {
+    if (rowData.ActiveStatus == "true") {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkActiveStatus").parent().addClass("is-checked");
+        $("#chkActiveStatus").parent().removeClass("is-checked");
     }
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
             fnAlert("w", "ECF_03_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
+        $('#PopupDepreciationMethod').modal('show');
         $('#PopupDepreciationMethod').find('.modal-title').text(localization.EditDepreciationMethod);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveDepreciationMethod").html('<i class="fa fa-sync"></i> ' + localization.Update);
-        $("#btndeactiveDepreciationMethod").hide();
+        $("#btnDeactiveDepreciationMethod").hide();
         $("input,textarea").attr('readonly', false);
-        $("select").next().attr('disabled', false);
+        $("select").next().attr('disabled', true);
         $("#btnSaveDepreciationMethod").show();
     }
 
@@ -159,7 +201,7 @@ function fnEditDepreciationMethod(e, actiontype) {
         $('#PopupDepreciationMethod').modal('show');
         $('#PopupDepreciationMethod').find('.modal-title').text(localization.ViewDepreciationMethod);
         $("#chkActiveStatus").prop('disabled', true);
-        $("#btnSaveDepreciationMethod,#btndeactiveDepreciationMethod").hide();
+        $("#btnSaveDepreciationMethod,#btnDeactiveDepreciationMethod").hide();
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
     }
@@ -172,14 +214,14 @@ function fnEditDepreciationMethod(e, actiontype) {
         $('#PopupDepreciationMethod').modal('show');
         $('#PopupDepreciationMethod').find('.modal-title').text(localization.ActiveORDeactiveDepreciationMethod);
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeactiveDepreciationMethod").html(localization.Deactivate);
+            $("#btnDeactiveDepreciationMethod").html(localization.Deactivate);
         }
         else {
-            $("#btndeactiveDepreciationMethod").html('Activate');
-            $("#btndeactiveDepreciationMethod").html(localization.Activate);
+            $("#btnDeactiveDepreciationMethod").html('Activate');
+            $("#btnDeactiveDepreciationMethod").html(localization.Activate);
         }
         $("#btnSaveDepreciationMethod").hide();
-        $("#btndeactiveDepreciationMethod").show();
+        $("#btnDeactiveDepreciationMethod").show();
         $("#chkActiveStatus").prop('disabled', true);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
@@ -188,6 +230,9 @@ function fnEditDepreciationMethod(e, actiontype) {
     }
 }
 
+$('#PopupDepreciationMethod').on('hidden.bs.modal', function () {
+    fnClearFields();
+});
 function fnSaveDepreciationMethod() {
 
     if (fnValidateDepreciationMethod() === false) {
@@ -195,10 +240,10 @@ function fnSaveDepreciationMethod() {
     }
     else {
         obj = {
-            Isdcode: $("#cboIsdcode").val(),
+            Isdcode: $("#cboISDCode").val(),
             AssetGroup: $("#cboAssetGroup").val(),
             AssetSubGroup: $("#cboAssetSubGroup").val(),
-            DepreciationMethod: $("#txtDepreciationMethod").val(),
+            DepreciationMethod: $("#cboDepreciationMethod").val(),
             DepreciationPercentage: $("#txtDepreciationPercentage").val(),
             UsefulYears: $("#txtUsefulYears").val(),
             EffectiveFrom: getDate($("#txtEffectiveFRM")),
@@ -207,7 +252,7 @@ function fnSaveDepreciationMethod() {
         }
         $("#btnSaveDepreciationMethod").attr('disabled', true);
         $.ajax({
-            url: getBaseURL() + '/Connect/InsertOrUpdateSMSConnect',
+            url: getBaseURL() + '/Depreciation/InsertOrUpdateDepreciationMethod',
             type: 'POST',
             datatype: 'json',
             data: { obj },
@@ -255,9 +300,8 @@ function fnValidateDepreciationMethod(){
         fnAlert("w", "EFC_01_00", "UI0146", errorMsg.EffectiveFrom_E8);
         return false;
     }
-    
    
-    if ($("#cboDepreciationMethod").val() === "0" || $("#cboDepreciationMethod").val() === "") {
+    if ($("#cboDepreciationMethod").val() == "0" || $("#cboDepreciationMethod").val() == 0) {
         fnAlert("w", "EFC_01_00", "UI0351", errorMsg.DepreciationMethod_E9);
         return false;
     }
@@ -269,14 +313,71 @@ function fnValidateDepreciationMethod(){
         fnAlert("w", "EFC_01_00", "UI0353", errorMsg.UserfulYears_E11);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtEffectiveTill").val())) {
-        fnAlert("w", "EFC_01_00", "UI0354", errorMsg.EffectiveTill_E12);
-        return false;
+   
+}
+function SetGridControlByAction() {
+    $('#jqgAdd').removeClass('ui-state-disabled');
+
+    if (_userFormRole.IsInsert === false) {
+        $('#jqgAdd').addClass('ui-state-disabled');
     }
 }
 function fnClearFields() {
+    $("input,textarea").attr('readonly', false);
+    $("select").next().attr('disabled', false);
     $("#cboAssetGroup").val(0).selectpicker('refresh');
     $("#cboAssetSubGroup").val(0).selectpicker('refresh');
     $("#cboDepreciationMethod").val(0).selectpicker('refresh');
     $("#txtEffectiveFRM,#txtDepreciationPercentage,#txtUsefulYears,#txtEffectiveTill").val('');
+}
+
+function fnDeleteDepreciationMethod() {
+   
+    var a_status;
+    //Activate or De Activate the status
+    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
+        a_status = false
+    }
+    else {
+        a_status = true;
+    }
+    $("#btnDeactiveDepreciationMethod").attr("disabled", true);
+    objdel = {
+        Isdcode: $("#cboISDCode").val(),
+        AssetGroup: $("#cboAssetGroup").val(),
+        AssetSubGroup: $("#cboAssetSubGroup").val(),
+        DepreciationMethod: $("#cboDepreciationMethod").val(),
+        DepreciationPercentage: $("#txtDepreciationPercentage").val(),
+        UsefulYears: $("#txtUsefulYears").val(),
+        EffectiveFrom: getDate($("#txtEffectiveFRM")),
+        EffectiveTill: getDate($("#txtEffectiveTill")),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
+    }
+    $.ajax({
+        url: getBaseURL() + '/Depreciation/ActiveOrDeActiveDepreciationMethod',
+        type: 'POST',
+        datatype: 'json',
+        data: { status: a_status, obj: objdel },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnDeactiveDepreciationMethod").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $('#PopupDepreciationMethod').modal('hide');
+                fnClearFields();
+                fnGridRefreshDepreciationMethod();
+                $("#btnDeactiveDepreciationMethod").attr("disabled", false);
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnDeactiveDepreciationMethod").attr("disabled", false);
+                $("#btnDeactiveDepreciationMethod").html('De Activate');
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btndeActiveSMSConnect").attr("disabled", false);
+            $("#btndeActiveSMSConnect").html('De Activate');
+        }
+    });
+
 }
