@@ -130,7 +130,7 @@ function fnFillServiceGroupDetail(ServiceGroupID) {
         },
         success: function (result) {
             $("#txtServiceGroupDesc").val(result.ServiceGroupDesc);
-            $("#cboservicecriteria").val(result.ServiceCriteria);
+            $("#cboservicecriteria").val(result.ServiceCriteria).selectpicker('refresh');
             if (result.ActiveStatus == true)
                 $('#chkActiveStatus').parent().addClass("is-checked");
             else

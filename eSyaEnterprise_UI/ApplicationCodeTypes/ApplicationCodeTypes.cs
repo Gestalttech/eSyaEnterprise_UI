@@ -74,7 +74,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         #endregion
 
         #region ConfigProduct
-        public const int ServiceCriteria = 91;
+        public const int ServiceCriteria = 262;
         public const int ServiceProvider = 81;
         #endregion
 

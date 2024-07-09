@@ -95,12 +95,15 @@
                                     @Localizer["ServiceCriteria"]
                                 </label>
                                 <div>
-                                    <select class="selectpicker" data-live-search="true" id="cboservicecriteria" title="">
+                                  @*   <select class="selectpicker" data-live-search="true" id="cboservicecriteria" title="">
                                         <option value="0">@Localizer["Select"] </option>
                                         <option value="C">@Localizer["Consultation"]</option>
                                         <option value="L">@Localizer["Laboratory"]</option>
                                         <option value="R">@Localizer["Radiology"]</option>
                                         <option value="U">@Localizer["Laundry"]</option>
+                                    </select> *@
+                                    <select class="selectpicker" data-size="6" data-container="body" asp-items="@ViewBag.ServiceCriteriaList" id="cboservicecriteria">
+                                        <option value="0">@Localizer["Select"]</option>
                                     </select>
                                 </div>
                             </div>

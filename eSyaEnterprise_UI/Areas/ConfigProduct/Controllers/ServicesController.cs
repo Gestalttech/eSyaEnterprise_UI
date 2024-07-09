@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ConfigProduct.Data;
 using eSyaEnterprise_UI.Areas.ConfigProduct.Models;
 using eSyaEnterprise_UI.Models;
@@ -226,9 +227,24 @@ namespace eSyaEnterprise_UI.Areas.ConfigProduct.Controllers
 
         [Area("ConfigProduct")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ECP_02_00()
+        public async Task<IActionResult> ECP_02_00()
         {
-            return View();
+            var ServiceResponse = await _eSyaConfigProductAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.ServiceCriteria);
+            if (ServiceResponse.Status )
+            {
+                ViewBag.ServiceCriteriaList = ServiceResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.ApplicationCode.ToString(),
+                    Text = b.CodeDesc,
+                }).ToList();
+               
+                return View();
+            }
+            else
+            {
+                _logger.LogError(new Exception(ServiceResponse.Message), "UD:GetApplicationCodesByCodeType");
+                return View();
+            }
         }
 
         public async Task<ActionResult> GetServiceGroups()
