@@ -48,21 +48,25 @@ function fnChangeDiscountat() {
 }
 function fnGridLoadServiceClass() {
     $("#jqgServiceClass").jqGrid('GridUnload');
+    var _data = [{ BusinessKey: '11', PatientCategoryID: "11", ServiceDesc: 'OP clinic', DiscountRule: "01", DiscountPercentage: '5', ServiceChargePerc: '2', ActiveStatus: true, edit: "" }];
+   
     $("#jqgServiceClass").jqGrid({
         //url: getBaseURL() + '/Discount/GetServiceClassByCodeType?codeType=' + codeType,
-        url:'',
+        url: '',
         mtype: 'Post',
         datatype: 'json',
+        data:_data,
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.PatientCategoryID, localization.ServiceClass, localization.DiscountRule, localization.DiscountPercentage, localization.ServicePercentage, localization.Active, localization.Actions],
+        colNames: [localization.BusinessKey, localization.PatientCategoryID, localization.ServiceClass, localization.DiscountRule, localization.DiscountPercentage, localization.ServiceChargePercentage, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "PatientCategoryID", width: 50, editable: true, align: 'left', hidden: true },
-            { name: "ServiceDesc", width: 70, editable: false, hidden: false, align: 'left', resizable: true, cellattr: function () { return ' title="Here is my tooltip!"'; } },
-            { name: "DiscountRule", width: 120, editable: true, align: 'left', resizable: false},
-            { name: "DiscountPercentage", width: 50, editable: true, align: 'left', resizable: false},
-            { name: "ServicePercentage", editable: true, width: 70, align: 'left', resizable: false},
+            { name: "ServiceDesc", width: 170, editable: false, hidden: false, align: 'left', resizable: true, cellattr: function () { return ' title="eSya Tool Tip!"'; } },
+            
+            { name: "DiscountRule", width: 40, editable: true, align: 'left', resizable: false },
+            { name: "DiscountPercentage", width: 40, editable: true, align: 'left', resizable: false },
+            { name: "ServiceChargePerc", editable: true, width: 50, align: 'left', resizable: false },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -93,11 +97,9 @@ function fnGridLoadServiceClass() {
             fnJqgridSmallScreen("jqgServiceClass");
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         },
-         onSelectRow: function (rowid, status, e) { },
+        onSelectRow: function (rowid, status, e) { },
     }).jqGrid('navGrid', '#jqpServiceClass', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpServiceClass', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshServiceClass
-    }).jqGrid('navButtonAdd', '#jqpServiceClass', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddServiceClass
     });
     fnAddGridSerialNoHeading();
 }
@@ -130,11 +132,11 @@ function fnAddServiceClass() {
 function fnEditServiceClass(actiontype) {
     var rowid = $("#jqgServiceClass").jqGrid('getGridParam', 'selrow');
     var rowData = $("#jqgServiceClass").jqGrid('getRowData', rowid);
-    $("#txtServiceClass").val(rowData.ServiceClass);
+    $("#txtServiceClass").val(rowData.ServiceDesc);
 
-    $("#cboServiceClass").val(rowData.DiscountRule).selecpicker('refresh');
+    $("#cboServiceClass").val(rowData.DiscountRule).selectpicker('refresh');
     $("#txtDiscountPercentage").val(rowData.DiscountPercentage);
-    $("#txtServiceChargePercentage").val(rowData.ServicePercentage);
+    $("#txtServiceChargePercentage").val(rowData.ServiceChargePerc);
     if (rowData.ActiveStatus === "true") {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
@@ -147,12 +149,13 @@ function fnEditServiceClass(actiontype) {
             fnAlert("w", "EPM_07_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
+        $('#PopupServiceClass').modal('show');
         $('#PopupServiceClass').find('.modal-title').text(localization.UpdateServiceClass);
         $("#btnSaveServiceClass").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btndeactiveServiceClass").hide();
         $("input,textarea").attr('readonly', false);
-        $("select").next().attr('disabled', false);
+        $("#cboDiscountRule").next().attr('disabled', false);
         $("#btnSaveServiceClass").show();
     }
 
@@ -165,7 +168,7 @@ function fnEditServiceClass(actiontype) {
         $('#PopupServiceClass').find('.modal-title').text(localization.ViewServiceClass);
         $("#btnSaveServiceClass").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
-        $("select").next().attr('disabled', true);
+        $("#cboDiscountRule").next().attr('disabled', true);
         $("#btnSaveServiceClass").hide();
         $("#chkActiveStatus").prop('disabled', true);
         $("#btndeactiveServiceClass").hide();
@@ -176,7 +179,7 @@ function fnGridRefreshServiceClass() {
 }
 
 $('#PopupServiceClass').on('hidden.bs.modal', function () {
-    fnClearFields_SClass();
+    fnClearFields_SClass(); fnGridRefreshServiceClass();
 });
 function SetGridControlByAction() {
     if (_userFormRole.IsInsert === false) {
@@ -204,14 +207,14 @@ function fnGridLoadServices() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.PatientCategoryID, localization.Services, localization.DiscountRule, localization.DiscountPercentage, localization.ServicePercentage, localization.Active, localization.Actions],
+        colNames: [localization.BusinessKey, localization.PatientCategoryID, localization.Services, localization.DiscountRule, localization.DiscountPercentage, localization.ServiceChargePercentage, localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "PatientCategoryID", width: 50, editable: true, align: 'left', hidden: true },
-            { name: "ServiceDesc", width: 70, editable: false, hidden: false, align: 'left', resizable: true, cellattr: function () { return ' title="Here is my tooltip!"'; } },
-            { name: "DiscountRule", width: 120, editable: true, align: 'left', resizable: false },
-            { name: "DiscountPercentage", width: 50, editable: true, align: 'left', resizable: false },
-            { name: "ServicePercentage", editable: true, width:70, align: 'left', resizable: false },
+            { name: "ServiceDesc", width: 170, editable: false, hidden: false, align: 'left', resizable: true, cellattr: function () { return ' title="Here is my tooltip!"'; } },
+            { name: "DiscountRule", width: 40, editable: true, align: 'left', resizable: false },
+            { name: "DiscountPercentage", width: 40, editable: true, align: 'left', resizable: false },
+            { name: "ServiceChargePerc", editable: true, width:50, align: 'left', resizable: false },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -245,9 +248,7 @@ function fnGridLoadServices() {
         onSelectRow: function (rowid, status, e) { },
     }).jqGrid('navGrid', '#jqpServices', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpServices', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshServices
-    }).jqGrid('navButtonAdd', '#jqpServices', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddServices
-    });
+    })
     fnAddGridSerialNoHeading();
 }
 function fnGridRefreshServices() {
