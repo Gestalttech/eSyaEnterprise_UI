@@ -15,13 +15,31 @@
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
     var localization = {
+        Edit: '@Localizer["Edit"]',
         Save: '@Localizer["Save"]',
+        Delete: '@Localizer["Deactive"]',
+        View: '@Localizer["View"]',
         Update: '@Localizer["Update"]',
         Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        ServiceClass: '@Localizer["ServiceClass"]',
+        ServiceDesc: '@Localizer["ServiceDescription"]',
+        AddServiceClass: '@Localizer["AddServiceClass"]',
+        UpdateServiceClass: '@Localizer["UpdateServiceClass"]',
+        ViewServiceClass: '@Localizer["ViewServiceClass"]',
+        DiscountRule: '@Localizer["DiscountRule"]',
+        DiscountPercentage: '@Localizer["DiscountPercentage"]',
+        ServicePercentage: '@Localizer["ServicePercentage"]',
+        IsApplicablePackage: '@Localizer["IsApplicablePackage"]',
         BusinessLocation: '@Localizer["BusinessLocation"]',
         PatientCategory: '@Localizer["PatientCategory"]',
         DiscountFor: '@Localizer["DiscountFor"]',
         DiscountAt: '@Localizer["DiscountAt"]',
+        Services: '@Localizer["Services"]',
+        AddServices: '@Localizer["AddServices"]',
+        EditServices: '@Localizer["EditServices"]',
+        ViewServices: '@Localizer["ViewServices"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -29,6 +47,10 @@
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
+        BusinessLocation_E1: '@Localizer["UI0064"]',
+        PatientCategory_E2: '@Localizer["UI0355"]',
+        DiscountFor_E3: '@Localizer["UI0356"]',
+        DiscountAt_E4: '@Localizer["UI0356"]',
     }
 </script>
 
@@ -42,7 +64,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessLocation_OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -50,7 +72,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["PatientCategory"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnPatientCategory _OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -58,7 +80,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["DiscountFor"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboDiscountFor" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnPatientCategory _OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboDiscountFor" data-size="8" asp-items="@ViewBag.DiscountForList" onchange="">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -66,21 +88,170 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["DiscountAt"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboDiscountAt" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnPatientCategory _OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboDiscountAt" data-size="8" asp-items="@ViewBag.DiscountAtList" onchange="fnChangeDiscountat()">
                 <option value="0">@Localizer["Select"]</option>
+                <option value="c">@Localizer["ServiceClass"]</option>
+                <option value="s">@Localizer["Services"]</option>
             </select>
         </div>
     </div>
    </div>
+
+ <section id="secServiceClass" style="display:none">
    <div class="row form-group">
        <div class="col-lg-12 col-md-12 col-sm-12">
-           <table id="jqgServiceClass"></table>
+            <table id="jqgServiceClass"></table>
            <div id="jqpServiceClass"></div>
        </div>
-   </div> 
+    </div>
+</section>
+
+<section id="secServices" style="display:none">
    <div class="row form-group">
        <div class="col-lg-12 col-md-12 col-sm-12">
-           <table id="jqgServices"></table>
+          <table id="jqgServices"></table>
         <div id="jqpServices"></div>
        </div>
    </div>
+</section>
+
+<div class="modal fade in" id="PopupServiceClass" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick=""> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddServiceClass"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtServiceClass"> @Localizer["ServiceClass"]</label>
+                            <input id="txtServiceClass" class="form-control" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="cboDiscountRule"> @Localizer["DiscountRule"]</label>
+                            <select class="selectpicker" id="cboDiscountRule" data-container="body" data-size="5">
+                                  <option value="0">@Localizer["Select"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtDiscountPercentage"> @Localizer["DiscountPercentage"]</label>
+                            <input id="txtDiscountPercentage" class="form-control number" step=".01" maxlength="8" type="text"/>
+                        </div>
+                    </div>
+                     <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtServiceChargePercentage"> @Localizer["ServiceChargePercentage"]</label>
+                            <input id="txtServiceChargePercentage" class="form-control" step=".01" maxlength="8" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2  col-md-2 col-sm-12 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <p class="subheading">@Localizer["ServiceParameters"]</p>
+                        <hr class="left" />
+                        @* @await Component.InvokeAsync("serviceParameter", new { parameterType = "17" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button primary-button" id="btnSaveServiceClass" onclick="fnSaveServiceClass();">
+                            <i class="fa fa-save"></i> @Localizer[" Save "]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelCountryArea">
+                            <i class="fa fa-times"></i> @Localizer["Cancel"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btndeactiveServiceClass">
+                            <i class="fa fa-times"></i> @Localizer["Deactivate"]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade in" id="PopupServices" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal" onclick=""> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddServices"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtServices_s"> @Localizer["Services"]</label>
+                            <input id="txtServices_s" class="form-control" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="cboDiscountRule_s"> @Localizer["DiscountRule"]</label>
+                            <select class="selectpicker" id="cboDiscountRule_s" data-container="body" data-size="5">
+                                <option value="0">@Localizer["Select"]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtDiscountPercentage_s"> @Localizer["DiscountPercentage"]</label>
+                            <input id="txtDiscountPercentage_s" class="form-control number" step=".01" maxlength="8" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-4">
+                        <div class="form-group">
+                            <label for="txtServiceChargePercentage_s"> @Localizer["ServiceChargePercentage"]</label>
+                            <input id="txtServiceChargePercentage_s" class="form-control" step=".01" maxlength="8" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2  col-md-2 col-sm-12 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                            <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                        </label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <p class="subheading">@Localizer["ServiceParameters"]</p>
+                        <hr class="left" />
+                        @* @await Component.InvokeAsync("serviceParameter", new { parameterType = "17" }) *@
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button primary-button" id="btnSaveServices" onclick="fnSaveServices();">
+                            <i class="fa fa-save"></i> @Localizer[" Save "]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-bs-dismiss="modal" id="">
+                            <i class="fa fa-times"></i> @Localizer["Cancel"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeactiveServices">
+                            <i class="fa fa-times"></i> @Localizer["Deactivate"]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
