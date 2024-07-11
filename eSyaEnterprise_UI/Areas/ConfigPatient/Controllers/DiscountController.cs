@@ -32,7 +32,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 List<int> l_codeType = new List<int>();
                 l_codeType.Add(ApplicationCodeTypeValues.DiscountFor);
                 l_codeType.Add(ApplicationCodeTypeValues.DiscountAt);
-
+                l_codeType.Add(ApplicationCodeTypeValues.DiscountRule);
                 var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonMethod/GetBusinessKey");
                 var appresponse = await _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_codeType);
 
@@ -41,6 +41,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 {
                     List<DO_ApplicationCodes> DiscountFor = appresponse.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DiscountFor).ToList();
                     List<DO_ApplicationCodes> DiscountAt = appresponse.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DiscountAt).ToList();
+                    List<DO_ApplicationCodes> DiscountRule = appresponse.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.DiscountRule).ToList();
 
                     ViewBag.BusinessKeyList = serviceResponse.Data.Select(a => new SelectListItem
                     {
@@ -58,6 +59,11 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     {
                         Value = c.ApplicationCode.ToString(),
                         Text = c.CodeDesc,
+                    }).ToList();
+                    ViewBag.DiscountRuleList = DiscountRule.Select(b => new SelectListItem
+                    {
+                        Value = b.ApplicationCode.ToString(),
+                        Text = b.CodeDesc,
                     }).ToList();
                 }
                 return View();
@@ -93,11 +99,16 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             }
         }
         [HttpGet]
-        public async Task<JsonResult> GetPatientCategoryDiscountbyDiscountAt(int businesskey, int patientcategoryId, int discountfor, bool serviceclass)
+        public async Task<JsonResult> GetPatientCategoryDiscountbyDiscountAt(int businesskey, int patientcategoryId, int discountfor, int discountAt)
         {
             try
             {
-                var parameter = "?businesskey=" + businesskey + "&patientcategoryId=" + patientcategoryId + "&discountfor=" + discountfor
+                bool serviceclass = false;
+                if(discountAt== 650001)
+                {
+                    serviceclass = true;
+                }
+                    var parameter = "?businesskey=" + businesskey + "&patientcategoryId=" + patientcategoryId + "&discountfor=" + discountfor
                     + "&serviceclass=" + serviceclass;
                 var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_PatientCategoryDiscount>>("Discount/GetPatientCategoryDiscountbyDiscountAt" + parameter);
                 if (serviceResponse.Status)
@@ -175,7 +186,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                     obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 
 
-                var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Discount/GetPatientPatientCategoryDiscountInfo", obj).Result;
+                var Insertresponse = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<DO_PatientCategoryDiscount>("Discount/GetPatientPatientCategoryDiscountInfo", obj).Result;
                 if (Insertresponse.Status)
                 {
                     return Json(Insertresponse.Data);
@@ -199,7 +210,15 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         {
             try
             {
-
+                obj.status = status;
+                if (obj.DiscountAt == 650001)
+                {
+                    obj.serviceclass = true;
+                }
+                else
+                {
+                    obj.serviceclass = false;
+                }
 
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);

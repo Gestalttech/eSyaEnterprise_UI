@@ -51,6 +51,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int DocumentListforPatientTypeCategoryLink = 61;
         public const int DiscountFor = 64;
         public const int DiscountAt = 65;
+        public const int DiscountRule = 66;
 
         #endregion
 
