@@ -1,4 +1,5 @@
 ﻿var itemsDisabled = {};
+var servicesDisabled = {};
 var isinsert = false;
 $(function () {
    
@@ -38,19 +39,19 @@ $(function () {
         items: {
             jqgAddS: {
                 name: localization.Add, icon: "add", callback: function (key, opt) { fnAddServices() }, disabled: function (key, opt) {
-                    return !!itemsDisabled[key];
+                    return !!servicesDisabled[key];
                 } },
             jqgEditS: {
                 name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditServices('edit') }, disabled: function (key, opt) {
-                    return !!itemsDisabled[key];
+                    return !!servicesDisabled[key];
                 } },
             jqgViewS: {
                 name: localization.View, icon: "view", callback: function (key, opt) { fnEditServices('view') }, disabled: function (key, opt) {
-                    return !!itemsDisabled[key];
+                    return !!servicesDisabled[key];
                 } },
             jqgDeleteS: {
                 name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditServices('delete') }, disabled: function (key, opt) {
-                    return !!itemsDisabled[key];
+                    return !!servicesDisabled[key];
                 } },
         }
     });
@@ -208,7 +209,7 @@ function fnGridLoadServices() {
             { name: "PatientCategoryId", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ServiceId", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ServiceDesc", width: 170, editable: false, hidden: false, align: 'left', resizable: true, cellattr: function () { return ' title="Here is my tooltip!"'; } },
-            { name: "DiscountRule", width: 40, editable: true, align: 'left', resizable: false, hidden: true },
+            { name: "DiscountRule", width: 40, editable: true, align: 'left', resizable: false, hidden: false },
             { name: "DiscountPerc", width: 40, editable: true, align: 'left', resizable: false },
             { name: "ServiceChargePerc", editable: true, width: 50, align: 'left', resizable: false },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -242,15 +243,12 @@ function fnGridLoadServices() {
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         },
         onSelectRow: function (rowid, status, e) {
-            debugger;
             var datas = jQuery('#jqgServices').getRowData(rowid);
             (datas.DiscountRule == 0 || datas.DiscountRule == '0') ? fnToggleControlS(1) : fnToggleControlS(2)
 
         },
-        onSelectRow: function (rowid, status, e) { },
-    }).jqGrid('navGrid', '#jqpServices', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpServices', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first"
-    })
+        
+    }).jqGrid('navGrid', '#jqpServices', { add: false, edit: false, search: false, del: false, refresh: false });
     fnAddGridSerialNoHeading();
 }
 function fnToggleControl(value) {
@@ -271,16 +269,16 @@ function fnToggleControl(value) {
 function fnToggleControlS(value) {
     debugger;
     if (value == 1) {
-        itemsDisabled["jqgAddS"] = false;
-        itemsDisabled["jqgEditS"] = true;
-        itemsDisabled["jqgViewS"] = true;
-        itemsDisabled["jqgDeleteS"] = true;
+        servicesDisabled["jqgAddS"] = false;
+        servicesDisabled["jqgEditS"] = true;
+        servicesDisabled["jqgViewS"] = true;
+        servicesDisabled["jqgDeleteS"] = true;
     }
     if (value == 2) {
-        itemsDisabled["jqgAddS"] = true;
-        itemsDisabled["jqgEditS"] = false;
-        itemsDisabled["jqgViewS"] = false;
-        itemsDisabled["jqgDeleteS"] = false;
+        servicesDisabled["jqgAddS"] = true;
+        servicesDisabled["jqgEditS"] = false;
+        servicesDisabled["jqgViewS"] = false;
+        servicesDisabled["jqgDeleteS"] = false;
     }
 }
 function fnAddServiceClass() {
