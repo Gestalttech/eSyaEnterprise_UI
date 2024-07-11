@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿
+$(function () {
    $.contextMenu({
         selector: "#btnServiceClass",
         trigger: 'left',
@@ -26,8 +27,41 @@
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
+function fnChangeBusinessLocation() {
+    
+    $("#cboPatientCategory").empty();
+    $.ajax({
+        url: getBaseURL() + '/Discount/GetActivePatientCategoriesbyBusinessKey?businesskey=' + $("#cboBusinessLocation").val(),
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response) {
+            if (response != null) {
+               
+                //refresh each time
+                $("#cboPatientCategory").empty();
 
+                $("#cboPatientCategory").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
 
+                    $("#cboPatientCategory").append($("<option></option>").val(response[i]["PatientCategoryId"]).html(response[i]["PatientCategoryDesc"]));
+                }
+                $('#cboPatientCategory').selectpicker('refresh');
+            }
+            else {
+                $("#cboPatientCategory").empty();
+                $("#cboPatientCategory").append($("<option value='0'> Select </option>"));
+                $('#cboPatientCategory').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+}
+ 
 function fnChangeDiscountat() {
     var _discountAt = $("#cboDiscountAt").val();
     if (_discountAt == "c") {

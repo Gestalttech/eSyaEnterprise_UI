@@ -65,7 +65,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="">
+            <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnChangeBusinessLocation()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -73,7 +73,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["PatientCategory"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="">
+            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" data-size="8">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -91,8 +91,6 @@
             <label>@Localizer["DiscountAt"]</label>
             <select class="selectpicker" data-live-search="true" id="cboDiscountAt" data-size="8" asp-items="@ViewBag.DiscountAtList" onchange="fnChangeDiscountat()">
                 <option value="0">@Localizer["Select"]</option>
-                <option value="c">@Localizer["ServiceClass"]</option>
-                <option value="s">@Localizer["Services"]</option>
             </select>
         </div>
     </div>
