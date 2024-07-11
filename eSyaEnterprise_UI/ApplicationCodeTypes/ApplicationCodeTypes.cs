@@ -49,6 +49,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int ConfigPatientRateType = 85;
         public const int PatientType = 58;
         public const int DocumentListforPatientTypeCategoryLink = 61;
+        public const int DiscountFor = 64;
+        public const int DiscountAt = 65;
 
         #endregion
 
