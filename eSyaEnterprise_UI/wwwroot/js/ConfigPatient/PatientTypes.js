@@ -66,7 +66,7 @@ function fnGetPatientType_Success(dataArray) {
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EPT_01_00", "UIC01", errorMsg.addauth_E1);
+                                fnAlert("w", "EMP_01_00", "UIC01", errorMsg.addauth_E1);
                                 return;
                             }
                             $("#pnlPatientTypeCategory").show();
@@ -104,7 +104,7 @@ function fnGetPatientType_Success(dataArray) {
 
                             if (_userFormRole.IsView === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EPT_01_00", "UIC03", errorMsg.vieweauth_E3);
+                                fnAlert("w", "EMP_01_00", "UIC03", errorMsg.vieweauth_E3);
                                 return;
                             }
 
@@ -128,7 +128,7 @@ function fnGetPatientType_Success(dataArray) {
 
                             if (_userFormRole.IsEdit === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EPT_01_00", "UIC02", errorMsg.editauth_E2);
+                                fnAlert("w", "EMP_01_00", "UIC02", errorMsg.editauth_E2);
                                 return;
                             }
 
@@ -219,7 +219,7 @@ function fnSavePatientCategory() {
         }
      }
     if (fmParams.length == _count) {
-        fnAlert("w", "", "", "Please check any parameter");
+        fnAlert("w", "EPM_01_00", "", errorMsg.parameterSelect_E6);
         $("#btnAddPatientType").attr('disabled', false);
         return;
     }
@@ -259,7 +259,7 @@ function fnSavePatientCategory() {
 function validationPatientCategory() {
 
     if (IsStringNullorEmpty($("#cboPatientcategory").val()) || $("#cboPatientcategory").val() === "0" || $("#cboPatientcategory").val() === "") {
-        fnAlert("w", "EPT_01_00", "UI0188", errorMsg.SelectCategory_E6);
+        fnAlert("w", "EMP_01_00", "UI0188", errorMsg.SelectCategory_E6);
         return false;
     }
 
