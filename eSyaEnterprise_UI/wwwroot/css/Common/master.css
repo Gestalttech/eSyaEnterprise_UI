@@ -181,6 +181,9 @@ hr.left {
     -moz-box-shadow: 0 0 0 .12rem rgba(99, 99, 99, 0.25) !important;
 }
     .context-menu-item.context-menu-hover .svg-inline--fa{color:gold !important;}
+.context-menu-disabled .icon-contextMenu svg {
+    color: #bbb;
+}
 p.subheading {
     border-left: 0px solid #fad029;
     font-size: 13px;
