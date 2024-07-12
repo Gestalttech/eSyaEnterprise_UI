@@ -111,15 +111,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
 
                         foreach (var f in PatientTypes.l_PatienTypeCategory.OrderBy(o => o.PatientTypeId))
                         {
+                            if (f.ActiveStatus)
+                            {
+
+                            
                             jsObj = new jsTreeObject
                             {
                                 id = "SM" + f.PatientTypeId.ToString() + "_" + f.PatientCategoryId.ToString(),
                                 text = f.Description,
                                 GroupIndex = f.PatientTypeId.ToString(),
                                 parent = "MM" + f.PatientTypeId.ToString(),
+                                icon = "/images/jsTree/checkedstate.jpg",
                                 state = new stateObject { opened = true, selected = false }
                             };
                             jsTree.Add(jsObj);
+                            }
+                            else
+                            {
+                                jsObj = new jsTreeObject
+                                {
+                                    id = "SM" + f.PatientTypeId.ToString() + "_" + f.PatientCategoryId.ToString(),
+                                    text = f.Description,
+                                    GroupIndex = f.PatientTypeId.ToString(),
+                                    parent = "MM" + f.PatientTypeId.ToString(),
+                                    state = new stateObject { opened = true, selected = false }
+                                };
+                                jsTree.Add(jsObj);
+                            }
                         }
                     }
                     return Json(jsTree);
