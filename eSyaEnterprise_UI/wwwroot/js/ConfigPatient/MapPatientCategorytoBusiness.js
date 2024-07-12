@@ -37,7 +37,7 @@ function fnLoadPatientTypeCategoryMapBusinessLink() {
             { name: "PatientTypeDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
               { name: "PatientCategoryDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
               { name: "RateType", editable: true, cellEdit:true, width: 100, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: RateTypelist } },
-              { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+              { name: "ActiveStatus", editable: true, width: 30, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
         ],
         rowNum: 100000,

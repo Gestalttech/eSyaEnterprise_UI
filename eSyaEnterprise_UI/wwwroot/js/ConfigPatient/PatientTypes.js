@@ -25,7 +25,7 @@ function LoadPatientTypeTree() {
 }
 
 function fnGetPatientType_Success(dataArray) {
-    $("#jsTreePatientType").jstree({
+    $("#jstPatientType").jstree({
         "state": { "checkbox_disabled": true },
         "checkbox": {
             "keep_selected_style": false
@@ -34,15 +34,15 @@ function fnGetPatientType_Success(dataArray) {
         core: { 'data': dataArray, 'check_callback': true, 'multiple': true }
     });
 
-    $("#jsTreePatientType").on('loaded.jstree', function () {
+    $("#jstPatientType").on('loaded.jstree', function () {
 
-        $("#jsTreePatientType").jstree('open_all');
-        $("#jsTreePatientType").jstree()._open_to(prevSelectedID);
-        $('#jsTreePatientType').jstree().select_node(prevSelectedID);
+        $("#jstPatientType").jstree('open_all');
+        $("#jstPatientType").jstree()._open_to(prevSelectedID);
+        $('#jstPatientType').jstree().select_node(prevSelectedID);
 
     });
 
-    $('#jsTreePatientType').on("changed.jstree", function (e, data) {
+    $('#jstPatientType').on("changed.jstree", function (e, data) {
 
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
@@ -136,7 +136,7 @@ function fnGetPatientType_Success(dataArray) {
                             $(".mdl-card__title-text").text(localization.EditPatientCategory);
                             $('#txtPatientCategoryId').val(NodeID);
                             $('#txtPatientTypeId').val(data.node.id.substring(2).split("_")[0]);
-
+                            $("#btnAddPatientType").attr('disabled', false);
                             fnFillPatientCategoryInfo();
 
                             //enableing check boxes
@@ -164,11 +164,11 @@ function fnGetPatientType_Success(dataArray) {
         }
     });
 
-    $('#jsTreePatientType').on("close_node.jstree", function (node) {
+    $('#jstPatientType').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#jsTreePatientType').jstree().deselect_node(closingNode.children);
+        $('#jstPatientType').jstree().deselect_node(closingNode.children);
     });
-    fnTreeSize('#jsTreePatientType');
+    fnTreeSize('#jstPatientType');
 };
 
 function fnFillPatientCategoryInfo() {
@@ -211,33 +211,49 @@ function fnSavePatientCategory() {
         PatientCategoryId: $("#cboPatientcategory").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
     };
-
     var fmParams = eSyaParams.GetJSONValue();
-    obj.l_ptypeparams = fmParams;
-
-    $.ajax({
-        url: getBaseURL() + '/PatientType/InsertOrUpdatePatientCategory',
-        type: 'POST',
-        datatype: 'json',
-        data: { isinsert: isinsert, obj: obj },
-        async: false,
-        success: function (response) {
-            if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
-                location.reload();
-                return true;
-            }
-            else {
-                fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnAddPatientType").attr('disabled', false);
-                return false;
-            }
-        },
-        error: function (error) {
-            $("#btnAddPatientType").attr('disabled', false);
-            fnAlert("e", "", error.StatusCode, error.statusText);
+    var _count = 0;
+    for (i = 0; i < fmParams.length; i++) {
+        if (fmParams[i].ParmAction == false || fmParams[i].ParmAction == "false") {
+            _count++;
         }
-    });
+     }
+    if (fmParams.length == _count) {
+        fnAlert("w", "", "", "Please check any parameter");
+        $("#btnAddPatientType").attr('disabled', false);
+        return;
+    }
+    else {
+        obj.l_ptypeparams = fmParams;
+
+        $.ajax({
+            url: getBaseURL() + '/PatientType/InsertOrUpdatePatientCategory',
+            type: 'POST',
+            datatype: 'json',
+            data: { isinsert: isinsert, obj: obj },
+            async: false,
+            success: function (response) {
+                if (response.Status) {
+                    debugger;
+                    fnAlert("s", "", response.StatusCode, response.Message);
+                    $("#pnlPatientTypeCategory").hide();
+                    $("#jstPatientType").jstree("destroy");
+                    LoadPatientTypeTree();
+                    prevSelectedID = "";
+                    return true;
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                    $("#btnAddPatientType").attr('disabled', false);
+                    return false;
+                }
+            },
+            error: function (error) {
+                $("#btnAddPatientType").attr('disabled', false);
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+    }
 }
 
 function validationPatientCategory() {
@@ -261,20 +277,13 @@ function fnClearFields() {
 }
 
 function fnExpandAll() {
-    $('#jsTreePatientType').jstree('open_all');
+    $('#jstPatientType').jstree('open_all');
 }
 
 function fnCollapseAll() {
     fnClearFields();
     $("#pnlPatientTypeCategory").hide();
-    $('#jsTreePatientType').jstree('close_all');
-}
-
-function fnTreeSize() {
-    $("#jsTreePatientType").css({
-        'height': $(window).innerHeight() - 136,
-        'overflow': 'auto'
-    });
+    $('#jstPatientType').jstree('close_all');
 }
 
 function fnDisableActivecheckboxs() {
