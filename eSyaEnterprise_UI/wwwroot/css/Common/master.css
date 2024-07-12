@@ -383,6 +383,7 @@ tr.ui-widget-content td select {
     font-size:12px !important;
     letter-spacing:0px !important;
     background:var(--color-primary) !important;
+    font-family:helvetica-Bold;
 }
 .tblParameter{
     cursor:pointer;
