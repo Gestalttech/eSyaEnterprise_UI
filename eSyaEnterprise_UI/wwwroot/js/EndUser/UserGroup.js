@@ -114,3 +114,11 @@ function fnSaveRoleMenulist() {
         }
     });
 }
+
+function fnExpandAll() {
+    $('#jstUserGroup').jstree('open_all');
+}
+
+function fnCollapseAll() {
+    $('#jstUserGroup').jstree('close_all');
+}
