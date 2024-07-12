@@ -1359,15 +1359,18 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                 l_ac.Add(ApplicationCodeTypeValues.UserGroup);
                 l_ac.Add(ApplicationCodeTypeValues.UserRole);
                 var response = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeTypeList", l_ac);
+                var userroleresponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("UserCreation/GetActiveUserRolesByCodeType?codeType=" + ApplicationCodeTypeValues.UserRole);
                 var Businessresponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
 
-                if (response.Status && Businessresponse.Status)
+                if (response.Status && Businessresponse.Status && userroleresponse.Status)
                 {
                     if (response.Data != null)
                     {
                         List<DO_ApplicationCodes> app_codes = response.Data;
+                        List<DO_ApplicationCodes> userrole = userroleresponse.Data;
                         ViewBag.UGappcodes = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.UserGroup);
-                        ViewBag.URappcodes = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.UserRole);
+                        //ViewBag.URappcodes = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.UserRole);
+                        ViewBag.URappcodes = userrole;
                         ViewBag.Businesskeys = Businessresponse.Data;
                         return View();
                     }
