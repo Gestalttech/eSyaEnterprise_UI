@@ -113,8 +113,6 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                         {
                             if (f.ActiveStatus)
                             {
-
-                            
                             jsObj = new jsTreeObject
                             {
                                 id = "SM" + f.PatientTypeId.ToString() + "_" + f.PatientCategoryId.ToString(),
