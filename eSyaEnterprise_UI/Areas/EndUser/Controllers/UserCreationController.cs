@@ -1377,13 +1377,13 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                     else
                     {
                         _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeTypeList");
-                        return Json(new { Status = false, StatusCode = "500" });
+                        return View();
                     }
                 }
                 else
                 {
                     _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeTypeList");
-                    return Json(new { Status = false, StatusCode = "500" });
+                    return View();
                 }
             }
             catch (Exception ex)
