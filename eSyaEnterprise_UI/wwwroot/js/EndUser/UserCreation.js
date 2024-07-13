@@ -381,6 +381,7 @@ function fnGridUserBusinessLocation() {
             },
         ],
         rowNum: 10,
+        rownumWidth: '55',
         loadonce: true,
         pager: "#jqpUserBusinessLocation",
         viewrecords: true,

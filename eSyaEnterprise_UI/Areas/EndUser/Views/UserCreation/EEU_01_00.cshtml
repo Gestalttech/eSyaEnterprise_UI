@@ -35,6 +35,9 @@
         IUStatus: '@Localizer["IUStatus"]',
         FormName: '@Localizer["FormName"]',
         SearchForm: '@Localizer["SearchForm"]',
+        ActionId: '@Localizer["ActionId"]',
+        ActionDescription: '@Localizer["ActionDescription"]',
+        Actions: '@Localizer["Actions"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -115,6 +118,10 @@
     <div class="col-lg-4 col-md-5 col-sm-6">
         <div id="jstUserGroup"></div>
     </div>
+    <div class="col-lg-6 col-md-5 col-sm-4">
+        <table id="jqgActions"></table>
+        <div id="jqpActions"></div>
+    </div>
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12" id="divUserActionsforTree" style="display:none;">
         <div class="card treeaction">
             <div class="card-header">
@@ -122,13 +129,13 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnExpandAll" onclick="fnExpandAll()">
-            <i class="fas fa-expand" style="color:#fff !important"></i>&nbsp;@Localizer["ExpandAll"]
+        <button class="mdl-button mdl-js-button mdl-button--raised text-left primary-button w-100" id="btnExpandAll" onclick="fnExpandAll()">
+            <i class="fas fa-expand"></i>&nbsp;@Localizer["ExpandAll"]
                     </button>
                 </li>
                 <li class="list-group-item">
-        <button class="mdl-button mdl-js-button mdl-button--raised primary-button w-100" id="btnCollapseAll" onclick="fnCollapseAll()">
-            <i class="fas fa-compress" style="color:#fff !important"></i>&nbsp;@Localizer["CollapseAll"]
+        <button class="mdl-button mdl-js-button mdl-button--raised text-left primary-button w-100" id="btnCollapseAll" onclick="fnCollapseAll()">
+            <i class="fas fa-compress"></i>&nbsp;@Localizer["CollapseAll"]
         </button>
         </li>
                 <li class="list-group-item">

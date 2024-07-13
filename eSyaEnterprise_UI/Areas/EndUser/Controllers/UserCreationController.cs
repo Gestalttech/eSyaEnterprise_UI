@@ -1570,6 +1570,27 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }
+
+        [HttpPost]
+        public async Task<JsonResult> GetActionsByUserGroup(int userRole)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_UserRoleActionLink>>("UserCreation/GetActionsByUserGroup?userRole=" + userRole);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActionsByUserGroup:For BusinessKey {0}", userRole);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActionsByUserGroup:For BusinessKey {0}", userRole);
+                throw;
+            }
+        }
         #endregion
 
         #region Link Action to User Role  

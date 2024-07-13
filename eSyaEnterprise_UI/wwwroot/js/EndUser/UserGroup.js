@@ -45,7 +45,8 @@ function fnGetUserRoleMenulist() {
 
             $(window).on('resize', function () {
                 fnTreeSize("#jstUserGroup");
-            })
+            });
+            fnLoadGridRoleActions();
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
@@ -122,3 +123,47 @@ function fnExpandAll() {
 function fnCollapseAll() {
     $('#jstUserGroup').jstree('close_all');
 }
+
+
+function fnLoadGridRoleActions() {
+
+    $("#jqgActions").GridUnload();
+
+    $("#jqgActions").jqGrid({
+        url: getBaseURL() + '/UserCreation/GetActionsByUserGroup?userRole=' + $("#cboUserRole").val(),
+        datatype: 'json',
+        mtype: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        colNames: [localization.ActionId, localization.ActionDescription, localization.Active],
+        colModel: [
+            { name: "ActionId", width: 50, align: 'left', editable: false, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "ActionDesc", width: 220, align: 'left', editable: false, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "ActiveStatus", width: 45, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+        ],
+
+        pager: "#jqpActions",
+        rowNum: 10,
+        sortable: false,
+        rowList: [10, 20, 50, 100],
+        rownumWidth: '55',
+        loadonce: true,
+        viewrecords: true,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        scroll: false,
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true, caption: localization.Actions,
+        loadComplete: function (data) {
+            fnJqgridSmallScreen("jqgActions");
+            fnAddGridSerialNoHeading();
+        },
+        onSelectRow: function (rowid, status, e) { },
+    }).jqGrid('navGrid', '#jqpActions', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpActions', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshActions
+    });
+    
+ }
