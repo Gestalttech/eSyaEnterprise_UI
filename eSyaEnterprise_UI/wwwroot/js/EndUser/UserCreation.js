@@ -16,6 +16,7 @@ $(document).ready(function () {
         // there's more, have a look at the demos and docs...
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $("#divBusinessLoc").css('display', 'none');
 });
 
 function fnGridLoadUserCreation() {
@@ -32,17 +33,17 @@ function fnGridLoadUserCreation() {
         colNames: ["User ID", localization.LoginID, localization.LoginDescription, localization.EMailId, localization.IsSignInBlocked, localization.IsUserAuthenticated, localization.IsDeActivated,localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 120, editable: true, align: 'left', hidden: true },
-            { name: "LoginID", width: 120, editable: true, align: 'left', hidden: false },
-            { name: "LoginDesc", width: 300, editable: false, hidden: false, align: 'left', resizable: true },
+            { name: "LoginID", width: 90, editable: true, align: 'left', hidden: false },
+            { name: "LoginDesc", width: 150, editable: false, hidden: false, align: 'left', resizable: true },
             { name: "EMailId", width: 150, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "BlockSignIn", editable: false, width: 55, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "BlockSignIn", editable: false, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "IsUserAuthenticated", editable: false, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "IsUserDeactivated", editable: false, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             { name: "ActiveStatus", editable: false, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
-                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 55, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="mr-1 btn btn-outline" id="btnEndUserCreation"><i class="fa fa-ellipsis-v"></i></button>'
                 }
@@ -64,7 +65,7 @@ function fnGridLoadUserCreation() {
         forceFit: true,
         caption: localization.UserMaster,
         loadComplete: function (data) {
-            SetGridControlByAction(); fnJqgridSmallScreen("jqgUserCreation");
+            SetGridControlByAction(); fnJqgridSmallScreen("jqgUserCreation"); $("#divBusinessLoc").css('display', 'none');
         },
 
         onSelectRow: function (rowid, status, e) {
@@ -92,6 +93,7 @@ function fnGridRefreshUserCreation() {
 }
 
 function fnGridAddUserCreation() {
+    $("#divBusinessLoc").css('display','none');
     $('#txtUserId').val(''); 
     $('#txtLoginId').val('');
     $("#txtLoginId").attr('disabled', false);
@@ -260,11 +262,14 @@ $("#PopupUserCreation").on('hide.bs.modal', function () {
     $("#userprofile-tab").addClass('active');
     $("#userprofile").addClass('active show');
     $("#imgPhotoimageblah").attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
+    $("#divBusinessLoc").css('display', 'none');
+    fnGridRefreshUserCreation();
 });
 
 $("#PopupUserCreation").on('show.bs.modal', function () {
     $("#video,#canvas").show();
     $("#imgPhotoimageblah").attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==');
+    $("#divBusinessLoc").css('display', 'none');
 });
 
 /*start Tab-2------------------------------------------------------------*/
@@ -370,7 +375,7 @@ function fnGridUserBusinessLocation() {
             { name: "MobileNumber", width: 100, editable: true, align: 'left' },
             { name: "IsdcodeWan", width: 100, editable: true, align: 'left', hidden: true },
             { name: "WhatsappNumber", width: 100, editable: true, align: 'left' },  
-            { name: "AllowMtfy", editable: false, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "AllowMtfy", editable: false, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", editable: false, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
            
             {
@@ -396,7 +401,7 @@ function fnGridUserBusinessLocation() {
         forceFit: true, caption:localization.UserBusinessLocation,
         loadComplete: function () {
             fnJqgridSmallScreen('jqgUserBusinessLocation');
-           
+            $("#divBusinessLoc").css('display', 'none');
         },
 
         onSelectRow: function (rowid, status, e) {
@@ -415,13 +420,15 @@ function fnGridUserBusinessLocation() {
 
 
 function fnAddUserBusinessLocation() {
+    
     fnClearLocationfields();
+    $("#divBusinessLoc").css('display', 'flex');
     $("#chkAllowMTFY").prop('disabled', false);
     $("#chklocationstatus").prop('disabled', false);
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
     $("#btnUserlocationsave").show();
-    $("#btnUserlocationsave").html('Save');
+    $("#btnUserlocationsave").html('<i class="fa fa-save"></i>  ' + localization.Save);
     $("#cboBusinesskey").attr('disabled', false);
     $('#cboBusinesskey').selectpicker('refresh');
     $("#chklocationstatus").parent().addClass("is-checked");
@@ -454,14 +461,14 @@ function fnEditUserBusinessLocation(e, actiontype) {
         $("#chklocationstatus").parent().addClass("is-checked");
     }
     else { $("#chklocationstatus").parent().removeClass("is-checked"); }
- 
+    $("#divBusinessLoc").css('display', 'flex');
     if (actiontype.trim() == "edit") {
         $("#chkAllowMTFY").prop('disabled', false);
         $("#chklocationstatus").prop('disabled', false);
         $("input,textarea").attr('readonly', false);
         $("select").next().attr('disabled', false);
         $("#btnUserlocationsave").show();
-        $("#btnUserlocationsave").html('Update');
+        $("#btnUserlocationsave").html('<i class="fa fa-sync"></i>  ' + localization.Update);
     }
 
     if (actiontype.trim() == "view") {
@@ -486,7 +493,8 @@ function fnClearLocationfields() {
     $("#chklocationstatus").parent().removeClass("is-checked");
     $("#chkAllowMTFY").parent().removeClass("is-checked");
     $("#btnUserlocationsave").attr('disabled', false);
-    $("#btnUserlocationsave").html('Save');
+    $("#btnUserlocationsave").html('<i class="fa fa-save"></i>  ' + localization.Save);
+   
 }
 function fnUserSaveBusinessLocation() {
     
