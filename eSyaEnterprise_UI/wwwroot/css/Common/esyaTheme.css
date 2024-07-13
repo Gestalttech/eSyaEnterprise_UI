@@ -26,7 +26,7 @@
     color: var(--primary-color);
 }
 .treeaction .card-header {
-    background-color: var(--color-primary);
+    background: linear-gradient(to top,var(--black),var(--color-primary));
     color: var(--secondary-color);
 }
 
