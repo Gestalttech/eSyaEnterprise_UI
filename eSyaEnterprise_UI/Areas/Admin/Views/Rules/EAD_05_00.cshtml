@@ -33,6 +33,8 @@
         Delete: '@Localizer["Delete"]',
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
+        OnlyAlphaNumeric25Chars: '@Localizer["OnlyAlphaNumeric25Chars"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -67,7 +69,7 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <div class="form-group">
-                            <label>@Localizer["InventoryRule"] </label>
+                            <label for="cboInventoryRule">@Localizer["InventoryRule"] </label>
                             <select class="selectpicker" id="cboInventoryRule" data-container="body" data-size="5">
                                 <option value="0">@Localizer["SelectRule"] </option>
                                 <option value="F">@Localizer["F"] </option>
@@ -79,14 +81,14 @@
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-12">
                         <div class="form-group">
-                            <label>@Localizer["Description"] </label>
-                            <input id="txtRuleDescription" class="form-control" type="text" autocomplete="off" maxlength="25" />
+                            <label for="txtRuleDescription">@Localizer["Description"] </label>
+                            <input id="txtRuleDescription" class="form-control" type="text" autocomplete="off" maxlength="25" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric25Chars"]' />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <div class="form-group">
-                            <label>@Localizer["RuleinDays"] </label>
-                            <input id="txtRuleInDays" class="form-control numberonly" type="text" autocomplete="off" maxlength="8" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <label for="txtRuleInDays">@Localizer["RuleinDays"] </label>
+                            <input id="txtRuleInDays" class="form-control numberonly" type="text" autocomplete="off" maxlength="8" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
