@@ -208,7 +208,9 @@
 
             });
             if ($("[data-bs-toggle='tooltip']").length) {
-                $("[data-bs-toggle='tooltip']").tooltip();
+                $("[data-bs-toggle='tooltip']").tooltip({
+                    trigger:'focus'
+                });
             }
            
         });

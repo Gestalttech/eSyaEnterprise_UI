@@ -50,17 +50,7 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 .fw-bold, .bold {
     font-family: helvetica-bold;
 }
-.span-usertips {
-    color: #a7a7a7 !important;
-    font-size: xx-small;
-    text-align: center;
-    display: flex;
-    align-items: flex-start;
-    justify-content: start;
-    line-height:16px !important;
-   
-}
-.custom-tooltip {
+.custom-tooltip,.tooltip {
     --bs-tooltip-bg: var(--color-primary);
     --bs-tooltip-color: var(--color-white);
     font-family:helvetica-Bold;

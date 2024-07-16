@@ -607,7 +607,7 @@ height: 30px !important; padding:0px !important;;font-size:0.82rem;}
         font-size: 20px;
     }
 .mdl-layout.is-upgraded .mdl-layout__tab.is-active {
-    color: #94864f !important;
+    color: #555 !important;
     background: #fff !important;
     
 }
@@ -629,6 +629,61 @@ a.mdl-layout__tab:hover {
 .mdl-layout__tab-bar{
     height:60px !important;
 }
+#lblUserWelcome {
+    display: flex;
+    align-items: center;
+    padding-left: 15px !important;
+
+    justify-content: center;
+    font-family: helvetica-Bold;
+    font-size: 1.2rem;
+}
+    #lblUserWelcome span {
+        color: #bb9f00;
+    }
+    .filter-option-inner-inner {
+    font-size: 0.82rem;
+}
+.selectpicker + .btn,
+.selectpicker +
+.btn-light:not(:disabled):not(.disabled).active,
+.selectpicker + .btn-light:not(:disabled):not(.disabled):active,
+.show > .btn-light.dropdown-toggle {
+    padding: 0px !important;
+}
+.bootstrap-select .btn {
+    color: #666666 !important;
+}
+.form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+    padding: 0px !important;
+    padding-left: 0px !important;
+    width: 100% !important;
+}
+.selectpicker + .btn, .selectpicker + .btn-light:not(:disabled):not(.disabled).active, .selectpicker + .btn-light:not(:disabled):not(.disabled):active, .show > .btn-light.dropdown-toggle {
+    padding: 4px;
+    background: var(--color-white);
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    font-size: 13px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+    .selectpicker + .btn:focus, .bootstrap-select.dropdown-toggle:focus {
+        /*border-bottom-color: #0f436f !important;*/
+        outline: 0 !important;
+        transition-duration: .2s;
+        -webkit-box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        box-shadow: none !important;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+    }
 .one-fourth{
     width:25% !important;
     margin-right:5px;

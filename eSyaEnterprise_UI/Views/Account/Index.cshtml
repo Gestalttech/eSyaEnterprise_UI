@@ -42,6 +42,7 @@
     <link href="~/css/common/bootstrap-select.css" rel="stylesheet" />
     <link href="~/css/common/material.min.css" rel="stylesheet" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/login/login.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/common/password.css" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/login/eSyaOTP.css" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyafonts.css" />
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyatheme.css" />
@@ -316,9 +317,10 @@
                              </select>
 
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group pass_show position-relative">
                             <label>@Localizer["EnterYourAnswer"]</label>
-                            <input type="text" id="txtAnswerId" class="form-control" maxlength="250"/>
+                            <input type="password" id="txtAnswerId" class="form-control" maxlength="250"/>
+                            <a href="#" id="viewAnswer"><i class="fa fa-eye-slash"></i></a>
                         </div>
                     </div>
                 </div>
@@ -524,6 +526,11 @@
            // fnSetTheProductImage();
 
         });
+        $(document).on('click', '#viewAnswer', function () {
+            $("#viewAnswer svg").toggleClass("fa-eye-slash fa-eye");
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+        });
+
 
         $(window).on('resize', function () {
            // fnSetTheProductImage();

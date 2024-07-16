@@ -13,14 +13,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="google" content="notranslate">
+    <meta name="description" content="eSya Enterprise" />
     <title>Business Location</title>
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.ico">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/common/material.min.js"></script>
+    <script src="~/js/common/all.min.js"></script>
+    <script src="~/js/common/bootstrap-select.js"></script>
+    <script src="~/js/jquery.inputmask/inputmask.js"></script>
+    <script src="~/js/jquery.inputmask/jquery.inputmask.min.js"></script>
+    <script src="~/js/jquery.inputmask/bindings/inputmask.binding.js"></script>
+    <script src="~/js/Common/toast.js"></script>
+    <script src="~/js/Common/toastr.js"></script>
+    <script src="~/js/Common/eSyaMessageNotification.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/common/animate.css" rel="stylesheet" />
     <link href="~/css/common/all.min.css" rel="stylesheet" />
+    <link href="~/css/common/bootstrap-select.css" rel="stylesheet" />
     <link href="~/css/common/material.min.css" rel="stylesheet" />
-    <link asp-append-version="true" href="~/css/login/login.css" rel="stylesheet" />
-    <link asp-append-version="true" href="~/css/common/esyafonts.css" rel="stylesheet" />
-    <link asp-append-version="true" href="~/css/common/esyatheme.css" rel="stylesheet" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/login/login.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/login/eSyaOTP.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyafonts.css" />
+    <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyatheme.css" />
     @if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
     {
         <link rel="stylesheet" type="text/css" href="~/css/Common/rtl.css">
@@ -29,49 +45,68 @@
 <body>
     <div class="loginContainer">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-sm-none d-md-block padright0 animated fadeIn">
-                <img src="~/images/esya-products-yellow-with-footer.jpg" class="leftImage" alt="eSya Logo" />
+            <div class="col-lg-12 text-center">
+                <img src="~/images/logo/esya-logo-black.png" class="smallDeviceLogo" alt="eSya Logo" />
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-auto col-sm-12 col-xs-12 login-form pad0">
-                <div class="text-center">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-sm-none d-md-block padright0 animated fadeIn">
+                <img src="~/images/esya-products-yellow-with-footer.jpg" class="leftImage" alt="eSya Products" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-auto col-sm-12 col-xs-12 login-form">
+               @*  <div class="text-center">
                     <img src="~/images/logo/esya-logo-black.png" class="smallDeviceLogo" alt="eSya Products" />
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 padtop20">
-                    <h5 class="text-center"> @Localizer["Hi"] <span class="c-red">@User.Identity.Name</span></h5>
-
-                    <form id="BusinessLocation" asp-controller="Account" asp-action="Confirmation" method="post">
+                </div> *@
+                <div class="row h-100 position-relative section-form">
+                    <div class="col-lg-12 col-md-12 col-sm-12 pad0 h-100 mb-0">
+                        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs h-100">
+                            <header class="mdl-layout__header">
+                                <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active" id="lblUserWelcome">
+                                           @Localizer[" Hi "]  <span class="c-secondary bold ps-2"> @User.Identity.Name</span>
+                                    </a>
+                                </div>
+                             </header>
+                            <main class="mdl-layout__content h-100 p-0">
+                                <section class="mdl-layout__tab-panel is-active">
+                                    <div class="page-content">
+                                        <form id="BusinessLocation" asp-controller="Account" asp-action="Confirmation" class="px-3 pb-3" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="row padtop30 padbot15">
-                            <div class="col-lg-12 col-md-12 col-sm-12 padleft0 padright0">
+                        <div class="row form-group">
+                                       
                                 <div class="form-group">
                                     <label class="lable-color">
                                         @Localizer["BusinessSegment"]
                                     </label>
-                                    <select class="selectpicker"
-                                            id="BusinessKey" name="BusinessKey"
-                                            ></select>
+                                    <select class=" selectpicker" id="BusinessKey" name="BusinessKey"></select>
                                 </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 padleft0 padright0">
+                           
                                 <div class="form-group">
                                     <label class="lable-color"> @Localizer["FinancialYear"]</label>
-                                    <select class="selectpicker" id="FinancialYear" name="FinancialYear"></select>
+                                                    <select class=" selectpicker" id="FinancialYear" name="FinancialYear"></select>
                                 </div>
-                            </div>
+                           
                         </div>
-                        <div class="row padtop30">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
                                 <button type="button" class="mdl-button loginButton" tabindex="3" id="btnBack"><i class="fa fa-chevron-left c-grey"></i> @Localizer["Back"]</button>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0 f-right">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6 f-right">
                                 <button type="submit" class="mdl-button loginButton f-right" tabindex="3">
                                     @Localizer["Signin"]  <i class="fas fa-chevron-right"></i>
                                 </button>
                             </div>
                         </div>
                     </form>
+                                </div></section>
+                    </main>
                 </div>
 
+            </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <p class="footer">
+                            <span class="lblPowered">@Localizer["PoweredBy"]</span>
+                            <span class="lblLicensed">@Localizer["LicensedTo"]</span>
+                        </p>
+                    </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 @*<p class="footernote"> &copy;@DateTime.Now.Year Gestalt Technologies Pvt. Ltd </p>*@
@@ -79,11 +114,16 @@
             </div>
         </div>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   @*  <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/common/material.min.js"></script>
     <script src="~/js/common/all.min.js"></script>
-    <script src="~/js/common/bootstrap-select.js"></script>
+    <script src="~/js/common/bootstrap-select.js"></script> *@
+    <script>
+        $("#btnBack").click(function () {
+            history.back();
+        })
+    </script>
 </body>
 </html>
