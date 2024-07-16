@@ -114,6 +114,18 @@ body {
     padding: 0px;
     background: #FFF;
 }
+.bootstrap-select .dropdown-menu ul > li > a {
+    padding: 0px 10px !important;
+    line-height: 32px !important;
+    font-size: 12px;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background: rgb(239, 223, 141) !important;
+    color: #000 !important;
+}
+    .dropdown-item.active:hover {
+        background: rgb(239, 223, 141) !important;
+    }
 
 .footer {
     color: #000000;
