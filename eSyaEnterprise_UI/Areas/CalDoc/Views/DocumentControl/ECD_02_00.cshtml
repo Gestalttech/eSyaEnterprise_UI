@@ -57,6 +57,8 @@
         DocumentControlManagement: '@Localizer["DocumentControlManagement"]',
         UsageStatus: '@Localizer["UsageStatus"]',
         ActiveStatus: '@Localizer["ActiveStatus"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
+        OnlyAlphaNumeric10Chars: '@Localizer["OnlyAlphaNumeric10Chars"]',
     };
     var errorMsg = {
         editauth_E3: '@Localizer["UIC02"]',
@@ -120,7 +122,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" hidden>
                                 <div class="form-group">
                                  
-                                    <input id="txtComboId" class="form-control numberonly" type="text" autocomplete="off" maxlength="9" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                                    <input id="txtComboId" class="form-control numberonly" type="text" autocomplete="off" maxlength="9" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
 
                                 </div>
                             </div>
@@ -168,7 +170,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="txtSchemaName">@Localizer["Schema"] </label>
-                                    <input id="txtSchemaName" class="form-control" type="text" autocomplete="off" maxlength="10" />
+                                    <input id="txtSchemaName" class="form-control" type="text" autocomplete="off" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Chars"]' />
                                 </div>
                             </div>
                             @* <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

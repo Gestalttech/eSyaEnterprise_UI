@@ -39,8 +39,11 @@
         AddDocumentControlMaster: '@Localizer["AddDocumentControlMaster"]',
         UpdateDocumentControlMaster: '@Localizer["UpdateDocumentControlMaster"]',
         ViewDocumentControlMaster: '@Localizer["ViewDocumentControlMaster"]',
-
-    }
+        OnlyAlphabets: '@Localizer["OnlyAlphabets"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
+        OnlyAlphaNumeric4Chars: '@Localizer["OnlyAlphaNumeric4Chars"]',
+        OnlyAlphaNumeric50Chars: '@Localizer["OnlyAlphaNumeric50Chars"]',
+     }
     var errorMsg = {
         DocumentID_E1: '@Localizer["UI0017"]',
         DocumenType_E2: '@Localizer["UI0018"]',
@@ -72,25 +75,25 @@
                      <div class="col-lg-6 col-6">
                         <div class="form-group">
                             <label for="txtDocumentId">@Localizer["DocumentId"]</label>
-                            <input type="text" class="form-control numberonly" maxlength="4" id="txtDocumentId" />
+                            <input type="text" class="form-control numberonly" maxlength="4" id="txtDocumentId" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-6">
                         <div class="form-group">
                             <label for="txtShortDesc">@Localizer["ShortDescription"]</label>
-                            <input type="text" class="form-control" maxlength="4" id="txtShortDesc" />
+                            <input type="text" class="form-control" maxlength="4" id="txtShortDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric4Chars"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-6">
                         <div class="form-group">
                             <label for="txtDocumentDesc">@Localizer["DocumentDescription"]</label>
-                            <input type="text" class="form-control" maxlength="50" id="txtDocumentDesc" />
+                            <input type="text" class="form-control" maxlength="50" id="txtDocumentDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Chars"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-6">
                         <div class="form-group">
-                            <label for="txtCodeType">@Localizer["DocumentType"]</label>
-                            <input type="text" class="form-control" maxlength="1" id="txtDocumentType" />
+                            <label for="txtDocumentType">@Localizer["DocumentType"]</label>
+                            <input type="text" class="form-control" maxlength="1" id="txtDocumentType" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
                         </div>
                     </div>
                     

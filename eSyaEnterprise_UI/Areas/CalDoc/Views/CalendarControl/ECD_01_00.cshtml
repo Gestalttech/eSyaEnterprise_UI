@@ -27,6 +27,7 @@
         CalendarHeader: '@Localizer["CalendarHeader"]',
         StartMonth: '@Localizer["StartMonth"]',
         CalendarKey: '@Localizer["CalendarKey"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -65,8 +66,8 @@
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["Year"]</label>
-                            <input class="form-control decimal" type="text" maxlength="4" id="txtyear" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <label for="txtyear">@Localizer["Year"]</label>
+                            <input class="form-control decimal" type="text" maxlength="4" id="txtyear" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
 
                         </div>
                     </div>
@@ -74,7 +75,7 @@
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["CalendarType"]</label>
+                            <label for="cboCalendarType">@Localizer["CalendarType"]</label>
                             <select class="selectpicker" id="cboCalendarType" data-container="body" data-size="4" onchange="fnCalendarType_Onchange()">
                                 <option value="0">Choose Calendar Type </option>
                                 <option value="FY">Financial Year</option>
@@ -86,14 +87,14 @@
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["FromDate"]</label>
+                            <label for="txtCalDefFRMDate">@Localizer["FromDate"]</label>
                             <input id="txtCalDefFRMDate" class="form-control" type="date" autocomplete="off" />
 
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label>@Localizer["TillDate"]</label>
+                            <label for="txtCalDefTillDate">@Localizer["TillDate"]</label>
                             <input id="txtCalDefTillDate" class="form-control" type="date" autocomplete="off" disabled />
                         </div>
                     </div>
