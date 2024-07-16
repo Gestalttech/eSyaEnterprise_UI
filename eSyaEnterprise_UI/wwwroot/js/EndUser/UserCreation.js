@@ -432,6 +432,8 @@ function fnAddUserBusinessLocation() {
     $("#cboBusinesskey").attr('disabled', false);
     $('#cboBusinesskey').selectpicker('refresh');
     $("#chklocationstatus").parent().addClass("is-checked");
+    $("#cboUserMobileNumber").next().attr('disabled', true);
+    $("#cboUserWhatsAppNumber").next().attr('disabled', true);
 }
 function fnEditUserBusinessLocation(e, actiontype) {
    
@@ -449,9 +451,11 @@ function fnEditUserBusinessLocation(e, actiontype) {
 
     $("#cboPreferredLanguage").val(rowData.PreferredLanguage).selectpicker('refresh');
     $("#cboUserMobileNumber").val(rowData.Isdcode).selectpicker('refresh');
+    
     $("#txtUserMobileNumber").val(rowData.MobileNumber);
     $("#cboUserWhatsAppNumber").val(rowData.IsdcodeWan).selectpicker('refresh');
     $("#txtUserWhatsAppNumber").val(rowData.WhatsappNumber);
+    
     if (rowData.AllowMtfy === "true") {
         $("#chkAllowMTFY").parent().addClass("is-checked");
     }
@@ -463,19 +467,26 @@ function fnEditUserBusinessLocation(e, actiontype) {
     else { $("#chklocationstatus").parent().removeClass("is-checked"); }
     $("#divBusinessLoc").css('display', 'flex');
     if (actiontype.trim() == "edit") {
+        
         $("#chkAllowMTFY").prop('disabled', false);
         $("#chklocationstatus").prop('disabled', false);
         $("input,textarea").attr('readonly', false);
         $("select").next().attr('disabled', false);
+        $("#cboUserMobileNumber").next().attr('disabled', true);
+        $("#cboUserWhatsAppNumber").next().attr('disabled', true);
         $("#btnUserlocationsave").show();
         $("#btnUserlocationsave").html('<i class="fa fa-sync"></i>  ' + localization.Update);
+
     }
 
     if (actiontype.trim() == "view") {
+       
         $("#chkAllowMTFY").prop('disabled', true);
         $("#chklocationstatus").prop('disabled', true);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
+        $("#cboUserMobileNumber").next().attr('disabled', true);
+        $("#cboUserWhatsAppNumber").next().attr('disabled', true);
         $("#btnUserlocationsave").hide();
     }
 }

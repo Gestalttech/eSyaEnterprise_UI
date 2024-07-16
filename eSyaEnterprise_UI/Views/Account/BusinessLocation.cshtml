@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @using System.Globalization;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @model LoginViewModel
 @{
@@ -76,12 +77,20 @@
                                     <label class="lable-color">
                                         @Localizer["BusinessSegment"]
                                     </label>
-                                    <select class=" selectpicker" id="BusinessKey" name="BusinessKey"></select>
-                                </div>
+                                    @* <select class=" selectpicker" id="BusinessKey" name="BusinessKey"></select> *@
+                                                    <select class="selectpicker" data-live-search="true" data-container="body" id="BusinessKey" name="BusinessKey" data-size="8"
+                                                            asp-items="@ViewBag.BK">
+                                                    </select>
+
+
+                                                </div>
                            
                                 <div class="form-group">
                                     <label class="lable-color"> @Localizer["FinancialYear"]</label>
-                                                    <select class=" selectpicker" id="FinancialYear" name="FinancialYear"></select>
+                              @*  <select class=" selectpicker" id="FinancialYear" name="FinancialYear"></select> *@
+                                                    <select class="selectpicker" data-live-search="true" data-container="body" id="FinancialYear" name="FinancialYear" data-size="8"
+                                                            asp-items="@ViewBag.FY">
+                                                    </select>
                                 </div>
                            
                         </div>
@@ -113,6 +122,7 @@
 
             </div>
         </div>
+    </div>
     </div>
    @*  <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/popper.min.js"></script>

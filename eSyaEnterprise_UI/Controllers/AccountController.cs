@@ -377,7 +377,7 @@ namespace eSyaEnterprise_UI.Controllers
                 model.FinancialYear = Convert.ToInt32(model.l_FinancialYear.Where(w => w.Selected).FirstOrDefault().Value);
 
             ViewBag.BK = model.l_BusinessKey;
-
+            ViewBag.FY = model.l_FinancialYear;
 
             TempData.Keep();
 
