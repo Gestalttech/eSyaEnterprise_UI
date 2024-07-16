@@ -119,6 +119,10 @@ body {
     line-height: 32px !important;
     font-size: 12px;
 }
+.dropdown-menu {
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border: none !important;
+}
 .dropdown-item.active, .dropdown-item:active {
     background: rgb(239, 223, 141) !important;
     color: #000 !important;
