@@ -404,7 +404,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     { 
         //new CultureInfo("en-IN"),
         new CultureInfo("en-US"),
-        new CultureInfo("ar-EG")
+        new CultureInfo("hi-IN"),
+        new CultureInfo("ar-EG"),
     };
 
     options.DefaultRequestCulture = new RequestCulture("en-US");

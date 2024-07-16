@@ -49,7 +49,7 @@
 <body>
     <div class="languageDiv form-group">
         <i class="fa fa-globe"></i>
-        @await Html.PartialAsync("_SelectLanguage")
+        @await Html.PartialAsync("_SelectLanguage", ViewData["cultureResponse"])
     </div>
     <div class="loginContainer">
         <div class="row">

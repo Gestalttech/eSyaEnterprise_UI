@@ -57,9 +57,9 @@ namespace eSyaEnterprise_UI.Controllers
                 HttpContext.Session.Set("AppConfig", appConfig);
 
                 SetLoginApplicationRuleInViewBag();
-
+                var cultureResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_eSyaLoginCulture>>("ApplicationRules/GetActiveCultures");
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_AppCodes>>("Common/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.SecurityQuestions);
-                if (serviceResponse.Status)
+                if (serviceResponse.Status && cultureResponse.Status)
                 {
                     ViewBag.QuestionList = serviceResponse.Data.Select(b => new SelectListItem
                     {
@@ -67,6 +67,13 @@ namespace eSyaEnterprise_UI.Controllers
                         Text = b.CodeDesc,
                     }).ToList();
 
+                    var cultures = cultureResponse.Data.Select(b => new SelectListItem
+                    {
+                        Value = b.CultureCode.ToString(),
+                        Text = b.CultureDesc,
+                    }).ToList();
+
+                    ViewData["cultureResponse"] = new SelectList(cultures, "Value", "Text");
                     return View();
                 }
                 else
@@ -483,8 +490,12 @@ namespace eSyaEnterprise_UI.Controllers
             //    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
             //new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
             //);
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar-EG");
 
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
+            //Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+            ViewBag.selectedculture = culture;
             return LocalRedirect(returnUrl);
         }
 
