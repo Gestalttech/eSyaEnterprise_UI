@@ -21,17 +21,15 @@ function fnGridLoadGateWayRules() {
     $("#jqgGateWayRules").GridUnload();
 
     $("#jqgGateWayRules").jqGrid({
-        //url: getBaseURL() + '/GWayRules/GetGateWayRules',
-        url:'',
+        url: getBaseURL() + '/GWayRules/GetGatewayRules',
         datatype: 'json',
         mtype: 'POST',
-        contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.GwruleId, localization.Gwdesc, localization.RuleValue, localization.Active, localization.Actions],
         colModel: [
             { name: "GwruleId", width: 50, align: 'left', editable: false,resizable: false, hidden: true },
             { name: "Gwdesc", width: 180, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "RuleValue", editable: false, align: 'left', width: 120, edittype: "select", resizable: false, formatter: 'select'},
+            { name: "RuleValue", editable: false, align: 'left', width: 50},
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -73,7 +71,7 @@ function fnGridLoadGateWayRules() {
 }
 
 function fnAddGateWayRules() {
-    _isInsert = true;
+    
     fnClearFields();
     $('#PopupGateWayRules').modal('show');
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -102,7 +100,7 @@ function fnEditGateWayRules(e, actiontype) {
     }
     $("#btnSaveGateWayRules").attr("disabled", false);
     
-    _isInsert = false;
+   
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
@@ -165,7 +163,7 @@ function fnEditGateWayRules(e, actiontype) {
     }
 }
 
-var _isInsert = true;
+
 function fnSaveGateWayRules() {
     if (IsStringNullorEmpty($("#txtGwDescription").val())) {
         fnAlert("w", "EPS_20_00", "UI0359", errorMsg.GateWayRulesDesc_E1);
@@ -177,7 +175,7 @@ function fnSaveGateWayRules() {
         document.getElementById("txtRuleValue").focus();
         return;
     }
-    gw_rules = {
+    obj = {
         GwruleId: $("#txtGwruleId").val(),
         Gwdesc: $("#txtGwDescription").val(),
         RuleValue: $("#txtRuleValue").val(),
@@ -187,10 +185,10 @@ function fnSaveGateWayRules() {
     $("#btnSaveGateWayRules").attr("disabled", true);
 
     $.ajax({
-        url: getBaseURL() + '/ApplicationCodes/InsertOrUpdateCodeTypes',
+        url: getBaseURL() + '/GWayRules/InsertOrUpdateGatewayRules',
         type: 'POST',
         datatype: 'json',
-        data: { isInsert: _isInsert, gw_rules: gw_rules },
+        data: { obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -216,6 +214,7 @@ function fnGridRefreshGateWayRules() {
 }
 
 function fnClearFields() {
+    $("#txtGwruleId").val('')
     $("#txtGwDescription").val('')
     $("#txtRuleValue").val(''),
     $("#chkActiveStatus").prop('disabled', false);
@@ -250,7 +249,7 @@ function fnDeleteGateWayRules() {
     }
     $("#btndeactiveGateWayRules").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/ApplicationCodes/ActiveOrDeActiveGateWayRules?status=' + a_status + '&code_type=' + $("#txtGateWayRules").val(),
+        url: getBaseURL() + '/GwayRules/ActiveOrDeActiveGatewayRules?status=' + a_status + '&GwRuleId=' + $("#txtGwruleId").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
