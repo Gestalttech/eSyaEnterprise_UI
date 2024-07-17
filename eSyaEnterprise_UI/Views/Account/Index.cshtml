@@ -51,7 +51,7 @@
 <body>
     <div class="languageDiv form-group">
         <i class="fa fa-globe"></i>
-        @await Html.PartialAsync("_SelectLanguage", ViewData["cultureResponse"])
+        @await Html.PartialAsync("_SelectLanguage", ViewBag.CultureResponse as IEnumerable<SelectListItem>)
     </div>
     <div class="loginContainer">
         <div class="row">

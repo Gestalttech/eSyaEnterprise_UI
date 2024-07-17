@@ -73,7 +73,9 @@ namespace eSyaEnterprise_UI.Controllers
                         Text = b.CultureDesc,
                     }).ToList();
 
-                    ViewData["cultureResponse"] = new SelectList(cultures, "Value", "Text");
+                    //ViewData["cultureResponse"] = new SelectList(cultures, "Value", "Text");
+                    ViewBag.CultureResponse = cultures;
+
                     return View();
                 }
                 else

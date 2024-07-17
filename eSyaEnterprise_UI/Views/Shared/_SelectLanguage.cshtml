@@ -29,15 +29,17 @@
        
     </form>
 </div> *@
-
+@model IEnumerable<SelectListItem>
 <div>
     <form id="selectLanguage" asp-controller="Account"
           asp-action="SetLanguage" asp-route-returnUrl="@returnUrl"
           method="post" class="form-horizontal" role="form">
         <label  class="d-inline">@Localizer["Language:"]</label>
         @* <select class="d-inline" data-container="body" id="cboCulture" name="culture" onchange="this.form.submit();" data-size="2"  asp-items="@(IEnumerable<SelectListItem>)@ViewData["cultureResponse"]"> *@
-        <select class="d-inline"  data-container="body" id="cboCulture" name="culture" onchange="fnChange()" asp-items='@(IEnumerable<SelectListItem>)@ViewData["cultureResponse"]'>
-          </select>
+       @*  <select class="d-inline"  data-container="body" id="cboCulture" name="culture" onchange="fnChange()" asp-items='@(IEnumerable<SelectListItem>)@ViewData["cultureResponse"]'>
+          </select> *@
+        <select class="d-inline" data-container="body" id="cboCulture" name="culture" onchange="fnChange()" asp-items="Model">
+        </select>
     </form>
 </div> 
 
