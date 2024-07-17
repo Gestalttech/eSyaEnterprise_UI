@@ -35,6 +35,8 @@
         Deactivate: '@Localizer["Deactivate"]',
         ApplicationCode: '@Localizer["ApplicationCode"]',
         Control: '@Localizer["Control"]',
+        OnlyAlphaNumeric50Chars: '@Localizer["OnlyAlphaNumeric50Chars"]',
+        OnlyAlphaNumeric15Chars: '@Localizer["OnlyAlphaNumeric15Chars"]',
     };
     var errorMsg = {
         DrugClassDesc_E1: '@Localizer["UI0011"]',
@@ -101,14 +103,14 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label> @Localizer["Description"]</label>
-                            <input id="txtApplicationCodeDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                            <input id="txtApplicationCodeDescription" class="form-control" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Chars"]' />
 
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label> @Localizer["ShortCode"]</label>
-                            <input id="txtShortCode" class="form-control" type="text" autocomplete="off" maxlength="15" />
+                            <input id="txtShortCode" class="form-control" type="text" autocomplete="off" maxlength="15" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric15Chars"]' />
 
                         </div>
                     </div>

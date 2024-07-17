@@ -70,11 +70,11 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 form-group">
                         <label> @Localizer["FormCode"] </label>
-                        <input type="text" class="form-control " id="txtFormCode" maxlength="10" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title=@Localizer["OnlyAlphaNumeric10Chars"] />
+                        <input type="text" class="form-control " id="txtFormCode" maxlength="10" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Chars"]' />
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-8 form-group">
                         <label>  @Localizer["FormDesc"] </label>
-                        <input type="text" class="form-control " id="txtFormDescription" maxlength="50" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title=@Localizer["OnlyAlphaNumeric50Chars"] />
+                        <input type="text" class="form-control " id="txtFormDescription" maxlength="50" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Chars"]'/>
                     </div>
                 </div>
                 <div class="row" style="display:none">
@@ -86,7 +86,7 @@
                 <div class="row mb-8">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <label> @Localizer["ToolTip"]</label>
-                        <input id="txtToolTip" class="form-control" maxlength="250" type="text" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title=@Localizer["OnlyAlphaNumeric250Chars"] />
+                        <input id="txtToolTip" class="form-control" maxlength="250" type="text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title='@Localizer["OnlyAlphaNumeric250Chars"]'/>
                     </div>
                 </div>
                 @*<div class="row ">
@@ -261,6 +261,7 @@
         FormSubParameter: '@Localizer["FormSubParameter"]',
         OnlyAlphaNumeric50Chars: '@Localizer["OnlyAlphaNumeric50Chars"]',
         OnlyAlphaNumeric10Chars: '@Localizer["OnlyAlphaNumeric10Chars"]',
+        OnlyAlphaNumeric250Chars: '@Localizer["OnlyAlphaNumeric250Chars"]',
     };
 
     var errorMsg = {

@@ -40,7 +40,9 @@
         AddAgeRange: '@Localizer["AddAgeRange"]',
         Delete: '@Localizer["Delete"]',
         Activate: '@Localizer["Activate"]',
-        DActivate: '@Localizer["DActivate"]',
+        DActivate: '@Localizer["Deactivate"]',
+        OnlyAlphaNumeric50Chars: '@Localizer["OnlyAlphaNumeric50Chars"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -61,7 +63,6 @@
 </div>
 
 <div class="modal fade in" id="PopupAgeRange" data-bs-keyboard="false" data-bs-backdrop="static">
-
     <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
@@ -71,20 +72,18 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                        <input type="text" class="form-control" id="txtAgeRangeId" name="AgeRangeId" hidden />
-
+                         <input type="text" class="form-control" id="txtAgeRangeId" name="AgeRangeId" hidden />
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>@Localizer["RangeDesc"]</label>
-                            <input type="text" class="form-control" id="txtRangeDesc" />
+                            <input type="text" class="form-control" id="txtRangeDesc" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Chars"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>@Localizer["AgeRangeFrom"]</label>
-                            <input type="text" class="form-control numberonly" id="txtAgeRangeFrom" maxlength="3" />
+                            <input type="text" class="form-control numberonly" id="txtAgeRangeFrom" maxlength="3" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -93,18 +92,12 @@
                             <select class="selectpicker" data-live-search="true" id="cboRangeFromPeriod" data-container="body" title="Choose Payment Method" data-size="8" asp-items="@ViewBag.RangePeriod">
                                 <option value="0">@Localizer["ChooseRangeFromPeriod"] </option>
                             </select>
-
-                            @* <select class="selectpicker" id="cboRangeFromPeriod" data-container="body" data-size="5">
-                                <option value="0">Choose Range From Period </option>
-                                <option value="Y">Year</option>
-                                <option value="D">Day</option>
-                            </select> *@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label>@Localizer["AgeRangeTo"]</label>
-                            <input type="text" class="form-control numberonly" id="txtAgeRangeTo" maxlength="3" />
+                            <input type="text" class="form-control numberonly" id="txtAgeRangeTo" maxlength="3" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -113,12 +106,7 @@
                             <select class="selectpicker" data-live-search="true" id="cboRangeToPeriod" data-container="body" title="Choose Payment Method" data-size="8" asp-items="@ViewBag.RangePeriod">
                                 <option value="0">@Localizer["ChooseRangeToPeriod"] </option>
                             </select>
-                            @* <select class="selectpicker" id="cboRangeToPeriod" data-container="body" data-size="5">
-                                <option value="0">Choose Range To Period </option>
-                                <option value="Y">Year</option>
-                                <option value="D">Day</option>
-                            </select> *@
-                        </div>
+                         </div>
                     </div>
 
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
@@ -135,7 +123,6 @@
                         <button class="mdl-button  primary-button" id="btnSaveAgeRange" onclick="fnSaveAgeRange()"><i class="fa fa-save"></i> @Localizer["Save"]   </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelAgeRange"> <i class="fa fa-times"></i> @Localizer["Cancel"] </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveAgeRange" onclick="fnDeleteAgeRange();"><i class="fa fa-times"></i> @Localizer["DeActivate"] </button>
-
                     </div>
                 </div>
             </div>

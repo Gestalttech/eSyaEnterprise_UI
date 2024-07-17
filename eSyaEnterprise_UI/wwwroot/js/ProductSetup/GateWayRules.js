@@ -18,38 +18,30 @@ $(document).ready(function () {
 var actiontype = "";
 function fnGridLoadGateWayRules() {
 
-    $("#jqgCodeType").GridUnload();
+    $("#jqgGateWayRules").GridUnload();
 
-    $("#jqgCodeType").jqGrid({
-        url: getBaseURL() + '/ApplicationCodes/GetGateWayRules',
+    $("#jqgGateWayRules").jqGrid({
+        //url: getBaseURL() + '/GWayRules/GetGateWayRules',
+        url:'',
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.CodeType, localization.Description, localization.Control, localization.Active, localization.Actions],
+        colNames: [localization.GwruleId, localization.Gwdesc, localization.RuleValue, localization.Active, localization.Actions],
         colModel: [
-            { name: "CodeType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
-            { name: "CodeTypeDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "CodeTypeControl", editable: true, align: 'left', width: 120, edittype: "select", resizable: false, formatter: 'select', editoptions: { value: "S: System Defined;U: User Defined" } },
-            { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: 'edit', search: false, align: 'left', width:88 , sortable: false, resizable: false,
-            //    formatter: function (cellValue, options, rowdata, action) {
-            //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditGateWayRules(event,\'edit\');"><i class="fas fa-pen"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnEditGateWayRules(event,\'view\');"><i class="far fa-eye"></i></button>'+
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Delete" id="jqgDelete" onclick="return fnEditGateWayRules(event,\'delete\');"><i class="fas fa-trash"></i></button>'
-            //    }
-            //},
+            { name: "GwruleId", width: 50, align: 'left', editable: false,resizable: false, hidden: true },
+            { name: "Gwdesc", width: 180, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "RuleValue", editable: false, align: 'left', width: 120, edittype: "select", resizable: false, formatter: 'select'},
+            { name: "ActiveStatus", width: 35, editable: false, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline" id="btnCodeType"><i class="fa fa-ellipsis-v"></i></button>'
-                    // return `<button class="mr-1 btn btn-outline" id="btnCodeType"><span class="material-symbols-outlined">more_vert</span ></button>`
+                    return '<button class="mr-1 btn btn-outline" id="btnGateWayRules"><i class="fa fa-ellipsis-v"></i></button>'
                 }
             },
         ],
 
-        pager: "#jqpCodeType",
+        pager: "#jqpGateWayRules",
         rowNum: 10,
         rowList: [10, 20, 50, 100],
         rownumWidth: '55',
@@ -63,49 +55,19 @@ function fnGridLoadGateWayRules() {
         autowidth: true,
         shrinkToFit: true,
         forceFit: true,
-        caption: localization.CodeType,
+        caption: localization.GateWayRules,
         loadComplete: function (data) {
-            SetGridControlByAction(); fnJqgridSmallScreen("jqgCodeType");
+            SetGridControlByAction(); fnJqgridSmallScreen("jqgGateWayRules");
         },
         loadBeforeSend: function () {
             $("[id*='_edit']").css('text-align', 'center');
         },
         onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        },
-    }).jqGrid('navGrid', '#jqpCodeType', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpCodeType', {
+           },
+    }).jqGrid('navGrid', '#jqpGateWayRules', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpGateWayRules', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshGateWayRules
-    }).jqGrid('navButtonAdd', '#jqpCodeType', {
+    }).jqGrid('navButtonAdd', '#jqpGateWayRules', {
         caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddGateWayRules
-    });
-
-    $(window).on("resize", function () {
-        var $grid = $("#jqgCodeType"),
-            newWidth = $grid.closest(".codetypecontainer").parent().width();
-        $grid.jqGrid("setGridWidth", newWidth, true);
     });
     fnAddGridSerialNoHeading();
 }
@@ -115,31 +77,31 @@ function fnAddGateWayRules() {
     fnClearFields();
     $('#PopupGateWayRules').modal('show');
     $("#chkActiveStatus").parent().addClass("is-checked");
-    $('#PopupGateWayRules').find('.modal-title').text(localization.AddCodeType);
-    $("#btnSaveCodeType").html('<i class="fa fa-save"></i>' + localization.Save);
+    $('#PopupGateWayRules').find('.modal-title').text(localization.AddGateWayRules);
+    $("#btnSaveGateWayRules").html('<i class="fa fa-save"></i>' + localization.Save);
     $("#chkActiveStatus").prop('disabled', true);
-    $("#btnSaveCodeType").show();
-    $("#btndeActiveCodeType").hide();
+    $("#btnSaveGateWayRules").show();
+    $("#btndeactiveGateWayRules").hide();
 }
 
 function fnEditGateWayRules(e, actiontype) {
-    var rowid = $("#jqgCodeType").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqgCodeType').jqGrid('getRowData', rowid);
+    var rowid = $("#jqgGateWayRules").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgGateWayRules').jqGrid('getRowData', rowid);
     var _selectedRow = $("#" + rowid).offset();
     var firstRow = $("tr.ui-widget-content:first").offset();
     $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
-    $('#txtCodeType').val(rowData.CodeType);
-    $('#txtCodeDescription').val(rowData.CodeTypeDesc);
-    $('#cboCodeTypeControl').val(rowData.CodeTypeControl);
-    $('#cboCodeTypeControl').selectpicker('refresh');
+    $('#txtGwruleId').val(rowData.GwruleId);
+    $('#txtGwDescription').val(rowData.Gwdesc);
+    $('#txtRuleValue').val(rowData.RuleValue);
+   
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
     }
     else {
         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
-    $("#btnSaveCodeType").attr("disabled", false);
-    $("#txtCodeType").attr("readonly", "readonly");
+    $("#btnSaveGateWayRules").attr("disabled", false);
+    
     _isInsert = false;
 
     if (actiontype.trim() == "edit") {
@@ -148,11 +110,11 @@ function fnEditGateWayRules(e, actiontype) {
             return;
         }
         $('#PopupGateWayRules').modal('show');
-        $('#PopupGateWayRules').find('.modal-title').text(localization.UpdateCodeType);
-        $("#btnSaveCodeType").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
-        $("#btndeActiveCodeType").hide();
+        $('#PopupGateWayRules').find('.modal-title').text(localization.UpdateGateWayRules);
+        $("#btnSaveGateWayRules").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btndeactiveGateWayRules").hide();
         $("#chkActiveStatus").prop('disabled', true);
-        $("#btnSaveCodeType").attr("disabled", false);
+        $("#btnSaveGateWayRules").attr("disabled", false);
     }
 
     if (actiontype.trim() == "view") {
@@ -161,15 +123,15 @@ function fnEditGateWayRules(e, actiontype) {
             return;
         }
         $('#PopupGateWayRules').modal('show');
-        $('#PopupGateWayRules').find('.modal-title').text(localization.ViewCodeType);
-        $("#btnSaveCodeType").attr("disabled", false);
+        $('#PopupGateWayRules').find('.modal-title').text(localization.ViewGateWayRules);
+        $("#btnSaveGateWayRules").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
-        $("#btnSaveCodeType").hide();
-        $("#btndeActiveCodeType").hide();
+        $("#btnSaveGateWayRules").hide();
+        $("#btndeactiveGateWayRules").hide();
         $("#chkActiveStatus").prop('disabled', true);
         $("#PopupGateWayRules").on('hidden.bs.modal', function () {
-            $("#btnSaveCodeType").show();
+            $("#btnSaveGateWayRules").show();
             $("input,textarea").attr('readonly', false);
             $("select").next().attr('disabled', false);
         });
@@ -180,23 +142,23 @@ function fnEditGateWayRules(e, actiontype) {
             return;
         }
         $('#PopupGateWayRules').modal('show');
-        $('#PopupGateWayRules').find('.modal-title').text(localization.DeleteCodeType);
-        $("#btnSaveCodeType").attr("disabled", false);
+        $('#PopupGateWayRules').find('.modal-title').text(localization.DeleteGateWayRules);
+        $("#btnSaveGateWayRules").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
-        $("#btnSaveCodeType").hide();
+        $("#btnSaveGateWayRules").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveCodeType").html(localization.DeActivate);
+            $("#btndeactiveGateWayRules").html(localization.DeActivate);
         }
         else {
-            $("#btndeActiveCodeType").html(localization.Activate);
+            $("#btndeactiveGateWayRules").html(localization.Activate);
         }
 
-        $("#btndeActiveCodeType").show();
+        $("#btndeactiveGateWayRules").show();
         $("#chkActiveStatus").prop('disabled', true);
         $("#PopupGateWayRules").on('hidden.bs.modal', function () {
-            $("#btnSaveCodeType").show();
+            $("#btnSaveGateWayRules").show();
             $("input,textarea").attr('readonly', false);
             $("select").next().attr('disabled', false);
         });
@@ -204,67 +166,65 @@ function fnEditGateWayRules(e, actiontype) {
 }
 
 var _isInsert = true;
-function fnSaveCodeType() {
-    if (IsStringNullorEmpty($("#txtCodeType").val())) {
-        fnAlert("w", "EPS_20_00", "UI0001", errorMsg.codeType_E1);
+function fnSaveGateWayRules() {
+    if (IsStringNullorEmpty($("#txtGwDescription").val())) {
+        fnAlert("w", "EPS_20_00", "UI0359", errorMsg.GateWayRulesDesc_E1);
+        document.getElementById("txtGwDescription").focus();
         return;
     }
-    if (IsStringNullorEmpty($("#txtCodeDescription").val())) {
-        fnAlert("w", "EPS_20_00", "UI0002", errorMsg.codedesc_E2);
+    if (IsStringNullorEmpty($("#txtRuleValue").val())) {
+        fnAlert("w", "EPS_20_00", "UI0360", errorMsg.RuleValueId_E2);
+        document.getElementById("txtRuleValue").focus();
         return;
     }
-    ct_type = {
-        CodeType: $("#txtCodeType").val() === '' ? 0 : $("#txtCodeType").val(),
-        CodeTypeDesc: $("#txtCodeDescription").val(),
-        CodeTypeControl: $("#cboCodeTypeControl").val(),
+    gw_rules = {
+        GwruleId: $("#txtGwruleId").val(),
+        Gwdesc: $("#txtGwDescription").val(),
+        RuleValue: $("#txtRuleValue").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
-    $("#btnSaveCodeType").attr("disabled", true);
+    $("#btnSaveGateWayRules").attr("disabled", true);
 
     $.ajax({
         url: getBaseURL() + '/ApplicationCodes/InsertOrUpdateCodeTypes',
         type: 'POST',
         datatype: 'json',
-        data: { isInsert: _isInsert, ct_type: ct_type },
+        data: { isInsert: _isInsert, gw_rules: gw_rules },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveCodeType").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btnSaveGateWayRules").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#PopupGateWayRules").modal('hide');
                 fnClearFields();
                 fnGridRefreshGateWayRules();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveCodeType").attr("disabled", false);
+                $("#btnSaveGateWayRules").attr("disabled", false);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveCodeType").attr("disabled", false);
+            $("#btnSaveGateWayRules").attr("disabled", false);
         }
     });
 }
 
 function fnGridRefreshGateWayRules() {
-    $("#jqgCodeType").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#jqgGateWayRules").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
 function fnClearFields() {
-    $("#txtCodeType").removeAttr("readonly");
-    $("#txtCodeType").val('');
-    $("#txtCodeDescription").val('');
-    $('#cboCodeTypeControl').val("S");
-    $('#cboCodeTypeControl').selectpicker('refresh');
-    $('#chkDefaultStatus').prop('checked', true);
+    $("#txtGwDescription").val('')
+    $("#txtRuleValue").val(''),
     $("#chkActiveStatus").prop('disabled', false);
-    $("#btnSaveCodeType").attr("disabled", false);
-    $("#btndeActiveCodeType").attr("disabled", false);
+    $("#btnSaveGateWayRules").attr("disabled", false);
+    $("#btndeactiveGateWayRules").attr("disabled", false);
 }
 
-$("#btnCancelCodeType").click(function () {
-    $("#jqgCodeType").jqGrid('resetSelection');
+$("#btnCancelGateWayRules").click(function () {
+    $("#jqgGateWayRules").jqGrid('resetSelection');
     $('#PopupGateWayRules').modal('hide');
     fnClearFields();
 });
@@ -279,39 +239,38 @@ function SetGridControlByAction() {
 
 }
 
-function fnDeleteCodeType() {
+function fnDeleteGateWayRules() {
 
     var a_status;
-    //Activate or De Activate the status
-    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
+   if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
         a_status = false
     }
     else {
         a_status = true;
     }
-    $("#btndeActiveCodeType").attr("disabled", true);
+    $("#btndeactiveGateWayRules").attr("disabled", true);
     $.ajax({
-        url: getBaseURL() + '/ApplicationCodes/ActiveOrDeActiveGateWayRules?status=' + a_status + '&code_type=' + $("#txtCodeType").val(),
+        url: getBaseURL() + '/ApplicationCodes/ActiveOrDeActiveGateWayRules?status=' + a_status + '&code_type=' + $("#txtGateWayRules").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btndeActiveCodeType").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#btndeactiveGateWayRules").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#PopupGateWayRules").modal('hide');
                 fnClearFields();
                 fnGridRefreshGateWayRules();
-                $("#btndeActiveCodeType").attr("disabled", false);
+                $("#btndeactiveGateWayRules").attr("disabled", false);
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btndeActiveCodeType").attr("disabled", false);
-                $("#btndeActiveCodeType").html('Deactivate');
+                $("#btndeactiveGateWayRules").attr("disabled", false);
+                $("#btndeactiveGateWayRules").html('Deactivate');
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btndeActiveCodeType").attr("disabled", false);
-            $("#btndeActiveCodeType").html('Deactivate');
+            $("#btndeactiveGateWayRules").attr("disabled", false);
+            $("#btndeactiveGateWayRules").html('Deactivate');
         }
     });
 }

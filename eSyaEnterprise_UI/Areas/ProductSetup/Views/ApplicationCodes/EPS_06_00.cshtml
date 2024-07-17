@@ -36,6 +36,8 @@
         DeActivate: '@Localizer[" DeActivate "]',
         DeleteCodeType: '@Localizer["DeleteCodeType"]',
         CodeType: '@Localizer["CodeType"]',
+        OnlyAlphaNumeric50Chars: '@Localizer["OnlyAlphaNumeric50Chars"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
 
 </script>
@@ -49,50 +51,6 @@
         deleteauth_E5: '@Localizer["UIC04"]',
     };
 </script>
-
-<style>
-    /*  .bootstrap-select {
-            width: 100% !important;
-        }
-
-        .err_div_mar {
-            margin-top: -36px;
-        }
-
-        .errorMsg_p {
-            background: #dc3545;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 10px;
-            position: initial;
-            z-index: 1;
-            left: 2%;
-            bottom: 0px;
-            font-size: 16px;
-            margin-bottom: 0px;
-            height: 36px;
-            border-top-left-radius: 12px !important;
-            border-top-right-radius: 12px !important;
-        }
-
-        .succMsg_p {
-            background: #28a745;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 10px;
-            position: initial;
-            z-index: 1;
-            left: 2%;
-            bottom: 0px;
-            font-size: 16px;
-            margin-bottom: 0px;
-            height: 36px;
-            border-top-left-radius: 12px !important;
-            border-top-right-radius: 12px !important;
-        } */
-</style>
 
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 codetypecontainer">
@@ -114,7 +72,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="txtCodeType">@Localizer["CodeType"] </label>
-                            <input class="form-control numberonly" type="text" maxlength="8" id="txtCodeType" pattern="[0-9]+" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <input class="form-control numberonly" type="text" maxlength="8" id="txtCodeType" pattern="[0-9]+" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                 </div>
@@ -122,7 +80,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="txtCodeDescription"> @Localizer["Description"]</label>
-                            <input id="txtCodeDescription" class="form-control" maxlength="50" type="text" />
+                            <input id="txtCodeDescription" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Chars"]' />
 
                         </div>
                     </div>
