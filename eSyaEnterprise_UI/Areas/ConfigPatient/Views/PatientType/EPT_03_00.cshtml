@@ -57,6 +57,7 @@
         MapBusiness: '@Localizer["MapBusiness"]',
         RateTypes: '@Localizer["RateTypes"]',
         Specialty: '@Localizer["Specialty"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
     }
     var errorMsg = {
         BusinessLocation_E1: '@Localizer["UI0064"]',
@@ -125,7 +126,7 @@
 
                         <div class="col-lg-4 col-md-4 col-4">
                             <label>@Localizer["CardPattern"]</label>
-                            <input type="text" value="" class="form-control" maxlength="10" id="txtCardPattern" />
+                            <input type="text" value="" class="form-control" maxlength="10" id="txtCardPattern" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                         <div class="col-lg-4 col-md-4 col-4">
                             <label>@Localizer["CurrentCard"]</label>

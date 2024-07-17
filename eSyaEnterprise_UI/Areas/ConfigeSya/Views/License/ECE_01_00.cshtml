@@ -44,6 +44,7 @@
         LicenseStatus: '@Localizer["LicenseStatus"]',
         UpdateeSyaLicense: '@Localizer["UpdateeSyaLicense"]',
         VieweSyaLicense: '@Localizer["VieweSyaLicense"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
       
     }
     var errorMsg = {
@@ -105,20 +106,20 @@
                     <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group lbl-right">
                             <label> @Localizer["eUserLicenses"] </label>
-                            <input type="text" id="txteUserLicenses" name="eUserLicenses" value="" class="form-control" />
+                            <input type="text" id="txteUserLicenses" name="eUserLicenses" value="" class="form-control"/>
                         </div>
                     </div>
                     <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group lbl-right">
                             <label> @Localizer["eActiveUsers"] </label>
-                            <input type="text" id="txteActiveUsers" name="eActiveUsers" value="" class="form-control" />
+                            <input type="text" id="txteActiveUsers" name="eActiveUsers" value="" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-lg-6  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group lbl-right">
                             <label> @Localizer["eNoofBeds"] </label>
-                            <input type="text" id="txteNoofBeds" name="eNoofBeds" value="" class="form-control" />
+                            <input type="text" id="txteNoofBeds" name="eNoofBeds" value="" class="form-control numberonly" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12  d-flex align-items-center">

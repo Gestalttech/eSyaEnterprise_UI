@@ -39,6 +39,7 @@
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
         DepreciationMethod: '@Localizer["DepreciationMethod"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -119,11 +120,11 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 form-group">
                 <label for="txtDepreciationPercentage">@Localizer["DepreciationPercentage"]</label>
-               <input type="text" class="form-control  decimal_3" step=".001" maxlength="9" name="percentage" id="txtDepreciationPercentage"/>
+                <input type="text" class="form-control  decimal_3" step=".001" maxlength="9" name="percentage" id="txtDepreciationPercentage" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
             </div> 
             <div class="col-lg-4 col-md-4 col-sm-4 form-group">
                 <label for="txtUsefulYears">@Localizer["UsefulYears"]</label>
-                        <input type="text" class="form-control numberonly"  id="txtUsefulYears" maxlength="4" />
+                <input type="text" class="form-control numberonly" id="txtUsefulYears" maxlength="4" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="form-group">

@@ -45,6 +45,7 @@
         ActiveOrDeactive: '@Localizer["ActiveOrDeactive"]',
         Activate: '@Localizer["Activate"]',
         Deactivate: '@Localizer["Deactivate"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -153,13 +154,13 @@
                     <div class="col-lg-3 col-4">
                         <div class="form-group">
                             <label for="txtDiscountPercentage"> @Localizer["DiscountPercentage"]</label>
-                            <input id="txtDiscountPercentage" class="form-control number" step=".01" maxlength="8" type="text"/>
+                            <input id="txtDiscountPercentage" class="form-control number" step=".01" maxlength="8" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                      <div class="col-lg-3 col-4">
                         <div class="form-group">
                             <label for="txtServiceChargePercentage"> @Localizer["ServiceChargePercentage"]</label>
-                            <input id="txtServiceChargePercentage" class="form-control" step=".01" maxlength="8" type="text" />
+                            <input id="txtServiceChargePercentage" class="form-control" step=".01" maxlength="8" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
 

@@ -34,8 +34,9 @@
         Edit: '@Localizer["Edit"]',
         View: '@Localizer["View"]',
         ParametersHeader: '@Localizer["ParametersHeader"]'
-
-    };
+        OnlyAlphanumeric5Characters: '@Localizer["OnlyAlphanumeric5Characters"]'
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]'
+  };
     var errorMsg = {
         ParameterTypeID_E1: '@Localizer["UI0014"]',
         Parameterdesc_E2: '@Localizer["UI0013"]',
@@ -53,7 +54,7 @@
 
 }
 
-<div class="row padbot10">
+<div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="ParametersContainer">
             <table id="jqgParametersHeader"></table>
@@ -74,14 +75,13 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 lblright">
                         <div class="form-group lblright">
                             <label for="txtParameterTypeId" class="text-right">@Localizer["ParameterTypeID"] </label>
-                            <input id="txtParameterTypeId" class="form-control numberonly" maxlength="5" type="text" />
-                            <span class="span-usertips">Only numeric - 5 digits</span>
-                        </div>
+                            <input id="txtParameterTypeId" class="form-control numberonly" maxlength="5" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric5Characters"]' />
+                       </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label for="txtParameterTypeDescription">@Localizer["ParameterTypeDescription"] </label>
-                            <input id="txtParameterTypeDescription" class="form-control" maxlength="50" type="text" />
+                            <input id="txtParameterTypeDescription" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">

@@ -32,6 +32,7 @@
         AddBookTypes: '@Localizer["AddBookTypes"]',
         EditBookTypes: '@Localizer["EditBookTypes"]',
         ViewBookTypes: '@Localizer["ViewBookTypes"]',
+        OnlyAlphabets: '@Localizer["OnlyAlphabets"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -118,12 +119,12 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-sm-12">
                             <div class="form-group">
                                 <label for="txtVoucherType"> @Localizer["VoucherType"] </label>
-                                <input type="text" id="txtVoucherType" class="form-control w-50" maxlength="1" name="alpha" />
+                                <input type="text" id="txtVoucherType" class="form-control w-50" maxlength="1" name="alpha" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
                             </div>
                         </div><div class="col-lg-8 col-md-8 col-sm-12">
                             <div class="form-group">
                                 <label for="txtVoucherTypeDescription"> @Localizer["VoucherTypeDescription"] </label>
-                                <input type="text" id="txtVoucherTypeDescription" class=" form-control" maxlength="25" name="alpha" />
+                                <input type="text" id="txtVoucherTypeDescription" class=" form-control" maxlength="25" name="alpha" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
