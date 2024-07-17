@@ -31,6 +31,8 @@
         Active: '@Localizer["Active"]',
         SingleSegment: '@Localizer["SingleSegment"]',
         MultiSegment: '@Localizer["MultiSegment"]',
+        OnlyAlphaNumeric75Characters: '@Localizer["OnlyAlphaNumeric75Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -68,7 +70,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label> @Localizer["BusinessDescription"] </label>
-                            <input id="txtEntityDescription" class=" form-control" maxlength="75" type="text" />
+                            <input id="txtEntityDescription" class=" form-control" maxlength="75" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric75Characters"]' />
                         </div>
                     </div>
 
@@ -88,14 +90,14 @@
                     <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label> @Localizer["NumberofUnits"] </label>
-                            <input id="txtNoofUnits" class="form-control numberonly" maxlength="8" type="text" />
+                            <input id="txtNoofUnits" class="form-control numberonly" maxlength="8" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
 
                     <div class="col-lg-4  col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label> @Localizer["NumberofActiveUnits"] </label>
-                            <input id="txtNoActiveofUnits" class=" form-control numberonly" maxlength="8" type="text" readonly="readonly" />
+                            <input id="txtNoActiveofUnits" class=" form-control numberonly" maxlength="8" type="text" readonly="readonly" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
 

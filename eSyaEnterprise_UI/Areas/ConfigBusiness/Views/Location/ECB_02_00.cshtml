@@ -134,6 +134,9 @@
         PaymentMethod: '@Localizer["PaymentMethod"]',
         InterfaceReqd: '@Localizer["InterfaceRequired"]',
         InstrumentType: '@Localizer["InstrumentType"]',
+        OnlyAlphaNumeric10Characters: '@Localizer["OnlyAlphaNumeric10Characters"]',
+        OnlyAlphaNumeric50Characters: '@Localizer["OnlyAlphaNumeric50Characters"]',
+        OnlyAlphaNumeric100Characters: '@Localizer["OnlyAlphaNumeric100Characters"]',
         
     };
     var errorMsg = {
@@ -207,13 +210,13 @@
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label class="lable-color" for="txtShortDescription">@Localizer["ShortDescription"]</label>
-                                            <input id="txtShortDescription" class="form-control" type="text" autocomplete="off" maxlength="10" />
+                                            <input id="txtShortDescription" class="form-control" type="text" autocomplete="off" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Characters"]' />
                                         </div>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <label class="lable-color" for="txtLocationDescription">@Localizer["LocationDescription"]</label>
-                                            <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                                            <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Characters"]' />
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +225,7 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="lable-color" for="txtBusinessName">@Localizer["BusinessName"]</label>
-                                            <input id="txtBusinessName" class="form-control" maxlength="100" type="text" />
+                                            <input id="txtBusinessName" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric100Characters"]' />
                                         </div>
                                     </div>
                                 </div>
