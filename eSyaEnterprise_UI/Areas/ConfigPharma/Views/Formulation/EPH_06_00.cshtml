@@ -48,6 +48,8 @@
         Volume: '@Localizer["Volume"]',
         MethodOfAdministration: '@Localizer["MethodOfAdministration"]',
         MethodOfAdministrationDesc: '@Localizer["MethodOfAdministrationDesc"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric100Characters: '@Localizer["OnlyAlphanumeric100Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -167,13 +169,13 @@
                     <div class="col-lg-12 collapse">
                         <div class="form-group">
                             <label for="txtFormulationId"> @Localizer["CompositionId"]</label>
-                            <input id="txtFormulationId" class="form-control" maxlength="10" type="text" />
+                            <input id="txtFormulationId" class="form-control" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label for="txtFormulationDesc"> @Localizer["FormulationDesc"]</label>
-                            <input id="txtFormulationDesc" class="form-control" maxlength="100" type="text" />
+                            <input id="txtFormulationDesc" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -195,7 +197,7 @@
                     <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label for="txtVolume"> @Localizer["Volume"]</label>
-                            <input type="text" id="txtVolume" class="form-control" maxlength="10" />
+                            <input type="text" id="txtVolume" class="form-control" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
 

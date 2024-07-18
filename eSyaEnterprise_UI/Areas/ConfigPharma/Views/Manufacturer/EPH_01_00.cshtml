@@ -37,6 +37,8 @@
         Activate: '@Localizer["Activate"]',
         Delete: '@Localizer["Delete"]',
         DrugManufacturers: '@Localizer["DrugManufacturers"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric75Characters: '@Localizer["OnlyAlphanumeric75Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -107,13 +109,13 @@
         <div class="col-lg-4 col-md-4 col-sm-6">
             <div class="form-group">
                 <label for="txtMnfcShortName"> @Localizer["ManufacturerShortName"]</label>
-                <input id="txtMnfcShortName" type="text" class="form-control" maxlength="10" />
+                <input id="txtMnfcShortName" type="text" class="form-control" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-6">
             <div class="form-group">
                 <label for="txtManufacturer"> @Localizer["ManufacturerName"]</label>
-                <input id="txtManufacturer" type="text" class="form-control" maxlength="75" />
+                <input id="txtManufacturer" type="text" class="form-control" maxlength="75" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric75Characters"]' />
             </div>
         </div>
 

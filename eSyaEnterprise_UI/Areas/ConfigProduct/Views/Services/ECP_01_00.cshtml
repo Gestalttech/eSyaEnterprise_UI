@@ -23,6 +23,7 @@
         Update: '@Localizer["Update"]',
         Doyouwanttomovenode: '@Localizer["Doyouwanttomovenode"]',
         Doyouwanttodeletenode: '@Localizer["Doyouwanttodeletenode"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -71,7 +72,7 @@
                                         <label>
                                             @Localizer["ServiceTypeDescription"]
                                         </label>
-                                        <input type="text" maxlength="50" class="form-control" id="txtServiceTypeDesc" />
+                                        <input type="text" maxlength="50" class="form-control" id="txtServiceTypeDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                                     </div>
                                 </div>
                             </div>

@@ -44,6 +44,8 @@
         ViewComposition: '@Localizer["ViewComposition"]',
         EditComposition: '@Localizer["EditComposition"]',
         DrugComposition: '@Localizer["DrugComposition"]',
+        OnlyAlphanumeric100Characters: '@Localizer["OnlyAlphanumeric100Characters"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -221,7 +223,7 @@
                     <div class="col-lg-12 collapse">
                         <div class="form-group">
                             <label for="txtCompositionId_p"> @Localizer["CompositionId"]</label>
-                            <input id="txtCompositionId_p" class="form-control" maxlength="10" type="text" />
+                            <input id="txtCompositionId_p" class="form-control" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12  shadowLite p-4">
@@ -239,14 +241,14 @@
                             <div class="col-lg-8 col-md-8 col-sm-9">
                                 <div class="form-group">
                                     <label for="txtDrugCompositionDescription_p"> @Localizer["DrugCompositionDescription"]</label>
-                                    <input id="txtDrugCompositionDescription_p" type="text" class="form-control" maxlength="100" />
+                                    <input id="txtDrugCompositionDescription_p" type="text" class="form-control" maxlength="100" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="form-group">
                                     <label for="cboDrugClass_p"> @Localizer["DrugClass"]</label>
                                     <select id="cboDrugClass_p" class="form-control selectpicker" asp-items="@ViewBag.DrugClassList" data-size="5" data-container="body">
-                                        <option value="0">Select</option>
+                                        <option value="0">@Localizer["Select"]</option>
                                     </select>
 
                                 </div>
@@ -255,7 +257,7 @@
                                 <div class="form-group">
                                     <label for="cboTherapueticClass_p"> @Localizer["TherapueticClass"]</label>
                                     <select id="cboTherapueticClass_p" class="form-control selectpicker" asp-items="@ViewBag.TherapueticClassList" data-size="5" data-container="body">
-                                        <option value="0">Select</option>
+                                        <option value="0">@Localizer["Select"]</option>
                                     </select>
 
                                 </div>
@@ -265,7 +267,7 @@
                                 <div class="form-group">
                                     <label for="cboPharmacyGroup_p"> @Localizer["PharmacyGroup"]</label>
                                     <select id="cboPharmacyGroup_p" class="form-control selectpicker" asp-items="@ViewBag.PharmacyGroupList" data-size="5" data-container="body">
-                                        <option value="0">Select</option>
+                                        <option value="0">@Localizer["Select"]</option>
                                     </select>
                                 </div>
                             </div>

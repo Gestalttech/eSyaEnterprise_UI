@@ -58,6 +58,7 @@
         RateTypes: '@Localizer["RateTypes"]',
         Specialty: '@Localizer["Specialty"]',
         OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         BusinessLocation_E1: '@Localizer["UI0064"]',
@@ -296,7 +297,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="txtDocumentDescription"> @Localizer["DocumentDesc"]</label>
-                            <input id="txtDocumentDescription" class="form-control" maxlength="50" type="text" />
+                            <input id="txtDocumentDescription" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 d-flex align-items-center">

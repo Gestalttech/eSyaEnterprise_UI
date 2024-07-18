@@ -29,6 +29,7 @@
         Laundry: '@Localizer["Laundry"]',
         Doyouwanttomovenode: '@Localizer["Doyouwanttomovenode"]',
         Doyouwanttodeletenode: '@Localizer["Doyouwanttodeletenode"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -84,7 +85,7 @@
                                 <label>
                                     @Localizer["ServiceGroupDescription"]
                                 </label>
-                                <input type="text" maxlength="50" class="form-control" id="txtServiceGroupDesc" />
+                                <input type="text" maxlength="50" class="form-control" id="txtServiceGroupDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                             </div>
                         </div>
                     </div>
