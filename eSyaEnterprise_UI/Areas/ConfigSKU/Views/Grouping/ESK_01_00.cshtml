@@ -25,6 +25,7 @@
         ViewItemGroup: '@Localizer["ViewItemGroup"]',
         EditItemGroup: '@Localizer["EditItemGroup"]',
         Update: '@Localizer["Update"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -99,7 +100,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label>@Localizer["ItemGroupDescription"]</label>
-                            <input type="text" maxlength="50" class="form-control" id="txtItemGroupDesc" />
+                            <input type="text" maxlength="50" class="form-control" id="txtItemGroupDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                 </div>

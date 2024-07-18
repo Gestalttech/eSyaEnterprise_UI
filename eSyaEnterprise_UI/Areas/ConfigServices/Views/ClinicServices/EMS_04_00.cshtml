@@ -39,6 +39,7 @@
         Actions: '@Localizer["Actions"]',
         Edit: '@Localizer["Edit"]',
         View: '@Localizer["View"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -56,7 +57,7 @@
 
     <div class="col-lg-4  col-md-4 col-sm-8 col-xs-12">
         <div class="form-group">
-            <label> @Localizer["BusinessLocation"] </label>
+            <label for="cboBusinessKey"> @Localizer["BusinessLocation"] </label>
             <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKey" onchange="fnBusinessKey_onChange()"></select>
 
         </div>
@@ -82,7 +83,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["ClinicType"] </label>
+                            <label for="cboClinicType"> @Localizer["ClinicType"] </label>
                             <select class="selectpicker" data-live-search="true" id="cboClinicType" title="" data-size="6" data-container="body" onchange="fnClinicType_onChange()">
                                 <option value="0"> @Localizer["Select"]</option>
                                
@@ -91,7 +92,7 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["ConsultationType"] </label>
+                            <label for="cboConsultationType"> @Localizer["ConsultationType"] </label>
                             <select class="selectpicker" data-live-search="true" id="cboConsultationType" title="" data-size="6" data-container="body">
                                 <option value="0"> @Localizer["Select"]</option>
                             </select>
@@ -101,7 +102,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["Service"] </label>
+                            <label for="cboService"> @Localizer["Service"] </label>
 
                             <select class="selectpicker" data-live-search="true" id="cboService" title="" data-size="6" data-container="body">
                                 <option value="0" selected> @Localizer["Select"]</option>
@@ -118,8 +119,8 @@
                     </div>
                     <div class="col-lg-4 col-md-2 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["VisitRule"] </label>
-                            <input type="text" class="form-control numberonly" autocomplete="off" maxlength="2" id="txtVisitRule" />
+                            <label for="txtVisitRule"> @Localizer["VisitRule"] </label>
+                            <input type="text" class="form-control numberonly" autocomplete="off" maxlength="2" id="txtVisitRule" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12">
