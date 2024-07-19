@@ -50,7 +50,7 @@
             <div class="mdl-card__supporting-text fullwidth">
                 <div class="row" id="dvNavigateURL">
                     <div class="col-sm-12 col-md-12 col-lg-4 form-group">
-                        <label> @Localizer["ControllerName"] </label>
+                        <label for="cboAreaController"> @Localizer["ControllerName"] </label>
                         <select class="selectpicker" data-live-search="true" id="cboAreaController" title="" data-size="5" onchange="fnController_onChanged()">
                             <option value="0">@Localizer["Choosecontroller"] </option>
                             @if (ViewBag.AreaController != null)
@@ -65,27 +65,27 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-4 form-group" hidden>
-                        <label> @Localizer["FormID"] </label>
+                        <label for="txtFormID"> @Localizer["FormID"] </label>
                         <input type="text" name="int" class="form-control integerFormat" id="txtFormID" />
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 form-group">
-                        <label> @Localizer["FormCode"] </label>
-                        <input type="text" class="form-control " id="txtFormCode" maxlength="10" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Characters"]' />
+                        <label for="txtFormCode"> @Localizer["FormCode"] </label>
+                        <input type="text" class="form-control" autocomplete="off" id="txtFormCode" maxlength="10" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Characters"]' />
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-8 form-group">
-                        <label>  @Localizer["FormDesc"] </label>
-                        <input type="text" class="form-control " id="txtFormDescription" maxlength="50" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Characters"]' />
+                        <label for="txtFormDescription">  @Localizer["FormDesc"] </label>
+                        <input type="text" class="form-control" autocomplete="off" id="txtFormDescription" maxlength="50" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Characters"]' />
                     </div>
                 </div>
                 <div class="row" style="display:none">
                     <div class="col-sm-12 col-md-12 col-lg-12 form-group">
-                        <label> @Localizer["ControllerName"]</label>
-                        <input id="txtControllerName" class="form-control" maxlength="50" type="text" readonly />
+                        <label for="txtControllerName"> @Localizer["ControllerName"]</label>
+                        <input id="txtControllerName" class="form-control" autocomplete="off" maxlength="50" type="text" readonly />
                     </div>
                 </div>
                 <div class="row mb-8">
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                        <label> @Localizer["ToolTip"]</label>
+                        <label for="txtToolTip"> @Localizer["ToolTip"]</label>
                         <input id="txtToolTip" class="form-control" maxlength="250" type="text" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title='@Localizer["OnlyAlphaNumeric250Characters"]' />
                     </div>
                 </div>
