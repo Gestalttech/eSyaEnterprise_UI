@@ -660,7 +660,9 @@
                     oneditfunc: function (result) {
                         var id = $("#jqgInternalForms").jqGrid('getGridParam', 'selrow');
                         $('#' + id + '_InternalFormNumber').prop('disabled', true);
-                        $('#' + id + '_NavigateURL').prop('disabled', true);
+                        //as per new requirement I am making navigate url as editable
+                        // $('#' + id + '_NavigateURL').prop('disabled', true);
+                          $('#' + id + '_NavigateURL').prop('disabled', false);
                     },
                     url: null,
                     extraparam: {
