@@ -30,10 +30,10 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         private readonly ISmsServices _smsServices;
         private readonly ILogger<UserCreationController> _logger;
 
-        public UserCreationController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, ILogger<UserCreationController> logger)
+        public UserCreationController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, ISmsServices smsServices, ILogger<UserCreationController> logger)
         {
             _eSyaEndUserAPIServices = eSyaEndUserAPIServices;
-
+            _smsServices = smsServices;
             _logger = logger;
         }
         //#region New User Group&Type
@@ -1697,14 +1697,15 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         {
             try
             {
-               
+                var eSyaAuthenticationresponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonData/GetApplicationCodesByCodeType?codeType=" + ApplicationCodeTypeValues.eSyaAuthentication);
                 var serviceresponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
 
-                if (serviceresponse.Status)
+                if (serviceresponse.Status && eSyaAuthenticationresponse.Status)
                 {
-                    if (serviceresponse.Data != null)
+                    if (serviceresponse.Data != null && eSyaAuthenticationresponse.Data != null)
                     {
                         ViewBag.Businesskeys = serviceresponse.Data;
+                        ViewBag.eSyaAuthenticationType = eSyaAuthenticationresponse.Data.OrderBy(x=>x.ApplicationCode).ToList();
                         return View();
                     }
                     else
@@ -2234,7 +2235,6 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                 obj.CreatedBy = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.userID = AppSessionVariables.GetSessionUserID(HttpContext);
-                //obj.userID = 1;
 
                 var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("UserCreation/ChangeUserPassword", obj);
                 if (serviceResponse.Status)

@@ -366,7 +366,7 @@ function fnGridUserBusinessLocation() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["UserID", "Business Key","", localization.ISDCode, localization.MobileNumber, localization.ISDCode, localization.WhatsAppNumber, localization.AllowMTFY, localization.Active, localization.Actions],
+        colNames: ["UserID", "Business Key","", localization.ISDCode, localization.MobileNumber, localization.ISDCode, localization.WhatsAppNumber,"Authentication Type", localization.AllowMTFY, localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 20, editable: false, align: 'left', hidden: true },
             { name: "BusinessKey", width: 20, editable: false, align: 'left', hidden: true },
@@ -375,6 +375,7 @@ function fnGridUserBusinessLocation() {
             { name: "MobileNumber", width: 100, editable: true, align: 'left' },
             { name: "IsdcodeWan", width: 100, editable: true, align: 'left', hidden: true },
             { name: "WhatsappNumber", width: 100, editable: true, align: 'left' },  
+            { name: "ESyaAuthentication", editable: true, align: 'left', width: 100, edittype: "select", resizable: false, formatter: 'select', editoptions: { value: "60001: Single Authentication;60002: Dual Authentication" } },
             { name: "AllowMtfy", editable: false, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", editable: false, width: 40, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
            
@@ -431,6 +432,8 @@ function fnAddUserBusinessLocation() {
     $("#btnUserlocationsave").html('<i class="fa fa-save"></i>  ' + localization.Save);
     $("#cboBusinesskey").attr('disabled', false);
     $('#cboBusinesskey').selectpicker('refresh');
+    $("#cboAuthenticationType").attr('disabled', false);
+    $('#cboAuthenticationType').selectpicker('refresh');
     $("#chklocationstatus").parent().addClass("is-checked");
     $("#cboUserMobileNumber").next().attr('disabled', true);
     $("#cboUserWhatsAppNumber").next().attr('disabled', true);
@@ -455,7 +458,7 @@ function fnEditUserBusinessLocation(e, actiontype) {
     $("#txtUserMobileNumber").val(rowData.MobileNumber);
     $("#cboUserWhatsAppNumber").val(rowData.IsdcodeWan).selectpicker('refresh');
     $("#txtUserWhatsAppNumber").val(rowData.WhatsappNumber);
-    
+    $("#cboAuthenticationType").val(rowData.ESyaAuthentication).selectpicker('refresh');
     if (rowData.AllowMtfy === "true") {
         $("#chkAllowMTFY").parent().addClass("is-checked");
     }
@@ -501,6 +504,7 @@ function fnClearLocationfields() {
     $("#txtUserMobileNumber").val('');
     $("#cboUserWhatsAppNumber").val('0').selectpicker('refresh');
     $("#txtUserWhatsAppNumber").val('');
+    $("#cboAuthenticationType").val('').selectpicker('refresh');
     $("#chklocationstatus").parent().removeClass("is-checked");
     $("#chkAllowMTFY").parent().removeClass("is-checked");
     $("#btnUserlocationsave").attr('disabled', false);
@@ -508,7 +512,7 @@ function fnClearLocationfields() {
    
 }
 function fnUserSaveBusinessLocation() {
-    
+   
     if (IsStringNullorEmpty($("#txtUserId").val())) {
         fnAlert("w", "EEU_03_00", "UI0208", errorMsg.EnterUserIDFirst_E16);
         return;
@@ -537,6 +541,10 @@ function fnUserSaveBusinessLocation() {
         fnAlert("w", "EEU_03_00", "UI0245", errorMsg.Whatappisd_E25);
         return;
     }
+    if (IsStringNullorEmpty($("#cboAuthenticationType").val()) || $("#cboAuthenticationType").val() == '0' || $("#cboAuthenticationType").val() == "0") {
+        fnAlert("w", "EEU_03_00", "UI0244", "Please select Authentication Type");
+        return;
+    }
     $("#btnUserlocationsave").attr('disabled', true);
     
 
@@ -549,6 +557,7 @@ function fnUserSaveBusinessLocation() {
         IsdcodeWan: $("#cboUserWhatsAppNumber").val(),
         WhatsappNumber: $("#txtUserWhatsAppNumber").val(),
         AllowMtfy: $("#chkAllowMTFY").parent().hasClass("is-checked"),
+        ESyaAuthentication: $("#cboAuthenticationType").val(),
         ActiveStatus: $("#chklocationstatus").parent().hasClass("is-checked")
     };
     $.ajax({

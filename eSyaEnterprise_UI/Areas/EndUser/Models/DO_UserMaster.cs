@@ -88,6 +88,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Models
         public string MobileNumber { get; set; }
         public int IsdcodeWan { get; set; }
         public string WhatsappNumber { get; set; }
+        public int ESyaAuthentication { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormID { get; set; }
         public int CreatedBy { get; set; }

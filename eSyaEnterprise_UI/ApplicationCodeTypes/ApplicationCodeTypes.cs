@@ -35,6 +35,7 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int UserGroup = 1;
         public const int UserRole = 2;
         public const int SecurityQuestions = 3;
+        public const int eSyaAuthentication = 6;
         #endregion
 
         #region Token System
