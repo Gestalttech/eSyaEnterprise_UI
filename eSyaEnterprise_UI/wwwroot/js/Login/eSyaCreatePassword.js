@@ -3,7 +3,7 @@
 $("#txtUserID").on('focusout', function () {
  
     fncheckPasswordWithLoginID();
-    fncheckIsUserQuestionsExists();
+   fncheckIsUserQuestionsExists();
 });
 $("#txtLoginPassword").on('focusin', function () {
  
@@ -238,7 +238,7 @@ function validateUserQuestionAnswer() {
 
 
 function fnSaveUserQuestionAnswer() {
-    debugger;
+  
 
     if (!validateUserQuestionAnswer()) {
         fnAlert("w", "", "", "Please correct the Errors and try again");
