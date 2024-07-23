@@ -181,6 +181,9 @@ body {
     font-weight: 300;
     font-family: helvetica-Bold;
 }
+.bold {
+    font-family: helvetica-Bold;
+}
 .modal-header h4 {
     margin: 0px !important;
     font-family: helvetica-Bold;

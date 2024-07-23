@@ -8,6 +8,12 @@
 @inject IConfiguration Configuration
 @inject IOptions<RequestLocalizationOptions> LocOptions
 @model LoginViewModel
+
+@{
+    int noOfQuestions = ViewBag.NoofQuestions ?? 1;
+    var questions = Enumerable.Range(1, noOfQuestions);
+}
+
 @{
     Layout = null;
 }
@@ -35,7 +41,7 @@
     <script src="~/js/Common/toast.js"></script>
     <script src="~/js/Common/toastr.js"></script>
     <script src="~/js/Common/eSyaMessageNotification.js"></script>
-    
+    <script src="~/js/utility/cf-input-validation.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/common/animate.css" rel="stylesheet" />
     <link href="~/css/common/all.min.css" rel="stylesheet" />
@@ -301,30 +307,43 @@
 
 
     <div class="modal fullscreen fade in" id="PopupSecretQuestion" data-bs-keyboard="false" data-bs-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;top:80px">
+        <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;top:0px">
             <div class="modal-content ">
                 <div class="modal-header popupHeader">
                     <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
-                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["SetSecretQuestion"]</h4>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["SetSecurityQuestions"]</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row p-1">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <p class="small text-muted bgUserTips">Select your secret question and Password. You can use it when you forget your password.</p>
-                            <label>@Localizer["SelectYourSecretQuestion"]</label>
-                    
-                            <select class="selectpicker" data-live-search="true" data-container="body" id="cboQuestionId" title="" data-size="8" asp-items="@ViewBag.QuestionList">
-                             <option value="0">@Localizer["Select"]</option>
-                             </select>
+                            <p class="small text-muted bgUserTips">
+                                <span class="bold">Purpose:</span>Select the Security Questions and Provide Your Answers. It is Mandatory to give Answer for all the Questions.The
+                                    Security Questions will be Used by the Application to Authenticate you as a Valid User.
+                            </p>
+                        </div>
+                        </div>
+                         @foreach (var q in questions)
+                        {
+                            <div class="row p-1">
+                            <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                                <label>@Localizer["Question"] <span class="bold">@q </span></label>
 
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group pass_show position-relative">
-                            <label>@Localizer["EnterYourAnswer"]</label>
-                            <input type="password" id="txtAnswerId" class="form-control" maxlength="250"/>
-                            <a href="#" id="viewAnswer"><i class="fa fa-eye-slash"></i></a>
-                        </div>
+                                <select class="selectpicker" data-live-search="true" name="cboSecurityQuestion" data-container="body" id="cboQuestionId_@q"  title="" data-size="8" asp-items="@ViewBag.QuestionList" onchange="updateOptions()">
+                                    <option value="0">@Localizer["Select"]</option>
+                                </select>
+
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 form-group pass_show position-relative">
+                                <label>@Localizer["EnterYourAnswer"]</label>
+                                <input type="password" id="txtAnswerId_@q" class="form-control" maxlength="250" />
+                                <a href="#" id="viewAnswer"><i class="fa fa-eye-slash"></i></a>
+                            </div>
+                            </div>
+                            
+                        }
+                       
                     </div>
-                </div>
+                
                 <div class="modal-footer justify-content-center">
                     <div class="row">
                         <div class="col-lg-12 text-center">
@@ -340,6 +359,7 @@
             </div>
         </div>
     </div>
+   
 
 
     <div class="modal fullscreen fade in" id="PopupGetUserID" data-bs-keyboard="false" data-bs-backdrop="static">
@@ -721,11 +741,11 @@
                 });
         }
 
-                
-       
+      
     </script>
     <script src="~/js/login/eSyaCreatePassword.js"></script>
     <script src="~/js/login/eSyaForgotUserID.js"></script>
     <script src="~/js/login/eSyaForgotPassword.js"></script>
+    <script src="~/js/login/eSyaSecretQuestions.js"></script>
 </body>
 </html>

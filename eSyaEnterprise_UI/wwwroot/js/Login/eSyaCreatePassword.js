@@ -1,12 +1,57 @@
 ﻿//Create password popup open functionality
 
 $("#txtUserID").on('focusout', function () {
-    fncheckPasswordWithLoginID()
+ 
+    fncheckPasswordWithLoginID();
+    fncheckIsUserQuestionsExists();
 });
 $("#txtLoginPassword").on('focusin', function () {
-    fncheckPasswordWithLoginID()
+ 
+    fncheckPasswordWithLoginID();
+    fncheckIsUserQuestionsExists();
 });
 
+
+
+function fncheckIsUserQuestionsExists() {
+
+    var logInId = $("#txtUserID").val();
+
+    // $("#lblLogInID").text(logInId);
+    if (logInId == null || logInId == "") {
+        return;
+    }
+    if (logInId !== null || logInId !== "") {
+        logInId = logInId.trim();
+    }
+    $.ajax({
+        url: getBaseURL() + '/Account/ChkIsUserQuestionsExists?loginId=' + logInId,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            if (response.StatusCode === "1") {
+               
+                $("#txtloginUserId").val(response.ID);
+                $("#PopupSecretQuestion").modal('show');
+               
+
+            }
+            else {
+                $("#txtloginUserId").val(response.ID);
+                $("#PopupSecretQuestion").modal('hide');
+
+            }
+        },
+        //async: false,
+        //processData: false
+    });
+
+
+}
 function fncheckPasswordWithLoginID() {
 
     var logInId = $("#txtUserID").val();
@@ -159,49 +204,130 @@ function fnClearChangePasswordfromLogin() {
     $("#txtAnswerId").val('');
 }
 
-function fnSaveUserQuestionAnswer() {
+// Validation function
+function validateUserQuestionAnswer() {
+   
+    var isValid = true;
 
-    if ($("#cboQuestionId").val() == "0" || $("#cboQuestionId").val() == 0 || $("#cboQuestionId").val() == "") {
-        fnAlert("w", "", "", "Please select Your Question");
-        return;
-    }
-
-    if ($("#txtAnswerId").val().trim().length <= 0) {
-        fnAlert("w", "", "", "Please Enter Your Answer");
-        return;
-    }
-    obj = {
-        UserId: $("#txtloginUserId").val(),
-        SecurityQuestionId: $("#cboQuestionId").val(),
-        SecurityAnswer: $("#txtAnswerId").val(),
-        ActiveStatus: true,
-    };
-
-
-    $("#btnSaveQuestion").attr("disabled", true);
-    $.ajax({
-        url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
-        type: 'POST',
-        datatype: 'json',
-        data: { obj },
-        success: function (response) {
-
-            if (response.Status) {
-                fnAlert("s", "", "", response.Message);
-                $("#PopupSecretQuestion").modal('hide');
-                fnClearChangePasswordfromLogin();
-
-            }
-            else {
-                fnAlert("e", "", "", response.Message);
-            }
-            $("#btnSaveQuestion").attr("disabled", false);
-        },
-        error: function (error) {
-            fnAlert("e", "", "", error.statusText);
-            $("#btnSaveQuestion").attr("disabled", false);
+    // Validate each selectpicker
+    $('.selectpicker').each(function () {
+        if ($(this).val() == "0" || IsStringNullorEmpty($(this).val())) {
+            isValid = false;
+           $(this).closest('.form-group').find('.validation-error').remove(); // Remove previous error
+            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">Please select a Question</p>');
+        } else {
+            $(this).closest('.form-group').find('.validation-error').remove();
+            isValid = true;
         }
     });
+
+    // Validate each answer input
+    $('input[type="password"]').each(function () {
+        if ($(this).val().trim() == "") {
+            isValid = false;
+            $(this).closest('.form-group').find('.validation-error').remove(); // Remove previous error
+            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">Please Enter Your Answer</p>');
+        } else {
+            $(this).closest('.form-group').find('.validation-error').remove();
+            isValid = true;
+        }
+    });
+
+    return isValid;
+}
+
+
+function fnSaveUserQuestionAnswer() {
+    debugger;
+
+    if (!validateUserQuestionAnswer()) {
+        fnAlert("w", "", "", "Please correct the Errors and try again");
+        return;
+    }
+
+    /* $('.selectpicker').selectpicker();*/
+     $('select[name=cboSecurityQuestion]').selectpicker();
+    var data = [];
+    $('select[name=cboSecurityQuestion]').each(function () {
+        var questionId = $(this).attr('id').replace('cboQuestionId_', '');
+        var questionValue = $(this).val();
+        var answerValue = $('#txtAnswerId_' + questionId).val();
+        data.push({
+            UserId: $("#txtloginUserId").val(),
+            questionId: questionId,
+            SecurityQuestionId: questionValue,
+            SecurityAnswer: answerValue
+        });
+    });
+           
+        $("#btnSaveQuestion").attr("disabled", true);
+            $.ajax({
+                    url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
+                    type: 'POST',
+                    datatype: 'json',
+                    data: { obj: data },
+                    success: function (response) {
+
+                        if (response.Status) {
+                            fnAlert("s", "", "", response.Message);
+                            $("#PopupSecretQuestion").modal('hide');
+                            fnClearChangePasswordfromLogin();
+
+                        }
+                        else {
+                            fnAlert("e", "", "", response.Message);
+                        }
+                        $("#btnSaveQuestion").attr("disabled", false);
+                    },
+                    error: function (error) {
+                        fnAlert("e", "", "", error.statusText);
+                        $("#btnSaveQuestion").attr("disabled", false);
+                    }
+            });
+        
+   
+
+    //if ($("#cboQuestionId").val() == "0" || $("#cboQuestionId").val() == 0 || $("#cboQuestionId").val() == "") {
+    //    fnAlert("w", "", "", "Please select Your Question");
+    //    return;
+    //}
+
+    ////if ($("#txtAnswerId").val().length <= 0) {
+    ////    fnAlert("w", "", "", "Please Enter Your Answer");
+    ////    return;
+    ////}
+    //obj = {
+    //    UserId: $("#txtloginUserId").val(),
+    //    SecurityQuestionId: $("#cboQuestionId").val(),
+    //    SecurityAnswer: $("#txtAnswerId").val(),
+    //    ActiveStatus: true,
+    //};
+
+
+    //$("#btnSaveQuestion").attr("disabled", true);
+    //$.ajax({
+    //    url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
+    //    type: 'POST',
+    //    datatype: 'json',
+    //    data: { obj },
+    //    success: function (response) {
+
+    //        if (response.Status) {
+    //            fnAlert("s", "", "", response.Message);
+    //            $("#PopupSecretQuestion").modal('hide');
+    //            fnClearChangePasswordfromLogin();
+
+    //        }
+    //        else {
+    //            fnAlert("e", "", "", response.Message);
+    //        }
+    //        $("#btnSaveQuestion").attr("disabled", false);
+    //    },
+    //    error: function (error) {
+    //        fnAlert("e", "", "", error.statusText);
+    //        $("#btnSaveQuestion").attr("disabled", false);
+    //    }
+    //});
 }
 // otp scripts
 
@@ -210,4 +336,35 @@ $("#PopupOTP").on('show.bs.modal', function () {
     fneSyaOTP(6, "#divCreatePwdOTP", "#txtCreatePwdOTP", "#btnCheckOTP");
 })
 
+
+//Get No of Questions from Rules
+function fnGetNumberofQuestionsbyRule() {
+
+    $.ajax({
+        url: getBaseURL() + '/Account/GetNumberofQuestionsbyRule',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            if (response.StatusCode === "1") {
+                
+                $("#txtloginUserId").val(response.ID);
+                $("#PopupOTP").modal('show');
+
+            }
+            else {
+                
+                $("#PopupOTP").modal('hide');
+
+            }
+        },
+        //async: false,
+        //processData: false
+    });
+
+
+}
  

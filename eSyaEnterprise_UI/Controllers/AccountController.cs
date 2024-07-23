@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -54,12 +55,15 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
+               int GwRuleId = 5;
                 HttpContext.Session.Set("AppConfig", appConfig);
 
                 SetLoginApplicationRuleInViewBag();
                 var cultureResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_eSyaLoginCulture>>("ApplicationRules/GetActiveCultures");
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_AppCodes>>("Common/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.SecurityQuestions);
-                if (serviceResponse.Status && cultureResponse.Status)
+                var QuestionResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("UserAccount/GetNumberofQuestion?GwRuleId=" + GwRuleId);
+
+                if (serviceResponse.Status && cultureResponse.Status && QuestionResponse.Status)
                 {
                     ViewBag.QuestionList = serviceResponse.Data.Select(b => new SelectListItem
                     {
@@ -75,6 +79,7 @@ namespace eSyaEnterprise_UI.Controllers
 
                     //ViewData["cultureResponse"] = new SelectList(cultures, "Value", "Text");
                     ViewBag.CultureResponse = cultures;
+                    ViewBag.NoofQuestions = QuestionResponse.Data;
 
                     return View();
                 }
@@ -682,6 +687,7 @@ namespace eSyaEnterprise_UI.Controllers
         {
             return View();
         }
+       
         #region Change password
 
         [HttpGet]
@@ -767,15 +773,77 @@ namespace eSyaEnterprise_UI.Controllers
         #endregion
 
         #region User Security Question
-        [HttpPost]
-        public async Task<JsonResult> InsertUserSecurityQuestion(DO_UserSecurityQuestions obj)
+        [HttpGet]
+        public async Task<JsonResult> ChkIsUserQuestionsExists(string loginId)
         {
             try
             {
-                obj.FormID = "0";
-                obj.TerminalID = "0";
-                obj.EffectiveFrom = DateTime.Now;
+                var parameter = "?loginID=" + loginId;
 
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsUserQuestionsExists" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsUserQuestionsExists:For UserID {0} with loginID entered {1}", loginId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ChkIsUserQuestionsExists:For UserID {0} with BusinessKey entered {1}", loginId);
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetNumberofQuestionsbyRule(int ProcessId,int RuleId)
+        {
+            try
+            {
+                var parameter = "?ProcessId=" + ProcessId + "&RuleId="+ RuleId;
+
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("UserAccount/GetNumberofQuestionsbyRule" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetNumberofQuestionsbyRule");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetNumberofQuestionsbyRule");
+                throw ex;
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> InsertUserSecurityQuestion(List<DO_UserSecurityQuestions> obj)
+        {
+            try
+            {
+                foreach(var q in obj)
+                {
+                    if (q.SecurityQuestionId == 0 || q.SecurityAnswer == null)
+                    {
+                        return Json(new { Status = false, Message="Please Select All Questions" });
+                    }
+                }
+                obj.All(c =>
+                {
+                    
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                    c.EffectiveFrom = System.DateTime.Now;
+                    return true;
+                });
+               
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("UserAccount/InsertUserSecurityQuestion",obj);
                 if (serviceResponse.Status)
                 {
