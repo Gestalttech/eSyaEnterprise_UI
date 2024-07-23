@@ -406,8 +406,7 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     padding: 5px 10px;
     border: 1px dotted #555555;
     border-radius: 10px;
-    
-}
+ }
 body.arabic input {
     text-align: right;
 }

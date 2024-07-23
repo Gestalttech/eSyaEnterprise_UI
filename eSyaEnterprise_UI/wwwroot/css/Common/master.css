@@ -50,6 +50,12 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 .fw-bold, .bold {
     font-family: helvetica-bold;
 }
+.bgUserTips {
+    background: #fff9dc;
+    padding: 5px 10px;
+    border: 1px dotted #555555;
+    border-radius: 10px;
+}
 .custom-tooltip,.tooltip {
     --bs-tooltip-bg: var(--color-primary);
     --bs-tooltip-color: var(--color-white);
