@@ -37,8 +37,9 @@
         ISDCode: '@Localizer["ISDCode"]',
         SMSToWhom: '@Localizer["SMSToWhom"]',
         SMSRecipient: '@Localizer["SMSRecipient"]',
-
-    };
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
+  };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
@@ -112,7 +113,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="txtRecipientName">@Localizer["RecipientName"] </label>
-                                <input id="txtRecipientName" class="form-control" maxlength="50" type="text" />
+                                <input id="txtRecipientName" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                             </div>
                         </div>
                        @* <div class="col-lg-2 col-md-6 col-sm-6">
@@ -128,7 +129,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="txtRemarks">@Localizer["Remarks"] </label>
-                                <input id="txtRemarks" class="form-control" maxlength="25" type="text" />
+                                <input id="txtRemarks" class="form-control" maxlength="25" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                             </div>
                         </div>
                         <div class="col-lg-2  col-md-3 col-sm-12 col-xs-12">

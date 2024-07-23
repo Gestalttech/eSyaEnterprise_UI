@@ -30,6 +30,8 @@
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         SMSVariable: '@Localizer["SMSVariable"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric6Characters: '@Localizer["OnlyAlphanumeric6Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -69,13 +71,13 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="txtSMSVariable">@Localizer["SMSVariable"]</label>
-                            <input id="txtSMSVariable" class="form-control" maxlength="6" type="text" />
+                            <input id="txtSMSVariable" class="form-control" maxlength="6" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric6Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="txtSMSComponent">@Localizer["SMSComponent"]</label>
-                            <input id="txtSMSComponent" class="form-control" maxlength="50" type="text" />
+                            <input id="txtSMSComponent" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">

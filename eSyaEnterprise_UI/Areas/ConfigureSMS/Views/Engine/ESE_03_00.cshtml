@@ -29,6 +29,8 @@
         Component: '@Localizer["Component"]',
         SMSParameter: '@Localizer["SMSParameter"]',
         SMSVariable: '@Localizer["SMSVariable"]',
+        OnlyAlphanumeric100Characters: '@Localizer["OnlyAlphanumeric100Characters"]',
+        OnlyAlphanumeric500Characters: '@Localizer["OnlyAlphanumeric500Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -90,7 +92,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="txtSMSDescription">@Localizer["SMSDescription"] </label>
-                        <input id="txtSMSDescription" class="form-control" maxlength="100" type="text" />
+                        <input id="txtSMSDescription" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />
 
                     </div>
                 </div>
@@ -107,7 +109,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="txtSMSStatement">@Localizer["SMSStatement"]</label>
-                        <textarea id="txtSMSStatement" class="form-control" maxlength="500" rows="4" cols="40"></textarea>
+                        <textarea id="txtSMSStatement" class="form-control" maxlength="500" rows="4" cols="40" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric500Characters"]'></textarea>
                     </div>
                 </div>
                 <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">

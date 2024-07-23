@@ -32,6 +32,8 @@
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         SMSTriggerEvent: '@Localizer["SMSTriggerEvent"]',
+        OnlyAlphanumeric150Characters: '@Localizer["OnlyAlphanumeric150Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -72,13 +74,13 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="txtTriggerEventId">@Localizer["TriggerEventId"]</label>
-                            <input id="txtTriggerEventId" class="form-control" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="8" />
+                            <input id="txtTriggerEventId" class="form-control numberonly" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="8" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="txtTriggerEventdesc">@Localizer["TriggerEventDescription"]</label>
-                            <input id="txtTriggerEventdesc" class="form-control" maxlength="150" type="text" />
+                            <input id="txtTriggerEventdesc" class="form-control" maxlength="150" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric150Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
