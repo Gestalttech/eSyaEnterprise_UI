@@ -45,6 +45,9 @@
         Update: '@Localizer["Update"]',
         Delete: '@Localizer["Delete"]',
         CurrencyMaster: '@Localizer["CurrencyMaster"]',
+        OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -94,7 +97,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="txtCurrencyName">@Localizer["CurrencyName"] </label>
-                                <input id="txtCurrencyName" class="form-control" maxlength="25" type="text" />
+                                <input id="txtCurrencyName" class="form-control" maxlength="25" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                             </div>
                         </div>
                     </div>
@@ -111,7 +114,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="txtDecimalPlaces">@Localizer["DecimalPlaces"] </label>
-                                <input id="txtDecimalPlaces" class="form-control decimal" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" maxlength="6" />
+                                <input id="txtDecimalPlaces" class="form-control decimal" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" maxlength="6" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                             </div>
                         </div>
                     </div>
@@ -133,7 +136,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="txtDecimalPortionWord">@Localizer["DecimalPortionWord"] </label>
-                                <input id="txtDecimalPortionWord" class="form-control" maxlength="50" type="text" />
+                                <input id="txtDecimalPortionWord" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
 
                             </div>
                         </div>

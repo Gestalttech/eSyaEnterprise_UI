@@ -50,6 +50,9 @@
         Activate: '@Localizer["Activate"]',
         Deactivate: '@Localizer["Deactivate"]',
         CurrencyDenomination: '@Localizer["CurrencyDenomination"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -91,7 +94,7 @@
 
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label> @Localizer["BNorCNId"] </label>
+                            <label for="cboBnorCnId"> @Localizer["BNorCNId"] </label>
                             <select class="selectpicker" data-live-search="false" id="cboBnorCnId" title="">
                                 <option value="0">@Localizer["Select"]</option>
                                 <option value="B">@Localizer["BankNote"]</option>
@@ -101,33 +104,33 @@
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="lable-color" for="txtDenomId">@Localizer["DenominationId"]</label>
-                            <input id="txtDenomId" class="form-control" autocomplete="off" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="10" />
+                            <label for="txtDenomId">@Localizer["DenominationId"]</label>
+                            <input id="txtDenomId" class="form-control" autocomplete="off" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
-                            <label class="lable-color" for="txtDenomDescription">@Localizer["DenominationDescription"]</label>
-                            <input id="txtDenomDescription" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                            <label for="txtDenomDescription">@Localizer["DenominationDescription"]</label>
+                            <input id="txtDenomDescription" class="form-control" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="lable-color" for="txtDenomConversion">@Localizer["DenominationConversion"]</label>
-                            <input id="txtDenomConversion" class="form-control decimalFormat" type="text" autocomplete="off" maxlength="50" />
+                            <label for="txtDenomConversion">@Localizer["DenominationConversion"]</label>
+                            <input id="txtDenomConversion" class="form-control decimalFormat" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label class="lable-color" for="txtSequence">@Localizer["DenominationSequence"]</label>
-                            <input id="txtSequence" class="form-control integerFormat numberonly" autocomplete="off" type="text" />
+                            <label for="txtSequence">@Localizer["DenominationSequence"]</label>
+                            <input id="txtSequence" class="form-control integerFormat numberonly" autocomplete="off" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label>@Localizer["EffectiveDateFrom"] <span class="lblInfo">(DD/MM/YYYY)</span></label>
-                            <input id="txtEffectiveDate" class="form-control datepicker" type="text" autocomplete="off" maxlength="50" />
+                            <label for="txtEffectiveDate">@Localizer["EffectiveDateFrom"] <span class="lblInfo">(DD/MM/YYYY)</span></label>
+                            <input id="txtEffectiveDate" class="form-control datepicker" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">

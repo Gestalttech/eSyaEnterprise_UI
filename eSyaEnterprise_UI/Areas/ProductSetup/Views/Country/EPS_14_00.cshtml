@@ -38,6 +38,9 @@
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         StatutoryCode: '@Localizer["StatutoryCode"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -84,28 +87,24 @@
                     </div>
                 </div>
 
-                <div class="row padbot4">
+                <div class="row">
                     <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12">
                         <div class="form-group">
-
-                            <label> @Localizer["StatShortCode"] </label>
-
-                            <input id="txtStatShortCode" class="form-control" maxlength="10" type="text" />
+                            <label for="txtStatShortCode"> @Localizer["StatShortCode"] </label>
+                            <input id="txtStatShortCode" class="form-control" autocomplete="off" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-6">
                         <div class="form-group">
-                            <label> @Localizer["StatutoryDescription"] </label>
-                            <input id="txtStatutoryDescription" class="form-control" maxlength="50" type="text" />
+                            <label for="txtStatutoryDescription"> @Localizer["StatutoryDescription"] </label>
+                            <input id="txtStatutoryDescription" class="form-control" autocomplete="off" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
 
                     <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12">
                         <div class="form-group">
-
-                            <label> @Localizer["StatPattern"] </label>
-
-                            <input id="txtStatPattern" class="form-control" maxlength="25" type="text" />
+                            <label for="txtStatPattern"> @Localizer["StatPattern"] </label>
+                            <input id="txtStatPattern" class="form-control" autocomplete="off" maxlength="25" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                         </div>
                     </div>
 
@@ -114,7 +113,6 @@
                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                                 <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                                 <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-
                             </label>
                         </div>
                     </div>

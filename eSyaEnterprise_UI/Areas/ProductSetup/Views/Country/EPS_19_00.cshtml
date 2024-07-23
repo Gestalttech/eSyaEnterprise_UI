@@ -34,6 +34,9 @@
         Activate: '@Localizer["Activate"]',
         StateCode: '@Localizer["StateCode"]',
         TaxIdentification: '@Localizer["TaxIdentification"]',
+        OnlyAlphanumeric4Characters: '@Localizer["OnlyAlphanumeric4Characters"]',
+        OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
+        OnlyAlphanumeric2Characters: '@Localizer["OnlyAlphanumeric2Characters"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -86,22 +89,22 @@
                 <div class="row padbot4">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["TaxIdentificationID"] </label>
-                            <input id="txtTaxIdentificationID" class="form-control numberonly" maxlength="4" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <label for="txtTaxIdentificationID"> @Localizer["TaxIdentificationID"] </label>
+                            <input id="txtTaxIdentificationID" autocomplete="off" class="form-control numberonly" maxlength="4" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric4Characters"]' />
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
-                            <label> @Localizer["TaxIdentificationDescription"] </label>
-                            <input id="txtTaxDescription" class="form-control" maxlength="25" type="text" />
+                            <label for="txtTaxDescription"> @Localizer["TaxIdentificationDescription"] </label>
+                            <input id="txtTaxDescription" autocomplete="off" class="form-control" maxlength="25" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
 
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4">
                         <div class="form-group">
-                            <label> @Localizer["StateCode"] </label>
-                            <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
+                            <label for="txtStateCode"> @Localizer["StateCode"] </label>
+                            <input id="txtStateCode" autocomplete="off" class="form-control" maxlength="2" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric2Characters"]' />
 
                         </div>
                     </div>

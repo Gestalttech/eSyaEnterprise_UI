@@ -40,6 +40,7 @@
         Actions: '@Localizer["Actions"]',
         Update: '@Localizer["Update"]',
         CityList: '@Localizer["CityList"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -85,7 +86,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="form-group">
                             <label for="txtCityDescription"> @Localizer["CityDescription"]</label>
-                            <input id="txtCityDescription" class="form-control" type="text" maxlength="50" />
+                            <input id="txtCityDescription" class="form-control" autocomplete="off" type="text" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
 

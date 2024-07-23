@@ -58,6 +58,10 @@
         ShortDateFormat: '@Localizer["ShortDateFormat"]',
         UIDlabel: '@Localizer["UIDlabel"]',
         CountryCode: '@Localizer["CountryCode"]',
+        OnlyAlphanumeric4Characters: '@Localizer["OnlyAlphanumeric4Characters"]',
+        OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     };
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -104,18 +108,18 @@
 
             <div class="modal-body">
 
-                <div class="row padbot4">
+                <div class="row">
 
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtIsdcode">@Localizer["ISDCode"]</label>
-                            <input id="txtIsdcode" class="form-control numberonly" maxlength="8" type="text" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />
+                            <input id="txtIsdcode" autocomplete="off" class="form-control numberonly" maxlength="8" type="text" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtCountrycode">@Localizer["CountryCode"]</label>
-                            <input id="txtCountrycode" class="form-control" maxlength="4" type="text" />
+                            <input id="txtCountrycode" autocomplete="off" class="form-control" maxlength="4" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric4Characters"]' />
                         </div>
                     </div>
 
@@ -157,7 +161,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtCountryName">@Localizer["CountryName"]</label>
-                            <input id="txtCountryName" class="form-control" maxlength="50" type="text" />
+                            <input id="txtCountryName" autocomplete="off" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
@@ -180,7 +184,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtMobileNumberPattern">@Localizer["MobileNoPattern"]</label>
-                            <input id="txtMobileNumberPattern" class="form-control" maxlength="25" type="text" />
+                            <input id="txtMobileNumberPattern" autocomplete="off" class="form-control" maxlength="25" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                         </div>
                     </div>
 
@@ -214,7 +218,7 @@
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtPOBoxPattern">@Localizer["POBoxPattern"]</label>
-                            <input id="txtPOBoxPattern" class="form-control" maxlength="25" type="text" disabled="disabled" />
+                            <input id="txtPOBoxPattern" autocomplete="off" class="form-control" maxlength="25" type="text" disabled="disabled" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-4 col-sm-12">
@@ -233,13 +237,13 @@
                     <div class="col-lg-2 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="txtPincodePattern">@Localizer["PincodePattern"]</label>
-                            <input id="txtPincodePattern" class="form-control" maxlength="25" type="text" disabled="disabled" />
+                            <input id="txtPincodePattern" autocomplete="off" class="form-control" maxlength="25" type="text" disabled="disabled" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric25Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-12">
                         <div class="form-group">
                             <label for="txtDateFormat">@Localizer["DateFormat"]</label>
-                            <input id="txtDateFormat" class="form-control" maxlength="15" type="text" />
+                            <input id="txtDateFormat" class="form-control" maxlength="15" type="text"  />
                             <span class="text-muted">(eg. YYYY-MM-DDThh:mm:ssZ)</span>
                         </div>
                     </div>
