@@ -227,7 +227,10 @@ td:first-child.ui-state-default.jqgrid-rownum {
 #gbox_jqgFormAction tr.ui-jqgrid-labels, #gbox_jqgFormParameter tr.ui-jqgrid-labels {
     display: table;
 }
-
+td .btn-outline {
+    padding: 0px 7px;
+    border-radius:0px;
+}
 /*Custom Table for Parameter*/
 #tbParameter {
     width: 100% !important;
