@@ -16,6 +16,7 @@
         CurrentPassword: '@Localizer["CurrentPassword"]',
         NewPassword: '@Localizer["NewPassword"]',
         ConfirmPassword: '@Localizer["ConfirmPassword"]',
+        OnlyAlphanumeric20Characters: '@Localizer["OnlyAlphanumeric20Characters"]',
      };
     var errorMsg = {
         LoginID_E1: '@Localizer["UI0133"]',
@@ -26,8 +27,7 @@
         PasswordPattern_E6: '@Localizer["UI0279"]',
         EnterPassword_E7: '@Localizer["UI0280"]',
         PasswordSame_E8: '@Localizer["UI0281"]',
-
-    }
+     }
     
 </script>
 
@@ -38,18 +38,18 @@
 
             <label for="txtCurrentPassword">@Localizer["CurrentPassword"]</label>
             <div class="form-group">
-                <input type="password" id="txtCurrentPassword" value="" class="form-control">
+                <input type="password" id="txtCurrentPassword" maxlength="20" value="" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
             </div>
             <div class="form-group ">
                 <label for="txtNewPassword">@Localizer["NewPassword"]</label>
                 <div class="form-group pass_show position-relative">
-                    <input type="password" id="txtNewPassword" class="form-control" data-toggle="popover" autocomplete="off">
+                    <input type="password" id="txtNewPassword" maxlength="20" class="form-control" data-toggle="popover" autocomplete="off" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
                     <a href="#" id="viewPassword"><i class="fa fa-eye-slash"></i></a>
                 </div>
             </div>
             <label for="txtConfirmPassword">@Localizer["ConfirmPassword"]</label>
             <div class="form-group">
-                <input type="password" id="txtConfirmPassword" class="form-control">
+                <input type="password" id="txtConfirmPassword" maxlength="20" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
             </div>
 
         </div>
