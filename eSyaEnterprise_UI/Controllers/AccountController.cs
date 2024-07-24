@@ -128,8 +128,17 @@ namespace eSyaEnterprise_UI.Controllers
 
             try
             {
-            
 
+                if (model.BusinessKey == 0|| model.FinancialYear == 0)
+                {
+                    ViewBag.bkey = "Please Select Location and Financial Year";
+                    return View("Index");
+                }
+                //if (model.FinancialYear == 0)
+                //{
+                //    ViewBag.fyear = "Please Select Financial Year";
+                //    return View("Index");
+                //}
                 var obj = new DO_UserLogIn()
                 {
                     LoginID = model.UserName,
@@ -168,48 +177,13 @@ namespace eSyaEnterprise_UI.Controllers
                         identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
                         var principal = new ClaimsPrincipal(identity);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                        AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
+                        AppSessionVariables.SetSessionDoctorID(HttpContext, serviceResponse.Data.DoctorID ?? 0);
+                        AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
 
-                    #region location setting
-                    var l_b = serviceResponse.Data.l_BusinessKey
-                                                      .Select(b => new SelectListItem
-                                                      {
-                                                          Value = b.Key.ToString(),
-                                                          Text = b.Value,
-                                                          Selected = serviceResponse.Data.l_BusinessKey.Count() == 1
-
-                                                      }).ToList();
-
-                    var l_f = serviceResponse.Data.l_FinancialYear
-                                                   .Select(b => new SelectListItem
-                                                   {
-                                                       Value = b.ToString(),
-                                                       Text = b.ToString(),
-                                                       Selected = b == serviceResponse.Data.l_FinancialYear.FirstOrDefault()
-                                                   }).ToList();
-
-                    TempData.Set("l_BusinessKey", l_b);
-                    TempData.Set("l_FinancialYear", l_f);
-
-                    AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
-                    AppSessionVariables.SetSessionDoctorID(HttpContext, serviceResponse.Data.DoctorID ?? 0);
-
-                    AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
-                    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
-
-                    //  if (l_b.Count > 1 || l_f.Count > 1)
-                    if (l_b.Count > 1)
-                        return new RedirectToActionResult("BusinessLocation", "Account", null);
-                    else
-                    {
-
-                        AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
-                        AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
-
-                        AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
+                        LocationConfirmation(model);
 
                         return RedirectToAction("Index", "Home");
-                    }
-                    #endregion
                 }
                 else
                     {
@@ -738,8 +712,9 @@ namespace eSyaEnterprise_UI.Controllers
             #endregion
         }
 
-        public IActionResult Confirmation(LoginViewModel model)
+        public void LocationConfirmation(LoginViewModel model)
         {
+            
             if (Convert.ToInt32(model.BusinessKey) > 0 && Convert.ToInt32(model.FinancialYear) > 0)
             {
                 AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(model.BusinessKey));
@@ -748,7 +723,6 @@ namespace eSyaEnterprise_UI.Controllers
                 var l_b = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_BusinessKey"].ToString());
                 AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.Where(w => w.Value == model.BusinessKey.ToString()).FirstOrDefault().Text);
 
-                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -763,7 +737,6 @@ namespace eSyaEnterprise_UI.Controllers
 
                 ModelState.AddModelError("", "please check user input");
                 TempData.Keep();
-                return View("BusinessLocation", model);
             }
         }
 
