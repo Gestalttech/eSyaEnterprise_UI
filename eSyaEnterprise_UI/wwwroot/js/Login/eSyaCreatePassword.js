@@ -365,13 +365,15 @@ function fnBindUserLocations() {
                 if (response.lstFinancialYear == null) {
                     $("#cboBusinessLocation").empty();
                     $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
-                } else if (response.lstUserLocation.length == 1) {
-                    $("#cboBusinessLocation option:eq(1)").prop("selected", true);
-                    $("#cboBusinessLocation").prop("disabled", true);
                 }
-                else {
-                    $("#cboBusinessLocation").prop("disabled", false);
-                }
+
+                //else if (response.lstUserLocation.length == 1) {
+                //    $("#cboBusinessLocation option:eq(1)").prop("selected", true);
+                //   /* $("#cboBusinessLocation").prop("disabled", true);*/
+                //}
+                //else {
+                //    $("#cboBusinessLocation").prop("disabled", false);
+                //}
                 
 
                 
@@ -386,12 +388,14 @@ function fnBindUserLocations() {
                 if (response.lstFinancialYear == null) {
                     $("#cboFinancialYear").empty();
                     $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
-                }else if (response.lstFinancialYear.length == 1) {
-                        $("#cboFinancialYear option:eq(1)").prop("selected", true);
-                        $("#cboFinancialYear").prop("disabled", true);
-                    } else {
-                        $("#cboFinancialYear").prop("disabled", false);
-                    }
+                }
+
+                //else if (response.lstFinancialYear.length == 1) {
+                //        $("#cboFinancialYear option:eq(1)").prop("selected", true);
+                //        /*$("#cboFinancialYear").prop("disabled", true);*/
+                //    } else {
+                //       /* $("#cboFinancialYear").prop("disabled", false);*/
+                //    }
                
             }
             else {

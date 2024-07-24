@@ -2235,7 +2235,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                 obj.CreatedBy = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.userID = AppSessionVariables.GetSessionUserID(HttpContext);
-
+               
                 var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("UserCreation/ChangeUserPassword", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
