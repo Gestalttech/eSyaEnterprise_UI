@@ -97,36 +97,43 @@
                                                 <span class="text-danger" id="spnInvalidMessage"> @ViewBag.InvaidUser</span>
                                             }
                                             
-                                            <div class="form-group animated fadeIn">
+                                            <div class="">
                                                 <label class="">@Localizer["UserID"]</label>
                                                 <input class="form-control" type="text" asp-for="@Model.UserName" autocomplete="off"  id="txtUserID" maxlength="40" tabindex="1" required>
                                             </div>
                                             @*  @if (ViewBag.IsGetUser)
                                             { *@
-                                            <div class="animated fadeIn form-group">
+                                            <div class="form-group">
                                                @*  <a href="@Url.Action("GetUserId", "Account")" data-bs-modal="toggle" data-bs-target="#PopupGetUserID" class="getUserId" tabindex="7">@Localizer["ForgotUserID"]</a> *@
-                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID"]</button>
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID?"]</button>
                                             </div>
                                             @* } *@
-                                            <div class="form-group animated fadeIn">
+                                            <div class="">
                                                 <label>@Localizer["Password"]</label>
                                                 <input class="form-control" type="password" asp-for="@Model.Password" id="txtLoginPassword" autocomplete="off" maxlength="50" tabindex="2" required>
                                                 <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
+                                            <div class="form-group">
+                                                @* <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a> *@
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupForgotPassword" tabindex="7">@Localizer["ForgotPassword?"]</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">@Localizer["BusinessLocation"]</label>
+                                                <select class="form-control" id="cboBusinessLocation"><option value="0">@Localizer["Select"]</option></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">@Localizer["FinancialYear"]</label>
+                                                <select class="form-control" id="cboFinancialYear"><option value="0">@Localizer["Select"]</option></select>
+                                            </div>
                                             @*  @if (ViewBag.IsGetPassword)
                                             { *@
-                                            <div class=" animated fadeIn form-group">
-                                                @* <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a> *@
-                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupForgotPassword" tabindex="7">@Localizer["ForgotPassword"]</button>
-                                            </div>
+                                            
                                             @*  } *@
-                                            <div>
-                                                <div class="animated fadeIn">
+                                                <div class="form-group">
                                                     <button id="btnUserSignIn" type="submit" class="mdl-button loginButton  f-right" tabindex="3">
                                                         @Localizer["Signin"]  <i class="fas fa-chevron-right"></i>
                                                     </button>
                                                 </div>
-                                            </div>
                                         </form>
                                     </div>
                                 </section>
