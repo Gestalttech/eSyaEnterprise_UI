@@ -374,7 +374,34 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     font-family:Arial, Helvetica, sans-serif;
     padding-bottom:0px;
 }
-.getPassword.mdl-layout__tab, .getUserID.mdl-layout__tab {
+.select {
+  
+        display: grid;
+}
+    .select::after {
+        content: "";
+        width: 0.8em;
+        height: 0.5em;
+        background-color: var(--select-arrow);
+        clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+        justify-self: end;
+    }
+.select {
+    align-items: center;
+    grid-template-areas: "select";
+}
+
+    .select,
+    .select:after {
+        grid-area: select;
+    }
+        .select[disabled] {
+            background: rgba(187, 187, 187, 0.2) !important;
+            opacity: 0.7;
+            pointer-events: none;
+            cursor: none;
+        }
+    .getPassword.mdl-layout__tab, .getUserID.mdl-layout__tab {
     padding-top: 12px !important;
 }
 .getUserId:hover {
