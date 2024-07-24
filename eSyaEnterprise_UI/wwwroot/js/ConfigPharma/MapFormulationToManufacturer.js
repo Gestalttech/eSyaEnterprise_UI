@@ -52,8 +52,8 @@ function fnLoadGridManufacturer() {
         colNames: [localization.ManufacturerID, localization.ManufacturerName, localization.Status],
         colModel: [
             { name: "ManufacturerId", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "ManufacturerName", width: 125, editable: false, align: 'left', hidden: false },
-            { name: "ActiveStatus", editable: false, width:60, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "ManufacturerName", width: 205, editable: false, align: 'left', hidden: false },
+            { name: "ActiveStatus", editable: false, width:25, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         rowNum: 10000,
         rownumWidth: '55',

@@ -39,7 +39,7 @@ function fnLoadLanguageCultureGrid() {
         pager: "#jqpLanguageCulture",
         pgtext: null,
         pgbuttons: null,
-        viewrecords: false,
+        viewrecords: true,
         gridview: true,
         rownumbers: true,
         height: 'auto',

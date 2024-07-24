@@ -29,7 +29,7 @@ function fnLoadCultureKeysGrid() {
             pgtext: null,
             caption: localization.CultureKeys,
             pgbuttons: null,
-            viewrecords: false,
+            viewrecords: true,
             gridview: true,
             rownumbers: true,
             height: 'auto',
