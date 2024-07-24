@@ -544,36 +544,6 @@ namespace eSyaEnterprise_UI.Controllers
                 throw;
             }
         }
-        //used to set selected businesskey & financical year
-        public IActionResult Confirmation(LoginViewModel model)
-        {
-            if (Convert.ToInt32(model.BusinessKey) > 0 && Convert.ToInt32(model.FinancialYear) > 0)
-            {
-                AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(model.BusinessKey));
-                AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(model.FinancialYear));
-
-                var l_b = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_BusinessKey"].ToString());
-                AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.Where(w => w.Value == model.BusinessKey.ToString()).FirstOrDefault().Text);
-
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                model.l_BusinessKey = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_BusinessKey"].ToString());
-                model.l_FinancialYear = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_FinancialYear"].ToString());
-
-                if (model.l_BusinessKey.Where(w => w.Selected).Count() > 0)
-                    model.BusinessKey = Convert.ToInt32(model.l_BusinessKey.Where(w => w.Selected).FirstOrDefault().Value);
-
-                if (model.l_FinancialYear.Where(w => w.Selected).Count() > 0)
-                    model.FinancialYear = Convert.ToInt32(model.l_FinancialYear.Where(w => w.Selected).FirstOrDefault().Value);
-
-                ModelState.AddModelError("", "please check user input");
-                TempData.Keep();
-                return View("BusinessLocation", model);
-            }
-        }
-
         public async Task<JsonResult> SendCreatePasswordOTP(string mobileNumber)
         {
             try
@@ -702,6 +672,11 @@ namespace eSyaEnterprise_UI.Controllers
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserFinBusinessLocation>("UserAccount/GetUserLocationsbyUserID" + parameter);
                 if (serviceResponse.Status)
                 {
+                    if(serviceResponse.Data.lstUserLocation!=null && serviceResponse.Data.lstFinancialYear!=null)
+                    {
+                        SetFinBusinessLocation(serviceResponse.Data);
+                    }
+                   
                     return Json(serviceResponse.Data);
 
                 }
@@ -718,48 +693,79 @@ namespace eSyaEnterprise_UI.Controllers
             }
         }
 
-        //public IActionResult SetFinBusinessLocation(LoginViewModel model)
-        //{
-        //    #region location setting
+        public void SetFinBusinessLocation(DO_UserFinBusinessLocation model)
+        {
+            #region location setting
+            DO_UserAccount obj = new DO_UserAccount();
 
-        //    DO_UserAccount obj = new DO_UserAccount();
-        //    var l_b = obj.l_BusinessKey
-        //                                      .Select(b => new SelectListItem
-        //                                      {
-        //                                          Value = b.Key.ToString(),
-        //                                          Text = b.Value,
-        //                                          Selected = obj.l_BusinessKey.Count() == 1
-        //                                      }).ToList();
+            // Populate us.l_BusinessKey
+            obj.l_BusinessKey = model.lstUserLocation
+                .Select(x => new KeyValuePair<int, string>(x.BusinessKey, x.BusinessLocation))
+                .ToDictionary(x => x.Key, x => x.Value);
 
-        //    var l_f = obj.l_FinancialYear
-        //                                   .Select(b => new SelectListItem
-        //                                   {
-        //                                       Value = b.ToString(),
-        //                                       Text = b.ToString(),
-        //                                       Selected = b == obj.l_FinancialYear.FirstOrDefault()
-        //                                   }).ToList();
+            // Generate the SelectListItem list
+            var l_b = obj.l_BusinessKey
+                .Select(b => new SelectListItem
+                {
+                    Value = b.Key.ToString(),
+                    Text = b.Value,
+                    Selected = obj.l_BusinessKey.Count == 1
+                }).ToList();
 
-        //    TempData.Set("l_BusinessKey", l_b);
-        //    TempData.Set("l_FinancialYear", l_f);
+            var l_f = model.lstFinancialYear
+                                           .Select(b => new SelectListItem
+                                           {
+                                               Value = b.ToString(),
+                                               Text = b.ToString(),
+                                               Selected = b == model.lstFinancialYear.FirstOrDefault()
+                                           }).ToList();
 
-        //    AppSessionVariables.SetSessionUserID(HttpContext, obj.UserID);
-        //    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, obj.l_BusinessKey);
+            TempData.Set("l_BusinessKey", l_b);
+            TempData.Set("l_FinancialYear", l_f);
 
-        //    //  if (l_b.Count > 1 || l_f.Count > 1)
-        //    if (l_b.Count > 1)
-        //        return new RedirectToActionResult("BusinessLocation", "Account", null);
-        //    else
-        //    {
+            AppSessionVariables.SetSessionUserID(HttpContext, obj.UserID);
+            AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, obj.l_BusinessKey);
 
-        //        AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
-        //        AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+            if (l_b.Count == 1)
+            {
 
-        //        AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
+                AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
+                AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+                AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
 
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    #endregion
-        //}
+              
+            }
+            #endregion
+        }
+
+        public IActionResult Confirmation(LoginViewModel model)
+        {
+            if (Convert.ToInt32(model.BusinessKey) > 0 && Convert.ToInt32(model.FinancialYear) > 0)
+            {
+                AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(model.BusinessKey));
+                AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(model.FinancialYear));
+
+                var l_b = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_BusinessKey"].ToString());
+                AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.Where(w => w.Value == model.BusinessKey.ToString()).FirstOrDefault().Text);
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                model.l_BusinessKey = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_BusinessKey"].ToString());
+                model.l_FinancialYear = JsonConvert.DeserializeObject<List<SelectListItem>>(TempData["l_FinancialYear"].ToString());
+
+                if (model.l_BusinessKey.Where(w => w.Selected).Count() > 0)
+                    model.BusinessKey = Convert.ToInt32(model.l_BusinessKey.Where(w => w.Selected).FirstOrDefault().Value);
+
+                if (model.l_FinancialYear.Where(w => w.Selected).Count() > 0)
+                    model.FinancialYear = Convert.ToInt32(model.l_FinancialYear.Where(w => w.Selected).FirstOrDefault().Value);
+
+                ModelState.AddModelError("", "please check user input");
+                TempData.Keep();
+                return View("BusinessLocation", model);
+            }
+        }
 
         #endregion
 
