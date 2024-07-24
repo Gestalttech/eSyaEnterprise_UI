@@ -687,7 +687,35 @@ namespace eSyaEnterprise_UI.Controllers
         {
             return View();
         }
-       
+
+        #region Getting the User Location List
+        [HttpGet]
+        public async Task<JsonResult> GetUserLocationsbyUserID(string loginId)
+        {
+            try
+            {
+                var parameter = "?loginID=" + loginId;
+
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("UserAccount/GetUserLocationsbyUserID" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUserLocationsbyUserID:For UserID {0} with loginID entered {1}", loginId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetUserLocationsbyUserID:For UserID {0} with BusinessKey entered {1}", loginId);
+                throw ex;
+            }
+        }
+        #endregion
+
         #region Change password
 
         [HttpGet]
