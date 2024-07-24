@@ -23,6 +23,7 @@ function fnGridLoadUserRoleActionLink() {
 
         ],
         rowNum: 10,
+        rownumWidth:'55',
         rowList: [10, 20, 50, 100],
         loadonce: true,
         pager: "#jqpUserRoleActionLink",
@@ -47,6 +48,7 @@ function fnGridLoadUserRoleActionLink() {
             fnJqgridSmallScreen("jqgUserRoleActionLink");
         },
     }).jqGrid('navGrid', '#jqpUserRoleActionLink', { add: false, edit: false, search: false, del: false, refresh: false });
+    fnAddGridSerialNoHeading();
 }
 
 $(document).on('focusout', '[role="gridcell"] *', function () {
