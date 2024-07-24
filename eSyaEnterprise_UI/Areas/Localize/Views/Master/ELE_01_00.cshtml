@@ -36,6 +36,9 @@
          DeActivate: '@Localizer["DeActivate"]',
          Activate: '@Localizer["Activate"]',
          LocalizationTable: '@Localizer["LocalizationTable"]',
+         OnlyNumeric: '@Localizer["OnlyNumeric"]',
+         OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+         OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     };
 
 
@@ -74,20 +77,20 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label>@Localizer["TableCode"] </label>
-                            <input id="txtTableCode" class="form-control numberonly" type="text" autocomplete="off" maxlength="10" />
+                            <input id="txtTableCode" class="form-control numberonly" type="text" autocomplete="off" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
 
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="form-group">
                             <label>@Localizer["SchemaName"] </label>
-                            <input id="txtSchemaName" class="form-control" type="text" autocomplete="off" maxlength="10" pattern="^[a-zA-Z _]+$" />
+                            <input id="txtSchemaName" class="form-control" type="text" autocomplete="off" maxlength="10" pattern="^[a-zA-Z _]+$" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label>@Localizer["TableDescription"] </label>
-                            <input id="txtTableDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
+                            <input id="txtTableDesc" class="form-control" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">

@@ -35,6 +35,8 @@
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         LanguageController: '@Localizer["LanguageController"]',
+        OnlyAlphanumeric250Characters: '@Localizer["OnlyAlphanumeric250Characters"]',
+        OnlyAlphanumeric500Characters: '@Localizer["OnlyAlphanumeric500Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -106,14 +108,14 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label for="txtKey">@Localizer["Key"]</label>
-                            <textarea id="txtKey" class="form-control" rows="4" maxlength="250" onkeypress="return AvoidSpace(event)"></textarea>
+                            <textarea id="txtKey" class="form-control" rows="4" maxlength="250" onkeypress="return AvoidSpace(event)" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]'></textarea>
                         </div>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label class="lable-color" for="txtValue">@Localizer["Value"]</label>
-                            <textarea id="txtValue" rows="4" class="form-control" maxlength="500"></textarea>
+                            <textarea id="txtValue" rows="4" class="form-control" maxlength="500" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric500Characters"]'></textarea>
                         </div>
                     </div>
                     <div class="col-lg-2  col-md-3 col-sm-6 col-xs-12">
