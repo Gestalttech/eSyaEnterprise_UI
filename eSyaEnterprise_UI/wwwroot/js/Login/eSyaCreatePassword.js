@@ -3,7 +3,8 @@
 $("#txtUserID").on('focusout', function () {
  
     fncheckPasswordWithLoginID();
-   fncheckIsUserQuestionsExists();
+    fncheckIsUserQuestionsExists();
+    fnBindUserLocations();
 });
 $("#txtLoginPassword").on('focusin', function () {
  
@@ -335,6 +336,56 @@ $("#PopupOTP").on('show.bs.modal', function () {
     $("#btnCheckOTP").attr('disabled', true);
     fneSyaOTP(6, "#divCreatePwdOTP", "#txtCreatePwdOTP", "#btnCheckOTP");
 })
+
+function fnBindUserLocations() {
+    var logInId = $("#txtUserID").val();
+    $("#cboBusinessLocation").empty();
+    $("#cboFinancialYear").empty();
+    $.ajax({
+        url: getBaseURL() + '/Account/GetUserLocationsbyUserID?loginId=' + logInId,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+         
+            if (response != null) {
+                //refresh each time
+             
+                $("#cboBusinessLocation").empty();
+                $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
+                if (response.lstUserLocation != null) {
+
+                for (var i = 0; i < response.lstUserLocation.length; i++) {
+                    $("#cboBusinessLocation").append($("<option></option>").val(response.lstUserLocation[i].BusinessKey).html(response.lstUserLocation[i].BusinessLocation));
+                    }
+                }
+
+                $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
+
+                if (response.lstFinancialYear != null) {
+                    for (var i = 0; i < response.lstFinancialYear.length; i++) {
+                        $("#cboFinancialYear").append($("<option></option>").val(response.lstFinancialYear[i]).html(response.lstFinancialYear[i]));
+                    }
+                }
+            }
+            else {
+                $("#cboBusinessLocation").empty();
+                $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
+
+                $("#cboFinancialYear").empty();
+                $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+
 
 
 //Get No of Questions from Rules

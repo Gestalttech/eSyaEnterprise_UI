@@ -40,4 +40,12 @@ namespace eSyaEnterprise_UI.Models
 
         public int PasswordValidity { get; set; }
     }
+    public class DO_UserFinBusinessLocation
+    {
+        public int BusinessKey { get; set; }
+        public string BusinessLocation { get; set; }
+        public List<int>? lstFinancialYear { get; set; }
+        public List<DO_UserFinBusinessLocation>? lstUserLocation { get; set; }
+
+    }
 }

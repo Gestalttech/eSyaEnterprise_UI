@@ -3,6 +3,7 @@ using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
+using eSyaEssentials_UI;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -168,7 +169,8 @@ namespace eSyaEnterprise_UI.Controllers
                         var principal = new ClaimsPrincipal(identity);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
 
-                        var l_b = serviceResponse.Data.l_BusinessKey
+                    #region location setting
+                    var l_b = serviceResponse.Data.l_BusinessKey
                                                       .Select(b => new SelectListItem
                                                       {
                                                           Value = b.Key.ToString(),
@@ -177,38 +179,39 @@ namespace eSyaEnterprise_UI.Controllers
 
                                                       }).ToList();
 
-                        var l_f = serviceResponse.Data.l_FinancialYear
-                                                       .Select(b => new SelectListItem
-                                                       {
-                                                           Value = b.ToString(),
-                                                           Text = b.ToString(),
-                                                           Selected = b == serviceResponse.Data.l_FinancialYear.FirstOrDefault()
-                                                       }).ToList();
+                    var l_f = serviceResponse.Data.l_FinancialYear
+                                                   .Select(b => new SelectListItem
+                                                   {
+                                                       Value = b.ToString(),
+                                                       Text = b.ToString(),
+                                                       Selected = b == serviceResponse.Data.l_FinancialYear.FirstOrDefault()
+                                                   }).ToList();
 
-                        TempData.Set("l_BusinessKey", l_b);
-                        TempData.Set("l_FinancialYear", l_f);
+                    TempData.Set("l_BusinessKey", l_b);
+                    TempData.Set("l_FinancialYear", l_f);
 
-                        AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
-                        AppSessionVariables.SetSessionDoctorID(HttpContext, serviceResponse.Data.DoctorID ?? 0);
+                    AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
+                    AppSessionVariables.SetSessionDoctorID(HttpContext, serviceResponse.Data.DoctorID ?? 0);
 
-                        AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
-                        AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
+                    AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
+                    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
 
-                        //  if (l_b.Count > 1 || l_f.Count > 1)
-                        if (l_b.Count > 1)
-                            return new RedirectToActionResult("BusinessLocation", "Account", null);
-                        else
-                        {
-
-                            AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
-                            AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
-
-                            AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
-
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
+                    //  if (l_b.Count > 1 || l_f.Count > 1)
+                    if (l_b.Count > 1)
+                        return new RedirectToActionResult("BusinessLocation", "Account", null);
                     else
+                    {
+
+                        AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
+                        AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+
+                        AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    #endregion
+                }
+                else
                     {
                         ModelState.AddModelError("", "Internal error");
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:Login:params:" + JsonConvert.SerializeObject(model));
@@ -505,7 +508,7 @@ namespace eSyaEnterprise_UI.Controllers
             ViewBag.selectedculture = culture;
             return LocalRedirect(returnUrl);
         }
-
+        //not used
         [HttpPost]
         public IActionResult SetBusinessLocation(int businessKey, string returnUrl)
         {
@@ -541,7 +544,7 @@ namespace eSyaEnterprise_UI.Controllers
                 throw;
             }
         }
-
+        //used to set selected businesskey & financical year
         public IActionResult Confirmation(LoginViewModel model)
         {
             if (Convert.ToInt32(model.BusinessKey) > 0 && Convert.ToInt32(model.FinancialYear) > 0)
@@ -688,7 +691,7 @@ namespace eSyaEnterprise_UI.Controllers
             return View();
         }
 
-        #region Getting the User Location List
+        #region Getting  and setting the User Location List
         [HttpGet]
         public async Task<JsonResult> GetUserLocationsbyUserID(string loginId)
         {
@@ -696,7 +699,7 @@ namespace eSyaEnterprise_UI.Controllers
             {
                 var parameter = "?loginID=" + loginId;
 
-                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("UserAccount/GetUserLocationsbyUserID" + parameter);
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserFinBusinessLocation>("UserAccount/GetUserLocationsbyUserID" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -714,6 +717,50 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
+
+        //public IActionResult SetFinBusinessLocation(LoginViewModel model)
+        //{
+        //    #region location setting
+
+        //    DO_UserAccount obj = new DO_UserAccount();
+        //    var l_b = obj.l_BusinessKey
+        //                                      .Select(b => new SelectListItem
+        //                                      {
+        //                                          Value = b.Key.ToString(),
+        //                                          Text = b.Value,
+        //                                          Selected = obj.l_BusinessKey.Count() == 1
+        //                                      }).ToList();
+
+        //    var l_f = obj.l_FinancialYear
+        //                                   .Select(b => new SelectListItem
+        //                                   {
+        //                                       Value = b.ToString(),
+        //                                       Text = b.ToString(),
+        //                                       Selected = b == obj.l_FinancialYear.FirstOrDefault()
+        //                                   }).ToList();
+
+        //    TempData.Set("l_BusinessKey", l_b);
+        //    TempData.Set("l_FinancialYear", l_f);
+
+        //    AppSessionVariables.SetSessionUserID(HttpContext, obj.UserID);
+        //    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, obj.l_BusinessKey);
+
+        //    //  if (l_b.Count > 1 || l_f.Count > 1)
+        //    if (l_b.Count > 1)
+        //        return new RedirectToActionResult("BusinessLocation", "Account", null);
+        //    else
+        //    {
+
+        //        AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
+        //        AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+
+        //        AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    #endregion
+        //}
+
         #endregion
 
         #region Change password
