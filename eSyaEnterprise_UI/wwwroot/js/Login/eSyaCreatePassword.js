@@ -1,15 +1,24 @@
 ﻿//Create password popup open functionality
 
 $("#txtUserID").on('focusout', function () {
- 
-    fncheckPasswordWithLoginID();
-    fncheckIsUserQuestionsExists();
-    fnBindUserLocations();
+   
+    if (IsStringNullorEmpty($("#txtUserID").val())) {
+        return;
+    } else {
+        fncheckPasswordWithLoginID();
+        fncheckIsUserQuestionsExists();
+        fnBindUserLocations();
+    }
+    
 });
 $("#txtLoginPassword").on('focusin', function () {
- 
-    fncheckPasswordWithLoginID();
-    fncheckIsUserQuestionsExists();
+   
+    if (IsStringNullorEmpty($("#txtUserID").val())) {
+        return;
+    } else {
+        fncheckPasswordWithLoginID();
+        fncheckIsUserQuestionsExists();
+    }
 });
 
 
@@ -285,50 +294,6 @@ function fnSaveUserQuestionAnswer() {
                         $("#btnSaveQuestion").attr("disabled", false);
                     }
             });
-        
-   
-
-    //if ($("#cboQuestionId").val() == "0" || $("#cboQuestionId").val() == 0 || $("#cboQuestionId").val() == "") {
-    //    fnAlert("w", "", "", "Please select Your Question");
-    //    return;
-    //}
-
-    ////if ($("#txtAnswerId").val().length <= 0) {
-    ////    fnAlert("w", "", "", "Please Enter Your Answer");
-    ////    return;
-    ////}
-    //obj = {
-    //    UserId: $("#txtloginUserId").val(),
-    //    SecurityQuestionId: $("#cboQuestionId").val(),
-    //    SecurityAnswer: $("#txtAnswerId").val(),
-    //    ActiveStatus: true,
-    //};
-
-
-    //$("#btnSaveQuestion").attr("disabled", true);
-    //$.ajax({
-    //    url: getBaseURL() + '/Account/InsertUserSecurityQuestion',
-    //    type: 'POST',
-    //    datatype: 'json',
-    //    data: { obj },
-    //    success: function (response) {
-
-    //        if (response.Status) {
-    //            fnAlert("s", "", "", response.Message);
-    //            $("#PopupSecretQuestion").modal('hide');
-    //            fnClearChangePasswordfromLogin();
-
-    //        }
-    //        else {
-    //            fnAlert("e", "", "", response.Message);
-    //        }
-    //        $("#btnSaveQuestion").attr("disabled", false);
-    //    },
-    //    error: function (error) {
-    //        fnAlert("e", "", "", error.statusText);
-    //        $("#btnSaveQuestion").attr("disabled", false);
-    //    }
-    //});
 }
 // otp scripts
 
@@ -367,13 +332,14 @@ function fnBindUserLocations() {
                     $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
                 }
 
-                //else if (response.lstUserLocation.length == 1) {
-                //    $("#cboBusinessLocation option:eq(1)").prop("selected", true);
-                //   /* $("#cboBusinessLocation").prop("disabled", true);*/
-                //}
-                //else {
-                //    $("#cboBusinessLocation").prop("disabled", false);
-                //}
+                else if (response.lstUserLocation.length == 1) {
+                    $("#cboBusinessLocation option:eq(1)").prop("selected", true);
+                    $("#cboBusinessLocation").prop("disabled", true);
+                }
+                else {
+                    $("#cboBusinessLocation option:eq(1)").prop("selected", true);
+                    $("#cboBusinessLocation").prop("disabled", false);
+                }
                 
 
                 
@@ -390,12 +356,13 @@ function fnBindUserLocations() {
                     $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
                 }
 
-                //else if (response.lstFinancialYear.length == 1) {
-                //        $("#cboFinancialYear option:eq(1)").prop("selected", true);
-                //        /*$("#cboFinancialYear").prop("disabled", true);*/
-                //    } else {
-                //       /* $("#cboFinancialYear").prop("disabled", false);*/
-                //    }
+                else if (response.lstFinancialYear.length == 1) {
+                        $("#cboFinancialYear option:eq(1)").prop("selected", true);
+                        $("#cboFinancialYear").prop("disabled", true);
+                } else {
+                        $("#cboFinancialYear option:eq(1)").prop("selected", true);
+                        $("#cboFinancialYear").prop("disabled", false);
+                    }
                
             }
             else {

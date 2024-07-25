@@ -23,6 +23,14 @@
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyafonts.css"/>
     <link asp-append-version="true" rel="stylesheet" href="~/css/common/esyatheme.css"/>
     <link asp-append-version="true" rel="stylesheet" href="~/css/Common/sessionTimeout.css"/>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            localStorage.removeItem("culture");
+            localStorage.clear();
+        });
+    </script>
 </head>
 <body>
     <div class="row sessionTimeout-outercontainer center_div_ver_hor">
@@ -62,9 +70,3 @@
     </div>
 </body>
 </html>
-<script>
-    $(function () {
-        localStorage.removeItem("culture");
-        localStorage.clear();
-    });
-</script>

@@ -129,16 +129,7 @@ namespace eSyaEnterprise_UI.Controllers
             try
             {
 
-                if (model.BusinessKey == 0|| model.FinancialYear == 0)
-                {
-                    ViewBag.bkey = "Please Select Location and Financial Year";
-                    return View("Index");
-                }
-                //if (model.FinancialYear == 0)
-                //{
-                //    ViewBag.fyear = "Please Select Financial Year";
-                //    return View("Index");
-                //}
+               
                 var obj = new DO_UserLogIn()
                 {
                     LoginID = model.UserName,
@@ -156,10 +147,11 @@ namespace eSyaEnterprise_UI.Controllers
                         if (!serviceResponse.Data.IsSucceeded)
                         {
                             //ModelState.AddModelError("", serviceResponse.Data.Message);
-                            ViewBag.InvaidUser = serviceResponse.Data.Message;
+                           // ViewBag.InvaidUser = serviceResponse.Data.Message;
                             SetLoginApplicationRuleInViewBag();
-                            return View("Index");
-                        }
+                            return Json(new { success = false, errorMessage = serviceResponse.Data.Message });
+                        //return View("Index");
+                    }
                         if (serviceResponse.Data.ForcePasswordChangeNextSignIn)
                         {
                             ViewBag.UserID = serviceResponse.Data.UserID;
@@ -182,16 +174,16 @@ namespace eSyaEnterprise_UI.Controllers
                         AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
 
                         LocationConfirmation(model);
-
-                        return RedirectToAction("Index", "Home");
+                        return Json(new { success = true, redirectUrl = "/Home/Index" });
+                   // return RedirectToAction("Index", "Home");
                 }
                 else
                     {
                         ModelState.AddModelError("", "Internal error");
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:Login:params:" + JsonConvert.SerializeObject(model));
                         SetLoginApplicationRuleInViewBag();
-                        return View("Index");
-                    }
+                        return Json(new { success = false, errorMessage = "Internal Error" });
+                }
         }
             catch (Exception ex)
             {
