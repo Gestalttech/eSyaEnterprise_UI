@@ -29,11 +29,55 @@
         SelectFormulation_E1: '@Localizer["UI0341"]'
     }
 </script>
-   <div class="row">
+<div class="row">
+    <div class="col-lg-12 col-xl-12 col-sm-12 form-group" id="divAlphabets">
+        <label>@Localizer["ChooseDrugFormulationsbyalphabets"]</label>
+        <span class="dot">A</span>
+        <span class="dot">B</span>
+        <span class="dot">C</span>
+        <span class="dot">D</span>
+        <span class="dot">E</span>
+        <span class="dot">F</span>
+        <span class="dot">G</span>
+        <span class="dot">H</span>
+        <span class="dot">I</span>
+        <span class="dot">J</span>
+        <span class="dot">K</span>
+        <span class="dot">L</span>
+        <span class="dot">M</span>
+        <span class="dot">N</span>
+        <span class="dot">O</span>
+        <span class="dot">P</span>
+        <span class="dot">Q</span>
+        <span class="dot">R</span>
+        <span class="dot">S</span>
+        <span class="dot">T</span>
+        <span class="dot">U</span>
+        <span class="dot">V</span>
+        <span class="dot">W</span>
+        <span class="dot">X</span>
+        <span class="dot">Y</span>
+        <span class="dot">Z</span>
+        <span class="dot">0-9</span>
+        <span class="dot">All</span>
+    </div>
+    <div class="row form-group" style="display:none" id="divSearch">
+        <div class="col-lg-12 col-xl-12 col-sm-4 pad0">
+            <span id="lblBackToAlphabets">
+                <i class="fa fa-chevron-left"></i> Drugs  A to Z
+            </span>
+            <p class="d-inline-b mar0">
+                Drugs:<span id="lblSelectedAlphabets"></span> <i class="fas fa-long-arrow-alt-right"></i>
+            </p>
+            <div class="filter-div d-inline-b"></div>
+        </div>
+    </div>
+</div>
+<div class="row" id="divGridSection" style="display:none">
         <div class="col-lg-4  col-md-4 col-sm-6 col-xs-12">
             <div class="form-group">
             <label for="cboDrugFormulation"> @Localizer["DrugFormulation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboDrugFormulation" onchange="fnAppendComposition()" data-container="body" title="Select" data-size="5" asp-items="@ViewBag.DrugFormulationList">
+            <select class="selectpicker" data-live-search="true" id="cboDrugFormulation" onchange="fnAppendComposition()" data-container="body" title="Select" data-size="5"> @* asp-items="@ViewBag.DrugFormulationList"> *@
                     <option value="0"> Select</option>
                 </select>
             </div>
