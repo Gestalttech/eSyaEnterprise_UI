@@ -64,8 +64,14 @@ function fnAppendFormulation(_prefix) {
                     $("#cboDrugFormulation").append($("<option></option>").val(response[i].FormulationId).html(response[i].FormulationDesc));
                 }
                 $("#cboDrugFormulation").selectpicker('refresh');
-                fnLoadGridManufacturer();
+                $("#txtCompositionId").val('');
+                $("#txtCompositionDesc").val('');
+                if (response.length == 0 || response.length == null) {
+                    fnAlert("w", "EPH_07_00", "UI0362", errorMsg.DrugFormulation_E3);
+                    return;
+                }
             } else {
+                
                 $("#cboDrugFormulation").empty();
                 $("#cboDrugFormulation").append($("<option value='0'> Select </option>"));
                 $('#cboDrugFormulation').selectpicker('refresh');
@@ -82,6 +88,7 @@ function fnLoadManufacturer() {
         fnLoadGridManufacturer();
     }
     else {
+        $("#divGridSection").css("display", "none");
         fnAlert("w", "EPH_07_00", "UI0341", errorMsg.SelectFormulation);
         return;
     }
@@ -99,7 +106,6 @@ function fnAppendComposition() {
         datatype: 'json',
         success: function (response) {
             if (response != null) {
-                
                 $("#txtCompositionId").val(response.CompositionId);
                 $("#txtCompositionDesc").val(response.DrugCompDesc);
                 fnLoadGridManufacturer();
@@ -171,12 +177,13 @@ function fnRefreshFormulationToManufacturer() {
 }
 
 function fnSaveFormulationToManufacturer() {
-    if (IsStringNullorEmpty($("#cboDrugFormulation").val() == "0" || $("#cboDrugFormulation").val() == "")) {
-        fnAlert("w", "EMR_03_00", "UI0064", "Please select Formulation");
+    debugger;
+    if ($("#cboDrugFormulation").val() == "0" || $("#cboDrugFormulation").val() == "") {
+        fnAlert("w", "EPH_07_00", "UI0341", errorMsg.SelectFormulation_E1);
         return;
     }
     if (IsStringNullorEmpty($("#txtCompositionId").val() == "0")) {
-        fnAlert("w", "EMR_03_00", "UI0342", "Composition is not linked to selected Formulation");
+        fnAlert("w", "EPH_07_00", "UI0361", errorMsg.CompositionNotlinked_E2);
         return;
     }
 
