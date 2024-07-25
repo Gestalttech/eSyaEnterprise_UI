@@ -1,13 +1,21 @@
 ﻿//Create password popup open functionality
-
+$("#txtUserID").on('focusin', function ()
+{
+    fnEnableSignInButton();
+});
+$("#txtLoginPassword").on('focusout', function () {
+    fnEnableSignInButton();
+});
 $("#txtUserID").on('focusout', function () {
    
     if (IsStringNullorEmpty($("#txtUserID").val())) {
         return;
     } else {
+        fnEnableSignInButton();
         fncheckPasswordWithLoginID();
         fncheckIsUserQuestionsExists();
         fnBindUserLocations();
+        
     }
     
 });
@@ -16,8 +24,10 @@ $("#txtLoginPassword").on('focusin', function () {
     if (IsStringNullorEmpty($("#txtUserID").val())) {
         return;
     } else {
+        fnEnableSignInButton();
         fncheckPasswordWithLoginID();
         fncheckIsUserQuestionsExists();
+       
     }
 });
 

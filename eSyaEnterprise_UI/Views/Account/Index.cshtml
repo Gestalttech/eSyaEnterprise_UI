@@ -113,11 +113,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="">@Localizer["BusinessLocation"]</label>
-                                                <select class="select form-control" id="cboBusinessLocation"><option value="0">@Localizer["Select"]</option></select>
+                                                <select class="select form-control" id="cboBusinessLocation" onchange="fnEnableSignInButton()">
+                                                    <option value="0">@Localizer["Select"]</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label class="">@Localizer["FinancialYear"]</label>
-                                                <select class="select form-control" id="cboFinancialYear"><option value="0">@Localizer["Select"]</option></select>
+                                                <select class="select form-control" id="cboFinancialYear" onchange="fnEnableSignInButton()">
+                                                    <option value="0">@Localizer["Select"]</option>
+                                               </select>
                                             </div>
                                             @*  @if (ViewBag.IsGetPassword)
                                             { *@

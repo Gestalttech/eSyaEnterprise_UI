@@ -1,4 +1,8 @@
 ﻿$(document).ready(function () {
+
+    $('#btnUserSignIn').attr('disabled', true);
+
+
     $('#btnUserSignIn').click(function (e) {
         e.preventDefault();
         if ($("#cboBusinessLocation").val() == "0" || IsStringNullorEmpty($("#cboBusinessLocation").val()))
@@ -41,4 +45,17 @@
             }
         });
     });
+
 });
+
+
+function fnEnableSignInButton()
+{
+    if (!IsStringNullorEmpty($("#txtUserID").val()) && !IsStringNullorEmpty($("#txtLoginPassword").val()) &&
+        $("#cboBusinessLocation").val() != "0" && $("#cboFinancialYear").val() != "0")
+    {
+        $('#btnUserSignIn').attr('disabled', false);
+    } else {
+        $('#btnUserSignIn').attr('disabled', true);
+    }
+}
