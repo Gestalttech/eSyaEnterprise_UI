@@ -1,7 +1,82 @@
-﻿$(function () {
-   
+﻿$(document).ready(function () {
+
+    $(".dot").click(function () {
+        $('.filter-div').empty();
+        $('.dot').removeClass('active');
+        drugFormulationPrefix = $(this).text();
+        $("#divAlphabets").hide(100);
+        $(this).addClass('active');
+        $("#divSearch").show(500);
+        var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        var numbers = "0123456789".split("");
+        // From Single char to double char 
+        if (drugFormulationPrefix == "0-9") {
+            $.each(numbers, function (letter) {
+                $('.filter-div').addClass("animated fadeIn").append($('<span class="filter-chars">' + numbers[letter] + '</span>'));
+            });
+        }
+        else if (drugFormulationPrefix == "All") {
+            $.each(alphabet, function (letter) {
+                $('.filter-div').addClass("animated fadeIn").append($('<span class="filter-chars">' + alphabet[letter] + '</span>'));
+            });
+        }
+        else {
+            $.each(alphabet, function (letter) {
+                $('.filter-div').addClass("animated fadeIn").append($('<span class="filter-chars">' + drugFormulationPrefix + alphabet[letter].toLowerCase() + '</span>'));
+            });
+        }
+        //Two Character alphabets Selection
+        $(".filter-chars").click(function () {
+            $(".filter-chars").removeClass('active');
+            drugFormulationPrefix = $(this).text();
+            
+            _dcnamePrefix = drugFormulationPrefix;
+           $("#divGridSection").css('display', 'flex');
+           fnAppendFormulation(_dcnamePrefix);
+           $(this).addClass('active');
+        });
+        //Going Back to the A to Z Selection
+        $("#lblBackToAlphabets").click(function () {
+            $("#divSearch").hide(500);
+            $('.filter-div').empty();
+            $("#divAlphabets").show(500);
+            $('.filter-char').removeClass('active');
+            $("#divGridSection").css("display", "none");
+       })
+
+    });
+    
+    //fnLoadDrugCharacteristics();
 });
 
+function fnAppendFormulation(_prefix) {
+
+    $.ajax({
+        url: getBaseURL() + '/Formulation/GetActiveFormulations?prefix='+ _prefix,
+        type: 'GET',
+        datatype: 'json',
+        success: function (response) {
+            debugger;
+            if (response != null) {
+                $("#cboDrugFormulation").empty();
+                $("#cboDrugFormulation").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+                    $("#cboDrugFormulation").append($("<option></option>").val(response[i].FormulationId).html(response[i].FormulationDesc));
+                }
+                $("#cboDrugFormulation").selectpicker('refresh');
+                fnLoadGridManufacturer();
+            } else {
+                $("#cboDrugFormulation").empty();
+                $("#cboDrugFormulation").append($("<option value='0'> Select </option>"));
+                $('#cboDrugFormulation').selectpicker('refresh');
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+
+        }
+    });
+}
 function fnLoadManufacturer() {
     if ($('#cboDrugFormulation').val() != '' || $('#cboDrugFormulation').val() != 0 || $('#cboDrugFormulation').val() != null || $('#cboDrugFormulation').val() != undefined) {
         fnLoadGridManufacturer();
