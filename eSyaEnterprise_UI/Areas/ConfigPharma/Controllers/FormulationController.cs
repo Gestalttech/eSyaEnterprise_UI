@@ -215,33 +215,26 @@ namespace eSyaEnterprise_UI.Areas.ConfigPharma.Controllers
         #region Map Formulation to Manufacturer
         [Area("ConfigPharma")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> EPH_07_00()
+        public IActionResult EPH_07_00()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetActiveFormulations(string prefix)
         {
             try
             {
-                var serviceresponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugFormulation>>("DrugFormulation/GetActiveFormulations");
-
-                if (serviceresponse.Status)
-                {
-                    ViewBag.DrugFormulationList = serviceresponse.Data.Select(a => new SelectListItem
-                    {
-                        Text = a.FormulationDesc,
-                        Value = a.FormulationId.ToString()
-                    });
-
-                    return View();
-                }
+                var parameter = "?prefix=" + prefix;
+                var serviceResponse = await _eSyapharmaAPIServices.HttpClientServices.GetAsync<List<DO_DrugFormulation>>("DrugFormulation/GetActiveFormulations" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
                 else
-                {
-                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetActiveFormulations");
-                }
-                return View();
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
             }
-
-
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetActiveFormulations");
+                _logger.LogError(ex, "UD:GetActiveFormulations :For prefix {0} ", prefix);
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
