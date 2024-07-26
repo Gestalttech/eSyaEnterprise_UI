@@ -380,7 +380,7 @@
                             @await Component.InvokeAsync("IsdMobileInput", new { id = "ForgotUIDOTPMobileNo" })
                         </div>
                    
-                            <div class="col-lg-5 col-md-5 col-6 form-group">
+                            @* <div class="col-lg-5 col-md-5 col-6 form-group">
                             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoSendOTPMob">
                                 <input type="radio" id="rdoSendOTPMob" class="mdl-radio__button" name="uid" value="1">
                                         <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
@@ -390,14 +390,20 @@
                                 <input type="radio" id="rdoSendOTPEmailID" class="mdl-radio__button" name="uid" value="2">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
                             </label>
-                            </div>
+                            </div> *@
                             <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnGetUserIDSendOTP">
-                                <i class="fa fa-save"></i> @Localizer["SendOTP"]
-                            </button>
-
-
-                            
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnGetUserIDSendOTP">
+                                    <i class="fa fa-save"></i> @Localizer["SendOTP"]
+                                </button>
+                            </div>
+                        <div class="col-lg-12 col-12">
+                            <p class="small text-muted bgUserTips" id="lblFUIDMobileNo" style="display:none"> We have sent the OTP to your registered mobile number </p>
+                            <p class="small text-muted bgUserTips" id="lblFUIDEmailID" style="display:none"> We have sent the OTP to your registered email id </p>
+                        </div>
+                        <div class="col-lg-12 col-12" id="divFUIDSQuestions" style="display:none">
+                            <p class="small text-muted bgUserTips" id=""> Please answer the following question as per your enrollment profile to reset your password. </p>
+                            <label id="lblFUIDSQuestions">@Localizer["SecurityQuestion"]</label>
+                            <input type="text" id="txtFUIDAnswers" class="form-control" maxlength="150" />
                         </div>
                 </div>
                 <div class="row" id="divForgotUIDOTPSec" style="display:none;">
@@ -453,7 +459,7 @@
                             @await Component.InvokeAsync("IsdMobileInput", new { id = "GetFPMobileNo" })
                         </div>
 
-                        <div class="col-lg-5 col-md-5 col-6 form-group">
+                       @*  <div class="col-lg-5 col-md-5 col-6 form-group">
                             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rdoFPOTPtoMob">
                                 <input type="radio" id="rdoFPOTPtoMob" class="mdl-radio__button" name="FPoptions" value="1">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Mobile Number</span>
@@ -463,11 +469,20 @@
                                 <input type="radio" id="rdoFPOTPtoEmailID" class="mdl-radio__button" name="FPoptions" value="2">
                                 <span class="mdl-radio__label rad-btn">Send OTP To Registered  Email ID</span>
                             </label>
-                        </div>
+                        </div> *@
                         <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnFPSendOTP" onclick="">
                                 <i class="fa fa-save"></i> @Localizer["SendOTP"]
                             </button>
+                        </div>
+                        <div class="col-lg-12 col-12">
+                            <p class="small text-muted bgUserTips" id="lblFPMobileNo" style="display:none"> We have sent the OTP to your registered mobile number </p>
+                            <p class="small text-muted bgUserTips" id="lblFPEmailID" style="display:none"> We have sent the OTP to your registered email id </p>
+                        </div>
+                        <div class="col-lg-12 col-12" id="divFPSQuestions" style="display:none">
+                            <p class="small text-muted bgUserTips" id=""> Please answer the following question as per your enrollment profile to reset your password. </p>
+                            <label id="lblFPSQuestions">@Localizer["SecurityQuestion"]</label>
+                            <input type="text" id="txtFPSAnswers" class="form-control" maxlength="150" />
                         </div>
                     </div>
 
