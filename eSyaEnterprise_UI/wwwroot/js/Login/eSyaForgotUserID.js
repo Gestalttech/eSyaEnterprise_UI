@@ -10,13 +10,13 @@ $("#btnGetUserIDSendOTP").click(function () {
         document.getElementById("txtForgotUIDOTPMobileNo").focus();
         return;
     }
-    var _rdoSendOTPMob = $("#rdoSendOTPMob").parent().hasClass('is-checked');
-    var _rdoSendOTPEmailID = $("#rdoSendOTPEmailID").parent().hasClass('is-checked');
+    //var _rdoSendOTPMob = $("#rdoSendOTPMob").parent().hasClass('is-checked');
+    //var _rdoSendOTPEmailID = $("#rdoSendOTPEmailID").parent().hasClass('is-checked');
 
-    if ((_rdoSendOTPMob == false) && (_rdoSendOTPEmailID == false)) {
-        fnAlert("w", "", "", "Please Select any medium to send OTP");
-        return;
-    }
+    //if ((_rdoSendOTPMob == false) && (_rdoSendOTPEmailID == false)) {
+    //    fnAlert("w", "", "", "Please Select any medium to send OTP");
+    //    return;
+    //}
     
     setTimeout(function () {
         $("#btnGetUserIDSendOTP").attr('disabled', true);
