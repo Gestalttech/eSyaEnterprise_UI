@@ -19,6 +19,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -905,6 +906,157 @@ namespace eSyaEnterprise_UI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:InsertUserSecurityQuestion", obj);
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region Forgot User ID
+        [HttpGet]
+        public async Task<JsonResult> GetOTPbyMobileNumber(string mobileNo)
+        {
+            try
+            {
+                //SMS Rule is true
+                int sprocessID = 1;
+                int sruleID = 1;
+                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(sprocessID, sruleID);
+                if (smspr)
+                {
+                    var smsparameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + smsparameter);
+                    if (serviceResponse.Status)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                   
+                }
+
+                //EMail Rule is true
+                int eprocessID = 1;
+                int eruleID = 2;
+                var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(eprocessID, eruleID);
+                if (Emailpr)
+                {
+                    var emailparameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + emailparameter);
+                    if (serviceResponse.Status)
+                    {
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+
+                //Question Rule is true
+                int qprocessID = 1;
+                int qruleID = 1;
+                var Questionpr = await _applicationRulesServices.GetApplicationRuleStatusByID(qprocessID, qruleID);
+                if (Questionpr)
+                {
+                    var parameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + parameter);
+                    if (serviceResponse.Status)
+                    {
+
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                return Json(new DO_ReturnParameter() {Status=false,Message="No Rule has been for Forgot User ID" });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ValidateUserbyOTP(string mobileNo, string otp, int expirytime)
+        {
+            try
+            {
+                var parameter = "?mobileNo=" + mobileNo + "&otp=" + otp + "&expirytime=" + expirytime;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserbyOTP" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetRandomSecurityQuestion(string mobileNo)
+        {
+            try
+            {
+                var parameter = "?mobileNo=" + mobileNo;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserSecurityQuestions>("ForgotUserPassword/GetRandomSecurityQuestion" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetRandomSecurityQuestion:For UserID {0} with mobileNo entered {1}", mobileNo);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateUserbyOTP:For UserID {0} with mobileNo entered {1}", mobileNo);
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ValidateUserSecurityQuestion(DO_UserSecurityQuestions obj)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserSecurityQuestion", obj);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateUserSecurityQuestion");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateUserSecurityQuestion");
                 throw ex;
             }
         }

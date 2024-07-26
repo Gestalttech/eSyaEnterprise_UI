@@ -11,5 +11,8 @@
         public string FormID { get; set; }
         public int CreatedBy { get; set; }
         public string TerminalID { get; set; }
+        public bool IsSucceeded { get; set; }
+        public string? Message { get; set; }
+        public string? QuestionDesc { get; set; }
     }
 }
