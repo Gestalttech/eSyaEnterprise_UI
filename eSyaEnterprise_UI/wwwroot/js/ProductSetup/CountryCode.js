@@ -697,6 +697,7 @@ function fnUIDPatternGrid() {
                 
             }
         });
+    fnAddGridSerialNoHeading();
 }
 
 $(".modal").on('shown.bs.modal', function (e) {
