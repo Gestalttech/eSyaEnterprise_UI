@@ -86,7 +86,7 @@ function fnGetOTPbyMobileNumber() {
                     $("#txtforgotUserId").val(response.UserId); 
 
                 } else {
-                    
+                    $("#btnValidateForgotUIDOTP").css('display', 'inline-block');
                     $("#divFUIDSQuestions").css('display', 'none');
                     $("#divForgotUIDOTPSec").css('display', 'flex');
                     fnStartTimer(_TimerDuration, "#lblForgotUIDOTPtimer", "#btnForgotUIDResendOTP");
