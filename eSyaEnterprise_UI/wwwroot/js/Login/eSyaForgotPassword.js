@@ -8,18 +8,11 @@ $("#btnFPSendOTP").click(function () {
         fnAlert("w", "", "", "Please enter the Mobile number");
         return;
     }
-    //var _rdoFPOTPtoMob = $("#rdoFPOTPtoMob").parent().hasClass('is-checked');
-    //var _rdoFPOTPtoEmailID = $("#rdoFPOTPtoEmailID").parent().hasClass('is-checked');
-
-    //if ((_rdoFPOTPtoMob == false) && (_rdoFPOTPtoEmailID == false)) {
-    //    fnAlert("w", "", "", "Please Select any medium to send OTP");
-    //    return;
-    //}
-
+   
     setTimeout(function () {
         $("#btnFPSendOTP").attr('disabled', true);
     }, 1000);
-    debugger;
+    
     $("#divForgotPWOTPSec").css('display', 'flex');
     fnStartTimer(300, "#lblForgotPWOTPtimer", "#btnForgotPWResendOTP");
     fneSyaOTP(6, "#divForgotPWOTPSec", "#txtForgotPWOTP", "#btnValidateForgotPWOTP");

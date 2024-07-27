@@ -18,8 +18,8 @@ namespace eSyaEnterprise_UI.DataServices
         {
             try
             {
-                var param = "processID=" + processID + "&ruleID" + ruleID;
-                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<bool>("ApplicationRules/GetApplicationRuleStatusByID?"+ param);
+                var param = "?processID=" + processID + "&ruleID=" + ruleID; 
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<bool>("ApplicationRules/GetApplicationRuleStatusByID" + param);
                 return serviceResponse.Data;
             }
             catch 

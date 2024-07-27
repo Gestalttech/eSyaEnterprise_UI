@@ -26,6 +26,7 @@ namespace eSyaEnterprise_UI.Models
         public int SelectedFinancialYear { get; set; }
         public int? DoctorID { get; set; }
         public string? LoginDesc { get; set; }
+        public int SecurityQuestionId { get; set; }
     }
     public class DO_UserLogIn
     {
