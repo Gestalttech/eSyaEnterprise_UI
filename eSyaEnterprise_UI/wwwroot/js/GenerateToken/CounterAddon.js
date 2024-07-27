@@ -30,7 +30,7 @@ function fnGridLoadCounterMappingHeader() {
             { name: "TokenPrefix", width: 50, align: 'left', editable: true, editoptions: { maxlength: 15 }, resizable: false, hidden: true },
             { name: "TokenDesc", editable: true, width: '100' },
             { name: "CounterNumber", width: 80, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: true },
-            { name: "CounterNumberdesc", width: 80, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
+            { name: "CounterNumberdesc", width: 40, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "FloorId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 15 }, resizable: false, hidden: true },
             { name: "FloorName", width: 80, align: 'left', editable: true, editoptions: { maxlength: 6 }, resizable: false, hidden: false },
             { name: "CounterKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 15 }, resizable: false, hidden: true },
@@ -65,7 +65,7 @@ function fnGridLoadCounterMappingHeader() {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshCounterMappingHeader
     });
 
-
+    fnAddGridSerialNoHeading();
 
 }
 
@@ -136,7 +136,7 @@ function fnGridLoadCounterAddon(BusinessKey, FloorId, TokenPrefix, CounterNumber
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshAddOnToken
     });
 
-
+    fnAddGridSerialNoHeading();
 
 }
 
