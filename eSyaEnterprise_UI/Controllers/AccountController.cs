@@ -1138,6 +1138,7 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
+
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.EffectiveFrom = System.DateTime.Now;
