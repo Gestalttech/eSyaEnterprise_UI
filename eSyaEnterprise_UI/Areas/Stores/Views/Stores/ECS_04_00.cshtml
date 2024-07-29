@@ -22,6 +22,7 @@
         ViewStoreBusinessLink: '@Localizer["ViewStoreBusinessLink"]',
         Action: '@Localizer["Action"]',
         BusinessLink: '@Localizer["BusinessLink"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -68,17 +69,17 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="demo-card-square mdl-card mdl-shadow--2dp" id="pnlMainMenu" style="width: 100%; display:none">
-            <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 h-60 d-block">
+            <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand padleft0 d-block">
                 <h5 class="mdl-card__title-text">@Localizer["AddStoreBusinessLink"] </h5>
             </div>
-            <div class="mdl-card__supporting-text fullwidth pad0">
+            <div class="mdl-card__supporting-text fullwidth">
 
-                <div class="row padbot4 mar0">
+                <div class="row">
                     <input type="text" id="txtStoreCode" style="display:none" />
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
                             <label> @Localizer["StoreDescription"] </label>
-                            <input id="txtStoreDescription" class="form-control" type="text" autocomplete="off" maxlength="10" pattern="^[a-zA-Z _]+$" />
+                            <input id="txtStoreDescription" class="form-control" type="text" autocomplete="off" maxlength="10" pattern="^[a-zA-Z _]+$" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
 
@@ -95,7 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-6">
+                    <div class="col-lg-6 col-6 d-flex align-items-center">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
                             <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
                             <span class="mdl-checkbox__label">@Localizer["Active"]</span>
