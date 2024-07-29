@@ -334,11 +334,7 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     max-height: 126px !important;
     overflow-y: auto !important;
 }
-#gview_jqgParameters .ui-jqgrid-bdiv{
-    max-height: 159px !important;
-    max-height: 159px !important;
-    overflow-y: auto !important;
-}
+
 #gview_jqgServiceBaseRate .ui-jqgrid-bdiv, #gview_jqgFormulationToManufacturer .ui-jqgrid-bdiv,
 #gview_jqgLanguageCulture .ui-jqgrid-bdiv, #gview_jqgCulturekeys .ui-jqgrid-bdiv {
     max-height: 252px !important;

@@ -31,6 +31,7 @@
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
         Delete: '@Localizer["Delete"]',
+        AddViewParameter: '@Localizer["AddViewParameter"]',
         Edit: '@Localizer["Edit"]',
         View: '@Localizer["View"]',
         ParametersHeader: '@Localizer["ParametersHeader"]',
@@ -75,7 +76,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 lblright">
                         <div class="form-group lblright">
                             <label for="txtParameterTypeId" class="text-right">@Localizer["ParameterTypeID"] </label>
-                            <input id="txtParameterTypeId" class="form-control numberonly" maxlength="5" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric5Characters"]' />
+                            <input id="txtParameterTypeId" class="form-control numberonly" maxlength="5" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                        </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -137,7 +138,7 @@
                         <div id="jqpParameters"></div>
                     </div>
                 </div>
-                <div class="row padbot4" id="divParameters">
+                <div class="row" id="divParameters">
                     <div class="col-lg-12 col-md-12 col-sm-12 collapse">
                         <div class="form-group">
                             <label for="txtParameterId">@Localizer["ParameterID"] </label>
@@ -147,12 +148,12 @@
                     <div class="col-lg-6 col-md-9 col-sm-12">
                         <div class="form-group">
                             <label for="txtParameterDescription">@Localizer["ParameterDescription"] </label>
-                            <input id="txtParameterDescription" class="form-control" maxlength="50" type="text" />
+                            <input id="txtParameterDescription" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["ValueType"] </label>
+                            <label>@Localizer["ValueType"] </label>
                             <div>
                                 <select class="selectpicker" data-live-search="false" id="cboParameterValueType" title="">
                                     <option value="A">Amount</option>

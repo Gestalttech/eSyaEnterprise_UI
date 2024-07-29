@@ -10,13 +10,14 @@ $(document).ready(function () {
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgAddViewParameter: { name: "Add/View Parameter", icon: "add", callback: function (key, opt) { fnParametersInfoPopup(event) } },
+            jqgAddViewParameter: { name: localization.AddViewParameter, icon: "add", callback: function (key, opt) { fnParametersInfoPopup(event) } },
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditParametersType(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditParametersType(event, 'view') } },
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditParametersType(event, 'delete') } },
         }
         // there's more, have a look at the demos and docs...
     });
+    $(".context-menu-icon-add").html("<span class='icon-contextMenu'><i class='fa fa-plus'></i>" + localization.AddViewParameter + " </span>");
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
