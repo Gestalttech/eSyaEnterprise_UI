@@ -1771,7 +1771,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     }
     .navbar-brand-container {
         background: var(--color-white) !important;
-        width: 270px;
+        width: clamp(50%,270px,300px);
         height: 50px;
         padding: 0px 20px 0px 0px;
         clip-path: polygon(0% 0%, 92.78% -0.55%, 99.94% 108.58%, -0.4% 100%);
@@ -1897,7 +1897,10 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     }
 }
 
-    @media screen and (min-width:300px) and (max-width:575px) {
+    @media screen and (min-width:220px) and (max-width:575px) {
+        body, .ui-jqgrid .ui-jqgrid-view {
+            font-size: 11px !important;
+        }
         #imgPhotoimageblah {
             width: 240px;
             height: auto;
@@ -1907,6 +1910,11 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             width: 90%;
             height: auto;
         }
+        #navbarSupportedContent {
+            background: var(--color-secondary);
+            padding: 11px 5px;
+        }
+     
         .jstree-default .jstree-anchor {
             font-size: 10px !important;
         }
@@ -1983,7 +1991,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
         }
         .modal-title {
             float: left !important;
-            line-height: 32px !important;
+            line-height: 27px !important;
             /*color: var(--color-secondary) !important;*/
             font-weight: 300;
             font-size: 12px !important;
@@ -2014,7 +2022,10 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             padding: 0px 0px !important;
             font-size: 12px !important;
         }
-
+       .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {
+            padding: 7px 0px 7px 0px !important;
+            font-size: 11px !important;
+        }
         .header .form-name {
             padding: 0px 0px 0px 15px !important;
             font-size: 1.15em !important;
@@ -2090,10 +2101,15 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             color: gold !important;
             font-size: 14px !important;
         }
-        .header nav {padding: 0rem;box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);}
+        .header nav {
+            padding: 0rem;
+            -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
+            -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
+        }
         .navbar-brand-container {
             background: var(--color-white) !important;
-            width: 270px;
+            width: 50%;
             height: 63px;
             padding: 0px 20px 0px 0px;
             clip-path: polygon(0% 0%, 92.78% -0.55%, 99.94% 108.58%, -0.4% 100%);
@@ -2153,6 +2169,9 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         }
 
+        .btn-xs .ui-button {
+            font-size: 10px;
+        }  
         .activeSideBar {
             transition: right .15s linear;
             right: 0px !important;
@@ -2171,243 +2190,6 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
         }
     }
 
-@media screen and (min-width:300px) and (max-width:349px) {
-
-    .modal-title {
-        float: left !important;
-        line-height: 27px !important;
-        font-weight: 300;
-        font-size: 16px !important;
-        font-family: helvetica-Bold;
-    }
-
-    .mdl-card__title-text {
-        border-bottom: 1px double #e6e6e6;
-        background: var(--color-secondary); width: 100%;
-        padding: 10px 15px;
-        color: gold;
-        font-size: 14px !important;
-        letter-spacing: normal !important;
-    }
-
-    .selectpicker + .btn, .selectpicker + .btn-light:not(:disabled):not(.disabled).active, .selectpicker + .btn-light:not(:disabled):not(.disabled):active, .show > .btn-light.dropdown-toggle {
-        padding: 4px;
-        background: var(--color-white);
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-bottom: 1px solid rgba(0,0,0,.12);
-        -webkit-border-radius: 0px !important;
-        -moz-border-radius: 0px !important;
-        border-radius: 0px !important;
-        box-shadow: none !important;
-        height: 30px !important;
-        padding: 4px 0px !important;
-        font-size: 12px !important;
-    }
-
-    .header .form-name {
-        padding: 0px 0px 0px 15px !important;
-        font-size: 1.15em !important;
-    }
-    body, .ui-jqgrid .ui-jqgrid-view {
-        font-size: 11px !important;
-    }
-    .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {
-        padding: 7px 0px 7px 0px !important;
-        font-size: 11px !important;
-    }
-
-    #navbarSupportedContent {
-        background: var(--color-secondary);
-        padding: 11px 5px;
-    }
-    .only-for-smallscreen {
-        display: block;
-    }
-
-    .btn_wdth {
-        text-align: left;
-        height: 30px !important;
-        font-size: 12px;
-        line-height: 30px !important;
-        width: 38px;
-        min-width: 10px;
-    }
-
-    .hide-in-smallscreen {
-        display: none !important;
-    }
-
-    .div-menuform {
-        padding: 15px !important;
-        position: fixed;
-        bottom: 0px;
-    }
-
-    .ui-jqgrid .ui-jqgrid-htable th div {
-        font-size: 0.75rem !important;
-        letter-spacing: 0.65px !important;
-    }
-
-    #divSignOutBox {
-        width: 180px !important;
-    }
-
-        #divSignOutBox .bg-whitesmoke {
-            padding-left: 20px;
-        }
-
-            #divSignOutBox .bg-whitesmoke .svg-inline--fa {
-                font-size: 18px;
-                margin-right: 10px !important;
-            }
-
-    .quickMenuItem p {
-        margin: 0px !important;
-        font-size: 0.84rem;
-        color: #7e849a !important;
-        letter-spacing: 0.80px;
-        text-align: left !important;
-        display: inline-block;
-    }
-
-    #divSignOutBox span {
-        font-size: 18px !important;
-        margin-right: 10px;
-    }
-
-    .quickMenuItem {
-        width: 100% !important;
-        display: inline-block;
-        border: 1px solid #fdfdfd;
-        padding: 10px 3px;
-        transition: 0.3s ease-in-out;
-        margin: auto;
-    }
-
-    #divSignOutBox a {
-        text-align: left !important;
-        padding: 8px 15px;
-        color: var(--color-black);
-        text-decoration: none !important;
-        border-bottom: 1px solid var(--color-efefef);
-    }
-
-    #divSignOutBox .row {
-        margin: auto !important;
-        padding: 0px 0px 0px !important;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-        color: gold !important;
-        font-size: 12px !important;
-    }
-
-    .header nav {
-        padding: 0rem;
-        -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
-        -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
-        box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 3px rgba(0, 0, 0, 0.23);
-    }
-
-    .navbar-brand-container {
-        background: var(--color-white) !important;
-        width: 190px;
-        height: 63px;
-    }
-
-    .navbar-brand {
-        margin-right: 0px !important;
-    }
-
-    .bg-light {
-        background: var(--color-white) !important
-    }
-    /*.navbar-brand-container {
-        width: auto !important
-    }*/
-    .ma5menu__toggle {
-        height: 50px !important;
-    }
-
-    .error-text {
-        position: fixed;
-        width: 99%;
-        margin: auto;
-        padding: 15px;
-        top: 0;
-        left: 0;
-        right: 0;
-        transition: 0.3s ease-in;
-        line-height: 20px;
-        text-align: center;
-        border-radius: 0px;
-        display: none;
-    }
-
-        .error-text.active {
-            margin-top: 0px !important;
-            z-index: 1199 !important;
-            display: block;
-        }
-
-    .container-fluid {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-
-    button.navbar-toggler {
-        display: none
-    }
-
-    .bg-light {
-        background: var(--color-white) !important;
-    }
-
-    .ui-jqgrid .ui-jqgrid-htable th div {
-    }
-
-    .navbar-nav {
-        flex-direction: row !important;
-    }
-
-    .MasterPage-Logo {
-        width: 22vw;
-        position: relative;
-        top: 5px;
-    }
-
-    .navbar-nav .dropdown-menu {
-        position: absolute !important;
-    }
-
-    .navbar-brand-container span, #version-number {
-        font-size: 1.5vh !important;
-        font-weight: 300 !important;
-        top: 6px;
-    }
-    #divSideBar {
-        position: fixed;
-        top: 106px;
-        right: -95vw;
-        background: white;
-        width: 95vw;
-        padding: 15px;
-        z-index: 1050;
-        border: 1px solid var(--color-efefef);
-        transition: right .15s linear;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    }
-    .btn-xs .ui-button{
-        font-size:10px;
-    }   
-}
-/*.fc-toolbar {
-    justify-content: unset !important;
-    align-items: unset !important;
-    flex-direction: column !important;
-}*/
     /*Accordian menu Starts*/
     * {
         box-sizing: border-box;
