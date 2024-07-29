@@ -26,8 +26,9 @@
     color: var(--primary-color);
 }
 .treeaction .card-header {
-    background: linear-gradient(to top,var(--black),var(--color-primary));
-    color: var(--secondary-color);
+    /*background: linear-gradient(to top,var(--black),var(--color-primary));*/
+    background: linear-gradient(to top,#efdf8d,#fff9e0);
+    color: var(--primary-color);
 }
 
 .treeaction h5 {
@@ -53,7 +54,9 @@
 .jquery-accordion-menu ul ul.submenu > li a{
     font-family:helvetica-Bold;
 }
-
+.treeaction h6, .treeaction h5 {
+    color: var(--primary-color);
+}
     .primary-button, .cancel-button, .ui-button, .loginButton, .mdl-button--raised.mdl-button--colored, button.mdl-button, .btn-primary, .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle, .mdl-button--accent.mdl-button--accent.mdl-button--raised {
     background-color: var(--primary-color);
     color: var(--button-forecolor);

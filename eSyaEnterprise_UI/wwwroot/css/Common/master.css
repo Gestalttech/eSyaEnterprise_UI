@@ -1533,12 +1533,10 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     font-weight: 300;
     margin-bottom: 0px;
     font-family: 'helvetica-bold';
-    color: gold;
     letter-spacing: normal;
 }
 .treeaction h6 {
     font-family: 'helvetica-bold';
-    color: gold;
     letter-spacing: normal;
     line-height: normal;
     font-size:14px;
