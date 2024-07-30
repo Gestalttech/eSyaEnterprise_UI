@@ -99,7 +99,7 @@
                                             { *@
                                             <div class="form-group">
                                                @*  <a href="@Url.Action("GetUserId", "Account")" data-bs-modal="toggle" data-bs-target="#PopupGetUserID" class="getUserId" tabindex="7">@Localizer["ForgotUserID"]</a> *@
-                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupGetUserID" tabindex="7">@Localizer["ForgotUserID?"]</button>
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" tabindex="7" onclick="fnOpenFUserIDPopup()">@Localizer["ForgotUserID?"]</button>
                                             </div>
                                             @* } *@
                                             <div class="">
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="form-group">
                                                 @* <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a> *@
-                                                <button type="button" class="btn btn-outlink getUserId ps-0" data-bs-toggle="modal" data-bs-target="#PopupForgotPassword" tabindex="7">@Localizer["ForgotPassword?"]</button>
+                                                <button type="button" class="btn btn-outlink getUserId ps-0" tabindex="7" onclick="fnOpenFPWDPopup()">@Localizer["ForgotPassword?"]</button>
                                             </div>
                                             <div class="form-group">
                                                 <label class="">@Localizer["BusinessLocation"]</label>
@@ -371,7 +371,7 @@
             <div class="modal-content ">
                 <div class="modal-header popupHeader">
                     <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
-                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["GetUserID"]</h4>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["ForgotUserID"]</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row form-group border-bottom">
@@ -379,8 +379,8 @@
                             <label>@Localizer["MobileNumber"]</label>
                             @await Component.InvokeAsync("IsdMobileInput", new { id = "ForgotUIDOTPMobileNo" })
                         </div>
-                   
-                            <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
+
+                        <div class="col-lg-4 col-md-4 col-12 form-group d-flex flex-column justify-content-end">
                                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnGetUserIDSendOTP">
                                     <i class="fa fa-save"></i> @Localizer["SendOTP"]
                                 </button>
@@ -447,7 +447,7 @@
             <div class="modal-content ">
                 <div class="modal-header popupHeader">
                     <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
-                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["GetForgotPassword"]</h4>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["ForgotPassword"]</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row form-group border-bottom">
@@ -456,7 +456,7 @@
                             @await Component.InvokeAsync("IsdMobileInput", new { id = "GetFPMobileNo" })
                         </div>
 
-                        <div class="col-lg-2 col-md-2 col-6 form-group d-flex flex-column justify-content-end">
+                        <div class="col-lg-4 col-md-4 col-12 form-group d-flex flex-column justify-content-end">
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button btn-link " id="btnFPSendOTP" onclick="">
                                 <i class="fa fa-save"></i> @Localizer["SendOTP"]
                             </button>
