@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -1034,6 +1035,47 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetLabelNamebyRule()
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 1);
+                if (smspr)
+                {
+                  
+                   return Json(new DO_ReturnParameter { Status = true,Message="Send OTP by SMS" }) ;
+                 
+                }
+
+                //EMail Rule is true
+
+                var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 2);
+                if (Emailpr)
+                {
+                     return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by Email" });
+
+                }
+
+                //Question Rule is true
+
+                var Questionpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 3);
+                if (Questionpr)
+                {
+                    return Json(new DO_ReturnParameter { Status = true, Message = "Answer Security Question" });
+                }
+                return Json(new DO_ReturnParameter() { Status = false, Message = "Send OTP by SMS" });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLabelNamebyRule:For UserID {0} with mobileNo entered {1}");
+                throw ex;
+            }
+        }
         #endregion
 
         #region Forgot Password 
@@ -1157,6 +1199,46 @@ namespace eSyaEnterprise_UI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:ValidateForgotPasswordSecurityQuestion");
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetLabelNameForgotPasswordbyRule()
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 1);
+                if (smspr)
+                {
+
+                    return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by SMS" });
+
+                }
+
+                //EMail Rule is true
+
+                var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 2);
+                if (Emailpr)
+                {
+                    return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by Email" });
+
+                }
+
+                //Question Rule is true
+
+                var Questionpr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 3);
+                if (Questionpr)
+                {
+                    return Json(new DO_ReturnParameter { Status = true, Message = "Answer Security Question" });
+                }
+                return Json(new DO_ReturnParameter() { Status = false, Message = "Send OTP by SMS" });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLabelNameForgotPasswordbyRule:For UserID {0} with mobileNo entered {1}");
                 throw ex;
             }
         }

@@ -19,8 +19,9 @@ namespace eSyaEnterprise_UI.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync(string parameterType)
         {
+           
             var serviceResponse = await _eSyaConfigAPIServices.HttpClientServices.GetAsync<List<DO_Parameters>>("Parameters/GetParametersInformationByParameterType?parameterType=" + parameterType);
-            var params_list = serviceResponse.Data;
+            var params_list = serviceResponse.Data.Where(x=>x.ActiveStatus);
 
             return View("_eSyaParameter", params_list);
         }

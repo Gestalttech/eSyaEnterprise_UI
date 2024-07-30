@@ -16,7 +16,7 @@ namespace eSyaEnterprise_UI.ViewComponents
         {
             ViewBag.tblID = "tbl" + id;
             var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Parameters>>("Parameters/GetParametersInformationByParameterType?parameterType=" + parameterType);
-            var params_list = serviceResponse.Data;
+            var params_list = serviceResponse.Data.Where(x => x.ActiveStatus);
 
             return View("_eSyaParameterType", params_list);
         }
