@@ -1037,7 +1037,7 @@ namespace eSyaEnterprise_UI.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetLabelNamebyRule()
+        public async Task<JsonResult> GetLabelNameForgotUserIDbyRule()
         {
             try
             {
@@ -1072,7 +1072,7 @@ namespace eSyaEnterprise_UI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetLabelNamebyRule:For UserID {0} with mobileNo entered {1}");
+                _logger.LogError(ex, "UD:GetLabelNameForgotUserIDbyRule:For UserID {0} with mobileNo entered {1}");
                 throw ex;
             }
         }
