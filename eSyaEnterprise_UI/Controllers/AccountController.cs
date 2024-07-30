@@ -1243,5 +1243,48 @@ namespace eSyaEnterprise_UI.Controllers
             }
         }
         #endregion
+
+        #region Password Expiration
+        [HttpGet]
+        public async Task<JsonResult> GetPasswordExpirationDaysbyRule(string loginId)
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 3);
+                if (smspr)
+                {
+
+                    var parameter = "?loginId=" + loginId;
+
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ForgotUserPassword/GetPasswordExpirationDays" + parameter);
+                    if (serviceResponse.Status)
+                    {
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPasswordExpirationDaysbyRule:For UserID {0} with loginID entered {1}", loginId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                  
+                }
+                else
+                {
+
+                    return Json(new DO_ReturnParameter() { Status=true,StatusCode="0",});
+                }
+              
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPasswordExpirationDaysbyRule:For loginId {0} with loginId entered {1}");
+                throw ex;
+            }
+        }
+        #endregion
     }
 }

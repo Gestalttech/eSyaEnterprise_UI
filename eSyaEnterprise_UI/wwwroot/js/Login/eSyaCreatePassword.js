@@ -3,9 +3,50 @@ $("#txtUserID").on('focusin', function ()
 {
     fnEnableSignInButton();
 });
+
 $("#txtLoginPassword").on('focusout', function () {
-    fnEnableSignInButton();
+  
+    if (!IsStringNullorEmpty($("#txtUserID").val())) {
+        $.ajax({
+            url: getBaseURL() + '/Account/GetPasswordExpirationDaysbyRule?loginId=' + $("#txtUserID").val(),
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            error: function (xhr) {
+                fnAlert("e", "", "", xhr.statusText);
+            },
+            success: function (response) {
+              
+                if (response.Status) {
+                   
+                    if (response.StatusCode == "1") {
+                        if (response.ID <= 0) {
+                            $("#btnRemindMeLater").attr('disabled', true);
+                            $("#PopupExpirationMsg").modal('show');
+                            $("#lblMessage").text("Your Password has Expired");
+                            fnEnableSignInButton();
+
+                        }
+                        else
+                        {
+                            $("#btnRemindMeLater").attr('disabled', false);
+                            $("#PopupExpirationMsg").modal('show');
+                            $("#lblMessage").text(response.Message);
+                            fnEnableSignInButton();
+                        }
+                        
+                    }
+                    else {
+                        $("#PopupExpirationMsg").modal('hide');
+                        $("#lblMessage").text('');
+                        fnEnableSignInButton();
+                    }
+                }
+            }
+        });
+    }
 });
+
 $("#txtUserID").on('focusout', function () {
    
     if (IsStringNullorEmpty($("#txtUserID").val())) {
@@ -19,6 +60,7 @@ $("#txtUserID").on('focusout', function () {
     }
     
 });
+
 $("#txtLoginPassword").on('focusin', function () {
    
     if (IsStringNullorEmpty($("#txtUserID").val())) {
@@ -30,8 +72,6 @@ $("#txtLoginPassword").on('focusin', function () {
        
     }
 });
-
-
 
 function fncheckIsUserQuestionsExists() {
 
