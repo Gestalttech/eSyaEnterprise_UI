@@ -55,6 +55,30 @@ $("#btnForgotPWResendOTP").click(function () {
     }
 });
 
+
+function fnOpenFPWDPopup() {
+    $.ajax({
+        url: getBaseURL() + '/Account/GetLabelNameForgotPasswordbyRule',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            if (response.Status) {
+                $("#btnFPSendOTP").html("<i class='fa-regular fa-paper-plane me-1'></i> " + response.Message);
+                $("#PopupForgotPassword").modal('show');
+            }
+            else {
+                $("#btnFPSendOTP").html("<i class='fa-regular fa-paper-plane me-1'></i> " + response.Message);
+                $("#PopupGetUserID").modal('show');
+            }
+        }
+    });
+}
+
+
 function fnFPGetOTPbyMobileNumber() {
 
 

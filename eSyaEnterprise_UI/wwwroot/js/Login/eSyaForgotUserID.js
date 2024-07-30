@@ -56,7 +56,7 @@ $("#btnForgotUIDResendOTP").click(function () {
 });
 
 
-function fnOpenFPUserIDPopup() {
+function fnOpenFUserIDPopup() {
     $.ajax({
         url: getBaseURL() + '/Account/GetLabelNameForgotUserIDbyRule',
         type: 'GET',
