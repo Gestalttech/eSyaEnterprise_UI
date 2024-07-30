@@ -55,10 +55,33 @@ $("#btnForgotUIDResendOTP").click(function () {
     }
 });
 
-function fnGetOTPbyMobileNumber() {
 
-   
+function fnOpenFPUserIDPopup() {
+    $.ajax({
+        url: getBaseURL() + '/Account/GetLabelNameForgotUserIDbyRule',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            if (response.Status) {
+                $("#PopupGetUserID").modal('show');
+
+                $("#btnGetUserIDSendOTP").html("<i class='fa-regular fa-paper-plane me-1'></i> " + response.Message);
+            }
+            else {
+                $("#PopupGetUserID").modal('show');
+
+                $("#btnGetUserIDSendOTP").html("<i class='fa-regular fa-paper-plane me-1'></i> " + response.Message);
+            }
+        }
+    });
+}
+function fnGetOTPbyMobileNumber() {
     
+   
     $.ajax({
         url: getBaseURL() + '/Account/GetOTPbyMobileNumber?mobileNo=' + $("#txtForgotUIDOTPMobileNo").val(),
         type: 'GET',
