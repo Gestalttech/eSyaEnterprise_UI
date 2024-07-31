@@ -542,7 +542,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                         
+                        <input type="text" hidden id="txtExpUserID" />
+
                         <div class="col-lg-12 col-12">
                             <p class="small text-muted bgUserTips" id="lblMessage"> </p>
                            
@@ -558,7 +559,7 @@
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnRemindMeLater">
                                 <i class="fa fa-save"></i> @Localizer["Remind Me Later"]
                             </button>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnResetNow">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnResetNow" onclick="fnOpenExpChangePasswordPopUp()">
                                 <i class="fa fa-save"></i> @Localizer["Reset Now"]
                             </button>
                             
@@ -570,7 +571,7 @@
     </div>
 
     <div class="modal fade in" id="PopupExpPassword" data-bs-keyboard="false" data-bs-backdrop="static">
-        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:80px">
+        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:50px">
             <div class="modal-content">
                 <div class="modal-header popupHeader">
                     <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
@@ -578,8 +579,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="row m-0">
+                        <div class="col-12 col-lg-12  form-group" id="divErrorMsg" style="display:none">
+                            <div class="bgUserTips">
+                            <p id="lblErrorMessageHeader" class="m-0 bold"></p>
+                            <div id="divlblErrorList"> </div>
+                            </div>
+                        </div>
                         <div class="col-sm-12 col-12">
-                            <input type="text" hidden id="txtExpUserID" />
                              <label for="txtExpCurrentPassword">@Localizer["CurrentPassword"]</label>
                             <div class="form-group">
                                 <input type="password" id="txtExpCurrentPassword" maxlength="20" value="" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
@@ -596,15 +602,7 @@
                                 <input type="password" id="txtExpConfirmPassword" maxlength="20" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
                             </div>
                        </div>
-                        <div class="col-12 col-lg-12 bgUserTips">
-                            <p class="small m-0">Your password must be</p>
-                            <ul class="small text-sm">
-                                <li>Minimum 8 character,</li>
-                                <li>Minimum 1 uppercase character/lowercase character required,[A-Z][a-z]</li>
-                                <li> Minimum 1 special symbol required,[@@#$%!&*'']</li>
-                                <li>Minimum 1 digit required.[0-9]</li>
-                            </ul>
-                       </div>
+                        
                    </div>
 
 

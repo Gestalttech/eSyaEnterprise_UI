@@ -24,6 +24,7 @@ $("#txtLoginPassword").on('focusout', function () {
                             $("#btnRemindMeLater").attr('disabled', true);
                             $("#PopupExpirationMsg").modal('show');
                             $("#lblMessage").text("Your Password has Expired");
+                            $("#txtExpUserID").val(response.Key);
                             fnEnableSignInButton();
 
                         }

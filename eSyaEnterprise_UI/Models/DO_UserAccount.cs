@@ -49,4 +49,13 @@ namespace eSyaEnterprise_UI.Models
         public List<DO_UserFinBusinessLocation>? lstUserLocation { get; set; }
 
     }
+    public class DO_ChangeExpirationPassword
+    {
+        public int userID { get; set; }
+        public string oldpassword { get; set; }
+        public string newPassword { get; set; }
+        public string FormID { get; set; }
+        public int CreatedBy { get; set; }
+        public string TerminalID { get; set; }
+    }
 }

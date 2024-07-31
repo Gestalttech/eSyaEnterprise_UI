@@ -26,8 +26,9 @@ namespace eSyaEnterprise_UI.Utility
 
         public ValidationResponse IsValidPasswordPolicy(string password)
         {
-            var message = "The password does not meet the password policy requirements";
-
+            var message = "The Password does not meet the Password Policy Requirements.";
+            var msg = configuration.GetValue<string>("PasswordPolicy:ErrorMessage");
+            message+= msg;
             if (!HasMinimumLength(password, _passwordPolicy.RequiredLength))
                 return new ValidationResponse { Status = false, Message = message };
              if (_passwordPolicy.RequireUppercase > UpperCaseCount(password))
@@ -68,8 +69,7 @@ namespace eSyaEnterprise_UI.Utility
 
             if (!HasMinimumLength(password, requiredLength))
                 return new ValidationResponse { Status = false, Message = "The Minimum password lenght is " + requiredLength.ToString() };
-            //if (!HasMinimumUniqueChars(password, requiredUniqueChars)) return new ValidationResponse { Status = false, Message = "The Minimum password lenght is "  };
-            //if (requireNonAlphanumeric && !HasSpecialChar(password)) return false;
+            //if (!HasMinimumUniqueChars(password, requiredUniqueChars)) return new ValidationResponse { Status = false, Message = "The Minimum password lenght is " };
             if (requireLowercase && !HasLowerCaseLetter(password))
                 return new ValidationResponse { Status = false, Message = "Must Contain at least 1 lowercase letter" };
             if (requireUppercase && !HasUpperCaseLetter(password))

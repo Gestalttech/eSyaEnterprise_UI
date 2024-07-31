@@ -4,6 +4,7 @@ using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using eSyaEssentials_UI;
+using Humanizer.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -38,13 +39,15 @@ namespace eSyaEnterprise_UI.Controllers
         private readonly DO_AppConfig appConfig;
         private readonly IPasswordPolicy _passwordPolicy;
         private readonly DO_PasswordPolicy _passwordStrength;
+        private readonly IConfiguration _configuration;
         public AccountController(SignInManager<ApplicationUser> signinMgr,
              IeSyaGatewayServices eSyaGatewayServices,
              IApplicationRulesServices applicationRulesServices,
              IOptions<DO_AppConfig> option,
              ILogger<AccountController> logger,
              IPasswordPolicy passwordPolicy,
-              IOptions<DO_PasswordPolicy> passwordStrength)
+              IOptions<DO_PasswordPolicy> passwordStrength,
+              IConfiguration configuration)
         {
             signInManager = signinMgr;
             _eSyaGatewayServices = eSyaGatewayServices;
@@ -53,6 +56,7 @@ namespace eSyaEnterprise_UI.Controllers
             _logger = logger;
             _passwordPolicy = passwordPolicy;
             _passwordStrength = passwordStrength.Value;
+            _configuration= configuration;
         }
         public async Task<IActionResult> Index()
         {
@@ -1244,7 +1248,41 @@ namespace eSyaEnterprise_UI.Controllers
         }
         #endregion
 
-        #region Password Expiration
+        #region Change Password Expiration Password
+        [HttpGet]
+        public async Task<JsonResult> GetPasswordPolicybyRule()
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data>0)
+                {
+
+                    var message = "The Password must meet the following Password Policy.";
+                    var msg = _configuration.GetValue<string>("PasswordPolicy:ErrorMessage");
+                    message += msg;
+                    return Json(new DO_ReturnParameter() { Status = true, StatusCode = "1",Message= message });
+ 
+                }
+                else
+                {
+
+                    return Json(new DO_ReturnParameter() { Status = true, StatusCode = "0", });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPasswordPolicybyRule");
+                throw ex;
+            }
+        }
         [HttpGet]
         public async Task<JsonResult> GetPasswordExpirationDaysbyRule(string loginId)
         {
@@ -1269,14 +1307,14 @@ namespace eSyaEnterprise_UI.Controllers
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPasswordExpirationDaysbyRule:For UserID {0} with loginID entered {1}", loginId);
                         return Json(new { Status = false, StatusCode = "500" });
                     }
-                  
+
                 }
                 else
                 {
 
-                    return Json(new DO_ReturnParameter() { Status=true,StatusCode="0",});
+                    return Json(new DO_ReturnParameter() { Status = true, StatusCode = "0", });
                 }
-              
+
 
             }
             catch (Exception ex)
@@ -1285,6 +1323,49 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
+        [HttpPost]
+        public async Task<JsonResult> ChangeUserExpirationPassword(DO_ChangeExpirationPassword obj)
+        {
+            try
+            {
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data > 0)
+                {
+
+                    var passswordpolicy = _passwordPolicy.IsValidPasswordPolicy(obj.newPassword);
+                    if (!passswordpolicy.Status)
+                    {
+                        return Json(new { Status = false, passswordpolicy.Message });
+                    }
+
+                }
+
+               
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.CreatedBy= AppSessionVariables.GetSessionUserID(HttpContext);
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ForgotUserPassword/ChangeUserExpirationPassword", obj);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChangeUserExpirationPassword", obj);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ChangeUserExpirationPassword", obj);
+                throw ex;
+            }
+        }
+        
         #endregion
     }
 }
