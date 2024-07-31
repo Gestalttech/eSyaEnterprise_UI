@@ -12,22 +12,22 @@ function fnLoadItemGroupTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ItemGroupTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ItemGroupTree");
+            $("#jstItemGroupTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstItemGroupTree");
             $(window).on('resize', function () {
-                fnTreeSize("#ItemGroupTree");
+                fnTreeSize("#jstItemGroupTree");
             })
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
-    $("#ItemGroupTree").on('loaded.jstree', function () {
-        $("#ItemGroupTree").jstree()._open_to(prevSelectedID);
-        $('#ItemGroupTree').jstree().select_node(prevSelectedID);
+    $("#jstItemGroupTree").on('loaded.jstree', function () {
+        $("#jstItemGroupTree").jstree()._open_to(prevSelectedID);
+        $('#jstItemGroupTree').jstree().select_node(prevSelectedID);
     });
 
-    $('#ItemGroupTree').on("changed.jstree", function (e, data) {
+    $('#jstItemGroupTree').on("changed.jstree", function (e, data) {
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -36,7 +36,7 @@ function fnLoadItemGroupTree() {
                 $('#Add').remove();
                 $("#dvItemGroup").hide();
 
-                var parentNode = $("#ItemGroupTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstItemGroupTree").jstree(true).get_parent(data.node.id);
 
                 // If Parent node is selected
                 if (parentNode == "#") {
@@ -102,9 +102,9 @@ function fnLoadItemGroupTree() {
             }
         }
     });
-    $('#ItemGroupTree').on("close_node.jstree", function (node) {
+    $('#jstItemGroupTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ItemGroupTree').jstree().deselect_node(closingNode.children);
+        $('#jstItemGroupTree').jstree().deselect_node(closingNode.children);
     });
 }
 function fnFillItemGroupDetail(ItemGroupID) {
@@ -149,7 +149,7 @@ function fnAddOrUpdateItemGroup() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ItemGroupTree").jstree("destroy");
+                    $("#jstItemGroupTree").jstree("destroy");
                     fnLoadItemGroupTree();
 
                 }
@@ -164,4 +164,33 @@ function fnAddOrUpdateItemGroup() {
             }
         });
     }
+}
+
+function fnIGClear() {
+    $("#dvItemGroup").css('display', 'none');
+}
+
+function fnExpandAll() {
+    if ($('.jstree-container-ul').height() <= 24) {
+        $("#jstItemGroupTree").jstree('open_all');
+        fnTreeSize("#jstItemGroupTree");
+        
+        setTimeout(function () {
+            $("#btnIGCollapseAll").attr('disabled', false);
+            $("#btnIGExpandAll").attr('disabled', true );
+        }, 1200)
+    }
+    else {
+        fnAlert("w", "", "", "Tree is Expanded or no branch to expand");
+    }
+    
+}
+
+function fnCollapseAll() {
+    $("#jstItemGroupTree").jstree('close_all');
+    setTimeout(function () {
+        $("#btnIGCollapseAll").attr('disabled', true);
+        $("#btnIGExpandAll").attr('disabled', false);
+    },1200)
+    
 }

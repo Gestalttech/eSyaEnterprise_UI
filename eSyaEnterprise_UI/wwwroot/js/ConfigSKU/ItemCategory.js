@@ -15,17 +15,17 @@ function fnLoadItemCategoryTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ItemCategoryTree").jstree({ core: { data: result, multiple: false } });
+            $("#jstItemCategoryTree").jstree({ core: { data: result, multiple: false } });
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
-    $("#ItemCategoryTree").on('loaded.jstree', function () {
-        $("#ItemCategoryTree").jstree()._open_to(prevSelectedID);
-        $('#ItemCategoryTree').jstree().select_node(prevSelectedID);
+    $("#jstItemCategoryTree").on('loaded.jstree', function () {
+        $("#jstItemCategoryTree").jstree()._open_to(prevSelectedID);
+        $('#jstItemCategoryTree').jstree().select_node(prevSelectedID);
     });
-    $('#ItemCategoryTree').on("changed.jstree", function (e, data) {
+    $('#jstItemCategoryTree').on("changed.jstree", function (e, data) {
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -35,7 +35,7 @@ function fnLoadItemCategoryTree() {
                 $("#dvItemCategory").hide();
                 $("#dvItemSubCategory").hide();
 
-                var parentNode = $("#ItemCategoryTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstItemCategoryTree").jstree(true).get_parent(data.node.id);
                 // If Main node is selected
                 if (parentNode == "#") {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
@@ -51,7 +51,7 @@ function fnLoadItemCategoryTree() {
                         //$("#txtBudgetAmount").val('0');
                         //$("#txtCommittmentAmount").val('0');
                         $('#chkActiveStatus').parent().addClass("is-checked");
-                        $("#btnICAdd").html("<i class='fa fa-save'></i>" + localization.Save);
+                        $("#btnICAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $('#btnICAdd').show();
                         $("#dvItemCategory").show();
                         $("#dvItemSubCategory").hide();
@@ -96,7 +96,7 @@ function fnLoadItemCategoryTree() {
                         $('#dvItemSubCategory').hide();
                         $('#dvItemCategory').show();
                         $("#pnlAddItemCategory .mdl-card__title-text").text(localization.EditItemCategory);
-                        $('#btnICAdd').html('<i class="fa fa-sync"></i>' + localization.Update);
+                        $('#btnICAdd').html('<i class="fa fa-sync"></i> ' + localization.Update);
                         $('#btnICAdd').show();
                         ItemCategoryID = data.node.id;
                         $("#txtItemCategoryDesc").prop("disabled", false);
@@ -111,9 +111,9 @@ function fnLoadItemCategoryTree() {
             }
         }
     });
-    $('#ItemCategoryTree').on("close_node.jstree", function (node) {
+    $('#jstItemCategoryTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ItemCategoryTree').jstree().deselect_node(closingNode.children);
+        $('#jstItemCategoryTree').jstree().deselect_node(closingNode.children);
     });
     fnTreeSize("#divItemCategoryTree");
 }
@@ -177,7 +177,7 @@ function fnAddOrUpdateItemCategory() {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
 
-                    $("#ItemCategoryTree").jstree("destroy");
+                    $("#jstItemCategoryTree").jstree("destroy");
                     fnLoadItemCategoryTree();
                 }
                 else {
@@ -191,6 +191,10 @@ function fnAddOrUpdateItemCategory() {
             }
         });
     }
+}
+
+function fnCancel() {
+    $("#dvItemCategory").css('display', 'none');
 }
 
 

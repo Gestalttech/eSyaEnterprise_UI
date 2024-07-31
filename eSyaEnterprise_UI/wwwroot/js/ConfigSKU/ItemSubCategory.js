@@ -13,8 +13,8 @@ function fnLoadItemSubCategoryTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ItemCategoryTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ItemCategoryTree");
+            $("#jstItemCategoryTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstItemCategoryTree");
             $(window).on('resize', function () {
                 fnTreeSize("#ItemGroupCategoryTree");
             })
@@ -23,11 +23,11 @@ function fnLoadItemSubCategoryTree() {
             fnAlert("e", "ESK_03_00", error.StatusCode, error.statusText);
         }
     });
-    $("#ItemCategoryTree").on('loaded.jstree', function () {
-        $("#ItemCategoryTree").jstree()._open_to(prevSelectedID);
-        $('#ItemCategoryTree').jstree().select_node(prevSelectedID);
+    $("#jstItemCategoryTree").on('loaded.jstree', function () {
+        $("#jstItemCategoryTree").jstree()._open_to(prevSelectedID);
+        $('#jstItemCategoryTree').jstree().select_node(prevSelectedID);
     });
-    $('#ItemCategoryTree').on("changed.jstree", function (e, data) {
+    $('#jstItemCategoryTree').on("changed.jstree", function (e, data) {
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -38,7 +38,7 @@ function fnLoadItemSubCategoryTree() {
                 $("#dvItemSubCategory").hide();
 
 
-                var parentNode = $("#ItemCategoryTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstItemCategoryTree").jstree(true).get_parent(data.node.id);
 
                 // If Category node is selected
                 if (parentNode == "ISC") {
@@ -57,7 +57,7 @@ function fnLoadItemSubCategoryTree() {
                         $("#pnlAddItemSubCategory .mdl-card__title-text").text(localization.AddItemSubCategory);
                         $("#txtItemSubCategoryDesc").val('');
                         $('#chkActiveStatusSub').parent().addClass("is-checked");
-                        $("#btnISCAdd").html("<i class='fa fa-save'></i>" + localization.Save);
+                        $("#btnISCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnISCAdd").show();
                         ItemCategoryID = data.node.id
                         ItemSubCategoryID = "0"
@@ -99,7 +99,7 @@ function fnLoadItemSubCategoryTree() {
                         $("#dvItemCategory").hide();
                         $("#dvItemSubCategory").show();
                         $("#pnlAddItemSubCategory .mdl-card__title-text").text(localization.EditItemSubCategory);
-                        $("#btnISCAdd").html("<i class='fa fa-sync'></i>" + localization.Update);
+                        $("#btnISCAdd").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnISCAdd").show();
                         ItemSubCategoryID = data.node.id;
                         ItemCategoryID = parentNode;
@@ -110,9 +110,9 @@ function fnLoadItemSubCategoryTree() {
             }
         }
     });
-    $('#ItemCategoryTree').on("close_node.jstree", function (node) {
+    $('#jstItemCategoryTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ItemCategoryTree').jstree().deselect_node(closingNode.children);
+        $('#jstItemCategoryTree').jstree().deselect_node(closingNode.children);
     });
 }
 function fnFillItemSubCateDetail(ItemSubCategoryID) {
@@ -163,7 +163,7 @@ function fnAddOrUpdateItemSubCategory() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ItemCategoryTree").jstree("destroy");
+                    $("#jstItemCategoryTree").jstree("destroy");
                     fnLoadItemSubCategoryTree();
                 }
                 else {
@@ -178,4 +178,6 @@ function fnAddOrUpdateItemSubCategory() {
         });
     }
 }
-
+function fnISClear() {
+    $("#dvItemSubCategory").css('display', 'none');
+}
