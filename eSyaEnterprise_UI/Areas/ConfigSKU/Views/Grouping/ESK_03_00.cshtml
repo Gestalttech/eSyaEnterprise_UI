@@ -18,13 +18,12 @@
 
 <script>
     var localization = {
-
         AddItemSubCategory: '@Localizer["AddItemSubCategory"]',
         Save: '@Localizer["Save"]',
         ViewItemSubCategory: '@Localizer["ViewItemSubCategory"]',
         EditItemSubCategory: '@Localizer["EditItemSubCategory"]',
         Update: '@Localizer["Update"]',
-
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -93,7 +92,7 @@
 <div class="row row-bottom-pad">
     <div class="col-sm-4 col-md-4 col-lg-4">
 
-        <div id="ItemCategoryTree">
+        <div id="jstItemCategoryTree">
         </div>
     </div>
     <div class="col-sm-1 col-md-1 col-lg-1"></div>
@@ -103,7 +102,7 @@
         <div id="dvItemSubCategory" style="display:none;">
 
             <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddItemSubCategory">
-                <div class="mdl-card__title mdl-card--expand padleft0 padtop0 h-60 d-block">
+                <div class="mdl-card__title mdl-card--expand padleft0 d-block">
                     <h5 class="mdl-card__title-text">@Localizer["AddItemSubCategory"]</h5>
                 </div>
                 <div class="mdl-card__supporting-text fullwidth">
@@ -113,13 +112,13 @@
                                 <label>
                                     @Localizer["ItemSubCategoryDescription"]
                                 </label>
-                                <input type="text" maxlength="50" class="form-control" id="txtItemSubCategoryDesc" />
+                                <input type="text" maxlength="50" autocomplete="off" autofocus class="form-control" id="txtItemSubCategoryDesc" />
 
                             </div>
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-lg-12" style="margin-bottom: 15px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 form-group">
                             <label class="mdl-checkbox mdl-js-checkbox" for="chkActiveStatusSub">
                                 <input type="checkbox" id="chkActiveStatusSub"
                                        class="mdl-checkbox__input">
@@ -127,18 +126,17 @@
                             </label>
                         </div>
                     </div>
+                </div>
 
+                <div class="mdl-card__actions mdl-card--border text-center vertical-center">
 
-                    <hr />
-                    <div class="mdl-card__actions text-center vertical-center pad0">
-
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnISCAdd" onclick="fnAddOrUpdateItemSubCategory()"><i class="fa fa-plus"></i> @Localizer["Save"]</button>
-
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect me-3" id="btnISCAdd" onclick="fnAddOrUpdateItemSubCategory()"><i class="fa fa-plus"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnISCancel" onclick="fnISClear()"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                     </div>
 
 
 
-                </div>
+               
             </div>
         </div>
     </div>
