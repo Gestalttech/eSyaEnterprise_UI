@@ -33,8 +33,10 @@ $("#PopupForgotPassword").on('shown.bs.modal', function () {
     $("#btnForgotPWResendOTP").attr('disabled', true);
     $("#btnValidateForgotPWOTP").attr('disabled', true);
     $("#btnValidateForgotPWAnswer").attr('disabled', true);
+  
+});
 
-})
+
 $("#PopupForgotPassword").on('hidden.bs.modal', function () {
     $("#txtGetFPMobileNo").val("");
     $("#divForgotPWOTPSec").css('display', 'none');

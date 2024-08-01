@@ -200,16 +200,16 @@ function fnValidateUserOTP() {
 }
 function fnSaveChangePassword() {
 
-    var PasswordPattern = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@@#$%!&*]).{8,20})");
+   // var PasswordPattern = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@@#$%!&*]).{8,20})");
 
     if ($("#txtpassword").val().trim().length <= 0) {
         fnAlert("w", "", "", "Please Enter New Password");
         return;
     }
-    if (!PasswordPattern.test($("#txtpassword").val())) {
-        fnAlert("w", "", "", "Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.");
-        return;
-    }
+    //if (!PasswordPattern.test($("#txtpassword").val())) {
+    //    fnAlert("w", "", "", "Password Should Contains : Minimum 8 character, Minimum 1 uppercase character/lowercase character required, Minimum 1 special symbol(@@#$%!&*) required, Minimum 1 digit required.");
+    //    return;
+    //}
     if ($("#txtConfirmPassword").val().trim().length <= 0) {
         fnAlert("w", "", "", "Please Enter New Confirm Password");
         return;
@@ -244,7 +244,22 @@ function fnSaveChangePassword() {
                 }, 2000);
             }
             else {
-                fnAlert("e", "", "", response.Message);
+                $("#txtpassword").val("");
+                $("#txtConfirmPassword").val("");
+                _createPWerrmsg = response.Message.split("\\");
+                _createPWlist = "";
+                $("#lblCPErrorList").remove();
+                $("#lblCPErrorMessageHeader").html(_createPWerrmsg[0]);
+                _createPWlist += "<ol id='lblCPErrorList'>"
+                for (i = 1; i < _createPWerrmsg.length; i++) {
+                    _createPWlist += "<li class='animate__animated animate__fadeInDown'>" + _createPWerrmsg[i] + "</li>";
+                }
+                _createPWlist += "</ol>"
+                $("#divCPlblErrorList").append(_createPWlist);
+
+                $(".bgUserTips").removeClass('red');
+                $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
+                $("#divCPErrorMsg").css('display', 'block');
             }
             $("#btnSaveChangePassword").attr("disabled", false);
         },
@@ -463,4 +478,55 @@ function fnGetNumberofQuestionsbyRule() {
 
 
 }
- 
+
+
+$("#PopupChangePassword").on('shown.bs.modal', function () {
+    $("#txtpassword").val("");
+    $("#txtConfirmPassword").val("");
+    fnCreatePasswordPolicy();
+});
+function fnCreatePasswordPolicy() {
+    var _createPWerrmsg = "";
+    var _createPWlist = "";
+
+    $.ajax({
+        url: getBaseURL() + '/Account/GetPasswordPolicybyRule',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            $(".bgUserTips").removeClass('animate__animated animate__flash animate__repeat-1');
+            $("#divCPErrorMsg").css('display', 'none');
+            if (response.Status) {
+
+                if (response.StatusCode == "1" || response.StatusCode == 1) {
+                    $("#txtpassword").val("");
+                    $("#txtConfirmPassword").val("");
+                    _createPWerrmsg = response.Message.split("\\");
+                    _createPWlist = "";
+                    $("#lblCPErrorList").remove();
+                    $("#lblCPErrorMessageHeader").html(_createPWerrmsg[0]);
+                    _createPWlist += "<ol id='lblCPErrorList'>"
+                    for (i = 1; i < _createPWerrmsg.length; i++) {
+                        _createPWlist += "<li class='animate__animated animate__fadeInDown'>" + _createPWerrmsg[i] + "</li>";
+                    }
+                    _createPWlist += "</ol>"
+                    $("#divCPlblErrorList").append(_createPWlist);
+
+                    $(".bgUserTips").removeClass('red');
+                    $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
+                    $("#divCPErrorMsg").css('display', 'block');
+                }
+                else {
+                    $("#txtpassword").val("");
+                    $("#txtConfirmPassword").val("");
+                   
+                    $("#divCPErrorMsg").css('display', 'none');
+                }
+            }
+        }
+    });
+}

@@ -220,7 +220,7 @@
 
 
     <div class="modal fullscreen fade in" id="PopupChangePassword" data-bs-keyboard="false" data-bs-backdrop="static">
-        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:80px">
+        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:20px">
             <div class="modal-content ">
                 <div class="modal-header popupHeader">
                     <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
@@ -234,36 +234,30 @@
                                 <label for="" id="lblLogInID" class="d-inline font-weight-bold h6"> </label>
                             </div>
                             <div>
-                               
-                                <input type="text"  id="txtloginUserId" hidden/> 
+
+                                <input type="text" id="txtloginUserId" hidden />
                             </div>
                         </div>
+                        <div class="col-12 col-lg-12  form-group" id="divCPErrorMsg" style="display:none">
+                            <div class="bgUserTips">
+                                <p id="lblCPErrorMessageHeader" class="m-0 bold animate__animated animate__fadeInDown"></p>
+                                <div id="divCPlblErrorList"> </div>
+                            </div>
+                        </div>
+                       
                         <div class="col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group pass_show position-relative">
                                 <label for="txtpassword">@Localizer["NewPassword"]</label>
                                 <input id="txtpassword" class="form-control" maxlength="50" type="password" />
-
+                                <a href="#" id="viewNPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="form-group">
+                            <div class="form-group pass_show position-relative">
                                 <label for="txtConfirmPassword">@Localizer["ConfirmPassword"]</label>
                                 <input id="txtConfirmPassword" class="form-control" maxlength="50" type="password" />
+                                <a href="#" id="viewCPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-lg-12 bgUserTips">
-                            <p class="small m-0">Your password must be</p>
-                            <ul class="small text-sm">
-                                <li>Minimum 8 character,</li>
-                                <li>Minimum 1 uppercase character/lowercase character required,[A-Z][a-z]</li>
-                                <li> Minimum 1 special symbol required,[@@#$%!&*'']</li>
-                                <li>Minimum 1 digit required.[0-9]</li>
-                            </ul>
-                            
-                            
-                           
-                            
                         </div>
                     </div>
                 </div>
@@ -664,7 +658,14 @@
             $("#viewAnswer svg").toggleClass("fa-eye-slash fa-eye");
             $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
         });
-
+        $(document).on('click', '#viewNPPassword', function () {
+            $("#viewNPPassword svg").toggleClass("fa-eye-slash fa-eye");
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+        })
+        $(document).on('click', '#viewCPPassword', function () {
+            $("#viewCPPassword svg").toggleClass("fa-eye-slash fa-eye");
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+        })
 
         $(window).on('resize', function () {
            // fnSetTheProductImage();

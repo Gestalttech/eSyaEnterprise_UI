@@ -519,12 +519,12 @@ padding:0px !important;font-size:0.82rem;}
     flex-direction: column;
     padding-right: 0px;
 }
-#lblErrorMessageHeader, #lblErrorList li {
+#lblErrorMessageHeader, #lblCPErrorMessageHeader, #lblErrorList li, #lblCPErrorList li {
     font-size: 0.82rem;
 }
-    #lblErrorList ol{
-        padding-left:14px;
-    }
+#lblErrorList ol, #lblCPErrorList ol {
+    padding-left: 14px;
+}
     @media screen and (min-width:1301px) {
         .loginContainer { width: 764px}
         .mainLogo {position: absolute;bottom: -30px;z-index: 21 !important;left: 40%;width:174px;/*height:57px;*/}
