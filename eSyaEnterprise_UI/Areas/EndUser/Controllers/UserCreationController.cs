@@ -29,12 +29,19 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         private readonly IeSyaEndUserAPIServices _eSyaEndUserAPIServices;
         private readonly ISmsServices _smsServices;
         private readonly ILogger<UserCreationController> _logger;
-
-        public UserCreationController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, ISmsServices smsServices, ILogger<UserCreationController> logger)
+        private readonly IApplicationRulesServices _applicationRulesServices;
+        private readonly IConfiguration _configuration;
+        private readonly IeSyaGatewayServices _eSyaGatewayServices;
+        private readonly IPasswordPolicy _passwordPolicy;
+        public UserCreationController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, ISmsServices smsServices, ILogger<UserCreationController> logger, IApplicationRulesServices applicationRulesServices, IConfiguration configuration, IeSyaGatewayServices eSyaGatewayServices, IPasswordPolicy passwordPolicy)
         {
             _eSyaEndUserAPIServices = eSyaEndUserAPIServices;
             _smsServices = smsServices;
             _logger = logger;
+            _applicationRulesServices = applicationRulesServices;
+            _configuration = configuration;
+            _eSyaGatewayServices = eSyaGatewayServices;
+            _passwordPolicy = passwordPolicy;
         }
         //#region New User Group&Type
         //[Area("EndUser")]
@@ -2226,11 +2233,60 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<JsonResult> GetPasswordPolicybyRule()
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data > 0)
+                {
+
+                    var message = "The Password must meet the following Password Policy.";
+                    var msg = _configuration.GetValue<string>("PasswordPolicy:ErrorMessage");
+                    message += msg;
+                    return Json(new DO_ReturnParameter() { Status = true, StatusCode = "1", Message = message });
+
+                }
+                else
+                {
+
+                    return Json(new DO_ReturnParameter() { Status = true, StatusCode = "0", });
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPasswordPolicybyRule");
+                throw ex;
+            }
+        }
+
         [HttpPost]
         public async Task<JsonResult> ChangeUserPassword(DO_ChangePassword obj)
         {
             try
             {
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data > 0)
+                {
+
+                    var passswordpolicy = _passwordPolicy.IsValidPasswordPolicy(obj.newPassword);
+                    if (!passswordpolicy.Status)
+                    {
+                        return Json(new { Status = false, passswordpolicy.Message });
+                    }
+
+                }
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.CreatedBy = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
