@@ -1,11 +1,19 @@
 ﻿var _errmsg = ""; var _list = ""
 var _errmsgS = ""; var _listS = ""
-$(document).on('click', '#viewPassword', function () {
+$(document).on('click', '#viewExpPassword', function () {
     //$(this).text($(this).text() == "Show" ? "Hide" : "Show");
     $("#viewExpPassword svg").toggleClass("fa-eye-slash fa-eye");
     $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+    $(".bgUserTips").removeClass('red');
+    $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
 });
-
+$("#txtExpCurrentPassword,#txtExpNewPassword,#txtExpConfirmPassword,#btnExpSave").on('focusin focusout click', function () {
+    $("#PopupExpirationMsg").modal('hide');
+});
+ 
+$("#PopupExpPassword").on('shown.bs.modal', function () {
+    $("#PopupExpirationMsg").modal('hide');
+});
 function fnOpenExpChangePasswordPopUp() {
    
     $("#lblErrorMessageHeader").html('');
@@ -19,7 +27,7 @@ function fnOpenExpChangePasswordPopUp() {
             fnAlert("e", "", "", xhr.statusText);
         },
         success: function (response) {
-
+            $(".bgUserTips").removeClass('animate__animated animate__flash animate__repeat-1');
             if (response.Status) {
               
                 if (response.StatusCode == "1" || response.StatusCode == 1) {
@@ -33,11 +41,13 @@ function fnOpenExpChangePasswordPopUp() {
                     $("#lblErrorMessageHeader").html(_errmsg[0]);
                     _list += "<ol id='lblErrorList'>"
                         for (i = 1; i < _errmsg.length; i++) {
-                            _list += "<li>" + _errmsg[i] + "</li>";
+                            _list += "<li class='animate__animated animate__fadeInDown'>" + _errmsg[i] + "</li>";
                         }
                         _list += "</ol>"
                     $("#divlblErrorList").append(_list);
-                        $("#divErrorMsg").css('display', 'block'); 
+                    $("#divErrorMsg").css('display', 'block');
+                    $(".bgUserTips").removeClass('red');
+                    $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
                  }
                 else {
                     $("#PopupExpirationMsg").modal('hide');
@@ -97,6 +107,8 @@ function fnSaveExpChangePassword() {
       
         datatype: 'json',
         success: function (response) {
+            
+            $(".bgUserTips").removeClass('red');
             $("#lblErrorMessage").html("");
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -106,21 +118,21 @@ function fnSaveExpChangePassword() {
             }
             else {
                
-               
+                $(".bgUserTips").removeClass('red');
                 _errmsgS = response.Message.split("\\");
                 $("#lblErrorMessageHeader").html(_errmsgS[0]);
                 
                 _listS = "";
                 $("#lblErrorList").remove();
                 $("#lblErrorMessageHeader").html(_errmsgS[0]);
-                _listS += "<ol id='lblErrorList'>"
+                _listS += "<ol id='lblErrorList' >"
                 for (i = 1; i < _errmsgS.length; i++) {
-                    _listS += "<li>" + _errmsgS[i] + "</li>";
+                    _listS += "<li class='animate__animated animate__fadeInDown'>" + _errmsgS[i] + "</li>";
                 }
                 _listS += "</ol>"
                 $("#divlblErrorList").append(_listS);
-                $("#divErrorMsg").css('display', 'block'); 
-               
+                $("#divErrorMsg").css('display', 'block');
+                $(".bgUserTips").addClass('red');
                
               
             }
