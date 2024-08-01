@@ -419,15 +419,15 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     width: auto;
     display: block;
 }
-#viewPassword {
+#viewPassword, #viewExpPassword {
     position: absolute;
     bottom: 30px;
     right: 16px;
-    text-decoration:none;
-    color:grey;
+    text-decoration: none;
+    color: grey;
 }
-    #viewPassword .svg-inline--fa.fa-w-20{
-        color:grey;
+    #viewPassword .svg-inline--fa.fa-w-20, #viewExpPassword .svg-inline--fa.fa-w-20 {
+        color: grey;
     }
 .bgUserTips {
     background: #fff9dc;
@@ -435,9 +435,15 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     border: 1px dotted #555555;
     border-radius: 10px;
  }
-body.arabic input {
-    text-align: right;
+.bgUserTips li{
+    color:#000;
 }
+    .bgUserTips.red li{
+        color:red;
+    }
+    body.arabic input {
+        text-align: right;
+    }
 body.arabic label{float:right;}
 body.arabic h4{text-align:right;}
 body.arabic .getUserId {text-align: left !important;}
