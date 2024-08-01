@@ -805,6 +805,22 @@ namespace eSyaEnterprise_UI.Controllers
                     return Json(new DO_ReturnParameter { Status = false, Message = "Password and Confirm Password should be same" });
                 }
 
+                //
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data > 0)
+                {
+
+                    var passswordpolicy = _passwordPolicy.IsValidPasswordPolicy(password);
+                    if (!passswordpolicy.Status)
+                    {
+                        return Json(new { Status = false, passswordpolicy.Message });
+                    }
+
+                }
+
                 var parameter = "?userId=" + userId + "&password=" + password ;
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/CreateUserPasswordINNextSignIn" + parameter);
                 if (serviceResponse.Status)
@@ -1288,7 +1304,7 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
-                //SMS Rule is true
+              
 
                 var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 3);
                 if (smspr)
