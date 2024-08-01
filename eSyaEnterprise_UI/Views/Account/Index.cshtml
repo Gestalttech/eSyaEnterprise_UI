@@ -119,7 +119,7 @@
                                             @* } *@
                                             <div class="">
                                                 <label>@Localizer["Password"]</label>
-                                                <input class="form-control" type="password" asp-for="@Model.Password" id="txtLoginPassword" autocomplete="off" maxlength="50" tabindex="2" required>
+                                                <input class="form-control" readonly onclick="this.removeAttribute('readonly');" type="password" asp-for="@Model.Password" id="txtLoginPassword" autocomplete="off" maxlength="50" tabindex="2" required>
                                                 <span asp-validation-for="Password" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
@@ -581,25 +581,25 @@
                     <div class="row m-0">
                         <div class="col-12 col-lg-12  form-group" id="divErrorMsg" style="display:none">
                             <div class="bgUserTips">
-                            <p id="lblErrorMessageHeader" class="m-0 bold"></p>
+                                <p id="lblErrorMessageHeader" class="m-0 bold animate__animated animate__fadeInDown"></p>
                             <div id="divlblErrorList"> </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-12">
                              <label for="txtExpCurrentPassword">@Localizer["CurrentPassword"]</label>
                             <div class="form-group">
-                                <input type="password" id="txtExpCurrentPassword" maxlength="20" value="" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
+                                <input type="password" tabindex="1" id="txtExpCurrentPassword" autocomplete="off" maxlength="20" value="" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
                             </div>
                             <div class="form-group">
                                 <label for="txtExpNewPassword">@Localizer["NewPassword"]</label>
                                 <div class="form-group pass_show position-relative">
-                                    <input type="password" id="txtExpNewPassword" maxlength="20" class="form-control" data-toggle="popover" autocomplete="off" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
+                                    <input type="password" tabindex="2" id="txtExpNewPassword" autocomplete="off" maxlength="20" class="form-control" data-toggle="popover" autocomplete="off" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
                                     <a href="#" id="viewExpPassword"><i class="fa fa-eye-slash"></i></a>
                                 </div>
                             </div>
                             <label for="txtExpConfirmPassword">@Localizer["ConfirmPassword"]</label>
                             <div class="form-group">
-                                <input type="password" id="txtExpConfirmPassword" maxlength="20" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
+                                <input type="password" tabindex="3" id="txtExpConfirmPassword" autocomplete="off" maxlength="20" class="form-control" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric20Characters"]'>
                             </div>
                        </div>
                         
