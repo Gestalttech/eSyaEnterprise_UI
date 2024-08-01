@@ -34,6 +34,12 @@
 
 <section class="resetPasswordSection">
     <div class="row">
+        <div class="col-12 col-lg-12  form-group" id="divRPErrorMsg" style="display:none">
+            <div class="bgUserTips">
+                <p id="lblRPErrorMessageHeader" class="m-0 bold animate__animated animate__fadeInDown"></p>
+                <div id="divRPlblErrorList"> </div>
+            </div>
+        </div>
         <div class="col-sm-12">
 
             <label for="txtCurrentPassword">@Localizer["CurrentPassword"]</label>
@@ -65,19 +71,7 @@
             </ul> *@
             
         </div>
-        <div class="col-12 col-lg-12 bgUserTips form-group">
-            <p class="small m-0">Your password must be</p>
-            <ul class="small text-sm">
-                <li>Minimum 8 character,</li>
-                <li>Minimum 1 uppercase character/lowercase character required,[A-Z][a-z]</li>
-                <li> Minimum 1 special symbol required,[@@#$%!&*'']</li>
-                <li>Minimum 1 digit required.[0-9]</li>
-            </ul>
-
-
-
-
-        </div>
+      
         <div class="col-sm-12" style="text-align:center">
             <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect m-r-15" id="btnSave" onclick="fnSaveChangePassword()"><i class="fas fa-sync"></i> @Localizer["ChangePassword"] </button>
             <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnClear" onclick="fnClear()"><i class="fa fa-trash"></i> @Localizer["Cancel"]</button>

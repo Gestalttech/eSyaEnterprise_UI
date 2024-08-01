@@ -456,6 +456,16 @@ tr.ui-widget-content td select {
     .tblParameter td:nth-of-type(2) {
         width:307.533px;
     }
+#lblRPErrorMessageHeader, #lblRPErrorList li {
+    font-size: 0.82rem;
+}
+.bgUserTips li {
+    color: #000;
+}
+
+.bgUserTips.red li {
+    color: red;
+}
         #vertical-Menu {
         width: 278px;
         border: 1px solid rgba(190,190,190,0.3);

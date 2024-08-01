@@ -1,5 +1,5 @@
-﻿var _errmsg = ""; var _list = ""
-var _errmsgS = ""; var _listS = ""
+﻿var _errmsg = ""; var _list = "";
+var _errmsgS = ""; var _listS = "";
 $(document).on('click', '#viewExpPassword', function () {
     //$(this).text($(this).text() == "Show" ? "Hide" : "Show");
     $("#viewExpPassword svg").toggleClass("fa-eye-slash fa-eye");
