@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "EPH_08_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -64,7 +66,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                         <label for="cboHsnCode">@Localizer["HsnCode"]</label>
-                        <select class="selectpicker" data-size="6" data-container="body"  id="cboHsnCode">
+                        <select class="selectpicker" data-size="6" data-container="body" id="cboHsnCode" asp-items="@ViewBag.HSN">
                             <option value="0">@Localizer["Select"]</option>
                         </select>
                     </div>

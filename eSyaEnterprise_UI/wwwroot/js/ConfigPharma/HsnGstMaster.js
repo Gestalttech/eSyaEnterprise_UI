@@ -16,12 +16,17 @@ $(function () {
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditHsnGst('edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditHsnGst('view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditHsnGst('delete') } },
+        //    jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditHsnGst('delete') } },
         }
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+//    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+
+    $('#txtGstperc').on('focusin', function () {
+        var that = this;
+        setTimeout(function () { that.selectionStart = that.selectionEnd = 10000; }, 0);
+    });
 });
  
 
@@ -29,17 +34,21 @@ function fnLoadGridHsnGst() {
     $("#jqgHsnGst").GridUnload();
 
     $("#jqgHsnGst").jqGrid({
-       // url: getBaseURL() + '',
+        url: getBaseURL() + '/GST/GetPharmacyGSTPercentages',
         datatype: 'json',
-        mtype: 'POST',
+        mtype: 'GET',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.Hsncode, localization.Gstperc, localization.EffectiveFrom, localization.Active, localization.Actions],
+        colNames: [localization.Hsncode, localization.Gstperc, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
         colModel: [
             { name: "Hsncode", width: 50, editable: false, align: 'left', hidden: false },
             { name: "Gstperc", width: 40, editable: false, align: 'left', resizable: false },
             {
                 name: "EffectiveFrom", index: 'FromDate', width: 40, hidden: false, sorttype: "date", formatter: "date", formatoptions:
+                    { newformat: _cnfjqgDateFormat }
+            },
+            {
+                name: "EffectiveTill", index: 'FromTill', width: 40, hidden: false, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -79,7 +88,7 @@ function fnLoadGridHsnGst() {
     fnAddGridSerialNoHeading();
 }
 function fnAddHsnGst() {
-   
+    fnClearHsnGst();
     $('#PopupHsnGst').modal({ backdrop: 'static', keyboard: false });
     $('#PopupHsnGst').find('.modal-title').text(localization.AddHsnGst);
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -90,6 +99,7 @@ function fnAddHsnGst() {
     $("#PopupHsnGst").modal('show');
 }
 function fnEditHsnGst(actiontype) {
+  
     var rowid = $("#jqgHsnGst").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgHsnGst').jqGrid('getRowData', rowid);
     $("#cboHsnCode").val(rowData.Hsncode).selectpicker('refresh');
@@ -120,7 +130,8 @@ function fnEditHsnGst(actiontype) {
         $("input,textarea").attr('readonly', false);
         $("select").next().attr('disabled', false);
         $("#btnSaveHsnGst").show();
-        document.getElementById("txtHsnGstEffectiveFRM").disabled = true;
+        document.getElementById("txtHsnGstEffectiveFRM").disabled = false;
+        $("#PopupHsnGst").modal('show');
     }
 
     if (actiontype.trim() == "view") {
@@ -136,26 +147,9 @@ function fnEditHsnGst(actiontype) {
         $("select").next().attr('disabled', true);
         $("#btnSaveHsnGst").hide();
         document.getElementById("txtHsnGstEffectiveFRM").disabled = true;
+        $("#PopupHsnGst").modal('show');
     }
-    if (actiontype.trim() == "delete") {
-        if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPH_08_00", "UIC04", errorMsg.deleteauth_E4);
-            return;
-        }
-        $('#PopupHsnGst').find('.modal-title').text(localization.ViewHsnGst);
-        if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveHsnGst").html(localization.Deactivate);
-        }
-        else {
-            $("#btndeActiveHsnGst").html('Activate');
-            $("#btndeActiveHsnGst").html(localization.Activate);
-        }
-        $("input,textarea").attr('readonly', true);
-        $("select").next().attr('disabled', true);
-        $("#chkActiveStatus").prop('disabled', true);
-        $("#btndeactiveHsnGst").show();
-        $("#btnSaveHsnGst").hide();
-    }
+    
 }
 
 
@@ -181,25 +175,25 @@ function fnSaveHsnGst() {
         return false;
     }
 
-    obj_HsnGst = {
+    obj = {
         Hsncode: $("#cboHsnCode").val(),
         Gstperc: $("#txtGstperc").val(),
         EffectiveFrom: getDate($("#txtHsnGstEffectiveFRM")),
-        ActiveStatus: $("#chkActiveStatus").val(),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     }
 
     $("#btnSaveHsnGst").attr('disabled', true);
     $.ajax({
-       // url: getBaseURL() + '/GST/InsertOrUpdateHsnGst',
+        url: getBaseURL() + '/GST/InsertOrUpdatePharmacyGSTPercentage',
         type: 'POST',
         datatype: 'json',
-        data: { obj_HsnGst },
+        data: { obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveHsnGst").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#btnSaveHsnGst").attr('disabled', false);
-                fnGridRefreshHsnGst();
+                fnRefreshGridHsnGst();
                 $('#PopupHsnGst').modal('hide');
             }
             else {
@@ -231,46 +225,46 @@ function SetGridControlByAction() {
     }
 }
 
-function fnDeleteHsnGst() {
-    var a_status;
-    //Activate or De Activate the status
-    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
-        a_status = false
-    }
-    else {
-        a_status = true;
-    }
-    $("#btndeactiveHsnGst").attr("disabled", true);
-    objdel = {
-        Hsncode: $("#cboHsnCode").val(),
-        Gstperc: $("#txtGstperc").val(),
-        EffectiveFrom: getDate($("#txtHsnGstEffectiveFRM")),
-        ActiveStatus: $("#chkActiveStatus").val(),
-    }
-    $.ajax({
-       // url: getBaseURL() + '/GST/ActiveOrDeActiveHsnGst',
-        type: 'POST',
-        datatype: 'json',
-        data: { status: a_status, obj: objdel },
-        success: function (response) {
-            if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btndeactiveHsnGst").html('<i class="fa fa-spinner fa-spin"></i> wait');
-                $('#PopupHsnGst').modal('hide');
-                fnClearFields();
-                fnGridRefreshHsnGst();
-                $("#btndeactiveHsnGst").attr("disabled", false);
-            }
-            else {
-                fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btndeactiveHsnGst").attr("disabled", false);
-                $("#btndeactiveHsnGst").html(localization.Deactivate);
-            }
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btndeactiveHsnGst").attr("disabled", false);
-            $("#btndeactiveHsnGst").html(localization.Deactivate);
-        }
-    });
-}
+//function fnDeleteHsnGst() {
+//    var a_status;
+//    //Activate or De Activate the status
+//    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
+//        a_status = false
+//    }
+//    else {
+//        a_status = true;
+//    }
+//    $("#btndeactiveHsnGst").attr("disabled", true);
+//    objdel = {
+//        Hsncode: $("#cboHsnCode").val(),
+//        Gstperc: $("#txtGstperc").val(),
+//        EffectiveFrom: getDate($("#txtHsnGstEffectiveFRM")),
+//        ActiveStatus: $("#chkActiveStatus").val(),
+//    }
+//    $.ajax({
+//       // url: getBaseURL() + '/GST/ActiveOrDeActiveHsnGst',
+//        type: 'POST',
+//        datatype: 'json',
+//        data: { status: a_status, obj: objdel },
+//        success: function (response) {
+//            if (response.Status) {
+//                fnAlert("s", "", response.StatusCode, response.Message);
+//                $("#btndeactiveHsnGst").html('<i class="fa fa-spinner fa-spin"></i> wait');
+//                $('#PopupHsnGst').modal('hide');
+//                fnClearFields();
+//                fnRefreshGridHsnGst();
+//                $("#btndeactiveHsnGst").attr("disabled", false);
+//            }
+//            else {
+//                fnAlert("e", "", response.StatusCode, response.Message);
+//                $("#btndeactiveHsnGst").attr("disabled", false);
+//                $("#btndeactiveHsnGst").html(localization.Deactivate);
+//            }
+//        },
+//        error: function (error) {
+//            fnAlert("e", "", error.StatusCode, error.statusText);
+//            $("#btndeactiveHsnGst").attr("disabled", false);
+//            $("#btndeactiveHsnGst").html(localization.Deactivate);
+//        }
+//    });
+//}
