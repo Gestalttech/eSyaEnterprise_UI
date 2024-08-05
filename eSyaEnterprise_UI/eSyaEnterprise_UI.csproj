@@ -195,6 +195,8 @@
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_21_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Control\EPS_23_00.cshtml" />
     <Content Remove="Areas\ProductSetup\Views\Rules\EPS_24_00.cshtml" />
+    <Content Remove="Areas\SAC\Views\SACClass\ECS_06_00.cshtml" />
+    <Content Remove="Areas\SAC\Views\SACClass\ECS_07_00.cshtml" />
     <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css" />
     <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css.map" />
     <Content Remove="C:\Users\lenovo\.nuget\packages\bootstrap\5.3.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.min.css" />
