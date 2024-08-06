@@ -204,27 +204,35 @@ function fnAddOrUpdateServiceClass() {
         });
     
 }
- function fnDeleteNode() {
+function fnDeleteNode() {
+    debugger;
     if (_userFormRole.IsDelete === false) {
         fnAlert("w", "ECS_05_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
-
+     if ($("#cboSACIsdcode").val() == 0 || $("#cboSACIsdcode").val() == '0' || IsStringNullorEmpty($("#cboSACIsdcode").val())) {
+         fnAlert("w", "ECS_05_00", "UI0119", "Please Select ISD Code");
+         return;
+     }
     var selectedNode = $('#jstServiceClassTree').jstree().get_selected(true);
-
-    if (selectedNode.length != 1) {
-        fnAlert("w", "ECS_05_00", "UI0114", errorMsg.ServiceClassDel_E8);
+    selectedNode = selectedNode[0];
+    if (selectedNode.id == "ST") {
+        fnAlert("w", "ECS_05_00", "UI0114", "Please Select SAC Class to delete");
+        return;
     }
+    
     else {
-        selectedNode = selectedNode[0];
+        var deleteNode = $('#jstServiceClassTree').jstree().get_selected(true);
+        DelNode = deleteNode[0];
         var data = {};
-        data.ServiceClassId = selectedNode.id;
+        data.ISDCode = $("#cboSACIsdcode").val(),
+        data.SACClassID = DelNode.id;
 
         $("#btnDelete").attr("disabled", true);
         if (confirm(localization.Doyouwanttodeletenode + selectedNode.text + ' ?')) {
 
             $.ajax({
-                url: getBaseURL() + '/SAC/DeleteServiceClass',
+                url: getBaseURL() + '/SACClass/DeleteSACClass',
                 type: 'POST',
                 datatype: 'json',
                 data: data,
@@ -244,6 +252,9 @@ function fnAddOrUpdateServiceClass() {
                     $("#btnDelete").attr("disabled", false);
                 }
             });
+        }
+        else {
+            $("#btnDelete").attr("disabled", false);
         }
     }
 }

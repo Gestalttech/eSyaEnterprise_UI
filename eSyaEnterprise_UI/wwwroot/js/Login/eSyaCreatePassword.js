@@ -298,7 +298,8 @@ function validateUserQuestionAnswer() {
     });
 
     // Validate each answer input
-    $('input[type="password"]').each(function () {
+    $('.seqPassword').each(function () {
+       
         if ($(this).val().trim() == "") {
             isValid = false;
             $(this).closest('.form-group').find('.validation-error').remove(); // Remove previous error
@@ -315,7 +316,7 @@ function validateUserQuestionAnswer() {
 
 function fnSaveUserQuestionAnswer() {
   
-
+   
     if (!validateUserQuestionAnswer()) {
         fnAlert("w", "", "", "Please correct the Errors and try again");
         return;
