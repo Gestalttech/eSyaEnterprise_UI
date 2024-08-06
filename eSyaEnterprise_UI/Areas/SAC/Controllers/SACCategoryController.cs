@@ -18,10 +18,10 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             _eSyaSACAPIServices = eSyaSACAPIServices;
             _logger = logger;
         }
-        #region ServiceCategory
+        #region SAC Category
 
         /// <summary>
-        /// Service Group
+        /// SAC Category
         /// </summary>
         /// <returns></returns>
 
@@ -31,12 +31,14 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         {
             return View();
         }
-
-        public async Task<ActionResult> GetServiceGroups()
+        [Produces("application/json")]
+        [HttpGet]
+        public async Task<ActionResult> GetSACCategories(int ISDCode)
         {
             try
             {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("ServiceManagement/GetServiceTypes");
+                var parameter = "?ISDCode=" + ISDCode;
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("SACClass/GetSACClasses");
                 var st_list = new List<DO_SACClass>();
                 if (serviceResponse.Status)
                 {
@@ -44,10 +46,10 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceGroups:GetServiceTypes");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACCategories:ISDCode");
                 }
 
-                var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("ServiceManagement/GetServiceGroups");
+                var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("SACCategory/GetSACCategories");
                 var sg_list = new List<DO_SACCategory>();
                 if (serviceResponse1.Status)
                 {
@@ -55,7 +57,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetServiceGroups:GetServiceGroups");
+                    _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetSACCategories:ISDCode");
                 }
 
                 string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
@@ -110,41 +112,14 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
 
 
         }
-        public async Task<ActionResult> GetServiceGroupsByTypeID(int servicetype)
+       
+        [HttpGet]
+        public async Task<ActionResult> GetSACCategoryByCategoryID(int ISDCode, string SACClassID, string SACCategoryID)
         {
             try
             {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("ServiceManagement/GetServiceGroupsByTypeID?servicetype=" + servicetype);
-                var sg_list = new List<DO_SACCategory>();
-                if (serviceResponse.Status)
-                {
-                    sg_list = serviceResponse.Data;
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceGroupsByTypeID: typeID{0}", servicetype);
-                }
-
-
-
-
-                return Json(sg_list);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetServiceGroupsByTypeID: typeID{0}", servicetype);
-                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
-            }
-
-
-
-
-        }
-        public async Task<ActionResult> GetServiceGroupByID(int ServiceGroupID)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACCategory>("ServiceManagement/GetServiceGroupByID?ServiceGroupID=" + ServiceGroupID);
+                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID + "&SACCategoryID=" + SACCategoryID;
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACCategory>("SACCategory/GetSACCategoryByCategoryID" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -154,90 +129,113 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceGroupByID:For ServiceGroupID {0}", ServiceGroupID);
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACCategoryByCategoryID:For SACCategoryID {0}", SACCategoryID);
+                        return Json(new { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACCategoryByCategoryID:For SACCategoryID {0}", SACCategoryID);
+                    return Json(new { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetSACCategoryByCategoryID:For SACCategoryID {0}", SACCategoryID);
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult> InsertOrUpdateSACCategory(bool _isInsert, DO_SACClass obj)
+        {
+            try
+            {
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                if (_isInsert)
+                {
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCategory/InsertIntoSACCategory", obj);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:InsertIntoSACCategory:params:" + JsonConvert.SerializeObject(obj));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                        }
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertIntoSACCategory:params:" + JsonConvert.SerializeObject(obj));
                         return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCategory/UpdateSACCategory", obj);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateSACCategory:params:" + JsonConvert.SerializeObject(obj));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                        }
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateSACCategory:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateSACCategory:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+        public async Task<ActionResult> DeleteSACCategory(int ISDCode, string SACClassID, string SACCategoryID)
+        {
+            try
+            {
+                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID + "&SACCategoryID=" + SACCategoryID;
+
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SACCategory/DeleteSACCategory" + parameter);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:DeleteSACCategory:For SACCategoryID {0} ", SACCategoryID);
+                        return Json(new { Status = false, Message = serviceResponse.Data.Message });
                     }
 
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceGroupByID:For ServiceGroupID {0}", ServiceGroupID);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteSACCategory:For SACCategoryID {0}", SACCategoryID);
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetServiceGroupByID:For ServiceGroupID {0}", ServiceGroupID);
-                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> AddOrUpdateServiceGroup(DO_SACCategory obj)
-        {
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateServiceGroup", obj);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateServiceGroup:params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:AddOrUpdateServiceGroup:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> UpdateServiceGroupIndex(int serviceTypeId, int serviceGroupId, bool isMoveUp, bool isMoveDown)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/UpdateServiceGroupIndex?serviceTypeId=" + serviceTypeId + "&serviceGroupId=" + serviceGroupId + "&isMoveUp=" + isMoveUp + "&isMoveDown=" + isMoveDown);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateServiceGroupIndex:For serviceTypeId {0}, serviceGroupId {1},isMoveUp {2},isMoveDown {3} ", serviceTypeId, serviceGroupId, isMoveUp, isMoveDown);
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:UpdateServiceGroupIndex:For serviceTypeId {0}, serviceGroupId {1},isMoveUp {2},isMoveDown {3} ", serviceTypeId, serviceGroupId, isMoveUp, isMoveDown);
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> DeleteServiceGroup(int serviceGroupId)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/DeleteServiceGroup?serviceGroupId=" + serviceGroupId);
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:DeleteServiceGroup:For serviceGroupId {0} ", serviceGroupId);
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:DeleteServiceGroup:For serviceGroupId {0} ", serviceGroupId);
+                _logger.LogError(ex, "UD:DeleteSACClass:For SACCategoryID {0} ", SACCategoryID);
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }

@@ -18,10 +18,10 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             _eSyaSACAPIServices = eSyaSACAPIServices;
             _logger = logger;
         }
-        #region ServiceCodes
+        #region SAC Codes
 
         /// <summary>
-        /// Service Class
+        /// SAC Codes
         /// </summary>
         /// <returns></returns>
 
@@ -32,11 +32,11 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             return View();
         }
 
-        //public async Task<ActionResult> GetServiceClasses()
+        //public async Task<ActionResult> GetSACCodes(int ISDCode)
         //{
         //    try
         //    {
-        //        var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_ServiceType>>("ServiceManagement/GetServiceTypes");
+        //        var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("SACClass/GetSACClasses");
         //        var st_list = new List<DO_SACClass>();
         //        if (serviceResponse.Status)
         //        {
@@ -44,9 +44,9 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         //        }
         //        else
         //        {
-        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceClasses:GetServiceTypes");
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACClasses:GetSACClasses");
         //        }
-        //        var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_ServiceGroup>>("ServiceManagement/GetServiceGroups");
+        //        var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("SACCategory/GetSACCategories");
         //        var sg_list = new List<DO_SACCategory>();
         //        if (serviceResponse1.Status)
         //        {
@@ -54,17 +54,17 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         //        }
         //        else
         //        {
-        //            _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetServiceClasses:GetServiceGroups");
+        //            _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetSACCategories:GetSACCategories");
         //        }
         //        var sc_list = new List<DO_SACCodes>();
-        //        var serviceResponse2 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCodes>>("ServiceManagement/GetServiceClasses");
+        //        var serviceResponse2 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCodes>>("SACCodes/GetSACCodes");
         //        if (serviceResponse2.Status)
         //        {
         //            sc_list = serviceResponse2.Data;
         //        }
         //        else
         //        {
-        //            _logger.LogError(new Exception(serviceResponse2.Message), "UD:GetServiceClasses:GetServiceClasses");
+        //            _logger.LogError(new Exception(serviceResponse2.Message), "UD:GetSACCodes:GetSACCodes");
         //        }
         //        List<jsTreeObject> treeView = new List<jsTreeObject>();
         //        jsTreeObject jsObj = new jsTreeObject();
@@ -96,7 +96,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         //                        {
         //                            jsObj = new jsTreeObject();
         //                            jsObj.id = sg.Saccategory.ToString();
-        //                            jsObj.text = sg.Saccategory;
+        //                            jsObj.text = sg.SaccategoryDesc;
         //                            jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
         //                            jsObj.parent = "T" + st.Sacclass.ToString();
         //                            jsObj.state = new stateObject { opened = false, selected = false };
@@ -109,20 +109,20 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         //                                {
         //                                    if (sg.Saccategory == sc.Saccategory)
         //                                    {
-        //                                        if (sc.Sacclass == sc.ParentId)
+        //                                        if (sc.ServiceClassId == sc.ParentId)
         //                                        {
         //                                            jsObj = new jsTreeObject();
-        //                                            jsObj.id = "C" + sc.Saccode.ToString();
-        //                                            jsObj.text = sc.Sacdescription;
+        //                                            jsObj.id = "C" + sc.ServiceClassId.ToString();
+        //                                            jsObj.text = sc.ServiceClassDesc;
         //                                            jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
-        //                                            jsObj.parent = sg.Saccategory.ToString();
+        //                                            jsObj.parent = sg.ServiceGroupId.ToString();
         //                                            treeView.Add(jsObj);
         //                                        }
         //                                        else
         //                                        {
         //                                            jsObj = new jsTreeObject();
-        //                                            jsObj.id = "C" + sc.Saccode.ToString();
-        //                                            jsObj.text = sc.Sacdescription;
+        //                                            jsObj.id = "C" + sc.ServiceClassId.ToString();
+        //                                            jsObj.text = sc.ServiceClassDesc;
         //                                            jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
         //                                            jsObj.parent = "C" + sc.ParentId.ToString();
         //                                            treeView.Add(jsObj);
@@ -148,154 +148,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
 
 
         //}
-        public async Task<ActionResult> GetServiceClassesByGroupID(int servicegroup)
-        {
-            try
-            {
-                var sc_list = new List<DO_SACCodes>();
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCodes>>("ServiceManagement/GetServiceClassesByGroupID?servicegroup=" + servicegroup);
-                if (serviceResponse.Status)
-                {
-                    sc_list = serviceResponse.Data;
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceClasses:GetServiceClassesByGroupID: GroupID{0}", servicegroup);
-                }
 
-
-                return Json(sc_list);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetServiceClassesByGroupID: GroupID{0}", servicegroup);
-                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
-            }
-
-
-
-        }
-        public async Task<ActionResult> GetServiceCodesByID(int ServiceClassID)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACCodes>("ServiceManagement/GetServiceClassByID?ServiceClassID=" + ServiceClassID);
-                if (serviceResponse.Status)
-                {
-                    var data = serviceResponse.Data;
-                    return Json(data);
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceClassByID:For ServiceClassID {0}", ServiceClassID);
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetServiceClassByID:For ServiceClassID {0}", ServiceClassID);
-                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> AddOrUpdateServiceClass(DO_SACCodes obj)
-        {
-            try
-            {
-
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateServiceClass", obj);
-                if (serviceResponse.Status)
-                {
-                    if (serviceResponse.Data != null)
-                    {
-                        return Json(serviceResponse.Data);
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
-                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
-                    }
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> UpdateServiceClassIndex(int serviceGroupId, int serviceClassId, bool isMoveUp, bool isMoveDown)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/UpdateServiceClassIndex?serviceGroupId=" + serviceGroupId + "&serviceClassId=" + serviceClassId + "&isMoveUp=" + isMoveUp + "&isMoveDown=" + isMoveDown);
-                if (serviceResponse.Status)
-                {
-                    if (serviceResponse.Data != null)
-                    {
-                        return Json(serviceResponse.Data);
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateServiceClassIndex:For serviceGroupId {0}, serviceClassId {1},isMoveUp {2},isMoveDown {3} ", serviceGroupId, serviceClassId, isMoveUp, isMoveDown);
-                        return Json(new { Status = false, Message = serviceResponse.Data.Message });
-                    }
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateServiceClassIndex:For serviceGroupId {0}, serviceClassId {1},isMoveUp {2},isMoveDown {3} ", serviceGroupId, serviceClassId, isMoveUp, isMoveDown);
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:UpdateServiceClassIndex:For serviceGroupId {0}, serviceClassId {1},isMoveUp {2},isMoveDown {3} ", serviceGroupId, serviceClassId, isMoveUp, isMoveDown);
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
-        //public async Task<ActionResult> DeleteServiceClass(int serviceClassId)
-        //{
-        //    try
-        //    {
-        //        var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/DeleteServiceClass?serviceClassId=" + serviceClassId);
-        //        if (serviceResponse.Status)
-        //        {
-        //            if (serviceResponse.Data != null)
-        //            {
-        //                return Json(serviceResponse.Data);
-        //            }
-        //            else
-        //            {
-        //                _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:DeleteServiceClass:For serviceClassId {0}", serviceClassId);
-        //                return Json(new { Status = false, Message = serviceResponse.Data.Message });
-        //            }
-
-        //        }
-        //        else
-        //        {
-        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteServiceClass:For serviceClassId {0}", serviceClassId);
-        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "UD:DeleteServiceClass:For serviceClassId {0}", serviceClassId);
-        //        return Json(new { Status = false, Message = ex.ToString() });
-        //    }
-        //}
         #endregion
     }
 }

@@ -31,22 +31,23 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         }
         [Produces("application/json")]
         [HttpGet]
-        public async Task<ActionResult> GetServiceClass()
+        public async Task<ActionResult> GetSACClasses(int ISDCode)
         {
             try
             {
+                var param = "&ISDCode=" + ISDCode;
                 List<jsTreeObject> treeView = new List<jsTreeObject>();
                 string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
 
                 jsTreeObject jsObj = new jsTreeObject();
                 jsObj.id = "ST";
                 jsObj.parent = "#";
-                jsObj.text = "Service Types";
+                jsObj.text = "SAC Class";
                 jsObj.icon = baseURL + "/images/jsTree/foldergroupicon.png";
                 jsObj.state = new stateObject { opened = true, selected = false };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("ServiceManagement/GetServiceTypes");
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("SACClass/GetSACClasses" + param);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -65,22 +66,24 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceTypes");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACClasses");
                 }
 
                 return Json(treeView);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetServiceTypes");
+                _logger.LogError(ex, "UD:GetSACClasses");
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.Message });
             }
         }
-        public async Task<ActionResult> GetServiceClassByID(int ServiceClassID)
+        [HttpGet]
+        public async Task<ActionResult> GetSACClassByClassID(int ISDCode, string SACClassID)
         {
             try
             {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACClass>("ServiceManagement/GetServiceClassByID?ServiceTypeID=" + ServiceClassID);
+                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID;
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACClass>("SACClass/GetSACClassByClassID" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -90,64 +93,90 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceClassByID:For ServiceClassID {0}", ServiceClassID);
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACClassByClassID:For SACClassID {0}", SACClassID);
                         return Json(new { Status = false, Message = serviceResponse.Message });
                     }
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceTypeByID:For ServiceTypeID {0}", ServiceClassID);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACClassByClassID:For SACClassID {0}", SACClassID);
                     return Json(new { Status = false, Message = serviceResponse.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetServiceTypeByID:For ServiceTypeID {0}", ServiceClassID);
+                _logger.LogError(ex, "UD:GetSACClassByClassID:For SACClassID {0}", SACClassID);
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }
-        public async Task<ActionResult> AddOrUpdateServiceClass(DO_SACClass obj)
+        [HttpPost]
+        public async Task<ActionResult> InsertOrUpdateSACClass(bool _isInsert,DO_SACClass obj)
         {
             try
             {
-                //obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                obj.FormID = "ECS_05_00";
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ServiceManagement/AddOrUpdateServiceClass", obj);
-                if (serviceResponse.Status)
+                if (_isInsert)
                 {
-                    if (serviceResponse.Data != null)
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACClass/InsertIntoSACClass", obj);
+                    if (serviceResponse.Status)
                     {
-                        return Json(serviceResponse.Data);
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:InsertIntoSACClass:params:" + JsonConvert.SerializeObject(obj));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                        }
+
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
-                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertIntoSACClass:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                     }
-
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACClass/UpdateSACClass", obj);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateSACClass:params:" + JsonConvert.SerializeObject(obj));
+                            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                        }
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateSACClass:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:InsertOrUpdateSACClass:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
         }
-        public async Task<ActionResult> UpdateServiceClassIndex(int ServiceClassId, bool isMoveUp, bool isMoveDown)
+        public async Task<ActionResult> DeleteSACClass(int ISDCode, string SACClassID)
         {
             try
             {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/UpdateServiceTypeIndex?serviceClassId=" + ServiceClassId + "&isMoveUp=" + isMoveUp + "&isMoveDown=" + isMoveDown);
+                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID;
+
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SACClass/DeleteSACClass" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -156,52 +185,21 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:UpdateServiceTypeIndex:For serviceClassId {0},isMoveUp {1},isMoveDown {2} ", ServiceClassId, isMoveUp, isMoveDown);
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:DeleteSACClass:For SACClassID {0} ", SACClassID);
                         return Json(new { Status = false, Message = serviceResponse.Data.Message });
                     }
 
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateServiceTypeIndex:For serviceClassId {0},isMoveUp {1},isMoveDown {2} ", ServiceClassId, isMoveUp, isMoveDown);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteSACClass:For SACClassID {0}", SACClassID);
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:UpdateServiceTypeIndex:For serviceClassId {0},isMoveUp {1},isMoveDown {2} ", ServiceClassId, isMoveUp, isMoveDown);
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
-        public async Task<ActionResult> DeleteServiceClass(int serviceClassId)
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ServiceManagement/DeleteServiceType?serviceClassId=" + serviceClassId);
-                if (serviceResponse.Status)
-                {
-                    if (serviceResponse.Data != null)
-                    {
-                        return Json(serviceResponse.Data);
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:DeleteServiceType:For serviceClassId {0} ", serviceClassId);
-                        return Json(new { Status = false, Message = serviceResponse.Data.Message });
-                    }
-
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteServiceType:For serviceClassId {0}", serviceClassId);
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:DeleteServiceType:For serviceClassId {0} ", serviceClassId);
+                _logger.LogError(ex, "UD:DeleteSACClass:For SACClassID {0} ", SACClassID);
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }
