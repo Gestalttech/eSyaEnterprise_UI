@@ -33,12 +33,13 @@ function fnGridLoadTaxIdentification() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["ISD Code", localization.TaxIdentificationID, localization.TaxIdentificationDescription,localization.StateCode, localization.Active, localization.Actions],
+        colNames: ["ISD Code", localization.TaxIdentificationID, localization.TaxIdentificationDescription, localization.StateCode, localization.IsUt, localization.Active, localization.Actions],
         colModel: [
             { name: "Isdcode", width: 70, editable: true, align: 'left', hidden: true },
             { name: "TaxIdentificationId", width: 70, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "TaxIdentificationDesc", editable: true, width: 120, align: 'left', resizable: false },
             { name: "StateCode", editable: true, width: 60, align: 'left', resizable: false },
+            { name: "IsUt", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -102,7 +103,7 @@ function fnGridAddTaxIdentification() {
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveTaxIdentification").show();
         $("#btnDeactivateTaxIdentification").hide();
-        $("#btnSaveTaxIdentification").html('<i class="fa fa-save"></i>'+localization.Save);
+        $("#btnSaveTaxIdentification").html('<i class="fa fa-save"></i> '+localization.Save);
     }
 }
 
@@ -123,7 +124,12 @@ function fnEditTaxIdentification(e, actiontype) {
     else {
         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
-
+    if (rowData.IsUt === "true") {
+        $("#chkIsUT").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkIsUT").parent().removeClass("is-checked");
+    }
     $("select").next().attr('disabled', true);
     $("#btnSaveTaxIdentification").attr('disabled', false);
 
@@ -138,7 +144,7 @@ function fnEditTaxIdentification(e, actiontype) {
         
         $("#txtTaxIdentificationID").attr('readonly', true);
         $('#PopupTaxIdentification').find('.modal-title').text(localization.EditTaxIdentification);
-        $("#btnSaveTaxIdentification").html('<i class="fa fa-sync"></i>'+localization.Update);
+        $("#btnSaveTaxIdentification").html('<i class="fa fa-sync"></i> '+localization.Update);
         fnEnableControl(false);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveTaxIdentification").show();
@@ -190,7 +196,7 @@ function fnEnableControl(val) {
 }
 
 function fnSaveTaxIdentification() {
-    //debugger;
+    debugger;
     if (validateTaxIdentification() === false) {
         return;
     }
@@ -203,6 +209,7 @@ function fnSaveTaxIdentification() {
         TaxIdentificationDesc: $("#txtTaxDescription").val(),
         StateCode:$("#txtStateCode").val(),
         InsertStatus: isInsert,
+        IsUt: $("#chkIsUT").parent().hasClass("is-checked"),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     }
 
