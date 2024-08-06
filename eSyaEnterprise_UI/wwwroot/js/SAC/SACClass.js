@@ -1,14 +1,21 @@
 ﻿var ServiceClassID = "0";
 var prevSelectedID = '';
 $(function () {
-    fnLoadServiceClassTree()
-    $('#chkSTActiveStatus').parent().addClass("is-checked");
+    $('#chkSCActiveStatus').parent().addClass("is-checked");
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
     // $("#btnDelete").attr("disabled", _userFormRole.IsDelete === false);
 });
+
+function fnISDCountryCode_onChange() {
+    debugger;
+    var _ISDCode = $("#cboSACIsdcode").val();
+    if (_ISDCode != 0) {
+        fnLoadServiceClassTree();
+    }
+}
 function fnLoadServiceClassTree() {
     $.ajax({
-        url: getBaseURL() + '/SAC/GetServiceClass',
+        url: getBaseURL() + '/SACClass/GetSACClasses?ISDCode=' + $("#cboSACIsdcode").val(),
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -20,7 +27,7 @@ function fnLoadServiceClassTree() {
             })
         },
         error: function (error) {
-            fnAlert("", "", error.StatusCode, error.statusText);
+            fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
 
@@ -54,14 +61,14 @@ function fnLoadServiceClassTree() {
 
                         $("#pnlAddServiceClass .mdl-card__title-text").text(localization.AddServiceClass);
                         $("#txtServiceClassDesc").val('');
-                        $('#chkSTActiveStatus').parent().addClass("is-checked");
+                        $('#chkSCActiveStatus').parent().addClass("is-checked");
                         $("#btnSCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSCAdd").show();
                         $("#dvServiceClass").show();
                         //$(".divTreeActions").show();
                         ServiceClassID = "0";
                         $("#txtServiceClassDesc").prop("disabled", false);
-                        $("#chkSTActiveStatus").prop("disabled", false);
+                        $("#chkSCActiveStatus").prop("disabled", false);
                     });
                 }
                 // If Child node is selected
@@ -80,7 +87,7 @@ function fnLoadServiceClassTree() {
                         $(".divTreeActions").show();
                         ServiceClassID = data.node.id;
                         $("#txtServiceClassDesc").prop("disabled", true);
-                        $("#chkSTActiveStatus").prop("disabled", true);
+                        $("#chkSCActiveStatus").prop("disabled", true);
                         fnFillServiceClassDetail(ServiceClassID);
 
                     });
@@ -98,7 +105,7 @@ function fnLoadServiceClassTree() {
                         $(".divTreeActions").show();
                         ServiceClassID = data.node.id;
                         $("#txtServiceClassDesc").prop("disabled", false);
-                        $("#chkSTActiveStatus").prop("disabled", false);
+                        $("#chkSCActiveStatus").prop("disabled", false);
                         fnFillServiceClassDetail(ServiceClassID);
 
                     });
@@ -119,9 +126,10 @@ function fnLoadServiceClassTree() {
         $('#jstServiceClassTree').jstree().deselect_node(closingNode.children);
     });
 }
+
 function fnFillServiceClassDetail(ServiceClassID) {
     $.ajax({
-        url: getBaseURL() + '/SAC/GetServiceClassByID',
+        url: getBaseURL() + '/SACClass/GetSACClassByClassID',
         data: {
             ServiceClassID: ServiceClassID
         },
@@ -155,14 +163,14 @@ function fnAddOrUpdateServiceClass() {
                 Isdcode: $("#cboSACIsdcode").val(),
                 Sacclass: ServiceClassID,
                 SacclassDesc: $("#txtServiceClassDesc").val(),
-                ActiveStatus: $("#chkSTActiveStatus").parent().hasClass("is-checked")
+                ActiveStatus: $("#chkSCActiveStatus").parent().hasClass("is-checked")
             },
             success: function (response) {
                 if (response.Status == true) {
                     if (ServiceClassID == 0) {
                         fnAlert("s", "", response.StatusCode, response.Message);
                         $("#txtServiceClassDesc").val('');
-                        $('#chkSTActiveStatus').parent().addClass("is-checked");
+                        $('#chkSCActiveStatus').parent().addClass("is-checked");
                     }
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);

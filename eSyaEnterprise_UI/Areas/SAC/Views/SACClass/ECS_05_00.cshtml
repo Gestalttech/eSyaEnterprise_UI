@@ -22,7 +22,7 @@
         Update: '@Localizer["Update"]',
         Doyouwanttomovenode: '@Localizer["Doyouwanttomovenode"]',
         Doyouwanttodeletenode: '@Localizer["Doyouwanttodeletenode"]',
-        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric250Characters: '@Localizer["OnlyAlphanumeric250Characters"]',
     }
      var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -36,10 +36,10 @@
     </script>
 
     <link href="~/css/Common/jsTree.css" rel="stylesheet">
-@section scripts{
+ 
     <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/SAC/SACClass.js"></script>
- }
+
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-9 col-12 form-group">
                 <label>@Localizer["ISDCode"]</label>
@@ -77,18 +77,18 @@
                                             <label>
                                             @Localizer["SACClassDescription"]
                                             </label>
-                                            <input type="text" maxlength="250" class="form-control" id="txtServiceClassDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
+                                            <input type="text" maxlength="250" class="form-control" id="txtServiceClassDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row ">
+                                <div class="row">
                                      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 d-flex align-items-end" style="pointer-events:none">
                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSCUsageStatus">
                                         <input type="checkbox" id="chkSCUsageStatus" class="mdl-checkbox__input">
                                         <span class="mdl-checkbox__label">@Localizer["UsageStatus"] </span>
                                     </label>
                               </div>
-                                    <div class="col-lg-12 form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 d-flex align-items-end">
                                         <label class="mdl-checkbox mdl-js-checkbox" for="chkSCActiveStatus">
                                             <input type="checkbox" id="chkSCActiveStatus"
                                                    class="mdl-checkbox__input">
@@ -99,7 +99,8 @@
 
                             </div>
                             <div class="mdl-card__actions mdl-card--border text-center">
-                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSCAdd" onclick="fnAddOrUpdateServiceClass()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect me-2" id="btnSCAdd" onclick="fnAddOrUpdateServiceClass()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSCCancel"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                             </div>
                         </div>
                     </div>
@@ -111,12 +112,12 @@
                         </div>
                         <ul class="list-group list-group-flush">
                         
-                            <li class="list-group-item collapse">
+                            <li class="list-group-item">
                                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnSACLExpandAll()">
                                     <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
                                 </button>
                             </li>
-                            <li class="list-group-item collapse">
+                            <li class="list-group-item">
                                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnSACLCollapseAll()">
                                     <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
                                 </button>
