@@ -55,7 +55,7 @@
         <div class="col-lg-8 col-md-6 col-sm-12 div-menuform">
             <div class="row">
                 <div class="col-lg-9 col-md-9 col-sm-6">
-                    <div id="dvServiceClass" style="display:none;">
+                    <div id="dvSACClass" style="display:none;">
                         <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddServiceClass">
                             <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
                                 <h5 class="mdl-card__title-text">@Localizer["AddSACClass"] </h5>
@@ -77,7 +77,7 @@
                                             <label>
                                             @Localizer["SACClassDescription"]
                                             </label>
-                                            <input type="text" maxlength="250" class="form-control" id="txtServiceClassDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
+                                        <input type="text" maxlength="250" class="form-control" id="txtSACClassDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,12 @@
                             <h6 class="m-0 p-0 c-secondary">@Localizer["Action"]</h6>
                         </div>
                         <ul class="list-group list-group-flush">
-                        
+                        <li class="list-group-item">
+
+                            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDelete" onclick="fnDeleteNode()">
+                                <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
+                            </button>
+                        </li>
                             <li class="list-group-item">
                                 <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnSACLExpandAll()">
                                     <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]

@@ -1,5 +1,6 @@
-﻿var ServiceClassID = "0";
+﻿var SACClassID = "0";
 var prevSelectedID = '';
+var _isInsert = false;
 $(function () {
     $('#chkSCActiveStatus').parent().addClass("is-checked");
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
@@ -7,13 +8,16 @@ $(function () {
 });
 
 function fnISDCountryCode_onChange() {
-    debugger;
+   
     var _ISDCode = $("#cboSACIsdcode").val();
     if (_ISDCode != 0) {
         fnLoadServiceClassTree();
     }
 }
 function fnLoadServiceClassTree() {
+
+    $("#jstServiceClassTree").jstree("destroy");
+
     $.ajax({
         url: getBaseURL() + '/SACClass/GetSACClasses?ISDCode=' + $("#cboSACIsdcode").val(),
         type: 'GET',
@@ -44,7 +48,7 @@ function fnLoadServiceClassTree() {
                 $('#View').remove();
                 $('#Edit').remove();
                 $('#Add').remove();
-                $("#dvServiceClass").hide();
+                $("#dvSACClass").hide();
                 //$(".divTreeActions").hide();
                 var parentNode = $("#jstServiceClassTree").jstree(true).get_parent(data.node.id);
 
@@ -54,19 +58,19 @@ function fnLoadServiceClassTree() {
                     $('#Add').on('click', function () {
 
                         if (_userFormRole.IsInsert === false) {
-                             $('#dvServiceClass').hide();
+                             $('#dvSACClass').hide();
                             fnAlert("w", "ECS_05_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
-
+                        _isInsert = true;
                         $("#pnlAddServiceClass .mdl-card__title-text").text(localization.AddServiceClass);
                         $("#txtServiceClassDesc").val('');
                         $('#chkSCActiveStatus').parent().addClass("is-checked");
                         $("#btnSCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSCAdd").show();
-                        $("#dvServiceClass").show();
-                        //$(".divTreeActions").show();
-                        ServiceClassID = "0";
+                        $("#dvSACClass").show();
+                        $("#txtSACClass").attr('disabled', false);
+                        SACClassID = "0";
                         $("#txtServiceClassDesc").prop("disabled", false);
                         $("#chkSCActiveStatus").prop("disabled", false);
                     });
@@ -77,36 +81,38 @@ function fnLoadServiceClassTree() {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
-                            $('#dvServiceClass').hide();
+                            $('#dvSACClass').hide();
                             fnAlert("w", "ECS_05_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
+                        _isInsert = false;
                         $("#pnlAddServiceClass .mdl-card__title-text").text(localization.ViewServiceClass);
                         $("#btnSCAdd").hide();
-                        $("#dvServiceClass").show();
+                        $("#dvSACClass").show();
                         $(".divTreeActions").show();
-                        ServiceClassID = data.node.id;
+                        SACClassID = data.node.id;
                         $("#txtServiceClassDesc").prop("disabled", true);
                         $("#chkSCActiveStatus").prop("disabled", true);
-                        fnFillServiceClassDetail(ServiceClassID);
+                        fnFillSACClassDetail(SACClassID);
 
                     });
 
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
-                            $('#dvServiceClass').hide();
+                            $('#dvSACClass').hide();
                             fnAlert("w", "ECS_05_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
+                        _isInsert = false;
                         $("#pnlAddServiceClass .mdl-card__title-text").text(localization.EditServiceClass);
                         $("#btnSCAdd").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnSCAdd").show();
-                        $("#dvServiceClass").show();
+                        $("#dvSACClass").show();
                         $(".divTreeActions").show();
-                        ServiceClassID = data.node.id;
+                        SACClassID = data.node.id;
                         $("#txtServiceClassDesc").prop("disabled", false);
                         $("#chkSCActiveStatus").prop("disabled", false);
-                        fnFillServiceClassDetail(ServiceClassID);
+                        fnFillSACClassDetail(SACClassID);
 
                     });
 
@@ -114,7 +120,7 @@ function fnLoadServiceClassTree() {
 
                 }
                 else {
-                    $("#dvServiceClass").hide();
+                    $("#dvSACClass").hide();
                     // $(".divTreeActions").hide();
                 }
 
@@ -127,14 +133,17 @@ function fnLoadServiceClassTree() {
     });
 }
 
-function fnFillServiceClassDetail(ServiceClassID) {
+function fnFillSACClassDetail(SACClassID) {
     $.ajax({
         url: getBaseURL() + '/SACClass/GetSACClassByClassID',
         data: {
-            ServiceClassID: ServiceClassID
+            ISDCode: $("#cboSACIsdcode").val(),
+            SACClassID: SACClassID
         },
         success: function (result) {
-            $("#txtServiceClassDesc").val(result.ServiceClassDesc);
+            $("#txtSACClass").val(result.Sacclass);
+            $("#txtSACClass").attr('disabled', true);
+            $("#txtSACClassDesc").val(result.SacclassDesc);
             if (result.ActiveStatus == true)
                 $('#chkSCActiveStatus').parent().addClass("is-checked");
             else
@@ -148,36 +157,40 @@ function fnFillServiceClassDetail(ServiceClassID) {
     });
 }
 function fnAddOrUpdateServiceClass() {
-    var txtServiceClassDesc = $("#txtServiceClassDesc").val()
-    if (txtServiceClassDesc == "" || txtServiceClassDesc == null || txtServiceClassDesc == undefined) {
-        fnAlert("w", "ECS_05_00", "UI0119", errorMsg.ServiceDesc_E6);
-        return false;
+    if ($("#cboSACIsdcode").val() == 0 || $("#cboSACIsdcode").val() == '0' || IsStringNullorEmpty($("#cboSACIsdcode").val())) {
+        fnAlert("w", "ECS_05_00", "UI0119", "Please Select ISD Code");
+        return;
     }
-    else {
-        $("#btnSCAdd").attr("disabled", true);
-        $.ajax({
-            url: getBaseURL() + '/SAC/AddOrUpdateServiceClass',
+    if (IsStringNullorEmpty($("#txtSACClass").val())) {
+        fnAlert("w", "ECS_05_00", "UI0119", "Please Enter SAC Class Code");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtSACClassDesc").val())) {
+        fnAlert("w", "ECS_05_00", "UI0119", "Please Enter SAC Class Description");
+        return;
+    }
+ 
+       $("#btnSCAdd").attr("disabled", true);
+       $.ajax({
+            url: getBaseURL() + '/SACClass/InsertOrUpdateSACClass',
             type: 'POST',
             datatype: 'json',
             data: {
                 Isdcode: $("#cboSACIsdcode").val(),
-                Sacclass: ServiceClassID,
-                SacclassDesc: $("#txtServiceClassDesc").val(),
-                ActiveStatus: $("#chkSCActiveStatus").parent().hasClass("is-checked")
+                Sacclass: $("#txtSACClass").val(),
+                SacclassDesc: $("#txtSACClassDesc").val(),
+                ActiveStatus: $("#chkSCActiveStatus").parent().hasClass("is-checked"),
+                _isInsert: _isInsert
             },
             success: function (response) {
                 if (response.Status == true) {
-                    if (ServiceClassID == 0) {
-                        fnAlert("s", "", response.StatusCode, response.Message);
-                        $("#txtServiceClassDesc").val('');
-                        $('#chkSCActiveStatus').parent().addClass("is-checked");
-                    }
-                    else {
-                        fnAlert("s", "", response.StatusCode, response.Message);
-                    }
-                    $("#jstServiceClassTree").jstree("destroy");
-                    fnLoadServiceClassTree();
-
+                    
+                    fnAlert("s", "", response.StatusCode, response.Message);
+                    $('#dvSACClass').hide();
+                    fnClearSACClass();
+                   $("#jstServiceClassTree").jstree("destroy");
+                   fnLoadServiceClassTree();
+                    $("#btnSCAdd").attr("disabled", false);
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
@@ -189,7 +202,7 @@ function fnAddOrUpdateServiceClass() {
                 $("#btnSCAdd").attr("disabled", false);
             }
         });
-    }
+    
 }
  function fnDeleteNode() {
     if (_userFormRole.IsDelete === false) {
@@ -240,5 +253,9 @@ function fnSACLExpandAll() {
 }
 function fnSACLCollapseAll() {
     $("#jstServiceClassTree").jstree('close_all');
-    $('#dvServiceClass').hide();
+    $('#dvSACClass').hide();
+}
+function fnClearSACClass() {
+    $("#txtSACClass").val('');
+    $("#txtSACClassDesc").val('');
 }
