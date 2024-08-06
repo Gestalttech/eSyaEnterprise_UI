@@ -35,7 +35,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         {
             try
             {
-                var param = "&ISDCode=" + ISDCode;
+                var param = "?ISDCode=" + ISDCode;
                 List<jsTreeObject> treeView = new List<jsTreeObject>();
                 string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
 
@@ -111,14 +111,14 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> InsertOrUpdateSACClass(bool _isInsert,DO_SACClass obj)
+        public async Task<ActionResult> InsertOrUpdateSACClass(DO_SACClass obj)
         {
             try
             {
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                if (_isInsert)
+                if (obj._isInsert)
                 {
                     var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACClass/InsertIntoSACClass", obj);
                     if (serviceResponse.Status)
