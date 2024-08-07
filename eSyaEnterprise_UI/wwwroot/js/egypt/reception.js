@@ -6,55 +6,56 @@
 };
 
 $(function () {
-    fnLoadSpecialty();
+    //fnLoadSpecialty();
     //fnGridLateDoctors();
     fnGridLatePatients();
+    fnGridLoadReceptionDetail();
 });
 
-function fnLoadSpecialty() {
+//function fnLoadSpecialty() {
 
-    $.ajax({
-        //url: getBaseURL() + '/AppointmentBooking/GetSpecialtyListByBKey',
-        type: 'get',
-        success: function (result) {
-            $.each(result, function (i, item) {
-                $("#cboSpecialty").append($("<option></option>").val(item.SpecialtyId).html(item.SpecialtyDescription));
-            });
-            $('#cboSpecialty').val(0);
-            $('#cboSpecialty').selectpicker('refresh');
-        }
-    });
+//    $.ajax({
+//        //url: getBaseURL() + '/AppointmentBooking/GetSpecialtyListByBKey',
+//        type: 'get',
+//        success: function (result) {
+//            $.each(result, function (i, item) {
+//                $("#cboSpecialty").append($("<option></option>").val(item.SpecialtyId).html(item.SpecialtyDescription));
+//            });
+//            $('#cboSpecialty').val(0);
+//            $('#cboSpecialty').selectpicker('refresh');
+//        }
+//    });
 
-    fnSpecialty_onchange();
-}
+//    fnSpecialty_onchange();
+//}
 
-function fnSpecialty_onchange() {
+//function fnSpecialty_onchange() {
 
-    $("#cboDoctor").html("");
-    $.ajax({
-        //url: getBaseURL() + '/AppointmentBooking/GetDoctorListByBKeySpecialty',
-        type: 'get',
-        data: {
-            specialtyId: $("#cboSpecialty").val(),
-        },
-        async: false,
-        success: function (result) {
-            $("#cboDoctor").append($("<option></option>").val(0).html("All"));
-            $.each(result, function (i, item) {
-                $("#cboDoctor").append($("<option></option>").val(item.DoctorId).html(item.DoctorName));
-            });
-            $('#cboDoctor').val(0);
-            $('#cboDoctor').selectpicker('refresh');
-        }
-    });
+//    $("#cboDoctor").html("");
+//    $.ajax({
+//        //url: getBaseURL() + '/AppointmentBooking/GetDoctorListByBKeySpecialty',
+//        type: 'get',
+//        data: {
+//            specialtyId: $("#cboSpecialty").val(),
+//        },
+//        async: false,
+//        success: function (result) {
+//            $("#cboDoctor").append($("<option></option>").val(0).html("All"));
+//            $.each(result, function (i, item) {
+//                $("#cboDoctor").append($("<option></option>").val(item.DoctorId).html(item.DoctorName));
+//            });
+//            $('#cboDoctor').val(0);
+//            $('#cboDoctor').selectpicker('refresh');
+//        }
+//    });
 
-    fnGridLoadReceptionDetail();
+//    fnGridLoadReceptionDetail();
 
-}
+//}
 
-function fnDoctor_onchange() {
-    fnGridLoadReceptionDetail();
-}
+//function fnDoctor_onchange() {
+//    fnGridLoadReceptionDetail();
+//}
 
 window.setTimeout(refreshGrid, 10000);
 function refreshGrid() {
@@ -64,13 +65,11 @@ function refreshGrid() {
 }
 
 function fnGridLoadReceptionDetail() {
-    // var patientType = $('input[name="rdoPatientType"]:checked').val();
     $("#jqgReception").jqGrid('GridUnload');
 
     $("#jqgReception").jqGrid(
         {
-            //url: getBaseURL() + '/Reception/GetTokenDetailForReceptionDesk',
-            url: '',
+            url: getBaseURL() + '/Reception/GetTokenDetailForReceptionDesk',
             datatype: "json",
             contentType: "application/json; charset-utf-8",
             mtype: 'GET',
@@ -108,7 +107,7 @@ function fnGridLoadReceptionDetail() {
                     }
                 },
                 {
-                    name: "Button", width: 100, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
+                    name: "Button", width: 100, editable: true, align: 'center', hidden: true, formatter: function (cellValue, options, rowObject) {
                         return "<button type='button' class='btn btn-primary' onclick=fnUpdateTokenStatusToCancel('" + rowObject.QueueTokenKey + "')><i class='fas fa-external-link-alt c-white'></i> Not Reported</button>"
                     }
                 },
@@ -199,8 +198,7 @@ function fnGridLatePatients() {
 
     $("#jqgLatePatients").jqGrid(
         {
-            //url: getBaseURL() + '/Reception/GetLongWaitingPatients',
-            url: '',
+            url: getBaseURL() + '/Reception/GetLongWaitingPatients',
             datatype: "json",
             contentType: "application/json; charset-utf-8",
             mtype: 'GET',
@@ -256,7 +254,7 @@ function fnNextToken() {
     if ($("#cboDeskNumber").val() === "") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("w", "", "", "Please select a Desk Number");
-        return false;
+        return;
     }
 
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
@@ -315,7 +313,7 @@ function fnRecallToken() {
     if ($("#cboDeskNumber").val() === "") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
-        return false;
+        return ;
     }
 
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
@@ -327,8 +325,7 @@ function fnRecallToken() {
 
     if (currentlyServingToken.length > 1) {
         $.ajax({
-            //url: getBaseURL() + '/Reception/UpdateReceptionCallingToken',
-            url: '',
+            url: getBaseURL() + '/Reception/UpdateReceptionCallingToken',
             type: 'POST',
             datatype: 'json',
             contenttype: 'application/json; charset=utf-8',
@@ -337,7 +334,6 @@ function fnRecallToken() {
             success: function (result) {
 
                 if (result.Status) {
-                    //fnAlert("Calling the Token : " + result.QTokenKey, "s");
                     fnAlert("s", "", "", "Calling the Token : " + result.QTokenKey);
 
                     var waitMinutes = 60 * 3;
@@ -346,8 +342,7 @@ function fnRecallToken() {
                     return true;
                 }
                 else {
-                    //fnAlert(result.Message, "e");
-                    fnAlert("", "", "", result.Message);
+                    fnAlert("w", "", "", result.Message);
                     $('#lblCurrentlyServingToken').text(0);
                     clearInterval(myTimer);
                     document.querySelector('#lblTokenTimer').textContent = "00:00";
@@ -356,8 +351,7 @@ function fnRecallToken() {
 
             },
             error: function (error) {
-                //fnAlert(error.statusText, "e");
-                fnAlert("", "", "", error.statusText);
+                fnAlert("e", "", "", error.statusText);
                 return false;
             }
         });
@@ -366,7 +360,7 @@ function fnRecallToken() {
 }
 
 function fnHoldToken() {
-
+    
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
 
     var obj = {
@@ -377,8 +371,7 @@ function fnHoldToken() {
     if (currentlyServingToken.length > 1) {
 
         $.ajax({
-            //url: getBaseURL() + '/Reception/UpdateReceptionTokenToHold',
-            url: '',
+            url: getBaseURL() + '/Reception/UpdateReceptionTokenToHold',
             type: 'POST',
             datatype: 'json',
             contenttype: 'application/json; charset=utf-8',
@@ -387,7 +380,6 @@ function fnHoldToken() {
             success: function (result) {
 
                 if (result.Status) {
-                    //fnAlert("Hold the Token : " + currentlyServingToken, "s");
                     fnAlert("s", "", "", "Hold the Token : " + currentlyServingToken);
                     $('#lblCurrentlyServingToken').text("0");
                     clearInterval(myTimer);
@@ -396,13 +388,11 @@ function fnHoldToken() {
                     return true;
                 }
                 else {
-                    //fnAlert(result.Message, "e");
                     fnAlert("e", "", "", result.Message);
                     return false;
                 }
             },
             error: function (error) {
-                //fnAlert(error.statusText, "e");
                 fnAlert("e", "", "", error.statusText);
                 return false;
             }
@@ -496,8 +486,7 @@ function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
                 };
 
                 $.ajax({
-                    // url: getBaseURL() + '/Reception/UpdateReceptionTokenStatusToNurseAssessment',
-                    url: '',
+                    url: getBaseURL() + '/Reception/UpdateReceptionTokenStatusToCompleted',
                     type: 'POST',
                     datatype: 'json',
                     contenttype: 'application/json; charset=utf-8',
@@ -881,8 +870,8 @@ function fnUpdateTokenToRelease(QueueTokenKey) {
                 };
 
                 $.ajax({
-                    //url: getBaseURL() + '/Reception/UpdateReceptionTokenToRelease',
-                    url: '',
+                    url: getBaseURL() + '/Reception/UpdateReceptionTokenToRelease',
+                   
                     type: 'POST',
                     datatype: 'json',
                     contenttype: 'application/json; charset=utf-8',

@@ -1,9 +1,9 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "TKM_99_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/js/common/bootbox.min.js"></script>
 <link href="~/css/egypt/reception.css" rel="stylesheet" />
 <script src="~/js/egypt/reception.js"></script>
  
@@ -11,12 +11,8 @@
     <div class="col-lg-3 col-md-4 col-sm-12">
         <div class="form-group hd">
             <label>Lounge Number</label>
-            <select class="selectpicker" id="cboLoungeNumber" title="">
+            <select class="selectpicker" id="cboLoungeNumber" title="" asp-items="@ViewBag.Floors" data-container="body">
                 <option value="" selected>Choose a Lounge Number</option>
-                @* @foreach (var r in ViewBag.RoomList)
-                {
-                <option value='@r'>@r</option>
-                } *@
             </select>
         </div>
     </div>
@@ -25,10 +21,10 @@
             <label>Desk Number</label>
             <select class="selectpicker" id="cboDeskNumber" title="">
                 <option value="" selected>Choose a Desk Number</option>
-                @* @foreach (var r in ViewBag.RoomList)
+                @foreach (var r in ViewBag.RoomList)
                 {
                     <option value='@r'>@r</option>
-                } *@
+                }
             </select>
         </div>
     </div>
@@ -78,8 +74,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-lg-12" style="display:inline-flex; margin-top:5px; padding-left:15px !important;padding-right:0px !important">
-                        <button type='button' class='btn btn-primary' onclick=fnTransferToNurseAssessment() style="width:100%;"><i></i> Transfer To Nurse Assessment</button>
+                    <div class="col-md-12 col-lg-12" style="display:none; margin-top:5px; padding-left:15px !important;padding-right:0px !important">
+                        <button type='button' class='btn btn-primary' onclick=fnTransferToNurseAssessment() style="width:100%;"><i></i> Complete</button>
                     </div>
                 </div>
                 <br /><br />
