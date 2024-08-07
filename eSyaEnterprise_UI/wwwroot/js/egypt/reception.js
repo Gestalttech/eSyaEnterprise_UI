@@ -83,7 +83,7 @@ function fnGridLoadReceptionDetail() {
                 {
                     name: "Button", width: 50, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
                         var i = options.rowId;
-                        return "<button id=btnCall_" + i + " type='button' class='btn btn-success' onclick=fnCallingToken('" + rowObject.QueueTokenKey + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
+                        return "<button id=btnCall_" + i + " type='button' class='btn btn-success w-100' onclick=fnCallingToken('" + rowObject.QueueTokenKey + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
                     }
                 },
                 { name: "QueueTokenKey", width: 60, editable: true, align: 'left' },
@@ -96,14 +96,14 @@ function fnGridLoadReceptionDetail() {
                     }
                 },
                 {
-                    name: "Button", width: 100, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
-                        return "<button type='button' class='btn btn-primary' onclick=fnUpdateTokenStatusToNurseAssessment('" + rowObject.QueueTokenKey + "')><i class='fas fa-external-link-alt c-white'></i> Completed</button>"
+                    name: "Button", width: 30, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
+                        return "<button type='button' class='btn btn-primary w-100' onclick=fnUpdateTokenStatusToNurseAssessment('" + rowObject.QueueTokenKey + "')><i class='fas fa-external-link-alt c-white'></i> Completed</button>"
                     }
                 },
                 {
-                    name: "Button", width: 70, editable: true, align: 'center', hidden: false, formatter: function (cellValue, option, rowObject) {
+                    name: "Button", width: 30, editable: true, align: 'center', hidden: false, formatter: function (cellValue, option, rowObject) {
                         var i = option.rowId;
-                        return "<button id=btnHold_" + i + "  type='button' class='btn btn-danger mr-3' onclick=fnUpdateTokenToHold('" + rowObject.QueueTokenKey + "')><i class='fas fa-pause c-white'></i> Hold</button> <button id=btnRelease_" + i + " type='button' class='btn btn-success' onclick=fnUpdateTokenToRelease('" + rowObject.QueueTokenKey + "')><i class='fas fa-play c-white'></i> Release</button>"
+                        return "<button id=btnHold_" + i + "  type='button' class='btn btn-danger mr-3 w-100' onclick=fnUpdateTokenToHold('" + rowObject.QueueTokenKey + "')><i class='fas fa-pause c-white'></i> Hold</button> <button id=btnRelease_" + i + " type='button' class='btn btn-success w-100' onclick=fnUpdateTokenToRelease('" + rowObject.QueueTokenKey + "')><i class='fas fa-play c-white'></i> Release</button>"
                     }
                 },
                 {
@@ -130,7 +130,7 @@ function fnGridLoadReceptionDetail() {
                 for (i = 0; i < rowIds.length; i++) {
                     rowData = $('#jqgReception').jqGrid('getRowData', rowIds[i]);
                     if (rowData['QueueTokenKey'].startsWith('B')) {
-                        if (rowData["TokenHold"] === "true") {
+                        if (rowData["TokenHold"] == "true" || rowData["TokenHold"] == true) {
                             $("#btnHold_" + rowIds[i]).hide();
                         }
                         else {
@@ -139,19 +139,27 @@ function fnGridLoadReceptionDetail() {
                         $('#jqgReception').jqGrid('setRowData', rowIds[i], false, "bg_ca");
                     }
                     else if (rowData['QueueTokenKey'].startsWith('C')) {
-                        if (rowData["TokenHold"] === "true")
+                        if (rowData["TokenHold"] == "true" ||rowData["TokenHold"] == true)
                             $("#btnHold_" + rowIds[i]).hide();
                         else
                             $("#btnRelease_" + rowIds[i]).hide();
                         $('#jqgReception').jqGrid('setRowData', rowIds[i], false, "bg_cw");
                     }
                     else if (rowData['QueueTokenKey'].startsWith('S')) {
-                        if (rowData["TokenHold"] === "true")
+                        if (rowData["TokenHold"] == "true" || rowData["TokenHold"] == true)
                             $("#btnHold_" + rowIds[i]).hide();
                         else
                             $("#btnRelease_" + rowIds[i]).hide();
                         $('#jqgReception').jqGrid('setRowData', rowIds[i], false, "bg_sw");
                     }
+                    else if (rowData['QueueTokenKey'].startsWith('L')) {
+                        if (rowData["TokenHold"] == "true" || rowData["TokenHold"] == true)
+                            $("#btnHold_" + rowIds[i]).hide();
+                        else
+                            $("#btnRelease_" + rowIds[i]).hide();
+                        $('#jqgReception').jqGrid('setRowData', rowIds[i], false, "bg_sw");
+                    }
+
                     if (rowData["TokenCalling"] === "true") {
                         $("#btnCall_" + rowIds[i]).removeClass("btn-success");
                         $("#btnCall_" + rowIds[i]).addClass("btn-danger");
@@ -214,6 +222,7 @@ function fnGridLatePatients() {
                 },
                 { name: "TokenCalling", width: 120, editable: true, align: 'left', hidden: true },
             ],
+            rownumWidth: '55',
             rowNum: 10000,
             viewrecords: true,
             gridview: true,
@@ -275,9 +284,9 @@ function fnNextToken() {
         success: function (result) {
 
             if (result.Status) {
-                if (!IsStringNullorEmpty(result.QTokenKey)) {
+                if (!IsStringNullorEmpty(result.QueueTokenKey)) {
                     //fnAlert("Calling the Token : " + result.QTokenKey, "s");
-                    fnAlert("s", "", "", "Calling the Token : " + result.QTokenKey);
+                    fnAlert("s", "", "", "Calling the Token : " + result.QueueTokenKey);
                     $('#lblCurrentlyServingToken').text(result.QTokenKey);
                     var waitMinutes = 60 * 3;
                     display = document.querySelector('#lblTokenTimer');
@@ -334,7 +343,7 @@ function fnRecallToken() {
             success: function (result) {
 
                 if (result.Status) {
-                    fnAlert("s", "", "", "Calling the Token : " + result.QTokenKey);
+                    fnAlert("s", "", "", "Calling the Token : " + result.Key);
 
                     var waitMinutes = 60 * 3;
                     var display = document.querySelector('#lblTokenTimer');
@@ -468,7 +477,7 @@ function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
 
 
     bootbox.confirm({
-        message: "Transfer to Nurse Assessment ?",
+        message: "Do you want to Complete ?",
         buttons: {
             confirm: {
                 label: 'Yes',
@@ -496,9 +505,10 @@ function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
 
                         if (result.Status) {
                             //fnAlert("Transfered to Nurse Assessment", "s");
-                            fnAlert("s", "", "", "Transfered to Nurse Assessment");
+                            fnAlert("s", "", "", "Completed");
                             clearInterval(myTimer);
-                            document.querySelector('#lblTokenTimer').textContent = "Completed";
+                            $('#lblCurrentlyServingToken').text(0);
+                            document.querySelector('#lblTokenTimer').textContent = "00:00";
                             jQuery("#jqgReception").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
                             return true;
                         }
@@ -901,3 +911,95 @@ function fnUpdateTokenToRelease(QueueTokenKey) {
         }
     });
 }
+
+// TIMER
+
+// Run Timer Control in Label
+var myTimer;
+function startTimer(duration, display) {
+
+    if (myTimer !== null)
+        clearInterval(myTimer);
+
+    var start = Date.now(),
+        diff,
+        minutes,
+        seconds;
+    function timer() {
+        // get the number of seconds that have elapsed since
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (diff <= 0) {
+            // add one second so that the count down starts at the full duration
+            // example 03:00 not 02:59 Restart
+            //start = Date.now() + 1000;
+            clearInterval(myTimer);
+            return;
+        }
+    };
+    // we don't want to wait a full second before the timer starts
+    timer();
+    myTimer = setInterval(timer, 1000);
+}
+
+// Voice of the Given text
+function fnTextToSpeech(text) {
+    //var msg = new SpeechSynthesisUtterance();
+    //var voices = window.speechSynthesis.getVoices();
+    //msg.voice = voices[2];
+    //msg.voiceURI = "native";
+    //msg.volume = 20;
+    //msg.rate = .7;
+    //msg.pitch = 5;
+    //msg.text = text;
+    //msg.onend = function (e) {
+    //    //console.log('Finished in ' + event.elapsedTime + ' seconds.');
+    //};
+    //speechSynthesis.speak(msg);
+
+    beep(1000, 2, function () {
+    });
+}
+
+
+var beep = (function () {
+    var ctxClass = window.audioContext || window.AudioContext || window.AudioContext || window.webkitAudioContext
+    var ctx = new ctxClass();
+    return function (duration, type, finishedCallback) {
+
+        duration = +duration;
+
+        // Only 0-4 are valid types.
+        type = (type % 5) || 0;
+
+        if (typeof finishedCallback != "function") {
+            finishedCallback = function () { };
+        }
+
+        var osc = ctx.createOscillator();
+
+        osc.type = type;
+        //osc.type = "sine";
+
+        osc.connect(ctx.destination);
+        if (osc.noteOn) osc.noteOn(0);
+        if (osc.start) osc.start();
+
+        setTimeout(function () {
+            if (osc.noteOff) osc.noteOff(0);
+            if (osc.stop) osc.stop();
+            finishedCallback();
+        }, duration);
+
+    };
+})();

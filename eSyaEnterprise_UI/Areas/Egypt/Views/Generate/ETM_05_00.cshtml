@@ -1,0 +1,163 @@
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "ETM_05_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Common/esyafonts.css" rel="stylesheet" />
+<link href="~/css/Common/esyaTheme.css" rel="stylesheet" />
+<link href="~/css/TokenSystem/tokensystem.css" rel="stylesheet" />
+
+<input type="hidden" id="hdBKey" value="@ViewBag.businessKey" />
+<header>
+    <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
+</header>
+
+<main>
+    <h1 class="text-center">Token Management System</h1>
+    <div class="container atmDisplay">
+        <div class="row" id="dvMain">
+        </div>
+    </div>
+</main>
+
+@section scripts {
+    <script src="~/js/Common/jquery.PrintArea.js"></script>
+    <script src="~/js/Common/jQuery.print.min.js"></script>
+}
+
+
+<div class="modal fade in " id="PopupTokenPrint" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static" style="overflow: scroll;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header ">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title blur"> @Localizer["TokenPrint"]</h4>
+            </div>
+            <div class="modal-body bg-lightgrey">
+                <div style="text-align:center">
+                    <div id="dvPrint" style="text-align:center;  width:7.5cm;height:7.5cm;">
+                        <div id="dvPrintToken" class="PrintArea" style="border:8px double;padding:10px;margin:10px;text-align:center">
+                            <div>
+                                <h1>@Localizer["TokenNumber"]</h1>
+
+                            </div>
+                            <hr style="border-top: 2px solid #212529;" />
+                            <div>
+                                <h1 id="lblTokenNumber" style="font-weight: 900;font-size:60px">-</h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="jQuery('#dvPrintToken').print()"><i class="fa fa-print"></i> @Localizer["Print"]</button>
+                <button type="button" class="btn btn-default" onclick="fnCloseModal()"><i class="fa fa-times"></i> @Localizer["Close"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+<script>
+    
+    $(document).ready(function () {
+        $('.header').css('display', 'none');
+        fnGetTokenTypes();
+    });
+    function fnGetTokenTypes() {
+        $.ajax({
+            url: getBaseURL() + '/Egypt/Generate/GetTokenTypes',
+            type: 'POST',
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                var _content = "";
+                $.each(result, function (key, data) {
+                    // _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenType + "')> <span>" + data.TokenDesc + "</span> <span class='position-absolute top-100 start-50 translate-middle fs-6 translate-middle badge pill bg-warning text-bg-warning'>Last Generated Token:9999</span></button></div>";
+                    _content += "<div class='col-xl-4 col-lg-4 col-md-4 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenPrefix + "')> <span>" + data.TokenDesc + "</span></button></div>";
+
+                });
+                $("#dvMain").html(_content);
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+
+
+    function fnGeneratToken(_tprefix) {
+        var obj = {
+            TokenPrefix: _tprefix,
+            BusinessKey: $('#hdBKey').val(),
+            
+        };
+        var URL = getBaseURL() + '/Egypt/Generate/GenerateToken';
+        $.ajax({
+            url: URL,
+            type: 'POST',
+            datatype: 'json',
+            contenttype: 'application/json; charset=utf-8',
+            data: obj,
+            success: function (response) {
+                if (response.Status) {
+                    // toastr.success("Token Generated. Token Number is : " + response.key);
+                    $('#lblTokenNumber').text(response.key);
+                    fnPrintToken();
+
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+
+    }
+    function fnPrintToken() {
+
+        $("#dvPrintToken").print({
+            // Use Global styles
+            globalStyles: false,
+
+            // Add link with attrbute media=print
+            mediaPrint: false,
+
+            //Custom stylesheet
+            stylesheet: "http://fonts.googleapis.com/css?family=Inconsolata",
+
+            //Print in a hidden iframe
+            iframe: true,
+
+            // Don't print this
+            noPrintSelector: ".avoid-this",
+
+            // Add this on top
+            //append: "Free jQuery Plugins<br/>",
+
+            //// Add this at bottom
+            //prepend: "<br/>jQueryScript.net",
+            // Manually add form values
+            manuallyCopyFormValues: false,
+
+            // resolves after print and restructure the code for better maintainability
+            deferred: $.Deferred(),
+            // timeout
+            timeout: 250,
+
+            // Custom title
+            title: null,
+            // Custom document type
+            doctype: '<!doctype html>'
+        });
+    }
+
+</script>
+
