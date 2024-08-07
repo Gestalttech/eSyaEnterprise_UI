@@ -79,7 +79,7 @@ function fnGridLoadReceptionDetail() {
                 doctorId: function () { return $('#cboDoctor').val(); },
                 //patientType: patientType,
             },
-            colNames: ["", "Token Number", "S.No", "Specialty", "Doctor Name", "Time Slot", "", "", "MRN", "Patient Name", "", "", "", "", "", "", "Insurance", "Visit Type", "", "", "", ""],
+            colNames: ["Call Token", "Token Number", "S.No", "", "", "", "", "", ""],
             colModel: [
                 {
                     name: "Button", width: 50, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
@@ -97,8 +97,8 @@ function fnGridLoadReceptionDetail() {
                     }
                 },
                 {
-                    name: "Button", width: 100, editable: true, align: 'center', hidden: true, formatter: function (cellValue, options, rowObject) {
-                        return "<button type='button' class='btn btn-primary' onclick=fnUpdateTokenStatusToNurseAssessment('" + rowObject.QueueTokenKey + "')><i class='fas fa-external-link-alt c-white'></i> Transfer to Nurse Assessment</button>"
+                    name: "Button", width: 100, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
+                        return "<button type='button' class='btn btn-primary' onclick=fnUpdateTokenStatusToNurseAssessment('" + rowObject.QueueTokenKey + "')><i class='fas fa-external-link-alt c-white'></i> Completed</button>"
                     }
                 },
                 {
