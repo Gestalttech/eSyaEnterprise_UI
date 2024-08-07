@@ -1,0 +1,103 @@
+﻿
+#Assessment-tab {
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0px 1px 0px rgba(0, 0, 0, 0.15);
+}
+
+    #Assessment-tab .nav-link {
+        text-transform: uppercase;
+        padding: 10px 15px;
+        width: 15vw;
+        text-align: center;
+        color: #565656;
+        font-size: 0.96rem;
+        font-weight: bolder;
+        letter-spacing: 0.99px;
+        border-bottom: 3px solid transparent;
+    }
+
+        #Assessment-tab .nav-link.active {
+            color: #005eca;
+            background-color: #f2f8ff;
+            border-bottom: 3px solid;
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.16), 0 0px 1px rgba(0, 0, 0, 0.23);
+            border-radius: 5px;
+        }
+
+
+.bg_ca {
+    background-color: #98F5FF;
+    color: #3c3b3b !important;
+}
+
+.bg_cw {
+    background-color: #ccffff;
+    color: #3c3b3b !important;
+}
+
+.bg_sa {
+    background-color: #b3d9ff;
+    color: #3c3b3b !important;
+}
+
+.bg_sw {
+    background-color: #E8E0FC;
+    color: #3c3b3b !important;
+}
+
+.token_currentserving table {
+    border: 1px solid #99caff;
+    width: 100%
+}
+
+.token_currentserving .header {
+    background-color: #efdf8d;
+    padding: 4px
+}
+
+.token_currentserving td {
+    font-size: large;
+    font: bold;
+    padding: 6px;
+    text-align: center
+}
+
+.token_currentserving th {
+    border: 1px solid #99caff;
+    padding: 8px;
+    text-align: center
+}
+
+.token_currentserving tr {
+    border: 1px solid #99caff;
+    font-size: large;
+    padding: 6px;
+    text-align: center
+}
+
+.token_timer {
+    font-size: larger !important;
+    color: coral !important;
+}
+
+.token_display {
+    font-size: larger !important;
+}
+
+.dv-radio-grp input[type=radio] {
+    vertical-align: text-top;
+}
+
+.dv-radio-grp label {
+    padding: 13px;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    /*margin-right: 7px;*/
+}
+
+.dv-radio-grp {
+    padding-bottom: 14px;
+}
+
+.hd {
+    margin-bottom: 2px !important;
+}

@@ -334,6 +334,7 @@
     <Folder Include="Areas\ConfigPatient\Data\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
+    <Folder Include="Areas\Egypt\Models\" />
     <Folder Include="Areas\ProductSetup\Views\Control\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Purchase\Models\" />

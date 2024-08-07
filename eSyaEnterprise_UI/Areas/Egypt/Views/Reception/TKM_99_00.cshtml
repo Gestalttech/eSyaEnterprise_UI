@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewData["Title"] = "TKM_99_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/egypt/reception.css" rel="stylesheet" />
+<script src="~/js/egypt/reception.js"></script>
+ 
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="form-group hd">
+            <label>Lounge Number</label>
+            <select class="selectpicker" id="cboLoungeNumber" title="">
+                <option value="" selected>Choose a Lounge Number</option>
+                @* @foreach (var r in ViewBag.RoomList)
+                {
+                <option value='@r'>@r</option>
+                } *@
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="form-group hd">
+            <label>Desk Number</label>
+            <select class="selectpicker" id="cboDeskNumber" title="">
+                <option value="" selected>Choose a Desk Number</option>
+                @* @foreach (var r in ViewBag.RoomList)
+                {
+                    <option value='@r'>@r</option>
+                } *@
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12" hidden>
+        <div class="form-group hd">
+            <label>Specialty</label>
+            <select class="selectpicker" data-live-search="true" id="cboSpecialty" title="" onchange="fnSpecialty_onchange()">
+                <option value="0" selected>All</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12" hidden>
+        <div class="form-group hd">
+            <label>Doctor Name</label>
+            <select class="selectpicker" data-live-search="true" id="cboDoctor" title="" onchange="fnDoctor_onchange()">
+                <option value="0" selected>All</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="with-assessment-tab">
+
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12" style="display:inline-flex; padding-left:15px !important;padding-right:0px !important">
+                        <div class="col-md-5 col-lg-5" style="line-height: 2.4; padding-left:0px !important;padding-right:0px !important">
+                            <button type='button' class='btn btn-primary' onclick=fnNextToken('C') style="width:100%;"><i></i> Next</button>
+                            <button type='button' class='btn btn-primary' onclick=fnRecallToken('C') style="width:100%;"><i></i> Recall</button>
+                            <button type='button' class='btn btn-primary' onclick=fnHoldToken('C') style="width:100%;"><i></i> Hold</button>
+                        </div>
+                        <div class="col-md-7 col-lg-7 token_currentserving" style=" padding-left:5px !important;padding-right:0px !important;vertical-align: top;">
+                            <table>
+                                <tr class="header">
+                                    <th>Currently Serving</th>
+                                </tr>
+                                <tr>
+                                    <td><label class="token_display" id="lblCurrentlyServingToken">0</label></td>
+                                </tr>
+                                <tr style=" ">
+                                    <td style="color:coral;padding:6px;"><label class="token_timer" id="lblTokenTimer">00:00</label></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12" style="display:inline-flex; margin-top:5px; padding-left:15px !important;padding-right:0px !important">
+                        <button type='button' class='btn btn-primary' onclick=fnTransferToNurseAssessment() style="width:100%;"><i></i> Transfer To Nurse Assessment</button>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group hd">
+                            <label>Long waiting patients</label>
+                            <table id="jqgLatePatients"> </table>
+                            <div id="jqpLatePatients"> </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row" style="height:200px;">
+
+                <div class="col-lg-12">
+                <div class="form-group hd">
+                <label>Late Doctors</label>
+                <table id="jqgLateDoctors"> </table>
+                <div id="jqpLateDoctors"> </div>
+                </div>
+                </div>
+                </div>*@
+
+            </div>
+            <div class="col-md-9 col-lg-9" style=" margin-top:10px;">
+
+                <div class="col-lg-12 dv-radio-grp" hidden>
+                    <label class="d-inline"><input type="radio" name="rdoPatientType" value="A" checked onchange="fnGridLoadReceptionDetail()" /> All </label>
+                    <label class="d-inline bg_ca"><input type="radio" name="rdoPatientType" value="B" onchange="fnGridLoadReceptionDetail()" />  Booked </label>
+                    <label class="d-inline bg_cw"><input type="radio" name="rdoPatientType" value="C" onchange="fnGridLoadReceptionDetail()" />  Walk-in Cash  </label>
+                    <label class="d-inline bg_sw"><input type="radio" name="rdoPatientType" value="S" onchange="fnGridLoadReceptionDetail()" />  Walk-in Sponsor </label>
+                </div>
+                <div class="col-lg-12">
+                    <table id="jqgReception"> </table>
+                    <div id="jqpReception"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+<div class="modal fade in" id="PopupComplete">
+    <div class="modal-dialog modal-md  " role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">Complete Registration</h4>
+            </div>
+            <div class="err_div_mar animated fadeInUp" id="errpopUP" style="display:none">
+                <p class="errorMsg_p" id="errmsg"></p>
+                <p class="succMsg_p" id="succmsg"></p>
+            </div>
+            <div class="modal-body">
+                <div class="row rowBox padtop10">
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Q Numder</label>
+                        <input type="text" name="int" id="txtQNumber" value="" class="form-control" readonly />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group" hidden>
+                        <label>UHID</label>
+                        <input type="text" name="int" id="txtUHID" value="" class="form-control" readonly />
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 form-group">
+                        <label>SAP MRN No</label>
+                        <input type="text" id="txtPatientID" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="row rowBox padtop10">
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>First Name</label>
+                        <input type="text" name="text" id="txtFirstName" value="" class="form-control" autocomplete="on" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="text" id="txtLastName" value="" class="form-control" autocomplete="on" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Gender</label>
+                        <select class="form-control" id="cboGender">
+                            <option value="0">Choose gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="T">Transgender</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" name="text" id="txtDateOfBirth" value="" class="form-control" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" name="int" id="txtMobileNumber" value="" class="form-control" maxlength="11" autocomplete="on" />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label>Email ID</label>
+                        <input type="text" name="text" id="txtEmailID" value="" class="form-control" autocomplete="on" />
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group" id="divCustomer">
+                        <label>Insurance Company</label>
+                        <select class="selectpicker" data-live-search="true" id="cboCustomer" title="">
+                            <option value="" selected>Choose Insurance</option>
+                            @* @foreach (var c in ViewBag.CustomerList)
+                            {
+                                <option value=@c.CustomerId>@c.CustomerName</option>
+                            } *@
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSave" onclick="fnCompeleteRegistration();">
+                            Confirm
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-dismiss="modal" id="#"> Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
