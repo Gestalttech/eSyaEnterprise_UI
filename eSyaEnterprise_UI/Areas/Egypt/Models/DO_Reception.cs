@@ -17,7 +17,7 @@
         //public string DoctorName_ar { get; set; }
         public bool TokenCalling { get; set; }
         public string? CallingRoomNumber { get; set; }
-        //public DateTime? TokenCallingTime { get; set; }
+        public DateTime? TokenCallingTime { get; set; }
         public bool TokenHold { get; set; }
         //public int TokenHoldOccurence { get; set; }
         //public DateTime TokenHoldingTime { get; set; }

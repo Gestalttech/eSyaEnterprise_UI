@@ -1,0 +1,404 @@
+﻿/*body {
+}*/
+
+.button {
+    padding: 15px 15px;
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #ba954f;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 6px #999;
+    margin-bottom: 10px;
+}
+
+    .button.big {
+        font-size: 5vh !important;
+        line-height: 5.5vh !important;
+    }
+
+    .button:hover {
+        background-color: #095c9b
+    }
+
+.divLogo {
+    text-align: left;
+    background: #fff;
+    padding: 10px 30px;
+    border-bottom: 1px solid #ba954f;
+}
+
+    .divLogo img {
+        width: 200px;
+    }
+
+.button:active {
+    background-color: #ba954f;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+
+.bg_ca {
+    background-color: #98F5FF;
+    color: #3c3b3b !important;
+}
+
+.bg_cw {
+    background-color: #ccffff;
+    color: #3c3b3b !important;
+}
+
+.bg_sa {
+    background-color: #b3d9ff;
+    color: #3c3b3b !important;
+}
+
+.bg_sw {
+    background-color: #E8E0FC;
+    color: #3c3b3b !important;
+}
+
+.token_currentserving table {
+    border: 1px solid #99caff;
+    width: 100%
+}
+
+.token_currentserving .header {
+    background-color: #b3d7ff;
+    padding: 4px
+}
+
+.token_currentserving td {
+    font-size: large;
+    font: bold;
+    padding: 6px;
+    text-align: center
+}
+
+.token_currentserving th {
+    border: 1px solid #99caff;
+    padding: 8px;
+    text-align: center
+}
+
+.token_currentserving tr {
+    border: 1px solid #99caff;
+    font-size: large;
+    padding: 6px;
+    text-align: center
+}
+
+.token_timer {
+    font-size: larger !important;
+    color: coral !important;
+}
+
+.token_display {
+    font-size: larger !important;
+}
+
+.AppointmentSectionBox [id^="btn"], #divDoctors button {
+    background: linear-gradient(to top, #632a00, #ba954f) !important;
+    box-shadow: 0 10px 10px -2px rgba(0,0,0,.25) !important;
+}
+
+    .AppointmentSectionBox [id^="btn"]:hover, #divDoctors button:hover {
+        background: linear-gradient(to bottom, #632a00, #ba954f) !important;
+        box-shadow: 0 10px 10px -2px rgba(0,0,0,.25) !important;
+    }
+
+.AppointmentSectionBox [id^="btn"], #divAppointments button {
+    background: linear-gradient(to top,#632a00, #ba954f) !important;
+    box-shadow: 0 10px 10px -2px rgba(0,0,0,.25) !important;
+}
+
+    .AppointmentSectionBox [id^="btn"]:hover, #divAppointments button:hover {
+        background: linear-gradient(to bottom, #632a00, #ba954f) !important;
+        box-shadow: 0 10px 10px -2px rgba(0,0,0,.25) !important;
+    }
+
+    .AppointmentSectionBox [id^="btn"]:hover, #divAppointments button:disabled {
+        background: linear-gradient(to bottom, gray, #6c757d) !important;
+        box-shadow: 0 10px 10px -2px rgba(0,0,0,.25) !important;
+    }
+
+.assalamlogo {
+    width: 14vw;
+    margin: 15px;
+}
+
+.leftDisplay, .katamya {
+    height: 100vh;
+    margin: 0vh 0px;
+    border: 1px solid #ccc;
+}
+
+.leftDisplay {
+    background-image: url('../../images/egypt/daralfouadhospitalBuilding.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-clip: unset;
+    background-color: #fff;
+}
+
+.katamya {
+    background-image: url('../../images/egypt/daralfouadhospitalBuilding.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+    background-clip: unset;
+    background-color: #b4edff;
+}
+
+.leftDisplay p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 3.5vw;
+    line-height: 3.25vw !important;
+    padding-top: 2vh;
+    font-weight: 300;
+    margin: 2vh 0px !important;
+    /*background:rgba(255,255,255,0.91);*/
+}
+
+.katamya p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 2.5vw;
+    line-height: 3vw;
+    padding-top: 0vh;
+    font-weight: bold;
+    margin: 1vh 0px !important;
+    background: rgba(255,255,255,0.91);
+}
+
+#lblCallingTokenNumber {
+    font-size: 10.5vw;
+    line-height: 10.5vw;
+}
+
+#lblCallingTokenNumberD {
+    font-size: 4.5vw;
+    line-height: 4.5vw;
+}
+
+.leftDisplay .tokenNumber {
+    text-align: center;
+    font-size: 7vw;
+    padding-top: 5.5vh;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+/*.rightDisplay div {
+    margin: 0vh 0px;
+    border: 8px outset rgba(245,245,200,0.2);
+}
+
+    .rightDisplay div:nth-child(even) {
+        background: #8c7310;
+    }
+
+    .rightDisplay div:nth-child(odd) {
+        background: #8e5f06;
+    }
+
+    .rightDisplay div p {
+        color: #fff !important
+    }*/
+
+.rightDisplay section {
+    margin: 0vh 0px;
+    border: 8px outset rgba(245,245,200,0.2);
+}
+
+    .rightDisplay section:nth-child(even) {
+        background: #8c7310;
+    }
+
+    .rightDisplay section:nth-child(odd) {
+        background: #8e5f06;
+    }
+
+    .rightDisplay section p {
+        color: #fff !important
+    }
+.rightDisplay p {
+    margin: 0px;
+}
+
+.rightDisplay .text-english {
+    display: block;
+    float: left;
+    padding-left: 0.25rem;
+    padding-top: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+    .rightDisplay .text-english.doctorName {
+        font-size: 3vh;
+    }
+
+.rightDisplay .text-arabic {
+    display: block;
+    float: right;
+    padding-right: 0.25rem;
+    padding-top: 0.25rem;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-tokenNumber {
+    display: block;
+    text-align: center;
+    padding-top: 0vh;
+    font-weight: bold;
+    margin-top: 3vh;
+    letter-spacing: 2px;
+}
+
+.text-tokenNumber-doctor {
+    display: block;
+    text-align: center;
+    padding-top: 0vh;
+    font-weight: bold;
+    margin-top: 3vh;
+    letter-spacing: 2px;
+    font-size: 5vw !important;
+}
+
+.queueStatus {
+    direction: rtl;
+    font-family: Tahoma;
+    font-weight: bold;
+    width: 50%;
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    font-size: 3vw !important;
+}
+
+.doctorName {
+    word-wrap: break-word;
+}
+
+.tbody:nth-child(even) .divDoctorName {
+    background: rgba(0,0,0,0.045);
+}
+
+.doctorClinicFooter {
+    font-family: Tahoma;
+    font-weight: bold;
+    margin: auto;
+    text-align: right;
+    font-size: 3vw;
+    padding: 15px;
+    line-height: 5vw;
+}
+
+#divTableHeader {
+    background-color: aliceblue;
+}
+
+    #divTableHeader .innertext {
+        font-size: x-large;
+        height: 50px;
+        text-align: center;
+        font-weight: bold;
+        direction: rtl;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        #divTableHeader .innertext.end {
+            font-size: x-large;
+            height: 50px;
+            text-align: center;
+            font-weight: bold;
+            direction: rtl;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+@media only screen and (max-width:991px) and (min-width:600px) {
+    .leftDisplay, .katamya {
+        height: 50vh;
+    }
+
+        .leftDisplay p {
+            color: #8e5f06;
+            text-align: center;
+            font-size: min(5.5vw,32px);
+            line-height: 5.5vw;
+            padding-top: 1vh;
+            font-weight: bold;
+            padding: 0px 15px;
+            margin: 1vh 0px !important;
+            background: rgba(255,255,255,0.91);
+        }
+
+        .katamya p {
+            color: #8e5f06;
+            text-align: center;
+            font-size: 4.5vw;
+            line-height: 5.25vw;
+            padding-top: 0vh;
+            font-weight: bold;
+            margin: 0.25vh 0px !important;
+            background: rgba(255,255,255,0.91);
+        }
+
+    .assalamlogo {
+        width: 200px;
+        margin: 10px auto;
+        display: block;
+    }
+}
+
+@media only screen and (max-width:599px) and (min-width:300px) {
+    .leftDisplay, .katamya {
+        height: 50vh;
+    }
+
+        .leftDisplay p {
+            color: #8e5f06;
+            text-align: center;
+            text-align: center;
+            font-size: 21px;
+            line-height: 30px;
+            padding-top: 1vh;
+            font-weight: bold;
+            padding: 0px 15px;
+            margin: 1vh 0px !important;
+            background: rgba(255,255,255,0.91);
+        }
+
+        .katamya p {
+            color: #8e5f06;
+            text-align: center;
+            font-size: 4.5vw;
+            line-height: 5.25vw;
+            padding-top: 0vh;
+            font-weight: bold;
+            margin: 1vh 0px !important;
+            background: rgba(255,255,255,0.91);
+        }
+
+    .assalamlogo {
+        width: 120px;
+        margin: 5px auto;
+        display: block;
+    }
+}
