@@ -30,10 +30,10 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
             l_RoomList.Add("3");
             l_RoomList.Add("4");
             ViewBag.RoomList = l_RoomList;
-            var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Reception/GetFloors");
+            var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Reception/GetLoungNumbers");
             if (serviceResponse.Status)
             {
-                ViewBag.Floors = serviceResponse.Data.Select(b => new SelectListItem
+                ViewBag.LoungNumbers = serviceResponse.Data.Select(b => new SelectListItem
                 {
                     Value = b.ApplicationCode.ToString(),
                     Text = b.CodeDesc,
@@ -48,14 +48,27 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
             }
         }
 
-
-       
         [HttpGet]
-        public async Task<JsonResult> GetTokenDetailForReceptionDesk()
+        public async Task<JsonResult> GetDeskNumbers(int loungnumber)
         {
             try
             {
-                var param = "?businessKey=" + 11;
+                var param = "?loungnumber=" + loungnumber;
+                var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Reception/GetDeskNumbers" + param);
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetTokenDetailForReceptionDesk(int tokenarea)
+        {
+            try
+            {
+                var param = "?businessKey=" + 11 + "&tokenarea=" + tokenarea;
                 var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_Reception>>("Reception/GetTokenDetailForReceptionDesk" + param);
                 return Json(serviceResponse.Data);
             }
@@ -65,11 +78,11 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
             }
         }
         [HttpGet]
-        public async Task<JsonResult> GetLongWaitingPatients()
+        public async Task<JsonResult> GetLongWaitingPatients(int tokenarea)
         {
             try
             {
-                var param = "?businessKey=" + 11;
+                var param = "?businessKey=" + 11 + "&tokenarea=" + tokenarea ;
                 var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_Reception>>("Reception/GetLongWaitingPatients" + param);
                 return Json(serviceResponse.Data);
             }

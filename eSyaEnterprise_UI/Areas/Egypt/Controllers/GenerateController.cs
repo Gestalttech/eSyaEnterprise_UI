@@ -22,8 +22,9 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
         [Area("Egypt")]
         public IActionResult ETM_05_00(string? TokenArea)
         {
-            tokenArea = TokenArea;
-            //ViewBag.TokenArea = TokenArea;
+            //tokenArea = TokenArea;
+            ViewBag.TokenArea = TokenArea;
+            ViewBag.businessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
             return View();
         }
         [Area("Egypt")]
@@ -52,24 +53,9 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
         {
             try
             {
-                if (tokenArea == "50001")
-                {
-                    obj.TokenAreaCode = "L1";
-                }
-                else if(tokenArea == "50002")
-                {
-                    obj.TokenAreaCode = "L1";
-                }
-                else if (tokenArea == "50003")
-                {
-                    obj.TokenAreaCode = "L3";
-                }
-                else if (tokenArea == "50004")
-                {
-                    obj.TokenAreaCode = "L4";
-                }
-                obj.TokenAreaCode = "L1";
-                obj.TokenArea = tokenArea;
+                // obj.TokenAreaCode = "L1";
+                //obj.TokenArea = tokenArea;
+                
                 obj.TokenType = string.IsNullOrEmpty(obj.TokenType) ? string.Empty : obj.TokenType;
                 obj.TokenKey = string.IsNullOrEmpty(obj.TokenKey) ? string.Empty : obj.TokenKey;
                 obj.MobileNumber = string.IsNullOrEmpty(obj.MobileNumber) ? string.Empty : obj.MobileNumber;

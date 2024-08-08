@@ -16,18 +16,28 @@ header {
     }
 
 h1 {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
 }
 
-.atmDisplay button {
+/*Existing style*/
+/*.atmDisplay button {
     height: 80px;
     width: 100%;
     max-width: 360px;
     font-size: 1.35rem;
     margin: 20px 0px;
     font-weight: bold;
-   
+  }*/
+
+/*Modified styles form daralfouad hospital*/
+.atmDisplay button {
+    height:150px;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 3.5rem;
+    margin: 20px 0px;
+    font-weight: bold;
 }
 
 footer {
@@ -143,8 +153,18 @@ h1 {
     text-transform: uppercase;
 }
 
-.atmDisplay .row div {
+/*Existing styles*/
+/*.atmDisplay .row div {
     text-align: center;
+}*/
+
+/*Modified styles form daralfouad hospital*/
+.atmDisplay .row div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 280px);
 }
 
 p.instruction {

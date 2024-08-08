@@ -10,6 +10,8 @@
 <link href="~/css/TokenSystem/tokensystem.css" rel="stylesheet" />
 
 <input type="hidden" id="hdBKey" value="@ViewBag.businessKey" />
+<input type="hidden" id="hdTokenArea" value="@ViewBag.TokenArea" />
+
 <header>
     <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
 </header>
@@ -65,6 +67,7 @@
 <script>
     
     $(document).ready(function () {
+        
         $('.header').css('display', 'none');
         fnGetTokenTypes();
     });
@@ -76,12 +79,19 @@
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 var _content = "";
-                $.each(result, function (key, data) {
-                    // _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenType + "')> <span>" + data.TokenDesc + "</span> <span class='position-absolute top-100 start-50 translate-middle fs-6 translate-middle badge pill bg-warning text-bg-warning'>Last Generated Token:9999</span></button></div>";
-                    _content += "<div class='col-xl-4 col-lg-4 col-md-4 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenPrefix + "')> <span>" + data.TokenDesc + "</span></button></div>";
-
-                });
-                $("#dvMain").html(_content);
+                var _hdTokenArea = $("#hdTokenArea").val();
+                if (_hdTokenArea == "") {
+                    $("#btnTokenGenerate").css("display", "none");
+                    fnAlert("w", "", "", "Please add the TokenArea in the URL");
+                    return;
+                }
+                else { 
+                    $.each(result, function (key, data) {
+                        // _content += "<div class='col-lg-6 col-md-6 pl-3 my-1'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenType + "')> <span>" + data.TokenDesc + "</span> <span class='position-absolute top-100 start-50 translate-middle fs-6 translate-middle badge pill bg-warning text-bg-warning'>Last Generated Token:9999</span></button></div>";
+                        _content += "<div class='col-xl-12 col-lg-12 col-md-12 pl-3 my-1 btnTokenGenerate'><button type='button' class='btn btn-primary p-4 pr-0 text-left position-relative' onclick=fnGeneratToken('" + data.TokenPrefix + "')> <span>" + data.TokenDesc + "</span></button></div>";
+                     });
+                    $("#dvMain").html(_content);
+                }
             },
             error: function (error) {
                 fnAlert("e", "", error.StatusCode, error.statusText);
@@ -92,8 +102,17 @@
 
 
     function fnGeneratToken(_tprefix) {
+        if (IsStringNullorEmpty($('#hdTokenArea').val())) {
+            fnAlert("w", "", "", "Please Enter Token Area");
+            return;
+        }
+        if ($('#hdTokenArea').val() == 0) {
+            fnAlert("w", "", "", "Please Enter Token Area");
+            return;
+        }
         var obj = {
             TokenPrefix: _tprefix,
+            TokenArea: $('#hdTokenArea').val(),
             BusinessKey: $('#hdBKey').val(),
             
         };

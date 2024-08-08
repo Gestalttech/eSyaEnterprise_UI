@@ -6,56 +6,41 @@
 };
 
 $(function () {
-    //fnLoadSpecialty();
-    //fnGridLateDoctors();
-    fnGridLatePatients();
+  
     fnGridLoadReceptionDetail();
+    fnGridLatePatients();
 });
+function fnDeskNumber_Onchange() {
+    fnGridLoadReceptionDetail();
+    fnGridLatePatients();
+}
+function fnLoungeNumber_Onchange() {
+    $('#cboDeskNumber').empty();
+    $.ajax({
+        url: getBaseURL() + '/Reception/GetDeskNumbers?loungnumber=' + $("#cboLoungeNumber").val(),
+        type: 'get',
+        success: function (result) {
+          
+            $("#cboDeskNumber").empty();
+            $("#cboDeskNumber").append($("<option value='0'> Select Desk Number </option>"));
+            $.each(result, function (i, item) {
+                $("#cboDeskNumber").append($("<option></option>").val(item.CodeDesc).html(item.CodeDesc));
+            });
+            $('#cboDeskNumber').selectpicker('refresh');
+        },
+        error: function () {
+            $("#cboDeskNumber").empty();
+            $("#cboDeskNumber").append($("<option value='0'> Select Desk Number</option>"));
+            $('#cboDeskNumber').selectpicker('refresh');
+        }
+        
+    });
 
-//function fnLoadSpecialty() {
+    fnGridLoadReceptionDetail();
+    fnGridLatePatients();
+}
 
-//    $.ajax({
-//        //url: getBaseURL() + '/AppointmentBooking/GetSpecialtyListByBKey',
-//        type: 'get',
-//        success: function (result) {
-//            $.each(result, function (i, item) {
-//                $("#cboSpecialty").append($("<option></option>").val(item.SpecialtyId).html(item.SpecialtyDescription));
-//            });
-//            $('#cboSpecialty').val(0);
-//            $('#cboSpecialty').selectpicker('refresh');
-//        }
-//    });
 
-//    fnSpecialty_onchange();
-//}
-
-//function fnSpecialty_onchange() {
-
-//    $("#cboDoctor").html("");
-//    $.ajax({
-//        //url: getBaseURL() + '/AppointmentBooking/GetDoctorListByBKeySpecialty',
-//        type: 'get',
-//        data: {
-//            specialtyId: $("#cboSpecialty").val(),
-//        },
-//        async: false,
-//        success: function (result) {
-//            $("#cboDoctor").append($("<option></option>").val(0).html("All"));
-//            $.each(result, function (i, item) {
-//                $("#cboDoctor").append($("<option></option>").val(item.DoctorId).html(item.DoctorName));
-//            });
-//            $('#cboDoctor').val(0);
-//            $('#cboDoctor').selectpicker('refresh');
-//        }
-//    });
-
-//    fnGridLoadReceptionDetail();
-
-//}
-
-//function fnDoctor_onchange() {
-//    fnGridLoadReceptionDetail();
-//}
 
 window.setTimeout(refreshGrid, 10000);
 function refreshGrid() {
@@ -69,7 +54,7 @@ function fnGridLoadReceptionDetail() {
 
     $("#jqgReception").jqGrid(
         {
-            url: getBaseURL() + '/Reception/GetTokenDetailForReceptionDesk',
+            url: getBaseURL() + '/Reception/GetTokenDetailForReceptionDesk?tokenarea=' + $("#cboLoungeNumber").val(),
             datatype: "json",
             contentType: "application/json; charset-utf-8",
             mtype: 'GET',
@@ -171,42 +156,13 @@ function fnGridLoadReceptionDetail() {
         });
 
 }
-//function fnGridLateDoctors() {
-//    $("#jqgLateDoctors").jqGrid('GridUnload');
 
-//    $("#jqgLateDoctors").jqGrid(
-//        {
-//            url: getBaseURL() + '/Reception/GetLateDoctors',
-//            datatype: "json",
-//            contentType: "application/json; charset-utf-8",
-//            mtype: 'GET',
-//            colNames: ["Doctor Name"],
-//            colModel: [
-
-//                { name: "DoctorName", width: 110, editable: true, align: 'left' },
-
-//            ],
-//            rowNum: 10000,
-//            viewrecords: true,
-//            gridview: true,
-//            rownumbers: true,
-//            scroll: false,
-//            loadonce: true,
-//            width: 'auto',
-//            height: 'auto',
-//            autowidth: true,
-//            shrinkToFit: true,
-//            forceFit: false,
-
-//        });
-
-//}
 function fnGridLatePatients() {
     $("#jqgLatePatients").jqGrid('GridUnload');
 
     $("#jqgLatePatients").jqGrid(
         {
-            url: getBaseURL() + '/Reception/GetLongWaitingPatients',
+            url: getBaseURL() + '/Reception/GetLongWaitingPatients?tokenarea=' + $("#cboLoungeNumber").val(),
             datatype: "json",
             contentType: "application/json; charset-utf-8",
             mtype: 'GET',
@@ -217,7 +173,7 @@ function fnGridLatePatients() {
                 {
                     name: "Button", width: 50, editable: true, align: 'center', hidden: false, formatter: function (cellValue, options, rowObject) {
                         var i = options.rowId;
-                        return "<button id=btnLWCall_" + i + " type='button' class='btn btn-success' onclick=fnCallingToken('" + rowObject.QueueTokenKey + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
+                        return "<button id=btnLWCall_" + i + " type='button' class='btn btn-success w-100' onclick=fnCallingToken('" + rowObject.QueueTokenKey + "')><i class='fa fa-phone' aria-hidden='true'></i> Call</button>"
                     }
                 },
                 { name: "TokenCalling", width: 120, editable: true, align: 'left', hidden: true },
@@ -274,9 +230,8 @@ function fnNextToken() {
     };
 
     $.ajax({
-        // url: getBaseURL() + '/Reception/UpdateReceptionToCallingNextToken',
-        url: '',
-        type: 'POST',
+       url: getBaseURL() + '/Reception/UpdateReceptionToCallingNextToken',
+       type: 'POST',
         datatype: 'json',
         contenttype: 'application/json; charset=utf-8',
         data: obj,
@@ -319,12 +274,11 @@ function fnNextToken() {
 
 function fnRecallToken() {
 
-    if ($("#cboDeskNumber").val() === "") {
+    if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
-        return ;
+        return;
     }
-
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
 
     var obj = {
@@ -369,7 +323,11 @@ function fnRecallToken() {
 }
 
 function fnHoldToken() {
-    
+    if ($("#cboDeskNumber").val() == "0") {
+        //fnAlert("Please select a Desk Number", "e");
+        fnAlert("e", "", "", "Please select a Desk Number");
+        return;
+    }
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
 
     var obj = {
@@ -419,10 +377,10 @@ function fnTransferToNurseAssessment() {
     }
 }
 function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
-    if ($("#cboDeskNumber").val() === "") {
+    if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
-        fnAlert("w", "", "", "Please select a Desk Number");
-        return false;
+        fnAlert("e", "", "", "Please select a Desk Number");
+        return;
     }
     if (QueueTokenKey != $('#lblCurrentlyServingToken').text()) {
         //fnAlert("Please call the patient first", "e");
@@ -530,10 +488,10 @@ function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
 
 }
 function fnUpdateTokenStatusToNurseAssessment_old(QueueTokenKey) {
-    if ($("#cboDeskNumber").val() === "") {
+    if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
-        fnAlert("w", "", "", "Please select a Desk Number");
-        return false;
+        fnAlert("e", "", "", "Please select a Desk Number");
+        return;
     }
     if (QueueTokenKey != $('#lblCurrentlyServingToken').text()) {
         //fnAlert("Please call the patient first", "e");

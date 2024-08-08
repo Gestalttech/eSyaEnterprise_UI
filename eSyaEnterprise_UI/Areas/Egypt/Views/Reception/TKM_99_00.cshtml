@@ -11,7 +11,7 @@
     <div class="col-lg-3 col-md-4 col-sm-12">
         <div class="form-group hd">
             <label>Lounge Number</label>
-            <select class="selectpicker" id="cboLoungeNumber" title="" asp-items="@ViewBag.Floors" data-container="body">
+            <select class="selectpicker" id="cboLoungeNumber" title="" asp-items="@ViewBag.LoungNumbers" data-container="body" onchange="fnLoungeNumber_Onchange()">
                 <option value="" selected>Choose a Lounge Number</option>
             </select>
         </div>
@@ -19,12 +19,12 @@
     <div class="col-lg-3 col-md-4 col-sm-12">
         <div class="form-group hd">
             <label>Desk Number</label>
-            <select class="selectpicker" id="cboDeskNumber" title="">
+            <select class="selectpicker" id="cboDeskNumber" title="" onchange="fnDeskNumber_Onchange()">
                 @* <option value="" selected>Choose a Desk Number</option> *@
-                @foreach (var r in ViewBag.RoomList)
+               @*  @foreach (var r in ViewBag.RoomList)
                 {
                     <option value='@r'>@r</option>
-                }
+                } *@
             </select>
         </div>
     </div>
@@ -54,9 +54,13 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12" style="display:inline-flex; padding-left:15px !important;padding-right:0px !important">
                         <div class="col-md-5 col-lg-5" style="line-height: 2.4; padding-left:0px !important;padding-right:0px !important">
-                            <button type='button' class='btn btn-primary' onclick=fnNextToken('C') style="width:100%;"><i></i> Next</button>
+                           @*  <button type='button' class='btn btn-primary' onclick=fnNextToken('C') style="width:100%;"><i></i> Next</button>
                             <button type='button' class='btn btn-primary' onclick=fnRecallToken('C') style="width:100%;"><i></i> Recall</button>
                             <button type='button' class='btn btn-primary' onclick=fnHoldToken('C') style="width:100%;"><i></i> Hold</button>
+                            *@
+                            <button type='button' class='btn btn-primary'  style="width:100%;"><i></i> Next</button>
+                            <button type='button' class='btn btn-primary'  style="width:100%;"><i></i> Recall</button>
+                            <button type='button' class='btn btn-primary' style="width:100%;"><i></i> Hold</button>
                         </div>
                         <div class="col-md-7 col-lg-7 token_currentserving" style=" padding-left:5px !important;padding-right:0px !important;vertical-align: top;">
                             <table>

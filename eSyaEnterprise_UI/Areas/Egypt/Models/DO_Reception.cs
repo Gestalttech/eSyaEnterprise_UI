@@ -128,7 +128,7 @@
         public DateTime? CreatedOn { get; set; }
         public string? ConfirmationUrl { get; set; }
         public string? QrcodeUrl { get; set; }
-        public string? TokenArea { get; set; }
+        public int TokenArea { get; set; }
         public string? TokenAreaCode { get; set; }
     }
 }

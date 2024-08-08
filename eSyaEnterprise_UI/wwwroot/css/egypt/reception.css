@@ -102,9 +102,9 @@
     margin-bottom: 2px !important;
 }
 
-[id*='btnCall'] {
+[id*='btnCall'], [id*='btnLWCall'] {
     background-color: #198754 !important;
-    padding:5px !important;
+    padding: 5px !important;
 }
 [id*='btnHold'] {
     background-color: #dc3545 !important;
