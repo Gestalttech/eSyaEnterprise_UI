@@ -24,63 +24,28 @@ function fnDynamicHeight() {
         var dynamicDivWidth = ($(".rightDisplay div").innerWidth() / 2);
         var winWidth = $(window).width();
        
-        if (winWidth < 992) {
-            if (divCount == 1) {
-                $(".rightDisplay div").css('height', 50 + 'vh');
-                $(".text-tokenNumber").css({ 'font-size': 5 + 'vh', 'line-height': 5 + 'vh', 'padding-top': 4 + 'vh' });
-                $(".doctorName").css({ 'font-size': 7 + 'vh', 'line-height': 7 + 'vh', 'width': dynamicDivWidth - 10 });
-                $(".clinicNumber").css({ 'font-size': 3 + 'vh', 'line-height': 3 + 'vh' });
-
-            }
-            else if (divCount == 2 || divCount == 3) {
-                //$(".rightDisplay div").css('height', dynamicHeight + 'px');
-                //$(".text-tokenNumber").css({ 'font-size': (dynamicHeight * 0.40) + 'px', 'line-height': (dynamicHeight * 0.40) + 'px', 'padding-top': (dynamicHeight * 0.10) + 'px' });
-                //$(".doctorName").css({ 'font-size': dynamicHeight / 7 + 'px', 'line-height': dynamicHeight / 7 + 'px', 'width': dynamicDivWidth - 10 });
-                //$(".clinicNumber").css({ 'font-size': (dynamicHeight * 0.07) + 'px', 'line-height': (dynamicHeight * 0.07) + 'px' });
-                $(".rightDisplay div").css('height', 50 / divCount + 'vh');
-                $(".text-tokenNumber").css({ 'font-size': 50 / (divCount * 3) + 'vh', 'line-height': 50 / (divCount * 3) + 'vh' });
-                $(".doctorName").css({ 'font-size': dynamicHeight / 3 + 'vh', 'line-height': dynamicHeight / 3 + 'vh', 'width': dynamicDivWidth - 10 });
-                $(".clinicNumber").css({ 'font-size': 2 + 'vh', 'line-height': 2 + 'vh', 'padding-top': 1 + 'vh' });
-            }
-            else {
-                $(".rightDisplay div").css('height', dynamicHeight + 'px');
-                $(".text-tokenNumber").css({ 'font-size': dynamicHeight * 0.34 + 'px', 'line-height': dynamicHeight * 0.34 + 'px', 'padding-top': dynamicHeight * 0.08 + 'px' });
-                $(".doctorName").css({ 'font-size': dynamicHeight / 6 + 'px', 'line-height': dynamicHeight / 6 + 'px', 'width': dynamicDivWidth - 10 });
-                $(".clinicNumber").css({ 'font-size': dynamicHeight / (divCount * 2.5) + 'px', 'line-height': dynamicHeight / (divCount * 2.5) + 'px', 'padding-top': 1 + 'vh' });
-
-            }
-        }
-        else {
+        
             if (divCount == 1) {
                 $(".rightDisplay div").css('height', dynamicHeight + 'px');
-                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 45 + 'px', 'line-height': dynamicHeight / 45 + 'px', 'padding-top': dynamicHeight / 10 + 'px' });
+                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 3 + 'px', 'line-height': dynamicHeight / 3 + 'px', 'padding-top': dynamicHeight * 0.15 + 'px' });
                 $(".doctorName").css({ 'font-size': dynamicHeight / 95 + 'px', 'line-height': dynamicHeight / 95 + '95', 'width': dynamicDivWidth - 10 });
                 $(".clinicNumber").css({ 'font-size': dynamicHeight * .025 + 'px', 'line-height': dynamicHeight * .025 + 'px' });
 
             }
             else if (divCount == 2 || divCount == 3) {
-                //$(".rightDisplay div").css('height', dynamicHeight + 'px');
-                //$(".text-tokenNumber").css({ 'font-size': (dynamicHeight * 0.60) + 'px', 'line-height': (dynamicHeight *0.60) + 'px', 'padding-top': (dynamicHeight * 0.10) + 'px' });
-                //$(".doctorName").css({ 'font-size': dynamicHeight / 7 + 'px', 'line-height': dynamicHeight / 7 + 'px', 'width': dynamicDivWidth - 10 });
-                //$(".clinicNumber").css({ 'font-size': (dynamicHeight * 0.125) + 'px', 'line-height': (dynamicHeight * 0.125) + 'px' });
                 $(".rightDisplay div").css('height', dynamicHeight + 'px');
-                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 10 + 'px', 'line-height': dynamicHeight / 10 + 'px' });
+                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 4 + 'px', 'line-height': dynamicHeight / 4 + 'px', 'padding-top': dynamicHeight * 0.15 + 'px' });
                 $(".doctorName").css({ 'font-size': dynamicHeight / 7 + 'px', 'line-height': dynamicHeight / 7 + 'px', 'width': dynamicDivWidth - 10 });
-                $(".clinicNumber").css({ 'font-size': dynamicHeight / 20 + 'px', 'line-height': dynamicHeight / 20 + 'px' });
+                $(".clinicNumber").css({ 'font-size': dynamicHeight * .08 + 'px', 'line-height': dynamicHeight * .08 + 'px' });
 
             }
             else {
-                //$(".rightDisplay div").css('height', dynamicHeight + 'px');
-                //$(".text-tokenNumber").css({'font-size': dynamicHeight / 7 + 'px', 'line-height': dynamicHeight / 7 + 'px' });
-                //$(".doctorName").css({ 'font-size': dynamicHeight / (divCount * 1.25) + 'px', 'line-height': dynamicHeight / (divCount * 1.25) + 'px', 'width': dynamicDivWidth - 10 });
-                //$(".clinicNumber").css({ 'font-size': dynamicHeight / 6 + 'px', 'line-height': dynamicHeight / 6 + 'px' });
-
                 $(".rightDisplay div").css('height', dynamicHeight + 'px');
-                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 3 + 'px', 'line-height': dynamicHeight / 3 + 'px' });
+                $(".text-tokenNumber").css({ 'font-size': dynamicHeight / 3 + 'px', 'line-height': dynamicHeight / 3 + 'px', 'padding-top': dynamicHeight * 0.05 +'px'});
                 $(".doctorName").css({ 'font-size': dynamicHeight / (divCount * 1.25) + 'px', 'line-height': dynamicHeight / (divCount * 1.25) + 'px', 'width': dynamicDivWidth - 10 });
-                $(".clinicNumber").css({ 'font-size': dynamicHeight * .09 + 'px', 'line-height': dynamicHeight * .20 + 'px !important' });
+                $(".clinicNumber").css({ 'font-size': dynamicHeight * .15 + 'px', 'line-height': dynamicHeight * .15 + 'px' });
             }
-        }
+        
 
     });
 
@@ -152,7 +117,7 @@ function fnDisplayingToken() {
                         //DoctorName: value.DoctorName
                         //DoctorName: value.DoctorName_ar
                     });
-
+                    $(".loungeNumber").text(value.TerminalID);
                 });
 
                 fnDisplayCallingToken();

@@ -6,7 +6,9 @@
 };
 
 $(function () {
-  
+    $('#lblCurrentlyServingToken').text(0);
+    clearInterval(myTimer);
+    document.querySelector('#lblTokenTimer').textContent = "00:00";
     fnGridLoadReceptionDetail();
     fnGridLatePatients();
 });
@@ -20,9 +22,12 @@ function fnLoungeNumber_Onchange() {
         url: getBaseURL() + '/Reception/GetDeskNumbers?loungnumber=' + $("#cboLoungeNumber").val(),
         type: 'get',
         success: function (result) {
-          
+            $('#lblCurrentlyServingToken').text(0);
+            clearInterval(myTimer);
+            document.querySelector('#lblTokenTimer').textContent = "00:00";
             $("#cboDeskNumber").empty();
             $("#cboDeskNumber").append($("<option value='0'> Select Desk Number </option>"));
+            
             $.each(result, function (i, item) {
                 $("#cboDeskNumber").append($("<option></option>").val(item.CodeDesc).html(item.CodeDesc));
             });
@@ -207,7 +212,7 @@ function fnGridLatePatients() {
 }
 
 function fnCallingToken(QueueTokenKey) {
-
+     
     $('#lblCurrentlyServingToken').text(QueueTokenKey);
 
     fnRecallToken();
