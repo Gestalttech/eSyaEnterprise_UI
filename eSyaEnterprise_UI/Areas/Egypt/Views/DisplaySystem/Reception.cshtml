@@ -20,19 +20,20 @@
 @* <input type="hidden" id="hdRoomNumber" value=@ViewBag.ArrayOfRoomNo /> *@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-12 col-12 leftDisplay p-lg-0 p-r-0">
-            <div><img src="~/images/egypt/logo_whitebg.png" class="darlfouadlogo" /></div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-12 leftDisplay p-lg-0 p-r-0">
+            <div class="d-flex justify-content-center pt-2"><img src="~/images/egypt/logo_whitebg.png" class="darlfouadlogo" /></div>
+            <p class="loungeNumber"></p>
             <p>Please proceed to reception desk number  <span id="lblCallingRoomNumber"></span></p>
-            <p>يرجى الانتقال الى مكتب الاستقبال رقم  <span id="lblCallingRoomNumber_ar"></span></p>
+            <p> يرجى التوجه الى شباك رقم <span id="lblCallingRoomNumber_ar"></span></p>
 
             <p class="tokenNumber blink" id="lblCallingTokenNumberD"></p>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7 rightDisplay p-r-0 p-0">
+        <div class="col-lg-6 col-md-6 col-sm-6 rightDisplay p-r-0 p-0">
             @foreach (var rm in ViewBag.RoomList)
             {
                 <div style="padding:5px 3px">
                     <p class="text-english clinicNumber font-weight-bold">Reception Desk No. @rm.CodeDesc</p>
-                    <p class="text-arabic clinicNumber font-weight-bold">مكتب الاستقبال رقم  <span id="lblRoomNo_ar_@rm.CodeDesc.Replace(" ", "")"></span></p>
+                    <p class="text-arabic clinicNumber font-weight-bold">شباك رقم  <span id="lblRoomNo_ar_@rm.CodeDesc.Replace(" ", "")"></span></p>
                     <span class="clearfix"></span>
                     <p class="text-center text-tokenNumber" style="margin:5px" id="lblTokenNumber_@rm.CodeDesc.Replace(" ", "")"></p>
                 </div>
