@@ -14,7 +14,7 @@ span.ui-jqgrid-titlebar {
     font-family: 'helvetica-Bold',sans-serif;
 }
     button, input, optgroup, select, textarea, span, p {
-    line-height: 20px !important;
+    line-height: 20px;
 }
 
 #divAlert {

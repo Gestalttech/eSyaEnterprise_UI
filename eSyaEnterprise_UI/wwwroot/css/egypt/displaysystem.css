@@ -101,6 +101,13 @@
 .token_display {
     font-size: larger !important;
 }
+.container-fluid{
+    padding:0px 3px !important;
+    overflow:hidden;
+}
+.darlfouadlogo{
+    width:40%;
+}
 
 .AppointmentSectionBox [id^="btn"], #divDoctors button {
     background: linear-gradient(to top, #632a00, #ba954f) !important;
@@ -160,7 +167,7 @@
     color: #ffffff;
     text-align: center;
     font-size: 3.5vw;
-    line-height: 3.25vw !important;
+    line-height: 4.5vw !important;
     padding-top: 2vh;
     font-weight: 300;
     margin: 2vh 0px !important;
@@ -177,7 +184,11 @@
     margin: 1vh 0px !important;
     background: rgba(255,255,255,0.91);
 }
-
+p.loungeNumber {
+    color: #c29e58;
+    font-size: 3.5vw;
+    font-weight:bold;
+}
 #lblCallingTokenNumber {
     font-size: 10.5vw;
     line-height: 10.5vw;
