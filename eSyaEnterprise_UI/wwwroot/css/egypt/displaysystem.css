@@ -196,7 +196,7 @@
     letter-spacing: 1.5px;
 }
 
-/*.rightDisplay div {
+.rightDisplay div {
     margin: 0vh 0px;
     border: 8px outset rgba(245,245,200,0.2);
 }
@@ -211,7 +211,7 @@
 
     .rightDisplay div p {
         color: #fff !important
-    }*/
+    }
 
 .rightDisplay section {
     margin: 0vh 0px;

@@ -1,6 +1,8 @@
 ﻿using eSyaEnterprise_UI.Areas.Egypt.Data;
+using eSyaEnterprise_UI.Areas.Egypt.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
@@ -17,29 +19,57 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
             _logger = logger;
         }
         [Area("Egypt")]
-        public IActionResult Reception()
+        public async Task<IActionResult> Reception(string? DisplayArea)
         {
-            return View();
+            if (DisplayArea == null || DisplayArea=="0")
+            {
+                return Json("Please Enter Display Area");
+            }
+           var param  = "?loungnumber=" + DisplayArea; 
+
+            var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Reception/GetDeskNumbers" + param);
+            if (serviceResponse.Status)
+            {
+                ViewBag.DisplayArea = DisplayArea;
+                ViewBag.RoomList = serviceResponse.Data;
+
+                return View();
+            }
+            else
+            {
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFloors");
+                return View();
+            }
+            
         }
-
-
-        //public JsonResult GetTokenForReceptionDisplay(int businessKey, string tokenArea)
-        //{
-        //    try
-        //    {
-        //        //var client = _EgyptAdminAPIServices.InitializeClient(HttpContext.RequestServices.GetRequiredService<IConfiguration>());
-        //        //var parameter = "?businessKey=" + businessKey.ToString();
-        //        //parameter += "&tokenArea=" + tokenArea;
-        //        //HttpResponseMessage response = client.GetAsync("DisplaySystem/GetTokenForReceptionDisplay" + parameter).Result;
-        //        //string respData = response.Content.ReadAsStringAsync().Result;
-
-        //        //var st = JsonConvert.DeserializeObject<List<DO_Reception>>(respData);
-        //        //return Json(st);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { Status = false, Message = ex.ToString() });
-        //    }
-        //}
+        [HttpGet]
+        public async Task<JsonResult> GetDeskNumbers(int loungnumber)
+        {
+            try
+            {
+                var param = "?loungnumber=" + loungnumber;
+                var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("Reception/GetDeskNumbers" + param);
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetTokenForReceptionDisplay(int DisplayArea,string arrayofRoomList)
+        {
+            try
+            {
+                var param = "?businessKey=" + 11 + "&DisplayArea=" + DisplayArea + "&DisplayArea="  +"&arrayofRoomList=" + arrayofRoomList;
+                var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<List<DO_Reception>>("DisplaySystem/GetTokensforReceptionDisplay" + param);
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+      
     }
 }
