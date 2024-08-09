@@ -34,10 +34,11 @@ h1 {
 .atmDisplay button {
     height:150px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     font-size: 3.5rem;
     margin: 20px 0px;
     font-weight: bold;
+    border-radius:150px;
 }
 
 footer {
@@ -180,7 +181,7 @@ footer p {
 }
 
 .container-fluid {
-    padding: 0px !important;
+    padding: 0px !important; overflow:hidden;
 }
 
 .instruction span {
