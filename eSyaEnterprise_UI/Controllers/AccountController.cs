@@ -179,7 +179,34 @@ namespace eSyaEnterprise_UI.Controllers
                         AppSessionVariables.SetSessionDoctorID(HttpContext, serviceResponse.Data.DoctorID ?? 0);
                         AppSessionVariables.SetSessionUserType(HttpContext, serviceResponse.Data.UserType);
 
-                        LocationConfirmation(model);
+                    //
+
+                    var l_b = serviceResponse.Data.l_BusinessKey
+                                                   .Select(b => new SelectListItem
+                                                   {
+                                                       Value = b.Key.ToString(),
+                                                       Text = b.Value,
+                                                       Selected = serviceResponse.Data.l_BusinessKey.Count() == 1
+
+                                                   }).ToList();
+
+                    var l_f = serviceResponse.Data.l_FinancialYear
+                                                   .Select(b => new SelectListItem
+                                                   {
+                                                       Value = b.ToString(),
+                                                       Text = b.ToString(),
+                                                       Selected = b == serviceResponse.Data.l_FinancialYear.FirstOrDefault()
+                                                   }).ToList();
+
+                    TempData.Set("l_BusinessKey", l_b);
+                    TempData.Set("l_FinancialYear", l_f);
+
+                    AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
+                    AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
+                    //
+
+
+                    LocationConfirmation(model);
                         return Json(new { success = true, redirectUrl = "/Home/Index" });
                    // return RedirectToAction("Index", "Home");
                 }
