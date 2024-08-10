@@ -1,20 +1,17 @@
 ﻿var accountName = '';
-var prevSelectedID = '';
 $(document).ready(function () {
-    var v_natureG = $("#cboNatureG");
-     
-    var v_group = $("#txtdesc");
+    var v_natureG = $("#natureG");
+    var v_add = $("#btnAdd");
+    var v_group = $("#txtGroup");
     var v_del = $("#btnDel");
     var v_moveUp = $("#btnUp");
     var v_moveDown = $("#btnDown");
-    var v_btnEditNode = $("#btnSaveAccountGroup");
+    var v_btnEditNode = $("#btnEditNode");
     var v_txtdesc = $("#txtdesc");
-    var v_accountTree = $("#jstAccountGroup");
-    var v_btnCancel = $("#btnCancelAccountGroup");
-    var v_AddGroup = $("#btnAddAccountGroup");
+    var v_accountTree = $("#accountTree");
     //var v_natureGA = $("#natureGA");
 
-    var obj = {};
+    var acc = {};
     var accUpdate = {};
     var treeObj = {};
     var accid = '';
@@ -25,28 +22,27 @@ $(document).ready(function () {
     ajaxCallingTree();
     $("#bookTypeDiv").hide();
     $('#prca').change(fnBookType);
-    $("#divAccountGroup").hide();
-   
-     
+    v_add.on('click', toAdd);
+    v_del.on('click', toDelete);
     v_moveUp.on('click', toMove);
     v_moveDown.on('click', toMove);
     v_btnEditNode.on('click', toEdit);
-    v_btnCancel.on('click', fnCloseForm);
-    v_AddGroup.on('click', fnToAdd);
 
     function ajaxCallingTree() {
         $.ajax({
-            url: getBaseURL() + '/AccountGroup/GetAccountGroupsforTreeview',
+            // url: getBaseURL() + '/AccountGroupDefine/AccountTreeRead',
+           url:'',
             type: 'post',
             datatype: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 treeObj = result;
+                //console.log(treeObj);
                 callingTree();
 
             },
             error: function (error) {
-                fnAlert("e", "", error.StatusCode, error.Message);
+                alertError(error.message)
             }
         });
     }
@@ -62,132 +58,164 @@ $(document).ready(function () {
         v_accountTree.on("changed.jstree", function (e, data) {
             console.log(data.node);
             if (data.node != undefined) {
-                debugger;
-              
-                    $('#View').remove();
-                    $('#Edit').remove();
-                    $('#Add').remove();
-                    prevClick = data.node.id;
+                v_add.prop('disabled', false);
+                v_del.prop('disabled', false);
 
-                    
-                    if (data.node.id == "s") {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
-                
-                        $('#Add').on('click', function () {
-                            $(".mdl-card__title-text").text(localization.AddAccountGroup);
-                            $("#btnSaveAccountGroup").html('<i class="fa fa-save"></i> ' + localization.Save);
-                            $("#btnSaveAccountGroup").attr("disabled", _userFormRole.IsInsert === false);
-                            $("#divAccountGroup").show();
-                            $("#btnSaveAccountGroup").show();
+                prevClick = data.node.id;
 
-                            $("#chkActiveStatus").parent().addClass("is-checked");
-                            $("#chkActiveStatus").attr("disabled", true);
+                if (data.node.id == "s") {
+                    v_natureG.prop('disabled', false).selectpicker('refresh');
+                    v_del.prop('disabled', true);
+                    v_moveDown.prop('disabled', true);
+                    v_moveUp.prop('disabled', true);
+                    $("#DivSAGD").css({ 'visibility': 'hidden' });
 
-                            $("#chkIsIntegrateFA").attr("disabled", false);
-                            $("#cboNatureG").attr("disabled", false);
-                            $("#txtdesc").attr("disabled", false);
-                            $("#txtBookTypeDescription").attr("disabled", false);
+                    accid = '';
+                    accountName = '';
+                }
+                else {
 
-                        });
-                        v_natureG.prop('disabled', false).selectpicker('refresh');
+
+                    accountName = data.node.text;
+                    accid = data.node.id,
+                        getExtraData(accid);
+                    $("#DivSAGD").css({ 'visibility': 'visible' });
+                    if ($("#prca").is(":checked")) {
+                        $("#bookTypeDiv").show().css({ 'visibility': '' });
+                    }
+                    else {
+                        $("#bookTypeDiv").hide();
+                    }
+
+                    v_moveDown.prop('disabled', false);
+                    v_moveUp.prop('disabled', false);
+                    v_del.prop('disabled', false);
+                    v_natureG.prop('disabled', true);
+                    v_natureG.val(data.node.id.substring(0, 1));
+                    v_natureG.selectpicker('refresh');
+                    console.log(data.node.id.substring(0, 1));
+
+                    groupIndex = data.node.original.GroupIndex;
+                    presentParent = data.node.parent;
+                    var presentChildren = v_accountTree.jstree().get_node(presentParent).children;
+                    var getArray = new Array();
+
+                    for (var i = 0; i < presentChildren.length; i++) {
+
+                        getArray.push(v_accountTree.jstree().get_node(presentChildren[i]).original.GroupIndex);
+                    }
+
+                    if (data.node.original.GroupIndex == Math.max.apply(Math, getArray)) {
 
                         v_moveDown.prop('disabled', true);
-                        v_moveUp.prop('disabled', true);
-
-
-                        accid = '';
-                        accountName = '';
                     }
-                  
-                    //.startsWith('Sat', 3)
-                    // else if (data.node.id.startsWith('A') == true) {
-                    else if ((data.node.id.startsWith('A') == true) || (data.node.id.startsWith('L') == true) || (data.node.id.startsWith('E') == true) || (data.node.id.startsWith('I') == true)) {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>');
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>');
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>');
 
-                        $('#Edit').on('click', function () {
-                            if (_userFormRole.IsEdit === false) {
-                                $('#divAccountGroup').hide();
-                                fnAlert("w", "EAC_03_00", "UIC02", errorMsg.editauth_E2);
-                                return;
-                            }
-                            $(".mdl-card__title-text").text(localization.EditAccountGroup);
-                            $("#btnSaveAccountGroup").html('<i class="fa fa-save"></i> ' + localization.Save);
-                            $("#btnSaveAccountGroup").attr("disabled", _userFormRole.IsEdit === false);
-                            $("#divAccountGroup").show();
-                            $("#btnSaveAccountGroup").show();
+                    if (data.node.original.GroupIndex == Math.min.apply(Math, getArray)) {
 
-                            $("#chkActiveStatus").parent().addClass("is-checked");
-                            $("#chkActiveStatus").attr("disabled", true);
-
-                            $("#chkIsIntegrateFA").attr("disabled", false);
-                            $("#cboNatureG").attr("disabled", false);
-                            $("#txtdesc").attr("disabled", false);
-                            $("#txtBookTypeDescription").attr("disabled", false);
-                        });
-
-                        $('#View').on('click', function () {
-                            if (_userFormRole.IsView === false) {
-                                $('#divAccountGroup').hide();
-                                fnAlert("w", "EAC_03_00", "UIC03", errorMsg.vieweauth_E3);
-                                return;
-                            }
-                            $(".mdl-card__title-text").text(localization.EditAccountGroup);
-
-                            $("#divAccountGroup").show();
-                            $("#btnSaveAccountGroup").hide();
-
-                            $("#chkActiveStatus").parent().addClass("is-checked");
-                            $("#chkActiveStatus").attr("disabled", true);
-
-                            $("#chkIsIntegrateFA").attr("disabled", true);
-                            $("#cboNatureG").attr("disabled", true);
-                            $("#txtdesc").attr("disabled", true);
-
-                        });
-                        accountName = data.node.text;
-                        accid = data.node.id;
-                            //getExtraData(accid);
-
-                        if ($("#prca").is(":checked")) {
-                            $("#bookTypeDiv").show();
-                        }
-                        else {
-                            $("#bookTypeDiv").hide();
-                        }
-
-                        v_moveDown.prop('disabled', false);
-                        v_moveUp.prop('disabled', false);
-
-                        v_natureG.prop('disabled', true);
-                        v_natureG.val(data.node.id.substring(0, 1));
-                        v_natureG.selectpicker('refresh');
-                        console.log(data.node.id.substring(0, 1));
-
-                        groupIndex = data.node.original.GroupIndex;
-                        presentParent = data.node.parent;
-                        var presentChildren = v_accountTree.jstree().get_node(presentParent).children;
-                        var getArray = new Array();
-
-                        for (var i = 0; i < presentChildren.length; i++) {
-
-                            getArray.push(v_accountTree.jstree().get_node(presentChildren[i]).original.GroupIndex);
-                        }
-
-                        if (data.node.original.GroupIndex == Math.max.apply(Math, getArray)) {
-
-                            v_moveDown.prop('disabled', true);
-                        }
-
-                        if (data.node.original.GroupIndex == Math.min.apply(Math, getArray)) {
-
-                            v_moveUp.prop('disabled', true);
-                        }
+                        v_moveUp.prop('disabled', true);
                     }
                 }
-            
+            }
+
         });
+    }
+
+    function toAdd() {
+        if (v_group.val() != '' && v_natureG.val() != '') {
+
+            if (accid == '') {
+                acc.ParentID = v_natureG.val();
+            }
+            else {
+                acc.ParentID = accid;
+            }
+            acc.GroupDesc = v_group.val();
+            acc.NatureofGroup = v_natureG.val();
+
+            $.ajax({
+                //url: getBaseURL() + '/AccountGroupDefine/CreateAccountGroup',
+                url:'',
+                type: 'post',
+                datattype: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    acc: acc
+                }),
+                success: function () {
+                    alertSuccess('Created group ' + acc.GroupDesc)
+                    v_group.val('')
+                    v_accountTree.jstree("destroy");
+                    ajaxCallingTree();
+
+                    v_natureG.prop('disabled', false).selectpicker('refresh');
+                    v_del.prop('disabled', true);
+                    v_moveDown.prop('disabled', true);
+                    v_moveUp.prop('disabled', true);
+                    $("#DivSAGD").css({ 'visibility': 'hidden' });
+
+                    accid = '';
+                    accountName = '';
+                },
+                error: function (err) {
+                    alertError(err.message)
+                }
+            });
+        }
+        else {
+            if (v_group.val() == '') {
+                v_group.attr('placeholder', "Cannot be empty").focus();
+            }
+            else {
+                alertError("Select Group");
+            }
+        }
+    }
+
+    function toDelete() {
+        var selectedNode = $('#accountTree').jstree().get_selected(true);
+        selectedNode = selectedNode[0];
+
+        if (selectedNode != undefined) {
+            if (selectedNode.children.length > 0) {
+                alertError('Please delete child nodes first.')
+            }
+            else {
+                if (confirm('Do you want to delete ' + accountName + ' account group?')) {
+                    $.ajax({
+                        //url: getBaseURL() + '/AccountGroupDefine/AccountGroupDelete',
+                        url:'',
+                        type: 'post',
+                        datattype: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            id: accid
+                        }),
+                        success: function (response) {
+                            if (response == true) {
+                                alertSuccess('Deleted ' + accountName + ' account group')
+                                v_accountTree.jstree("destroy");
+                                ajaxCallingTree();
+
+                                v_natureG.prop('disabled', false).selectpicker('refresh');
+                                v_del.prop('disabled', true);
+                                v_moveDown.prop('disabled', true);
+                                v_moveUp.prop('disabled', true);
+                                $("#DivSAGD").css({ 'visibility': 'hidden' });
+
+                                accid = '';
+                                accountName = '';
+                            }
+                            else {
+                                alertError("Sub Group / Account group exists.");
+                            }
+                        },
+                        error: function (err) {
+                            alertError(err.message)
+                        }
+                    });
+                }
+            }
+        }
     }
 
     function toMove() {
@@ -199,8 +227,8 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            // url: getBaseURL() + '/AccountGroupDefine/AccountGroupMoveUpDown',
-            url: '',
+            //url: getBaseURL() + '/AccountGroupDefine/AccountGroupMoveUpDown',
+            url:'',
             type: 'post',
             datattype: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -215,8 +243,8 @@ $(document).ready(function () {
                 ajaxCallingTree();
                 commonAll();
             },
-            error: function (error) {
-                fnAlert("e", "", error.StatusCode, error.statusText);
+            error: function (err) {
+                alertError(err.message)
             }
         });
     }
@@ -224,8 +252,7 @@ $(document).ready(function () {
     function getExtraData(idVal) {
         console.log(idVal, "dsfasdf");
         $.ajax({
-            //url: getBaseURL() + '/AccountGroupDefine/getExtraData',
-            url: '',
+            url: getBaseURL() + '/AccountGroupDefine/getExtraData',
             type: 'post',
             datatype: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -235,7 +262,7 @@ $(document).ready(function () {
             success: function (result) {
 
                 v_txtdesc.val(result.GroupDesc);
-                $("#cboBookType").val(result.BookType).selectpicker('refresh');
+                $("#bookType").val(result.BookType).selectpicker('refresh');
                 $("#prgl").prop("checked", result.PR_GeneralLedger);
                 $("#prca").prop("checked", result.PR_ControlAccount).trigger('change');
                 $("#jgl").prop("checked", result.J_GeneralLedger);
@@ -250,64 +277,18 @@ $(document).ready(function () {
 
             },
             error: function (error) {
-                fnAlert("e", "", error.StatusCode, error.statusText);
+                alertError(error.message)
             }
         });
     }
-    function fnToAdd() {
-        debugger;
-        if (v_group.val() != '' && v_natureG.val() != '') {
 
-            if (accid == '') {
-                obj.ParentId = v_natureG.val();
-            }
-            else {
-                obj.ParentId = accid;
-            }
-            obj.GroupDesc = v_group.val();
-            obj.NatureOfGroup = v_natureG.val();
-
-            $.ajax({
-                url: getBaseURL() + '/AccountGroup/InsertIntoAccountGroup',
-                type: 'post',
-                datattype: 'json',
-                data: { obj },
-                success: function () {
-                    fnAlert("s", "", "", 'Created group ' + obj.GroupDesc)
-                    v_group.val('')
-                    v_accountTree.jstree("destroy");
-                    ajaxCallingTree();
-                    fnTreeSize("#jstAccountGroup");
-                    v_natureG.prop('disabled', false).selectpicker('refresh');
-                    v_del.prop('disabled', true);
-                    v_moveDown.prop('disabled', true);
-                    v_moveUp.prop('disabled', true);
-                    $("#DivSAGD").css({ 'visibility': 'hidden' });
-
-                    accid = '';
-                    accountName = '';
-                },
-                error: function (error) {
-                    fnAlert("e", "", error.StatusCode, error.statusText);
-                }
-            });
-        }
-        else {
-            if (v_group.val() == '') {
-                v_group.attr('placeholder', "Cannot be empty").focus();
-            }
-            else {
-                fnAlert("e", "","", "Select Group");
-            }
-        }
-    }
     function toEdit() {
 
         if (v_txtdesc.val() != '') {
             accUpdate = {
                 GroupDesc: v_txtdesc.val(),
                 GroupCode: accid,
-                BookType: $("#cboBookType").val(),
+                BookType: $("#bookType").val(),
                 PR_GeneralLedger: $("#prgl").is(":checked"),
                 PR_ControlAccount: $("#prca").is(":checked"),
                 J_GeneralLedger: $("#jgl").is(":checked"),
@@ -322,31 +303,31 @@ $(document).ready(function () {
             };
 
             $.ajax({
-                // url: getBaseURL() + '/AccountGroupDefine/UpdateAccountGroup',
-                url: '',
+                //url: getBaseURL() + '/AccountGroupDefine/UpdateAccountGroup',
+                url:'',
                 type: 'post',
                 datatype: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({
-                    obj: accUpdate
+                    acc: accUpdate
                 }),
                 success: function (result) {
-                    fnAlert("s", "", "", 'Updated ' + accountName + ' account group');
+                    alertSuccess('Updated ' + accountName + ' account group')
                     v_accountTree.jstree("destroy");
                     ajaxCallingTree();
                     commonAll();
 
                     v_natureG.prop('disabled', false).selectpicker('refresh');
-                    
+                    v_del.prop('disabled', true);
                     v_moveDown.prop('disabled', true);
                     v_moveUp.prop('disabled', true);
-                    $("#divAccountGroup").hide();
-                    fnTreeSize("#jstAccountGroup");
+                    $("#DivSAGD").css({ 'visibility': 'hidden' });
+
                     accid = '';
                     accountName = '';
                 },
                 error: function (error) {
-                    fnAlert("e", "", error.StatusCode, error.statusText);
+                    alertError(error.message)
                 }
             });
         }
@@ -356,78 +337,29 @@ $(document).ready(function () {
     }
 
     function commonAll() {
+        v_add.prop('disabled', true);
+        v_del.prop('disabled', true);
         v_moveDown.prop('disabled', true);
         v_moveUp.prop('disabled', true);
     }
 });
 
-function fnToDelete() {
-    var selectedNode = $('#jstAccountGroup').jstree().get_selected(true);
-    selectedNode = selectedNode[0];
-
-    if (selectedNode != undefined) {
-        if (selectedNode.children.length > 0) {
-            fnAlert("w","","","Please delete child nodes first.");
-        }
-        else {
-            if (confirm('Do you want to delete ' + accountName + ' account group?')) {
-                $.ajax({
-                    url: getBaseURL() + '/AccountGroupDefine/AccountGroupDelete',
-                    type: 'post',
-                    datattype: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify({
-                        id: accid
-                    }),
-                    success: function (response) {
-                        if (response == true) {
-                            fnAlert("s", "", "", 'Deleted ' + accountName + ' account group');
-                            v_accountTree.jstree("destroy");
-                            ajaxCallingTree();
-
-                            v_natureG.prop('disabled', false).selectpicker('refresh');
-                            v_del.prop('disabled', true);
-                            v_moveDown.prop('disabled', true);
-                            v_moveUp.prop('disabled', true);
-                            $("#divAccountGroup").hide();
-
-                            accid = '';
-                            accountName = '';
-                        }
-                        else {
-                            fnAlert("e", "", response.StatusCode, response.statusText);
-                        }
-                    },
-                    error: function (error) {
-                        fnAlert("e", "", error.StatusCode, error.statusText); 
-                    }
-                });
-            }
-        }
-    }
-}
 function open_All() {
-    $("#jstAccountGroup").jstree('open_all');
+    $("#accountTree").jstree('open_all');
 }
 
 function close_All() {
-    $("#jstAccountGroup").jstree('close_all');
+    $("#accountTree").jstree('close_all');
 }
 
 function fnBookType() {
     if ($("#prca").is(":checked")) {
-        $("#bookTypeDiv").show();
+        $("#bookTypeDiv").show().css({ 'visibility': '' });
         $('#sca,#pca,#cnca,#dnca').prop('checked', false).prop('disabled', true);
     }
     else {
         $("#bookTypeDiv").hide();
-        $("#cboBookType").val('');
+        $("#bookType").val('');
         $('#sca,#pca,#cnca,#dnca').prop('disabled', false);
     }
-}
-
-function fnCloseForm() {
-    $("#divAccountGroup").hide();
-   
-    ajaxCallingTree();
 }

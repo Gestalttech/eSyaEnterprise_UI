@@ -35,9 +35,147 @@
     <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/configfinance/AccountGroups.js"></script>
 }
+<div>
+    <div class="col-md-4 col-sm-4 col-lg-4 padleft0" id="leftDivAGD">
+        <div id="accountTree"></div>
+    </div>
+
+    <div class="col-md-8 col-sm-8 col-lg-8 padright0" id="rightDivAGD">
+        <div class="row">
+
+            <div class="col-lg-9 col-md-9 col-sm-9" id="DivSAGD">
+                <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth">
+                    <div class="mdl-card__title mdl-card--expand padleft0 d-block">
+                        <h5 class="mdl-card__title-text"> @Localizer["BookTypes"] </h5>
+                    </div>
+                    <div class="mdl-card__supporting-text fullwidth">
+                        <div class="row padbot4 marleftright0">
+                            <div class="col-sm-8 col-md-8 col-lg-8 padall0">
+                                <label style="padding-left:0px">Description </label>
+                                <input type="text" class="form-control" id="txtdesc" />
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4" id="bookTypeDiv">
+                                <label class="labelfull">Book Type: </label>
+                                <select class="form-control selectpicker" data-live-search="true" id="bookType" title="Choose Book Type">
+                                    <option value="B">Bank</option>
+                                    <option value="C">Cash</option>
+                                </select>
+
+                            </div>
+
+                        </div>
 
 
-<div class="row">
+
+                        <div id="extrasel">
+                            <div class="table-responsive" id="chkSel">
+                                <table class="table">
+                                    <thead><tr><th></th><th><p class="bold">Is Control Account</p></th><th><p class="bold" style="text-align:center;margin-bottom:5px !important;">Is General Ledger</p></th></tr></thead>
+                                    <tbody>
+                                        @*<tr><td></td><td><p align="center">Control Account</p></td><td><p align="center">General Ledger</p></td></tr>*@
+                                        <tr><td><p class="m-0">Payment / Receipt</p></td><td align="center"><input type="checkbox" id="prca" onclick="fnBookType()"></td><td align="center"><input type="checkbox" id="prgl"></td></tr>
+                                        <tr><td><p class="m-0">Sales</p></td><td align="center"><input type="checkbox" id="sca"> </td><td align="center"><input type="checkbox" id="sgl"></td></tr>
+                                        <tr><td><p class="m-0">Purchase</p></td><td align="center"><input type="checkbox" id="pca"></td><td align="center"><input type="checkbox" id="pgl"></td></tr>
+                                        <tr><td><p class="m-0">Credit Note</p></td><td align="center"><input type="checkbox" id="cnca"></td><td align="center"><input type="checkbox" id="cngl"></td></tr>
+                                        <tr><td><p class="m-0">Debit Note</p></td><td align="center"><input type="checkbox" id="dnca"></td><td align="center"><input type="checkbox" id="dngl"></td></tr>
+                                        <tr><td><p class="m-0">Journal</p></td><td align="center"><input type="checkbox" id="dnca" disabled="disabled"> </td><td align="center"><input type="checkbox" id="jgl"></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row padbot4">
+                            <div class="col-md-12 col-sm-12 col-lg-12" align="center">
+                                
+                                <button type="button" class="btn btn-primary mr-1" id="btnEditNode"><i class="fa fa-save"></i> Save</button>
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="card treeaction">
+                    <div class="card-header">
+                        <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
+                    </div>
+                    <div class="panel-body addgrp" style="padding:8px;">
+                        <div class="row" style="
+     margin-left:0px; margin-right:0px;">
+                            <div class="col-sm-12 col-lg-12" style="margin-bottom:8px; padding:0px; ">
+                                <input type="text" class="form-control" id="txtGroup" required style="margin-bottom:8px;" />
+                                <select class="form-control selectpicker" data-live-search="true" id="natureG" title="Choose Group">
+                                    <option value="A">Assets</option>
+                                    <option value="L">Liabilities</option>
+                                    <option value="E">Expenses</option>
+                                    <option value="I">Incomes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" id="btnAdd" disabled="disabled" style="width:100%; text-align:justify"><i class="fa fa-plus"></i>  Add group</button>
+                            </li>
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" id="btnDel" disabled="disabled" style="width: 100%; text-align: justify"><i class="fa fa-trash"></i>  Delete group</button>
+                            </li>
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" id="btnUp" disabled="disabled" style="width: 100%; text-align: justify"> <i class="glyphicon glyphicon-arrow-up"></i> Move Up</button>
+                            </li>
+
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" id="btnDown" disabled="disabled" style="width: 100%; text-align: justify"> <i class="glyphicon glyphicon-arrow-down"></i> Move Down</button>
+                            </li>
+
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" id="openAll" onclick="open_All()" style="width: 100%; text-align: justify"><i class="fa fa-expand"></i> Expand All</button>
+                            </li>
+                            <li class="list-group-item">
+                                <button class="btn btn-primary mdl-button" onclick="close_All()" style="width: 100%; text-align: justify"><i class="fa fa-compress"></i> Collapse All</button>
+                            </li>
+                        </ul>
+
+                      @*   <div class="row">
+
+                            <div class="col-sm-12 col-md-12" style=" margin-bottom:8px;">
+                                <button class="btn btn-primary" id="btnAdd" disabled="disabled" style="width:100%; text-align:justify"><i class="glyphicon glyphicon-plus"></i>  Add group</button>
+                            </div>
+
+                            <div class="col-sm-12 col-md-12" style=" margin-bottom: 8px;">
+                                <button class="btn btn-primary" id="btnDel" disabled="disabled" style="width: 100%; text-align: justify"><i class="glyphicon glyphicon-remove"></i>  Delete group</button>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-md-12" style="margin-bottom:8px;">
+                                <button class="btn btn-primary" id="btnUp" disabled="disabled" style="width: 100%; text-align: justify"> <i class="glyphicon glyphicon-arrow-up"></i> Move Up</button>
+                            </div>
+                            <div class="col-sm-12 col-md-12" style="margin-bottom:8px;">
+                                <button class="btn btn-primary" id="btnDown" disabled="disabled" style="width: 100%; text-align: justify"> <i class="glyphicon glyphicon-arrow-down"></i> Move Down</button>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12" style="margin-bottom:8px;">
+                                <button class="btn btn-primary" id="openAll" onclick="open_All()" style="width: 100%; text-align: justify"><i class="fa fa-expand"></i> Expand All</button>
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                                <button class="btn btn-primary" onclick="close_All()" style="width: 100%; text-align: justify"><i class="fa fa-compress"></i> Collapse All</button>
+                            </div>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+</div>
+   @* modified *@
+<div class="row" hidden>
     <div class="col-lg-4 col-md-4 col-sm-4 col-12">
         <div id="jstAccountGroup"></div>
     </div>
@@ -159,7 +297,15 @@
         </div>
 <script type="text/javascript">
     
-   // $(window).resize(function () { location.reload(); });
+    $(window).resize(function () { location.reload(); });
 
-    //$(document).ready(function () { var fullh = $(window).outerHeight(true); var halfh = fullh - 145; $("#accountTree").css('height', halfh); });
+    $(document).ready(function () { var fullh = $(window).outerHeight(true); var halfh = fullh - 145; $("#accountTree").css('height', halfh); });
 </script>
+
+
+
+
+@* @model G.Finance.Model.DO_DefineAccountGroup *@
+ 
+ 
+
