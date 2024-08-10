@@ -236,11 +236,11 @@ namespace eSyaEnterprise_UI.Areas.ConfigFin.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> AccountGroupMoveUpDown(string GroupCode, string ParentID, short GroupIndex, bool moveUp)
+        public async Task<ActionResult> AccountGroupMoveUpDown(string GroupCode, string ParentId, short GroupIndex, bool moveUp)
         {
             try
             {
-                var parameter = "?GroupCode=" + GroupCode + "&ParentID=" + ParentID + "&GroupIndex=" + GroupIndex + "&moveUp=" + moveUp;
+                var parameter = "?GroupCode=" + GroupCode + "&ParentID=" + ParentId + "&GroupIndex=" + GroupIndex + "&moveUp=" + moveUp;
                 var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("AccountGroup/AccountGroupMoveUpDown" + parameter);
                 if (serviceResponse.Status)
                 {

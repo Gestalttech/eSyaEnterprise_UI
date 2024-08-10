@@ -30,8 +30,8 @@ $(document).ready(function () {
 
     function ajaxCallingTree() {
         $.ajax({
-            // url: getBaseURL() + '/AccountGroupDefine/AccountTreeRead',
-           url:'',
+            url: getBaseURL() + '/AccountGroup/GetAccountGroupsforTreeview',
+           
             type: 'post',
             datatype: 'json',
             contentType: 'application/json; charset=utf-8',
@@ -42,7 +42,8 @@ $(document).ready(function () {
 
             },
             error: function (error) {
-                alertError(error.message)
+               /* alertError(error.message);*/
+                fnAlert("e","","",error.message);
             }
         });
     }
@@ -119,30 +120,30 @@ $(document).ready(function () {
 
         });
     }
-
     function toAdd() {
+       
         if (v_group.val() != '' && v_natureG.val() != '') {
 
             if (accid == '') {
-                acc.ParentID = v_natureG.val();
+                acc.ParentId = v_natureG.val();
             }
             else {
-                acc.ParentID = accid;
+                acc.ParentId = accid;
             }
             acc.GroupDesc = v_group.val();
-            acc.NatureofGroup = v_natureG.val();
+            acc.NatureOfGroup = v_natureG.val();
 
             $.ajax({
-                //url: getBaseURL() + '/AccountGroupDefine/CreateAccountGroup',
-                url:'',
+                url: getBaseURL() + '/AccountGroup/InsertIntoAccountGroup',
                 type: 'post',
-                datattype: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({
-                    acc: acc
-                }),
+                datatype: 'json',
+                data: {
+                    obj: acc
+                  
+                },
                 success: function () {
-                    alertSuccess('Created group ' + acc.GroupDesc)
+                   // alertSuccess('Created group ' + acc.GroupDesc);
+                    fnAlert("s", "", "", 'Created group ' + acc.GroupDesc);
                     v_group.val('')
                     v_accountTree.jstree("destroy");
                     ajaxCallingTree();
@@ -157,7 +158,8 @@ $(document).ready(function () {
                     accountName = '';
                 },
                 error: function (err) {
-                    alertError(err.message)
+                    //alertError(err.message);
+                    fnAlert("e", "", "", error.message);
                 }
             });
         }
@@ -166,7 +168,8 @@ $(document).ready(function () {
                 v_group.attr('placeholder', "Cannot be empty").focus();
             }
             else {
-                alertError("Select Group");
+                //alertError("Select Group");
+                fnAlert("e", "", "", "Please select a group");
             }
         }
     }
@@ -177,22 +180,24 @@ $(document).ready(function () {
 
         if (selectedNode != undefined) {
             if (selectedNode.children.length > 0) {
-                alertError('Please delete child nodes first.')
+                //alertError('Please delete child nodes first.');
+                fnAlert("e", "", "", 'Please delete child nodes first.');
+
             }
             else {
                 if (confirm('Do you want to delete ' + accountName + ' account group?')) {
                     $.ajax({
-                        //url: getBaseURL() + '/AccountGroupDefine/AccountGroupDelete',
-                        url:'',
-                        type: 'post',
+                        url: getBaseURL() + '/AccountGroup/DeleteAccountGroup',
+                      
+                        type: 'GET',
                         datattype: 'json',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify({
-                            id: accid
-                        }),
+                        data: {
+                            groupcode: accid
+                        },
                         success: function (response) {
-                            if (response == true) {
-                                alertSuccess('Deleted ' + accountName + ' account group')
+                            if (response.Status) {
+                                //alertSuccess('Deleted ' + accountName + ' account group');
+                                fnAlert("s", "", "", 'Deleted ' + accountName + ' account group');
                                 v_accountTree.jstree("destroy");
                                 ajaxCallingTree();
 
@@ -206,11 +211,13 @@ $(document).ready(function () {
                                 accountName = '';
                             }
                             else {
-                                alertError("Sub Group / Account group exists.");
+                                //alertError("Sub Group / Account group exists.");
+                                fnAlert("e", "", "", response.Message);
                             }
                         },
                         error: function (err) {
-                            alertError(err.message)
+                            //alertError(err.message);
+                            fnAlert("e", "", "", err.message);
                         }
                     });
                 }
@@ -227,92 +234,96 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            //url: getBaseURL() + '/AccountGroupDefine/AccountGroupMoveUpDown',
-            url:'',
-            type: 'post',
+            url: getBaseURL() + '/AccountGroup/AccountGroupMoveUpDown',
+           
+            type: 'GET',
             datattype: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({
+            data: {
                 GroupCode: accid,
-                ParentID: presentParent,
+                ParentId: presentParent,
                 GroupIndex: groupIndex,
                 moveUp: moveUp
-            }),
+            },
             success: function (response) {
                 v_accountTree.jstree("destroy");
                 ajaxCallingTree();
                 commonAll();
             },
             error: function (err) {
-                alertError(err.message)
+                //alertError(err.message);
+                fnAlert("e", "", "", error.message);
             }
         });
     }
 
     function getExtraData(idVal) {
-        console.log(idVal, "dsfasdf");
+       
         $.ajax({
-            url: getBaseURL() + '/AccountGroupDefine/getExtraData',
-            type: 'post',
+            url: getBaseURL() + '/AccountGroup/GetAccountGroupsbyGroupCode',
+            type: 'GET',
             datatype: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({
-                idval: idVal
-            }),
+           
+            data: {
+                groupcode: idVal
+            },
             success: function (result) {
 
                 v_txtdesc.val(result.GroupDesc);
                 $("#bookType").val(result.BookType).selectpicker('refresh');
-                $("#prgl").prop("checked", result.PR_GeneralLedger);
-                $("#prca").prop("checked", result.PR_ControlAccount).trigger('change');
-                $("#jgl").prop("checked", result.J_GeneralLedger);
-                $("#sca").prop("checked", result.S_ControlAccount);
-                $("#sgl").prop("checked", result.S_GeneralLedger);
-                $("#pca").prop("checked", result.P_ControlAccount);
-                $("#pgl").prop("checked", result.P_GeneralLedger);
-                $("#cnca").prop("checked", result.CN_ControlAccount);
-                $("#cngl").prop("checked", result.CN_GeneralLedger);
-                $("#dnca").prop("checked", result.DN_ControlAccount);
-                $("#dngl").prop("checked", result.DN_GeneralLedger);
+                $("#prgl").prop("checked", result.PrGeneralLedger);
+                $("#prca").prop("checked", result.PrControlAccount).trigger('change');
+                $("#jgl").prop("checked", result.JGeneralLedger);
+                $("#sca").prop("checked", result.SControlAccount);
+                $("#sgl").prop("checked", result.SGeneralLedger);
+                $("#pca").prop("checked", result.PControlAccount);
+                $("#pgl").prop("checked", result.PGeneralLedger);
+                $("#cnca").prop("checked", result.CnControlAccount);
+                $("#cngl").prop("checked", result.CnGeneralLedger);
+                $("#dnca").prop("checked", result.DnControlAccount);
+                $("#dngl").prop("checked", result.DnGeneralLedger);
+                $("#jca").prop("checked", result.JControlAccount);
+                $("#iif").prop("checked", result.IsIntegrateFa);
 
             },
             error: function (error) {
-                alertError(error.message)
+                //alertError(error.message);
+                fnAlert("e", "", "", error.message);
             }
         });
     }
 
     function toEdit() {
-
+       
         if (v_txtdesc.val() != '') {
             accUpdate = {
                 GroupDesc: v_txtdesc.val(),
                 GroupCode: accid,
                 BookType: $("#bookType").val(),
-                PR_GeneralLedger: $("#prgl").is(":checked"),
-                PR_ControlAccount: $("#prca").is(":checked"),
-                J_GeneralLedger: $("#jgl").is(":checked"),
-                S_ControlAccount: $("#sca").is(":checked"),
-                S_GeneralLedger: $("#sgl").is(":checked"),
-                P_ControlAccount: $("#pca").is(":checked"),
-                P_GeneralLedger: $("#pgl").is(":checked"),
-                CN_ControlAccount: $("#cnca").is(":checked"),
-                CN_GeneralLedger: $("#cngl").is(":checked"),
-                DN_ControlAccount: $("#dnca").is(":checked"),
-                DN_GeneralLedger: $("#dngl").is(":checked"),
+                PrGeneralLedger: $("#prgl").is(":checked"),
+                PrControlAccount: $("#prca").is(":checked"),
+                JGeneralLedger: $("#jgl").is(":checked"),
+                JControlAccount: $("#jca").is(":checked"),
+                SControlAccount: $("#sca").is(":checked"),
+                SGeneralLedger: $("#sgl").is(":checked"),
+                PControlAccount: $("#pca").is(":checked"),
+                PGeneralLedger: $("#pgl").is(":checked"),
+                CnControlAccount: $("#cnca").is(":checked"),
+                CnGeneralLedger: $("#cngl").is(":checked"),
+                DnControlAccount: $("#dnca").is(":checked"),
+                DnGeneralLedger: $("#dngl").is(":checked"),
+                IsIntegrateFa: $("#iif").is(":checked"),
             };
 
             $.ajax({
-                //url: getBaseURL() + '/AccountGroupDefine/UpdateAccountGroup',
-                url:'',
+                url: getBaseURL() + '/AccountGroup/UpdateAccountGroup',
                 type: 'post',
                 datatype: 'json',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify({
-                    acc: accUpdate
-                }),
+                data: {
+                    obj: accUpdate
+                },
                 success: function (result) {
-                    alertSuccess('Updated ' + accountName + ' account group')
+                    //alertSuccess('Updated ' + accountName + ' account group');
+                    fnAlert("s", "", "", 'Updated ' + accountName + ' account group');
                     v_accountTree.jstree("destroy");
                     ajaxCallingTree();
                     commonAll();
@@ -327,7 +338,8 @@ $(document).ready(function () {
                     accountName = '';
                 },
                 error: function (error) {
-                    alertError(error.message)
+                    //alertError(error.message);
+                    fnAlert("e", "", "", error.message);
                 }
             });
         }

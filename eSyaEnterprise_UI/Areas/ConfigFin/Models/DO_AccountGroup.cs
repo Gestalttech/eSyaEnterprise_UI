@@ -6,12 +6,12 @@
         public string GroupDesc { get; set; } = null!;
         public string ParentId { get; set; } = null!;
         public int GroupIndex { get; set; }
-        public string NatureOfGroup { get; set; } = null!;
+        public string? NatureOfGroup { get; set; } = null!;
         public string? BookType { get; set; } = null!;
         public bool PrGeneralLedger { get; set; }
         public bool PrControlAccount { get; set; }
         public bool JGeneralLedger { get; set; }
-        public bool JControlAccount { get; set; }
+        public bool JControlAccount { get; set; } //add
         public bool SGeneralLedger { get; set; }
         public bool SControlAccount { get; set; }
         public bool PGeneralLedger { get; set; }
