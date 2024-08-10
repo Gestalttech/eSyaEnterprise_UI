@@ -125,6 +125,7 @@ function fnGridVoucherType(BookTypeID) {
         mtype: 'GET',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.VoucherType, localization.VoucherTypeDesc, localization.Active, localization.Actions],
         colModel: [
             { name: "VoucherType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
