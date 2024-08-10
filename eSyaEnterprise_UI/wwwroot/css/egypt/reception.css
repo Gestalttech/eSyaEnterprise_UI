@@ -104,13 +104,28 @@
 
 [id*='btnCall'], [id*='btnLWCall'] {
     background-color: #198754 !important;
-    padding: 5px !important;
+    padding: 12px !important;
+    font-weight:bold;
 }
+   .ui-state-hover .svg-inline--fa, [id*='btnCall']:hover .svg-inline--fa, [id*='btnLWCall']:hover .svg-inline--fa,
+    [id*='btnHold']:hover .svg-inline--fa, [id*='btnRelease']:hover .svg-inline--fa {
+        color: #fff !important;
+    }
+
 [id*='btnHold'] {
     background-color: #dc3545 !important;
-    padding: 5px !important;
+    padding: 12px !important;
+    font-weight: bold;
 }
 [id*='btnRelease'] {
     background-color: #ffc107 !important;
-    padding: 5px !important;
+    padding: 12px !important;
+    font-weight: bold;
 }
+.ui-widget-content button {
+    padding: 12px !important;
+    font-weight:bold;
+    color:#fff;
+}
+
+ 

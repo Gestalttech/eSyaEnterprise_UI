@@ -15,6 +15,7 @@ $(function () {
 function fnDeskNumber_Onchange() {
     fnGridLoadReceptionDetail();
     fnGridLatePatients();
+    fnClearToken();
 }
 function fnLoungeNumber_Onchange() {
     $('#cboDeskNumber').empty();
@@ -159,7 +160,8 @@ function fnGridLoadReceptionDetail() {
 
             },
         });
-
+    fnAddGridSerialNoHeading();
+    fnSetHeightForGrid("#gview_jqgReception .ui-jqgrid-bdiv");
 }
 
 function fnGridLatePatients() {
@@ -208,7 +210,7 @@ function fnGridLatePatients() {
 
             },
         });
-
+    fnAddGridSerialNoHeading(); fnSetHeightForGrid("#gview_jqgLatePatients .ui-jqgrid-bdiv");
 }
 
 function fnCallingToken(QueueTokenKey) {
@@ -221,17 +223,19 @@ function fnCallingToken(QueueTokenKey) {
 
 function fnNextToken() {
 
-    if ($("#cboDeskNumber").val() === "") {
+    
+    if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
-        fnAlert("w", "", "", "Please select a Desk Number");
+        fnAlert("e", "", "", "Please select a Desk Number");
+        fnClearToken();
         return;
     }
-
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
 
     var obj = {
         QueueTokenKey: currentlyServingToken,
-        CallingRoomNumber: $('#cboDeskNumber').val()
+        CallingRoomNumber: $('#cboDeskNumber').val(),
+        LoungeNumber: $('#cboLoungeNumber').val(),
     };
 
     $.ajax({
@@ -242,12 +246,12 @@ function fnNextToken() {
         data: obj,
         async: false,
         success: function (result) {
-
+           
             if (result.Status) {
-                if (!IsStringNullorEmpty(result.QueueTokenKey)) {
+                if (!IsStringNullorEmpty(result.Key)) {
                     //fnAlert("Calling the Token : " + result.QTokenKey, "s");
-                    fnAlert("s", "", "", "Calling the Token : " + result.QueueTokenKey);
-                    $('#lblCurrentlyServingToken').text(result.QTokenKey);
+                    fnAlert("s", "", "", "Calling the Token : " + result.Key);
+                    $('#lblCurrentlyServingToken').text(result.Key);
                     var waitMinutes = 60 * 3;
                     display = document.querySelector('#lblTokenTimer');
                     startTimer(waitMinutes, display);
@@ -282,6 +286,7 @@ function fnRecallToken() {
     if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
+        fnClearToken();
         return;
     }
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
@@ -331,6 +336,7 @@ function fnHoldToken() {
     if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
+        fnClearToken();
         return;
     }
     var currentlyServingToken = $('#lblCurrentlyServingToken').text();
@@ -385,6 +391,7 @@ function fnUpdateTokenStatusToNurseAssessment(QueueTokenKey) {
     if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
+        fnClearToken();
         return;
     }
     if (QueueTokenKey != $('#lblCurrentlyServingToken').text()) {
@@ -496,6 +503,7 @@ function fnUpdateTokenStatusToNurseAssessment_old(QueueTokenKey) {
     if ($("#cboDeskNumber").val() == "0") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("e", "", "", "Please select a Desk Number");
+        fnClearToken();
         return;
     }
     if (QueueTokenKey != $('#lblCurrentlyServingToken').text()) {
@@ -706,7 +714,8 @@ function fnUpdateTokenStatusToCancel(QueueTokenKey) {
     if ($("#cboDeskNumber").val() === "") {
         //fnAlert("Please select a Desk Number", "e");
         fnAlert("w", "", "", "Please select a Desk Number");
-        return false;
+        fnClearToken();
+        return;
     }
     if (QueueTokenKey != $('#lblCurrentlyServingToken').text()) {
         //fnAlert("Please call the patient first", "e");
@@ -770,55 +779,63 @@ function fnUpdateTokenStatusToCancel(QueueTokenKey) {
 }
 
 function fnUpdateTokenToHold(qKey) {
-
-    bootbox.confirm({
-        message: "Do you want to hold this Token " + qKey + " ?",
-        buttons: {
-            confirm: {
-                label: 'Yes',
-                className: 'btn-success'
+    if ($("#cboDeskNumber").val() == "0") {
+        //fnAlert("Please select a Desk Number", "e");
+        fnAlert("w", "", "", "Please select a Desk Number");
+        fnClearToken();
+        return;
+    }
+    else {
+        bootbox.confirm({
+            message: "Do you want to hold this Token " + qKey + " ?",
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
             },
-            cancel: {
-                label: 'No',
-                className: 'btn-danger'
-            }
-        },
-        callback: function (result) {
-            if (result) {
-                var obj = {
-                    QueueTokenKey: qKey,
-                };
+            callback: function (result) {
+                if (result) {
+                    var obj = {
+                        QueueTokenKey: qKey,
+                    };
 
-                $.ajax({
-                    url: getBaseURL() + '/Reception/UpdateReceptionTokenToHold',
-                    type: 'POST',
-                    datatype: 'json',
-                    contenttype: 'application/json; charset=utf-8',
-                    data: obj,
-                    async: false,
-                    success: function (result) {
+                    $.ajax({
+                        url: getBaseURL() + '/Reception/UpdateReceptionTokenToHold',
+                        type: 'POST',
+                        datatype: 'json',
+                        contenttype: 'application/json; charset=utf-8',
+                        data: obj,
+                        async: false,
+                        success: function (result) {
 
-                        if (result.Status) {
-                            //fnAlert("Hold the Token", "s");
-                            fnAlert("s", "", "", "Hold the Token");
-                            jQuery("#jqgReception").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
-                            return true;
-                        }
-                        else {
-                            //fnAlert(result.Message, "e");
-                            fnAlert("e", "", "", result.Message);
+                            if (result.Status) {
+                                //fnAlert("Hold the Token", "s");
+                                fnAlert("s", "", "", "Hold the Token");
+                                jQuery("#jqgReception").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+                                return true;
+                            }
+                            else {
+                                //fnAlert(result.Message, "e");
+                                fnAlert("e", "", "", result.Message);
+                                return false;
+                            }
+                        },
+                        error: function (error) {
+                            // fnAlert(error.statusText, "e");
+                            fnAlert("e", "", "", error.statusText);
                             return false;
                         }
-                    },
-                    error: function (error) {
-                        // fnAlert(error.statusText, "e");
-                        fnAlert("e", "", "", error.statusText);
-                        return false;
-                    }
-                });
+                    });
+                }
             }
-        }
-    });
+        });
+    }
+   
 
 }
 
@@ -966,3 +983,27 @@ var beep = (function () {
 
     };
 })();
+
+
+
+function fnClearToken() {
+    $('#lblCurrentlyServingToken').text(0);
+    clearInterval(myTimer);
+    document.querySelector('#lblTokenTimer').textContent = "00:00";
+}
+
+
+function fnSetHeightForGrid(id) {
+    var _winWidth = $(window).width();
+    var _winHeight = $(window).height();
+    var _gridID = $(id);
+    var offset = _gridID.offset();
+    var _gridIDIDTop = offset.top;
+
+    $(id).css({
+        'max-height': $(window).innerHeight() - _gridIDIDTop - 30,
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden'
+    });
+   
+}

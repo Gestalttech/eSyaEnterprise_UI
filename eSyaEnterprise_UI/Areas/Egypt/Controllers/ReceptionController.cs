@@ -19,7 +19,7 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
             _EgyptAdminAPIServices = EgyptAdminAPIServices;
             _logger = logger;
         }
-        #region Display
+        #region Main screen calling
         [Area("Egypt")]
         //[ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult>  TKM_99_00()
@@ -203,6 +203,37 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }
+        #endregion
+
+        #region Next Buttons related functionality
+        [HttpPost]
+        public async Task<JsonResult> UpdateReceptionToCallingNextToken(DO_Reception obj)
+        {
+            try
+            {
+
+
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.BusinessKey = 11;
+
+                var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Reception/UpdateReceptionToCallingNextToken", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:UpdateReceptionToCallingNextToken:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:UpdateReceptionToCallingNextToken:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
         #endregion
 
         #region Display
