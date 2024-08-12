@@ -158,11 +158,12 @@ $(document).ready(function () {
         }
         else {
             if (v_group.val() == '') {
-                v_group.attr('placeholder', "Cannot be empty").focus();
+                v_group.attr('placeholder', "Cannot be Empty").focus();
+                fnAlert("e", "", "", "Please Enter Description");
             }
             else {
                 //alertError("Select Group");
-                fnAlert("e", "", "", "Please select a group");
+                fnAlert("w", "", "", "Please Select a Group");
             }
         }
     }
@@ -174,7 +175,7 @@ $(document).ready(function () {
         if (selectedNode != undefined) {
             if (selectedNode.children.length > 0) {
                 //alertError('Please delete child nodes first.');
-                fnAlert("e", "", "", 'Please delete child nodes first.');
+                fnAlert("w", "", "", 'Please delete child nodes first.');
 
             }
             else {
@@ -337,7 +338,8 @@ $(document).ready(function () {
             });
         }
         else {
-            v_txtdesc.attr('placeholder', "Cannot be empty").focus();
+            v_txtdesc.attr('placeholder', "Cannot be Empty").focus();
+            fnAlert("w", "", "", "Enter Description");
         }
     }
 
