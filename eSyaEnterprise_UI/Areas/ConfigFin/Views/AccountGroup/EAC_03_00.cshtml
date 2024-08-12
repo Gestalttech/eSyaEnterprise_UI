@@ -36,11 +36,11 @@
     <script src="~/js/configfinance/AccountGroups.js"></script>
 
 <div class="row">
-    <div class="col-md-4 col-sm-4 col-lg-4 padleft0" id="leftDivAGD">
+    <div class="col-md-4 col-sm-4 col-lg-4" id="leftDivAGD">
         <div id="accountTree"></div>
     </div>
 
-    <div class="col-md-8 col-sm-8 col-lg-8 padright0" id="rightDivAGD">
+    <div class="col-md-8 col-sm-8 col-lg-8" id="rightDivAGD">
         <div class="row">
 
             <div class="col-lg-9 col-md-9 col-sm-9" id="DivSAGD">
@@ -73,15 +73,15 @@
                         <div id="extrasel">
                             <div class="table-responsive" id="chkSel">
                                 <table class="table">
-                                    <thead><tr><th></th><th><p class="bold m-0">Is Control Account</p></th><th><p class="bold" style="text-align:center;margin-bottom:5px !important;">Is General Ledger</p></th></tr></thead>
+                                    <thead><tr><th></th><th><p class="bold m-0 text-center">Is Control Account</p></th><th><p class="bold" style="text-align:center;margin-bottom:5px !important;">Is General Ledger</p></th></tr></thead>
                                     <tbody>
                                         @*<tr><td></td><td><p align="center">Control Account</p></td><td><p align="center">General Ledger</p></td></tr>*@
-                                        <tr><td><p class="m-0">Payment / Receipt</p></td><td align="center"><input type="checkbox" id="prca" onclick="fnBookType()"></td><td align="center"><input type="checkbox" id="prgl"></td></tr>
+                                        <tr><td><p class="m-0">Payment / Receipt</p></td><td align="center"><input type="checkbox" id="prca"></td><td align="center"><input type="checkbox" id="prgl"></td></tr>
                                         <tr><td><p class="m-0">Sales</p></td><td align="center"><input type="checkbox" id="sca"> </td><td align="center"><input type="checkbox" id="sgl"></td></tr>
                                         <tr><td><p class="m-0">Purchase</p></td><td align="center"><input type="checkbox" id="pca"></td><td align="center"><input type="checkbox" id="pgl"></td></tr>
                                         <tr><td><p class="m-0">Credit Note</p></td><td align="center"><input type="checkbox" id="cnca"></td><td align="center"><input type="checkbox" id="cngl"></td></tr>
                                         <tr><td><p class="m-0">Debit Note</p></td><td align="center"><input type="checkbox" id="dnca"></td><td align="center"><input type="checkbox" id="dngl"></td></tr>
-                                        <tr><td><p class="m-0">Journal</p></td><td align="center"><input type="checkbox" id="jca" disabled="disabled"> </td><td align="center"><input type="checkbox" id="jgl"></td></tr>
+                                        <tr><td><p class="m-0">Journal</p></td><td align="center"><input type="checkbox" id="jca"> </td><td align="center"><input type="checkbox" id="jgl"></td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -95,8 +95,8 @@
                         <div class="row padbot4">
                             <div class="col-md-12 col-sm-12 col-lg-12" align="center">
                                 
-                                <button type="button" class="btn btn-primary mr-1" id="btnEditNode"><i class="fa fa-save"></i> Update</button>
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</button>
+                                <button type="button" class="btn btn-primary mdl-button me-1" id="btnEditNode"><i class="fa fa-save"></i> Update</button>
+                                <button type="reset" class="btn mdl-button"><i class="fa fa-times"></i> Cancel</button>
                             </div>
                         </div>
                     </div>

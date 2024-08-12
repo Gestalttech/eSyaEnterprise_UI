@@ -205,7 +205,7 @@ function fnAddOrUpdateServiceClass() {
     
 }
 function fnDeleteNode() {
-    debugger;
+   
     if (_userFormRole.IsDelete === false) {
         fnAlert("w", "ECS_05_00", "UIC04", errorMsg.deleteauth_E4);
         return;

@@ -20,8 +20,6 @@ $(document).ready(function () {
     var groupIndex = '';
     var moveUp = false;
     ajaxCallingTree();
-    $("#bookTypeDiv").hide();
-    $('#prca').change(fnBookType);
     v_add.on('click', toAdd);
     v_del.on('click', toDelete);
     v_moveUp.on('click', toMove);
@@ -81,12 +79,7 @@ $(document).ready(function () {
                     accid = data.node.id,
                         getExtraData(accid);
                     $("#DivSAGD").css({ 'visibility': 'visible' });
-                    if ($("#prca").is(":checked")) {
-                        $("#bookTypeDiv").show().css({ 'visibility': '' });
-                    }
-                    else {
-                        $("#bookTypeDiv").hide();
-                    }
+                   
 
                     v_moveDown.prop('disabled', false);
                     v_moveUp.prop('disabled', false);
@@ -364,14 +357,3 @@ function close_All() {
     $("#accountTree").jstree('close_all');
 }
 
-function fnBookType() {
-    if ($("#prca").is(":checked")) {
-        $("#bookTypeDiv").show().css({ 'visibility': '' });
-        $('#sca,#pca,#cnca,#dnca').prop('checked', false).prop('disabled', true);
-    }
-    else {
-        $("#bookTypeDiv").hide();
-        $("#bookType").val('');
-        $('#sca,#pca,#cnca,#dnca').prop('disabled', false);
-    }
-}
