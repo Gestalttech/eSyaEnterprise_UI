@@ -1,5 +1,5 @@
-﻿
-
+﻿var actiontype = "";
+var isUpdate = 0;
 $(function () {
 
     fnGridLoadCOAParameters();
@@ -24,7 +24,7 @@ function fnGridLoadCOAParameters() {
     $('#jqgCOAParameters').jqGrid('GridUnload');
     $("#jqgCOAParameters").jqGrid({
         //url: getBaseURL() + '',
-        url: '',
+        url: getBaseURL() + '/Parameter/GetAccountGLType',
         datatype: 'json',
         mtype: 'Get',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -80,6 +80,7 @@ function fnAddCOAParameters() {
     $("#chkCOAActiveStatus").parent().addClass("is-checked");
     $("#chkCOAActiveStatus").prop('disabled', true);
     $("#btnDeactivateCOAParameters").hide();
+    isUpdate = 0;
 }
 
 function fnEditCOAParameters(actiontype) {
@@ -95,6 +96,7 @@ function fnEditCOAParameters(actiontype) {
         $("#chkCOAActiveStatus").parent().removeClass("is-checked");
     }
     $("#btnSaveCOAParameters").attr('disabled', false);
+    isUpdate = 1;
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
             fnAlert("w", "EAC_04_00", "UIC02", errorMsg.editauth_E2);
@@ -156,8 +158,6 @@ function fnEditCOAParameters(actiontype) {
     }
 }
 
-
-
 function fnClearCOAParameters() {
     $("#txtCOAParametersId").val('');
     $("#txtCOAParametersDesc").val('');
@@ -182,20 +182,25 @@ function fnSaveCOAParameters() {
         return false;
     }
 
-    var coaParamaters = {
-        ParameterId: $("#txtCOAParametersId").val(),
+    var obj = {
+        ParameterID: $("#txtCOAParametersId").val(),
         ParameterDesc: $("#txtCOAParametersDesc").val(),
         UsageStatus: $("#chkCOAUsageStatus").parent().hasClass("is-checked"),
         ActiveStatus: $("#chkCOAActiveStatus").parent().hasClass("is-checked")
     }
+
+    var URL = getBaseURL() + '/Parameter/InsertAccountGLType';
+    if (isUpdate == 1) {
+        URL = getBaseURL() + '/Parameter/UpdateAccountGLType';
+    }
+
     $("#btnSaveCOAParameters").attr('disabled', true);
 
     $.ajax({
-        //url: getBaseURL() + '',
-        url:'',
+        url: URL,
         type: 'POST',
         datatype: 'json',
-        data: { coaParamaters },
+        data: { obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -236,7 +241,7 @@ function fnDeleteParameters() {
     }
     $("#btnDeactivateCOAParameters").attr("disabled", true);
     $.ajax({
-        url: '',
+        url: getBaseURL() + '/Parameter/DeleteAccountGLType?status=' + a_status + '&ParameterID=' + $("#txtCOAParametersId").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
