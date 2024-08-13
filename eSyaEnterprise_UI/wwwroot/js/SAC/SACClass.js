@@ -4,7 +4,7 @@ var _isInsert = false;
 $(function () {
     $('#chkSCActiveStatus').parent().addClass("is-checked");
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
-    // $("#btnDelete").attr("disabled", _userFormRole.IsDelete === false);
+     $("#btnDelete").attr("disabled", _userFormRole.IsDelete === false);
 });
 
 function fnISDCountryCode_onChange() {
@@ -62,6 +62,7 @@ function fnLoadServiceClassTree() {
                             fnAlert("w", "ECS_05_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
+                        fnClearSACClass();
                         _isInsert = true;
                         $("#pnlAddServiceClass .mdl-card__title-text").text(localization.AddServiceClass);
                         $("#txtServiceClassDesc").val('');
@@ -269,4 +270,6 @@ function fnSACLCollapseAll() {
 function fnClearSACClass() {
     $("#txtSACClass").val('');
     $("#txtSACClassDesc").val('');
+    $('#chkSCUsageStatus').parent().removeClass('is-checked');
+    $('#chkSCActiveStatus').parent().removeClass('is-checked');
 }

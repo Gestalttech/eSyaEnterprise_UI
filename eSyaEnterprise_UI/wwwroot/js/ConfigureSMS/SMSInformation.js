@@ -64,10 +64,10 @@ function fnGridLoadSMSEmptyParameter() {
         colNames: [localization.SMSID, localization.SMSDescription, localization.IsVariable, localization.TriggeringEvent, localization.SMSStatement, localization.Active, localization.Actions],
         colModel: [
             { name: "Smsid", width: 70, editable: true, align: 'left' },
-            { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true },
+            { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true }, 
             { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
-            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
+            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 }, hidden: true },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -122,7 +122,7 @@ function fnGridLoadSMSParameter() {
             { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true },
             { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
-            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
+            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 }, hidden: true },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
            {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
