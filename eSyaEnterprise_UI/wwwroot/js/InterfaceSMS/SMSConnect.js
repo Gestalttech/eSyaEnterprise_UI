@@ -6,7 +6,7 @@ $(function () {
         dateFormat: _cnfDateFormat,
     });
     $("#txtEffectiveTillDate").datepicker({
-        minDate: 0,
+        minDate: $("#txtEffectiveFRMDate").val(),
         dateFormat: _cnfDateFormat,
     });
 
@@ -43,7 +43,7 @@ function fnLoadGridSMSConnect() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessLocation, localization.ServiceProvider, localization.ISDCode, localization.Api, localization.UserId, localization.Password, localization.SenderId, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
+        colNames: [localization.BusinessLocation, localization.ServiceProvider, localization.ISDCode, localization.Api, localization.UserId, localization.Password, localization.SenderId, localization.EffectiveFrom, "Effective Till", localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden: true },
             { name: "ServiceProvider", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
@@ -57,7 +57,7 @@ function fnLoadGridSMSConnect() {
                     { newformat: _cnfjqgDateFormat }
             },
             {
-                name: "EffectiveTill", index: 'TillDate', width: 40, hidden: true, sorttype: "date", formatter: "date", formatoptions:
+                name: "EffectiveTill", index: 'TillDate', width: 40, hidden: false, sorttype: "date", formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat }
             },
 
@@ -363,7 +363,10 @@ function fnValidateSMSConnect() {
         fnAlert("w", "EIF_01_00", "UI0070", errorMsg.FromDate_E8);
         return false;
     }
-
+    if (IsStringNullorEmpty($("#txtEffectiveTillDate").val())) {
+        fnAlert("w", "EIF_01_00", "UI0070", "Please Select Effective Till Date");
+        return false;
+    }
 
 
 }
