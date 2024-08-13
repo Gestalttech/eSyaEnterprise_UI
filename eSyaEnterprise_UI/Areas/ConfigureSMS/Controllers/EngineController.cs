@@ -543,5 +543,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
 
         #endregion
 
+        #region Manage SMS Location-wise
+        [Area("ConfigureSMS")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult ESE_04_00()
+        {
+            return View();
+        }
+        #endregion
+
     }
 }
