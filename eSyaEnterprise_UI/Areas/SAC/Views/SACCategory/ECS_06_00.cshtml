@@ -18,10 +18,10 @@
 
 <script>
     var localization = {
-        AddServiceCategory: '@Localizer["AddServiceCategory"]',
+        AddSACCategory: '@Localizer["AddSACCategory"]',
         Save: '@Localizer["Save"]',
-        ViewServiceCategory: '@Localizer["ViewServiceCategory"]',
-        EditServiceCategory: '@Localizer["EditServiceCategory"]',
+        ViewSACCategory: '@Localizer["ViewSACCategory"]',
+        EditSACCategory: '@Localizer["EditSACCategory"]',
         Update: '@Localizer["Update"]',
         Select: '@Localizer["Select"]',
         Consultation: '@Localizer["Consultation"]',
@@ -30,7 +30,8 @@
         Laundry: '@Localizer["Laundry"]',
         Doyouwanttomovenode: '@Localizer["Doyouwanttomovenode"]',
         Doyouwanttodeletenode: '@Localizer["Doyouwanttodeletenode"]',
-        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric10Characters: '@Localizer["OnlyAlphanumeric10Characters"]',
+        OnlyAlphanumeric250Characters: '@Localizer["OnlyAlphanumeric250Characters"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -51,39 +52,47 @@
     <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-9 col-12 form-group">
                 <label>@Localizer["ISDCode"]</label>
-                @await Component.InvokeAsync("IsdCountryInput", new { id = "SACAIsdcode" })
+                @await Component.InvokeAsync("IsdCountryInput", new { id = "SACGIsdcode" })
             </div>
         </div>
 <div class="row">
     <div class="col-md-4 col-lg-4 col-10">
 
-        <div id="jstServiceCategoryTree" class="h50-smallscreen">
+        <div id="jstSACCategoryTree" class="h50-smallscreen">
         </div>
     </div>
      
     <div class="col-lg-6 col-md-6 col-sm-12 f-right div-menuform">
-        <div id="dvServiceCategory" style="display:none;">
+        <div id="dvSACCategory" style="display:none;">
 
-            <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddServiceCategory">
+            <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddSACCategory">
                 <div class="mdl-card__title mdl-card--expand padleft0 padtop0  d-block">
                     <h5 class="mdl-card__title-text">@Localizer["AddServiceCategory"] </h5>
                 </div>
                 <div class="mdl-card__supporting-text fullwidth">
                     <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label>
+                                    @Localizer["SACCategory"]
+                                </label>
+                                <input type="text" maxlength="10" autocomplete="off" class="form-control" id="txtSACCategory" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
+                            </div>
+                        </div>
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="form-group">
                                 <label>
-                                    @Localizer["ServiceCategoryDescription"]
+                                    @Localizer["SACCategoryDescription"]
                                 </label>
-                                <input type="text" maxlength="50" class="form-control" id="txtServiceCategoryDesc" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
+                                <input type="text" maxlength="250" autocomplete="off" class="form-control" id="txtSACCategoryDescription" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
                             </div>
                         </div>
                     </div>
                      
                     <div class="row form-group">
                         <div class="col-lg-12">
-                            <label class="mdl-checkbox mdl-js-checkbox" for="chkActiveStatus">
-                                <input type="checkbox" id="chkActiveStatus"
+                            <label class="mdl-checkbox mdl-js-checkbox" for="chkSACCategoryActiveStatus">
+                                <input type="checkbox" id="chkSACCategoryActiveStatus"
                                        class="mdl-checkbox__input">
                                 <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                             </label>
@@ -92,7 +101,8 @@
                     </div>
                 </div>
                 <div class="mdl-card__actions mdl-card--border text-center">
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSGAdd" onclick="fnAddOrUpdateServiceCategory()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect me-2" id="btnSGAdd" onclick="fnAddOrUpdateSACCategory()"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnSGCancel" onclick="fnClearSACCategory()"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
                 </div>
             </div>
         </div>
@@ -104,7 +114,7 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDelete" onclick="fnSACADeleteNode()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDelete" onclick="fnSACCategoryDeleteNode()">
                      <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
                      </button>
                 </li>

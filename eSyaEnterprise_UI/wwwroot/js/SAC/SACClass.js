@@ -272,4 +272,5 @@ function fnClearSACClass() {
     $("#txtSACClassDesc").val('');
     $('#chkSCUsageStatus').parent().removeClass('is-checked');
     $('#chkSCActiveStatus').parent().removeClass('is-checked');
+    $("#dvSACClass").hide();
 }

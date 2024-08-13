@@ -53,7 +53,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigFin.Controllers
                 jsTreeObject jsObj = new jsTreeObject();
                 jsObj.id = "s";
                 jsObj.parent = "#";
-                jsObj.text = "Account Group";
+                jsObj.text = "Account Groups";
                 jsObj.icon = baseURL + "/images/jsTree/foldergroupicon.png";
                 jsObj.state = new stateObject { opened = true, selected = false };
                 treeView.Add(jsObj);

@@ -1,23 +1,34 @@
-﻿var ServiceCategoryID = "0";
-var ServiceClassID = "0";
+﻿var _SACCategoryID = "0";
+var _SACClassID = "0";
 var prevSelectedID = '';
+var _isInsert = false;
 $(document).ready(function () {
-    fnLoadServiceCategoryTree();
-    $('#chkActiveStatus').parent().addClass("is-checked");
+   
+    $('#chkSACCategoryActiveStatus').parent().addClass("is-checked");
     $("#btnSGAdd").attr("disabled", _userFormRole.IsInsert === false);
+    $("#btnDelete").attr("disabled", _userFormRole.IsDelete == false ? false:true);
+
 });
-function fnLoadServiceCategoryTree() {
+function fnISDCountryCode_onChange() {
+    
+    var _ISDCode = $("#cboSACGIsdcode").val();
+    if (_ISDCode != 0) {
+        fnLoadSACCategoryTree();
+    }
+}
+function fnLoadSACCategoryTree() {
+    $("#jstSACCategoryTree").jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/SAC/GetServiceCategory',
+        url: getBaseURL() + '/SACCategory/GetSACCategories?ISDCode=' + $("#cboSACGIsdcode").val(),
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
-        async: false,
+       
         success: function (result) {
-            $("#jstServiceCategoryTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#jstServiceCategoryTree");
+            $("#jstSACCategoryTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstSACCategoryTree");
             $(window).on('resize', function () {
-                fnTreeSize("#jstServiceCategoryTree");
+                fnTreeSize("#jstSACCategoryTree");
             })
         },
         error: function (error) {
@@ -25,44 +36,48 @@ function fnLoadServiceCategoryTree() {
         }
     });
 
-    $("#jstServiceCategoryTree").on('loaded.jstree', function () {
-        $("#jstServiceCategoryTree").jstree()._open_to(prevSelectedID);
-        $('#jstServiceCategoryTree').jstree().select_node(prevSelectedID);
+    $("#jstSACCategoryTree").on('loaded.jstree', function () {
+        $("#jstSACCategoryTree").jstree()._open_to(prevSelectedID);
+        $('#jstSACCategoryTree').jstree().select_node(prevSelectedID);
     });
-    $('#jstServiceCategoryTree').on("changed.jstree", function (e, data) {
+    $('#jstSACCategoryTree').on("changed.jstree", function (e, data) {
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
                 $('#View').remove();
                 $('#Edit').remove();
                 $('#Add').remove();
-                $("#dvServiceCategory").hide();
-
-                var parentNode = $("#jstServiceCategoryTree").jstree(true).get_parent(data.node.id);
-
+                $("#dvSACCategory").hide();
+                debugger;
+                var parentNode = $("#jstSACCategoryTree").jstree(true).get_parent(data.node.id);
+                _SACClassID = parentNode;
                 // If Parent node is selected
                 if (parentNode == "#") {
-                    $("#dvServiceCategory").hide();
+                    $("#dvSACCategory").hide();
                 }
                 // If Type node is selected
                 else if (parentNode == "SG") {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
-                            $('#dvServiceCategory').hide();
+                            $('#dvSACCategory').hide();
                             fnAlert("w", "ECS_06_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
-                        $("#pnlAddServiceCategory .mdl-card__title-text").text(localization.AddServiceCategory);
-                        $("#txtServiceCategoryDesc").val('');
-                        $('#chkActiveStatus').parent().addClass("is-checked");
+                        $("#pnlAddSACCategory .mdl-card__title-text").text(localization.AddSACCategory);
+                        $("#txtSACCategory").val('');
+                        $("#txtSACCategoryDescription").val('');
+                        $('#chkSACCategoryActiveStatus').parent().addClass("is-checked");
                         $("#btnSGAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSGAdd").show();
-                        ServiceCategoryID = "0";
-                        ServiceClassID = data.node.id;
-                        $("#dvServiceCategory").show();
-                        $("#txtServiceCategoryDesc").prop("disabled", false);
-                        $("#chkActiveStatus").prop("disabled", false);
+                        _SACCategoryID = "0";
+                        _SACClassID = data.node.id;
+                        $("#dvSACCategory").show();
+                        $("#txtSACCategory").attr("disabled", false);
+                        $("#txtSACCategoryDescription").prop("disabled", false);
+                        $("#chkSACCategoryActiveStatus").prop("disabled", false);
+                        _isInsert = true;
                     });
                 }
                 // If Child node is selected
@@ -71,37 +86,40 @@ function fnLoadServiceCategoryTree() {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
-                            $('#dvServiceCategory').hide();
+                            $('#dvSACCategory').hide();
                             fnAlert("w", "ECS_06_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
-                        $("#pnlAddServiceCategory .mdl-card__title-text").text(localization.ViewServiceCategory);
+                        $("#pnlAddSACCategory .mdl-card__title-text").text(localization.ViewSACCategory);
                         $("#btnSGAdd").hide();
-                        ServiceCategoryID = data.node.id;
-                        ServiceCategoryID = ServiceCategoryID.substring(1);
-                        fnFillServiceCategoryDetail(ServiceCategoryID);
-                        $("#dvServiceCategory").show();
-                        $("#txtServiceCategoryDesc").prop("disabled", true);
-                        $("#chkActiveStatus").prop("disabled", true);
-
+                        _SACCategoryID = data.node.id;
+                        _SACCategoryID = _SACCategoryID.substring(1);
+                        fnFillServiceCategoryDetail(_SACCategoryID);
+                        $("#dvSACCategory").show();
+                        $("#txtSACCategory").prop("disabled", true);
+                        $("#txtSACCategoryDescription").prop("disabled", true);
+                        $("#chkSACCategoryActiveStatus").prop("disabled", true);
+                        _isInsert = false;
                     });
 
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
-                            $('#dvServiceCategory').hide();
+                            $('#dvSACCategory').hide();
                             fnAlert("w", "ECS_06_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
-                        $("#pnlAddServiceCategory .mdl-card__title-text").text(localization.EditServiceCategory);
+                        $("#pnlAddSACCategory .mdl-card__title-text").text(localization.EditSACCategory);
                         $("#btnSGAdd").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnSGAdd").show();
-                        ServiceCategoryID = data.node.id;
-                        ServiceCategoryID = ServiceCategoryID.substring(1);
-                        fnFillServiceCategoryDetail(ServiceCategoryID);
-                        $("#dvServiceCategory").show();
-                        $("#txtServiceCategoryDesc").prop("disabled", false);
-                        $("#chkActiveStatus").prop("disabled", false);
+                        _SACCategoryID = data.node.id;
+                        _SACCategoryID = _SACCategoryID.substring(1);
+                        fnFillServiceCategoryDetail(_SACCategoryID);
+                        $("#dvSACCategory").show();
 
+                        $("#txtSACCategory").attr("disabled", true);
+                        $("#txtSACCategoryDescription").prop("disabled", false);
+                        $("#chkSACCategoryActiveStatus").prop("disabled", false);
+                        _isInsert = false;
                     });
 
                 }
@@ -109,97 +127,98 @@ function fnLoadServiceCategoryTree() {
         }
     });
 
-    $('#jstServiceCategoryTree').on("close_node.jstree", function (node) {
+    $('#jstSACCategoryTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#jstServiceCategoryTree').jstree().deselect_node(closingNode.children);
+        $('#jstSACCategoryTree').jstree().deselect_node(closingNode.children);
     });
 
 }
-function fnFillServiceCategoryDetail(ServiceCategoryID) {
+function fnFillServiceCategoryDetail(_SACCategoryID) {
     $.ajax({
-        url: getBaseURL() + '/SAC/GetServiceCategoryByID',
-        data: {
-            ServiceCategoryID: ServiceCategoryID
-        },
+        url: getBaseURL() + '/SACCategory/GetSACCategoryByCategoryID?ISDCode=' + $("#cboSACGIsdcode").val() + '&SACClassID=' + _SACClassID + '&SACCategoryID=' + _SACCategoryID,
         success: function (result) {
-            $("#txtServiceCategoryDesc").val(result.ServiceCategoryDesc);
-            $("#cboservicecriteria").val(result.ServiceCriteria).selectpicker('refresh');
+            $("#txtSACCategory").val(result.Saccategory);
+            $("#txtSACCategoryDescription").val(result.SaccategoryDesc);
+             
             if (result.ActiveStatus == true)
-                $('#chkActiveStatus').parent().addClass("is-checked");
+                $('#chkSACCategoryActiveStatus').parent().addClass("is-checked");
             else
-                $('#chkActiveStatus').parent().removeClass("is-checked");
+                $('#chkSACCategoryActiveStatus').parent().removeClass("is-checked");
         }
     });
 }
-function fnAddOrUpdateServiceCategory() {
-    var txtServiceCategoryDesc = $("#txtServiceCategoryDesc").val()
-    if (txtServiceCategoryDesc == "" || txtServiceCategoryDesc == null || txtServiceCategoryDesc == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", errorMsg.ServiceCategoryDesc_E6);
+function fnAddOrUpdateSACCategory() {
+    var txtSACCategory = $("#txtSACCategory").val()
+    var txtSACCategoryDescription = $("#txtSACCategoryDescription").val()
+
+    if (txtSACCategory == "" || txtSACCategory == null || txtSACCategory == undefined) {
+        fnAlert("w", "ECS_06_00", "UI0366","Please enter SAC category");
+        return false;
+    }
+    if (txtSACCategoryDescription == "" || txtSACCategoryDescription == null || txtSACCategoryDescription == undefined) {
+        fnAlert("w", "ECS_06_00", "UI0366", "Please enter SAC category description");
         return false;
     }
 
-    else {
-        if (ServiceCategoryID == "0") {
-            if (ServiceClassID == "0" || ServiceClassID == null || ServiceClassID == undefined) {
-                fnAlert("w", "ECS_06_00", "UI0332", errorMsg.ServiceClassSelect_E7);
-                return false;
-            }
-        }
+   
         $("#btnSGAdd").attr("disabled", true);
         $.ajax({
-            url: getBaseURL() + '/SAC/AddOrUpdateServiceCategory',
+            url: getBaseURL() + '/SACCategory/InsertOrUpdateSACCategory',
             type: 'POST',
             datatype: 'json',
             data: {
-                Isdcode: $("#cboSACAIsdcode").val(),
-                Sacclass: ServiceClassID,
-                Saccategory: ServiceCategoryID,
-                SaccategoryDesc: $("#txtServiceCategoryDesc").val(),
-                ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+                Isdcode: $("#cboSACGIsdcode").val(),
+                Sacclass: _SACClassID,
+                Saccategory: $("#txtSACCategory").val(), 
+                SaccategoryDesc: $("#txtSACCategoryDescription").val(),
+                ActiveStatus: $("#chkSACCategoryActiveStatus").parent().hasClass("is-checked"),
+                _isInsert: _isInsert
             },
-            async: false,
+           
             success: function (response) {
                 if (response.Status == true) {
-                    if (ServiceCategoryID == 0) {
-                        fnAlert("s", "", response.StatusCode, response.Message);
-                        $("#txtServiceCategoryDesc").val('');
-                        $('#chkActiveStatus').parent().addClass("is-checked");
-                    }
-                    else {
-                        fnAlert("s", "", response.StatusCode, response.Message);
-                    }
-                    $("#jstServiceCategoryTree").jstree("destroy");
-                    fnLoadServiceCategoryTree();
 
+                    fnAlert("s", "", response.StatusCode, response.Message);
+                    $('#dvSACCategory').hide();
+                    $("#txtSACCategory").val('');
+                    $("#txtSACCategoryDescription").val('');
+                    $('#chkSACCategoryActiveStatus').parent().addClass("is-checked");
+                    $("#jstSACCategoryTree").jstree("destroy");
+                    fnLoadSACCategoryTree();
+                    $("#btnSGAdd").attr("disabled", false);
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
                 }
                 $("#btnSGAdd").attr("disabled", false);
             },
+           
             error: function (error) {
                 fnAlert("e", "", error.StatusCode, error.statusText);
                 $("#btnSGAdd").attr("disabled", false);
             }
         });
-    }
+    
 }
 function fnSACAExpandAll() {
-    $("#jstServiceCategoryTree").jstree('open_all');
+    $("#jstSACCategoryTree").jstree('open_all');
 }
 function fnSACACollapseAll() {
-    $("#jstServiceCategoryTree").jstree('close_all');
-    $('#dvServiceCategory').hide();
+    $("#jstSACCategoryTree").jstree('close_all');
+    $('#dvSACCategory').hide();
 }
 
  
-function fnDeleteNode() {
+function fnSACCategoryDeleteNode() {
     if (_userFormRole.IsDelete === false) {
         fnAlert("w", "ECS_06_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
-
-    var selectedNode = $('#jstServiceCategoryTree').jstree().get_selected(true);
+    if ($("#cboSACGIsdcode").val() == 0 || $("#cboSACGIsdcode").val() == '0' || IsStringNullorEmpty($("#cboSACGIsdcode").val())) {
+        fnAlert("w", "ECS_06_00", "UI0119", "Please Select ISD Code");
+        return;
+    }
+    var selectedNode = $('#jstSACCategoryTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECS_06_00", "UI0118", errorMsg.ServiceCategoryDelete_E9);
@@ -212,23 +231,21 @@ function fnDeleteNode() {
             fnAlert("w", "ECS_06_00", "UI0118", errorMsg.ServiceCategoryDelete_E9);
         }
         else {
-            var data = {};
-            data.serviceCategoryId = selectedNode.id.substring(1);
+           
+           var SACCategoryID = selectedNode.id.substring(1);
 
             $("#btnDelete").attr("disabled", true);
             if (confirm(localization.Doyouwanttodeletenode + selectedNode.text + ' ?')) {
 
                 $.ajax({
-                    url: getBaseURL() + '/SAC/DeleteServiceCategory',
+                    url: getBaseURL() + '/SACCategory/DeleteSACCategory?ISDCode=' + $("#cboSACGIsdcode").val() + '&SACClassID=' + _SACClassID + '&SACCategoryID=' + SACCategoryID,
                     type: 'POST',
                     datatype: 'json',
-                    data: data,
-                    async: false,
                     success: function (response) {
-                        if (response.Status === true) {
+                        if (response.Status) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#jstServiceCategoryTree").jstree("destroy");
-                            fnLoadServiceCategoryTree();
+                            $("#jstSACCategoryTree").jstree("destroy");
+                            fnLoadSACCategoryTree();
                         }
                         else {
                             fnAlert("e", "", response.StatusCode, response.Message);
@@ -243,4 +260,10 @@ function fnDeleteNode() {
             }
         }
     }
+}
+function fnClearSACCategory() {
+    $("#txtSACCategory").val('');
+    $("#txtSACCategoryDescription").val('');
+    $('#chkSACCategoryActiveStatus').parent().removeClass('is-checked');
+    $("#dvSACCategory").hide();
 }

@@ -38,7 +38,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             try
             {
                 var parameter = "?ISDCode=" + ISDCode;
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("SACClass/GetSACClasses");
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACClass>>("SACClass/GetSACClasses"+ parameter);
                 var st_list = new List<DO_SACClass>();
                 if (serviceResponse.Status)
                 {
@@ -49,7 +49,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:GetSACCategories:ISDCode");
                 }
 
-                var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("SACCategory/GetSACCategories");
+                var serviceResponse1 = await _eSyaSACAPIServices.HttpClientServices.GetAsync<List<DO_SACCategory>>("SACCategory/GetSACCategories"+ parameter);
                 var sg_list = new List<DO_SACCategory>();
                 if (serviceResponse1.Status)
                 {
@@ -67,7 +67,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 jsTreeObject jsObj = new jsTreeObject();
                 jsObj.id = "SG";
                 jsObj.parent = "#";
-                jsObj.text = "Service Groups";
+                jsObj.text = "SAC Category";
                 jsObj.icon = baseURL + "/images/jsTree/foldergroupicon.png";
                 jsObj.state = new stateObject { opened = true, selected = false };
                 treeView.Add(jsObj);
@@ -104,7 +104,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetServiceGroups");
+                _logger.LogError(ex, "UD:GetSACCategories");
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
 
@@ -147,14 +147,14 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> InsertOrUpdateSACCategory(bool _isInsert, DO_SACClass obj)
+        public async Task<ActionResult> InsertOrUpdateSACCategory(DO_SACCategory obj)
         {
             try
             {
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                if (_isInsert)
+                if (obj._isInsert)
                 {
                     var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCategory/InsertIntoSACCategory", obj);
                     if (serviceResponse.Status)

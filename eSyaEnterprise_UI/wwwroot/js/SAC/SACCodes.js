@@ -1,36 +1,36 @@
-﻿var ServiceCodesID = "0";
+﻿var SACCodesID = "0";
 var ServiceGroupID = "0";
 var CodesParentID = "0";
 var prevSelectedID = '';
 var flag = "f";
 $(document).ready(function () {
-    fnLoadServiceCodesTree();
+    fnLoadSACCodesTree();
     /*  $('#chkBaseRateApplicable').parent().removeClass("is-checked");*/
     $('#chkActiveStatus').parent().addClass("is-checked");
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
 });
 $(window).on('resize', function () {
-    fnTreeSize("#jstServiceCodesTree");
+    fnTreeSize("#jstSACCodesTree");
 })
-function fnLoadServiceCodesTree() {
+function fnLoadSACCodesTree() {
     $.ajax({
-        url: getBaseURL() + '/Services/GetServiceCodeses',
+        url: getBaseURL() + '/SAC/GetSACCodes?ISDCode=' + $("#SACCodesIsdcode").val(),
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#jstServiceCodesTree").jstree({ core: { data: result, multiple: false } });
+            $("#jstSACCodesTree").jstree({ core: { data: result, multiple: false } });
         },
         error: function (error) {
             alert(error.statusText)
         }
     });
-    $("#jstServiceCodesTree").on('loaded.jstree', function () {
-        $("#jstServiceCodesTree").jstree()._open_to(prevSelectedID);
-        $('#jstServiceCodesTree').jstree().select_node(prevSelectedID);
+    $("#jstSACCodesTree").on('loaded.jstree', function () {
+        $("#jstSACCodesTree").jstree()._open_to(prevSelectedID);
+        $('#jstSACCodesTree').jstree().select_node(prevSelectedID);
     });
 
-    $('#jstServiceCodesTree').on("changed.jstree", function (e, data) {
+    $('#jstSACCodesTree').on("changed.jstree", function (e, data) {
 
 
         if (data.node != undefined) {
@@ -39,19 +39,19 @@ function fnLoadServiceCodesTree() {
                 $('#View').remove();
                 $('#Edit').remove();
                 $('#Add').remove();
-                $("#dvServiceCodes").hide();
+                $("#dvSACCodes").hide();
 
 
-                var parentNode = $("#jstServiceCodesTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstSACCodesTree").jstree(true).get_parent(data.node.id);
 
                 // If Root is selected
                 if (parentNode == '#') {
                     ServiceGroupID = "0";
-                    $("#dvServiceCodes").hide();
+                    $("#dvSACCodes").hide();
                 }
                 // If Service Type node is selected
                 else if (parentNode == 'SC') {
-                    $("#dvServiceCodes").hide();
+                    $("#dvSACCodes").hide();
                     ServiceGroupID = "0";
                 }
                 // If Service Group node is selected
@@ -59,19 +59,19 @@ function fnLoadServiceCodesTree() {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i Codes="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
-                            $('#dvServiceCodes').hide();
+                            $('#dvSACCodes').hide();
                             fnAlert("w", "ECS_07_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
 
-                        $("#pnlAddServiceCodes .mdl-card__title-text").text(localization.AddServiceCodes);
-                        $("#txtServiceCodesDesc").val('');
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.AddSACCodes);
+                        $("#txtSACCodesDesc").val('');
                         /*  $('#chkBaseRateApplicable').parent().removeClass("is-checked");*/
                         $('#chkActiveStatus').parent().addClass("is-checked");
                         $("#btnSCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSCAdd").show();
-                        $("#dvServiceCodes").show();
-                        ServiceCodesID = "0";
+                        $("#dvSACCodes").show();
+                        SACCodesID = "0";
                         ServiceGroupID = data.node.id;
                         eSyaParams.ClearValue();
                     });
@@ -83,25 +83,25 @@ function fnLoadServiceCodesTree() {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:5px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i> </span>')
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
-                            $('#dvServiceCodes').hide();
+                            $('#dvSACCodes').hide();
                             fnAlert("w", "ECS_07_00", "UIC01", errorMsg.addauth_E1);
                             return;
                         }
-                        $("#txtServiceCodesDesc").prop("disabled", false);
+                        $("#txtSACCodesDesc").prop("disabled", false);
                         /* $("#chkBaseRateApplicable").prop("disabled", false);*/
                         $("#chkActiveStatus").prop("disabled", false);
                         $("#dvParameters").removeClass("disable-Param");
-                        $("#pnlAddServiceCodes .mdl-card__title-text").text(localization.AddServiceCodes);
-                        $("#txtServiceCodesDesc").val('');
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.AddSACCodes);
+                        $("#txtSACCodesDesc").val('');
                         /* $('#chkBaseRateApplicable').parent().removeClass("is-checked");*/
                         $('#chkActiveStatus').parent().addClass("is-checked");
                         $("#btnSCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSCAdd").show();
-                        $("#dvServiceCodes").show();
-                        ServiceCodesID = "0";
+                        $("#dvSACCodes").show();
+                        SACCodesID = "0";
                         ServiceGroupID = parentNode;
                         while (ServiceGroupID.startsWith('C')) {
-                            ServiceGroupID = $("#jstServiceCodesTree").jstree(true).get_parent(ServiceGroupID);
+                            ServiceGroupID = $("#jstSACCodesTree").jstree(true).get_parent(ServiceGroupID);
                         };
                         eSyaParams.ClearValue();
                         CodesParentID = data.node.id.substring(1);
@@ -109,40 +109,40 @@ function fnLoadServiceCodesTree() {
                     });
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
-                            $('#dvServiceCodes').hide();
+                            $('#dvSACCodes').hide();
                             fnAlert("w", "ECS_07_00", "UIC03", errorMsg.vieweauth_E3);
                             return;
                         }
-                        $("#txtServiceCodesDesc").prop("disabled", true);
+                        $("#txtSACCodesDesc").prop("disabled", true);
                         /* $("#chkBaseRateApplicable").prop("disabled", true);*/
                         $("#chkActiveStatus").prop("disabled", true);
                         $("#dvParameters").addClass("disable-Param");
-                        $("#pnlAddServiceCodes .mdl-card__title-text").text(localization.ViewServiceCodes);
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.ViewSACCodes);
                         $("#btnSCAdd").hide();
-                        $("#dvServiceCodes").show();
-                        ServiceCodesID = data.node.id;
-                        ServiceCodesID = ServiceCodesID.substring(1);
-                        fnFillServiceCodesDetail(ServiceCodesID);
+                        $("#dvSACCodes").show();
+                        SACCodesID = data.node.id;
+                        SACCodesID = SACCodesID.substring(1);
+                        fnFillSACCodesDetail(SACCodesID);
 
                     });
 
                     $('#Edit').on('click', function () {
                         if (_userFormRole.IsEdit === false) {
-                            $('#dvServiceCodes').hide();
+                            $('#dvSACCodes').hide();
                             fnAlert("w", "ECS_07_00", "UIC02", errorMsg.editauth_E2);
                             return;
                         }
-                        $("#txtServiceCodesDesc").prop("disabled", false);
+                        $("#txtSACCodesDesc").prop("disabled", false);
                         /* $("#chkBaseRateApplicable").prop("disabled", false);*/
                         $("#chkActiveStatus").prop("disabled", false);
                         $("#dvParameters").removeClass("disable-Param");
-                        $("#pnlAddServiceCodes .mdl-card__title-text").text(localization.EditServiceCodes);
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.EditSACCodes);
                         $("#btnSCAdd").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnSCAdd").show();
-                        $("#dvServiceCodes").show();
-                        ServiceCodesID = data.node.id;
-                        ServiceCodesID = ServiceCodesID.substring(1);
-                        fnFillServiceCodesDetail(ServiceCodesID);
+                        $("#dvSACCodes").show();
+                        SACCodesID = data.node.id;
+                        SACCodesID = SACCodesID.substring(1);
+                        fnFillSACCodesDetail(SACCodesID);
 
                     });
                 }
@@ -151,22 +151,22 @@ function fnLoadServiceCodesTree() {
         }
 
     });
-    $('#jstServiceCodesTree').on("close_node.jstree", function (node) {
+    $('#jstSACCodesTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#jstServiceCodesTree').jstree().deselect_node(closingNode.children);
+        $('#jstSACCodesTree').jstree().deselect_node(closingNode.children);
     });
-    fnTreeSize("#jstServiceCodesTree");
+    fnTreeSize("#jstSACCodesTree");
 }
 
 
-function fnFillServiceCodesDetail(ServiceCodesID) {
+function fnFillSACCodesDetail(SACCodesID) {
     $.ajax({
-        url: getBaseURL() + '/Services/GetServiceCodesByID',
+        url: getBaseURL() + '/Services/GetSACCodesByID',
         data: {
-            ServiceCodesID: ServiceCodesID
+            SACCodesID: SACCodesID
         },
         success: function (result) {
-            $("#txtServiceCodesDesc").val(result.ServiceCodesDesc);
+            $("#txtSACCodesDesc").val(result.SACCodesDesc);
             //if (result.IsBaseRateApplicable == true)
             //    $('#chkBaseRateApplicable').parent().addClass("is-checked");
             //else
@@ -181,10 +181,10 @@ function fnFillServiceCodesDetail(ServiceCodesID) {
     });
 
 }
-function fnAddOrUpdateServiceCodes() {
+function fnAddOrUpdateSACCodes() {
 
-    var txtServiceCodesDesc = $("#txtServiceCodesDesc").val();
-    if (txtServiceCodesDesc == "" || txtServiceCodesDesc == null || txtServiceCodesDesc == undefined) {
+    var txtSACCodesDesc = $("#txtSACCodesDesc").val();
+    if (txtSACCodesDesc == "" || txtSACCodesDesc == null || txtSACCodesDesc == undefined) {
         fnAlert("w", "ECS_07_00", "UI0119", errorMsg.ServiceDesc_E6)
         return false;
     }
@@ -196,15 +196,15 @@ function fnAddOrUpdateServiceCodes() {
         var cPar = eSyaParams.GetJSONValue();
         var obj = {
             ServiceGroupID: ServiceGroupID,
-            ServiceCodesID: ServiceCodesID,
-            ServiceCodesDesc: $("#txtServiceCodesDesc").val(),
+            SACCodesID: SACCodesID,
+            SACCodesDesc: $("#txtSACCodesDesc").val(),
             /* IsBaseRateApplicable: $("#chkBaseRateApplicable").parent().hasClass("is-checked"),*/
             ParentID: CodesParentID,
             ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
             l_CodesParameter: cPar
         }
         $.ajax({
-            url: getBaseURL() + '/Services/AddOrUpdateServiceCodes',
+            url: getBaseURL() + '/Services/AddOrUpdateSACCodes',
             type: 'POST',
             datatype: 'json',
             data: {
@@ -212,9 +212,9 @@ function fnAddOrUpdateServiceCodes() {
             },
             success: function (response) {
                 if (response.Status == true) {
-                    if (ServiceCodesID == 0) {
+                    if (SACCodesID == 0) {
                         fnAlert("s", "", response.StatusCode, response.Message);
-                        $("#txtServiceCodesDesc").val('');
+                        $("#txtSACCodesDesc").val('');
                         /*$('#chkBaseRateApplicable').parent().removeClass("is-checked");*/
                         $('#chkActiveStatus').parent().addClass("is-checked");
                         eSyaParams.ClearValue();
@@ -223,8 +223,8 @@ function fnAddOrUpdateServiceCodes() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#jstServiceCodesTree").jstree("destroy");
-                    fnLoadServiceCodesTree();
+                    $("#jstSACCodesTree").jstree("destroy");
+                    fnLoadSACCodesTree();
 
                 }
                 else {
@@ -239,12 +239,12 @@ function fnAddOrUpdateServiceCodes() {
         });
     }
 }
-function fnExpandAll() {
-    $("#jstServiceCodesTree").jstree('open_all');
+function fnSACCodesExpandAll() {
+    $("#jstSACCodesTree").jstree('open_all');
 }
-function fnCollapseAll() {
-    $("#jstServiceCodesTree").jstree('close_all');
-    $('#dvServiceCodes').hide();
+function fnSACCodesCollapseAll() {
+    $("#jstSACCodesTree").jstree('close_all');
+    $('#dvSACCodes').hide();
 }
 function fnMoveItemUpDown(updown) {
     var isMoveUp = false, isMoveDown = false;
@@ -257,7 +257,7 @@ function fnMoveItemUpDown(updown) {
         isMoveDown = true;
         str = ' down';
     }
-    var selectedNode = $('#jstServiceCodesTree').jstree().get_selected(true);
+    var selectedNode = $('#jstSACCodesTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECS_07_00", "UI0120", errorMsg.ServiceCodesMove_E7);
@@ -288,8 +288,8 @@ function fnMoveItemUpDown(updown) {
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#jstServiceCodesTree").jstree("destroy");
-                            fnLoadServiceCodesTree();
+                            $("#jstSACCodesTree").jstree("destroy");
+                            fnLoadSACCodesTree();
                         }
                         else {
                             fnAlert("e", "", response.StatusCode, response.Message);
@@ -312,7 +312,7 @@ function fnDeleteNode() {
         fnAlert("w", "ECS_07_00", "UIC04", errorMsg.deleteauth_E4);
         return;
     }
-    var selectedNode = $('#jstServiceCodesTree').jstree().get_selected(true);
+    var selectedNode = $('#jstSACCodesTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
         fnAlert("w", "ECS_07_00", "UI0121", errorMsg.ServiceCodesDel_E8);
@@ -332,15 +332,15 @@ function fnDeleteNode() {
             if (confirm(localization.Doyouwanttodeletenode + selectedNode.text + ' ?')) {
 
                 $.ajax({
-                    url: getBaseURL() + '/Services/DeleteServiceCodes',
+                    url: getBaseURL() + '/Services/DeleteSACCodes',
                     type: 'POST',
                     datatype: 'json',
                     data: data,
                     success: function (response) {
                         if (response.Status === true) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            $("#jstServiceCodesTree").jstree("destroy");
-                            fnLoadServiceCodesTree();
+                            $("#jstSACCodesTree").jstree("destroy");
+                            fnLoadSACCodesTree();
                         }
                         else {
                             fnAlert("e", "", response.StatusCode, response.Message);
