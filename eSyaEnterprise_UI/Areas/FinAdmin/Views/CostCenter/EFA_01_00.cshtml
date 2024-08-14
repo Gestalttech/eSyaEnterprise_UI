@@ -16,6 +16,15 @@
         Update: '@Localizer["Update"]',
         Action: '@Localizer["Action"]',
         Active: '@Localizer["Active"]',
+        AddCostCenterClass: '@Localizer["AddCostCenterClass"]',
+        EditCostCenterclass: '@Localizer["EditCostCenterclass"]',
+        ViewCostCenterclass: '@Localizer["ViewCostCenterclass"]',
+        AddCostCenterDesc: '@Localizer["AddCostCenterDesc"]',
+        AddCostCenter: '@Localizer["AddCostCenter"]',
+        EditCostCenter: '@Localizer["EditCostCenter"]',
+        ViewCostCenter: '@Localizer["ViewCostCenter"]',
+        EditCostCenterDesc: '@Localizer["EditCostCenterDesc"]',
+        ViewCostCenterDesc: '@Localizer["ViewCostCenterDesc"]',
      }
      var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -33,29 +42,68 @@
     <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-5  col-10" id="divJstCostCenter">
         <div id="jstCostCenter"></div>
     </div>
-    <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-5 col-sm-12 div-menuform">
-    <div class="demo-card-square mdl-card mdl-shadow--2dp" id="pnlCostCenterClass" style="width: 100%;">
-            <div id="pnlMainModuleHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+    <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-5 col-sm-12">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp" id="divCostCenterClass" style="width: 100%;">
+            <div id="pnlCostCenterClassDescHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
                 <h5 class="mdl-card__title-text">@Localizer["AddCostCenterClass"] </h5>
+                </div>
+                <div class="mdl-card__supporting-text fullwidth">
+                    <div class="row">
+                      <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> @Localizer["CostCenterClassDescription"] </label>
+                                <input id="txtCostCenterClassDescription" class="form-control"  type="text" />
+                            </div>
+                        </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkCCClassActiveStatus">
+                            <input type="checkbox" id="chkCCClassActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                        </label>
+                    </div>
+                     </div>
+                </div>
+                <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnSaveCCClass" onclick="fnSaveBusinessEntity()">
+                    <i class="fa fa-save"></i> @Localizer["Save"]
+                    </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="btnCancelCCClass" onclick="fnClearCCClass()">
+                       <i class="fa fa-times"></i> @Localizer["Cancel"]
+                    </button>
+                </div>
+
+        </div>
+        <div class="demo-card-square mdl-card mdl-shadow--2dp" id="divCostCenterClassDesc" style="width: 100%;">
+            <div id="pnlCostCenterClassDescHeading" class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+                <h5 class="mdl-card__title-text">@Localizer["AddCostCenter"] </h5>
             </div>
             <div class="mdl-card__supporting-text fullwidth">
                 <div class="row">
-                  <div class="col-lg-12">
+                    <div class="col-lg-12">
                         <div class="form-group">
-                            <label> @Localizer["CostCenterClassDescription"] </label>
-                            <input id="txtCostCenterClassDescription" class=" form-control" maxlength="75" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric75Characters"]' />
+                            <label> @Localizer["CostCenterDescription"] </label>
+                            <input id="txtCostCenterDescription" class="form-control"  type="text"  />
                         </div>
                     </div>
-                 </div>
+                    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkCCCDActiveStatus">
+                            <input type="checkbox" id="chkCCCDActiveStatus" class="mdl-checkbox__input">
+                            <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSaveBusinessEntity" onclick="fnSaveBusinessEntity()">
-                    @Localizer["Save"]
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnSaveCCDesc" onclick="fnSaveCCDesc()">
+                    <i class="fa fa-save"></i> @Localizer["Save"]
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised" id="btnCancelCCDesc" onclick="fnCCClassDesc()">
+                    <i class="fa fa-times"></i>  @Localizer["Cancel"]
                 </button>
             </div>
 
         </div>
-        </div>
+    </div>
          <div class="col-lg-2 col-md-2 col-sm-6">
         <div class="card treeaction">
             <div class="card-header">
@@ -63,19 +111,19 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnDeleteNode" onclick="fnDeleteNode()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnCCDeleteNode" onclick="fnDeleteNode()">
                         <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
                     </button>
                 </li>
                 <li class="list-group-item">
 
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnExpandAll" onclick="fnExpandAll()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCExpandAll" onclick="fnCCExpandAll()">
                         <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
                     </button>
                 </li>
                 <li class="list-group-item">
 
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCollapseAll" onclick="fnCollapseAll()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCCollapseAll" onclick="fnCCCollapseAll()">
                         <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
                     </button>
                 </li>
