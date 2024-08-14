@@ -1518,6 +1518,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
     height:auto !important;
     font-size:11px !important;
     white-space:normal;
+    width:90%;
 }
 
 #divSideBar {
