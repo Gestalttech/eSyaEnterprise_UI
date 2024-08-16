@@ -1,7 +1,7 @@
 ﻿
 .ui-jqgrid .ui-jqgrid-htable th, .ui-jqgrid tr.jqgrow td, .ui-jqgrid tr.footrow td {
     padding: 0px 5px !important;
-} 
+}
 
 /*table heading*/
 .ui-state-default, .ui-widget-content .ui-state-default {
@@ -14,25 +14,29 @@
 .ui-jqgrid .ui-jqgrid-view {
     font-size: 12px !important;
     font-weight: 600 !important;
-    color:#161616;
+    color: #161616;
 }
-.ui-jqgrid .ui-pager-control{
-    background:#ffffff !important;
-   
+
+.ui-jqgrid .ui-pager-control {
+    background: #ffffff !important;
 }
-.btnAction{
-    display:none;
+
+.btnAction {
+    display: none;
 }
+
 td:first-child.ui-state-default.jqgrid-rownum {
     /*background: #fff !important;*/
     border-right-color: rgba(0,0,0,0.1) !important;
     border-top-color: rgba(0,0,0,0.1) !important;
     border-bottom-color: rgba(0,0,0,0.1) !important;
 }
+
 .ui-jqgrid td input:disabled {
     color: -internal-light-dark(rgb(84, 84, 84), gold) !important;
     cursor: default;
 }
+
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
     /*background: #fffdc0 !important;*/ /*#E4F1F7 !important;*/
     color: #000 !important;
@@ -42,6 +46,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
     border-top: 1px solid rgba(0,0,0,0.1) !important;
     border-bottom-color: rgba(0,0,0,0.1) !important;
 }
+
 .ui-state-hover:not(th) {
     /*background: #fbe2ff !important;*/ /* #fbe2ff  aliceblue !important;*/
     color: #000;
@@ -50,44 +55,50 @@ td:first-child.ui-state-default.jqgrid-rownum {
     border-top-color: rgba(0,0,0,0.1) !important;
     border-bottom-color: rgba(0,0,0,0.1) !important;
 }
-.ui-pg-button .ui-corner-all .ui-state-hover{
-    background:transparent !important;
+
+.ui-pg-button .ui-corner-all .ui-state-hover {
+    background: transparent !important;
 }
+
 .ui-state-hover td {
     color: #000 !important;
 }
+
 .ui-pg-div {
     border: 1px solid #ffffff !important;
 }
+
 .ui-pg-button.ui-corner-all.ui-state-hover .ui-pg-div {
     background: #ffffff !important;
     border: 1px solid transparent !important;
     color: #000 !important;
 }
+
 .ui-widget-content {
     border: none !important;
     border-right: 0px solid rgba(0,0,0,0.1) !important;
     border-top: 0px solid #eaeaea !important;
     border-bottom: 0px solid #eaeaea !important;
 }
+
 .ui-state-hover .ui-state-default {
     color: #1d5987 !important;
     border-color: none !important;
-   
 }
- 
+
 /*Jqgrid header*/
 .ui-jqgrid .ui-jqgrid-pager {
     font-size: 12px !important;
     font-weight: bold !important;
     height: 34px !important;
     background: #fff !important;
-   }
+}
 /*pager*/
 .ui-widget {
     /*font-family: roboto !important;*/
     font-family: 'helvetica',sans-serif;
 }
+
 .ui-pg-div .svg-inline--fa {
     color: #6c6c6c !important; /*gold !important;*/ /*#1094f8 !important;*/
     padding-right: 0px;
@@ -95,23 +106,28 @@ td:first-child.ui-state-default.jqgrid-rownum {
     margin-left: 6px;
     background-image: none;
     height: 0.9rem;
-    width:auto;
+    width: auto;
 }
+
 .ui-widget-header .ui-icon {
     background-image: url(images/ui-icons_gold_256x240.png);
 }
+
 .ui-widget.ui-widget-content {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 0px !important;
     border: 0px solid #797172 !important;
-    border-radius:0px;
+    border-radius: 0px;
 }
-.ui-widget-header{
-    border-radius:0px;
+
+.ui-widget-header {
+    border-radius: 0px;
 }
+
 .ui-pg-div.svg-inline--fa.ui-icon, .ui-widget-content.svg-inline--fa .ui-icon {
     background-image: none !important;
 }
+
 .ui-jqgrid {
     box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)
     /*box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);*/
@@ -121,20 +137,23 @@ td:first-child.ui-state-default.jqgrid-rownum {
         padding: 7px 7px 7px 3px !important;
         font-family: 'helvetica-Bold';
         color: #555 !important;
-        font-size:12px;
+        font-size: 12px;
     }
 
     .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
         border-right: 1px solid #8c8c8c !important;
+        padding: 0px !important;
         /*#e8e8e8*/
     }
 
     .ui-jqgrid .ui-jqgrid-htable {
         border-bottom: 0px solid #e8e8e8 !important;
     }
-        .ui-jqgrid .ui-jqgrid-htable th{
-            height:34px !important;
+
+        .ui-jqgrid .ui-jqgrid-htable th {
+            height: 34px !important;
         }
+
             .ui-jqgrid .ui-jqgrid-htable th div {
                 /*height: 24px !important;
             font-weight: 400 !important;*/
@@ -148,13 +167,16 @@ td:first-child.ui-state-default.jqgrid-rownum {
                 font-size: 0.86rem;
                 font-family: 'helvetica-Bold';
             }
+
 .ui-jqgrid-hdiv {
     background: #797172 !important;
     /*aliceblue*/
 }
+
 .ui-pager-table {
     width: 100% !important;
 }
+
 .ui-jqgrid .ui-paging-info {
     height: 34px;
     margin-top: 0px !important;
@@ -165,12 +187,14 @@ td:first-child.ui-state-default.jqgrid-rownum {
     color: #484646;
 }
 
-.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column{
-    text-align:left !important;
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {
+    text-align: left !important;
 }
-.ui-jqgrid .ui-pg-table td{
-    padding:0px !important;
+
+.ui-jqgrid .ui-pg-table td {
+    padding: 0px !important;
 }
+
 .ui-first-th-ltr {
     border-right-color: #8c8c8c !important;
 }
@@ -180,62 +204,76 @@ td:first-child.ui-state-default.jqgrid-rownum {
 .ui-jqgrid tr.ui-row-ltr td {
     line-height: 24px !important;
     white-space: normal;
-    word-break:break-word;
+    word-break: break-word;
 }
-.ui-jqgrid .ui-jqgrid-titlebar{
-    display:none;
+
+.ui-jqgrid .ui-jqgrid-titlebar {
+    display: none;
 }
+
 .ui-jqgrid tr.jqgfirstrow td {
     color: transparent !important;
 }
+
 .ui-jqgrid-view .ui-jqgrid-titlebar-close .ui-icon {
     background-image: url("images/ui-icons_ffffff_256x240.png") !important
 }
-.ui-jqgrid-btable tr:nth-child(odd), .ui-jqgrid-btable tr:nth-child(odd) td:first-child.ui-state-default.jqgrid-rownum{
+
+.ui-jqgrid-btable tr:nth-child(odd), .ui-jqgrid-btable tr:nth-child(odd) td:first-child.ui-state-default.jqgrid-rownum {
     background: #fffcec; /*#f7f7f7;*/
 }
+
 .ui-jqgrid-btable tr:nth-child(even), .ui-jqgrid-btable tr:nth-child(even) td:first-child.ui-state-default.jqgrid-rownum {
     background: #fff;
 }
-        .btn-jqgrid {
+
+.btn-jqgrid {
     padding: 2px 4px;
     background: #797172 !important;
     color: gold !important;
     margin: 3px;
-    letter-spacing:0.95px;
+    letter-spacing: 0.95px;
 }
+
 .loading.ui-state-default {
     color: gold !important;
 }
+
 [id$=Amount], [id$=Amt], [id*=jqgExchangeRate_ExchangeRate], [id=jqgh_jqgIncentiveAmount_VariableIncentiveAmount], [id=jqgh_jqgSalary_BankCharges],
 [id=jqgh_jqgAdvanceSalary_SalaryAdvance], [id=jqgh_jqgSalaryProcess_ExchangeRate], [id=jqgh_jqgSalaryProcess_AmountInLocalCurrency] {
     text-align: right !important;
 }
-.ui-jqgrid .ui-jqgrid-bdiv{
-    overflow-x:hidden;
+
+.ui-jqgrid .ui-jqgrid-bdiv {
+    overflow-x: hidden;
 }
 
-.group.ui-widget.ui-widget-content{
-    width:100% !important;
+.group.ui-widget.ui-widget-content {
+    width: 100% !important;
 }
-.ui-jqgrid-sdiv, .ui-jqgrid-ftable{
-    width:100% !important;
+
+.ui-jqgrid-sdiv, .ui-jqgrid-ftable {
+    width: 100% !important;
 }
+
 .ui-state-default.jqgrid-rownum {
     color: #797172 !important;
 }
+
 #gbox_jqgFormAction tr.ui-jqgrid-labels, #gbox_jqgFormParameter tr.ui-jqgrid-labels {
     display: table;
 }
+
 td .btn-outline {
     padding: 0px 7px;
-    border-radius:5px;
+    border-radius: 5px;
 }
 
 /*Custom Table for Parameter*/
 #tbParameter {
     width: 100% !important;
 }
+
     #tbParameter th {
         padding: 5px;
         text-align: left;
@@ -244,16 +282,19 @@ td .btn-outline {
         color: gold !important;
         border-right: 1px solid #8c8c8c !important;
         height: 34px;
-        letter-spacing:1.5px;
+        letter-spacing: 1.5px;
     }
+
     #tbParameter td input[type=checkbox] {
         vertical-align: middle;
     }
+
     #tbParameter td, #customers th {
         border: 1px solid #ddd;
         padding: 2px 5px;
         height: 32px;
     }
+
     #tbParameter td {
         font-size: 12px !important;
         line-height: 25px !important;
@@ -261,16 +302,19 @@ td .btn-outline {
         padding: 0px 5px;
         border-bottom: 0px !important;
     }
-        #tbParameter tr:nth-child(even) {
-            background-color: #fffcec;
-        }
 
-#tbParameter tr:hover {
-    background-color: #fbe2ff;
-}
-    #tbParameter th:first-child, #tbParameter td:first-child{
+    #tbParameter tr:nth-child(even) {
+        background-color: #fffcec;
+    }
+
+    #tbParameter tr:hover {
+        background-color: #fbe2ff;
+    }
+
+    #tbParameter th:first-child, #tbParameter td:first-child {
         text-align: center;
     }
+
     #tbParameter tr td .form-control {
         border: none !important;
         border-bottom: 1px solid #ced4da !important;
@@ -287,18 +331,22 @@ td .btn-outline {
     background: #ffffff !important;
     color: #212120 !important;
 }
-.ui-datepicker .ui-state-default.ui-state-hover{
-    background:#797172 !important;
-    color:gold !important;
-}
-.ui-datepicker .ui-state-default.ui-state-highlight {
-    background: #fffdc0 !important;
-    color:#000 !important;
-}
+
+    .ui-datepicker .ui-state-default.ui-state-hover {
+        background: #797172 !important;
+        color: gold !important;
+    }
+
+    .ui-datepicker .ui-state-default.ui-state-highlight {
+        background: #fffdc0 !important;
+        color: #000 !important;
+    }
+
 .ui-datepicker .ui-widget.ui-widget-content {
     border: 1px solid #e4e0e0 !important;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
 .btn-pager {
     padding-right: 5px;
     padding-top: 2px;
@@ -306,9 +354,11 @@ td .btn-outline {
     vertical-align: text-top;
     margin-left: 8px;
 }
-.FormGrid, .EditTable, .EditTable tbody, .EditTable tr{
-    width:100% !important;
+
+.FormGrid, .EditTable, .EditTable tbody, .EditTable tr {
+    width: 100% !important;
 }
+
 .fm-button.ui-state-default {
     background: #555 !important;
     color: gold !important;
@@ -321,20 +371,25 @@ td .btn-outline {
     height: 32px;
     line-height: 32px;
 }
-.fm-button .ui-icon{
-    display:none !important;
+
+.fm-button .ui-icon {
+    display: none !important;
 }
+
 .fm-button:nth-child(2) {
     color: gold !important;
     background: #555 !important;
-    margin-left:10px !important;
+    margin-left: 10px !important;
 }
+
 .ui-jqdialog-content td.navButton {
     display: none !important;
 }
+
 .ui-jqdialog-content td.EditButton {
     text-align: center !important;
 }
+
 .ui-widget-header {
     background: #555 !important;
     background-image: none !important;
@@ -342,25 +397,28 @@ td .btn-outline {
     border: none !important;
     border-bottom: 1px solid #dee2e6 !important;
     line-height: 32px !important;
-    color:gold !important;
+    color: gold !important;
 }
 
-.ui-datepicker{
-    padding:0em !important;
+.ui-datepicker {
+    padding: 0em !important;
 }
+
 .ui-jqdialog-title {
     font-size: 14px !important;
     font-weight: 300;
     color: gold !important;
     font-family: helvetica-Bold;
-    line-height:30px !important;
+    line-height: 30px !important;
 }
+
 .ui-jqdialog-content .CaptionTD {
     line-height: 20px;
     font-size: 12px;
     font-family: 'helvetica',sans-serif;
-    padding:0px;
+    padding: 0px;
 }
+
 .EditTable td input, .EditTable td select, .EditTable td textarea {
     font-size: 14px !important;
     border: none !important;
@@ -368,89 +426,112 @@ td .btn-outline {
     padding-left: 0px !important;
     border-radius: 0px !important;
     height: 20px;
-    width:100%;
+    width: 100%;
 }
-    .ui-jqdialog-content .DataTD{
-       padding:0px;
-    }
-#ProcessControl, .DataTD #ActiveStatus{
+
+.ui-jqdialog-content .DataTD {
+    padding: 0px;
+}
+
+#ProcessControl, .DataTD #ActiveStatus {
     width: 50%;
 }
-#editcntgvProcessRule{
-    padding:0px !important;
+
+#editcntgvProcessRule {
+    padding: 0px !important;
 }
+
 #FrmGrid_gvProcessRule {
     padding: 15px !important;
 }
-#TblGrid_gvProcessRule_2 tbody tr:nth-of-type(1){
-    display:none;
+
+#TblGrid_gvProcessRule_2 tbody tr:nth-of-type(1) {
+    display: none;
 }
+
 #TblGrid_gvProcessRule_2 tbody tr td.EditButton {
     padding: 3px 0px;
     background: #f0e08e;
-    height:48px;
+    height: 48px;
 }
+
 #IsSegmentSpecific, #SystemControl {
     height: 15px;
     position: relative;
     bottom: 36px;
 }
+
 #editmodgvProcessRule .jqResize {
     display: none
 }
+
 .ui-jqdialog-content .DataTD br {
     display: none;
 }
+
 #ProcessId, #RuleId {
     position: relative;
     bottom: 20px;
 }
+
 #ProcessDesc {
     width: 100% !important;
     position: relative;
     bottom: 20px;
 }
+
 .EditTable td input:focus, .EditTable td select:focus, .EditTable td textarea:focus {
     outline: none !important;
     border-bottom-color: gold !important;
 }
+
 .ui-jqdialog-content .CaptionTD, .ui-jqdialog-content .DataTD {
     display: block !important;
 }
-tr.FormData{
-   height:72px !important;
+
+tr.FormData {
+    height: 72px !important;
 }
-.ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content{
-    padding:15px 15px 10px  !important;
+
+.ui-jqdialog-content, .ui-jqdialog .ui-jqdialog-content {
+    padding: 15px 15px 10px !important;
 }
-.ui-jqdialog .ui-jqdialog-titlebar{
-    padding:4px 14px !important;
+
+.ui-jqdialog .ui-jqdialog-titlebar {
+    padding: 4px 14px !important;
 }
+
 #editmodgvProcessRule {
     top: 109px !important;
-    max-width:500px;
-    margin:auto;
+    max-width: 500px;
+    margin: auto;
 }
+
 .ui-jqdialog-content, hr.ui-jqdialog-content {
     border-left: none !important;
     border-right: none !important;
 }
-.ui-jqgrid-bdiv{
-    max-height:330px;
-    overflow-y:auto;
+
+.ui-jqgrid-bdiv {
+    max-height: 330px;
+    overflow-y: auto;
 }
-#gview_jqgCulturekeys .ui-jqgrid-bdiv, #gview_jqgLanguageCulture .ui-jqgrid-bdiv{
+
+#gview_jqgCulturekeys .ui-jqgrid-bdiv, #gview_jqgLanguageCulture .ui-jqgrid-bdiv {
     max-height: 290px;
     overflow-y: auto;
 }
+
 .ui-jqgrid .ui-jqgrid-htable {
     table-layout: fixed;
     margin: 0;
     padding-right: 20px;
 }
+
 .ui-jqgrid .ui-jqgrid-hbox {
-    padding-right: 0px ;
+    padding-right: 0px;
 }
+
 #gview_jqgApplicationCodes > .ui-jqgrid-hbox {
     padding-right: 17px !important;
 }
@@ -458,47 +539,57 @@ tr.FormData{
 #gbox_jqgApplicationCodes .ui-jqgrid .ui-jqgrid-hbox {
     padding-right: 17px !important;
 }
+
 .ui-state-hover .svg-inline--fa {
- /*   color: var(--button-forecolor);*/
+    /*   color: var(--button-forecolor);*/
     color: var(--primary-color);
-   }
+}
 
 tr.jqgrow td button.btn {
-/*background:linear-gradient(to top, var(--primary-color),#fff);*/
-background-color:var(--action-button);
-   
+    /*background:linear-gradient(to top, var(--primary-color),#fff);*/
+    background-color: var(--action-button);
 }
+
 tr.jqgrow td button.btn-outline .svg-inline--fa {
     color: var(--button-forecolor);
-    font-size:12px;
+    font-size: 12px;
 }
-.ui-state-hover button{
-    border:1px solid var(--primary-color);
+
+.ui-state-hover button {
+    border: 1px solid var(--primary-color);
 }
+
 .ui-widget-content .ui-state-disabled, tr.ui-state-disabled td {
     pointer-events: none;
     opacity: 0.85;
-    cursor:none;
+    cursor: none;
 }
+
 @media screen and (min-width:551px) and (max-width:991px) {
-    .ui-jqgrid .ui-jqgrid-htable th div{
-        font-size:11px;
+    .ui-jqgrid .ui-jqgrid-htable th div {
+        font-size: 11px;
     }
+
     .ui-jqgrid .ui-jqgrid-resize {
         display: none;
     }
+
     .ui-jqgrid .ui-jqgrid-titlebar {
         display: none;
     }
+
     [class*="ui-jqgrid"] {
         width: 100% !important;
     }
+
     .ui-jqgrid .ui-jqgrid-htable th, .ui-jqgrid tr.jqgrow td, .ui-jqgrid tr.footrow td {
         padding: 0px 2px !important;
-    } 
-    .ui-jqgrid .ui-jqgrid-view{
-        font-size:12px !important;
     }
+
+    .ui-jqgrid .ui-jqgrid-view {
+        font-size: 12px !important;
+    }
+
     .ui-jqgrid .ui-pg-table td {
         font-size: 11px !important;
     }
@@ -514,7 +605,7 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
     .ui-jqgrid tr.ui-row-ltr td {
         line-height: 24px !important;
         white-space: normal !important;
-        font-size:11px !important;
+        font-size: 11px !important;
     }
 
     .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {
@@ -525,9 +616,11 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
     .ui-jqgrid .ui-jqgrid-btable, .ui-jqgrid .ui-jqgrid-htable {
         table-layout: fixed !important;
     }
+
     .ui-jqgrid-htable, .ui-jqgrid-hdiv, .ui-jqgrid-view, .ui-jqgrid, .ui-jqgrid-bdiv, .ui-jqgrid-btable, .ui-jqgrid-pager {
         width: 100% !important;
     }
+
         .ui-jqgrid .ui-jqgrid-pager {
             font-size: 13px !important;
             font-weight: bold !important;
@@ -535,26 +628,29 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
             background: #fff !important;
         }
 }
+
 @media screen and (min-width:300px) and (max-width:550px) {
-    .ui-jqgrid .ui-jqgrid-titlebar{
-        display:block;
+    .ui-jqgrid .ui-jqgrid-titlebar {
+        display: block;
     }
+
     .ui-jqgrid .ui-jqgrid-htable th, .ui-jqgrid tr.jqgrow td, .ui-jqgrid tr.footrow td {
         padding: 0px 2px !important;
     }
-    .ui-jqgrid-htable, .ui-jqgrid-hdiv, .ui-jqgrid-view, .ui-jqgrid ,.ui-jqgrid-pager{
+
+    .ui-jqgrid-htable, .ui-jqgrid-hdiv, .ui-jqgrid-view, .ui-jqgrid, .ui-jqgrid-pager {
         width: 100% !important;
     }
-    /*[class*="ui-jqgrid"] {
+        /*[class*="ui-jqgrid"] {
         width: 100% !important;
     }*/
-    .ui-jqgrid .ui-jqgrid-view {
-        font-size: 12px !important;
-    }
+        .ui-jqgrid .ui-jqgrid-view {
+            font-size: 12px !important;
+        }
 
-    .ui-jqgrid .ui-pg-table td {
-        font-size: 11px !important;
-    }
+        .ui-jqgrid .ui-pg-table td {
+            font-size: 11px !important;
+        }
 
     td[id*=_right ] {
         display: none !important;
@@ -563,33 +659,37 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
     .ui-jqgrid tr.ui-row-ltr td {
         line-height: 21px !important;
         white-space: normal !important;
-        font-size:11.75px !important;
+        font-size: 11.75px !important;
     }
 
     .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {
         padding: 0px 0px 0px 0px !important;
         font-size: 11px !important;
     }
-    ..ui-widget-header{
-        font-weight:300;
+
+    ..ui-widget-header {
+        font-weight: 300;
     }
+
     .ui-jqgrid .ui-jqgrid-btable, .ui-jqgrid .ui-jqgrid-htable {
         table-layout: fixed !important;
     }
-    td button{
-        width:auto !important;
-        line-height:14px !important;
+
+    td button {
+        width: auto !important;
+        line-height: 14px !important;
     }
-        
-        .ui-jqgrid .ui-jqgrid-pager {
-            font-size: 13px !important;
-            font-weight: bold !important;
-            height: auto !important;
-            background: #fff !important;
+
+    .ui-jqgrid .ui-jqgrid-pager {
+        font-size: 13px !important;
+        font-weight: bold !important;
+        height: auto !important;
+        background: #fff !important;
+    }
+
+        .ui-jqgrid .ui-jqgrid-toppager .ui-pager-control, .ui-jqgrid .ui-jqgrid-pager .ui-pager-control {
+            height: auto;
         }
-    .ui-jqgrid .ui-jqgrid-toppager .ui-pager-control, .ui-jqgrid .ui-jqgrid-pager .ui-pager-control {
-        height: auto;
-    }
 
     .ui-jqgrid .ui-pager-control td[id$="_toppager_center"], .ui-jqgrid .ui-pager-control td[id$="pager_center"] {
         width: auto !important;
@@ -624,36 +724,41 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
 /*@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {*/
 
 @media only screen and (min-device-width: 300px) and (max-device-width: 551px) {
-    .ui-jqgrid-titlebar{
-        display:block;
+    .ui-jqgrid-titlebar {
+        display: block;
     }
-    .btnAction{
-        display:block;
+
+    .btnAction {
+        display: block;
     }
     /* Force table to not be like tables anymore */
     .ui-jqgrid-bdiv table, .ui-jqgrid-bdiv thead, .ui-jqgrid-bdiv tbody, .ui-jqgrid-bdiv th, .ui-jqgrid-bdiv tr {
         display: block;
     }
+
     .ui-jqgrid {
         box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
     }
+
     .ui-widget.ui-widget-content {
         border: 1px solid #fff !important;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
+
     .ui-jqgrid-btable tr {
         border-bottom: 1px solid #e1e1e1 !important;
         margin-bottom: 0px !important;
     }
+
     .ui-jqgrid-btable td {
         display: block;
     }
-        /* Hide table headers (but not display: none;, for accessibility) */
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
 
     .ui-jqgrid-bdiv tr {
         margin: 0 0 1rem 0;
@@ -662,19 +767,24 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
     .ui-pg-div {
         border: 0px solid #fff !important;
     }
-    .ui-pgtable tr td:nth-of-type(2){
 
+    .ui-pgtable tr td:nth-of-type(2) {
     }
+
     td[id*="_left"] table, td[id*="_center"] table {
-        width: 100% !important;margin:0px 0px !important;
+        width: 100% !important;
+        margin: 0px 0px !important;
     }
-        .ui-jqgrid .ui-pg-button{
-            height:unset !important;
-        }
-        td[id*="_left"] table tr td, td[id*="_center"] table tr td {
-            display: inline-block !important;
-            width: auto !important;
-        }
+
+    .ui-jqgrid .ui-pg-button {
+        height: unset !important;
+    }
+
+    td[id*="_left"] table tr td, td[id*="_center"] table tr td {
+        display: inline-block !important;
+        width: auto !important;
+    }
+
     .ui-jqgrid tr.jqgrow td {
         position: relative;
         bottom: 0px;
@@ -684,24 +794,28 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
         border-bottom: 1px solid #f4f4f4;
         /*display: inline-block !important;*/
         width: 49% !important;
-        line-height:30px !important;
+        line-height: 30px !important;
     }
+
         .ui-jqgrid tr.jqgrow td[title*="Edit"] {
             display: inline-flex !important;
             justify-content: flex-start;
         }
-        .ui-pager-control tr {
-            background: #fff !important;
-            border-bottom: 0px solid #eee;
-            margin: 0px !important;
-        }
+
+    .ui-pager-control tr {
+        background: #fff !important;
+        border-bottom: 0px solid #eee;
+        margin: 0px !important;
+    }
 
     .ui-pager-table tr {
         display: flex !important;
     }
 
     td[id*="_center"] {
-        float: right;width:auto !important;margin:0px 5px !important;
+        float: right;
+        width: auto !important;
+        margin: 0px 5px !important;
     }
 
     td:before {
@@ -730,10 +844,12 @@ tr.jqgrow td button.btn-outline .svg-inline--fa {
         float: left;
         line-height: 30px !important;
     }
+
     .ui-jqgrid-titlebar {
         font-size: 13px !important;
         letter-spacing: normal;
     }
+
     .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
         background: transparent !important;
     }

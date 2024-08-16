@@ -25,10 +25,11 @@
 .c-primary {
     color: var(--primary-color);
 }
-.treeaction .card-header {
+.treeaction .card-header,.card .card-header {
     /*background: linear-gradient(to top,var(--black),var(--color-primary));*/
     background: linear-gradient(to top,#efdf8d,#fff9e0);
     color: var(--primary-color);
+    font-family:helvetica-Bold;
 }
 
 .treeaction h5 {
