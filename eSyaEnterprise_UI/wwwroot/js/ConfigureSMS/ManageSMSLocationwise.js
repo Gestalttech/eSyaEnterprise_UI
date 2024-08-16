@@ -2,34 +2,39 @@
     fnLoadFormsTree();
 });
 var prevSelectedID = "";
+var FormID = "";
 function fnLoadFormsTree() {
 
+    //$.ajax({
+    //    url: getBaseURL() + '',
+    //    type: 'Post',
+    //    datatype: 'json',
+    //    contentType: 'application/json; charset=utf-8',
+    //    success: function (result) {
+    //        /*uncomment the next line which is commented and remove the code till the comment word ended as 'ends'*/
+    //        //$("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
+    //            $("#jstManageSMSLocation").jstree({
+    //            core: {
+
+    //                    'data' : [
+    //                        { "id": "ajson2", "parent": "#", "text": "Root node 2" },
+    //                        { "id": "ajson3", "parent": "ajson2", "text": "Child 1" },
+    //                        { "id": "ajson4", "parent": "ajson2", "text": "Child 2" },
+    //                        ],
+    //             multiple: false
+    //            }
+    //        });
+    //        // Remove Till here -- ends
+
     $.ajax({
-        url: getBaseURL() + '',
-        type: 'Post',
+        
+        url: getBaseURL() + '/Engine/GetFormForStorelinking',
+        type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
+        async: false,
         success: function (result) {
-            /*uncomment the next line which is commented and remove the code till the comment word ended as 'ends'*/
-            //$("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
-                $("#jstManageSMSLocation").jstree({
-                core: {
-                    
-                        'data' : [
-                            { "id": "ajson2", "parent": "#", "text": "Root node 2" },
-                            { "id": "ajson3", "parent": "ajson2", "text": "Child 1" },
-                            { "id": "ajson4", "parent": "ajson2", "text": "Child 2" },
-                            ],
-                 multiple: false
-                }
-            });
-            // Remove Till here -- ends
-
-
-            fnTreeSize("#jstManageSMSLocation");
-            $(window).on('resize', function () {
-                fnTreeSize("#jstManageSMSLocation");
-            })
+            $("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
@@ -42,7 +47,7 @@ function fnLoadFormsTree() {
     });
 
     $('#jstManageSMSLocation').on("changed.jstree", function (e, data) {
-
+        FormID = "";
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -71,7 +76,7 @@ function fnLoadFormsTree() {
 function fnGridLoadSMSLocationWise(_FormID) {
     $("#jqgSMSLocationWise").jqGrid('GridUnload');
     $("#jqgSMSLocationWise").jqGrid({
-        url: '',
+        url: getBaseURL() + '/Engine/GetSMSInformationFormLocationWise?formId=' + _FormID + '&businessKey=' + $("#cboBusinessLocation").val(),
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -83,7 +88,7 @@ function fnGridLoadSMSLocationWise(_FormID) {
             { name: "IsVariable", width: 45, editable: true, align: 'center', hidden: false, resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
             { name: "TEventDesc", width: 70, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
-            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
+            { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 }, hidden: true },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             ],
         pager: "#jqpSMSLocationWise",
@@ -104,7 +109,7 @@ function fnGridLoadSMSLocationWise(_FormID) {
         loadComplete: function (data) {
             SetGridControlByAction();
             fnAddGridSerialNoHeading();
-            fnJqgridSmallScreen("jqgSMSLocationWise");
+            //fnJqgridSmallScreen("jqgSMSLocationWise");
 
         },
 
@@ -115,6 +120,66 @@ function fnGridLoadSMSLocationWise(_FormID) {
     $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 }
 
+function fnSaveLinkedSMS() {
+    if (IsStringNullorEmpty(FormID) || FormID == '0') {
+
+        fnAlert("w", "ESE_04_00", "UI0102", errorMsg.BusinessLocation_E10);
+        return;
+    }
+    if ($("#cboBusinessLocation").val().trim().length <= 0) {
+        fnAlert("w", "ESE_04_00", "UI0064", errorMsg.BusinessLocation_E10);
+        return;
+    }
+
+    var r_doc = [];
+    var ids = jQuery("#jqgSMSLocationWise").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgSMSLocationWise').jqGrid('getRowData', rowId);
+
+        r_doc.push({
+            BusinessKey: $("#cboBusinessLocation").val(),
+            Smsid: rowData.Smsid,
+            FormId: FormID,            
+            ActiveStatus: rowData.ActiveStatus
+        });
+    }
+    fnAlert("w", "EMI_04_00", "UI0367", r_doc.length);
+    if (r_doc.length <= 0) {
+        fnAlert("w", "EMI_04_00", "UI0367", errorMsg.gridStore_E11);
+        return;
+    }
+
+    $("#btnSaveItem").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Engine/InsertOrUpdateSMSInformationFLW',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: r_doc },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnAddLinkedSMS").attr('disabled', false);
+                fnRefreshGridSMSLocationWise();
+                $('#btnAddLinkedSMS').modal('hide');
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnAddLinkedSMS").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnAddLinkedSMS").attr("disabled", false);
+        }
+    });
+}
+
+$("#btnCancelLinkedSMS").click(function () {
+    fnRefreshGridSMSLocationWise()
+    $("#jqgSMSLocationWise").jqGrid('resetSelection');
+    $("#pnlLinkedSMS").css('display', 'none');
+});
  
 function SetGridControlByAction() {
     $('#jqgAdd').removeClass('ui-state-disabled');
