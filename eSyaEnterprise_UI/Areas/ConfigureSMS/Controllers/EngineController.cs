@@ -548,7 +548,123 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ESE_04_00()
         {
-            return View();
+            try
+            {
+                var serviceBusinessResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey").Result;
+                ViewBag.BusinessKey = serviceBusinessResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.BusinessKey.ToString(),
+                    Text = b.LocationDescription,
+                }).ToList();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        public JsonResult GetFormForStorelinking()
+        {
+            try
+            {
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "FM",
+                    parent = "#",
+                    text = "eSya Forms",
+                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                treeView.Add(jsObj);
+
+                var serviceResponse1 = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormForStorelinking").Result;
+                if (serviceResponse1.Status)
+                {
+                    foreach (var fm in serviceResponse1.Data)
+                    {
+                        jsObj = new jsTreeObject
+                        {
+                            id = fm.FormID.ToString(),
+                            text = fm.FormCode.ToString() + '.' + fm.FormName,
+                            icon = baseURL + "/images/jsTree/openfolder.png",
+                            parent = "FM"
+                        };
+                        treeView.Add(jsObj);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetFormList");
+                }
+
+                return Json(treeView);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetFormList");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///Get SMS Information by BusinessKey And FormId
+        /// </summary>
+        public JsonResult GetSMSInformationFormLocationWise(int formId, int businessKey)
+        {
+            try
+            {
+                var serviceResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSHeader>>("SMSEngine/GetSMSInformationFormLocationWise?businessKey=" + businessKey + "&formId=" + formId).Result;
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update SMS Information Form Location Wise
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertOrUpdateSMSInformationFLW(List<DO_SMSHeader> l_obj)
+        {
+            try
+            {
+                if (l_obj.Count == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "No Record" });
+                }
+                else
+                {
+                    l_obj.All(c =>
+                    {
+                        c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                        c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                        c.FormId1 = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                        return true;
+                    });
+
+                    var serviceResponse = _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertOrUpdateSMSInformationFLW", l_obj).Result;
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(serviceResponse.Message, "UD:InsertOrUpdateSMSInformationFormLocationWise:Params:" + JsonConvert.SerializeObject(l_obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateSMSInformationFormLocationWise:Params:" + JsonConvert.SerializeObject(l_obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
         }
         #endregion
 
