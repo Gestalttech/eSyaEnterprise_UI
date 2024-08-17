@@ -4,28 +4,6 @@
 var prevSelectedID = "";
 var FormID = "";
 function fnLoadFormsTree() {
-
-    //$.ajax({
-    //    url: getBaseURL() + '',
-    //    type: 'Post',
-    //    datatype: 'json',
-    //    contentType: 'application/json; charset=utf-8',
-    //    success: function (result) {
-    //        /*uncomment the next line which is commented and remove the code till the comment word ended as 'ends'*/
-    //        //$("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
-    //            $("#jstManageSMSLocation").jstree({
-    //            core: {
-
-    //                    'data' : [
-    //                        { "id": "ajson2", "parent": "#", "text": "Root node 2" },
-    //                        { "id": "ajson3", "parent": "ajson2", "text": "Child 1" },
-    //                        { "id": "ajson4", "parent": "ajson2", "text": "Child 2" },
-    //                        ],
-    //             multiple: false
-    //            }
-    //        });
-    //        // Remove Till here -- ends
-
     $.ajax({
         
         url: getBaseURL() + '/Engine/GetFormForSMSlinking',
