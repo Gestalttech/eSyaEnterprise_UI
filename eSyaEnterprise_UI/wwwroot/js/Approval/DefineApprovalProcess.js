@@ -38,7 +38,7 @@ function fnLoadGridLevelBasedApproval() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.LevelId, localization.LevelDesc, localization.Active],
+        colNames: [localization.LevelId, localization.LevelDescription, localization.Active],
         colModel: [
             { name: "LevelId", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "LevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
