@@ -28,7 +28,7 @@ function fnLoadFormsTree() {
 
     $.ajax({
         
-        url: getBaseURL() + '/Engine/GetFormForStorelinking',
+        url: getBaseURL() + '/Engine/GetFormForSMSlinking',
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -121,41 +121,37 @@ function fnGridLoadSMSLocationWise(_FormID) {
 }
 
 function fnSaveLinkedSMS() {
+    if ($("#cboBusinessLocation").val().trim().length <= 0) {
+        fnAlert("w", "ESE_04_00", "UI0064", errorMsg.SelectBusinessLocation_E5);
+        return;
+    }
     if (IsStringNullorEmpty(FormID) || FormID == '0') {
 
-        fnAlert("w", "ESE_04_00", "UI0102", errorMsg.BusinessLocation_E10);
-        return;
-    }
-    if ($("#cboBusinessLocation").val().trim().length <= 0) {
-        fnAlert("w", "ESE_04_00", "UI0064", errorMsg.BusinessLocation_E10);
+        fnAlert("w", "ESE_04_00", "UI0102", errorMsg.SelectForm_E6);
         return;
     }
 
-    var r_doc = [];
+    $("#jqgSMSLocationWise").jqGrid('editCell', 0, 0, false);
+    var s_LW = [];
     var ids = jQuery("#jqgSMSLocationWise").jqGrid('getDataIDs');
     for (var i = 0; i < ids.length; i++) {
         var rowId = ids[i];
         var rowData = jQuery('#jqgSMSLocationWise').jqGrid('getRowData', rowId);
 
-        r_doc.push({
+        s_LW.push({
             BusinessKey: $("#cboBusinessLocation").val(),
             Smsid: rowData.Smsid,
-            FormId: FormID,            
-            ActiveStatus: rowData.ActiveStatus
+            FormId: FormID, 
+           ActiveStatus: rowData.ActiveStatus
         });
     }
-    fnAlert("w", "EMI_04_00", "UI0367", r_doc.length);
-    if (r_doc.length <= 0) {
-        fnAlert("w", "EMI_04_00", "UI0367", errorMsg.gridStore_E11);
-        return;
-    }
-
-    $("#btnSaveItem").attr('disabled', true);
+   
+    $("#btnAddLinkedSMS").attr('disabled', true);
     $.ajax({
         url: getBaseURL() + '/Engine/InsertOrUpdateSMSInformationFLW',
         type: 'POST',
         datatype: 'json',
-        data: { obj: r_doc },
+        data: { obj: s_LW },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);

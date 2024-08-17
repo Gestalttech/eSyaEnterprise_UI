@@ -565,7 +565,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
             }
         }
 
-        public JsonResult GetFormForStorelinking()
+        /// <summary>
+        ///Get Form SMS Link
+        /// </summary>
+        public JsonResult GetFormForSMSlinking()
         {
             try
             {
@@ -583,7 +586,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse1 = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormForStorelinking").Result;
+                var serviceResponse1 = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormForSMSlinking").Result;
                 if (serviceResponse1.Status)
                 {
                     foreach (var fm in serviceResponse1.Data)
@@ -632,7 +635,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         /// Insert or Update SMS Information Form Location Wise
         /// </summary>
         [HttpPost]
-        public JsonResult InsertOrUpdateSMSInformationFLW(List<DO_SMSHeader> l_obj)
+        public JsonResult InsertOrUpdateSMSInformationFLW(List<DO_BusinessFormSMSLink> l_obj)
         {
             try
             {
