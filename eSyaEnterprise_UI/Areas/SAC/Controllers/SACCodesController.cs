@@ -26,9 +26,16 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         /// <returns></returns>
 
         [Area("SAC")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECS_07_00()
         {
+            ViewBag.UserFormRole = new DO_UserFormRole
+            {
+                IsInsert = true,
+                IsEdit = true,
+                IsDelete = true,
+                IsView = true
+            };
             return View();
         }
 
@@ -74,7 +81,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
 
                 jsObj.id = "SC";
                 jsObj.parent = "#";
-                jsObj.text = "Service Classes";
+                jsObj.text = "SAC Codes";
                 jsObj.icon = "/images/jsTree/foldergroupicon.png";
                 jsObj.state = new stateObject { opened = true, selected = false };
                 treeView.Add(jsObj);
@@ -84,7 +91,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     {
                         jsObj = new jsTreeObject();
                         jsObj.id = "T" + st.Sacclass.ToString();
-                        jsObj.text = st.SacclassDesc;
+                        jsObj.text =st.Sacclass+"-"+ st.SacclassDesc;
                         jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
                         jsObj.parent = "SC";
                         jsObj.state = new stateObject { opened = false, selected = false };
@@ -97,7 +104,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                                 {
                                     jsObj = new jsTreeObject();
                                     jsObj.id = sg.Saccategory.ToString();
-                                    jsObj.text = sg.SaccategoryDesc;
+                                    jsObj.text =sg.Saccategory+"-"+ sg.SaccategoryDesc;
                                     jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
                                     jsObj.parent = "T" + st.Sacclass.ToString();
                                     jsObj.state = new stateObject { opened = false, selected = false };
@@ -114,7 +121,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                                                 {
                                                     jsObj = new jsTreeObject();
                                                     jsObj.id = "C" + sc.Saccode.ToString();
-                                                    jsObj.text = sc.Sacdescription;
+                                                    jsObj.text =sc.Saccode +"-"+ sc.Sacdescription;
                                                     jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
                                                     jsObj.parent = sg.Saccategory.ToString();
                                                     treeView.Add(jsObj);
@@ -123,7 +130,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                                                 {
                                                     jsObj = new jsTreeObject();
                                                     jsObj.id = "C" + sc.Saccode.ToString();
-                                                    jsObj.text = sc.Sacdescription;
+                                                    jsObj.text =sc.Saccode+"-"+ sc.Sacdescription;
                                                     jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
                                                     jsObj.parent = "C" + sc.ParentId.ToString();
                                                     treeView.Add(jsObj);
@@ -151,11 +158,11 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSACCodeByCode(int ISDCode, string SACClassID, string SACCategoryID, string SACCodeID)
+        public async Task<ActionResult> GetSACCodeByCode(int ISDCode,  string SACCodeID)
         {
             try
             {
-                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID + "&SACCategoryID=" + SACCategoryID + "&SACCodeID=" + SACCodeID;
+                var parameter = "?ISDCode=" + ISDCode + "&SACCodeID=" + SACCodeID;
                 var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_SACCodes>("SACCodes/GetSACCodeByCode" + parameter);
                 if (serviceResponse.Status)
                 {
@@ -184,16 +191,16 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
             }
         }
         [HttpPost]
-        public async Task<ActionResult> InsertOrUpdateSACCode(bool _isInsert, DO_SACCodes obj)
+        public async Task<ActionResult> InsertOrUpdateSACCode( DO_SACCodes obj)
         {
             try
             {
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                if (_isInsert)
+                if (obj._isInsert)
                 {
-                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCode/InsertIntoSACCode", obj);
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCodes/InsertIntoSACCode", obj);
                     if (serviceResponse.Status)
                     {
                         if (serviceResponse.Data != null)
@@ -215,7 +222,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 }
                 else
                 {
-                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCode/UpdateSACSACCode", obj);
+                    var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SACCodes/UpdateSACSACCode", obj);
                     if (serviceResponse.Status)
                     {
                         if (serviceResponse.Data != null)
@@ -243,14 +250,14 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
         }
-        public async Task<ActionResult> DeleteSACCode(int ISDCode, string SACClassID, string SACCategoryID, string SACCodeID)
+        public async Task<ActionResult> DeleteSACCode(int ISDCode,  string SACCodeID)
         {
             try
             {
-                var parameter = "?ISDCode=" + ISDCode + "&SACClassID=" + SACClassID + "&SACCategoryID=" + SACCategoryID
-                    + "&SACCodeID=" + SACCodeID;
+                var parameter = "?ISDCode=" + ISDCode + "&SACCodeID=" + SACCodeID;
 
-                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SACCode/DeleteSACCode" + parameter);
+
+                var serviceResponse = await _eSyaSACAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SACCodes/DeleteSACCode" + parameter);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)

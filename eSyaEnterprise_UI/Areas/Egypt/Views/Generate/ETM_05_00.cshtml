@@ -10,7 +10,8 @@
 <link href="~/css/TokenSystem/tokensystem.css" rel="stylesheet" />
 
 <input type="hidden" id="hdBKey" value="@ViewBag.businessKey" />
-<input type="hidden" id="hdTokenArea" value="@ViewBag.TokenArea" />
+<input type="hidden" id="hdTokenArea" value="@ViewBag.TokenArea"/>
+<input type="hidden" id="hdIpAddress" value="@ViewBag.IPADDRESS"/>
 
 <header>
     <img src="~/images/logo/esya-logo-whitebg.jpeg" class="img-responsive" />
@@ -69,6 +70,7 @@
     $(document).ready(function () {
         
         $('.header').css('display', 'none');
+        // 
         fnGetTokenTypes();
     });
     function fnGetTokenTypes() {
@@ -82,7 +84,9 @@
                 var _hdTokenArea = $("#hdTokenArea").val();
                 if (_hdTokenArea == "") {
                     $("#btnTokenGenerate").css("display", "none");
-                    fnAlert("w", "", "", "Please add the TokenArea in the URL");
+                    // fnAlert("w", "", "", "Please add the TokenArea in the URL");
+                    var ip = $("#hdIpAddress").val();
+                    fnAlert("w", "", "", ip +" does n't have any Token Area");
                     return;
                 }
                 else { 

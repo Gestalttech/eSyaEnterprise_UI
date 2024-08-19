@@ -20,11 +20,36 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
         }
 
         [Area("Egypt")]
-        public IActionResult ETM_05_00(string? TokenArea)
+        public async Task<IActionResult> ETM_05_00()
         {
             //tokenArea = TokenArea;
-            ViewBag.TokenArea = TokenArea;
-            ViewBag.businessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+           string ip= AppSessionVariables.GetIPAddress(HttpContext);
+           int businesskey = 11;
+           var param = "?businessKey=" + businesskey + "&IpAddress=" + ip;
+
+            var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<DO_TokenGeneration>("TokenGeneration/GetFloorIDbyIPAddress" + param);
+            if (serviceResponse.Status)
+            {
+                if (serviceResponse.Data != null)
+                {
+                    ViewBag.TokenArea = serviceResponse.Data.TokenArea;
+                    ViewBag.businessKey = 11;
+
+                }
+                else
+                {
+                    ViewBag.TokenArea = tokenArea;
+                    ViewBag.IPADDRESS = ip;
+                }
+              
+            }
+            else
+            {
+                ViewBag.TokenArea = tokenArea;
+                ViewBag.IPADDRESS = ip;
+            } 
+
+           
             return View();
         }
         [Area("Egypt")]

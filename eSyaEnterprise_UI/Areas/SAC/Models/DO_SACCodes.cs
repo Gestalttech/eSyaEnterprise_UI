@@ -11,6 +11,8 @@
         public string FormID { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }
-        public string ParentId { get; set; }
+        public string? ParentId { get; set; }
+        public bool _isInsert { get; set; }
+        
     }
 }

@@ -57,7 +57,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                         {
                             jsObj = new jsTreeObject();
                             jsObj.id = it.Sacclass.ToString();
-                            jsObj.text = it.SacclassDesc;
+                            jsObj.text =it.Sacclass+"-"+ it.SacclassDesc;
                             jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
                             jsObj.parent = "ST";
                             treeView.Add(jsObj);

@@ -77,7 +77,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                     {
                         jsObj = new jsTreeObject();
                         jsObj.id = st.Sacclass.ToString();
-                        jsObj.text = st.SacclassDesc;
+                        jsObj.text =st.Sacclass +"-"+ st.SacclassDesc;
                         jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
                         jsObj.parent = "SG";
                         jsObj.state = new stateObject { opened = false, selected = false };
@@ -90,7 +90,7 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
                                 {
                                     jsObj = new jsTreeObject();
                                     jsObj.id = "G" + sg.Saccategory.ToString();
-                                    jsObj.text = sg.SaccategoryDesc;
+                                    jsObj.text = sg .Saccategory + "-" + sg.SaccategoryDesc;
                                     jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
                                     jsObj.parent = st.Sacclass.ToString();
                                     treeView.Add(jsObj);
