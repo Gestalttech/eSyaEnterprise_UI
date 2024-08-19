@@ -58,6 +58,7 @@ using eSyaEnterprise_UI.Areas.ConfigFAsset.Data;
 using eSyaEnterprise_UI.Areas.ConfigFin.Data;
 using eSyaEnterprise_UI.Areas.SAC.Data;
 using eSyaEnterprise_UI.Areas.Egypt.Data;
+using eSyaEnterprise_UI.Areas.Approval.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -396,6 +397,16 @@ builder.Services.AddHttpClient<IeSyaFinanceAPIServices, eSyaFinanceAPIServices>(
 builder.Services.AddHttpClient<IeSyaSACAPIServices, eSyaSACAPIServices>(p =>
 {
     p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaSAC_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+
+});
+
+builder.Services.AddHttpClient<IeSyaApprovalProcessAPIServices, eSyaApprovalProcessAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaApprovalProcess_API"));
     p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
     p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
