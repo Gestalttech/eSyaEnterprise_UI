@@ -26,16 +26,16 @@ namespace eSyaEnterprise_UI.Areas.SAC.Controllers
         /// <returns></returns>
 
         [Area("SAC")]
-        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ECS_07_00()
         {
-            ViewBag.UserFormRole = new DO_UserFormRole
-            {
-                IsInsert = true,
-                IsEdit = true,
-                IsDelete = true,
-                IsView = true
-            };
+            //ViewBag.UserFormRole = new DO_UserFormRole
+            //{
+            //    IsInsert = true,
+            //    IsEdit = true,
+            //    IsDelete = true,
+            //    IsView = true
+            //};
             return View();
         }
 

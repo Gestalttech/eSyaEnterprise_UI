@@ -297,7 +297,7 @@ function fnSACCodesCollapseAll() {
 }
  
 function fnDeleteNode() {
-    debugger;
+   
     if (_userFormRole.IsDelete === false) {
         fnAlert("w", "ECS_07_00", "UIC04", errorMsg.deleteauth_E4);
         return;
