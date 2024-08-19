@@ -550,7 +550,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         {
             try
             {
-                var serviceBusinessResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKey").Result;
+                var serviceBusinessResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("ConfigMasterData/GetBusinessKeyBySMSIntegration").Result;
                 ViewBag.BusinessKey = serviceBusinessResponse.Data.Select(b => new SelectListItem
                 {
                     Value = b.BusinessKey.ToString(),

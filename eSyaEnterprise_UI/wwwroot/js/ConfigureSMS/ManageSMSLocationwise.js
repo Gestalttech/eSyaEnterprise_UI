@@ -129,7 +129,7 @@ function fnSaveLinkedSMS() {
         url: getBaseURL() + '/Engine/InsertOrUpdateSMSInformationFLW',
         type: 'POST',
         datatype: 'json',
-        data: { obj: s_LW },
+        data: { l_obj: s_LW },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
