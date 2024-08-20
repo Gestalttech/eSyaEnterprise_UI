@@ -7,6 +7,7 @@ namespace eSyaEnterprise_UI.Models
 {
     public class DO_SmsParameter
     {
+        public int BusinessKey { get; set; }
         public string MessageType { get; set; }
         public string NavigationURL { get; set; }
         public int FormID { get; set; }

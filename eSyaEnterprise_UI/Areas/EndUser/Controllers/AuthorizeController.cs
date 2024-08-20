@@ -1,6 +1,7 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.Areas.EndUser.Data;
 using eSyaEnterprise_UI.Areas.EndUser.Models;
+using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,12 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
     public class AuthorizeController : Controller
     {
         private readonly IeSyaEndUserAPIServices _eSyaEndUserAPIServices;
+        private readonly IeSyaGatewayServices _eSyaGatewayServices;
         private readonly ILogger<AuthorizeController> _logger;
-        public AuthorizeController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, ILogger<AuthorizeController> logger)
+        public AuthorizeController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, IeSyaGatewayServices eSyaGatewayServices, ILogger<AuthorizeController> logger)
         {
             _eSyaEndUserAPIServices = eSyaEndUserAPIServices;
-
+            _eSyaGatewayServices = eSyaGatewayServices;
             _logger = logger;
         }
         #region Authenticate a new user
@@ -52,13 +54,34 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         {
             try
             {
-
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.ModifiedBy = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.IsUserAuthenticated = true;
+
                 var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Authorize/AuthenticateUser", obj);
+
                 if (serviceResponse.Status)
+                {
+                    //DO_SmsParameter sms = new DO_SmsParameter
+                    //{
+                    //    BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                    //    TEventID = SMSTriggerEventValues.OnSaveClick,
+                    //    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                    //    UserID = obj.UserID,
+                    //};
+                    //var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendSmsonSaveClick", sms).Result;
+                    //if (sr_SMS.Status)
+                    //{
+                    //    return Json(new { Status = true, serviceResponse.Data.StatusCode });
+                    //}
+                    //else
+                    //{
+                    //    _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                    //    return Json(new { Status = false, StatusCode = "500" });
+                    //}
+
                     return Json(serviceResponse.Data);
+                }
                 else
                 {
                     _logger.LogError(new Exception(serviceResponse.Message), "UD:AuthenticateUser:params:" + JsonConvert.SerializeObject(obj));
