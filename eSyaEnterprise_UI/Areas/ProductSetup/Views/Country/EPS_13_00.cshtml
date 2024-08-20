@@ -130,7 +130,7 @@
 
                             <div class="form-group">
                                 <label>@Localizer["CountryFlag"]</label>
-                                <select id="cboflagImage" class="selectpicker" data-size="5">
+                                <select id="cboflagImage" class="selectpicker" data-size="5" data-container="body">
                                     <option value='0'>Select Flag</option>
                                     @foreach (var f in ViewBag.Images)
                                     {
@@ -167,7 +167,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="">@Localizer["CurrencyCode"]</label>
-                            <select class="selectpicker" data-live-search="true" title="" data-size="8" id="cboCurrencycode">
+                            <select class="selectpicker" data-container="body" data-live-search="true" title="" data-size="8" id="cboCurrencycode">
                                 <option value="0">@Localizer["ChooseCurrency"] </option>
                                 @if (ViewBag.currencyList != null)
                                 {
