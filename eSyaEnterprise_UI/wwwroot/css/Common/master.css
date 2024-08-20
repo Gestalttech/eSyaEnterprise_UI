@@ -1440,10 +1440,14 @@ button[id^="btnCall"], button[id^="btnHold"], button[id^="btnConfirm"], button[i
     vertical-align: text-top;
     white-space: normal !important;
     letter-spacing: 0px;
-    text-align: center;
     background: #555;
 }
-.f-20{font-size:20px !important;}
+.custH {
+    text-align:center;
+}
+    .f-20 {
+    font-size: 20px !important;
+}
 .f-28{
     font-size:28px !important;
 }
