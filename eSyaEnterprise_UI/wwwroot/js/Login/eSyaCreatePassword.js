@@ -21,6 +21,7 @@ $("#txtLoginPassword").on('focusout', function () {
                    
                     if (response.StatusCode == "1") {
                         if (response.ID <= 0) {
+                           
                             $("#btnRemindMeLater").attr('disabled', true);
                             $("#PopupExpirationMsg").modal('show');
                             $("#lblMessage").text("Your Password has Expired");
@@ -33,6 +34,7 @@ $("#txtLoginPassword").on('focusout', function () {
                             $("#btnRemindMeLater").attr('disabled', false);
                             $("#PopupExpirationMsg").modal('show');
                             $("#lblMessage").text(response.Message);
+                            $("#txtExpUserID").val(response.Key);
                             fnEnableSignInButton();
                         }
                         

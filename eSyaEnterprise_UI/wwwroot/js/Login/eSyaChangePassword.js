@@ -15,7 +15,7 @@ $("#PopupExpPassword").on('shown.bs.modal', function () {
     $("#PopupExpirationMsg").modal('hide');
 });
 function fnOpenExpChangePasswordPopUp() {
-   
+    debugger;
     $("#lblErrorMessageHeader").html('');
  
     $.ajax({
@@ -60,7 +60,7 @@ function fnOpenExpChangePasswordPopUp() {
     
 }
 function fnSaveExpChangePassword() {
-
+  
     $("#lblErrorMessageHeader").html('');
     /*$("#lblErrorList").remove();*/
    

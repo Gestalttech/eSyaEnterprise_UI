@@ -1,9 +1,8 @@
 ﻿var actiontype = "";
 var _isInsert = true;
-
+var FormID = "0";
+var prevSelectedID = '';
 $(function () {
-    fnLoadGridLevelBasedApproval();
-    fnLoadGridValueBasedApproval();
     $("#txtAPEffectiveFrom").datepicker({
         minDate: 0,
         dateFormat: _cnfDateFormat,
@@ -28,23 +27,38 @@ $(function () {
 });
 
 
+function fnOnChangeBusinessKey() {
+    debugger;
+    var _businessKey = $("#cboBusinessKey").val();
+    if (_businessKey != "0" ||  _businessKey != 0 ) {
+
+        fnLoadFormsTree();
+        $("#pnlApprovalProcess").css('display', 'none');
+    }
+    else {
+        $("#jstApprovalProcess").jstree("destroy"); $("#pnlApprovalProcess").css('display', 'none');
+    }
+}
+
 
 /* Dropdown change function starts */
 function fnOnChangeApproval() {
     var _approvalType = $("#cboApprovalType").val();
-    if (_approvalType == "l") {
+    if (_approvalType == "70001" || _approvalType == 70001) {
         $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         $("#secValueBasedApproval").hide();
-        $("#secLevelBasedApproval").show();
+        $("#secLevelBasedApproval,#btnSaveApprovalLevel").show();
+        fnLoadGridLevelBasedApproval();
     }
-    if (_approvalType == "v") {
-        $("#secLevelBasedApproval").hide();
+    if (_approvalType == "70002" || _approvalType == 70002) {
+        $("#secLevelBasedApproval,#btnSaveApprovalLevel").hide();
         $("#secValueBasedApproval").show();
+        fnLoadGridValueBasedApproval();
         $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         fnLoadGridLevelBasedApproval_popup();
     }
     if (_approvalType == "0" || _approvalType == 0) {
-        $("#secValueBasedApproval").hide(); $("#secLevelBasedApproval").hide();
+        $("#secValueBasedApproval").hide(); $("#secLevelBasedApproval,#btnSaveApprovalLevel").hide();
     }
 }
 
@@ -53,17 +67,22 @@ function fnOnChangeApproval() {
 
 
 
-/* Jstree starts*/ 
-function fnLoadFormsTree() {
-    $.ajax({
+/* Jstree starts*/
 
-        url: getBaseURL() + '/Engine/GetFormForStorelinking',
-        type: 'POST',
+function fnLoadFormsTree() {
+    $("#jstApprovalProcess").jstree("destroy");
+    $.ajax({
+        url: getBaseURL() + '/Approval/Process/GetFormsForApproval',
+        type: 'Post',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
-        async: false,
         success: function (result) {
+
             $("#jstApprovalProcess").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstApprovalProcess");
+            $(window).on('resize', function () {
+                fnTreeSize("#jstApprovalProcess");
+            })
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
@@ -76,7 +95,7 @@ function fnLoadFormsTree() {
     });
 
     $('#jstApprovalProcess').on("changed.jstree", function (e, data) {
-        FormID = "";
+
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
                 prevSelectedID = data.node.id;
@@ -87,8 +106,13 @@ function fnLoadFormsTree() {
 
                     $("#lblSelectedFormName").text(data.node.text);
                     FormID = data.node.id;
-                    
+
+                    $("#cboApprovalType").val('0').selectpicker('refresh');
+                    fnOnChangeApproval();
+                    //fnLoadGridLevelBasedApproval();
                     $("#pnlApprovalProcess").css('display', 'block');
+                    $("#chkATActiveStatus").parent().addClass("is-checked");
+                    $("#chkATActiveStatus").prop('disabled', true);
                 }
                 else {
                     $("#pnlApprovalProcess").css('display', 'none');
@@ -102,9 +126,117 @@ function fnLoadFormsTree() {
         $('#jstApprovalProcess').jstree().deselect_node(closingNode.children);
     });
 }
-/* Jstree ends*/ 
-function fnClearApprovalProcess() {
 
+
+function fnALExpandAll() {
+    $('#jstApprovalProcess').jstree('open_all');
+}
+
+function fnALCollapseAll() {
+    $("#pnlApprovalProcess").hide();
+   
+    $('#jstApprovalProcess').jstree('close_all');
+}
+
+/* Jstree ends*/
+
+/* Save Approval Type */
+function fnSaveApprovalLevels() {
+   
+    if (validationApprovalType() === false) {
+        return;
+    }
+    if (!validateAtLeastOneCheckbox('jqgLevelBasedApproval')) {
+        fnAlert("w", "ECS_04_00", "UI0064", "Please check at least one Approval Level.");
+        return;
+    } 
+
+    $("#jqgLevelBasedApproval").jqGrid('editCell', 0, 0, false).attr("value");
+    $("#btnSaveApprovalLevel").attr('disabled', true);
+
+    var $grid = $("#jqgLevelBasedApproval");
+    var _levelslinks = [];
+    var ids = jQuery("#jqgLevelBasedApproval").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgLevelBasedApproval').jqGrid('getRowData', rowId);
+
+
+        _levelslinks.push({
+            ApprovalLevel: rowData.ApprovalLevel,
+            ActiveStatus: rowData.ActiveStatus
+        });
+
+    }
+    var _objatype = {
+        BusinessKey: $("#cboBusinessKey").val(),
+        FormId: FormID,
+        ApprovalType: $("#cboApprovalType").val(),
+        ActiveStatus: $("#chkATActiveStatus").parent().hasClass("is-checked"),
+        lst_ApprovalLevels: _levelslinks
+    };
+
+    $.ajax({
+        url: getBaseURL() + '/Approval/Process/InsertOrUpdateApprovalLevel',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: _objatype },
+
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSaveApprovalLevel").attr('disabled', false);
+                $("#pnlApprovalProcess").css('display', 'none');
+                fnLoadFormsTree();
+                return true;
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveApprovalLevel").attr('disabled', false);
+                return false;
+            }
+
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveApprovalLevel").attr('disabled', false);
+        }
+    });
+}
+function validationApprovalType() {
+
+    if ($("#cboBusinessKey").val() <= 0) {
+        fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        return;
+    }
+
+    if (IsStringNullorEmpty(FormID) || FormID == "0") {
+        fnAlert("w", "ECS_04_00", "UI0181", "Select a form");
+        return false;
+    }
+    if (IsStringNullorEmpty($("#cboApprovalType").val()) || $("#cboApprovalType").val() == "0") {
+        fnAlert("w", "ECS_04_00", "UI0302", "Select a Approval type");
+        return false;
+    }
+}
+
+function validateAtLeastOneCheckbox(jqgLevelBasedApproval) {
+   
+    let isChecked = false;
+    const rows = $("#" + jqgLevelBasedApproval).getDataIDs(); // Get all row IDs
+    for (let i = 0; i < rows.length; i++) {
+        const isRowChecked = $("#" + jqgLevelBasedApproval).jqGrid('getCell', rows[i], 'ActiveStatus');
+        if (isRowChecked == 'true') {
+            isChecked = true;
+            break;
+        }
+    }
+    return isChecked;
+}
+/*End Save Approval Type*/
+
+function fnClearApprovalProcess() {
+    $("#pnlApprovalProcess").css('display', 'none');
 }
 
 /*Level Based Approval Starts*/
@@ -113,15 +245,15 @@ function fnLoadGridLevelBasedApproval() {
     $("#jqgLevelBasedApproval").GridUnload();
 
     $("#jqgLevelBasedApproval").jqGrid({
-        url:'',
+        url: getBaseURL() + '/Approval/Process/GetApprovalLevelsbyCodeType?businesskey=' + $("#cboBusinessKey").val()
+            + '&formId=' + FormID + '&approvaltype=' + $("#cboApprovalType").val(),
         datatype: 'json',
         mtype: 'POST',
-        contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.LevelId, localization.LevelDescription, localization.Active],
         colModel: [
-            { name: "LevelId", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "LevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "ApprovalLevel", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "ApprovalLevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
             { name: "ActiveStatus", width: 110, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, },
         ],
         pager: "#jqpLevelBasedApproval",
@@ -167,13 +299,15 @@ function fnLoadGridValueBasedApproval() {
     $("#jqgValueBasedApproval").GridUnload();
 
     $("#jqgValueBasedApproval").jqGrid({
-        url: '',
+        url: getBaseURL() + '/Approval/Process/GetApprovalValuesbyFormID?businesskey=' + $("#cboBusinessKey").val()
+            + '&formId=' + FormID + '&approvaltype=' + $("#cboApprovalType").val(),
         datatype: 'json',
         mtype: 'POST',
-        contentType: 'application/json; charset=utf-8',
-        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+       ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.ValueFrom, localization.ValueTo, localization.EffectiveFrom, localization.EffectiveTill, localization.Active, localization.Actions],
         colModel: [
+            
+
             { name: "ValueFrom", width:100, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: false },
             { name: "ValueTo", width:100, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: false },
             {
@@ -231,7 +365,7 @@ function fnAddValueBasedApproval() {
     $("#btnDeactiveApprovalProcess").hide();
 }
 
-function fnEditValueBasedApproval() {
+function fnEditValueBasedApproval(actiontype) {
     var rowid = $("#jqgValueBasedApproval").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgValueBasedApproval').jqGrid('getRowData', rowid);
     if (rowData.ActiveStatus == 'true') {
@@ -297,17 +431,17 @@ function fnLoadGridLevelBasedApproval_popup() {
     $("#jqgLevelBasedApproval_popup").GridUnload();
 
     $("#jqgLevelBasedApproval_popup").jqGrid({
-        url: '',
+        url: getBaseURL() + '/Approval/Process/GetApprovalLevelsbyCodeType?businesskey=' + $("#cboBusinessKey").val()
+            + '&formId=' + FormID + '&approvaltype=' + $("#cboApprovalType").val(),
         datatype: 'json',
         mtype: 'POST',
-        contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         colNames: [localization.LevelId, localization.LevelDescription, localization.Active],
         colModel: [
-            { name: "LevelId", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "LevelDesc", width: 300, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "ActiveStatus", width: 120, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, },
-        ],
+            { name: "ApprovalLevel", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "ApprovalLevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "ActiveStatus", width: 110, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, },
+         ],
         pager: "#jqpLevelBasedApproval_popup",
         rowNum: 10,
         sortable: false,
@@ -347,3 +481,137 @@ $("#PopupApprovalProcess").on('shown.bs.modal', function () {
     $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 })
 /* Level Based Approval grid Ends */
+
+
+
+/* Save Approval Values */
+function fnSaveApprovalValues() {
+
+    if (validationApprovalValues() === false) {
+        return;
+    }
+    if (!validateAtLeastOneCheckboxValues('jqgLevelBasedApproval_popup')) {
+        fnAlert("w", "ECS_04_00", "UI0064", "Please check at least one Approval Level.");
+        return;
+    }
+
+    $("#jqgLevelBasedApproval_popup").jqGrid('editCell', 0, 0, false).attr("value");
+    $("#btnSaveApprovalValues").attr('disabled', true);
+
+    var $grid = $("#jqgLevelBasedApproval_popup");
+    var _valuelinks = [];
+    var _valubased = [];
+    var ids = jQuery("#jqgLevelBasedApproval_popup").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgLevelBasedApproval_popup').jqGrid('getRowData', rowId);
+
+
+        _valuelinks.push({
+            ApprovalLevel: rowData.ApprovalLevel,
+            ActiveStatus: rowData.ActiveStatus
+        });
+
+    }
+
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgLevelBasedApproval_popup').jqGrid('getRowData', rowId);
+
+
+        _valubased.push({
+            BusinessKey: $("#cboBusinessKey").val(),
+            FormId: FormID,
+            ApprovalLevel: rowData.ApprovalLevel,
+            ValueFrom: $("#txtAPValueFrom").val(),
+            ValueTo: $("#txtAPValueTo").val(),
+            EffectiveFrom: getDate($("#txtAPEffectiveFrom")),
+            EffectiveTill: getDate($("#txtAPEffectiveTill")),
+            ActiveStatus: rowData.ActiveStatus 
+        });
+
+    }
+    var _objvalue = {
+        BusinessKey: $("#cboBusinessKey").val(),
+        FormId: FormID,
+        ValueFrom: $("#txtAPValueFrom").val(),
+        ValueTo: $("#txtAPValueTo").val(),
+        EffectiveFrom: getDate($("#txtAPEffectiveFrom")),
+        EffectiveTill: getDate($("#txtAPEffectiveTill")),
+        ApprovalType: $("#cboApprovalType").val(),
+        ActiveStatus: $("#chkAPActiveStatus").parent().hasClass("is-checked"),
+        lst_ApprovalLevels: _valuelinks,
+        lst_ApprovalValues: _valubased
+    };
+
+    $.ajax({
+        url: getBaseURL() + '/Approval/Process/InsertOrUpdateApprovalValueBased',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: _objvalue },
+
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSaveApprovalValues").attr('disabled', false);
+                $("#pnlApprovalProcess").css('display', 'none');
+                fnLoadFormsTree();
+                return true;
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveApprovalValues").attr('disabled', false);
+                return false;
+            }
+
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveApprovalValues").attr('disabled', false);
+        }
+    });
+}
+function validationApprovalValues() {
+
+    if ($("#cboBusinessKey").val() <= 0) {
+        fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        return;
+    }
+
+    if (IsStringNullorEmpty(FormID) || FormID == "0") {
+        fnAlert("w", "ECS_04_00", "UI0181", "Select a form");
+        return false;
+    }
+    if (IsStringNullorEmpty($("#cboApprovalType").val()) || $("#cboApprovalType").val() == "0") {
+        fnAlert("w", "ECS_04_00", "UI0302", "Select a Approval type");
+        return false;
+    }
+
+    if (IsStringNullorEmpty($("#txtAPValueFrom").val())) {
+        fnAlert("w", "ECS_04_00", "UI0181", "Please Enter Value From");
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtAPValueTo").val()) || $("#txtAPValueTo").val()=="0") {
+        fnAlert("w", "ECS_04_00", "UI0181", "Please Enter Effective Value To");
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtAPEffectiveFrom").val())) {
+        fnAlert("w", "ECS_04_00", "UI0181", "Please Select Effective From");
+        return false;
+    }
+}
+
+function validateAtLeastOneCheckboxValues(jqgLevelBasedApproval_popup) {
+
+    let isChecked = false;
+    const rows = $("#" + jqgLevelBasedApproval_popup).getDataIDs(); // Get all row IDs
+    for (let i = 0; i < rows.length; i++) {
+        const isRowChecked = $("#" + jqgLevelBasedApproval_popup).jqGrid('getCell', rows[i], 'ActiveStatus');
+        if (isRowChecked == 'true') {
+            isChecked = true;
+            break;
+        }
+    }
+    return isChecked;
+}
+/*End Save Approval Type*/

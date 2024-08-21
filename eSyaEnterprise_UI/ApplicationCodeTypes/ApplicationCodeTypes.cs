@@ -114,5 +114,9 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
 
         #endregion
 
+        #region Approval
+        public const int ApprovalType = 7;
+        public const int ApprovalLevel = 8;
+        #endregion
     }
 }

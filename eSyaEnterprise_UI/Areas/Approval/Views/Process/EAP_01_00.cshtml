@@ -46,8 +46,8 @@
     <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
         <div class="form-group">
             <label for="cboBusinessKey"> @Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKeyList">
-            <option value="0">Select</option>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnOnChangeBusinessKey()">
+            <option value="0">Select Location</option>
             </select>
 
         </div>
@@ -56,18 +56,7 @@
 <div class="row">
     <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-5  col-10" id="divApprovalProcess">
         <div id="jstApprovalProcess"></div>
-        <div id="jstApprovalSample">
-            <ul>
-            <li class="jstree-open" id="node_1">
-                FormNames
-                <ul>
-                    <li>
-                        <a href="#" class="jstree-clicked">Form Name 1</a>
-                    </li>
-                </ul>
-            </li>
-            </ul>
-        </div>
+        
     </div>
     <div class="col-xxl-7 col-xl-7 col-lg-7 col-md-5 col-sm-12">
         
@@ -80,7 +69,7 @@
                     <div class="col-lg-5  col-md-5 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label for="cboApprovalType"> @Localizer["ApprovalType"]</label>
-                            <select class="selectpicker" data-live-search="true" id="cboApprovalType" title="" data-size="8" onchange="fnOnChangeApproval()">
+                            <select class="selectpicker" data-live-search="true" id="cboApprovalType" title="" data-size="8" onchange="fnOnChangeApproval()" asp-items="@ViewBag.ApprovalType">
                                 <option value="0">@Localizer["Select"]</option>
                                @*  <option value="l">@Localizer["LevelBasedApproval"]</option>
                                 <option value="v">@Localizer["ValueBasedApproval"]</option> *@
@@ -93,6 +82,12 @@
                         <div class="col-lg-9 col-md-9 col-sm-12 form-group">
                             <table id="jqgLevelBasedApproval"></table>
                             <div id="jqpLevelBasedApproval"></div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkATActiveStatus">
+                                <input type="checkbox" id="chkATActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                            </label>
                         </div>
                     </div>
                 </section>
@@ -109,7 +104,7 @@
                 </section>
             </div>
             <div class="mdl-card__actions mdl-card--border" style="text-align: center;">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnSaveCCDesc" onclick="fnSaveCCDesc()">
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnSaveApprovalLevel" onclick="fnSaveApprovalLevels()">
                     <i class="fa fa-save"></i> @Localizer["Save"]
                 </button>
                 <button class="mdl-button mdl-js-button mdl-button--raised" id="btnCancelCCDesc" onclick="fnClearApprovalProcess()">
@@ -125,20 +120,16 @@
                 <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button btn_wdth" id="btnCCDeleteNode" onclick="fnDeleteNode()">
-                        <i class="fa fa-times"></i>     @Localizer["DeleteNode"]
-                    </button>
-                </li>
+               
                 <li class="list-group-item">
 
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCExpandAll" onclick="fnCCExpandAll()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCExpandAll" onclick="fnALExpandAll()">
                         <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
                     </button>
                 </li>
                 <li class="list-group-item">
 
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCCollapseAll" onclick="fnCCCollapseAll()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCCollapseAll" onclick="fnALCollapseAll()">
                         <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
                     </button>
                 </li>
@@ -159,25 +150,25 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="txtAPValueFrom"> @Localizer["ValueFrom"]</label>
                             <input id="txtAPValueFrom" class="form-control decimal_3" type="text" maxlength="18" />
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="txtAPValueTo"> @Localizer["ValueTo"]</label>
                             <input id="txtAPValueTo" class="form-control decimal_3" type="text" maxlength="18" />
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="txtAPEffectiveFrom"> @Localizer["EffectiveFrom"]</label>
                             <input id="txtAPEffectiveFrom" class="form-control" autocomplete="off" type="text"/>
                         </div>
                     </div> 
-                    <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
                         <div class="form-group">
                             <label for="txtAPEffectiveTill"> @Localizer["EffectiveTill"]</label>
                             <input id="txtAPEffectiveTill" class="form-control" autocomplete="off" type="text" />
@@ -202,7 +193,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button type="button" class="mdl-button primary-button" id="btnSaveApprovalProcess">
+                        <button type="button" class="mdl-button primary-button" id="btnSaveApprovalValues" onclick="fnSaveApprovalValues()">
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
                         <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelApprovalProcess">
