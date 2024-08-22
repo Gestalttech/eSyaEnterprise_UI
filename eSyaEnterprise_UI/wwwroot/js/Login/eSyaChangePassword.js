@@ -15,7 +15,7 @@ $("#PopupExpPassword").on('shown.bs.modal', function () {
     $("#PopupExpirationMsg").modal('hide');
 });
 function fnOpenExpChangePasswordPopUp() {
-    debugger;
+   
     $("#lblErrorMessageHeader").html('');
  
     $.ajax({
@@ -60,7 +60,7 @@ function fnOpenExpChangePasswordPopUp() {
     
 }
 function fnSaveExpChangePassword() {
-  
+   
     $("#lblErrorMessageHeader").html('');
     /*$("#lblErrorList").remove();*/
    
@@ -113,8 +113,11 @@ function fnSaveExpChangePassword() {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 fnExpClear();
-                $("#txtExpUserID").val(''); $("#btnExpSave").attr("disabled", false);
+                $("#txtExpUserID").val('');
+                $("#btnExpSave").attr("disabled", false);
                 $("#divErrorMsg").css('display', 'none');
+                $("#PopupExpPassword").modal('hide');
+                location.reload();
             }
             else {
                

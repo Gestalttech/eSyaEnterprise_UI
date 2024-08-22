@@ -17,13 +17,12 @@ $(function () {
          items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditValueBasedApproval('edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditValueBasedApproval('view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditValueBasedApproval('delete') } },
         }
        
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+//    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
 
 
@@ -70,6 +69,7 @@ function fnOnChangeApproval() {
 /* Jstree starts*/
 
 function fnLoadFormsTree() {
+    prevSelectedID = '';
     $("#jstApprovalProcess").jstree("destroy");
     $.ajax({
         url: getBaseURL() + '/Approval/Process/GetFormsForApproval',
@@ -237,6 +237,7 @@ function validateAtLeastOneCheckbox(jqgLevelBasedApproval) {
 
 function fnClearApprovalProcess() {
     $("#pnlApprovalProcess").css('display', 'none');
+    fnLoadFormsTree();
 }
 
 /*Level Based Approval Starts*/
@@ -359,18 +360,41 @@ function fnLoadGridValueBasedApproval() {
 
 
 function fnAddValueBasedApproval() {
+    fnLoadGridLevelBasedApproval_popup();
     $("#PopupApprovalProcess").modal('show');
+    $("#btnSaveApprovalValues").show();
     $("#chkAPActiveStatus").parent().addClass("is-checked");
     $("#chkAPActiveStatus").prop('disabled', true);
     $("#btnDeactiveApprovalProcess").hide();
+    $("#txtAPValueFrom,#txtAPValueTo,#txtAPEffectiveFrom,#txtAPEffectiveTill").val('');
+    $("#txtAPValueFrom,#txtAPValueTo,#txtAPEffectiveFrom,#txtAPEffectiveTill").attr('disabled', false);
+    $('#PopupApprovalProcess').find('.modal-title').text(localization.AddValueBasedApproval);
 }
 
 function fnEditValueBasedApproval(actiontype) {
+    debugger;
     var rowid = $("#jqgValueBasedApproval").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgValueBasedApproval').jqGrid('getRowData', rowid);
+   
+    $("#txtAPValueFrom").val(rowData.ValueFrom);
+    $("#txtAPValueTo").val(rowData.ValueTo);
+    
+    if (rowData.EffectiveFrom !== null) {
+        setDate($('#txtAPEffectiveFrom'), fnGetDateFormat(rowData.EffectiveFrom));
+    }
+    else {
+        $('#txtAPEffectiveFrom').val('');
+    }
+
+    if (rowData.EffectiveTill !== null) {
+        setDate($('#txtAPEffectiveTill'), fnGetDateFormat(rowData.EffectiveTill));
+    }
+    else {
+        $('#txtAPEffectiveTill').val('');
+    }
     if (rowData.ActiveStatus == 'true') {
         $("#chkAPActiveStatus").parent().addClass("is-checked");
-     }
+    }
     else {
         $("#chkAPActiveStatus").parent().removeClass("is-checked");
     }
@@ -381,7 +405,10 @@ function fnEditValueBasedApproval(actiontype) {
         }
         $('#PopupApprovalProcess').modal('show');
         $('#PopupApprovalProcess').find('.modal-title').text(localization.EditValueBasedApproval);
+        $("#btnSaveApprovalValues").show();
         $("#chkActiveStatus").prop('disabled', true);
+        $("#txtAPValueFrom,#txtAPValueTo,#txtAPEffectiveFrom").attr('disabled', true);
+        $("#txtAPEffectiveTill").attr('disabled', false);
     }
 
     if (actiontype.trim() == "view") {
@@ -392,17 +419,11 @@ function fnEditValueBasedApproval(actiontype) {
         $('#PopupApprovalProcess').modal('show');
         $('#PopupApprovalProcess').find('.modal-title').text(localization.ViewValueBasedApproval);
         $("#chkActiveStatus").prop('disabled', true);
+        $("#txtAPValueFrom,#txtAPValueTo,#txtAPEffectiveFrom,#txtAPEffectiveTill").attr('disabled', true);
+        $("#btnSaveApprovalValues").hide();
     }
 
-    if (actiontype.trim() == "delete") {
-        if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EAP_01_00", "UIC04", errorMsg.deleteauth_E4);
-            return;
-        }
-        $('#PopupApprovalProcess').modal('show');
-        $('#PopupApprovalProcess').find('.modal-title').text(localization.DeactivateValueBasedApproval);
-        $("#chkActiveStatus").prop('disabled', true);
-    }
+    
 }
 
 function fnGridRefreshValueBasedApproval() {
@@ -477,6 +498,9 @@ function fnGridRefreshLevelBasedApproval_popup() {
 }
 
 
+$("#PopupApprovalProcess").on('hidden.bs.modal', function () {
+    fnGridRefreshLevelBasedApproval_popup();
+});
 $("#PopupApprovalProcess").on('shown.bs.modal', function () {
     $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 })
@@ -554,7 +578,9 @@ function fnSaveApprovalValues() {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveApprovalValues").attr('disabled', false);
-                $("#pnlApprovalProcess").css('display', 'none');
+                
+                $("#PopupApprovalProcess").modal('hide');
+                fnGridRefreshValueBasedApproval();
                 fnLoadFormsTree();
                 return true;
             }
