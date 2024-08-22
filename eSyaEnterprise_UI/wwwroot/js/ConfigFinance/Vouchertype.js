@@ -130,7 +130,7 @@ function fnGridVoucherType(BookTypeID) {
         colModel: [
             { name: "VoucherType", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "VoucherTypeDesc", width: 280, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", width: 55, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -242,11 +242,12 @@ function fnGridLoadInstrumentType() {
         datatype: 'json',
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.InstrumentType, localization.InstrumentTypeDescription,localization.Active],
         colModel: [
             { name: "InstrumentType", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
-            { name: "InstrumentTypeDesc", width: 250, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "InstrumentTypeDesc", width: 270, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "ActiveStatus", editable: true, width:50, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         rowNum: 10,
         rownumWidth: 55,
@@ -271,6 +272,7 @@ function fnGridLoadInstrumentType() {
         },
         loadComplete: function () {
             fnJqgridSmallScreen("jqgInstrumentType");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 
         },
     }).jqGrid('navGrid', '#jqpInstrumentType', { add: false, edit: false, search: false, del: false, refresh: false });
