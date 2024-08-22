@@ -431,6 +431,8 @@ namespace eSyaEnterprise_UI.Controllers
 
             HttpContext.Session.Set("AppConfig", appConfig);
             SetLoginApplicationRuleInViewBag();
+            //clearing Culture cookie
+            Response.Cookies.Delete(CookieRequestCultureProvider.DefaultCookieName);
             return View();
         }
         public async Task<JsonResult> SendUserID(string mobileNumber)
@@ -493,17 +495,18 @@ namespace eSyaEnterprise_UI.Controllers
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
+            // Set the culture in a cookie so it persists across requests
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+            new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
+            );
 
-            //Response.Cookies.Append(
-            //    CookieRequestCultureProvider.DefaultCookieName,
-            //    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-            //new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(1) }
-            //);
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+            // Set the current thread culture (affects only the current request)
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
-
-            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
-            //Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
             ViewBag.selectedculture = culture;
             return LocalRedirect(returnUrl);
         }
