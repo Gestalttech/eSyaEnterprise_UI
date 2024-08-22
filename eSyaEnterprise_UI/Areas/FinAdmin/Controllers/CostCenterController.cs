@@ -23,32 +23,16 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
 
         #region Manage Cost Center
         [Area("FinAdmin")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult EFA_01_00()
         {
             return View();
         }
 
-        //class MenuType
-        //{
-        //    public string ID { get; set; }
-        //    public string Type { get; set; } // HD - > Header,CL -> Cost Center Class , CC -> Cost Center
-        //    public bool Status { get; set; }
-        //}
-
         public async Task<ActionResult> GetCostCenterMenuForTree()
         {
             try
             {
-                //var serviceResponse = await _eSyaFinanceAPIServices.HttpClientServices.GetAsync<List<DO_CostCenterClass>>("ServiceManagement/GetServiceTypes");
-                //var st_list = new List<DO_ServiceType>();
-                //if (serviceResponse.Status)
-                //{
-                //    st_list = serviceResponse.Data.FindAll(w => w.ActiveStatus == true);
-                //}
-                //else
-                //{
-                //    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetServiceClasses:GetServiceTypes");
-                //}
                 var serviceResponse1 = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CostCenterClass>>("CostCentre/GetCostCenterClass");
                 var sg_list = new List<DO_CostCenterClass>();
                 if (serviceResponse1.Status)
@@ -70,7 +54,6 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                     _logger.LogError(new Exception(serviceResponse2.Message), "UD:GetCostCenterList:GetCostCenterList");
                 }
                 List<jsTreeObject> treeView = new List<jsTreeObject>();
-                //List<MenuType> TypeList = new List<MenuType>();
                 jsTreeObject jsObj = new jsTreeObject();
 
                 string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
@@ -83,7 +66,6 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                 treeView.Add(jsObj);
                 if (sg_list != null)
                 {
-                    //int i = 0;
                     foreach (var st in sg_list)
                     {
                         jsObj = new jsTreeObject();
@@ -91,14 +73,9 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                         jsObj.parent = "HD0";
                         jsObj.text = st.CostClassDesc;
                         jsObj.icon = baseURL + "/images/jsTree/openfolder.png";
-
-                        //jsObj.GroupIndex = i.ToString();
-                        //i++;
                         jsObj.state = new stateObject { opened = false, selected = false };
                         treeView.Add(jsObj);
-                        //TypeList.Add(new MenuType { ID = jsObj.id, Type = "CL", Status = st.Status });//CC -> Cost Center Class
-
-
+                        
                         if (sc_list != null)
                         {
                             foreach (var sc in sc_list)
@@ -111,38 +88,10 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                                         jsObj.parent = "CL" + sc.CostCenterClass.ToString();
                                     else
                                         continue;
-                                    jsObj.text = sc.CostCenterDesc; //+ " - " + m.AccountCode;
-                                                                    //obj.icon = "/Content/images/Finance/EditIcon.png";//AccountsIcon.png";
-                                                                    //jsObj.GroupIndex = i.ToString(); i++;
-
+                                    jsObj.text = sc.CostCenterDesc; 
                                     jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
                                     jsObj.state = new stateObject { opened = false, selected = false };
                                     treeView.Add(jsObj);
-                                    //TypeList.Add(new MenuType { ID = jsObj.id, Type = "CC", Status = sc.Status });
-
-
-                                    //if (st.CostCenterClass == sc.CostCenterClass)
-                                    //{
-                                    //    if (sc.CostCenterCode == sc.ParentId)
-                                    //    {
-                                    //        jsObj = new jsTreeObject();
-                                    //        jsObj.id = "C" + sc.ServiceClassId.ToString();
-                                    //        jsObj.text = sc.ServiceClassDesc;
-                                    //        jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
-                                    //        jsObj.parent = sg.ServiceGroupId.ToString();
-                                    //        treeView.Add(jsObj);
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        jsObj = new jsTreeObject();
-                                    //        jsObj.id = "C" + sc.ServiceClassId.ToString();
-                                    //        jsObj.text = sc.ServiceClassDesc;
-                                    //        jsObj.icon = baseURL + "/images/jsTree/fileIcon.png";
-                                    //        jsObj.parent = "C" + sc.ParentId.ToString();
-                                    //        treeView.Add(jsObj);
-                                    //    }
-
-                                    //}
                                 }
                             }
                         }
@@ -157,6 +106,60 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
             }
         }
 
+        public async Task<ActionResult> GetCostCenterClassByCode(int CostCenterClass)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CostCenterClass>>("CostCentre/GetCostCenterClassByCode?CostCenterClass=" + CostCenterClass);
+                if (serviceResponse.Data != null)
+                {
+                    var data = serviceResponse.Data;
+                    return Json(data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCostCenterClassByCode:For CostCenterClass {0}", CostCenterClass);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetServiceClassesByGroupID: CostCenterClass{0}", CostCenterClass);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        public async Task<ActionResult> GetCostCenterCodes(int CostCentreCode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CostCenter>>("CostCentre/GetCostCenterCodes?CostCentreCode=" + CostCentreCode);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        var data = serviceResponse.Data;
+                        return Json(data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCostCenterCodes:For CostCentreCode {0}", CostCentreCode);
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetCostCenterCodes: CostCentreCode{0}", CostCentreCode);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetCostCenterCodes: CostCentreCode{0}", CostCentreCode);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+
         public async Task<ActionResult> AddOrUpdateCostCenterClass(DO_CostCenterClass obj)
         {
             try
@@ -166,8 +169,7 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-
-                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CostCentre/CreateCostCenterClass", obj);
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CostCentre/AddOrUpdateCostCenterClass", obj);
                 if (serviceResponse.Status)
                 {
                     if (serviceResponse.Data != null)
@@ -176,21 +178,124 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateCostCenterClass:params:" + JsonConvert.SerializeObject(obj));
                         return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
                     }
 
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateCostCenterClass:params:" + JsonConvert.SerializeObject(obj));
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:AddOrUpdateServiceClass:params:" + JsonConvert.SerializeObject(obj));
+                _logger.LogError(ex, "UD:AddOrUpdateCostCenterClass:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        public async Task<ActionResult> AddOrUpdateCostCenterCodes(DO_CostCenter obj)
+        {
+            try
+            {
+                obj.FormId = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                obj.CreatedOn = DateTime.Now;
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("CostCentre/AddOrUpdateCostCenterCodes", obj);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:AddOrUpdateCostCenterCodes:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AddOrUpdateCostCenterCodes:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:AddOrUpdateCostCenterCodes:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteCostCenterClass(int CostCenterClass)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("CostCentre/DeleteCostCenterClass?CostCenterClass=" + CostCenterClass);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteCostCenterClass:For CostCenterClass {0}", CostCenterClass);
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteCostCenterClass: CostCenterClass{0}", CostCenterClass);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:DeleteCostCenterClass: CostCenterClass{0}", CostCenterClass);
+                return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteCostCenter(int CostCenterCode)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("CostCentre/DeleteCostCenter?CostCenterCode=" + CostCenterCode);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteCostCenterClass:For CostCenterClass {0}", CostCenterCode);
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:DeleteCostCenterClass: CostCenterClass{0}", CostCenterCode);
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:DeleteCostCenterClass: CostCenterClass{0}", CostCenterCode);
                 return Json(new DO_ReturnParameter() { Status = false, Message = ex.ToString() });
             }
         }
