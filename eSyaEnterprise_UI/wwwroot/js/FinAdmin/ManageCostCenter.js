@@ -1,6 +1,7 @@
 ﻿var prevSelectedID = "";
 var _CostCenterClassID = "";
 var _CostCenterID = "";
+
 $(function () {
 
     $('#chkCCActiveStatus').parent().addClass("is-checked");
@@ -13,32 +14,37 @@ $(function () {
 function fnLoadSACCategoryTree() {
     $("#jstCostCenter").jstree("destroy");
     $.ajax({
-        url:'',
+        url: getBaseURL() + '/CostCenter/GetCostCenterMenuForTree',
         //url:'',
         type: 'GET',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
 
         success: function (result) {
-            //$("#jstCostCenter").jstree({ core: { data: result, multiple: false } });
+            $("#jstCostCenter").jstree({ core: { data: result, multiple: false } });
 
-            $("#jstCostCenter").jstree({
-                core: {
+            //$("#jstCostCenter").jstree({
+            //    core: {
 
-                    'data': [
-                        { "id": "pa", "parent": "#", "text": "Cost Center Class" },
-                        { "id": "CL", "parent": "pa", "text": "Patient Care" },
-                        { "id": "CD1", "parent": "CL", "text": "Maadi" },
-                        { "id": "CD2", "parent": "CL", "text": "Zayed" },
-                    ],
-                    multiple: false
-                }
-            });
+            //        'data': [
+            //            { "id": "pa", "parent": "#", "text": "Cost Center Class" },
+            //            { "id": "CL", "parent": "pa", "text": "Patient Care" },
+            //            { "id": "CD1", "parent": "CL", "text": "Maadi" },
+            //            { "id": "CD2", "parent": "CL", "text": "Zayed" },
+            //        ],
+            //        multiple: false
+            //    }
+            //});
+            //error: function (error) {
+            //    alert(error.statusText)
+            //}
 
-            fnTreeSize("#jstCostCenter");
-            $(window).on('resize', function () {
-                fnTreeSize("#jstCostCenter");
-            })
+            
+
+            //fnTreeSize("#jstCostCenter");
+            //$(window).on('resize', function () {
+            //    fnTreeSize("#jstCostCenter");
+            //})
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
@@ -59,7 +65,7 @@ function fnLoadSACCategoryTree() {
                 $("#divCostCenterClass").hide();
                 debugger;
                 var parentNode = $("#jstCostCenter").jstree(true).get_parent(data.node.id);
-                _SACClassID = parentNode;
+                _CostCenterClassID = parentNode;
                 // If Parent node is selected
                 if (parentNode == "#") {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClass" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
@@ -86,7 +92,7 @@ function fnLoadSACCategoryTree() {
                    
                 }
                 // If Type node is selected
-                else if (parentNode == "pa") {
+                else if (parentNode == "CL") {
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClassDesc" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="EditClass" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
                     $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="ViewClass" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
@@ -121,7 +127,7 @@ function fnLoadSACCategoryTree() {
                         $("#btnSaveCCClass").hide();
                         _CostCenterClassID = data.node.id;
                         _CostCenterClassID = _CostCenterClassID.substring(1);
-                        fnFillServiceCategoryDetail(_CostCenterClassID);
+                        fnFillCostCentreClass(_CostCenterClassID);
                         $('#chkCCClassActiveStatus').parent().addClass("is-checked");
                         $("#divCostCenterClass").show();
                         $("#divCostCenterClassDesc").hide();
@@ -140,7 +146,7 @@ function fnLoadSACCategoryTree() {
                         $("#btnSaveCCClass").show();
                         _CostCenterClassID = data.node.id;
                         _CostCenterClassID = _CostCenterClassID.substring(1);
-                        fnFillServiceCategoryDetail(_CostCenterClassID);
+                        fnFillCostCentreClass(_CostCenterClassID);
                         $("#divCostCenterClass").show();
                         $("#divCostCenterClassDesc").hide();
                         $('#chkCCClassActiveStatus').parent().addClass("is-checked");
@@ -167,7 +173,7 @@ function fnLoadSACCategoryTree() {
                         $("#btnSaveCCDesc").hide();
                         _CostCenterID = data.node.id;
                         _CostCenterID = _CostCenterID.substring(1);
-                        fnFillServiceCategoryDetail(_CostCenterID);
+                        fnFillCostCentreCodes(_CostCenterID);
                         $("#divCostCenterClass").hide();
                         $("#divCostCenterClassDesc").show();
                         $("#chkCCCDActiveStatus").prop("disabled", true);
@@ -188,7 +194,7 @@ function fnLoadSACCategoryTree() {
                         $("#btnSaveCCDesc").show();
                         _CostCenterID = data.node.id;
                         _CostCenterID = _CostCenterID.substring(1);
-                        fnFillServiceCategoryDetail(_CostCenterID);
+                        fnFillCostCentreCodes(_CostCenterID);
                         $("#divCostCenterClassDesc").show();
                         $("#txtCostCenterDescription").prop("disabled", false);
                         $("#chkCCCDActiveStatus").prop("disabled", false);
@@ -206,6 +212,15 @@ function fnLoadSACCategoryTree() {
     });
 
 }
+
+function fnFillCostCentreClass(_CostCenterClassID) {
+
+}
+
+function fnFillCostCentreCodes(_CostCenterID) {
+
+}
+
 function fnFillCostCenter(_SACCategoryID) {
     $.ajax({
         url:'',
@@ -215,6 +230,56 @@ function fnFillCostCenter(_SACCategoryID) {
         }
     });
 }
+
+function fnAddUpdateCostCentreClass() {
+
+    var CCClassDesc = $("#txtCostCenterClassDescription").val();
+    if (CCClassDesc == "" || CCClassDesc == null || CCClassDesc == undefined) {
+        fnAlert("w", "ECP_03_00", "UI0119", errorMsg.ServiceDesc_E6)
+        return false;
+    }
+
+    else {
+        $("#btnSaveCCClass").attr("disabled", true);
+        
+        var obj = {
+            CostClassDesc: $("#txtCostCenterClassDescription").val(),
+            ActiveStatus: $("#chkCCClassActiveStatus").parent().hasClass("is-checked"),
+        }
+        $.ajax({
+            url: getBaseURL() + '/CostCenter/AddOrUpdateCostCenterClass',
+            type: 'POST',
+            datatype: 'json',
+            data: {
+                obj
+            },
+            success: function (response) {
+                if (response.Status == true) {
+                    if (_CostCenterClassID == 0) {
+                        fnAlert("s", "", response.StatusCode, response.Message);
+                        $("#txtServiceClassDesc").val('');
+                        $('#chkActiveStatus').parent().addClass("is-checked");
+                    }
+                    else {
+                        fnAlert("s", "", response.StatusCode, response.Message);
+                    }
+                    $("#divCostCenterClass").hide();
+                    $("#jstCostCenter").jstree("destroy");
+                    fnLoadSACCategoryTree();  
+                }
+                else {
+                    fnAlert("e", "", response.StatusCode, response.Message);
+                }
+                $("#btnSaveCCClass").attr("disabled", false);
+            },
+            error: function (error) {
+                fnAlert("e", "", error.StatusCode, error.statusText);
+                $("#btnSaveCCClass").attr("disabled", false);
+            }
+        });
+    }
+}
+
 function fnCCExpandAll() {
     $("#jstCostCenter").jstree('open_all');
 }

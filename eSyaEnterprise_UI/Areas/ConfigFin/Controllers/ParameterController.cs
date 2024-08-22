@@ -13,8 +13,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigFin.Controllers
     public class ParameterController : Controller
     {
         private readonly IeSyaFinanceAPIServices _eSyaFinanceAPIServices;
-        private readonly ILogger<VoucherTypeController> _logger;
-        public ParameterController(IeSyaFinanceAPIServices eSyaFinanceAPIServices, ILogger<VoucherTypeController> logger)
+        private readonly ILogger<ParameterController> _logger;
+        public ParameterController(IeSyaFinanceAPIServices eSyaFinanceAPIServices, ILogger<ParameterController> logger)
         {
             _eSyaFinanceAPIServices = eSyaFinanceAPIServices;
             _logger = logger;

@@ -56,6 +56,7 @@ using eSyaEnterprise_UI.Areas.ServiceProvider.Data;
 using eSyaEnterprise_UI.Areas.ManagePharma.Data;
 using eSyaEnterprise_UI.Areas.ConfigFAsset.Data;
 using eSyaEnterprise_UI.Areas.ConfigFin.Data;
+using eSyaEnterprise_UI.Areas.FinAdmin.Data;
 using eSyaEnterprise_UI.Areas.SAC.Data;
 using eSyaEnterprise_UI.Areas.Egypt.Data;
 using eSyaEnterprise_UI.Areas.Approval.Data;
@@ -422,6 +423,17 @@ builder.Services.AddHttpClient<IEgyptTokenSystemAPIServices, EgyptTokenSystemAPI
 
 
 });
+
+builder.Services.AddHttpClient<IeSyaFinAdminAPIServices, eSyaFinAdminAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaFinAdmin_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+
+});
+
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
 builder.Services.AddSingleton<ISmsServices, SmsServices>();
