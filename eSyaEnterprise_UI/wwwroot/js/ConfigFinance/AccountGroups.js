@@ -8,7 +8,7 @@ $(document).ready(function () {
     var v_moveDown = $("#btnDown");
     var v_btnEditNode = $("#btnEditNode");
     var v_txtdesc = $("#txtdesc");
-    var v_accountTree = $("#accountTree");
+    var v_accountTree = $("#jstAccountTree");
     //var v_natureGA = $("#natureGA");
 
     var acc = {};
@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     function callingTree() {
         v_accountTree.jstree({ core: { data: treeObj, multiple: false } });
-
+        fnTreeSize("#jstAccountTree");
         v_accountTree.on('loaded.jstree', function () {
             console.log(prevClick);
             v_accountTree.jstree()._open_to(prevClick);
@@ -352,10 +352,10 @@ $(document).ready(function () {
 });
 
 function open_All() {
-    $("#accountTree").jstree('open_all');
+    $("#jstAccountTree").jstree('open_all');
 }
 
 function close_All() {
-    $("#accountTree").jstree('close_all');
+    $("#jstAccountTree").jstree('close_all');
 }
 
