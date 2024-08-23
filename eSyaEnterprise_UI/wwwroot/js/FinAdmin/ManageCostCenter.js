@@ -81,7 +81,8 @@ function fnLoadSACCategoryTree() {
                         $("#txtCostCenterClassDescription").val('');
                          $('#chkCCClassActiveStatus').parent().addClass("is-checked");
                         $("#btnSaveCCClass").html("<i class='fa fa-save'></i> " + localization.Save);
-                        $("#btnSaveCCClass").show();
+                         $("#btnSaveCCClass").show();
+                         _CostCenterID = 0;
                          _CostCenterClassID = "0";
                          _CostCenterClassID = data.node.id;
                         $("#divCostCenterClass").show();
@@ -110,6 +111,7 @@ function fnLoadSACCategoryTree() {
                         $('#chkCCCDActiveStatus').parent().addClass("is-checked");
                         $("#btnSaveCCDesc").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSaveCCDesc").show();
+                        _CostCenterID = 0;
                         _CostCenterClassID = "0";
                         _CostCenterClassID = data.node.id;
                         _CostCenterClassID = _CostCenterClassID.substring(2);
@@ -128,6 +130,7 @@ function fnLoadSACCategoryTree() {
                         }
                         $("#pnlCostCenterClassDescHeading .mdl-card__title-text").text(localization.ViewCostCenterclass);
                         $("#btnSaveCCClass").hide();
+                        _CostCenterID = 0;
                         _CostCenterClassID = "0";
                         _CostCenterClassID = data.node.id;
                         _CostCenterClassID = _CostCenterClassID.substring(2);
@@ -149,6 +152,7 @@ function fnLoadSACCategoryTree() {
                         $("#pnlCostCenterClassDescHeading .mdl-card__title-text").text(localization.EditCostCenterclass);
                         $("#btnSaveCCClass").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnSaveCCClass").show();
+                        _CostCenterID = 0;
                         _CostCenterClassID = "0";
                         _CostCenterClassID = data.node.id;
                         _CostCenterClassID = _CostCenterClassID.substring(2);
