@@ -11,6 +11,7 @@
     <Compile Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Compile Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <Compile Remove="Areas\ConfigFAsset\**" />
+    <Compile Remove="Areas\ConfigFin\Views\Subledger\**" />
     <Compile Remove="Areas\ConfigInventory\**" />
     <Compile Remove="Areas\ConfigProduct\**" />
     <Compile Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -34,6 +35,7 @@
     <Content Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <Content Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <Content Remove="Areas\ConfigFAsset\**" />
+    <Content Remove="Areas\ConfigFin\Views\Subledger\**" />
     <Content Remove="Areas\ConfigInventory\**" />
     <Content Remove="Areas\ConfigProduct\**" />
     <Content Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -57,6 +59,7 @@
     <EmbeddedResource Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <EmbeddedResource Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <EmbeddedResource Remove="Areas\ConfigFAsset\**" />
+    <EmbeddedResource Remove="Areas\ConfigFin\Views\Subledger\**" />
     <EmbeddedResource Remove="Areas\ConfigInventory\**" />
     <EmbeddedResource Remove="Areas\ConfigProduct\**" />
     <EmbeddedResource Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -80,6 +83,7 @@
     <None Remove="Areas\ConfigFacilities\Views\SpecialtyTeaching\**" />
     <None Remove="Areas\ConfigFacilities\Views\Specialty\**" />
     <None Remove="Areas\ConfigFAsset\**" />
+    <None Remove="Areas\ConfigFin\Views\Subledger\**" />
     <None Remove="Areas\ConfigInventory\**" />
     <None Remove="Areas\ConfigProduct\**" />
     <None Remove="Areas\DocumentControl\Views\DocumentControl\**" />
@@ -126,6 +130,7 @@
     <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyCodes.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyParameter.cs" />
     <Compile Remove="Areas\ConfigFacilities\Models\DO_SpecialtyUnit.cs" />
+    <Compile Remove="Areas\ConfigFin\Controllers\SubledgerController.cs" />
     <Compile Remove="Areas\ConfigPatient\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\ConfigServicesController.cs" />
     <Compile Remove="Areas\ConfigServices\Models\DO_ClinicServiceLink.cs" />
@@ -336,7 +341,6 @@
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
     <Folder Include="Areas\FinAdmin\Data\" />
-    <Folder Include="Areas\FinAdmin\Models\" />
     <Folder Include="Areas\ProductSetup\Views\Control\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Purchase\Models\" />

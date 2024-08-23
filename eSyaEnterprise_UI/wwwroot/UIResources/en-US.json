@@ -366,6 +366,9 @@
   "UI0365": "Please enter the Effective from",
   "UI0366": "Please enter the Service Category Description",
   "UI0367": "Please Select SMS ID from the Grid List",
+  "UI0368": "Please enter the swiping machine Id",
+  "UI0369": "Please enter the account code",
+  "UI0370": "Please enter the swiping machine name",
 
   "UIC01": "You are not Authorized to Add",
   "UIC02": "You are not Authorized to Edit",
