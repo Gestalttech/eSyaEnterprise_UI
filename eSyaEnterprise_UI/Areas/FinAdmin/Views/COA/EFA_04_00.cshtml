@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EFA_04_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+
+<link href="~/css/Common/jsTree.css" rel="stylesheet" />
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/js/Common/jsTree.js"></script>
+    <script src="~/js/FinAdmin/ManageChartOfAccounts.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
