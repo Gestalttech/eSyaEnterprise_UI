@@ -177,6 +177,70 @@ function fnEditExRates(actiontype) {
         $("select").next().attr('disabled', true);
     }
 }
+
+function fnSaveExRates() {
+
+    if ($("#cboExRatesCurrencyCode").val() === 0 || $("#cboExRatesCurrencyCode").val() === "0") {
+        fnAlert("w", "EFA_03_00", "UI0064", errorMsg.BusinessLoc_E9);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtStandardRate").val())) {
+        fnAlert("w", "EFA_03_00", "UI0368", errorMsg.SwipingMachine_E6);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtDateOfExchangeRate").val())) {
+        fnAlert("w", "EFA_03_00", "UI0369", errorMsg.ControlAccountCode_E7);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtSellingRate").val())) {
+        fnAlert("w", "EFA_03_00", "UI0370", errorMsg.SwipingMachineName_E8);
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtBuyingRate").val())) {
+        fnAlert("w", "EFA_03_00", "UI0370", errorMsg.SwipingMachineName_E8);
+        return;
+    }
+
+    var obj = {
+        CurrencyCode: $("#cboExRatesCurrencyCode").val(),
+        CurrencyDesc: $("#cboExRatesCurrencyCode").val(),
+        StandardRate: $("#txtStandardRate").val(),
+        DateOfExchangeRate: getDate($("#txtDateOfExchangeRate")), //$("#txtDateOfExchangeRate").val(),
+        SellingRate: $("#txtSellingRate").val(),
+        SellingLastVoucherDate: getDate($("#txtSellingLastVoucherDate")), //$("#txtSellingLastVoucherDate").val(),
+        BuyingRate: $("#txtBuyingRate").val(),
+        BuyingLastVoucherDate: getDate($("#txtBuyingLastVoucherDate")), //$("#txtBuyingLastVoucherDate").val(),
+        ActiveStatus: $("#chkExRatesActiveStatus").parent().hasClass("is-checked")
+    };
+
+    $("#btnSaveExRates").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/ExRates/InsertUpdateExchangeRate',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnSaveExRates").html('<i class="fa fa-spinner fa-spin"></i> wait');
+                $("#PopupExRates").modal('hide');
+                fnRefreshGridExRates();
+                fnClearExRates();
+
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnSaveExRates").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveExRates").attr("disabled", false);
+        }
+    });
+}
+
 function fnRefreshGridExRates() {
     $("#jqgExRates").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
