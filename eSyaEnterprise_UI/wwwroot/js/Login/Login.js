@@ -7,11 +7,11 @@
         e.preventDefault();
         if ($("#cboBusinessLocation").val() == "0" || IsStringNullorEmpty($("#cboBusinessLocation").val()))
         {
-            fnAlert("w", "", "", "User ID is Not Linked to any Location");
+            fnAlert("w", "", "UI0371", errorMsg.UserIDNotLinkedLoc_E9);
             return;
         }
         if ($("#cboFinancialYear").val() == "0" || IsStringNullorEmpty($("#cboFinancialYear").val())) {
-            fnAlert("w", "", "", "User ID is Not Linked to Financial Year");
+            fnAlert("w", "", "UI0372", errorMsg.UserIDNotLinkedFY_E10);
             return;
         }
         $('#btnUserSignIn').attr('disabled', true);

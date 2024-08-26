@@ -65,7 +65,7 @@ function fnSaveExpChangePassword() {
     /*$("#lblErrorList").remove();*/
    
     if (IsStringNullorEmpty($("#txtExpUserID").val())) {
-        fnAlert("w", "", "UI0277", "User ID is not Exist");
+        fnAlert("w", "", "UI0373", errorMSg.UserIDNotExist_E11);
         return;
     }
     if (IsStringNullorEmpty($("#txtExpCurrentPassword").val())) {

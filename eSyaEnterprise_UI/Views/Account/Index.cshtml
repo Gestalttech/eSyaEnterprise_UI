@@ -59,13 +59,26 @@
             NewPassword: '@Localizer["NewPassword"]',
             ConfirmPassword: '@Localizer["ConfirmPassword"]',
             OnlyAlphanumeric20Characters: '@Localizer["OnlyAlphanumeric20Characters"]',
+            PleaseEnterYourAnswer: '@Localizer["PleaseEnterYourAnswer"]',
+            PleaseselectaQuestion: '@Localizer["PleaseselectaQuestion"]',
+            Select: '@Localizer["Select"]',
+            YourUserID: '@Localizer["YourUserID:"]',
+            YourPassword: '@Localizer["YourPassword:"]',
         };
         var errorMsg = {
-        CurrentPassword_E4: '@Localizer["UI0277"]',
-        NewPassword_E5: '@Localizer["UI0278"]',
-        PasswordPattern_E6: '@Localizer["UI0279"]',
-        EnterPassword_E7: '@Localizer["UI0280"]',
-        PasswordSame_E8: '@Localizer["UI0281"]',
+            CurrentPassword_E4: '@Localizer["UI0277"]',
+            NewPassword_E5: '@Localizer["UI0278"]',
+            PasswordPattern_E6: '@Localizer["UI0279"]',
+            EnterPassword_E7: '@Localizer["UI0280"]',
+            PasswordSame_E8: '@Localizer["UI0281"]',
+            UserIDNotLinkedLoc_E9: '@Localizer["UI0371"]',
+            UserIDNotLinkedFY_E10: '@Localizer["UI0372"]',
+            UserIDNotExist_E11: '@Localizer["UI0373"]',
+            PleaseCorrectErrors_E12: '@Localizer["UI0374"]',
+            Mobileno_E13: '@Localizer["UI0111"]',
+            EnterYourAnswer_E14: '@Localizer["UI0375"]',
+            YouhaveTriedTwoTimes_E15: '@Localizer["UI0376"]',
+            YourPasswordHasbeensent_E16: '@Localizer["UI0377"]',
      }
      </script>
 </head>
@@ -265,7 +278,7 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveChangePassword" onclick="fnSaveChangePassword();">
-                                <i class="fa fa-save"></i> @Localizer[" Save "]
+                                <i class="fa fa-save"></i> @Localizer["Save"]
                             </button>
 
                         </div>
@@ -286,7 +299,7 @@
                 <div class="modal-body">
                     <div class="row p-1">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <p class="bgUserTips small"> You are logging in eSya for the first time.</p>
+                            <p class="bgUserTips small">@Localizer["YouareloggingineSyaforthefirsttime"]</p>
                             <label>@Localizer["PleaseEnterYourOTP"]</label>
                             <div id="divCreatePwdOTP" class="otp-form">
                                 <input class="otp-field" type="text" autocomplete="off" name="opt-field[]" maxlength=1>
@@ -331,7 +344,7 @@
                     <div class="row p-1">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                             <p class="small text-muted bgUserTips">
-                                <span class="bold">Purpose:</span> Select the Security Questions and provide your answers. It is mandatory for you to provide answers to all the questions. The system will use these security questions randomly to authenticate you as a valid user, when you first login to the system, and when you forget your User ID or Password and want to reset them.
+                                <span class="bold">@Localizer["Purpose:"]</span>@Localizer["SelecttheSecurityQuestionsandprovideyouranswersItismandatoryforyoutoprovideanswerstoallthequestionsThesystemwillusethesesecurityquestionsrandomlytoauthenticateyouasavaliduserwhenyoufirstlogintothesystemandwhenyouforgetyourUserIDorPasswordandwanttoresetthem"]
                             </p>
                         </div>
                         </div>
@@ -395,12 +408,12 @@
                                 </button>
                             </div>
                         <div class="col-lg-12 col-12">
-                            <p class="small text-muted bgUserTips" id="lblFUIDMobileNo" style="display:none"> We have sent the OTP to your registered mobile number </p>
-                            <p class="small text-muted bgUserTips" id="lblFUIDEmailID" style="display:none"> We have sent the OTP to your registered email id </p>
+                            <p class="small text-muted bgUserTips" id="lblFUIDMobileNo" style="display:none"> @Localizer["WehavesenttheOTPtoyourregisteredmobilenumber"]</p>
+                            <p class="small text-muted bgUserTips" id="lblFUIDEmailID" style="display:none"> @Localizer["WehavesenttheOTPtoyourregisteredemailid"] </p>
                         </div>
                         
                         <div class="col-lg-12 col-12" id="divFUIDSQuestions" style="display:none">
-                            <p class="small text-muted bgUserTips" id=""> Please answer the following question as per your enrollment profile to reset your password. </p>
+                            <p class="small text-muted bgUserTips" id="">@Localizer["Pleaseanswerthefollowingquestionasperyourenrollmentprofiletoresetyourpassword"] </p>
                            
                             <label id="lblFUIDSQuestions">@Localizer["SecurityQuestion"]</label>
                             <input type="text" id="txtFUIDAnswers" class="form-control" maxlength="50" />
@@ -471,11 +484,11 @@
                             </button>
                         </div>
                         <div class="col-lg-12 col-12">
-                            <p class="small text-muted bgUserTips" id="lblFPMobileNo" style="display:none"> We have sent the OTP to your registered mobile number </p>
-                            <p class="small text-muted bgUserTips" id="lblFPEmailID" style="display:none"> We have sent the OTP to your registered email id </p>
+                            <p class="small text-muted bgUserTips" id="lblFPMobileNo" style="display:none">@Localizer["WehavesenttheOTPtoyourregisteredmobilenumber"]</p>
+                            <p class="small text-muted bgUserTips" id="lblFPEmailID" style="display:none">@Localizer["WehavesenttheOTPtoyourregisteredemailid"]</p>
                         </div>
                         <div class="col-lg-12 col-12" id="divFPSQuestions" style="display:none">
-                            <p class="small text-muted bgUserTips" id=""> Please answer the following question as per your enrollment profile to reset your password. </p>
+                            <p class="small text-muted bgUserTips" id=""> @Localizer["Pleaseanswerthefollowingquestionasperyourenrollmentprofiletoresetyourpassword"] </p>
                             <label id="lblFPSQuestions">@Localizer["SecurityQuestion"]</label>
                             <input type="text" id="txtFPSAnswers" class="form-control" maxlength="150" />
                         </div>
@@ -551,10 +564,10 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnRemindMeLater">
-                                <i class="fa fa-save"></i> @Localizer["Remind Me Later"]
+                                <i class="fa fa-save"></i> @Localizer["RemindMeLater"]
                             </button>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button me-2" id="btnResetNow" onclick="fnOpenExpChangePasswordPopUp()">
-                                <i class="fa fa-save"></i> @Localizer["Reset Now"]
+                                <i class="fa fa-save"></i> @Localizer["ResetNow"]
                             </button>
                             
                         </div>

@@ -8,7 +8,7 @@ $("#btnFPSendOTP").click(function () {
 
     var _FPMobileNo = $("#txtGetFPMobileNo").val();
     if (_FPMobileNo == 0 || _FPMobileNo == null || _FPMobileNo == undefined) {
-        fnAlert("w", "", "", "Please enter the Mobile number");
+        fnAlert("w", "", "UI0111", errorMsg.Mobileno_E13);
         document.getElementById("txtGetFPMobileNo").focus();
         return;
     }
@@ -53,7 +53,7 @@ $("#btnForgotPWResendOTP").click(function () {
         _ClickedResendBtn++;
     }
     else {
-        fnAlert("w", "", "", "You have tried 2 times");
+        fnAlert("w", "", "UI0376", errorMsg.YouhaveTriedTwoTimes_E15);
     }
 });
 
@@ -136,7 +136,7 @@ function fnFPValidateAnswer() {
 
     if (IsStringNullorEmpty($("#txtFPSAnswers").val())) {
 
-        fnAlert("w", "", "", "Please Enter Your Answer");
+        fnAlert("w", "", "UI0375", errorMsg.EnterYourAnswer_E14);
         return;
     }
 
@@ -154,7 +154,7 @@ function fnFPValidateAnswer() {
         data: { obj },
         success: function (response) {
             if (response.IsSucceeded) {
-                fnAlert("s", "", response.StatusCode, response.Message + " Your Password :" + response.Password);
+                fnAlert("s", "", response.StatusCode, response.Message + localization.YourPassword + response.Password);
                 fnFPCloseQuestionAnswer();
                 $("#PopupForgotPassword").modal('hide');
             }
@@ -187,7 +187,7 @@ function fnForgotPWValidateOTP() {
         async: false,
         success: function (result) {
             if (result.IsSucceeded) {
-                fnAlert("s", "", "", result.Message + " Your Password has been sent to SMS/Email");
+                fnAlert("s", "", "UI0377", result.Message + localization.YourPasswordHasbeensent_E16);
                 $("#PopupForgotPassword").modal('hide');
 
             } else {

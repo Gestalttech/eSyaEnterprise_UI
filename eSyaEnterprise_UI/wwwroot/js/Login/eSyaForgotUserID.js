@@ -8,7 +8,7 @@ $("#btnGetUserIDSendOTP").click(function () {
    
     var _ForgotUIDOTPMobileNo = $("#txtForgotUIDOTPMobileNo").val();
     if (_ForgotUIDOTPMobileNo == 0 || _ForgotUIDOTPMobileNo == null || _ForgotUIDOTPMobileNo == undefined) {
-        fnAlert("w", "", "", "Please enter the Mobile number");
+        fnAlert("w", "", "UI0111", errorMsg.Mobileno_E13);
         document.getElementById("txtForgotUIDOTPMobileNo").focus();
         return;
     }
@@ -51,7 +51,7 @@ $("#btnForgotUIDResendOTP").click(function () {
         _ClickedResendBtn++;
     }
     else {
-        fnAlert("w", "", "", "You have tried 2 times");
+        fnAlert("w", "", "UI0376", errorMsg.YouhaveTriedTwoTimes_E15);
     }
 });
 
@@ -133,7 +133,7 @@ function fnValidateAnswer() {
     
     if (IsStringNullorEmpty($("#txtFUIDAnswers").val())) {
 
-        fnAlert("w", "", "", "Please Enter Your Answer");
+        fnAlert("w", "", "UI0375", errorMsg.EnterYourAnswer_E14);
         return;
     }
 
@@ -151,7 +151,7 @@ function fnValidateAnswer() {
         data: { obj },
         success: function (response) {
             if (response.IsSucceeded) {
-                fnAlert("s", "", response.StatusCode, response.Message + " Your User ID :" + response.LoginID);
+                fnAlert("s", "", response.StatusCode, response.Message + localization.YourUserID + response.LoginID);
                 fnCloseQuestionAnswer();
                 $("#PopupGetUserID").modal('hide');
             }
@@ -184,7 +184,7 @@ function fnForgotUIDValidateOTP() {
         async: false,
         success: function (result) {
             if (result.IsSucceeded) {
-                fnAlert("s", "", "", result.Message + " Your User ID has been sent to SMS/Email");
+                fnAlert("s", "", "UI0377", result.Message + localization.YourPasswordHasbeensent_E16);
                 $("#PopupGetUserID").modal('hide');
 
             } else {
