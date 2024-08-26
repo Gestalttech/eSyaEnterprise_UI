@@ -25,21 +25,21 @@ $(function () {
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditExRates('edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditExRates('view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditExRates('delete') } },
+            //jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditExRates('delete') } },
         }
 
     });
 
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    //$(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
 
 
 function fnGridLoadExRates() {
     $('#jqgExRates').jqGrid('GridUnload');
     $("#jqgExRates").jqGrid({
-        //url: getBaseURL() + '',
+        url: getBaseURL() + '/ExRates/FillExchangeRate',
         datatype: 'json',
         mtype: 'Get',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -50,7 +50,7 @@ function fnGridLoadExRates() {
             { name: "CurrencyCode", width: 50, editable: true, key: true, hidden: true },
             { name: "CurrencyDesc", width: 50, editable: true },
             {
-                name: "DateOfExchangeRate", width: 50, editable: true, align: 'right', formatter: "date", formatoptions:
+                name: "DateOfExchangeRate", width: 50, editable: true, key: true, align: 'right', formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
             },
             { name: "StandardRate", width: 50, editable: true, align: 'right' },
@@ -64,7 +64,8 @@ function fnGridLoadExRates() {
                     { newformat: _cnfjqgDateFormat },
             },
             { name: "BuyingRate", width: 70, editable: true, align: 'right' },
-            { name: "ActiveStatus", editable: true, width: 80, edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" }, formatoptions: { disabled: true } },
+            //{ name: "ActiveStatus", editable: true, width: 80, edittype: "select", formatter: 'select', editoptions: { value: "true: Active;false: InActive" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
@@ -110,6 +111,14 @@ function fnGridLoadExRates() {
     $('.jqg-first-row-header').css('display', 'none');
 }
 
+function SetGridControlByAction() {
+    $('#jqgAdd').removeClass('ui-state-disabled');
+
+    if (_userFormRole.IsInsert === false) {
+        $('#jqgAdd').addClass('ui-state-disabled');
+    }
+}
+
 function fnAddExRates() {
     $("#PopupExRates").modal('show');
     $('#PopupExRates').find('.modal-title').text(localization.AddExchangeRates);
@@ -124,8 +133,49 @@ function fnEditExRates(actiontype) {
     var rowid = $("#jqgExRates").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgExRates').jqGrid('getRowData', rowid);
 
-    $("#chkExRatesActiveStatus").parent().addClass("is-checked");
-    $("#chkExRatesActiveStatus").prop('disabled', true);
+    $('#cboExRatesCurrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
+    $("#cboExRatesCurrencyCode").next().attr('disabled', true);
+
+    $('#txtStandardRate').val(rowData.StandardRate);
+
+    $("#txtDateOfExchangeRate").attr('readonly', true);
+
+    if (rowData.DateOfExchangeRate !== null) {
+        setDate($('#txtDateOfExchangeRate'), fnGetDateFormat(rowData.DateOfExchangeRate));
+    }
+    else {
+        $('#txtDateOfExchangeRate').val('');
+    }
+
+    $('#txtSellingRate').val(rowData.SellingRate);
+
+    $("#txtSellingLastVoucherDate").attr('readonly', true);
+    if (rowData.SellingLastVoucherDate !== null) {
+        setDate($('#txtSellingLastVoucherDate'), fnGetDateFormat(rowData.SellingLastVoucherDate));
+    }
+    else {
+        $('#txtSellingLastVoucherDate').val('');
+    }    
+
+    $('#txtBuyingRate').val(rowData.BuyingRate);
+
+    $("#txtBuyingLastVoucherDate").attr('readonly', true);
+    if (rowData.BuyingLastVoucherDate !== null) {
+        setDate($('#txtBuyingLastVoucherDate'), fnGetDateFormat(rowData.BuyingLastVoucherDate));
+    }
+    else {
+        $('#txtBuyingLastVoucherDate').val('');
+    }   
+
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkExRatesActiveStatus").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkExRatesActiveStatus").parent().removeClass("is-checked");
+    }
+
+    //$("#chkExRatesActiveStatus").parent().addClass("is-checked");
+    //$("#chkExRatesActiveStatus").prop('disabled', true);
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
@@ -134,7 +184,7 @@ function fnEditExRates(actiontype) {
         }
         $('#PopupExRates').modal('show');
         $('#PopupExRates').find('.modal-title').text(localization.UpdateExchangeRates);
-        $("#chkActiveStatus").prop('disabled', true);
+        $("#chkExRatesActiveStatus").prop('disabled', true);
         $("#btnSaveExRates").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnDeactivateExRates").hide();
         $("input,textarea").attr('readonly', false);
@@ -150,54 +200,54 @@ function fnEditExRates(actiontype) {
         }
         $('#PopupExRates').modal('show');
         $('#PopupExRates').find('.modal-title').text(localization.ViewExchangeRates);
-        $("#chkActiveStatus").prop('disabled', true);
+        $("#chkExRatesActiveStatus").prop('disabled', true);
         $("#btnSaveExRates,#btnDeactivateExRates").hide();
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
     }
 
 
-    if (actiontype.trim() == "delete") {
-        if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EFA_02_00", "UIC04", errorMsg.deleteauth_E4);
-            return;
-        }
-        $('#PopupExRates').modal('show');
-        $('#PopupExRates').find('.modal-title').text(localization.ActiveOrDeactiveExchangeRates);
-        if (rowData.ActiveStatus == 'true') {
-            $("#btnDeactivateExRates").html(localization.Deactivate);
-        }
-        else {
-            $("#btnDeactivateExRates").html(localization.Activate);
-        }
-        $("#btnSaveExRates").hide();
-        $("#btnDeactivateExRates").show();
-        $("#chkActiveStatus").prop('disabled', true);
-        $("input,textarea").attr('readonly', true);
-        $("select").next().attr('disabled', true);
-    }
+    //if (actiontype.trim() == "delete") {
+    //    if (_userFormRole.IsDelete === false) {
+    //        fnAlert("w", "EFA_02_00", "UIC04", errorMsg.deleteauth_E4);
+    //        return;
+    //    }
+    //    $('#PopupExRates').modal('show');
+    //    $('#PopupExRates').find('.modal-title').text(localization.ActiveOrDeactiveExchangeRates);
+    //    if (rowData.ActiveStatus == 'true') {
+    //        $("#btnDeactivateExRates").html(localization.Deactivate);
+    //    }
+    //    else {
+    //        $("#btnDeactivateExRates").html(localization.Activate);
+    //    }
+    //    $("#btnSaveExRates").hide();
+    //    $("#btnDeactivateExRates").show();
+    //    $("#chkExRatesActiveStatus").prop('disabled', true);
+    //    $("input,textarea").attr('readonly', true);
+    //    $("select").next().attr('disabled', true);
+    //}
 }
 
 function fnSaveExRates() {
 
     if ($("#cboExRatesCurrencyCode").val() === 0 || $("#cboExRatesCurrencyCode").val() === "0") {
-        fnAlert("w", "EFA_03_00", "UI0064", errorMsg.BusinessLoc_E9);
+        fnAlert("w", "EFA_02_00", "UI0371", errorMsg.CurrencyCode_E4);
         return;
     }
     if (IsStringNullorEmpty($("#txtStandardRate").val())) {
-        fnAlert("w", "EFA_03_00", "UI0368", errorMsg.SwipingMachine_E6);
+        fnAlert("w", "EFA_02_00", "UI0372", errorMsg.StandardRate_E5);
         return;
     }
     if (IsStringNullorEmpty($("#txtDateOfExchangeRate").val())) {
-        fnAlert("w", "EFA_03_00", "UI0369", errorMsg.ControlAccountCode_E7);
+        fnAlert("w", "EFA_02_00", "UI0375", errorMsg.DateofExRt_E8);
         return;
     }
     if (IsStringNullorEmpty($("#txtSellingRate").val())) {
-        fnAlert("w", "EFA_03_00", "UI0370", errorMsg.SwipingMachineName_E8);
+        fnAlert("w", "EFA_02_00", "UI0373", errorMsg.SellingRate_E6);
         return;
     }
     if (IsStringNullorEmpty($("#txtBuyingRate").val())) {
-        fnAlert("w", "EFA_03_00", "UI0370", errorMsg.SwipingMachineName_E8);
+        fnAlert("w", "EFA_02_00", "UI0374", errorMsg.BuyingRate_E7);
         return;
     }
 
@@ -225,6 +275,7 @@ function fnSaveExRates() {
                 fnAlert("s", "", response.StatusCode, response.Message);
                 $("#btnSaveExRates").html('<i class="fa fa-spinner fa-spin"></i> wait');
                 $("#PopupExRates").modal('hide');
+                $("#btnSaveExRates").attr("disabled", false);
                 fnRefreshGridExRates();
                 fnClearExRates();
 
