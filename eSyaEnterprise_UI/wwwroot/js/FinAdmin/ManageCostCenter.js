@@ -287,7 +287,7 @@ function fnFillCostCenter(_SACCategoryID) {
 function fnAddUpdateCostCentreClass() {
     var CCClassDesc = $("#txtCostCenterClassDescription").val();
     if (CCClassDesc == "" || CCClassDesc == null || CCClassDesc == undefined) {
-        fnAlert("w", "EFA_01_00", "UI0119", errorMsg.ServiceDesc_E6)
+        fnAlert("w", "EFA_01_00", "UI0119", errorMsg.CostCentreClassDesc_E6)
         return false;
     }
 

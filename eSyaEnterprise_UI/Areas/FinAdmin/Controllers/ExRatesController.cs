@@ -26,7 +26,7 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EFA_02_00()
         {
-            int BusinessKey = 11;//AppSessionVariables.GetSessionBusinessKey(HttpContext);
+            int BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
             var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyMaster>>("CommonData/GetActiveCurrencyCodes?BusinessKey=" + BusinessKey);
             if (serviceResponse.Status)
             {
@@ -50,9 +50,7 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
         {
             try
             {
-                int BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
-
-                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyExchangeRate>>("ExchangeRate/FillExchangeRate?BusinessKey=" + BusinessKey);
+                var serviceResponse = await _eSyaFinAdminAPIServices.HttpClientServices.GetAsync<List<DO_CurrencyExchangeRate>>("ExchangeRate/FillExchangeRate");
                 
                 if (serviceResponse.Status)
                 {
@@ -63,13 +61,13 @@ namespace eSyaEnterprise_UI.Areas.FinAdmin.Controllers
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:FillExchangeRate:For BusinessKey {0}", BusinessKey);
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:FillExchangeRate");
                         return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                     }
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:FillExchangeRate:For BusinessKey {0}", BusinessKey);
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:FillExchangeRate");
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
 

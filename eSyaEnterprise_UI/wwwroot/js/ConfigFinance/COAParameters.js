@@ -170,15 +170,15 @@ function fnClearCOAParameters() {
 function fnSaveCOAParameters() {
 
     if (IsStringNullorEmpty($("#txtCOAParametersId").val())) {
-        fnAlert("w", "EAC_04_00", "UI0014", "Please enter the Parameter ID");
+        fnAlert("w", "EFA_01_00", "UI0371", errorMsg.ParamterId_E6);
         return false;
     }
     if ($("#txtCOAParametersId").val() == 0) {
-        fnAlert("w", "EAC_04_00", "UI0015", "Please enter the valid Parameter ID");
+        fnAlert("w", "EFA_01_00", "UI0015", errorMsg.ParameterId_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCOAParametersDesc").val())) {
-        fnAlert("w", "EAC_04_00", "UI0016", "Please enter the Parameter Description");
+        fnAlert("w", "EFA_01_00", "UI0016", errorMsg.ParameterDesc_E8);
         return false;
     }
 
