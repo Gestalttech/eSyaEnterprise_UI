@@ -205,7 +205,7 @@ function fnSaveChangePassword() {
    // var PasswordPattern = new RegExp("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@@#$%!&*]).{8,20})");
 
     if ($("#txtpassword").val().trim().length <= 0) {
-        fnAlert("w", "", "", "Please Enter New Password");
+        fnAlert("w", "", "UI0278", errorMsg.NewPassword_E5);
         return;
     }
     //if (!PasswordPattern.test($("#txtpassword").val())) {
@@ -213,12 +213,12 @@ function fnSaveChangePassword() {
     //    return;
     //}
     if ($("#txtConfirmPassword").val().trim().length <= 0) {
-        fnAlert("w", "", "", "Please Enter New Confirm Password");
+        fnAlert("w", "", "UI0280", errorMsg.EnterPassword_E7);
         return;
     }
 
     if ($("#txtpassword").val() !== $("#txtConfirmPassword").val()) {
-        fnAlert("w", "", "", "Password and Confirm Password should be same");
+        fnAlert("w", "", "UI0281", errorMsg.PasswordSame_E8);
         return;
     }
 
@@ -292,7 +292,7 @@ function validateUserQuestionAnswer() {
         if ($(this).val() == "0" || IsStringNullorEmpty($(this).val())) {
             isValid = false;
            $(this).closest('.form-group').find('.validation-error').remove(); // Remove previous error
-            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">Please select a Question</p>');
+            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">' + localization.PleaseselectaQuestion +'</p>');
         } else {
             $(this).closest('.form-group').find('.validation-error').remove();
             isValid = true;
@@ -305,7 +305,7 @@ function validateUserQuestionAnswer() {
         if ($(this).val().trim() == "") {
             isValid = false;
             $(this).closest('.form-group').find('.validation-error').remove(); // Remove previous error
-            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">Please Enter Your Answer</p>');
+            $(this).closest('.form-group').append('<p class="validation-error text-danger m-0">' + localization.PleaseEnterYourAnswer + '</p>');
         } else {
             $(this).closest('.form-group').find('.validation-error').remove();
             isValid = true;
@@ -320,7 +320,7 @@ function fnSaveUserQuestionAnswer() {
   
    
     if (!validateUserQuestionAnswer()) {
-        fnAlert("w", "", "", "Please correct the Errors and try again");
+        fnAlert("w", "", "UI0374", errorMsg.PleaseCorrectErrors_E12);
         return;
     }
 
@@ -389,7 +389,7 @@ function fnBindUserLocations() {
                 //refresh each time
              
                 $("#cboBusinessLocation").empty();
-                $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
+                $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
                 if (response.lstUserLocation != null) {
 
                 for (var i = 0; i < response.lstUserLocation.length; i++) {
@@ -398,7 +398,7 @@ function fnBindUserLocations() {
                 }
                 if (response.lstFinancialYear == null) {
                     $("#cboBusinessLocation").empty();
-                    $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
+                    $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
                 }
 
                 else if (response.lstUserLocation.length == 1) {
@@ -413,7 +413,7 @@ function fnBindUserLocations() {
 
                 
                 
-                $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
+                $("#cboFinancialYear").append($("<option value='0'>" + localization.Select + "</option>"));
 
                 if (response.lstFinancialYear != null) {
                     for (var i = 0; i < response.lstFinancialYear.length; i++) {
@@ -422,7 +422,7 @@ function fnBindUserLocations() {
                 }
                 if (response.lstFinancialYear == null) {
                     $("#cboFinancialYear").empty();
-                    $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
+                    $("#cboFinancialYear").append($("<option value='0'>" + localization.Select + "</option>"));
                 }
 
                 else if (response.lstFinancialYear.length == 1) {
@@ -436,10 +436,10 @@ function fnBindUserLocations() {
             }
             else {
                 $("#cboBusinessLocation").empty();
-                $("#cboBusinessLocation").append($("<option value='0'> Select </option>"));
+                $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
 
                 $("#cboFinancialYear").empty();
-                $("#cboFinancialYear").append($("<option value='0'> Select </option>"));
+                $("#cboFinancialYear").append($("<option value='0'>" + localization.Select + "</option>"));
             }
         },
         async: false,
