@@ -64,6 +64,10 @@ $("#txtUserID").on('focusout', function () {
     
 });
 
+$("#btnRemindMeLater").click(function () {
+    $("#PopupExpirationMsg").modal('hide');
+});
+
 $("#txtLoginPassword").on('focusin', function () {
    
     if (IsStringNullorEmpty($("#txtUserID").val())) {
