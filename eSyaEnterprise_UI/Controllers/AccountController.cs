@@ -1094,30 +1094,71 @@ namespace eSyaEnterprise_UI.Controllers
                 //SMS Rule is true
 
                 var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 1);
+                string otpmsg = "Send OTP by SMS";
                 if (smspr)
                 {
                   
-                   return Json(new DO_ReturnParameter { Status = true,Message="Send OTP by SMS" }) ;
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if(uiCulture== "hi-IN")
+                        {
+                            otpmsg = "एसएमएस द्वारा OTP भेजें";
+                        }else if(uiCulture == "ar-EG")
+                        {
+                            otpmsg = "إرسال OTP عبر الرسائل القصيرة";
+                        }
+                        
+                    }
+
+                    return Json(new DO_ReturnParameter { Status = true,Message= otpmsg }) ;
                  
                 }
 
                 //EMail Rule is true
 
                 var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 2);
+                string emailmsg = "Send OTP by Email";
                 if (Emailpr)
                 {
-                     return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by Email" });
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            emailmsg = "ईमेल द्वारा OTP भेजें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            emailmsg = "إرسال OTP عبر البريد الإلكتروني";
+                        }
+
+                    }
+                    return Json(new DO_ReturnParameter { Status = true, Message = emailmsg });
 
                 }
 
                 //Question Rule is true
 
                 var Questionpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 3);
+                string quesmsg = "Answer Security Question";
                 if (Questionpr)
                 {
-                    return Json(new DO_ReturnParameter { Status = true, Message = "Answer Security Question" });
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            quesmsg = "सुरक्षा प्रश्न का उत्तर दें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            quesmsg = "الإجابة على سؤال الأمان";
+                        }
+                        return Json(new DO_ReturnParameter { Status = true, Message = quesmsg });
+                    }
                 }
-                return Json(new DO_ReturnParameter() { Status = false, Message = "Send OTP by SMS" });
+                return Json(new DO_ReturnParameter() { Status = false, Message = otpmsg });
 
             }
             catch (Exception ex)
@@ -1260,30 +1301,72 @@ namespace eSyaEnterprise_UI.Controllers
                 //SMS Rule is true
 
                 var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 1);
+                string otpmsg = "Send OTP by SMS";
                 if (smspr)
                 {
 
-                    return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by SMS" });
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            otpmsg = "एसएमएस द्वारा OTP भेजें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            otpmsg = "إرسال OTP عبر الرسائل القصيرة";
+                        }
+
+                    }
+
+                    return Json(new DO_ReturnParameter { Status = true, Message = otpmsg });
 
                 }
 
                 //EMail Rule is true
 
                 var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 2);
+                string emailmsg = "Send OTP by Email";
                 if (Emailpr)
                 {
-                    return Json(new DO_ReturnParameter { Status = true, Message = "Send OTP by Email" });
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            emailmsg = "ईमेल द्वारा OTP भेजें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            emailmsg = "إرسال OTP عبر البريد الإلكتروني";
+                        }
+
+                    }
+                    return Json(new DO_ReturnParameter { Status = true, Message = emailmsg });
 
                 }
 
                 //Question Rule is true
 
                 var Questionpr = await _applicationRulesServices.GetApplicationRuleStatusByID(2, 3);
+                string quesmsg = "Answer Security Question";
                 if (Questionpr)
                 {
-                    return Json(new DO_ReturnParameter { Status = true, Message = "Answer Security Question" });
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            quesmsg = "सुरक्षा प्रश्न का उत्तर दें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            quesmsg = "الإجابة على سؤال الأمان";
+                        }
+                        return Json(new DO_ReturnParameter { Status = true, Message = quesmsg });
+                    }
                 }
-                return Json(new DO_ReturnParameter() { Status = false, Message = "Send OTP by SMS" });
+                return Json(new DO_ReturnParameter() { Status = false, Message = otpmsg });
 
             }
             catch (Exception ex)
