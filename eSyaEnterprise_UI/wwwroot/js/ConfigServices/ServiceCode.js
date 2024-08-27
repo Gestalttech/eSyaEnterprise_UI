@@ -18,10 +18,10 @@ function fnLoadServiceCodeTree() {
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (result) {
-            $("#ServiceCodeTree").jstree({ core: { data: result, multiple: false } });
-            fnTreeSize("#ServiceCodeTree");
+            $("#jstServiceCodeTree").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstServiceCodeTree");
             $(window).on('resize', function () {
-                fnTreeSize("#ServiceCodeTree");
+                fnTreeSize("#jstServiceCodeTree");
             })
         },
         error: function (error) {
@@ -29,12 +29,12 @@ function fnLoadServiceCodeTree() {
         }
     });
 
-    $("#ServiceCodeTree").on('loaded.jstree', function () {
-        $("#ServiceCodeTree").jstree()._open_to(prevSelectedID);
-        $('#ServiceCodeTree').jstree().select_node(prevSelectedID);
+    $("#jstServiceCodeTree").on('loaded.jstree', function () {
+        $("#jstServiceCodeTree").jstree()._open_to(prevSelectedID);
+        $('#jstServiceCodeTree').jstree().select_node(prevSelectedID);
     });
 
-    $('#ServiceCodeTree').on("changed.jstree", function (e, data) {
+    $('#jstServiceCodeTree').on("changed.jstree", function (e, data) {
 
         if (data.node != undefined) {
             if (prevSelectedID != data.node.id) {
@@ -44,7 +44,7 @@ function fnLoadServiceCodeTree() {
                 $('#Add').remove();
                 $("#dvServiceCode").hide();
 
-                var parentNode = $("#ServiceCodeTree").jstree(true).get_parent(data.node.id);
+                var parentNode = $("#jstServiceCodeTree").jstree(true).get_parent(data.node.id);
 
                 if (parentNode == "#" || parentNode.startsWith('T') || parentNode == "SM") {
                     $("#dvServiceCode").hide();
@@ -86,13 +86,13 @@ function fnLoadServiceCodeTree() {
                                 ServiceGroupID = parentNode.substring(1);
                             }
                             else {
-                                ServiceGroupID = $("#ServiceCodeTree").jstree(true).get_parent(parentNode);
+                                ServiceGroupID = $("#jstServiceCodeTree").jstree(true).get_parent(parentNode);
                                 while (ServiceGroupID.startsWith('C')) {
-                                    ServiceGroupID = $("#ServiceCodeTree").jstree(true).get_parent(ServiceGroupID);
+                                    ServiceGroupID = $("#jstServiceCodeTree").jstree(true).get_parent(ServiceGroupID);
                                 };
                                 ServiceGroupID = ServiceGroupID.substring(1);
                             }
-                            ServiceTypeID = $("#ServiceCodeTree").jstree(true).get_parent("G" + ServiceGroupID).substring(1);
+                            ServiceTypeID = $("#jstServiceCodeTree").jstree(true).get_parent("G" + ServiceGroupID).substring(1);
                             ServiceID = "0"
                         //    eSyaParams.ClearValue();
                         });
@@ -154,9 +154,9 @@ function fnLoadServiceCodeTree() {
         }
     });
 
-    $('#ServiceCodeTree').on("close_node.jstree", function (node) {
+    $('#jstServiceCodeTree').on("close_node.jstree", function (node) {
         var closingNode = node.handleObj.handler.arguments[1].node;
-        $('#ServiceCodeTree').jstree().deselect_node(closingNode.children);
+        $('#jstServiceCodeTree').jstree().deselect_node(closingNode.children);
     });
 }
 function fnFillServiceDetail(ServiceID) {
@@ -248,7 +248,7 @@ function fnAddOrUpdateServiceCode() {
                     else {
                         fnAlert("s", "", response.StatusCode, response.Message);
                     }
-                    $("#ServiceCodeTree").jstree("destroy");
+                    $("#jstServiceCodeTree").jstree("destroy");
                     fnLoadServiceCodeTree();
 
                 }
@@ -265,9 +265,9 @@ function fnAddOrUpdateServiceCode() {
     }
 }
 function fnExpandAll() {
-    $("#ServiceCodeTree").jstree('open_all');
+    $("#jstServiceCodeTree").jstree('open_all');
 }
 function fnCollapseAll() {
-    $("#ServiceCodeTree").jstree('close_all');
+    $("#jstServiceCodeTree").jstree('close_all');
     $("#dvServiceCode").hide();
 }
