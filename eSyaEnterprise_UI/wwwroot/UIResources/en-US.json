@@ -375,7 +375,7 @@
   "UI0374": "Please Enter Buying Rate",
   "UI0375": "Please Date of Exchange Rate",
   "UI0376": "Please Enter Parameter Id",
-  "UI0377": "Parameter Id Can't Zero'",
+  "UI0377": "Parameter Id Cannot Zero",
   "UI0378": "Please Enter Parameter Description",
   "UI0379": "Please Enter Cost Center Class Description",
 
