@@ -136,7 +136,7 @@ function fnFPValidateAnswer() {
 
     if (IsStringNullorEmpty($("#txtFPSAnswers").val())) {
 
-        fnAlert("w", "", "UI0375", errorMsg.EnterYourAnswer_E14);
+        fnAlert("w", "", "UI0384", errorMsg.EnterYourAnswer_E14);
         return;
     }
 
@@ -187,7 +187,7 @@ function fnForgotPWValidateOTP() {
         async: false,
         success: function (result) {
             if (result.IsSucceeded) {
-                fnAlert("s", "", "UI0377", result.Message + localization.YourPasswordHasbeensent_E16);
+                fnAlert("s", "", "UI0386", result.Message + localization.YourPasswordHasbeensent_E16);
                 $("#PopupForgotPassword").modal('hide');
 
             } else {

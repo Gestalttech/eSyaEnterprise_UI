@@ -51,7 +51,7 @@ $("#btnForgotUIDResendOTP").click(function () {
         _ClickedResendBtn++;
     }
     else {
-        fnAlert("w", "", "UI0376", errorMsg.YouhaveTriedTwoTimes_E15);
+        fnAlert("w", "", "UI0385", errorMsg.YouhaveTriedTwoTimes_E15);
     }
 });
 

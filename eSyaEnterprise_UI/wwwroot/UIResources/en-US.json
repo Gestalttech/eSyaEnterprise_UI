@@ -378,6 +378,14 @@
   "UI0377": "Parameter Id Cannot Zero",
   "UI0378": "Please Enter Parameter Description",
   "UI0379": "Please Enter Cost Center Class Description",
+  "UI0380": "User ID is Not Linked to any Location",
+  "UI0381": "User ID is Not Linked to Financial Year",
+  "UI0382": "User ID is not Exist",
+  "UI0383": "Please correct the Errors and try again",
+  "UI0384": "Please enter your Answer",
+  "UI0385": "You have tried 2 times",
+  "UI0386": "Your Password has been sent to SMS/Email",
+
 
   "UIC01": "You are not Authorized to Add",
   "UIC02": "You are not Authorized to Edit",

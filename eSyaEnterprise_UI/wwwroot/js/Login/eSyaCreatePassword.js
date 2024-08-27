@@ -324,7 +324,7 @@ function fnSaveUserQuestionAnswer() {
   
    
     if (!validateUserQuestionAnswer()) {
-        fnAlert("w", "", "UI0374", errorMsg.PleaseCorrectErrors_E12);
+        fnAlert("w", "", "UI0383", errorMsg.PleaseCorrectErrors_E12);
         return;
     }
 
