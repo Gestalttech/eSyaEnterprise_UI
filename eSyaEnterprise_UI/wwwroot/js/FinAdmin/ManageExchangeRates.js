@@ -45,12 +45,12 @@ function fnGridLoadExRates() {
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         ignoreCase: true,
-        colNames: [localization.CurrencyCode, localization.Description, localization.DateOfExchange, localization.StandardRate, localization.Date, localization.Rate, localization.Date, localization.Rate, localization.ActiveStatus, localization.Actions],
+        colNames: [localization.CurrencyCode, localization.Description, localization.DateOfExchange, localization.StandardRate, localization.SellingDate, localization.SellingRate, localization.BuyingDate, localization.BuyingRate, localization.ActiveStatus, localization.Actions],
         colModel: [
-            { name: "CurrencyCode", width: 50, editable: true, key: true, hidden: true },
+            { name: "CurrencyCode", width: 50, editable: true, hidden: true },
             { name: "CurrencyDesc", width: 50, editable: true },
             {
-                name: "DateOfExchangeRate", width: 50, editable: true, key: true, align: 'right', formatter: "date", formatoptions:
+                name: "DateOfExchangeRate", width: 50, editable: true,  align: 'right', formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
             },
             { name: "StandardRate", width: 50, editable: true, align: 'right' },
@@ -101,13 +101,13 @@ function fnGridLoadExRates() {
             caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'btnGridRefresh', position: 'last', onClickButton: fnRefreshGridExRates
         });
     fnAddGridSerialNoHeading();
-    $("#jqgExRates").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true,
-        groupHeaders: [
-            { startColumnName: 'SellingLastVoucherDate', numberOfColumns: 2, titleText: '<div class="custH">Selling</div>' },
-            { startColumnName: 'BuyingLastVoucherDate', numberOfColumns: 2, titleText: '<div class="custH">Buying</div>' }
-        ]
-    });
+    //$("#jqgExRates").jqGrid('setGroupHeaders', {
+    //    useColSpanStyle: true,
+    //    groupHeaders: [
+    //        { startColumnName: 'SellingLastVoucherDate', numberOfColumns: 2, titleText: '<div class="custH">Selling</div>' },
+    //        { startColumnName: 'BuyingLastVoucherDate', numberOfColumns: 2, titleText: '<div class="custH">Buying</div>' }
+    //    ]
+    //});
     $('.jqg-first-row-header').css('display', 'none');
 }
 
@@ -120,16 +120,19 @@ function SetGridControlByAction() {
 }
 
 function fnAddExRates() {
+    fnClearExRates();
     $("#PopupExRates").modal('show');
     $('#PopupExRates').find('.modal-title').text(localization.AddExchangeRates);
     $("#btnSaveExRates").html("<i class='fa fa-save'></i> " + localization.Save);
     $("#chkExRatesActiveStatus").parent().addClass("is-checked");
     $("#chkExRatesActiveStatus").prop('disabled', true);
     $("#btnDeactivateExRates").hide();
+    $("#txtDateOfExchangeRate,#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', false);
 }
 
 
 function fnEditExRates(actiontype) {
+    
     var rowid = $("#jqgExRates").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgExRates').jqGrid('getRowData', rowid);
 
@@ -188,6 +191,7 @@ function fnEditExRates(actiontype) {
         $("#btnSaveExRates").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnDeactivateExRates").hide();
         $("input,textarea").attr('readonly', false);
+        $("#txtDateOfExchangeRate,#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', false);
         $("select").next().attr('disabled', false);
         $("#btnSaveExRates").show();
     }
@@ -203,6 +207,7 @@ function fnEditExRates(actiontype) {
         $("#chkExRatesActiveStatus").prop('disabled', true);
         $("#btnSaveExRates,#btnDeactivateExRates").hide();
         $("input,textarea").attr('readonly', true);
+        $("#txtDateOfExchangeRate,#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', true);
         $("select").next().attr('disabled', true);
     }
 

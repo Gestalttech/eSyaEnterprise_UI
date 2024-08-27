@@ -315,7 +315,9 @@ footer {
 div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     text-align: center !important;
 }
-#jqgh_jqgItemReorderLevel_MaximumStockLevel, #jqgItemReorderLevel_ReorderLevel, #jqgItemReorderLevel_SafetyStockLevel, #jqgItemReorderLevel_MinimumStockLevel, #jqgh_jqgPaymentDetails_Discount {
+#jqgh_jqgItemReorderLevel_MaximumStockLevel, #jqgItemReorderLevel_ReorderLevel, #jqgItemReorderLevel_SafetyStockLevel, #jqgItemReorderLevel_MinimumStockLevel,
+#jqgh_jqgPaymentDetails_Discount, #jqgh_jqgExRates_DateOfExchangeRate, #jqgh_jqgExRates_StandardRate, #jqgh_jqgExRates_SellingLastVoucherDate, #jqgh_jqgExRates_SellingRate,
+#jqgh_jqgExRates_BuyingLastVoucherDate, #jqgh_jqgExRates_BuyingRate {
     text-align: right !important;
 }
 #jqgh_gvProcessRule_ActiveStatus{
