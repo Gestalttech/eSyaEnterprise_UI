@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
 {
-    [SessionTimeout]
+    //[SessionTimeout]
     public class GenerateController : Controller
     {
         private readonly IEgyptTokenSystemAPIServices _EgyptAdminAPIServices;
@@ -23,8 +23,11 @@ namespace eSyaEnterprise_UI.Areas.Egypt.Controllers
         public async Task<IActionResult> ETM_05_00()
         {
             //tokenArea = TokenArea;
-           string ip= AppSessionVariables.GetIPAddress(HttpContext);
-           int businesskey = 11;
+            //string ip= AppSessionVariables.GetIPAddress(HttpContext);
+
+            string ip = AppSessionVariables.GetRemoteIPAddress(HttpContext);
+
+            int businesskey = 11;
            var param = "?businessKey=" + businesskey + "&IpAddress=" + ip;
 
             var serviceResponse = await _EgyptAdminAPIServices.HttpClientServices.GetAsync<DO_TokenGeneration>("TokenGeneration/GetFloorIDbyIPAddress" + param);
