@@ -73,20 +73,18 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                         UserID = obj.UserID,
                     };
 
-                    _smsServices.SendSmsonSaveClick(smsParams);
+                    var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
+                    if (sr_SMS.Status)
+                    {
+                        return Json(new { Status = true, serviceResponse.Data.StatusCode });
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
 
-                    //var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendSmsonSaveClick", sms).Result;
-                    //if (sr_SMS.Status)
-                    //{
-                    //    return Json(new { Status = true, serviceResponse.Data.StatusCode });
-                    //}
-                    //else
-                    //{
-                    //    _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
-                    //    return Json(new { Status = false, StatusCode = "500" });
-                    //}
-
-                    return Json(serviceResponse.Data);
+                    //return Json(serviceResponse.Data);
                 }
                 else
                 {

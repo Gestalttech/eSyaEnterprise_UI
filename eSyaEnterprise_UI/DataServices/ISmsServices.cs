@@ -9,6 +9,5 @@ namespace eSyaEnterprise_UI.DataServices
     public interface ISmsServices
     {
         void SendSmsForForm(DO_SmsParameter smsparams);
-        void SendSmsonSaveClick(DO_SmsParameter smsparams);
     }
 }

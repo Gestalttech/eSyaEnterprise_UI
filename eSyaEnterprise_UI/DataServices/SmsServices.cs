@@ -18,10 +18,5 @@ namespace eSyaEnterprise_UI.DataServices
         {
             _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendSmsForForm", smsparams);
         }
-
-        public void SendSmsonSaveClick(DO_SmsParameter smsparams)
-        {
-            _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendSmsonSaveClick", smsparams);
-        }
     }
 }
