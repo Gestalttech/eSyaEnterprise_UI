@@ -2,8 +2,11 @@
 using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ConfigServices.Data;
 using eSyaEnterprise_UI.Areas.ConfigServices.Models;
+using eSyaEnterprise_UI.Areas.Localize.Data;
+using eSyaEnterprise_UI.Areas.Localize.Models;
 using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -13,11 +16,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
     [SessionTimeout]
     public class ClinicServicesController : Controller
     {
+        private readonly IeSyaLocalizeAPIServices _eSyalocalizeAPIServices;
+
         private readonly IeSyaConfigServicesAPIServices _eSyaConfigServicesAPIServices;
         private readonly ILogger<ClinicServicesController> _logger;
-        public ClinicServicesController(IeSyaConfigServicesAPIServices eSyaConfigServicesAPIServices, ILogger<ClinicServicesController> logger)
+        public ClinicServicesController(IeSyaConfigServicesAPIServices eSyaConfigServicesAPIServices, IeSyaLocalizeAPIServices eSyalocalizeAPIServices, ILogger<ClinicServicesController> logger)
         {
             _eSyaConfigServicesAPIServices = eSyaConfigServicesAPIServices;
+            _eSyalocalizeAPIServices = eSyalocalizeAPIServices;
             _logger = logger;
         }
         #region ServiceCode
@@ -272,19 +278,65 @@ namespace eSyaEnterprise_UI.Areas.ConfigServices.Controllers
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EMS_04_00()
         {
-            var businessserviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+            //var businessserviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
             var serviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_ServiceCode>>("ClinicServices/GetActiveServices");
 
-            if (businessserviceResponse.Status && serviceResponse.Status)
+            string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+            if (uiCulture != null)
             {
-                if (businessserviceResponse.Data != null)
+                if (uiCulture == "en-US")
                 {
-                    ViewBag.BusinessKey = businessserviceResponse.Data.Select(b => new SelectListItem
+                    var businessserviceResponse = await _eSyaConfigServicesAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+                    if (businessserviceResponse.Status)
                     {
-                        Value = b.BusinessKey.ToString(),
-                        Text = b.LocationDescription,
-                    }).ToList();
+                        ViewBag.BusinessKey = businessserviceResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.BusinessKey.ToString(),
+                            Text = b.LocationDescription,
+                        }).ToList();
+                    }
                 }
+                if (uiCulture == "hi-IN")
+                {
+                    var parameter = "?languageCode=" + uiCulture + "&tableCode=" +2;
+                    var hindiserviceResponse = await _eSyalocalizeAPIServices.HttpClientServices.GetAsync<List<DO_LocalizationLanguageMapping>>("Master/GetLocalizationLanguageMapping" + parameter);
+                    if (hindiserviceResponse.Status)
+                    {
+                        ViewBag.BusinessKey = hindiserviceResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.TablePrimaryKeyId.ToString(),
+                            Text = b.FieldDescLanguage,
+                        }).ToList();
+                    }
+                }
+                if (uiCulture == "ar-EG")
+                {
+                    var parameter = "?languageCode=" + uiCulture + "&tableCode=" + 2;
+                    var arabicserviceResponse = await _eSyalocalizeAPIServices.HttpClientServices.GetAsync<List<DO_LocalizationLanguageMapping>>("Master/GetLocalizationLanguageMapping" + parameter);
+                    if (arabicserviceResponse.Status)
+                    {
+                        ViewBag.BusinessKey = arabicserviceResponse.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.TablePrimaryKeyId.ToString(),
+                            Text = b.FieldDescLanguage,
+                        }).ToList();
+                    }
+                }
+            }
+                
+
+            
+
+            if (/*businessserviceResponse.Status &&*/ serviceResponse.Status)
+            {
+                //if (businessserviceResponse.Data != null)
+                //{
+                //    ViewBag.BusinessKey = businessserviceResponse.Data.Select(b => new SelectListItem
+                //    {
+                //        Value = b.BusinessKey.ToString(),
+                //        Text = b.LocationDescription,
+                //    }).ToList();
+                //}
                 if (serviceResponse.Data != null)
                 {
                     ViewBag.Services = serviceResponse.Data.Select(s => new SelectListItem
