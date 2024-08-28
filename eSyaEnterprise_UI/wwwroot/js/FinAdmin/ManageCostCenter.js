@@ -22,6 +22,7 @@ function fnLoadSACCategoryTree() {
 
         success: function (result) {
             $("#jstCostCenter").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstCostCenter");
 
             //$("#jstCostCenter").jstree({
             //    core: {
@@ -41,7 +42,7 @@ function fnLoadSACCategoryTree() {
 
             
 
-            //fnTreeSize("#jstCostCenter");
+            
             //$(window).on('resize', function () {
             //    fnTreeSize("#jstCostCenter");
             //})
@@ -106,7 +107,7 @@ function fnLoadSACCategoryTree() {
                             return;
                         }
                         $("#pnlCostCenterClassDescHeading .mdl-card__title-text").text(localization.AddCostCenter);
-                         
+                        $("#txtCostCenterDescription").prop("disabled", false);
                         $("#txtCostCenterDescription").val('');
                         $('#chkCCCDActiveStatus').parent().addClass("is-checked");
                         $("#btnSaveCCDesc").html("<i class='fa fa-save'></i> " + localization.Save);

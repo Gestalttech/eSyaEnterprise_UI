@@ -25,7 +25,10 @@ $(document).ready(function () {
     v_moveUp.on('click', toMove);
     v_moveDown.on('click', toMove);
     v_btnEditNode.on('click', toEdit);
-
+    $("#bookTypeDiv .dropdown.bootstrap-select").css({
+        'max-width': '200px',
+        'width': 100 + '%'
+    });
     function ajaxCallingTree() {
         $.ajax({
             url: getBaseURL() + '/AccountGroup/GetAccountGroupsforTreeview',
