@@ -30,12 +30,18 @@
         SubledgerDescription: '@Localizer["SubledgerDescription"]',
         Coahead: '@Localizer["Coahead"]',
         AddViewSubledgerGroup: '@Localizer["AddViewSubledgerGroup"]',
+        AddSubledgerType: '@Localizer["AddSubledgerType"]',
+        UpdateSubledgerType: '@Localizer["UpdateSubledgerType"]',
+        ViewSubledgerType: '@Localizer["ViewSubledgerType"]',
+        ActiveDeactiveSubledgerType: '@Localizer["ActiveDeactiveSubledgerType"]',
  }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
         vieweauth_E3: '@Localizer["UIC03"]',
         deleteauth_E4: '@Localizer["UIC04"]',
+        SubledgerType_E5: '@Localizer["UI0387"]',
+        SubledgerTypeDesc_E6: '@Localizer["UI0388"]',
     }
    </script>
 @section scripts {
@@ -63,8 +69,8 @@
                 <div class="row padbot4">
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="txtSubledgerType" class="text-right">@Localizer["SubledgerType"] </label>
-                            <input id="txtSubledgerType" class="form-control numberonly" maxlength="1" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
+                            <label for="txtSubledgerType">@Localizer["SubledgerType"] </label>
+                            <input id="txtSubledgerType" class="form-control" maxlength="1" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -74,12 +80,10 @@
                         </div>
                     </div>
                     <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12 form-group">
-                        <div class="">
-                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSLTActiveStatus">
+                           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSLTActiveStatus">
                                 <input type="checkbox" id="chkSLTActiveStatus" class="mdl-checkbox__input">
                                 <span class="mdl-checkbox__label">@Localizer["Active"] </span>
                             </label>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -118,7 +122,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                        @Localizer["SubledgerType"]  :  <span id="lblSubledgerType" class="fixedText"></span>
+                        @Localizer["SubledgerType"]  <span id="lblSubledgerType" class="fixedText"></span>
                     </div>
                 </div>
                 <div class="row">
