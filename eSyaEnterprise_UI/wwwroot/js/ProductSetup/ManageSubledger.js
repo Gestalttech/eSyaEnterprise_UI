@@ -60,14 +60,8 @@ function fnGridLoadSubledgerType() {
             SetGridControlByAction(); fnJqgridSmallScreen("jqgSubledgerType");
         },
     }).
-        jqGrid('navGrid', '#jqpSubledgerType', { add: false, edit: false, search: true, searchtext: 'Search', del: false, refresh: false }, {}, {}, {}, {
-            closeOnEscape: true,
-            caption: "Search...",
-            multipleSearch: true,
-            Find: "Find",
-            Reset: "Reset",
-            odata: [{ oper: 'eq', text: 'Match' }, { oper: 'cn', text: 'Contains' }, { oper: 'bw', text: 'Begins With' }, { oper: 'ew', text: 'Ends With' }],
-        }).jqGrid('navButtonAdd', '#jqpSubledgerType', {
+        jqGrid('navGrid', '#jqpSubledgerType', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpSubledgerType', {
             caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddSubledgerType
         }).
         jqGrid('navButtonAdd', '#jqpSubledgerType', {
@@ -230,9 +224,6 @@ function fnSaveSubledgerType() {
 }
 
 
-$("#PopupSubledgerType").on('hidden.bs.modal', function () {
-    fnGridRefreshSubledgerType();
-});
 function SetGridControlByAction() {
     $('#jqgAdd').removeClass('ui-state-disabled');
 
