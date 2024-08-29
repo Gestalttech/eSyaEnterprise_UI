@@ -281,12 +281,11 @@ function fnDeleteSubledgerType() {
 
 // Add/View SubLedgerGroup
 function fnGridLoadSubledgerGroup() {
-    $('#jqgSubLedgerGroup').jqGrid('GridUnload');
-    $("#jqgSubLedgerGroup").jqGrid({
-        //url: getBaseURL() + '/Parameters/GetParametersInformationByParameterType?parameterType=' + $("#txtParameterType").val(),
-        url:'',
-        datatype: 'local',
-        //mtype: 'Post',
+    $('#jqgSubledgerGroup').jqGrid('GridUnload');
+    $("#jqgSubledgerGroup").jqGrid({
+        url: getBaseURL() + '/Subledger/GetSubledgerGroupInformationBySubledgerType?stype=' + $("#txtSubledgerType").val(),
+        datatype: 'json',
+        mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.SubledgerType, localization.SubledgerGroup, localization.SubledgerDescription, localization.Coahead, localization.Active, localization.Actions],
@@ -299,8 +298,8 @@ function fnGridLoadSubledgerGroup() {
             {
                 name: 'action', search: false, align: 'left', width: 80, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditSubledgerGroup(\'edit\')"><i class="fas fa-pen"></i></button>' +
-                        '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" onclick="return fnEditSubledgerGroup(\'view\')"><i class="far fa-eye"></i></button>'
+                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditSubledgerGroup(event,\'edit\')"><i class="fas fa-pen"></i></button>' +
+                        '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" onclick="return fnEditSubledgerGroup(event,\'view\')"><i class="far fa-eye"></i></button>'
 
                 }
             },
@@ -309,7 +308,7 @@ function fnGridLoadSubledgerGroup() {
         rowList: [10, 20, 30, 50, 100],
         rownumWidth: 55,
         emptyrecords: "No records to View",
-        pager: "#jqpSubLedgerGroup",
+        pager: "#jqpSubledgerGroup",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -319,34 +318,37 @@ function fnGridLoadSubledgerGroup() {
         shrinkToFit: true,
         forceFit: true,
         loadonce: true,
-        scrollOffset: 0, caption: localization.SubLedgerGroup,
+        scrollOffset: 0, caption: localization.SubledgerGroup,
         loadComplete: function () {
-            fnJqgridSmallScreen("jqgSubLedgerGroup");
+            fnJqgridSmallScreen("jqgSubledgerGroup");
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         },
-    }).jqGrid('navGrid', '#jqpSubLedgerGroup', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpSubLedgerGroup', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshSubLedgerGroup
-    }).jqGrid('navButtonAdd', '#jqpSubLedgerGroup', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'custAdd', position: 'first', onClickButton: fnAddSubLedgerGroup
+    }).jqGrid('navGrid', '#jqpSubledgerGroup', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpSubledgerGroup', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshSubledgerGroup
+    }).jqGrid('navButtonAdd', '#jqpSubledgerGroup', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'custAdd', position: 'first', onClickButton: fnAddSubledgerGroup
     });
     fnAddGridSerialNoHeading();
 }
 
 function fnAddSubledgerGroup() {
-    fnClearSubLedgerGroup();
+    
+    fnClearSubledgerGroup();
     fnUserAction(false);
-    $('#PopupSubLedgerGroup').find('.modal-title').text(localization.AddSubLedgerGroup);
+    $('#PopupSubledgerGroup').find('.modal-title').text(localization.AddSubLedgerGroup);
     $("#chkSLGActiveStatus").parent().addClass("is-checked");
     $("#chkSLGActiveStatus").prop('disabled', false);
-    $("#btnSaveSubLedgerGroup").html(localization.Save).show();
+    $("#btnSaveSubledgerGroup").html(localization.Save).show();
 }
 
-function fnEditSubLedgerGroup(e, actiontype) {
-
+function fnEditSubLedgerGroup(e,actiontype) {
+    fnClearSubledgerGroup();
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
     var rowData = $('#jqgSubLedgerGroup').jqGrid('getRowData', rowid);
-    $('#txtSubLedgerType').val(rowData.ParameterId).attr('readonly', true);
-    $('#txtSubLedgerTypeDescription').val(rowData.ParameterDesc);
+    $("#txtHDSubledgerType").val(rowData.SubledgerType);
+    $("#txtHDSubledgerGroup").val(rowData.SubledgerGroup);
+  
+    $('#lblSubledgerType').text(rowData.Sltdesc);
    
     if (rowData.ActiveStatus == 'true') {
         $("#chkSLGActiveStatus").parent().addClass("is-checked");
@@ -358,10 +360,10 @@ function fnEditSubLedgerGroup(e, actiontype) {
     fnUserAction(false);
     if (actiontype.trim() == "edit") {
         $("#chkSLGActiveStatus").prop('disabled', false);
-        $("#btnSaveSubLedgerType").html('Update').show();
+        $("#btnSaveSubledgerType").html('Update').show();
     }
     if (actiontype.trim() == "view") {
-        $("#btnSaveSubLedgerType").hide();
+        $("#btnSaveSubledgerType").hide();
         $("#chkSLGActiveStatus").prop('disabled', true);
         fnUserAction(true);
 
@@ -376,44 +378,47 @@ function fnUserAction(val) {
 
 function fnSaveSubledgerGroup() {
 
-    if (IsStringNullorEmpty($("#txtParameterDescription").val())) {
-        fnAlert("w", "EPS_21_00", "UI0013", errorMsg.Parameterdesc_E2);
+    if (IsStringNullorEmpty($("#txtHDSubledgerType").val())) {
+        fnAlert("w", "EPS_21_00", "UI0013", "Please select subledger type");
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtSubledgerDescription").val())) {
+        fnAlert("w", "EPS_21_00", "UI0013", "Please enter subledger group description");
         return false;
     }
 
-    var pa_rm = {
-        ParameterType: $("#txtParameterType").val(),
-        ParameterId: $("#txtParameterId").val() === '' ? 0 : $("#txtParameterId").val(),
-        ParameterDesc: $("#txtParameterDescription").val(),
-        ParameterValueType: $("#cboParameterValueType").val(),
-        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+    var sub_group = {
+        SubledgerType: $("#txtHDSubledgerType").val(),
+        SubledgerGroup: $("#txtHDSubledgerGroup").val() === '' ? 0 : $("#txtHDSubledgerGroup").val(),
+        SubledgerDesc: $("#txtSubledgerDescription").val(),
+        Coahead: $("#txtCOAHead").val(),
+        ActiveStatus: $("#chkSLGActiveStatus").parent().hasClass("is-checked")
     }
-    $("#btnSaveSubLedgerType").attr('disabled', true);
+    $("#btnSaveSubledgerType").attr('disabled', true);
     $.ajax({
-        //url: getBaseURL() + '/Parameters/InsertOrUpdateParameters',
-        url:'',
+        url: getBaseURL() + '/Subledger/InsertOrUpdateSubledgerGroup',
         type: 'POST',
         datatype: 'json',
-        data: { pa_rm },
+        data: { obj: sub_group },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btnSaveSubLedgerType").attr('disabled', false);
+                $("#btnSaveSubledgerType").attr('disabled', false);
                 $("#txtParameterDescription").val('');
-                
-                fnGridRefreshParameters();
+                fnClearSubledgerGroup();
+                fnGridRefreshSubledgerGroup();
                 //$("#PopupParameters").modal('hide');
 
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btnSaveSubLedgerType").attr('disabled', false);
+                $("#btnSaveSubledgerType").attr('disabled', false);
             }
 
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveSubLedgerType").attr("disabled", false);
+            $("#btnSaveSubledgerType").attr("disabled", false);
         }
     });
 }
@@ -422,14 +427,14 @@ function fnGridRefreshSubledgerType() {
     $("#jqgSubledgerType").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
-function fnGridRefreshSubLedgerGroup() {
+function fnGridRefreshSubledgerGroup() {
     $("#jqgSubledgerGroup").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
-function fnClearSubLedgerGroup() {
-    $("#txtParameterId").val('');
-    $("#txtParameterId").hide();
-    $("#txtParameterDescription").val('');
+function fnClearSubledgerGroup() {
+    $("#txtHDSubledgerGroup").val('');
+    $("#txtSubledgerDescription").val('');
+    $("#txtCOAHead").val('');
     $("#chkSLGActiveStatus").prop('disabled', false);
     $("#chkSLGActiveStatus").parent().removeClass("is-checked");
     $("#btnSaveSubledgerGroup").attr('disabled', false);

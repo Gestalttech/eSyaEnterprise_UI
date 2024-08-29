@@ -150,6 +150,42 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+
+        /// <summary>
+        /// Insert Into / Update Parameter
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateSubledgerGroup(DO_Subledger obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+                if (obj.SubledgerGroup == 0)
+                {
+                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Subledger/InsertIntoSubledgerGroup", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+                else
+                {
+                    var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Subledger/UpdateSubledgerGroup", obj);
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateSubledgerGroup:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
         #endregion
     }
 }
