@@ -158,14 +158,17 @@ function fnEditSubledgerType(actiontype) {
 }
 
 function fnSubledgerGroupInfoPopup(e) {
+    debugger;
+    fnClearSubledgerGroup();
+    $("#divSubledgerGroup").css('display', 'none');
     var rowid = $("#jqgSubledgerType").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgSubledgerType').jqGrid('getRowData', rowid);
     $("#PopupSubledgerGroup").modal('show');
-    $("#txtSubledgerType").val('');
-    $("#txtSubledgerType").val(rowData.SubledgerType);
-    $("#lblSubledgerType").text(rowData.ParameterHeaderDesc);
+    $("#txtHDSubledgerType").val(rowData.SubledgerType);
+    $("#txtHDSubledgerGroup").val('');
+    $("#lblSubledgerType").text(rowData.Sltdesc);
     $("#chkSLGActiveStatus").parent().addClass("is-checked");
-    fnGridLoadSubledgerGroup();
+    fnGridLoadSubledgerGroup(rowData.SubledgerType);
 }
 
 function fnClearSubledgerTypeFields() {
@@ -271,10 +274,10 @@ function fnDeleteSubledgerType() {
 }
 
 // Add/View SubLedgerGroup
-function fnGridLoadSubledgerGroup() {
+function fnGridLoadSubledgerGroup(SLType) {
     $('#jqgSubledgerGroup').jqGrid('GridUnload');
     $("#jqgSubledgerGroup").jqGrid({
-        url: getBaseURL() + '/Subledger/GetSubledgerGroupInformationBySubledgerType?stype=' + $("#txtSubledgerType").val(),
+        url: getBaseURL() + '/Subledger/GetSubledgerGroupInformationBySubledgerType?stype=' + SLType,
         datatype: 'json',
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -323,22 +326,28 @@ function fnGridLoadSubledgerGroup() {
 }
 
 function fnAddSubledgerGroup() {
-    
+    debugger;
     fnClearSubledgerGroup();
     fnUserAction(false);
     $('#PopupSubledgerGroup').find('.modal-title').text(localization.AddSubLedgerGroup);
     $("#chkSLGActiveStatus").parent().addClass("is-checked");
     $("#chkSLGActiveStatus").prop('disabled', false);
     $("#btnSaveSubledgerGroup").html(localization.Save).show();
+    $("#divSubledgerGroup").css('display', 'flex');
+    $("#txtSubledgerDescription").attr('disabled',false);
+    $("#txtCOAHead").attr('disabled', false);
 }
 
-function fnEditSubLedgerGroup(e,actiontype) {
+function fnEditSubledgerGroup(e,actiontype) {
     fnClearSubledgerGroup();
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    var rowData = $('#jqgSubLedgerGroup').jqGrid('getRowData', rowid);
+    var rowData = $('#jqgSubledgerGroup').jqGrid('getRowData', rowid);
+    $("#divSubledgerGroup").css('display', 'flex');
     $("#txtHDSubledgerType").val(rowData.SubledgerType);
     $("#txtHDSubledgerGroup").val(rowData.SubledgerGroup);
-  
+    $("#txtSubledgerDescription").val(rowData.SubledgerDesc);
+    $("#txtCOAHead").val(rowData.Coahead);
+
     $('#lblSubledgerType').text(rowData.Sltdesc);
    
     if (rowData.ActiveStatus == 'true') {
@@ -352,12 +361,15 @@ function fnEditSubLedgerGroup(e,actiontype) {
     if (actiontype.trim() == "edit") {
         $("#chkSLGActiveStatus").prop('disabled', false);
         $("#btnSaveSubledgerType").html('Update').show();
+        $("#txtSubledgerDescription").attr('disabled', false);
+        $("#txtCOAHead").attr('disabled', false);
     }
     if (actiontype.trim() == "view") {
         $("#btnSaveSubledgerType").hide();
         $("#chkSLGActiveStatus").prop('disabled', true);
         fnUserAction(true);
-
+        $("#txtSubledgerDescription").attr('disabled', true);
+        $("#txtCOAHead").attr('disabled', true);
     }
 }
 
@@ -370,11 +382,11 @@ function fnUserAction(val) {
 function fnSaveSubledgerGroup() {
 
     if (IsStringNullorEmpty($("#txtHDSubledgerType").val())) {
-        fnAlert("w", "EPS_21_00", "UI0013", "Please select subledger type");
+        fnAlert("w", "EPS_21_00", "UI0387", errorMsg.SubledgerType_E5);
         return false;
     }
     if (IsStringNullorEmpty($("#txtSubledgerDescription").val())) {
-        fnAlert("w", "EPS_21_00", "UI0013", "Please enter subledger group description");
+        fnAlert("w", "EPS_21_00", "UI0389", errorMsg.SubledgerGroupDesc_E7);
         return false;
     }
 
@@ -419,6 +431,7 @@ function fnGridRefreshSubledgerType() {
 }
 
 function fnGridRefreshSubledgerGroup() {
+    $("#divSubledgerGroup").css('display', 'none');
     $("#jqgSubledgerGroup").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 

@@ -385,6 +385,9 @@
   "UI0384": "Please enter your Answer",
   "UI0385": "You have tried 2 times",
   "UI0386": "Your Password has been sent to SMS/Email",
+  "UI0387": "Please enter the Subledger Type",
+  "UI0388": "Please enter the Subledger Type description",
+  "UI0389": "Please enter subledger group description",
 
 
   "UIC01": "You are not Authorized to Add",

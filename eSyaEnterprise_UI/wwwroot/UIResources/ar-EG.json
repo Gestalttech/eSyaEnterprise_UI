@@ -385,6 +385,9 @@
   "UI0384": "الرجاء إدخال إجابتك",
   "UI0385": "لقد حاولت مرتين",
   "UI0386": "لقد تم إرسال كلمة المرور الخاصة بك إلى رسالة نصية قصيرة أو البريد الإلكتروني",
+  "UI0387": "Please enter the Subledger Type",
+  "UI0388": "Please enter the Subledger Type description",
+  "UI0389": "Please enter subledger group description",
 
   "UIC01": "أنت غير مخول بإضافة",
   "UIC02": "أنت غير مخول بالتعديل",

@@ -42,6 +42,7 @@
         deleteauth_E4: '@Localizer["UIC04"]',
         SubledgerType_E5: '@Localizer["UI0387"]',
         SubledgerTypeDesc_E6: '@Localizer["UI0388"]',
+        SubledgerGroupDesc_E7: '@Localizer["UI0389"]',
     }
    </script>
 @section scripts {
@@ -128,11 +129,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 form-group">
-                        <table id="jqgSubLedgerGroup"></table>
-                        <div id="jqpSubLedgerGroup"></div>
+                        <table id="jqgSubledgerGroup"></table>
+                        <div id="jqpSubledgerGroup"></div>
                     </div>
                 </div>
-                <div class="row" id="divSubledgerGroup">
+                <div class="row" id="divSubledgerGroup" style="display:none">
                     <div class="col-lg-12 col-md-12 col-sm-12 collapse">
                         <div class="form-group">
                             <label for="txtSubledgerType">@Localizer["SubledgerType"] </label>

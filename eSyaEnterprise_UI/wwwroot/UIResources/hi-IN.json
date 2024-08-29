@@ -385,6 +385,9 @@
   "UI0384": "अपने जवाब दाखिल करें",
   "UI0385": "आपने 2 बार प्रयास किया है",
   "UI0386": "आपका पासवर्ड एसएमएस या ईमेल पर भेज दिया गया है",
+  "UI0387": "Please enter the Subledger Type",
+  "UI0388": "Please enter the Subledger Type description",
+  "UI0389": "Please enter subledger group description",
 
   "UIC01": "आप जोड़ने के लिए अधिकृत नहीं हैं",
   "UIC02": "आप संपादित करने के लिए अधिकृत नहीं हैं",
