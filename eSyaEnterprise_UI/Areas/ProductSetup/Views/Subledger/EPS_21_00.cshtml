@@ -1,0 +1,176 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "EPS_21_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Cancel: '@Localizer["Cancel"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        Activate: '@Localizer["Activate"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Delete: '@Localizer["Delete"]',
+        SubledgerType: '@Localizer["SubledgerType"]',
+        SltDescription: '@Localizer["SltDescription"]',
+        SubledgerType: '@Localizer["SubledgerType"]',
+        SubledgerGroup: '@Localizer["SubledgerGroup"]',
+        SubledgerDescription: '@Localizer["SubledgerDescription"]',
+        Coahead: '@Localizer["Coahead"]',
+        AddViewSubledgerGroup: '@Localizer["AddViewSubledgerGroup"]',
+ }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+    }
+   </script>
+@section scripts {
+    <script src="~/js/ProductSetup/ManageSubledger.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table id="jqgSubledgerType"></table>
+        <div id="jqpSubledgerType"></div>
+    </div>
+</div>
+
+
+<div class="modal fade in" id="PopupSubledgerType" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["AddSubledgerType"]</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row padbot4">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtSubledgerType" class="text-right">@Localizer["SubledgerType"] </label>
+                            <input id="txtSubledgerType" class="form-control numberonly" maxlength="1" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphabets"]' />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtSubledgerTypeDescription">@Localizer["SubledgerTypeDescription"] </label>
+                            <input id="txtSubledgerTypeDescription" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
+                        </div>
+                    </div>
+                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12 form-group">
+                        <div class="">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSLTActiveStatus">
+                                <input type="checkbox" id="chkSLTActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveSubledgerType" onclick="fnSaveSubledgerType();">
+                            <i class="fa fa-save"></i> @Localizer["Save"]
+                        </button>
+
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateSubledgerType" onclick="fnDeleteSubledgerType();">
+                            <i class="fas fa-ban"></i> @Localizer["Deactivate"]
+                        </button>
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#" onclick="fnClearSubledgerTypeFields()">
+                            <i class="fa fa-times"></i> @Localizer["Cancel"]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fullscreen fade in" id="PopupSubledgerGroup" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <input type="text" id="txtParameterType" style="display:none" />
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header popupHeader">
+                <h4 class="modal-title">@Localizer["SubledgerGroup"]  </h4>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        @Localizer["SubledgerType"]  :  <span id="lblSubledgerType" class="fixedText"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 form-group">
+                        <table id="jqgSubLedgerGroup"></table>
+                        <div id="jqpSubLedgerGroup"></div>
+                    </div>
+                </div>
+                <div class="row" id="divSubledgerGroup">
+                    <div class="col-lg-12 col-md-12 col-sm-12 collapse">
+                        <div class="form-group">
+                            <label for="txtSubledgerType">@Localizer["SubledgerType"] </label>
+                            <input id="txtSubledgerType" class="form-control" maxlength="1" type="text" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-9 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtSubledgerDescription">@Localizer["SubledgerDescription"] </label>
+                            <input id="txtSubledgerDescription" class="form-control" maxlength="75" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric75Characters"]' />
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <div class="form-group">
+                            <label for="txtCOAHead">@Localizer["COAHead"] </label>
+                            <input id="txtCOAHead" class="form-control" maxlength="15" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric15Characters"]' />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                        <div class="">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkSLGActiveStatus">
+                                <input type="checkbox" id="chkSLGActiveStatus" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveSubLedgerGroup" onclick="fnSaveSubLedgerGroup();">
+                            <i class='fa fa-save'></i> @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="#" onclick="fnClearSubLedgerGroup()">
+                            <i class='fa fa-times'></i>  @Localizer["Cancel"]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
