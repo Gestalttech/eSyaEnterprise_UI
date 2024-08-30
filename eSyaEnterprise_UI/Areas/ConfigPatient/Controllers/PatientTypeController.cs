@@ -31,7 +31,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         //
         [Area("ConfigPatient")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EPM_01_00()
+        public async Task<IActionResult> EPM_01_00()
         {
             try
             {
@@ -41,11 +41,12 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
                 //l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
 
 
-                var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
+                //var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
+                var response =await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonMethod/GetPatientCategory");
+
                 if (response.Status)
                 {
-                    List<DO_ApplicationCodes> pcat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.PatientCategory).ToList();
-                    ViewBag.PatientCategory = pcat.Select(a => new SelectListItem
+                    ViewBag.PatientCategory = response.Data.Select(a => new SelectListItem
                     {
                         Text = a.CodeDesc,
                         Value = a.ApplicationCode.ToString()
