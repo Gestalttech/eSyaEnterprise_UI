@@ -19,15 +19,15 @@ $(function () {
 function fnGridLoadEmailVariable() {
     $('#jqgEmailVariable').jqGrid('GridUnload');
     $("#jqgEmailVariable").jqGrid({
-        url:'',
+        url: getBaseURL() + '/Engine/GetEmailVariableInformation',
         datatype: 'json',
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.EmailVariable, localization.EmailComponent, localization.Active, localization.Actions],
         colModel: [
-            { name: "EMAVariable", width: 45, editable: true, align: 'left', editoptions: { maxlength: 4 } },
-            { name: "EMAComponent", width: 108, editable: true, align: 'left', editoptions: { maxlength: 4 } },
+            { name: "Emavariable", width: 45, editable: true, align: 'left', editoptions: { maxlength: 4 } },
+            { name: "Emacomponent", width: 108, editable: true, align: 'left', editoptions: { maxlength: 4 } },
             { name: "ActiveStatus", editable: true, width: 35, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -97,8 +97,8 @@ function fnAddEmailVariable() {
 function fnEditEmailVariable(actiontype) {
      var rowid = $("#jqgEmailVariable").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgEmailVariable').jqGrid('getRowData', rowid);
-    $('#txtEmailVariable').val(rowData.Emailvariable).attr('readonly', true);
-    $('#txtEmailComponent').val(rowData.Emailcomponent);
+    $('#txtEmailVariable').val(rowData.Emavariable).attr('readonly', true);
+    $('#txtEmailComponent').val(rowData.Emacomponent);
     if (rowData.ActiveStatus === 'true') {
         $("#chkEmailActiveStatus").parent().addClass("is-checked");
         $("#btnDeactivateEmailVariable").html(localization.Deactivate);
@@ -170,19 +170,23 @@ function fnSaveEmailVariable() {
         return false;
     }
 
-    var emailVariable = {
-        Emailvariable: $("#txtEmailVariable").val(),
-        Emailcomponent: $("#txtEmailComponent").val(),
+    var obj = {
+        Emavariable: $("#txtEmailVariable").val(),
+        Emacomponent: $("#txtEmailComponent").val(),
         ActiveStatus: $("#chkEmailActiveStatus").parent().hasClass("is-checked")
     }
 
-   
+    var URL = getBaseURL() + '/Engine/InsertIntoEmailVariable';
+    if (isUpdate == 1) {
+        URL = getBaseURL() + '/Engine/UpdateEmailVariable';
+    }
+
     $("#btnSaveEmailVariable").attr('disabled', true);
     $.ajax({
-        url: '',
+        url: URL,
         type: 'POST',
         datatype: 'json',
-        data: { emailVariable },
+        data: { obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -225,7 +229,7 @@ function fnDeleteEmailVariable() {
     }
     $("#btnDeactivateEmailVariable").attr("disabled", true);
     $.ajax({
-        url:'',
+        url: getBaseURL() + '/Engine/ActiveOrDeActiveEmailVariable?status=' + a_status + '&smsvariable=' + $("#txtSMSVariable").val(),
         type: 'POST',
         success: function (response) {
             if (response.Status) {
