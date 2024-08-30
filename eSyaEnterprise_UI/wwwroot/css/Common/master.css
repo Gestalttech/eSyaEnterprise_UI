@@ -106,7 +106,10 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
     flex-flow: column;
 }
 .btnEMRTriage{padding:0.25rem 2.5rem !important;}
-
+input[type="radio"]:checked + label {
+    color:black;
+} 
+.vertical-center
 .toast-body .fa-circle-check {color: #038f01;}
 .toast-body .fa-circle-exclamation {color: #f39304;}
 .toast-body .fa-circle-xmark {color: #bb3502;}

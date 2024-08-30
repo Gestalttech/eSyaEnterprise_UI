@@ -23,9 +23,157 @@
         Delete: '@Localizer["Delete"]',
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
+        EmailTempID: '@Localizer["EmailTempID"]',
+        FormID: '@Localizer["FormID"]',
+        EmailTempDescription: '@Localizer["EmailTempDescription"]',
+        EmailSubject: '@Localizer["EmailSubject"]',
+        EmailBody: '@Localizer["EmailBody"]',
+        EmailStatement: '@Localizer["EmailStatement"]',
+        IsAttachmentReqd: '@Localizer["IsAttachmentReqd"]',
     }
 </script>
 @section scripts {
     <script src="~/js/ConfigureEmail/EmailTemplate.js"></script>
     <script src="~/js/Common/jquery.contextmenu.min.js"></script>
+    <script src="~/js/Common/tinymce/tinymce.min.js"></script>
 }
+<section id="divEmailParameter">
+    <div class="row">
+         <div class="col-lg-3 col-md-2 col-sm-6">
+            <label title="FormOptions">@Localizer["FormOption"]</label>
+            <div class="form-group">
+                <input type="radio" name="rdEMform" id="rdEMnewform" value="NewForm" checked="checked" /> <label for="rdEMnewform" class="d-inline pe-3"> @Localizer["New"] </label>
+                <input type="radio" name="rdEMform" id="rdEMExistingform" value="ExistingForm" /> <label for="rdEMExistingform" class="d-inline"> @Localizer["Existing"]</label>
+            </div>
+         </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="form-group">
+                <label>@Localizer["FormName"]</label>
+                <select class="selectpicker form-control" data-live-search="true" id="cboEMFormId" data-size="8" onchange="fnGridLoadEmailParameter()"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <table id="jqgEmailParameter"></table>
+            <div id="jqpEmailParameter"></div>
+        </div>
+    </div>
+</section>
+<section id="divEmailTemplate" style="display:none;">
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <p class="subheading" id="hdFormName">@Localizer["NewForm"]</p>
+            <hr class="left" />
+        </div>
+            <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="txtEmailTempID">@Localizer["EmailTempID"] </label>
+                        <input id="txtEmailTempID" class="form-control" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
+                     </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <div class="form-group">
+                        <label for="txtEmailTempDesc">@Localizer["EmailTempDesc"] </label>
+                        <input id="txtEmailTempDesc" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />
+                     </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label for="txtEmailSubject">@Localizer["EmailSubject"] </label>
+                        <input id="txtEmailSubject" class="form-control" maxlength="250" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
+                     </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <div class="form-group">
+                        <label for="txtEmailBody">@Localizer["EmailBody"]</label>
+                        <textarea id="txtEmailBody" class="form-control" rows="4" cols="40" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric500Characters"]'></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group">
+                     <p class="subheading" id="hdFormName">@Localizer["EmailParameter"]</p>
+                     <hr class="left" />
+                        @await Component.InvokeAsync("eSyaParameter", new { parameterType = "9" })
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsIsAttachmentReqd">
+                                    <input type="checkbox" id="chkIsAttachmentReqd" class="mdl-checkbox__input">
+                                    <span class="mdl-checkbox__label">@Localizer["IsAttachmentReqd"] ?</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkEMTActiveStatus">
+                                    <input type="checkbox" id="chkEMTActiveStatus" checked="checked" class="mdl-checkbox__input">
+                                    <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="col-lg-12 text-center">
+           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10" id="" onclick="fnRedirectToEmailTemplate()">
+                <i class="fa fa-chevron-left"></i>  @Localizer["Back"]
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveEmailTemplate" onclick="fnSaveEmailTemplate()">
+                <i class="fa fa-save"></i>   @Localizer["Save"]
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" onclick="fnCloseEmailTemplate()"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+        </div>
+    </div>   
+</section>
+
+<script>
+    $(document).ready(function () {
+        tinymceinit();
+    })
+    function tinymceinit() {
+        tinymce.init({
+            selector: 'textarea#txtEmailBody',
+            height: 200,
+            menubar: true,
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+            plugins: ' image textpattern textcolor colorpicker insertdatetime lists table tabfocus searchreplace hr visualblocks ',
+            toolbar: ' undo redo | fontselect fontsizeselect formatselect | link image | bold underline | alignleft aligncenter alignright | forecolor backcolor | insertdatetime | bullist numlist | table | searchreplace | hr',
+            insertdatetime_formats: ["%H:%M:%S", "%d-%m-%Y", "%I:%M:%S %p", "%D"],
+            image_title: true,
+            automatic_uploads: true,
+
+            file_picker_types: 'image',
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.onchange = function () {
+                    var file = this.files[0];
+
+                    var reader = new FileReader();
+                    reader.onload = function () {
+
+                        var id = 'blobid' + (new Date()).getTime();
+                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                        var base64 = reader.result.split(',')[1];
+                        var blobInfo = blobCache.create(id, file, base64);
+                        blobCache.add(blobInfo);
+
+                        cb(blobInfo.blobUri(), { title: file.name });
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+                input.click();
+            },
+            init_instance_callback: function (editor) {
+                var freeTiny = document.querySelector('.tox .tox-notification--in');
+                //freeTiny.style.display = 'none';
+            }
+        });
+    }
+</script>
