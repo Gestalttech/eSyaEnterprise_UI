@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EME_01_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<link href="~/css/Common/jquery.contextmenu.min.css" rel="stylesheet" />
+<script>
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+
+    var localization = {
+        AddEmailVariable: '@Localizer["AddEmailVariable"]',
+        EmailVariable: '@Localizer["EmailVariable"]',
+        EmailComponent: '@Localizer["EmailComponent"]',
+        Actions: '@Localizer["Actions"]',
+        AddEmailVariable: '@Localizer["AddEmailVariable"]',
+        Save: '@Localizer["Save"]',
+        Cancel: '@Localizer["Cancel"]',
+        EditEmailVariable: '@Localizer["EditEmailVariable"]',
+        Update: '@Localizer["Update"]',
+        ViewEmailVariable: '@Localizer["ViewEmailVariable"]',
+        Active: '@Localizer["Active"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Delete: '@Localizer["Delete"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        Activate: '@Localizer["Activate"]',
+        EmailVariable: '@Localizer["EmailVariable"]',
+        OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyAlphanumeric6Characters: '@Localizer["OnlyAlphanumeric6Characters"]',
+    };
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        EmailVariable_E6: '@Localizer["UI0390"]',
+        EmailComponent_E7: '@Localizer["UI0390"]',
+    }
+</script>
+@section scripts {
+    <script src="~/js/ConfigureEmail/EmailVariable.js"></script>
+    <script src="~/js/Common/jquery.contextmenu.min.js"></script>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+           <table id="jqgEmailVariable"></table>
+            <div id="jqpEmailVariable"></div>
+        </div>
+</div>
+
+<div class="modal fade in" id="PopupEmailVariable" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog  modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content ">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">@Localizer["AddEmailVariable"]</h4>
+                <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="txtEmailVariable">@Localizer["EmailVariable"]</label>
+                            <input id="txtEmailVariable" class="form-control" maxlength="6" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric6Characters"]' />
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="txtEmailComponent">@Localizer["EmailComponent"]</label>
+                            <input id="txtEmailComponent" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkEmailActiveStatus">
+                                    <input type="checkbox" id="chkEmailActiveStatus" checked="checked" class="mdl-checkbox__input">
+                                    <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveEmailVariable" onclick="fnSaveEmailVariable()">
+                            <i class="fa fa-save"></i>  @Localizer["Save"]
+                        </button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnDeactivateEmailVariable" onclick="fnDeleteEmailVariable()"><i class="fa-solid fa-ban"></i>  @Localizer["Deactivate"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelEmailVariable" onclick="fnClearEmailVariable()"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

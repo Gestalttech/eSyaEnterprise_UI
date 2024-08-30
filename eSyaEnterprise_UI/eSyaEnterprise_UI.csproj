@@ -338,6 +338,8 @@
     <Folder Include="Areas\Appointment\Data\" />
     <Folder Include="Areas\Appointment\Models\" />
     <Folder Include="Areas\ConfigPatient\Data\" />
+    <Folder Include="Areas\ConfigureEmail\Data\" />
+    <Folder Include="Areas\ConfigureEmail\Models\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
     <Folder Include="Areas\FinAdmin\Data\" />
