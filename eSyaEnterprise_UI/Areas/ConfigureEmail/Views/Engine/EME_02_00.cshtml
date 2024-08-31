@@ -65,6 +65,8 @@
 <section id="divEmailTemplate" style="display:none;">
     <div class="row">
         <div class="col-lg-12 col-12">
+            <input type="hidden" id="hdvFormId" />
+            <input type="hidden" id="hdvEmailId" />
             <p class="subheading" id="hdFormName">@Localizer["NewForm"]</p>
             <hr class="left" />
         </div>
@@ -99,6 +101,16 @@
                         @await Component.InvokeAsync("eSyaParameter", new { parameterType = "9" })
                     </div>
                     <div class="row">
+
+                <div class="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                    <div class="default-checkbox separate">
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsVariable">
+                            <input type="checkbox" id="chkIsVariable" class="mdl-checkbox__input" onclick="fnIsVariableRequired(this)">
+                            <span class="mdl-checkbox__label">@Localizer["IsVariable"] ?</span>
+                        </label>
+                    </div>
+                </div>
+
                         <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsIsAttachmentReqd">
@@ -117,6 +129,19 @@
                         </div>
                     </div>
                 </div>
+
+        <div class="col-lg-5 col-md-5 col-sm-5">
+            <div class="row" id="dvEmailVariable">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <p class="subheading">@Localizer["SMSVariable"]</p>
+                    <hr class="left" />
+                    <table id="jqgEmailVariable"></table>
+                    <div id="jqpEmailVariable"></div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="col-lg-12 text-center">
            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10" id="" onclick="fnRedirectToEmailTemplate()">
                 <i class="fa fa-chevron-left"></i>  @Localizer["Back"]

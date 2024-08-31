@@ -5,7 +5,6 @@ using eSyaEnterprise_UI.Areas.ConfigureEmail.Data;
 using eSyaEnterprise_UI.Areas.ConfigureEmail.Models;
 using eSyaEnterprise_UI.Utility;
 using eSyaEnterprise_UI.Areas.ProductSetup.Models;
-using eSyaEnterprise_UI.Areas.ConfigureSMS.Models;
 
 namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
 {
@@ -159,7 +158,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         {
             try
             {
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_SMSHeader>>("EmailEngine/GetEmailHeaderInformationByFormId?formId=" + formId).Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailHeader>>("EmailEngine/GetEmailHeaderInformationByFormId?formId=" + formId).Result;
                 return Json(serviceResponse.Data);
             }
             catch (Exception ex)
@@ -171,11 +170,11 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// <summary>
         ///Get SMS Header Information by Email Temp Id
         /// </summary>
-        public JsonResult GetEmailHeaderInformationBySMSId(string emailTempId)
+        public JsonResult GetEmailHeaderInformationByEmailId(string emailTempId)
         {
             try
             {
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<DO_SMSHeader>("SMSEngine/GetEmailHeaderInformationBySMSId?smsId=" + emailTempId).Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<DO_EmailHeader>("EmailEngine/GetEmailHeaderInformationByEmailId?emailTempId=" + emailTempId).Result;
                 return Json(serviceResponse.Data);
             }
             catch (Exception ex)
@@ -192,7 +191,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         {
             try
             {
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_SMSVariable>>("SMSEngine/GetActiveEmailVariableInformation").Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailHeader>>("EmailEngine/GetActiveEmailVariableInformation").Result;
                 return Json(serviceResponse.Data);
             }
             catch (Exception ex)
@@ -206,15 +205,15 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// Insert Into Email Template Header
         /// </summary>
         [HttpPost]
-        public JsonResult InsertIntoEmailHeader(DO_SMSHeader sm_sh)
+        public JsonResult InsertIntoEmailHeader(DO_EmailHeader sm_sh)
         {
             try
             {
                 sm_sh.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 sm_sh.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                sm_sh.Smsid = string.IsNullOrEmpty(sm_sh.Smsid) ? string.Empty : sm_sh.Smsid;
+                sm_sh.EmailTempid = string.IsNullOrEmpty(sm_sh.EmailTempid) ? string.Empty : sm_sh.EmailTempid;
 
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertIntoEmailHeader", sm_sh).Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/InsertIntoEmailHeader", sm_sh).Result;
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -230,14 +229,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// Update SMS Header
         /// </summary>
         [HttpPost]
-        public JsonResult UpdateEmailHeader(DO_SMSHeader sm_sh)
+        public JsonResult UpdateEmailHeader(DO_EmailHeader sm_sh)
         {
             try
             {
                 sm_sh.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 sm_sh.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
 
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/UpdateEmailHeader", sm_sh).Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/UpdateEmailHeader", sm_sh).Result;
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
