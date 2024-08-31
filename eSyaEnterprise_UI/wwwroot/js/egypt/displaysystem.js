@@ -142,7 +142,7 @@ function fnDisplayCallingToken() {
 
     if (lastCallingToken !== previousCallingToken) {
         previousCallingToken = lastCallingToken
-        beep(1500, 3, 0.99, function () {
+        beep(2600, 3, 0.99, function () {
         });
 
 
@@ -252,7 +252,7 @@ var beep = (function () {
         
 
         osc.type = type;
-        //osc.type = "sine";
+        osc.type = "square"; //square triangle sawtooth sine 
         gainNode.gain.value = volume;
         osc.connect(gainNode);
         gainNode.connect(ctx.destination);
