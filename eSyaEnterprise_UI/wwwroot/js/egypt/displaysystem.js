@@ -142,8 +142,11 @@ function fnDisplayCallingToken() {
 
     if (lastCallingToken !== previousCallingToken) {
         previousCallingToken = lastCallingToken
-        beep(1500, 3, function () {
+        beep(1500, 3, 0.99, function () {
         });
+
+
+       
     }
 
 }
@@ -219,31 +222,41 @@ function fnTextToSpeech(text) {
     //};
     //speechSynthesis.speak(msg);
 
-    beep(1000, 2, function () {
+    beep(1000, 2,0.99, function () {
     });
+    
 }
 
 
 var beep = (function () {
     var ctxClass = window.audioContext || window.AudioContext || window.AudioContext || window.webkitAudioContext
     var ctx = new ctxClass();
-    return function (duration, type, finishedCallback) {
+    return function (duration, type, volume, finishedCallback) {
 
         duration = +duration;
 
         // Only 0-4 are valid types.
         type = (type % 5) || 0;
 
+        if (typeof volume !== "number" || volume < 0 || volume > 1) {
+            volume = 0.95; // Default volume (0.5 = 50% of max volume)
+        }
+
         if (typeof finishedCallback != "function") {
             finishedCallback = function () { };
         }
 
         var osc = ctx.createOscillator();
+        var gainNode = ctx.createGain(); // Create a GainNode
+
+        
 
         osc.type = type;
         //osc.type = "sine";
-
-        osc.connect(ctx.destination);
+        gainNode.gain.value = volume;
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+         
         if (osc.noteOn) osc.noteOn(0);
         if (osc.start) osc.start();
 
