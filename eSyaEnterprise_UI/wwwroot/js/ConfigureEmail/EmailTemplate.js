@@ -20,11 +20,11 @@
 function fnRadioLoadFormData() {
     $('#cboEMFormId').selectpicker('refresh');
 
-    $("input[name='rdform']").each(function () {
+    $("input[name='rdEMform']").each(function () {
         if ($(this).is(":checked")) {
             $.ajax({
                 type: "Post",
-                url: getBaseURL() + '/Engine/GetFormDetails?rdvalue=' + $(this).val(),
+                url: "",//getBaseURL() + '/Engine/GetFormDetails?rdvalue=' + $(this).val(),
 
                 dataType: "json",
                 success: function (data) {
