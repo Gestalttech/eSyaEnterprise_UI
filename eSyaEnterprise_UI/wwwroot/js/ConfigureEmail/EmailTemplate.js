@@ -1,7 +1,7 @@
 ﻿$(function () {
     $('#cboEMFormId').selectpicker('refresh');
     fnRadioLoadFormData();
-    $("input[name='rdEMform']").change(function () {
+    $("input[name='rdEMform']").on('click',function () {
         //reload dropdownlist
         fnRadioLoadFormData();
     })
@@ -18,15 +18,16 @@
 });
 
 function fnRadioLoadFormData() {
+    debugger;
     $('#cboEMFormId').selectpicker('refresh');
-
-    $("input[name='rdEMform']").each(function () {
-        if ($(this).is(":checked")) {
+    var selectedRadio = $("input[name='rdEMform']:checked");
+    if (selectedRadio.length > 0) {
             $.ajax({
-                type: "Post",
-                url: "",//getBaseURL() + '/Engine/GetFormDetails?rdvalue=' + $(this).val(),
+                type: "POST",
+                url: getBaseURL() + '/ConfigureEmail/Engine/GetFormDetails?rdvalue=' + selectedRadio.val(),
 
                 dataType: "json",
+                contentType: 'application/json; charset=utf-8',
                 success: function (data) {
 
                     $('#cboEMFormId').empty();
@@ -47,7 +48,7 @@ function fnRadioLoadFormData() {
                 }
             });
         }
-    });
+    
     //fnGridLoadEmailParameter(); 
 }
 

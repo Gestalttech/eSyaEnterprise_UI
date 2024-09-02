@@ -127,7 +127,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// <summary>
         ///Get All forms forms from Form Master
         /// </summary>
+        /// 
+        [Area("ConfigureEmail")]
         [HttpPost]
+
         public JsonResult GetFormDetails(string rdvalue)
         {
             try
