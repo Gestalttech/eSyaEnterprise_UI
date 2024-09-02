@@ -10,7 +10,49 @@ $(document).ready(function () {
     $("#pnlPatientTypeCategory").hide();
     LoadPatientTypeTree();
 });
+function fnSubledgerType_onChange() {
 
+    fnBindPatientCategories();
+   
+}
+
+function fnBindPatientCategories() {
+    var ledgertype = $("#cboSubledgerType").val();
+    $("#cboPatientcategory").empty();
+    $.ajax({
+        url: getBaseURL() + '/PatientType/GetPatientCategorybySubledgerType?subledgertype=' + ledgertype,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboPatientcategory").empty();
+
+                $("#cboPatientcategory").append($("<option value='0'> Select Patient Category </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboPatientcategory").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
+                }
+                $('#cboPatientcategory').selectpicker('refresh');
+
+            }
+            else {
+                $("#cboPatientcategory").empty();
+                $("#cboPatientcategory").append($("<option value='0'> Select Patient Category </option>"));
+                $('#cboPatientcategory').selectpicker('refresh');
+            }
+
+        },
+        async: false,
+        processData: false
+    });
+
+    
+}
 function LoadPatientTypeTree() {
     $.ajax({
         url: getBaseURL() + '/PatientType/GetAllPatientTypesforTreeView',
@@ -80,6 +122,8 @@ function fnGetPatientType_Success(dataArray) {
 
                             $("input[id*='chk']").attr('disabled', false);
                             //Enable category dropdown and check boxes
+                            $("#cboSubledgerType").prop('disabled', false).selectpicker("refresh");
+
                             $("#cboPatientcategory").prop('disabled', false).selectpicker("refresh");
                             Isactivestatus = false;
                             isinsert = true;
@@ -143,6 +187,7 @@ function fnGetPatientType_Success(dataArray) {
                             Isactivestatus = false;
                             isinsert = false;
                             //disable category dropdown
+                            $("#cboSubledgerType").next().attr('disabled', true).selectpicker("refresh");
                             $("#cboPatientcategory").next().attr('disabled', true).selectpicker("refresh");
                             //$("#cboRateType").next().attr('disabled', false).selectpicker("refresh");
 
@@ -182,6 +227,9 @@ function fnFillPatientCategoryInfo() {
             success: function (result) {
                 $("#txtPatientTypeId").val('');
                 $("#txtPatientTypeId").val(result.PatientTypeId);
+                $('#cboSubledgerType').val(result.Description);
+                $('#cboSubledgerType').selectpicker('refresh');
+                fnBindPatientCategories();
                 $('#cboPatientcategory').val(result.PatientCategoryId);
                 $('#cboPatientcategory').selectpicker('refresh');
                 //$('#cboRateType').val(result.RateType);
@@ -258,15 +306,22 @@ function fnSavePatientCategory() {
 
 function validationPatientCategory() {
 
+    if (IsStringNullorEmpty($("#cboSubledgerType").val()) || $("#cboSubledgerType").val() === "0" || $("#cboSubledgerType").val() === "") {
+        fnAlert("w", "EMP_01_00", "UI0188", "Please select Subledger Type");
+        return false;
+    }
     if (IsStringNullorEmpty($("#cboPatientcategory").val()) || $("#cboPatientcategory").val() === "0" || $("#cboPatientcategory").val() === "") {
         fnAlert("w", "EMP_01_00", "UI0188", errorMsg.SelectCategory_E6);
         return false;
     }
-
+    
 }
 
 function fnClearFields() {
+    
     $("#txtPatientTypeId").val('');
+    $("#cboSubledgerType").val('0');
+    $("#cboSubledgerType").selectpicker('refresh');
     $("#cboPatientcategory").val('0');
     $("#cboPatientcategory").selectpicker('refresh');
     $("#chkActiveStatus").parent().addClass("is-checked");

@@ -36,39 +36,55 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             try
             {
 
-                List<int> l_ac = new List<int>();
-                l_ac.Add(ApplicationCodeTypeValues.PatientCategory);
-                //l_ac.Add(ApplicationCodeTypeValues.ConfigPatientRateType);
-
-
-                //var response = _eSyaConfigPatientAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("CommonMethod/GetApplicationCodesByCodeTypeList", l_ac).Result;
-                var response =await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("CommonMethod/GetPatientCategory");
+                var response =await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("PatientTypes/GetSubledgerTypes");
 
                 if (response.Status)
                 {
-                    ViewBag.PatientCategory = response.Data.Select(a => new SelectListItem
+                    ViewBag.SubledgerType = response.Data.Select(a => new SelectListItem
                     {
                         Text = a.CodeDesc,
-                        Value = a.ApplicationCode.ToString()
+                        Value = a.CodeDesc.ToString()
                     });
 
-                    //List<DO_ApplicationCodes> prat = response.Data.Where(x => x.CodeType == ApplicationCodeTypeValues.ConfigPatientRateType).ToList();
-                    //ViewBag.RateType = prat.Select(a => new SelectListItem
-                    //{
-                    //    Text = a.CodeDesc,
-                    //    Value = a.ApplicationCode.ToString()
-                    //});
+                 
                 }
                 else
                 {
-                    _logger.LogError(new Exception(response.Message), "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
+                    _logger.LogError(new Exception(response.Message), "UD:GetSubledgerTypes");
                 }
                 return View();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType:For RateType {0}", ApplicationCodeTypeValues.ConfigPatientRateType);
+                _logger.LogError(ex, "UD:GetSubledgerTypes");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        ///Get Patient Category by Sub Ledger Type
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetPatientCategorybySubledgerType(string subledgertype)
+        {
+            try
+            {
+                var parameter = "?subledgertype=" + subledgertype ;
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("PatientTypes/GetPatientCategorybySubledgerType" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetPatientCategorybySubledgerType:For subledgertype {0} ", subledgertype);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetPatientCategorybySubledgerType:For subledgertype {0}", subledgertype);
+                throw ex;
             }
         }
         /// <summary>
