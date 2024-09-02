@@ -54,6 +54,16 @@
                 <input id="txtPatientCategoryId" class="form-control" maxlength="10" type="text" style="display:none" />
 
                 <div class="row" id="dvNavigateURL">
+
+
+                    <div class="col-sm-6 col-md-6 col-lg-6 form-group">
+                        <label for="cboSublegderType">@Localizer["SublegderType"] </label>
+                        <select class="selectpicker" data-live-search="true" id="cboSublegderType" title="Select" data-size="5">
+                            <option value="0">@Localizer["Select"]  </option>
+                            <option value="C">@Localizer["C"]</option>
+                            <option value="P">@Localizer["P"]</option>
+                        </select>
+                    </div> 
                     <div class="col-sm-6 col-md-6 col-lg-6 form-group">
                         <label>@Localizer["PatientCategory"] </label>
                         <select class="selectpicker" data-live-search="true" id="cboPatientcategory" title="Select" data-size="5" asp-items="@ViewBag.PatientCategory">
