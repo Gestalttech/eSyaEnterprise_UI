@@ -194,7 +194,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         {
             try
             {
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailHeader>>("EmailEngine/GetActiveEmailVariableInformation").Result;
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailVariable>>("EmailEngine/GetActiveEmailVariableInformation").Result;
                 return Json(serviceResponse.Data);
             }
             catch (Exception ex)

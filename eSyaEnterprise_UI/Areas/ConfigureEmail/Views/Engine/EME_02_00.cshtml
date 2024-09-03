@@ -15,7 +15,7 @@
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
     var localization = {
         Active: '@Localizer["Active"]',
-        Edit: '@Localizer["Edit"]',
+        Update: '@Localizer["Update"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
         Actions: '@Localizer["Actions"]',
@@ -30,6 +30,14 @@
         EmailBody: '@Localizer["EmailBody"]',
         EmailStatement: '@Localizer["EmailStatement"]',
         IsAttachmentReqd: '@Localizer["IsAttachmentReqd"]',
+    }
+
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        FormSelect_E10: '@Localizer["UI0108"]',
     }
 </script>
 @section scripts {
@@ -72,13 +80,13 @@
                     <p class="subheading" id="hdFormName">@Localizer["NewForm"]</p>
                     <hr class="left" />
                 </div>
-                <div class="col-lg-3">
+                @* <div class="col-lg-3">
                     <div class="form-group">
                         <label for="txtEmailTempID">@Localizer["EmailTempID"] </label>
                         <input id="txtEmailTempID" class="form-control" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
                     </div>
-                </div>
-                <div class="col-lg-9 col-md-9 col-sm-9">
+                </div> *@
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="txtEmailTempDesc">@Localizer["EmailTempDesc"] </label>
                         <input id="txtEmailTempDesc" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />

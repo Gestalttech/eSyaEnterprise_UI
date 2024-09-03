@@ -105,7 +105,7 @@ function fnGridLoadEmailEmptyParameter() {
 function fnGridLoadEmailParameter() {
     $("#jqgEmailParameter").jqGrid('GridUnload');
     $("#jqgEmailParameter").jqGrid({
-        url: getBaseURL() + '/Engine/GetEmailHeaderInformationByFormId?formId=' + $("#cboFormId").val(),
+        url: getBaseURL() + '/Engine/GetEmailHeaderInformationByFormId?formId=' + $("#cboEMFormId").val(),
         datatype: 'json',
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -169,28 +169,34 @@ function fnAddEmailTemplate() {
     $("#btnSaveEmailTemplate").show();
     $("#btnSaveEmailTemplate").html("<i class='fa fa-save'></i> " + localization.Save);
     fnEnableTemplateDetail(false);
-    fnGridLoadSMSVariable();
+    fnGridLoadEmailVariable();
     $("#divEmailTemplate").css('display', 'block');
     $("#divEmailParameter").hide(500);
-    $('#dvSMSVariable').hide();
+    $('#dvEmailVariable').hide();
     $('#chkIsVariable').parent().removeClass("is-checked");
-    $('#hdvFormId').val($("#cboFormId").val());
+
+    
+    $('#hdvFormId').val($("#cboEMFormId").val());
+    
     $('#hdvEmailId').val('');
-    document.getElementById("hdFormName").innerHTML = document.getElementById("cboFormId").options[document.getElementById("cboFormId").selectedIndex].text;
+    document.getElementById("hdFormName").innerHTML = document.getElementById("cboEMFormId").options[document.getElementById("cboEMFormId").selectedIndex].text;
     $("#chkEMTActiveStatus").attr('disabled', true);
 }
 
 function fnEditEmailTemplate(e, actiontype) {
     fnClearEmailTemplate();
-    document.getElementById("hdFormName").innerHTML = document.getElementById("cboFormId").options[document.getElementById("cboFormId").selectedIndex].text;
+    document.getElementById("hdFormName").innerHTML = document.getElementById("cboEMFormId").options[document.getElementById("cboEMFormId").selectedIndex].text;
 
     var rowid = $("#jqgEmailParameter").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgEmailParameter').jqGrid('getRowData', rowid);
     fnGridLoadEmailVariable();
 
-    $('#chkIsIsAttachmentReqd').parent().removeClass("is-checked");
-    $('#hdvFormId').val($("#cboFormId").val());
-    $('#hdvEmailId').val(rowData.Smsid);
+    $('#chkIsVariable').parent().removeClass("is-checked");
+    $('#chkIsAttachmentReqd').parent().removeClass("is-checked");
+    $('#hdvFormId').val($("#cboEMFormId").val());
+    
+    $('#hdvEmailId').val(rowData.EmailTempid);
+
     fnFillEmailInformation();
     
     if (actiontype.trim() == "edit") {
@@ -200,7 +206,7 @@ function fnEditEmailTemplate(e, actiontype) {
         }
         $("#divEmailTemplate").css('display', 'block');
         $("#divEmailParameter").hide(500);
-        $('#dvSMSVariable').hide();
+        $('#dvEmailVariable').hide();
         $("#btnSaveEmailTemplate").show();
         fnEnableTemplateDetail(false);
         $("#chkEMTActiveStatus").attr('disabled', true);
@@ -214,13 +220,12 @@ function fnEditEmailTemplate(e, actiontype) {
         $("#divEmailTemplate").css('display', 'block');
         $("#divEmailParameter").hide(500);
         $("#btnSaveEmailTemplate").hide();
-        $('#dvSMSVariable').hide();
+        $('#dvEmailVariable').hide();
         fnEnableTemplateDetail(true);
     }
 }
 
-function fnFillSMSInformation() {
-
+function fnFillEmailInformation() {
     $.ajax({
         url: getBaseURL() + '/Engine/GetEmailHeaderInformationByEmailId',
         data: {
@@ -235,8 +240,8 @@ function fnFillSMSInformation() {
 
                 tinyMCE.activeEditor.setContent('');
 
-                if (data.EmailBody != null) {
-                    tinyMCE.activeEditor.setContent(data.EmailBody);
+                if (result.EmailBody != null) {
+                    tinyMCE.activeEditor.setContent(result.EmailBody);
 
 
                 }
@@ -246,10 +251,10 @@ function fnFillSMSInformation() {
                 }
 
                 if (result.IsAttachmentReqd == true) {
-                    $('#chkIsIsAttachmentReqd').parent().addClass("is-checked");
+                    $('#chkIsAttachmentReqd').parent().addClass("is-checked");
                 }
                 else
-                    $('#chkIsIsAttachmentReqd').parent().removeClass("is-checked");
+                    $('#chkIsAttachmentReqd').parent().removeClass("is-checked");
 
                 $('#dvEmailVariable').hide();
                 if (result.IsVariable == true) {
@@ -266,13 +271,13 @@ function fnFillSMSInformation() {
                     $('#chkEMTActiveStatus').parent().removeClass("is-checked");
 
                 eSyaParams.ClearValue();
-                eSyaParams.SetJSONValue(result.l_SMSParameter);
+                eSyaParams.SetJSONValue(result.l_EmailParameter);
             }
         }
     });
 }
 
-function fnGridLoadSMSVariable() {
+function fnGridLoadEmailVariable() {
     $("#jqgEmailVariable").jqGrid('GridUnload');
     $("#jqgEmailVariable").jqGrid({
         url: getBaseURL() + '/Engine/GetActiveEmailVariableInformation',
@@ -282,7 +287,7 @@ function fnGridLoadSMSVariable() {
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         colNames: [localization.Variable, localization.Component],
         colModel: [
-            { name: "Emavariable", width: 200, editable: true, align: 'left' },
+            { name: "Emavariable", width: 100, editable: true, align: 'left' },
             { name: "Emacomponent", width: 200, editable: false, align: 'left' },
         ],
         pager: "#jqgEmailVariable",
@@ -326,7 +331,7 @@ function fnSaveEmailTemplate() {
         return;
     }
     else {
-        var smsParams = eSyaParams.GetJSONValue();
+        var emailParams = eSyaParams.GetJSONValue();
 
         $("#btnSaveEmailTemplate").attr("disabled", true);
 
@@ -344,9 +349,10 @@ function fnSaveEmailTemplate() {
                 EmailTempDesc: $("#txtEmailTempDesc").val(),
                 EmailSubject: $("#txtEmailSubject").val(),
                 EmailBody: tinyMCE.get('txtEmailBody').getContent(),//$("#txtEmailBody").val(),
-                IsAttachmentReqd: $("#chkIsIsAttachmentReqd").parent().hasClass("is-checked"),
+                IsVariable: $("#chkIsVariable").parent().hasClass("is-checked"),
+                IsAttachmentReqd: $("#chkIsAttachmentReqd").parent().hasClass("is-checked"),
                 ActiveStatus: $("#chkEMTActiveStatus").parent().hasClass("is-checked"),
-                l_SMSParameter: smsParams
+                l_EmailParameter: emailParams
             },
             async: false,
             success: function (response) {
@@ -384,11 +390,12 @@ function fnGridRefreshEmailTemplate() {
 function fnClearEmailTemplate() {
     eSyaParams.ClearValue();
     $('#hdvEmailId').val('');
-    $("#txtEmailTempID").val('');
+    //$("#txtEmailTempID").val('');
     $("#txtEmailTempDesc").val('');
     $("#txtEmailSubject").val('');
     tinyMCE.activeEditor.setContent('');
     //$("#txtEmailBody").val('');
+    $('#chkIsVariable').parent().removeClass("is-checked");
     $('#chkEMTActiveStatus').parent().addClass("is-checked");
     $("#btnSaveEmailTemplate").attr('disabled', false);
 }
@@ -401,6 +408,7 @@ function fnCloseEmailTemplate() {
 
 function fnEnableTemplateDetail(val) {
     $("input,textarea").attr('readonly', val);
+    $("#chkIsVariable").attr('disabled', val);
     $("#chkEMTActiveStatus").attr('disabled', val);
 }
 
