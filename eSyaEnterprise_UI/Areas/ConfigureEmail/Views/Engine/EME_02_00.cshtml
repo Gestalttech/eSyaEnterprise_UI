@@ -40,7 +40,7 @@
 <section id="divEmailParameter">
     <div class="row">
          <div class="col-lg-3 col-md-2 col-sm-6">
-            <label title="FormOptions">@Localizer["FormOption"]</label>
+            <label>@Localizer["FormOption"]</label>
             <div class="form-group">
                 <input type="radio" name="rdEMform" id="rdEMnewform" value="NewForm" checked="checked" /> <label for="rdEMnewform" class="d-inline pe-3"> @Localizer["New"] </label>
                 <input type="radio" name="rdEMform" id="rdEMExistingform" value="ExistingForm" /> <label for="rdEMExistingform" class="d-inline"> @Localizer["Existing"]</label>
@@ -64,37 +64,56 @@
 </section>
 <section id="divEmailTemplate" style="display:none;">
     <div class="row">
-        <div class="col-lg-12 col-12">
-            <input type="hidden" id="hdvFormId" />
-            <input type="hidden" id="hdvEmailId" />
-            <p class="subheading" id="hdFormName">@Localizer["NewForm"]</p>
-            <hr class="left" />
-        </div>
-            <div class="col-lg-3">
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <input type="hidden" id="hdvFormId" />
+                    <input type="hidden" id="hdvEmailId" />
+                    <p class="subheading" id="hdFormName">@Localizer["NewForm"]</p>
+                    <hr class="left" />
+                </div>
+                <div class="col-lg-3">
                     <div class="form-group">
                         <label for="txtEmailTempID">@Localizer["EmailTempID"] </label>
                         <input id="txtEmailTempID" class="form-control" maxlength="10" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric10Characters"]' />
-                     </div>
+                    </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-9">
                     <div class="form-group">
                         <label for="txtEmailTempDesc">@Localizer["EmailTempDesc"] </label>
                         <input id="txtEmailTempDesc" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric100Characters"]' />
-                     </div>
+                    </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="txtEmailSubject">@Localizer["EmailSubject"] </label>
                         <input id="txtEmailSubject" class="form-control" maxlength="250" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric250Characters"]' />
-                     </div>
+                    </div>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-9">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="txtEmailBody">@Localizer["EmailBody"]</label>
                         <textarea id="txtEmailBody" class="form-control" rows="4" cols="40" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric500Characters"]'></textarea>
                     </div>
                 </div>
+            </div>
+        </div>
+
+       
                 <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row" id="dvEmailVariable">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <p class="subheading">@Localizer["EmailVariable"]</p>
+                            <hr class="left" />
+                            <table id="jqgEmailVariable"></table>
+                            <div id="jqpEmailVariable"></div>
+                        </div>
+
+                    </div>
+                </div>
+                   
                     <div class="form-group">
                      <p class="subheading" id="hdFormName">@Localizer["EmailParameter"]</p>
                      <hr class="left" />
@@ -113,7 +132,7 @@
 
                         <div class="col-lg-6  col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group">
-                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsIsAttachmentReqd">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkIsAttachmentReqd">
                                     <input type="checkbox" id="chkIsAttachmentReqd" class="mdl-checkbox__input">
                                     <span class="mdl-checkbox__label">@Localizer["IsAttachmentReqd"] ?</span>
                                 </label>
@@ -129,18 +148,8 @@
                         </div>
                     </div>
                 </div>
-
-        <div class="col-lg-5 col-md-5 col-sm-5">
-            <div class="row" id="dvEmailVariable">
-                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                    <p class="subheading">@Localizer["SMSVariable"]</p>
-                    <hr class="left" />
-                    <table id="jqgEmailVariable"></table>
-                    <div id="jqpEmailVariable"></div>
-                </div>
-
-            </div>
         </div>
+        
 
         <div class="col-lg-12 text-center">
            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btn-back mr-10" id="" onclick="fnRedirectToEmailTemplate()">
