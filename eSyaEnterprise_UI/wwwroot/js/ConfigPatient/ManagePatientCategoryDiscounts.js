@@ -126,7 +126,7 @@ function fnChangeDiscountat() {
         $("#secServices").show();
         fnGridLoadServices();
     }
-    if (_discountAt == "0" || _discountAt == null || _discountAt == undefined) {
+    if (_discountAt == "0" ||_discountAt == null || _discountAt == undefined) {
         $("#secServices").hide();
         $("#secServiceClass").hide();
     }
@@ -567,11 +567,11 @@ function fnSaveServiceClass() {
         fnAlert("w", "EPM_07_00", "UI0357", "Select Discount Rule");
         return;
     }
-    if ($("#txtDiscountPercentage").val() === "0" || $("#txtDiscountPercentage").val() === "") {
+    if ($("#txtDiscountPercentage").val() == "" || $("#txtDiscountPercentage").val() == null || $("#txtDiscountPercentage").val() == undefined) {
         fnAlert("w", "EPM_07_00", "UI0357", "Please Enter Discount Percentage");
         return;
     }
-    if ($("#txtServiceChargePercentage").val() === "0" || $("#txtServiceChargePercentage").val() === "") {
+    if ($("#txtServiceChargePercentage").val() === null || $("#txtServiceChargePercentage").val() === "") {
         fnAlert("w", "EPM_07_00", "UI0357", "Please Enter Service Charge Percentage");
         return;
     }
