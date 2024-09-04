@@ -11,4 +11,5 @@
         public int BusinessKey { get; set; }
         public string LocationDescription { get; set; }
     }
+    
 }
