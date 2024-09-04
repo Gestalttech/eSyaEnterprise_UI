@@ -5,6 +5,10 @@ using eSyaEnterprise_UI.Areas.ConfigureEmail.Data;
 using eSyaEnterprise_UI.Areas.ConfigureEmail.Models;
 using eSyaEnterprise_UI.Utility;
 using eSyaEnterprise_UI.Areas.ProductSetup.Models;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
+using eSyaEnterprise_UI.Areas.ManageRates.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using eSyaEssentials_UI;
 
 namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
 {
@@ -119,8 +123,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         #region Define Email Template
         [Area("ConfigureEmail")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EME_02_00()
+        public async Task<IActionResult> EME_02_00()
         {
+            try
+            {
+                var serviceResponse = await _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonData/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.EMailType);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        ViewBag.EmailType_list = serviceResponse.Data.Select(r => new SelectListItem
+                        {
+                            Value = r.ApplicationCode.ToString(),
+                            Text = r.CodeDesc,
+                        }).ToList();
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApplicationCodesByCodeType: CodeType {0} ", ApplicationCodeTypeValues.EMailType);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetApplicationCodesByCodeType: CodeType {0} ", ApplicationCodeTypeValues.EMailType);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
             return View();
         }
 

@@ -235,6 +235,10 @@ function fnFillEmailInformation() {
 
             if (result != null) {
                 $("#txtEmailTempDesc").val(result.EmailTempDesc);
+
+                $("#cboEmailType").val(result.EmailType);
+                $("#cboEmailType").selectpicker('refresh');
+
                 $("#txtEmailSubject").val(result.EmailSubject);
                 //$("#txtEmailBody").val(result.Smsstatement);
 
@@ -242,12 +246,9 @@ function fnFillEmailInformation() {
 
                 if (result.EmailBody != null) {
                     tinyMCE.activeEditor.setContent(result.EmailBody);
-
-
                 }
                 else {
                     tinyMCE.activeEditor.setContent('');
-
                 }
 
                 if (result.IsAttachmentReqd == true) {
@@ -322,6 +323,10 @@ function fnSaveEmailTemplate() {
         fnAlert("w", "EME_02_00", "UI0103", errorMsg.SMSDesc_E7);
         return false;
     }
+    if ($("#cboEmailType").val() === 0 || $("#cboEmailType").val() === "0" || $("#cboEmailType").val() === null) {
+        fnAlert("w", "EME_02_00", "UI0343", errorMsg.EmailType_E20);
+        return false;
+    }
     if (IsStringNullorEmpty($("#txtEmailSubject").val())) {
         fnAlert("w", "EME_02_00", "UI0103", errorMsg.SMSDesc_E7);
         return false;
@@ -347,6 +352,7 @@ function fnSaveEmailTemplate() {
                 EmailTempid: !IsStringNullorEmpty($("#hdvEmailId").val()) ? $("#hdvEmailId").val() : '',
                 FormId: $("#hdvFormId").val(),
                 EmailTempDesc: $("#txtEmailTempDesc").val(),
+                EmailType: $("#cboEmailType").val(),
                 EmailSubject: $("#txtEmailSubject").val(),
                 EmailBody: tinyMCE.get('txtEmailBody').getContent(),//$("#txtEmailBody").val(),
                 IsVariable: $("#chkIsVariable").parent().hasClass("is-checked"),
@@ -397,6 +403,7 @@ function fnClearEmailTemplate() {
     //$("#txtEmailBody").val('');
     $('#chkIsVariable').parent().removeClass("is-checked");
     $('#chkEMTActiveStatus').parent().addClass("is-checked");
+    $("#cboEmailType").val('0').selectpicker('refresh');
     $("#btnSaveEmailTemplate").attr('disabled', false);
 }
 
