@@ -129,7 +129,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label for="cboHealthCard">@Localizer["HealthCard"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+                <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.HealthCardList" onchange="fnPatientType_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -219,7 +219,9 @@
                     <div class="row" id="divHealthCardRates" style="display:none">
                         <div class="col-lg-6 col-md-6 col-sm-6 form-group">
                             <label for="cboHCRCurrencyCode">@Localizer["CurrencyCode"] </label>
-                              <select id="cboHCRCurrencyCode" class="selectpicker" data-live-search="true" data-container="body" onchange="fnCurrency_onChange()" data-size="5"></select>
+                            <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.CurrencyList">
+                             <option value="0">@Localizer["Select"]</option>
+                             </select>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 form-group">
                             <label for="txtHCREffectiveFrom">@Localizer["EffectiveFrom"]</label>

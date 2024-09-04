@@ -378,7 +378,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         /// Insert Into Care Card
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> InsertOrUpdateCareCardPattern(DO_CareCardPattern obj)
+        public async Task<JsonResult> InsertOrUpdateCareCardPattern(DO_HealthCareCard obj)
         {
             try
             {
@@ -412,7 +412,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
             try
             {
                 var parameter = "?businesskey=" + businesskey + "&PatientTypeId=" + PatientTypeId + "&PatientCategoryId=" + PatientCategoryId;
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_CareCardPattern>("PatientType/GetCareCardPattern" + parameter);
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_HealthCareCard>("PatientType/GetCareCardPattern" + parameter);
 
                 if (serviceResponse.Status)
                 {
@@ -440,7 +440,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigPatient.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_CareCardPattern>("PatientType/GetCardNumber");
+                var serviceResponse = await _eSyaConfigPatientAPIServices.HttpClientServices.GetAsync<DO_HealthCareCard>("PatientType/GetCardNumber");
 
                 if (serviceResponse.Status)
                 {

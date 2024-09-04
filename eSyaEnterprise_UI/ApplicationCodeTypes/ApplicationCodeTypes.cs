@@ -53,7 +53,8 @@ namespace eSyaEnterprise_UI.ApplicationCodeTypes
         public const int DiscountFor = 64;
         public const int DiscountAt = 65;
         public const int DiscountRule = 66;
-        public const int HealthCareCard = 52;
+        public const int HealthCareCard = 63;
+        public const int Relationship = 52;
 
         #endregion
 
