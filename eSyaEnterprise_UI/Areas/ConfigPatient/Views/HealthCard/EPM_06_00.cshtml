@@ -1,0 +1,259 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "EPM_06_00";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
+}
+<script>
+
+    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+    var localization = {
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Delete: '@Localizer["Delete"]',
+        Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        PatientType: '@Localizer["PatientType"]',
+        HealthCardDetails: '@Localizer["HealthCardDetails"]',
+        PatientTypeId: '@Localizer["PatientTypeId"]',
+        PatientCategoryId: '@Localizer["PatientCategoryId"]',
+        HealthCardId: '@Localizer["HealthCardId"]',
+        OfferStartDate: '@Localizer["OfferStartDate"]',
+        OfferEndDate: '@Localizer["OfferEndDate"]',
+        CardValidityInMonths: '@Localizer["CardValidityInMonths"]',
+        CareCardNoPattern: '@Localizer["CareCardNoPattern"]',
+        IsSpecialtySpecific: '@Localizer["IsSpecialtySpecific"]',
+        AddPatientCategory: '@Localizer["AddPatientCategory"]',
+        EditPatientCategory: '@Localizer["EditPatientCategory"]',
+        ViewPatientCategory: '@Localizer["ViewPatientCategory"]',
+        MapPatientCategorySpecialty: '@Localizer["MapPatientCategorySpecialty"]',
+        SpecialtyDesc: '@Localizer["SpecialtyDescription"]',
+        SpecialtyId: '@Localizer["SpecialtyId"]',
+        CurrencyCode: '@Localizer["CurrencyCode"]',
+        EffectiveFrom: '@Localizer["EffectiveFrom"]',
+        EffectiveTill: '@Localizer["EffectiveTill"]',
+        CardCharges: '@Localizer["CardCharges"]',
+    }
+    var errorMsg = {
+        addauth_E1: '@Localizer["UIC01"]',
+        editauth_E2: '@Localizer["UIC02"]',
+        vieweauth_E3: '@Localizer["UIC03"]',
+        deleteauth_E4: '@Localizer["UIC04"]',
+        actDeact_E5: '@Localizer["UIC05"]',
+        RestrictedSpecialty_E6: '@Localizer["UI0309"]',
+        BusinessLocation_E11: '@Localizer["UI0064"]',
+        PatientType_E12: '@Localizer["UI0274"]',
+        PatientCategory_E13: '@Localizer["UI0275"]',
+    }
+</script>
+<link href="~/css/Masters/VendorMaster.css" rel="stylesheet" />
+<link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
+@section scripts {
+    <script src="~/js/ConfigPatient/MapPatientCategorytoHealthCard.js"></script>
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+}
+<style>
+    div[role=tablist] {
+        width: 100%;
+        padding: 0px 0px 15px;
+    }
+
+    #HealthCard-pills-tab .nav-item .nav-link {
+        font-size: 12px;
+        padding: 8px 12px;
+        font-family: 'helvetica-bold';
+        color: #4a4a4a;
+        /* border: 1px dashed #cccccc; */
+        width: 100%;
+        border-radius: 0px !important;
+        background: #fff;
+        border-bottom: 1px solid #f1f1f1;
+        text-align: left;
+    }
+
+        #HealthCard-pills-tab .nav-item .nav-link.active, #HealthCard-pills-tab .nav-item .show > .nav-link {
+            color: #000000;
+            background-color: #fff9d6;
+            font-family: 'helvetica-bold';
+            border-right: 3px solid #797172;
+        }
+
+    #HealthCard-pills-tab li.nav-item {
+        border-bottom: 1px solid #ffffff
+    }
+
+    #HealthCard-pills-tab li button {
+        font-size: 12px;
+        border-color: transparent;
+    }
+</style>
+<section id="divGridHealthCard">
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboBusinessKey">@Localizer["BusinessLocation"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKey_OnChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboPatientTypes">@Localizer["PatientTypes"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div> 
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboPatientCategory">@Localizer["PatientCategory"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div> 
+    <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="form-group">
+            <label for="cboHealthCard">@Localizer["HealthCard"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
+
+    </div>
+        
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-12">
+            <table id="jqgHealthCardDetails"></table>
+        <div id="jqpHealthCardDetails"></div>
+    </div>
+</div>
+</section>
+<section id="divFormHealthCard" style="display:none">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <h6 class="displayNames" id="hdHealthcard"><span class="d-inline m-0 fw-bold" id="lblHCDisplayNames">@Localizer["HealthCardDetails"]</span>   <span class='lblClosebtn' onclick="fnCloseHealthCardDetails()"><i class="fa fa-times"></i></span></h6>
+        </div>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" id="txtHealthCard" style="display:none">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 col-xl-2  animated slideInLeft sidebarSmall">
+            <ul class="nav flex-column nav-tabs shadowLite" id="HealthCard-pills-tab" role="tablist" aria-orientation="vertical">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active position-relative" id="HealthCardDetails-tab" data-bs-toggle="pill" data-bs-target="#HealthCardDetails" type="button" role="tab" aria-controls="pills-HealthCardDetails" aria-selected="true">@Localizer["HealhCardDetails"]</button>
+                </li>
+               
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link position-relative" id="HealthCardRates-tab" data-bs-toggle="pill" data-bs-target="#HealthCardRates" type="button" role="tab" aria-controls="pills-HealthCardRates" aria-selected="true" onclick="fnLoadGridHealthCardRates()">@Localizer["HealthCardRates"]</button>
+                </li>
+             </ul>
+           </div>
+        <div class="col-lg-8 col-md-8 col-sm-9 col-xl-10 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
+            <div class="tab-content shadowLite px-4 pb-4" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="HealthCardDetails" role="tabpanel" aria-labelledby="vendorDetails-tab">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label>@Localizer["OfferStartDate"]</label>
+                            <input type="text" name="OfferStartDate" id="txtOfferStartDate" autocomplete="off" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label>@Localizer["OfferEndDate"]</label>
+                            <input type="text" name="OfferEndDate" id="txtOfferEndDate" autocomplete="off" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label>@Localizer["CardValidityInMonths"]</label>
+                            <input type="text" name="CardValidityInMonths" id="txtCardValidityInMonths" autocomplete="off" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label>@Localizer["CareCardNoInPatterns"]</label>
+                            <input type="text" name="CareCardNoInPatterns" id="txtCareCardNoInPatterns" autocomplete="off" class="form-control" maxlength="15" />
+                        </div>
+                        <div class="col-lg-3 form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox" for="chkHCActiveStatus">
+                                <input type="checkbox" id="chkHCActiveStatus"
+                                       class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-3 form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox" id="lblIsSpecialtySpecific" for="chkIsSpecialtySpecific" onclick="fnIsSpecialtySpecific()">
+                                <input type="checkbox" id="chkIsSpecialtySpecific"
+                                       class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["IsSpecialtySpecific"]</span>
+                            </label>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 form-group" id="divSpecialtyLink" style="display:none;">
+                            <table id="jqgSpecialtyLink"></table>
+                            <div id="jqpSpecialtyLink"></div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 text-center">
+                            <hr /> 
+                            <button type="button" class="mdl-button me-2"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                            <button type="button" class="mdl-button"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
+                        </div>
+                        </div>
+                </div>
+                
+                <div class="tab-pane fade" id="HealthCardRates" role="tabpanel" aria-labelledby="HealthCardRates-tab">
+                    <div class="row form-group">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <table id="jqgHealthCardRates"></table>
+                            <div id="jqpHealthCardRates"></div>
+                        </div>
+                    </div>
+                    <div class="row" id="divHealthCardRates" style="display:none">
+                        <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                            <label for="cboHCRCurrencyCode">@Localizer["CurrencyCode"] </label>
+                              <select id="cboHCRCurrencyCode" class="selectpicker" data-live-search="true" data-container="body" onchange="fnCurrency_onChange()" data-size="5"></select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label for="txtHCREffectiveFrom">@Localizer["EffectiveFrom"]</label>
+                            <input type="text" id="txtHCREffectiveFrom" autocomplete="off" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label for="txtHCREffectiveTill">@Localizer["EffectiveTill"]</label>
+                            <input type="text" id="txtHCREffectiveTill" autocomplete="off" class="form-control" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                            <label>@Localizer["CardCharges"]</label>
+                            <input type="text" id="txtCardCharges" autocomplete="off" class="form-control" maxlength="15" />
+                        </div>
+                        <div class="col-lg-3 form-group">
+                            <label class="mdl-checkbox mdl-js-checkbox" for="chkHCRActiveStatus">
+                                <input type="checkbox" id="chkHCRActiveStatus"
+                                       class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
+                        </div>
+                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12 text-center">
+                            <hr />
+                            <button type="button" class="mdl-button me-2"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                            <button type="button" class="mdl-button"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
+                        </div>
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+
+    </div>
+</section>
+

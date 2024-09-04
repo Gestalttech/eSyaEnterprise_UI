@@ -29,6 +29,7 @@
     <Compile Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <Compile Remove="Areas\TokenSystem\Views\Generate\**" />
     <Compile Remove="Areas\TokenSystem\Views\TokenManagement\**" />
+    <Compile Remove="wwwroot\audio\**" />
     <Compile Remove="wwwroot\js\ConfigInventory\**" />
     <Compile Remove="wwwroot\js\ManageServices\**" />
     <Content Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
@@ -53,6 +54,7 @@
     <Content Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <Content Remove="Areas\TokenSystem\Views\Generate\**" />
     <Content Remove="Areas\TokenSystem\Views\TokenManagement\**" />
+    <Content Remove="wwwroot\audio\**" />
     <Content Remove="wwwroot\js\ConfigInventory\**" />
     <Content Remove="wwwroot\js\ManageServices\**" />
     <EmbeddedResource Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
@@ -77,6 +79,7 @@
     <EmbeddedResource Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Generate\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\TokenManagement\**" />
+    <EmbeddedResource Remove="wwwroot\audio\**" />
     <EmbeddedResource Remove="wwwroot\js\ConfigInventory\**" />
     <EmbeddedResource Remove="wwwroot\js\ManageServices\**" />
     <None Remove="Areas\ConfigBusiness\Views\BusinessCalendar\**" />
@@ -101,6 +104,7 @@
     <None Remove="Areas\TokenSystem\Views\DisplaySystem\**" />
     <None Remove="Areas\TokenSystem\Views\Generate\**" />
     <None Remove="Areas\TokenSystem\Views\TokenManagement\**" />
+    <None Remove="wwwroot\audio\**" />
     <None Remove="wwwroot\js\ConfigInventory\**" />
     <None Remove="wwwroot\js\ManageServices\**" />
   </ItemGroup>
