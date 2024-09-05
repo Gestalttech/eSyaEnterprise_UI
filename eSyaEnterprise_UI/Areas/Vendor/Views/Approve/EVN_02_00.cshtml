@@ -11,12 +11,12 @@
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
 @section scripts {
-    <script src="~/js/Vendor/ApprovalListInVendorRegister.js"></script>
-    <script src="~/js/Vendor/VendorLocation.js"></script>
-    <script src="~/js/Vendor/VendorBusinessLink.js"></script>
-    <script src="~/js/Vendor/VendorStatutorydetails.js"></script>
-    <script src="~/js/Vendor/VendorBank.js"></script>
-    <script src="~/js/Vendor/VendorSupplyGroup.js"></script>
+    <script src="~/js/VendorApproval/ApprovalListInVendorRegister.js"></script>
+    <script src="~/js/VendorApproval/VendorLocation.js"></script>
+    <script src="~/js/VendorApproval/VendorBusinessLink.js"></script>
+    <script src="~/js/VendorApproval/VendorStatutorydetails.js"></script>
+    <script src="~/js/VendorApproval/VendorBank.js"></script>
+    <script src="~/js/VendorApproval/VendorSupplyGroup.js"></script>
     <script src="~/js/Common/bootbox.min.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 
@@ -48,7 +48,7 @@
         }
 
     #v-pills-tab li.nav-item {
-        border-bottom: 1px solid #ffffff
+        border-bottom: 1px solid #ffffff;
     }
 
     #v-pills-tab li button {
@@ -57,10 +57,9 @@
     }
 </style>
 <script>
-    var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
+     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
-    var localization = {
-
+     var localization = {
         VendorId: '@Localizer["VendorId"]',
         VendorName: '@Localizer["VendorName"]',
         CreditType: '@Localizer["CreditType"]',
@@ -113,13 +112,13 @@
         VendorItemLink: '@Localizer["VendorItemLink"]',
         VendorCode: '@Localizer["VendorCode"]',
         ItemDescription: '@Localizer["ItemDescription"]',
-        BusinessShare(inPercentage): '@Localizer["BusinessShare(inPercentage)"]',
+        BusinessShareInPercentage: '@Localizer["BusinessShareInPercentage"]',
         MinimumSupplyQuantity: '@Localizer["MinimumSupplyQuantity"]',
         RatePlan: '@Localizer["RatePlan"]',
         EffectiveFrom: '@Localizer["EffectiveFrom"]',
         EffectiveTill: '@Localizer["EffectiveTill"]',
         ActiveStatus: '@Localizer["ActiveStatus"]',
-    };
+     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
@@ -248,7 +247,7 @@
 
     </div>
 </section>
-
+  
 <div class="modal fullscreen fade in" id="popupVendorRegister" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 9997;" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -276,14 +275,14 @@
                     </div>
                 </div>
 
-            </div>@*Modal Body Ends*@
+            </div>
             <div class="modal-footer">
                 <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-dismiss="modal" onclick="fnClearVendorReg();" id="btnclosepopup">@Localizer["Close"] </button>
             </div>
         </div>
     </div>
 </div>
-
+  
 <script>
    
     $("#btnVendorMaster").on('click', function () {
