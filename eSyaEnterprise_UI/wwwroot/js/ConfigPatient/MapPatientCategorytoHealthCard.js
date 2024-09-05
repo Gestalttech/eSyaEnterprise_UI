@@ -561,6 +561,7 @@ function fnAddHealthCardRates() {
     $("#cboCurrencyCode").val('0').selectpicker('refresh');
     $("#divHealthCardRates").show('500');
     $("#cboCurrencyCode").attr('disabled', false).selectpicker('refresh');
+    $("#chkHCRActiveStatus").parent().addClass("is-checked");
 }
 
 $("#HealthCardDetails-tab").on('click', function () {
