@@ -111,7 +111,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label for="cboPatientTypes">@Localizer["PatientTypes"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+            <select class="selectpicker" data-live-search="true" id="cboPatientTypes" title="" data-size="8" onchange="fnPatientType_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -120,7 +120,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label for="cboPatientCategory">@Localizer["PatientCategory"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboPatientCategory" title="" data-size="8" asp-items="@ViewBag.PatientTypeList" onchange="fnPatientType_OnChange()">
+                <select class="selectpicker" data-live-search="true" id="cboPatientCategory" title="" data-size="8" onchange="fnPatientCategory_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -129,7 +129,7 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="form-group">
             <label for="cboHealthCard">@Localizer["HealthCard"]</label>
-                <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.HealthCardList" onchange="fnPatientType_OnChange()">
+                <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.HealthCardList" onchange="fnHealthCard_OnChange()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
@@ -177,7 +177,7 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 form-group">
                             <label>@Localizer["CardValidityInMonths"]</label>
-                            <input type="text" name="CardValidityInMonths" id="txtCardValidityInMonths" autocomplete="off" class="form-control" />
+                            <input type="text" name="CardValidityInMonths" id="txtCardValidityInMonths" autocomplete="off" class="form-control numberonly" maxlength="2" />
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 form-group">
                             <label>@Localizer["CareCardNoInPatterns"]</label>
@@ -203,8 +203,8 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-12 text-center">
                             <hr /> 
-                            <button type="button" class="mdl-button me-2"><i class="fa fa-save"></i> @Localizer["Save"]</button>
-                            <button type="button" class="mdl-button"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
+                            <button type="button" class="mdl-button me-2" onclick="fnSaveHealthCardDetails()" id="btnSaveHealthCardDetails"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                            <button type="button" class="mdl-button" onclick="fnClearHealthCardDetails()"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
                         </div>
                         </div>
                 </div>
@@ -218,22 +218,22 @@
                     </div>
                     <div class="row" id="divHealthCardRates" style="display:none">
                         <div class="col-lg-6 col-md-6 col-sm-6 form-group">
-                            <label for="cboHCRCurrencyCode">@Localizer["CurrencyCode"] </label>
-                            <select class="selectpicker" data-live-search="true" id="cboHealthCard" title="" data-size="8" asp-items="@ViewBag.CurrencyList">
+                            <label for="cboCurrencyCode">@Localizer["CurrencyCode"] </label>
+                            <select class="selectpicker" data-live-search="true" id="cboCurrencyCode" title="" data-size="8" asp-items="@ViewBag.CurrencyList">
                              <option value="0">@Localizer["Select"]</option>
                              </select>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-4 form-group">
                             <label for="txtHCREffectiveFrom">@Localizer["EffectiveFrom"]</label>
                             <input type="text" id="txtHCREffectiveFrom" autocomplete="off" class="form-control" />
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-4 form-group">
                             <label for="txtHCREffectiveTill">@Localizer["EffectiveTill"]</label>
                             <input type="text" id="txtHCREffectiveTill" autocomplete="off" class="form-control" />
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 form-group">
+                        <div class="col-lg-2 col-md-3 col-sm-4 form-group">
                             <label>@Localizer["CardCharges"]</label>
-                            <input type="text" id="txtCardCharges" autocomplete="off" class="form-control" maxlength="15" />
+                            <input type="text" id="txtCardCharges" autocomplete="off" class="form-control decimal_3" maxlength="15" />
                         </div>
                         <div class="col-lg-3 form-group">
                             <label class="mdl-checkbox mdl-js-checkbox" for="chkHCRActiveStatus">
@@ -247,8 +247,8 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12 text-center">
                             <hr />
-                            <button type="button" class="mdl-button me-2"><i class="fa fa-save"></i> @Localizer["Save"]</button>
-                            <button type="button" class="mdl-button"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
+                            <button type="button" class="mdl-button me-2" onclick="fnSaveCareCardRates()" id="btnSaveCareCardRates"><i class="fa fa-save"></i> @Localizer["Save"]</button>
+                            <button type="button" class="mdl-button" onclick="fnClearHealthCardRates()"><i class="fa fa-save"></i> @Localizer["Cancel"]</button>
                         </div>
                     </div>
                 </div>
