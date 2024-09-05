@@ -249,12 +249,14 @@ function fnAddHealthCardDetails() {
     $("#divSpecialtyLink").hide();
     $("#txtOfferStartDate").attr('disabled', false);
     $("#btnSaveHealthCardDetails").show();
+    $("#lblHCDisplayNames").text($("#cboHealthCard option:selected").text());
 }
 
 
 function fnEditHealthCardDetails(actiontype) {
     var rowid = $("#jqgHealthCardDetails").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgHealthCardDetails').jqGrid('getRowData', rowid);
+    $("#lblHCDisplayNames").text($("#cboHealthCard option:selected").text());
      $("#txtCardValidityInMonths").val(rowData.CardValidityInMonths);
     $("#txtCareCardNoInPatterns").val(rowData.CareCardNoPattern);
     if (rowData.ActiveStatus == 'true') {
@@ -339,6 +341,7 @@ function fnClearHealthCardDetails() {
     $("#chkIsSpecialtySpecific").parent().removeClass("is-checked");
     fnLoadGridSpecialtyLink();
     $("#divSpecialtyLink").hide();
+    $("#lblHCDisplayNames").text('');
 }
 function fnIsSpecialtySpecific() {
     

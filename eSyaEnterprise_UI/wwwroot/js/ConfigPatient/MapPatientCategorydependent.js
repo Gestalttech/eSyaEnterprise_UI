@@ -167,15 +167,15 @@ function fnLoadGridPatientCategoryDependent() {
 
 function fnAddPatientCategoryDependent() {
     if ($("#cboBusinessKey").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Location");
+        fnAlert("w", "EPM_08_00", "UIC01", "Please select Location");
         return;
     }
     if ($("#cboPatientTypes").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Type");
+        fnAlert("w", "EPM_08_00", "UIC01", "Please select Patient Type");
         return;
     }
     if ($("#cboPatientCategory").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Category");
+        fnAlert("w", "EPM_08_00", "UIC01", "Please select Patient Category");
         return;
     }
     fnClearPatientCategoryDependent();
@@ -206,7 +206,7 @@ function fnEditPatientCategoryDependent(actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_01_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EPM_08_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $('#PopupPatientCategoryDependent').modal('show');
@@ -218,7 +218,7 @@ function fnEditPatientCategoryDependent(actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_01_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPM_08_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $('#PopupPatientCategoryDependent').modal('show');
