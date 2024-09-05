@@ -1,6 +1,6 @@
 ﻿
 $(function () {
-    fnLoadGridPatientCategoryDependent();
+    
 
     $.contextMenu({
          selector: "#btnPatientCategoryDependent",
@@ -15,15 +15,100 @@ $(function () {
 
 });
 var actiontype = "";
-var _isInsert = true;
 
+
+function fnBusinessKey_OnChange() {
+    fnBindPatientTypes();
+    fnLoadGridPatientCategoryDependent();
+}
+function fnPatientType_OnChange() {
+    fnBindPatientCategories();
+    fnLoadGridPatientCategoryDependent();
+}
+function fnPatientCategory_OnChange() {
+    fnLoadGridPatientCategoryDependent();
+}
+function fnBindPatientTypes() {
+    var bkkeys = $("#cboBusinessKey").val();
+    $("#cboPatientTypes").empty();
+    $.ajax({
+        url: getBaseURL() + '/Dependent/GetPatientTypesbyBusinessKey?businesskey=' + bkkeys,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboPatientTypes").empty();
+
+                $("#cboPatientTypes").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboPatientTypes").append($("<option></option>").val(response[i]["PatientTypeId"]).html(response[i]["Description"]));
+                }
+                $('#cboPatientTypes').selectpicker('refresh');
+            }
+            else {
+                $("#cboPatientTypes").empty();
+                $("#cboPatientTypes").append($("<option value='0'> Select </option>"));
+                $('#cboPatientTypes').selectpicker('refresh');
+            }
+        },
+
+        async: false,
+        processData: false,
+
+    });
+
+    fnBindPatientCategories();
+}
+
+function fnBindPatientCategories() {
+    var bkey = $("#cboBusinessKey").val();
+    var ptype = $("#cboPatientTypes").val();
+    $("#cboPatientCategory").empty();
+    $.ajax({
+        url: getBaseURL() + '/Dependent/GetPatientCategoriesbyPatientType?businesskey=' + bkey + '&patienttypeID=' + ptype,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboPatientCategory").empty();
+
+                $("#cboPatientCategory").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboPatientCategory").append($("<option></option>").val(response[i]["PatientCategoryId"]).html(response[i]["Description"]));
+                }
+                $('#cboPatientCategory').selectpicker('refresh');
+            }
+            else {
+                $("#cboPatientCategory").empty();
+                $("#cboPatientCategory").append($("<option value='0'> Select </option>"));
+                $('#cboPatientCategory').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
 function fnLoadGridPatientCategoryDependent() {
 
     $("#jqgPatientCategoryDependent").GridUnload();
 
     $("#jqgPatientCategoryDependent").jqGrid({
-        // url: getBaseURL() + '/Actions/GetAllActions',
-       url:'',
+        url: getBaseURL() + '/Dependent/GetAllDependents?businesskey=' + $("#cboBusinessKey").val() +
+            '&patienttypeID=' + $("#cboPatientTypes").val() + '&patientcategoryID=' + $("#cboPatientCategory").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
@@ -81,31 +166,43 @@ function fnLoadGridPatientCategoryDependent() {
 }
 
 function fnAddPatientCategoryDependent() {
-    _isInsert = true;
+    if ($("#cboBusinessKey").val() == "0") {
+        fnAlert("w", "EPM_05_00", "UIC01", "Please select Location");
+        return;
+    }
+    if ($("#cboPatientTypes").val() == "0") {
+        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Type");
+        return;
+    }
+    if ($("#cboPatientCategory").val() == "0") {
+        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Category");
+        return;
+    }
     fnClearPatientCategoryDependent();
+    $("#cboRelationship").next().attr('disabled', false);
+    $("#cboRelationship").val("0").selectpicker('refresh');
     $('#PopupPatientCategoryDependent').modal('show');
-    $("#chkDPActiveStatus").parent().addClass("is-checked");
+    $("#chkActiveStatus").parent().addClass("is-checked");
     $('#PopupPatientCategoryDependent').find('.modal-title').text(localization.AddPatientCategoryDependent);
     $("#btnSavePatientCategoryDependent").html('<i class="fa fa-save"></i> ' + localization.Save);
-    $("#chkDPActiveStatus").prop('disabled', true);
+    $("#chkActiveStatus").prop('disabled', true);
     $("#btnSavePatientCategoryDependent").show();
-    $('#txtRelationshipDescription').val('');
 }
 
 function fnEditPatientCategoryDependent(actiontype) {
     var rowid = $("#jqgPatientCategoryDependent").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgPatientCategoryDependent').jqGrid('getRowData', rowid);
-    $('#txtRelationshipDescription').val(rowData.ActionId);
-    $("#txtRelationship").val(rowData.Relationship);
+    $('#cboRelationship').val(rowData.Relationship).selectpicker('refresh');
+    $("#cboRelationship").next().attr('disabled', true);
      if (rowData.ActiveStatus == 'true') {
-        $("#chkDPActiveStatus").parent().addClass("is-checked");
+         $("#chkActiveStatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkDPActiveStatus").parent().removeClass("is-checked");
+         $("#chkActiveStatus").parent().removeClass("is-checked");
     }
     $("#btnSavePatientCategoryDependent").attr("disabled", false);
 
-    _isInsert = false;
+ 
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
@@ -115,8 +212,7 @@ function fnEditPatientCategoryDependent(actiontype) {
         $('#PopupPatientCategoryDependent').modal('show');
         $('#PopupPatientCategoryDependent').find('.modal-title').text(localization.UpdatePatientCategoryDependent);
         $("#btnSavePatientCategoryDependent").html('<i class="fa fa-sync"></i>' + localization.Update);
-         
-        $("#chkDPActiveStatus").prop('disabled', true);
+        $("#chkActiveStatus").prop('disabled', false);
         $("#btnSavePatientCategoryDependent").attr("disabled", false);
     }
 
@@ -132,7 +228,7 @@ function fnEditPatientCategoryDependent(actiontype) {
         $("select").next().attr('disabled', true);
         $("#btnSavePatientCategoryDependent").hide();
          
-        $("#chkDPActiveStatus").prop('disabled', true);
+        $("#chkActiveStatus").prop('disabled', true);
         $("#PopupPatientCategoryDependent").on('hidden.bs.modal', function () {
             $("#btnSavePatientCategoryDependent").show();
             $("input,textarea").attr('readonly', false);
@@ -144,28 +240,26 @@ function fnEditPatientCategoryDependent(actiontype) {
 
 function fnSavePatientCategoryDependent() {
 
-    if (IsStringNullorEmpty($("#txtRelationshipDescription").val())) {
-        fnAlert("w", "EPM_08_00", "", 'Please enter the relationship description');
+    if (IsStringNullorEmpty($("#cboRelationship").val()) || $("#cboRelationship").val()=="0") {
+        fnAlert("w", "EPM_08_00", "", 'Please Select Relationship');
         return;
     }
     
-    obj_dependent = {
-        BusinessKey: $("#cboDPBusinessKey").val(),
-        PatientTypeId: $("#cboDPPatientTypes").val(),
-        PatientCategoryId: $("#cboDPPatientCategory").val(),
-        Relationship: $("#txtRelationship").val(),
-        RelationshipDesc: $("#txtRelationshipDescription").val(),
-        ActiveStatus: $("#chkDPActiveStatus").parent().hasClass("is-checked")
+    obj = {
+        BusinessKey: $("#cboBusinessKey").val(),
+        PatientTypeId: $("#cboPatientTypes").val(),
+        PatientCategoryId: $("#cboPatientCategory").val(),
+        Relationship: $("#cboRelationship").val(),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     };
 
     $("#btnSavePatientCategoryDependent").attr("disabled", true);
 
     $.ajax({
-        // url: getBaseURL() + '/Actions/InsertOrUpdateActions',
-       url:'',
+        url: getBaseURL() + '/Dependent/InsertOrUpdatePatientDependent',
         type: 'POST',
         datatype: 'json',
-        data: { isInsert: _isInsert, obj: obj_action },
+        data: {  obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -191,11 +285,11 @@ function fnGridRefreshPatientCategoryDependent() {
 }
 
 function fnClearPatientCategoryDependent() {
-    $("#txtRelationship").val('');
-    $("#txtRelationshipDescription").val('');
-    $("#chkDPActiveStatus").prop('disabled', false);
+    $("#cboRelationship").val("0").selectpicker('refresh');
+    $("#chkActiveStatus").prop('disabled', false);
     $("#btnSavePatientCategoryDependent").attr("disabled", false);
     $("input,textarea").attr('readonly', false);
+    $("#cboRelationship").next().attr('disabled', false);
 }
 
 $("#btnCancelPatientCategoryDependent").click(function () {

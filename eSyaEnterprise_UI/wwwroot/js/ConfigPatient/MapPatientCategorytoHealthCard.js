@@ -55,10 +55,10 @@ function fnPatientCategory_OnChange() {
     fnLoadGridHealthCardDetails();
 }
 
-function fnPatientType_OnChange() {
-    fnBindPatientCategories();
-    fnLoadGridHealthCardDetails();
-}
+//function fnPatientType_OnChange() {
+//    fnBindPatientCategories();
+//    fnLoadGridHealthCardDetails();
+//}
 function fnHealthCard_OnChange() {
     {
         fnLoadGridHealthCardDetails();
