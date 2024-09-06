@@ -23,6 +23,10 @@
         Delete: '@Localizer["Delete"]',
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
+        BusinessKey: '@Localizer["BusinessKey"]',
+        UserId: '@Localizer["UserId"]',
+        LoginDescription: '@Localizer["LoginDescription"]',
+        MapUserToApprovals: '@Localizer["MapUserToApprovals"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -37,6 +41,26 @@
     <script src="~/js/EndUser/MapUserToApprovals.js"></script>
     <script src="~/js/Common/jquery.contextmenu.min.js"></script>
 }
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group">
+            <label for="cboBusinessKey">@Localizer["BusinessLocation"]</label>
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKey_OnChange()">
+                <option value="0">@Localizer["Select"]</option>
+            </select>
+        </div>
 
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-6">
+        <table id="jqgMapUserToApprovals"></table>
+        <div id="jqpMapUserToApprovals"></div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+        <div id="jstApprovalForms" class="bg-light border-dashed"></div>
+    </div>
+</div>
 
 
