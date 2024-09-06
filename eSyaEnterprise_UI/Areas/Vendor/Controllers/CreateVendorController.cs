@@ -529,8 +529,8 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
         {
             try
             {
-                int parameterType = 3;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_Parameters>>("Parameters/GetParametersInformationByParameterType?parameterType=" + parameterType);
+                string subledgertype = "S";
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_Parameters>>("Vendor/GetVendorSuuplyGroupSubledgerType?subledgertype=" + subledgertype);
                 List<DO_Parameters> par_master = serviceResponse.Data;
                 var parameter = "?vendorID=" + vendorID;
                 var serviceResp = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("Vendor/GetVendorSuuplyGroupParameterList" + parameter);
