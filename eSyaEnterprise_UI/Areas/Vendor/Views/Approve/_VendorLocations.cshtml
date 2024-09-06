@@ -1,0 +1,105 @@
+﻿ @using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
+<div class="row padtop15">
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAPDefaulultloc">
+                <input type="checkbox" id="chkAPDefaulultloc" class="mdl-checkbox__input">
+                <span class="mdl-checkbox__label">@Localizer["DefaultLocation"] </span>
+            </label>
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+        <div class="form-group">
+            <label for="txtAPcontactperson">@Localizer["Contactperson"] </label>
+            <input id="txtAPcontactperson" class="form-control" type="text" autocomplete="off" maxlength="75" pattern="^[a-zA-Z _]+$" />
+
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label>@Localizer["MobileNumber"] </label>
+            @*<select class="selectpicker one-fourth" data-live-search="true" id="cboIsdcode" title="" data-size="8">
+            <option value="0">@Localizer["ChooseISDCode"] </option>
+            @if (ViewBag.Isdcodes != null)
+            {
+            foreach (var code in ViewBag.Isdcodes)
+            {
+            <option value="@code.Isdcode">@code.Isdcode-@code.CountryName</option>
+            }
+            }
+            </select>
+            <input id="txtregmobileno" class="form-control three-fourth" type="text" autocomplete="off" maxlength="15" data-inputmask="'mask': '9', 'repeat': 10, 'greedy' : false" />*@
+            @await Component.InvokeAsync("IsdMobileInput", new { id = "APVendorMobile" })
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+        <label for="cboAPStateCode">@Localizer["State"]</label>
+        <select class="selectpicker" data-live-search="true" id="cboAPStateCode" title="Select">
+            <option value="0">Select</option>
+        </select>
+    </div>
+
+
+    <div class="col-lg-5 col-md-5 col-sm-12  col-xs-12">
+        <div class="form-group">
+            <label for="txtAPvendoremailid">@Localizer["EmailID"] </label>
+            <input id="txtAPvendoremailid" class="form-control" type="email" autocomplete="off" maxlength="50" />
+
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label>@Localizer["WhatsAppNumber"] </label>
+            @await Component.InvokeAsync("IsdMobileInput", new { id = "APVendorWhatsAppNumber" })
+
+        </div>
+    </div>
+
+</div>
+<div class="row d-flex align-items-end">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label for="txtAPvendorlocation">@Localizer["VendorLocation"] </label>
+            <input class="form-control" type="text" rows="2" id="txtAPvendorlocation" maxlength="50">
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label for="txtAPaddress">@Localizer["VendorAddress"] </label>
+            <textarea class="form-control" type="text" rows="2" id="txtAPaddress" maxlength="150"></textarea>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+
+        <div class="form-group">
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAPlocationstatus">
+                <input type="checkbox" id="chkAPlocationstatus" class="mdl-checkbox__input">
+                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+            </label>
+        </div>
+
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+        <hr />
+      <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnClearAPLocationfields()"><i class="fa fa-times"></i> @Localizer["Clear"] </button>
+    </div>
+</div>
+
+<!-- Vendor Location Grid -->
+<div class="row form-group">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <table id="jqgAPVendorLocation"></table>
+        <div id="jqpAPVendorLocation"></div>
+    </div>
+</div>
+<!--End Vendor Location Grid -->

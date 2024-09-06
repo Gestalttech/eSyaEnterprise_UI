@@ -372,6 +372,7 @@
     <None Include="Views\Shared\Components\IsdMobileInput\_IsdMobileInput.cshtml" />
     <None Include="Views\Shared\Components\Menu\_UserMenu.cshtml" />
     <None Include="Views\Shared\Components\UserBusinessLocation\_UserBusinessLocation.cshtml" />
+    <None Include="wwwroot\Audio\TokenCallingaudio.mpeg.ogg" />
     <None Include="wwwroot\js\jquery.inputmask\bindings\inputmask.binding.js" />
     <None Include="wwwroot\js\jquery.inputmask\inputmask-userdefined.js" />
     <None Include="wwwroot\js\jquery.inputmask\inputmask.js" />

@@ -12,6 +12,7 @@
 }
 @section scripts {
     <script src="~/js/VendorApproval/ApprovalListInVendorRegister.js"></script>
+    <script src="~/js/VendorApproval/VendorRegister.js"></script>
     <script src="~/js/VendorApproval/VendorLocation.js"></script>
     <script src="~/js/VendorApproval/VendorBusinessLink.js"></script>
     <script src="~/js/VendorApproval/VendorStatutorydetails.js"></script>
@@ -146,7 +147,7 @@
         PartDesc_E24: '@Localizer["UI0238"]',
     }
 </script>
-<section id="divGrid">
+<section id="divAPGrid">
     <div class="row form-group">
         <div class="col-lg-12 col-xl-12 col-sm-12">
             <label>@Localizer["ChooseVendorbyalphabets"]</label>
@@ -182,8 +183,8 @@
 
     <div class="row form-group">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <table id="jqgVendorRegister"></table>
-            <div id="jqpVendorRegister"></div>
+            <table id="jqgAPVendorRegister"></table>
+            <div id="jqpAPVendorRegister"></div>
         </div>
     </div>
 
@@ -192,55 +193,55 @@
 <section id="divApprovalForm" style="display:none">
     <div class="row">
         <div class="col-lg-12 col-md-12">
-            <h6 class="displayNames" id="hdVendorName"><span class="d-inline m-0 fw-bold" id="lblDisplayNames">@Localizer["VendorDetails"]</span>   <span class='lblClosebtn' onclick="fnCloseVendorDetails()"><i class="fa fa-times"></i></span></h6>
+            <h6 class="displayNames" id="hdAPVendorName"><span class="d-inline m-0 fw-bold" id="lblAPDisplayNames">@Localizer["VendorDetails"]</span>   <span class='lblClosebtn' onclick="fnCloseVendorDetails()"><i class="fa fa-times"></i></span></h6>
         </div>
         <div class="col-sm-12">
-            <input type="text" class="form-control" id="txtVendorCode" style="display:none">
+            <input type="text" class="form-control" id="txtAPVendorCode" style="display:none">
         </div>
         <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 col-xl-2  animated slideInLeft sidebarSmall">
-            <ul class="nav flex-column nav-tabs shadowLite" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <ul class="nav flex-column nav-tabs shadowLite" id="approveVendor-pills-tab" role="tablist" aria-orientation="vertical">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active position-relative" id="vendorDetails-tab" data-bs-toggle="pill" data-bs-target="#vendorDetails" type="button" role="tab" aria-controls="pills-vendorDetails" aria-selected="true">@Localizer["VendorDetails"]</button>
+                    <button class="nav-link active position-relative" id="vendorDetailsAP-tab" data-bs-toggle="pill" data-bs-target="#vendorDetailsAP" type="button" role="tab" aria-controls="pills-vendorDetails" aria-selected="true">@Localizer["VendorDetails"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="vendorLocations-tab" data-bs-toggle="pill" data-bs-target="#vendorLocations" type="button" role="tab" aria-controls="pills-vendorLocations" aria-selected="true" onclick="fnloadvendorLocationGrid()">@Localizer["VendorLocations"]</button>
+                    <button class="nav-link position-relative" id="vendorLocationsAP-tab" data-bs-toggle="pill" data-bs-target="#vendorLocationsAP" type="button" role="tab" aria-controls="pills-vendorLocations" aria-selected="true" onclick="fnloadAPvendorLocationGrid()">@Localizer["VendorLocations"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="vendorBusinessLink-tab" data-bs-toggle="pill" data-bs-target="#vendorBusinessLink" type="button" role="tab" aria-controls="pills-vendorBusinessLink" aria-selected="true" onclick="fnLoadBusinessLinkGrid()">@Localizer["VendorBusinessLink"]</button>
+                    <button class="nav-link position-relative" id="vendorBusinessLinkAP-tab" data-bs-toggle="pill" data-bs-target="#vendorBusinessLinkAP" type="button" role="tab" aria-controls="pills-vendorBusinessLink" aria-selected="true" onclick="fnLoadAPBusinessLinkGrid()">@Localizer["VendorBusinessLink"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="statutorydetails-tab" data-bs-toggle="pill" data-bs-target="#statutorydetails" type="button" role="tab" aria-controls="pills-statutorydetails" aria-selected="true" onclick="fnloadvendorLocationDetailsGrid()">@Localizer["StatutoryDetails"]</button>
+                    <button class="nav-link position-relative" id="statutorydetailsAP-tab" data-bs-toggle="pill" data-bs-target="#statutorydetailsAP" type="button" role="tab" aria-controls="pills-statutorydetails" aria-selected="true" onclick="fnloadAPvendorLocationDetailsGrid()">@Localizer["StatutoryDetails"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="bankdetails-tab" data-bs-toggle="pill" data-bs-target="#bankdetails" type="button" role="tab" aria-controls="pills-bankdetails" aria-selected="true" onclick="fnLoadBankDetails()">@Localizer["BankDetails"]</button>
+                    <button class="nav-link position-relative" id="bankdetailsAP-tab" data-bs-toggle="pill" data-bs-target="#bankdetailsAP" type="button" role="tab" aria-controls="pills-bankdetails" aria-selected="true" onclick="fnLoadAPBankDetails()">@Localizer["BankDetails"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="supplygroup-tab" data-bs-toggle="pill" data-bs-target="#supplygroup" type="button" role="tab" aria-controls="pills-supplygroup" aria-selected="true" onclick="fnLoadSupplyGroupGrid()">@Localizer["SupplyGroup"]</button>
+                    <button class="nav-link position-relative" id="supplygroupAP-tab" data-bs-toggle="pill" data-bs-target="#supplygroupAP" type="button" role="tab" aria-controls="pills-supplygroup" aria-selected="true" onclick="fnLoadAPSupplyGroupGrid()">@Localizer["SupplyGroup"]</button>
                 </li>
             </ul>
             
         </div>
         <div class="col-lg-8 col-md-8 col-sm-9 col-xl-10 bg-white animated fadeIn delay-1s padleft0 mainbarSmall">
-            <div class="tab-content shadowLite px-4 pb-4" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="vendorDetails" role="tabpanel" aria-labelledby="vendorDetails-tab">
-                    @await Html.PartialAsync("../CreateVendor/_VendorDetails")
+            <div class="tab-content shadowLite px-4 pb-4" id="approveVendor-pills-tabContent">
+                <div class="tab-pane fade show active" id="vendorDetailsAP" role="tabpanel" aria-labelledby="vendorDetails-tab">
+                    @await Html.PartialAsync("../Approve/_VendorDetails")
                     
                 </div>
-                <div class="tab-pane fade" id="vendorLocations" role="tabpanel" aria-labelledby="vendorLocations-tab">
-                    @await Html.PartialAsync("../CreateVendor/_VendorLocations")
+                <div class="tab-pane fade" id="vendorLocationsAP" role="tabpanel" aria-labelledby="vendorLocationsAP-tab">
+                    @await Html.PartialAsync("../Approve/_VendorLocations")
                   
                 </div>
-                <div class="tab-pane fade" id="vendorBusinessLink" role="tabpanel" aria-labelledby="vendorBusinessLink-tab">
-                    @await Html.PartialAsync("../CreateVendor/_VendorBusinessLink")
+                <div class="tab-pane fade" id="vendorBusinessLinkAP" role="tabpanel" aria-labelledby="vendorBusinessLinkAP-tab">
+                    @await Html.PartialAsync("../Approve/_VendorBusinessLink")
                 </div>
-                <div class="tab-pane fade" id="statutorydetails" role="tabpanel" aria-labelledby="statutorydetails-tab">
-                    @await Html.PartialAsync("../CreateVendor/_StatutoryDetails")
+                <div class="tab-pane fade" id="statutorydetailsAP" role="tabpanel" aria-labelledby="statutorydetailsAP-tab">
+                    @await Html.PartialAsync("../Approve/_StatutoryDetails")
                 </div>
-                <div class="tab-pane fade" id="bankdetails" role="tabpanel" aria-labelledby="bankdetails-tab">
-                    @await Html.PartialAsync("../CreateVendor/_BankDetails")
+                <div class="tab-pane fade" id="bankdetailsAP" role="tabpanel" aria-labelledby="bankdetailsAP-tab">
+                    @await Html.PartialAsync("../Approve/_BankDetails")
                 </div>
-                <div class="tab-pane fade" id="supplygroup" role="tabpanel" aria-labelledby="supplygroup-tab">
-                    @await Html.PartialAsync("../CreateVendor/_SupplyGroup")
+                <div class="tab-pane fade" id="supplygroupAP" role="tabpanel" aria-labelledby="supplygroupAP-tab">
+                    @await Html.PartialAsync("../Approve/_SupplyGroup")
                 </div>
             </div>
         </div>
@@ -248,24 +249,24 @@
     </div>
 </section>
   
-<div class="modal fullscreen fade in" id="popupVendorRegister" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 9997;" data-keyboard="false" data-backdrop="static">
+<div class="modal fullscreen fade in" id="popupAPVendorRegister" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 9997;" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div id="modalid"></div>
-            <div class="modal-header popupHeader">
-                <button type="button" class="close" data-dismiss="modal" onclick="fnClearVendorReg()"> <i class="fa fa-times"></i></button>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="fnClearAPVendorReg()"> <i class="fa fa-times"></i></button>
                 <h4 class="modal-title">@Localizer["RegisterVendor"] </h4>
             </div>
 
             <!-- Hidden fields -->
             <!-- for Vendor Code-->
-            <input type="hidden" id="txtVendorCode" />
+            <input type="hidden" id="txtAPVendorCode" />
             <!-- for Vendor Location-->
-            <input type="hidden" id="txtlocationId" />
+            <input type="hidden" id="txtAPlocationId" />
             <!-- for Vendor Statutory Details-->
-            <input type="hidden" id="txtstatutorylocationId" />
-            <input type="hidden" id="txtstatutorycode" />
-            <input type="hidden" id="txtstatutoryvendorcode" />
+            <input type="hidden" id="txtAPstatutorylocationId" />
+            <input type="hidden" id="txtAPstatutorycode" />
+            <input type="hidden" id="txtAPstatutoryvendorcode" />
             <!-- Hidden fields -->
 
             <div class="modal-body">
@@ -277,7 +278,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-dismiss="modal" onclick="fnClearVendorReg();" id="btnclosepopup">@Localizer["Close"] </button>
+                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" data-dismiss="modal" onclick="fnClearVendorReg();" id="btnAPclosepopup">@Localizer["Close"] </button>
             </div>
         </div>
     </div>
@@ -285,7 +286,7 @@
   
 <script>
    
-    $("#btnVendorMaster").on('click', function () {
+    $("#btnAPVendorMaster").on('click', function () {
         $('select,input').attr('disabled',true);
          
     })
