@@ -17,6 +17,13 @@ $(window).on('resize', function () {
     fnDynamicHeight();
     //fnDynamicHeight_new();
 })
+
+function playTheAudio() {
+    var tokenAudio = new Audio('/Audio/TokenCallingaudio.mpeg.ogg');
+    tokenAudio.loop = false;
+    tokenAudio.play();
+}
+
 function fnDynamicHeight() {
     $(".rightDisplay").each(function () {
         var divCount = $(this).find('div').length;
@@ -142,9 +149,9 @@ function fnDisplayCallingToken() {
 
     if (lastCallingToken !== previousCallingToken) {
         previousCallingToken = lastCallingToken
-        beep(2600, 3, 0.99, function () {
-        });
-
+        //beep(2600, 3, 0.99, function () {
+        //});
+        playTheAudio();
 
        
     }
@@ -222,9 +229,9 @@ function fnTextToSpeech(text) {
     //};
     //speechSynthesis.speak(msg);
 
-    beep(1000, 2,0.99, function () {
-    });
-    
+    //beep(1000, 2,0.99, function () {
+    //});
+    playTheAudio();
 }
 
 
