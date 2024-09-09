@@ -1,17 +1,17 @@
 ﻿var businesslocation = false;
 var activeTabName = "";
-$(document).ready(function () {
-    $("#lblDisplayNames").val('');
+$(function () {
+    $("#lblAPDisplayNames").val('');
      
     $.contextMenu({
         // define which elements trigger this menu
-        selector: "#btnVendorMaster",
+        selector: "#btnAPVendorMaster",
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditVendor(event, 'edit') } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditVendor(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor(event, 'delete') } },
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPVendor('edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPVendor('view') } },
+            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnAPDeActivateVendor('delete') } },
         }
         // there's more, have a look at the demos and docs...
     });
@@ -23,13 +23,13 @@ $(document).ready(function () {
     $(".dot").click(function () {
         $('.dot').removeClass('active');
         var alphabet = $(this).text();
-        fnloadVendorGrid(alphabet);
+        fnloadAPVendorGrid(alphabet);
         $(this).addClass('active');
     });
-    $("#lblFormName").text("Vendor Codes");
+    $("#lblAPFormName").text("Vendor Codes");
     $("#accordion").hide();
    
-    $("#jqgVendorRegister").jqGrid({
+    $("#jqgAPVendorRegister").jqGrid({
 
       
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
@@ -56,7 +56,7 @@ $(document).ready(function () {
         rowList: [10, 20, 50, 100],
         rownumWidth:55,
         loadonce: true,
-        pager: "#jqpVendorRegister",
+        pager: "#jqpAPVendorRegister",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -68,21 +68,21 @@ $(document).ready(function () {
         forceFit: true,
         caption: localization.VendorRegister,
         
-    }).jqGrid('navGrid', '#jqpVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpVendorRegister', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshVendorGrid
-    }).jqGrid('navButtonAdd', '#jqpVendorRegister', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddVendor 
+    }).jqGrid('navGrid', '#jqpAPVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPVendorGrid
+    }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddAPVendor 
         });
     fnAddGridSerialNoHeading();
 });
 
-function fnloadVendorGrid(alphabet) {
+function fnloadAPVendorGrid(alphabet) {
 
-    $("#jqgVendorRegister").GridUnload();
+    $("#jqgAPVendorRegister").GridUnload();
 
-    $("#jqgVendorRegister").jqGrid({
+    $("#jqgAPVendorRegister").jqGrid({
       
-        url: getBaseURL() + '/CreateVendor/GetVendors?Alphabet=' + alphabet,
+        url: getBaseURL() + '/Approve/GetVendors?Alphabet=' + alphabet,
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -103,7 +103,7 @@ function fnloadVendorGrid(alphabet) {
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline" id="btnVendorMaster"><i class="fa fa-ellipsis-v"></i></button>'
+                    return '<button class="mr-1 btn btn-outline" id="btnAPVendorMaster"><i class="fa fa-ellipsis-v"></i></button>'
                 }
             },
         ],
@@ -111,7 +111,7 @@ function fnloadVendorGrid(alphabet) {
         rowList: [10, 20, 50, 100],
         rownumWidth: 55,
         loadonce: true,
-        pager: "#jqpVendorRegister",
+        pager: "#jqpAPVendorRegister",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -124,17 +124,17 @@ function fnloadVendorGrid(alphabet) {
         caption: localization.VendorRegister,
         loadComplete: function (data) {
             SetGridControlByAction();
-            fnJqgridSmallScreen("jqgVendorRegister");
+            fnJqgridSmallScreen("jqgAPVendorRegister");
         },
-  }).jqGrid('navGrid', '#jqpVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
-        .jqGrid('navButtonAdd', '#jqpVendorRegister', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshVendorGrid
-    }).jqGrid('navButtonAdd', '#jqpVendorRegister', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddVendor
+  }).jqGrid('navGrid', '#jqpAPVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPVendorGrid
+    }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddAPVendor
         });
     fnAddGridSerialNoHeading();
 }
-$('#v-pills-tab button').on('click', function (e) {
+$('#approveVendor-pills-tab button').on('click', function (e) {
     
     e.preventDefault()
     $(".tab-pane").removeClass('show active');
@@ -144,61 +144,60 @@ $('#v-pills-tab button').on('click', function (e) {
     //    fnGridLoadCustomerLocation();
     //}
    
-    $("#lblDisplayNames").text('');
-    $("#lblDisplayNames").text(e.currentTarget.innerHTML);
+    $("#lblAPDisplayNames").text('');
+    $("#lblAPDisplayNames").text(e.currentTarget.innerHTML);
 })
 
-function fnAddVendor() {
+function fnAddAPVendor() {
     fnEnableVendorRegister(false);
-    $('#txtVendorCode').val('');
+    $('#txtAPVendorCode').val('');
     $('.selectpicker').selectpicker('refresh');
-    $("#divForm").css("display", "block");
-    $("#divGrid").hide();
-    $("#chkActiveStatus").parent().addClass("is-checked");
+    $("#divAPForm").css("display", "block");
+    $("#divAPGrid").hide();
+    $("#chkAPActiveStatus").parent().addClass("is-checked");
     businesslocation = false;
-    $("#btnSaveVendorDetails").html('<i class="fa fa-save"></i> ' + localization.Save);
     fnSetSidebar();
-    $("#lblDisplayNames").text("VendorDetails");
+    $("#lblAPDisplayNames").text("VendorDetails");
 }
 
-function fnEditVendor(e,actiontype) {
+function fnEditAPVendor(actiontype) {
     
-    var rowid = $("#jqgVendorRegister").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqgVendorRegister').jqGrid('getRowData', rowid);
+    var rowid = $("#jqgAPVendorRegister").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgAPVendorRegister').jqGrid('getRowData', rowid);
     
-    $("#txtVendorCode").val(rowData.VendorId);
-    $("#txtVendorName").val(rowData.VendorName);
-    $('#cboCreditType').val(rowData.CreditType);
-    $('#cboCreditType').selectpicker('refresh');
-    $("#txtCreditPeriod").val(rowData.CreditPeriod);
-    $('#cboPayMode').val(rowData.PreferredPaymentMode);
-    $('#cboPayMode').selectpicker('refresh');
-    $('#cboVendorClass').val(rowData.VendorClass);
-    $('#cboVendorClass').selectpicker('refresh'); $("#lblDisplayNames").text("VendorDetails");
+    $("#txtAPVendorCode").val(rowData.VendorId);
+    $("#txtAPVendorName").val(rowData.VendorName);
+    $('#cboAPCreditType').val(rowData.CreditType);
+    $('#cboAPCreditType').selectpicker('refresh');
+    $("#txtAPCreditPeriod").val(rowData.CreditPeriod);
+    $('#cboAPPayMode').val(rowData.PreferredPaymentMode);
+    $('#cboAPPayMode').selectpicker('refresh');
+    $('#cboAPVendorClass').val(rowData.VendorClass);
+    $('#cboAPVendorClass').selectpicker('refresh'); $("#lblAPDisplayNames").text("VendorDetails");
     if (rowData.ActiveStatus == 'true') {
-        $("#chkActiveStatus").parent().addClass("is-checked");
+        $("#chkAPActiveStatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkActiveStatus").parent().removeClass("is-checked");
+        $("#chkAPActiveStatus").parent().removeClass("is-checked");
     }
 
     if (rowData.IsBlackListed == 'true') {
-        $("#chkIsBlockList").parent().addClass("is-checked");
+        $("#chkAPIsBlockList").parent().addClass("is-checked");
     }
     else {
-        $("#chkIsBlockList").parent().removeClass("is-checked");
+        $("#chkAPIsBlockList").parent().removeClass("is-checked");
     }
-    $("#divForm").css("display", "block");
-    $("#divGrid").hide();
-    $("#vendorDetails-tab").addClass("active");
+    $("#divAPForm").css("display", "block");
+    $("#divAPGrid").hide();
+    $("#vendorDetailsAP-tab").addClass("active");
     $("#vendorDetails").addClass("show active");
     
-    if ($("#txtVendorCode").val() > 0) {
-        $("#divForm").css("display", "block");
-        $("#divGrid").hide();
+    if ($("#txtAPVendorCode").val() > 0) {
+        $("#divAPForm").css("display", "block");
+        $("#divAPGrid").hide();
 
-        $("#vendorDetails-tab").addClass("active");
-        $("#vendorDetails").addClass("show active");
+        $("#vendorDetailsAP-tab").addClass("active");
+        $("#vendorDetailsAP").addClass("show active");
     }
     fnSetSidebar();  //Setting the sidebar - UI
     
@@ -206,7 +205,7 @@ function fnEditVendor(e,actiontype) {
 
     $.ajax({
         async: false,
-        url: getBaseURL() + '/CreateVendor/GetVendorParameterList?vendorID=' + $("#txtVendorCode").val() ,
+        url: getBaseURL() + '/Approve/GetVendorParameterList?vendorID=' + $("#txtAPVendorCode").val() ,
         type: 'POST',
         datatype: 'json',
         success: function (result) {
@@ -224,24 +223,19 @@ function fnEditVendor(e,actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EVN_01_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EVN_02_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $("#btnSaveUnitofMeasure").show();
         fnEnableVendorRegister(false);
-        $("#btnSaveVendorDetails").html('<i class="fa fa-sync"></i> ' +localization.Update);
-        $("#btnSaveSMSInformation").html('<i class="fa fa-sync"></i> Update');
-        $("#btnSaveBankDetails,#btnPartNumberDisabled,#btnsavestatutory,#btnSaveBusinessLink,#btnSaveVendorDetails,#btnlocationsave,#btnSaveSupplyGroup").show();
         businesslocation = false;
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EVN_01_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EVN_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
-        $("#btnSaveUnitofMeasure").hide();
         fnEnableVendorRegister(true);
-        $("#btnSaveBankDetails,#btnPartNumberDisabled,#btnsavestatutory,#btnSaveBusinessLink,#btnSaveVendorDetails,#btnlocationsave,#btnSaveSupplyGroup").hide();
         businesslocation = true;
     }
     $("#PopupUnitofMeasure").on('hidden.bs.modal', function () {
@@ -250,33 +244,33 @@ function fnEditVendor(e,actiontype) {
     });
 }
 
-function fnSaveVendor() {
-    if (IsValidVendor() == false) {
+function fnSaveAPVendor() {
+    if (IsValidAPVendor() == false) {
         return;
     }
     var vendor = {
-        VendorId: $("#txtVendorCode").val() === '' ? 0 : $("#txtVendorCode").val(),
-        VendorName: $("#txtVendorName").val(),
-        CreditType: $("#cboCreditType").val(),
-        VendorClass: $("#cboVendorClass").val(),
-        CreditPeriod: $("#txtCreditPeriod").val(),
-        PreferredPaymentMode: $("#cboPayMode").val(),
-        IsBlackListed: $('#chkIsBlockList').parent().hasClass("is-checked"),
-        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+        VendorId: $("#txtAPVendorCode").val() === '' ? 0 : $("#txtAPVendorCode").val(),
+        VendorName: $("#txtAPVendorName").val(),
+        CreditType: $("#cboAPCreditType").val(),
+        VendorClass: $("#cboAPVendorClass").val(),
+        CreditPeriod: $("#txtAPCreditPeriod").val(),
+        PreferredPaymentMode: $("#cboAPPayMode").val(),
+        IsBlackListed: $('#chkAPIsBlockList').parent().hasClass("is-checked"),
+        ActiveStatus: $("#chkAPActiveStatus").parent().hasClass("is-checked")
     };
     var fmParams = eSyaParams.GetJSONValue();
     vendor.l_FormParameter = fmParams;
     $.ajax({
 
-        url: getBaseURL() + '/CreateVendor/InsertOrUpdateVendor',
+        url: getBaseURL() + '/Approve/InsertOrUpdateVendor',
         type: 'POST',
         datatype: 'json',
         data: { vendor },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnRefreshVendorGrid();
-                ReadVendorCode(response);
+                fnRefreshAPVendorGrid();
+                ReadAPVendorCode(response);
                 return true;
             }
             else{
@@ -291,80 +285,79 @@ function fnSaveVendor() {
     });
 }
 
-function IsValidVendor() {
+function IsValidAPVendor() {
     
-    if (IsStringNullorEmpty($("#txtVendorName").val())) {
-        fnAlert("w", "EVN_01_00", "UI0225", errorMsg.VendorName_E15);
+    if (IsStringNullorEmpty($("#txtAPVendorName").val())) {
+        fnAlert("w", "EVN_02_00", "UI0225", errorMsg.VendorName_E15);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtCreditPeriod").val())) {
-        fnAlert("w", "EVN_01_00", "UI0226", errorMsg.CreditDays_E16);
+    if (IsStringNullorEmpty($("#txtAPCreditPeriod").val())) {
+        fnAlert("w", "EVN_02_00", "UI0226", errorMsg.CreditDays_E16);
         return false;
     }
    
-    if ($("#txtCreditPeriod").val() == 0 || $("#txtCreditPeriod").val() == "0") {
-        fnAlert("w", "EVN_01_00", "UI0227", errorMsg.CreditPeriod_E17);
+    if ($("#txtAPCreditPeriod").val() == 0 || $("#txtAPCreditPeriod").val() == "0") {
+        fnAlert("w", "EVN_02_00", "UI0227", errorMsg.CreditPeriod_E17);
         return false;
     }
-    if ($("#cboPayMode").val() == 0 || $("#cboPayMode").val() == "0" || IsStringNullorEmpty($("#cboPayMode").val())) {
-        fnAlert("w", "EVN_01_00", "UI0289", errorMsg.PaymentPreferredMode_E25);
+    if ($("#cboAPPayMode").val() == 0 || $("#cboAPPayMode").val() == "0" || IsStringNullorEmpty($("#cboAPPayMode").val())) {
+        fnAlert("w", "EVN_02_00", "UI0289", errorMsg.PaymentPreferredMode_E25);
         return false;
     } 
     
-    if ($("#cboVendorClass").val() == 0 || $("#cboVendorClass").val() == "0" || IsStringNullorEmpty($("#cboVendorClass").val())) {
-        fnAlert("w", "EVN_01_00", "UI0290", errorMsg.VendorClass_E26);
+    if ($("#cboAPVendorClass").val() == 0 || $("#cboAPVendorClass").val() == "0" || IsStringNullorEmpty($("#cboAPVendorClass").val())) {
+        fnAlert("w", "EVN_02_00", "UI0290", errorMsg.VendorClass_E26);
         return false;
     }
 
 }
 
-function ReadVendorCode(res) {
-    $("#txtVendorCode").val('');
-    $("#txtVendorCode").val(res.VendorId);
-    if ($("#txtVendorCode").val() > 0) {
+function ReadAPVendorCode(res) {
+    $("#txtAPVendorCode").val('');
+    $("#txtAPVendorCode").val(res.VendorId);
+    if ($("#txtAPVendorCode").val() > 0) {
         $("#accordion").show();
     }
 }
 
-function fnRefreshVendorGrid() {
-    $("#jqgVendorRegister").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
-    $("#vendorDetails-tab").addClass("active");
-    $("#vendorDetails").addClass("show active");
+function fnRefreshAPVendorGrid() {
+    $("#jqgAPVendorRegister").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#vendorDetailsAP-tab").addClass("active");
+    $("#vendorDetailsAP").addClass("show active");
 }
 
-function fnClearVendorReg() {
-    $("#txtVendorCode").val('');
-    $("#txtVendorName").val('');
-    $('#cboCreditType').val("P");
-    $('#cboCreditType').selectpicker('refresh');
-    $("#txtCreditPeriod").val('');
-    $('#cboPayMode').val("0");
-    $('#cboPayMode').selectpicker('refresh');
-    $('#cboVendorClass').val("0");
-    $('#cboVendorClass').selectpicker('refresh');
-    $("#chkActiveStatus").prop('disabled', false);
-    $('#chkIsBlockList').prop('checked', true);
-    $('#chkIsBlockList').parent().removeClass('is-checked');
-    $('#chkIsBlockList').prop('checked', false);
-    $("#VendorLocations").removeClass('show');
-    $("#txtVendorCode").val('');
-    fnRefreshVendorGrid();
-    $("#btnSaveBankDetails,#btnPartNumberDisabled,#btnsavestatutory,#btnSaveBusinessLink,#btnSaveVendorDetails,#btnlocationsave,#btnSaveSupplyGroup").show();
+function fnClearAPVendorReg() {
+    $("#txtAPVendorCode").val('');
+    $("#txtAPVendorName").val('');
+    $('#cboAPCreditType').val("P");
+    $('#cboAPCreditType').selectpicker('refresh');
+    $("#txtAPCreditPeriod").val('');
+    $('#cboAPPayMode').val("0");
+    $('#cboAPPayMode').selectpicker('refresh');
+    $('#cboAPVendorClass').val("0");
+    $('#cboAPVendorClass').selectpicker('refresh');
+    $("#chkAPActiveStatus").prop('disabled', false);
+    $('#chkAPIsBlockList').prop('checked', true);
+    $('#chkAPIsBlockList').parent().removeClass('is-checked');
+    $('#chkAPIsBlockList').prop('checked', false);
+    $("#VendorLocationsAP").removeClass('show');
+    $("#txtAPVendorCode").val('');
+    fnRefreshAPVendorGrid();
     //location.reload();
     businesslocation = false;
-    $("#lblDisplayNames").text("VendorDetails");
+    $("#lblAPDisplayNames").text("VendorDetails");
     eSyaParams.ClearValue();
 }
 
 
 function fnCloseVendorDetails() {
-    $("#divGrid").show();
-    $("#divForm").css("display", "none");
+    $("#divAPGrid").show();
+    $("#divAPForm").css("display", "none");
     $(".tab-pane").removeClass('active show');
-    $("#v-pills-tab button").removeClass("active");
-    $('#txtVendorCode').val("0");
-    fnClearVendorReg();
-    fnClearStatutoryDetails();
+    $("#approveVendor-pills-tab button").removeClass("active");
+    $('#txtAPVendorCode').val("0");
+    fnClearAPVendorReg();
+    fnClearAPStatutoryDetails();
 }
 
 
@@ -382,20 +375,20 @@ function fnEnableVendorRegister(val) {
     $("#chklocationstatus").prop('disabled', val); 
     $("input[id*='chk']").attr('disabled', val);
     $("select").next().attr('disabled', val);
-    $("#chkActiveStatus").attr('disabled', true);
+    $("#chkAPActiveStatus").attr('disabled', true);
 }
 
-function fnDeActivateVendor(e) {
+function fnAPDeActivateVendor() {
     fnSetSidebar();
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "EVN_01_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+        fnAlert("w", "EVN_02_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
         return;
     }
 
    
 
-    var rowid = $("#jqgVendorRegister").jqGrid('getGridParam', 'selrow');
-    var rowData = $('#jqgVendorRegister').jqGrid('getRowData', rowid);
+    var rowid = $("#jqgAPVendorRegister").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgAPVendorRegister').jqGrid('getRowData', rowid);
 
     var vcode = rowData.VendorId;
     var a_status;
@@ -432,18 +425,18 @@ function fnDeActivateVendor(e) {
                     return false;
                 }
                 $.ajax({
-                    url: getBaseURL() + '/CreateVendor/ActiveOrDeActiveVendor?status=' + a_status + '&vendorID=' + vcode,
+                    url: getBaseURL() + '/Approve/ActiveOrDeActiveVendor?status=' + a_status + '&vendorID=' + vcode,
                     type: 'POST',
                     success: function (response) {
 
                         if (response.Status) {
                             fnAlert("s", "", response.StatusCode, response.Message);
-                            fnRefreshVendorGrid();
+                            fnRefreshAPVendorGrid();
                         }
                         else {
                             fnAlert("e", "", response.StatusCode, response.Message);
                         }
-                        $("#jqgVendorRegister").setGridParam({ datatype: 'json' }).trigger('reloadGrid');
+                        $("#jqgAPVendorRegister").setGridParam({ datatype: 'json' }).trigger('reloadGrid');
                     },
                     error: function (response) {
                         fnAlert("e", "", response.StatusCode, response.statusText);
@@ -460,7 +453,7 @@ function fnSetSidebar() {
     var _newTabH = (_fullH - _tabcontent.top - 15);
     var windW = $(window).width();
     if (windW > 1099) {
-        $(".tab-content,#v-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
+        $(".tab-content,#approveVendor-pills-tab").css({ "height": _newTabH, "overflow-y": "auto" });
     }
     else {
         $(".tab-content").css({ "height": _newTabH, "overflow-y": "auto" });

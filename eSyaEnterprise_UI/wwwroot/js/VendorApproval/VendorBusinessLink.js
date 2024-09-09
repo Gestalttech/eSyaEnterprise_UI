@@ -1,16 +1,16 @@
-﻿function fnLoadBusinessLinkGrid() {
-    $("#jqgBusinessLink").GridUnload();
+﻿function fnLoadAPBusinessLinkGrid() {
+    $("#jqgAPBusinessLink").GridUnload();
 
-    $("#jqgBusinessLink").jqGrid(
+    $("#jqgAPBusinessLink").jqGrid(
 
         {
-            url: getBaseURL() + '/CreateVendor/GetBusinessKeysByVendorcode?vendorID=' + $("#txtVendorCode").val(),
+            url: getBaseURL() + '/Approve/GetBusinessKeysByVendorcode?vendorID=' + $("#txtAPVendorCode").val(),
             mtype: 'POST',
             datatype: 'json',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
             serializeGridData: function (postdata) {
-                postdata.Vendorcode = $("#txtVendorCode").val();
+                postdata.Vendorcode = $("#txtAPVendorCode").val();
                 return JSON.stringify(postdata.Vendorcode);
             },
             colNames: [localization.BusinessKey,  localization.BusinessLocation, localization.Select],
@@ -27,7 +27,7 @@
             rowList: [10, 20, 50, 100],
             rownumWidth:55,
             loadonce: true,
-            pager: "#jqpBusinessLink",
+            pager: "#jqpAPBusinessLink",
             viewrecords: true,
             gridview: true,
             rownumbers: true,
@@ -39,30 +39,30 @@
             scroll: false, scrollOffset: 0,
             caption: localization.VendorBusinessLink,
             onSelectRow: function (rowid) {
-                BusinessKey = $("#jqgBusinessLink").jqGrid('getCell', rowid, 'BusinessKey');
+                BusinessKey = $("#jqgAPBusinessLink").jqGrid('getCell', rowid, 'BusinessKey');
 
             },
             loadComplete: function (data) {
-                fnDisableActivecheckboxs();
-                fnJqgridSmallScreen("jqgBusinessLink");
+                fnAPDisableActivecheckboxs();
+                fnJqgridSmallScreen("jqgAPBusinessLink");
             },
         })
 
-        .jqGrid('navGrid', '#jqpBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false })
-        .jqGrid('navButtonAdd', '#jqpBusinessLink', {
-            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshBusinessLinkGrid
+        .jqGrid('navGrid', '#jqpAPBusinessLink', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpAPBusinessLink', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPBusinessLinkGrid
         });  
     fnAddGridSerialNoHeading();
 }
 
-function fnSaveBusinessLinks() {
-    if (IsValidBusinessLinks() == false) {
+function fnSaveAPBusinessLinks() {
+    if (IsValidAPBusinessLinks() == false) {
         return;
     }
     var val = [];
-    var numberOfRecords = $("#jqgBusinessLink").getGridParam("records");
+    var numberOfRecords = $("#jqgAPBusinessLink").getGridParam("records");
     for (i = 1; i <= numberOfRecords; i++) {
-        var rowData = $('#jqgBusinessLink').getRowData(i);
+        var rowData = $('#jqgAPBusinessLink').getRowData(i);
         if (rowData.ActiveStatus == "true") {
             val.push(rowData.BusinessKey);
 
@@ -70,19 +70,19 @@ function fnSaveBusinessLinks() {
     }
 
     var bkeys = {
-        vendorID: $("#txtVendorCode").val(),
+        vendorID: $("#txtAPVendorCode").val(),
         Businesslink: val
     };
 
     $.ajax({
-        url: getBaseURL() + "/CreateVendor/InsertBusinesskeyforVendor",
+        url: getBaseURL() + "/Approve/InsertBusinesskeyforVendor",
         type: 'POST',
         datatype: 'json',
         data: { bkeys },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnRefreshBusinessLinkGrid();
+                fnRefreshAPBusinessLinkGrid();
                 return true;
             }
             else{
@@ -95,17 +95,17 @@ function fnSaveBusinessLinks() {
         }
     });
 }
-function IsValidBusinessLinks() {
-    if (IsStringNullorEmpty($("#txtVendorCode").val())) {
+function IsValidAPBusinessLinks() {
+    if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);
         return false;
     }
 }
-function fnRefreshBusinessLinkGrid() {
-    $("#jqgBusinessLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
+function fnRefreshAPBusinessLinkGrid() {
+    $("#jqgAPBusinessLink").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
 }
 
-function fnDisableActivecheckboxs() {
+function fnAPDisableActivecheckboxs() {
     if (businesslocation === true) {
         $("input[type=checkbox]").attr('disabled', true);
     }

@@ -1,10 +1,10 @@
-﻿function fnloadvendorLocationDetailsGrid() {
-    fnClearStatutoryDetails();
-    $("#jqgLocationDetails").GridUnload();
+﻿function fnloadAPvendorLocationDetailsGrid() {
+    fnClearAPStatutoryDetails();
+    $("#jqgAPLocationDetails").GridUnload();
 
-    $("#jqgLocationDetails").jqGrid({
+    $("#jqgAPLocationDetails").jqGrid({
         
-        url: getBaseURL() + '/CreateVendor/GetVendorLocationsByVendorcode?vendorID=' + $("#txtVendorCode").val(),
+        url: getBaseURL() + '/Approve/GetVendorLocationsByVendorcode?vendorID=' + $("#txtAPVendorCode").val(),
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -23,7 +23,7 @@
         rowList: [10, 20, 40],
         rownumWidth:55,
         loadonce: true,
-        pager: "#jqpLocationDetails",
+        pager: "#jqpAPLocationDetails",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -36,40 +36,40 @@
         scrollOffset: 0,
         caption: localization.VendorStatutoryDetails,
         loadComplete: function (data) {
-            fnJqgridSmallScreen("jqgLocationDetails");
+            fnJqgridSmallScreen("jqgAPLocationDetails");
         },
         onSelectRow: function (rowid) {
           
-           var locId = $("#jqgLocationDetails").jqGrid('getCell', rowid, 'VendorLocationId');
-            var vcode = $("#jqgLocationDetails").jqGrid('getCell', rowid, 'VendorId');
-            fnGetStatutorydetails(vcode,locId);
+           var locId = $("#jqgAPLocationDetails").jqGrid('getCell', rowid, 'VendorLocationId');
+            var vcode = $("#jqgAPLocationDetails").jqGrid('getCell', rowid, 'VendorId');
+            fnGetAPStatutorydetails(vcode,locId);
            
         },
 
-    }).jqGrid('navGrid', '#jqpLocationDetails', { add: false, edit: false, search: false, del: false, refresh: false }); fnAddGridSerialNoHeading();
+    }).jqGrid('navGrid', '#jqpAPLocationDetails', { add: false, edit: false, search: false, del: false, refresh: false }); fnAddGridSerialNoHeading();
 }
 
-function fnGetStatutorydetails(vcode,locId) {
-    $("#txtstatutorylocationId").val(locId);
-    $("#txtstatutoryvendorcode").val(vcode);
-    $("#txtstatdetailsDesc").val('');
-    $("#chkstatutorystatus").parent().removeClass("is-checked");
-    fnloadVendorStatutorydetails();
-    $("#chkstatutorystatus").parent().addClass("is-checked");
-    $("#divstatutorydetailsform").show();
-    $("#lbllocationId").text(locId);
-    $("#btnsavestatutory").html('<i class="fa fa-save"></i>  Save');
+function fnGetAPStatutorydetails(vcode,locId) {
+    $("#txtAPstatutorylocationId").val(locId);
+    $("#txtAPstatutoryvendorcode").val(vcode);
+    $("#txtAPstatdetailsDesc").val('');
+    $("#chkAPstatutorystatus").parent().removeClass("is-checked");
+    fnloadAPVendorStatutorydetails();
+    $("#chkAPstatutorystatus").parent().addClass("is-checked");
+    $("#divAPstatutorydetailsform").show();
+    $("#lblAPlocationId").text(locId);
+    $("#btnAPsavestatutory").html('<i class="fa fa-save"></i>  Save');
 }
 
-function fnloadVendorStatutorydetails() {
+function fnloadAPVendorStatutorydetails() {
     
-    $("#jqgStatutoryDetails").GridUnload();
-    var locationId = $("#txtstatutorylocationId").val();
-    var vndcode = $("#txtstatutoryvendorcode").val();
-    $("#jqgStatutoryDetails").jqGrid({
+    $("#jqgAPStatutoryDetails").GridUnload();
+    var locationId = $("#txtAPstatutorylocationId").val();
+    var vndcode = $("#txtAPstatutoryvendorcode").val();
+    $("#jqgAPStatutoryDetails").jqGrid({
 
       
-        url: getBaseURL() + '/CreateVendor/GetStatutorydetailsbyVendorcodeAndLocationId?vendorID=' + vndcode + '&locationId=' + locationId,
+        url: getBaseURL() + '/Approve/GetStatutorydetailsbyVendorcodeAndLocationId?vendorID=' + vndcode + '&locationId=' + locationId,
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -91,7 +91,7 @@ function fnloadVendorStatutorydetails() {
         rowList: [10, 20, 50, 100],
         rownumWidth: 55,
         loadonce: true,
-        pager: "#jqpStatutoryDetails",
+        pager: "#jqpAPStatutoryDetails",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -102,42 +102,42 @@ function fnloadVendorStatutorydetails() {
         shrinkToFit: true,
         scrollOffset: 0,
        
-        }).jqGrid('navGrid', '#jqpStatutoryDetails', { add: false, edit: false, search: false, del: false, refresh: false });
+        }).jqGrid('navGrid', '#jqpAPStatutoryDetails', { add: false, edit: false, search: false, del: false, refresh: false });
     fnAddGridSerialNoHeading();
 }
 
-function fnSaveStatutorydetails() {
-    if (IsStringNullorEmpty($("#txtVendorCode").val())) {
-        fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);
+function fnSaveAPStatutorydetails() {
+    if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
+        fnAlert("w", "EVN_02_00", "UI0217", errorMsg.CreateVendordetails_E5);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtstatutorylocationId").val())) {
-        fnAlert("w", "EVN_01_00", "UI0223", errorMsg.VendorLocation_E11);
+    if (IsStringNullorEmpty($("#txtAPstatutorylocationId").val())) {
+        fnAlert("w", "EVN_02_00", "UI0223", errorMsg.VendorLocation_E11);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtstatdetailsDesc").val())) {
-        fnAlert("w", "EVN_01_00", "UI0224", errorMsg.Statutorydetails_E14);
+    if (IsStringNullorEmpty($("#txtAPstatdetailsDesc").val())) {
+        fnAlert("w", "EVN_02_00", "UI0224", errorMsg.Statutorydetails_E14);
         return;
     }
 
       var statutorydetails = {
-            VendorId: $("#txtstatutoryvendorcode").val(),
-            VendorLocationId: $("#txtstatutorylocationId").val(),
-            StatutoryCode: $("#txtstatutorycode").val() === '' ? 0 : $("#txtstatutorycode").val(),
-            StatutoryDescription: $("#txtstatdetailsDesc").val(),
-            ActiveStatus: $("#chkstatutorystatus").parent().hasClass("is-checked")
+            VendorId: $("#txtAPstatutoryvendorcode").val(),
+            VendorLocationId: $("#txtAPstatutorylocationId").val(),
+            StatutoryCode: $("#txtAPstatutorycode").val() === '' ? 0 : $("#txtAPstatutorycode").val(),
+            StatutoryDescription: $("#txtAPstatdetailsDesc").val(),
+            ActiveStatus: $("#chkAPstatutorystatus").parent().hasClass("is-checked")
         };
    
     $.ajax({
-        url: getBaseURL() + '/CreateVendor/InsertOrUpdateStatutorydetails',
+        url: getBaseURL() + '/Approve/InsertOrUpdateStatutorydetails',
         type: 'POST',
         datatype: 'json',
         data: { statutorydetails },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnClearStatutoryDetails();
-                $("#jqgStatutoryDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+                fnClearAPStatutoryDetails();
+                $("#jqgAPStatutoryDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 
                 return true;
             } 
@@ -154,23 +154,23 @@ function fnSaveStatutorydetails() {
 
 function fnEditStatutoryDetails(e) {
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    var rowData = $('#jqgStatutoryDetails').jqGrid('getRowData', rowid);
+    var rowData = $('#jqgAPStatutoryDetails').jqGrid('getRowData', rowid);
     
-    $("#txtstatutoryvendorcode").val(rowData.VendorId);
-    $("#txtstatutorylocationId").val(rowData.VendorLocationId);
-    $("#txtstatutorycode").val(rowData.StatutoryCode);
-    $("#txtstatdetailsDesc").val(rowData.StatutoryDescription);
+    $("#txtAPstatutoryvendorcode").val(rowData.VendorId);
+    $("#txtAPstatutorylocationId").val(rowData.VendorLocationId);
+    $("#txtAPstatutorycode").val(rowData.StatutoryCode);
+    $("#txtAPstatdetailsDesc").val(rowData.StatutoryDescription);
     if (rowData.ActiveStatus == 'true') {
-        $("#chkstatutorystatus").parent().addClass("is-checked");
+        $("#chkAPstatutorystatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkstatutorystatus").parent().removeClass("is-checked");
+        $("#chkAPstatutorystatus").parent().removeClass("is-checked");
     }
-    $("#btnsavestatutory").html('<i class="fa fa-sync"></i> ' +localization.Update);
+    $("#btnAPsavestatutory").html('<i class="fa fa-sync"></i> ' +localization.Update);
 }
 
-function fnClearStatutoryDetails() {
-    $("#txtstatutorycode").val('');
-    $("#txtstatdetailsDesc").val('');
-    $("#btnsavestatutory").html('<i class="fa fa-save"></i> '+localization.Save);
+function fnClearAPStatutoryDetails() {
+    $("#txtAPstatutorycode").val('');
+    $("#txtAPstatdetailsDesc").val('');
+    $("#btnAPsavestatutory").html('<i class="fa fa-save"></i> '+localization.Save);
 }

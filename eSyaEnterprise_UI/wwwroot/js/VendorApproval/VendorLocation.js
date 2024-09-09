@@ -1,11 +1,11 @@
-﻿$(document).ready(function () {
+﻿$(function () {
     $.contextMenu({
-        selector: "#btnVendorLocation",
+        selector: "#btnAPVendorLocation",
         trigger: 'left',
          items: {
-             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditLocation(event, 'edit') } },
-             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditLocation(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor(event, 'delete') } },
+             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPLocation('edit') } },
+             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPLocation('view') } },
+            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor('delete') } },
         }
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
@@ -16,14 +16,14 @@
 
 function fnloadvendorLocationGrid() {
    
-    fnClearLocationfields();
-    BindStatesCodes();
+    fnClearAPLocationfields();
+    BindAPStatesCodes();
 
-    $("#jqgVendorLocation").GridUnload();
+    $("#jqgAPVendorLocation").GridUnload();
 
-    $("#jqgVendorLocation").jqGrid({
+    $("#jqgAPVendorLocation").jqGrid({
 
-        url: getBaseURL() + '/CreateVendor/GetVendorLocationsByVendorcode?vendorID=' + $("#txtVendorCode").val(),
+        url: getBaseURL() + '/Approve/GetVendorLocationsByVendorcode?vendorID=' + $("#txtAPVendorCode").val(),
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -46,7 +46,7 @@ function fnloadvendorLocationGrid() {
             {
                 name: 'edit', search: false, align: 'left', width: 80, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditLocation(event)"><i class="fas fa-pen"></i> ' +localization.Edit+' </button>'
+                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditAPLocation()"><i class="fas fa-pen"></i> ' +localization.Edit+' </button>'
                 }
             },
         ],
@@ -54,7 +54,7 @@ function fnloadvendorLocationGrid() {
         rowList: [10, 20, 50, 100],
         rownumWidth:55,
         loadonce: true,
-        pager: "#jqpVendorLocation",
+        pager: "#jqpAPVendorLocation",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -66,48 +66,48 @@ function fnloadvendorLocationGrid() {
         forceFit: true,
         caption: localization.VendorLocation,
         loadComplete: function () {
-            fnJqgridSmallScreen("jqgVendorLocation");
+            fnJqgridSmallScreen("jqgAPVendorLocation");
         },
-    }).jqGrid('navGrid', '#jqpVendorLocation', { add: false, edit: false, search: false, del: false, refresh: false })
-        .jqGrid('navButtonAdd', '#jqpVendorLocation', {
-            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshlocationGrid
+    }).jqGrid('navGrid', '#jqpAPVendorLocation', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpAPVendorLocation', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPlocationGrid
         });
     fnAddGridSerialNoHeading();
     
 }
 
-function fnSaveLocation() {
+function fnSaveAPLocation() {
    
-    if (IsValidLocation() == false) {
+    if (IsValidAPLocation() == false) {
         return;
     }
         var vendorloc = {
-            VendorId: $("#txtVendorCode").val(),
-            VendorLocationId: $("#txtlocationId").val() === '' ? 0 : $("#txtlocationId").val(),
-            IsLocationDefault: $("#chkDefaulultloc").parent().hasClass("is-checked"),
-            VendorLocation: $("#txtvendorlocation").val(),
-            VendorAddress: $("#txtaddress").val(),
-            Isdcode: $("#cboVendorMobile").val(),
-            ContactPerson: $("#txtcontactperson").val(),
-            MobileNumber: $("#txtVendorMobile").val(),
-            WIsdcode: $("#cboVendorWhatsAppNumber").val(),
-            WhatsappNumber: $("#txtVendorWhatsAppNumber").val(),
-            StateCode: $("#cboStateCode").val(),
-            EMailId: $("#txtvendoremailid").val(),
-            ActiveStatus: $("#chklocationstatus").parent().hasClass("is-checked")
+            VendorId: $("#txtAPVendorCode").val(),
+            VendorLocationId: $("#txtAPlocationId").val() === '' ? 0 : $("#txtAPlocationId").val(),
+            IsLocationDefault: $("#chkAPDefaulultloc").parent().hasClass("is-checked"),
+            VendorLocation: $("#txtAPvendorlocation").val(),
+            VendorAddress: $("#txtAPaddress").val(),
+            Isdcode: $("#cboAPVendorMobile").val(),
+            ContactPerson: $("#txtAPcontactperson").val(),
+            MobileNumber: $("#txtAPVendorMobile").val(),
+            WIsdcode: $("#cboAPVendorWhatsAppNumber").val(),
+            WhatsappNumber: $("#txtAPVendorWhatsAppNumber").val(),
+            StateCode: $("#cboAPStateCode").val(),
+            EMailId: $("#txtAPvendoremailid").val(),
+            ActiveStatus: $("#chkAPlocationstatus").parent().hasClass("is-checked")
 
         };
     $.ajax({
-        url: getBaseURL() + '/CreateVendor/InsertOrUpdateVendorLocation',
+        url: getBaseURL() + '/Approve/InsertOrUpdateVendorLocation',
         type: 'POST',
         datatype: 'json',
         data: { vendorloc },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnRefreshlocationGrid();
-                $("#btnlocationsave").html("<i class='fa fa-save'></i> Save");
-                fnClearLocationfields();
+                fnRefreshAPlocationGrid();
+                $("#btnAPlocationsave").html("<i class='fa fa-save'></i> Save");
+                fnClearAPLocationfields();
                 return true;
             }
             else {
@@ -123,126 +123,126 @@ function fnSaveLocation() {
 
 }
 
-function fnEditLocation(e) {
+function fnEditAPLocation(actiontype) {
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    var rowData = $('#jqgVendorLocation').jqGrid('getRowData', rowid);
-    $("#txtlocationId").val(rowData.VendorLocationId);
-    $('#cboVendorMobile').val(rowData.Isdcode);
-    $('#cboVendorMobile').selectpicker('refresh');
-    BindStatesCodes();
-    $('#cboStateCode').val(rowData.StateCode).selectpicker('refresh');
-    $("#txtcontactperson").val(rowData.ContactPerson);
-    $('#txtVendorMobile').val(rowData.MobileNumber);
+    var rowData = $('#jqgAPVendorLocation').jqGrid('getRowData', rowid);
+    $("#txtAPlocationId").val(rowData.VendorLocationId);
+    $('#cboAPVendorMobile').val(rowData.Isdcode);
+    $('#cboAPVendorMobile').selectpicker('refresh');
+    BindAPStatesCodes();
+    $('#cboAPStateCode').val(rowData.StateCode).selectpicker('refresh');
+    $("#txtAPcontactperson").val(rowData.ContactPerson);
+    $('#txtAPVendorMobile').val(rowData.MobileNumber);
     
-    $('#cboVendorWhatsAppNumber').val(rowData.WIsdcode);
-    $('#cboVendorWhatsAppNumber').selectpicker('refresh');
+    $('#cboAPVendorWhatsAppNumber').val(rowData.WIsdcode);
+    $('#cboAPVendorWhatsAppNumber').selectpicker('refresh');
 
-    $('#txtVendorWhatsAppNumber').val(rowData.WhatsappNumber);
-    $('#txtaddress').val(rowData.VendorAddress);
-    $('#txtvendorlocation').val(rowData.VendorLocation);
-    $('#txtvendoremailid').val(rowData.EMailId);
+    $('#txtAPVendorWhatsAppNumber').val(rowData.WhatsappNumber);
+    $('#txtAPaddress').val(rowData.VendorAddress);
+    $('#txtAPvendorlocation').val(rowData.VendorLocation);
+    $('#txtAPvendoremailid').val(rowData.EMailId);
     if (rowData.ActiveStatus == 'true') {
-        $("#chklocationstatus").parent().addClass("is-checked");
+        $("#chkAPlocationstatus").parent().addClass("is-checked");
     }
     else {
-        $("#chklocationstatus").parent().removeClass("is-checked");
+        $("#chkAPlocationstatus").parent().removeClass("is-checked");
     }
 
     if (rowData.IsLocationDefault == 'true') {
-        $("#chkDefaulultloc").parent().addClass("is-checked");
+        $("#chkAPDefaulultloc").parent().addClass("is-checked");
     }
     else {
-        $("#chkDefaulultloc").parent().removeClass("is-checked");
+        $("#chkAPDefaulultloc").parent().removeClass("is-checked");
     }
 
-    $("#btnlocationsave").html("<i class='fa fa-sync'></i> "+localization.Update);
+    $("#btnAPlocationsave").html("<i class='fa fa-sync'></i> "+localization.Update);
 }
 
-function IsValidLocation() {
-     if (IsStringNullorEmpty($("#txtVendorCode").val())) {
+function IsValidAPLocation() {
+     if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
          fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtcontactperson").val())) {
+    if (IsStringNullorEmpty($("#txtAPcontactperson").val())) {
         fnAlert("w", "EVN_01_00", "UI0228", errorMsg.ContactPerson_E18);
         return false;
     }
-    if ($("#cboVendorMobile").val() == 0 || $("#cboVendorMobile").val() == "0" || IsStringNullorEmpty($("#cboVendorMobile").val())) {
+    if ($("#cboAPVendorMobile").val() == 0 || $("#cboAPVendorMobile").val() == "0" || IsStringNullorEmpty($("#cboAPVendorMobile").val())) {
         fnAlert("w", "EVN_01_00", "UI0137", errorMsg.ISD_E19);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtVendorMobile").val())) {
+    if (IsStringNullorEmpty($("#txtAPVendorMobile").val())) {
         fnAlert("w", "EVN_01_00", "UI0138", errorMsg.MobileNo_E20);
         return false;
     }
-    if ($("#cboStateCode").val() == 0 || $("#cboStateCode").val() == "0" || IsStringNullorEmpty($("#cboStateCode").val())) {
+    if ($("#cboAPStateCode").val() == 0 || $("#cboAPStateCode").val() == "0" || IsStringNullorEmpty($("#cboAPStateCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0067", errorMsg.StateCode_E28);
         return false;
     }
 
-    if (IsStringNullorEmpty($("#txtvendoremailid").val())) {
+    if (IsStringNullorEmpty($("#txtAPvendoremailid").val())) {
         fnAlert("w", "EVN_01_00", "UI0139", errorMsg.EmailID_E12);
         return false;
     }
    
-    var validemail = IsValidateEmail($("#txtvendoremailid").val());
+    var validemail = IsValidateEmail($("#txtAPvendoremailid").val());
     if (validemail == false) {
         fnAlert("w", "EVN_01_00", "UI0140", errorMsg.ValidEmailID_E13);
         return false;
     } 
-    if ($("#cboVendorWhatsAppNumber").val() == 0 || $("#cboVendorWhatsAppNumber").val() == "0" || IsStringNullorEmpty($("#cboVendorWhatsAppNumber").val())) {
+    if ($("#cboAPVendorWhatsAppNumber").val() == 0 || $("#cboAPVendorWhatsAppNumber").val() == "0" || IsStringNullorEmpty($("#cboAPVendorWhatsAppNumber").val())) {
         fnAlert("w", "EVN_01_00", "UI0244", errorMsg.VendorWhatsAppNumber_E29);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtVendorWhatsAppNumber").val())) {
+    if (IsStringNullorEmpty($("#txtAPVendorWhatsAppNumber").val())) {
         fnAlert("w", "EVN_01_00", "UI0245", errorMsg.WhatsAppNumber_E27);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtaddress").val())) {
+    if (IsStringNullorEmpty($("#txtAPaddress").val())) {
         fnAlert("w", "EVN_01_00", "UI0229", errorMsg.Address_E21);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtvendorlocation").val())) {
+    if (IsStringNullorEmpty($("#txtAPvendorlocation").val())) {
         fnAlert("w", "EVN_01_00", "UI0223", errorMsg.VendorLocation_E11);
         return false;
     }
    
 }
 
-function fnRefreshlocationGrid() {
-    $("#jqgVendorLocation").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
+function fnRefreshAPlocationGrid() {
+    $("#jqgAPVendorLocation").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
 }
 
-function fnClearLocationfields () {
-    $("#chkDefaulultloc").parent().removeClass("is-checked");
-    $("#cboVendorMobile").val("0");
-    $('#cboVendorMobile').selectpicker('refresh');
-    $("#cboStateCode").val("0");
-    $('#cboStateCode').selectpicker('refresh');
-    $("#txtlocationId").val('');
-    $("#txtaddress").val('');
-    $("#txtvendorlocation").val('');
-    $("#txtcontactperson").val(''),
-    $("#txtVendorMobile").val('');
-    $("#cboVendorWhatsAppNumber").val("0");
-    $('#cboVendorWhatsAppNumber').selectpicker('refresh');
-    $("#txtVendorWhatsAppNumber").val('');
-    $("#txtvendoremailid").val('');
-    $("#chklocationstatus").parent().addClass("is-checked");
-    $("#btnlocationsave").html("<i class='fa fa-save'></i> " +localization.Save);
+function fnClearAPLocationfields () {
+    $("#chkAPDefaulultloc").parent().removeClass("is-checked");
+    $("#cboAPVendorMobile").val("0");
+    $('#cboAPVendorMobile').selectpicker('refresh');
+    $("#cboAPStateCode").val("0");
+    $('#cboAPStateCode').selectpicker('refresh');
+    $("#txtAPlocationId").val('');
+    $("#txtAPaddress").val('');
+    $("#txtAPvendorlocation").val('');
+    $("#txtAPcontactperson").val(''),
+    $("#txtAPVendorMobile").val('');
+    $("#cboAPVendorWhatsAppNumber").val("0");
+    $('#cboAPVendorWhatsAppNumber').selectpicker('refresh');
+    $("#txtAPVendorWhatsAppNumber").val('');
+    $("#txtAPvendoremailid").val('');
+    $("#chkAPlocationstatus").parent().addClass("is-checked");
+    $("#btnAPlocationsave").html("<i class='fa fa-save'></i> " +localization.Save);
 }
 
 
 function fnCboISDCodes_onChanged()
 {
-    BindStatesCodes();
+    BindAPStatesCodes();
 }
 
-function BindStatesCodes() {
+function BindAPStatesCodes() {
   
-    $("#cboStateCode").empty();
+    $("#cboAPStateCode").empty();
     $.ajax({
-        url: getBaseURL() + '/CreateVendor/GetStatesbyISDCode?isdCode=' + $("#cboVendorMobile").val(),
+        url: getBaseURL() + '/Approve/GetStatesbyISDCode?isdCode=' + $("#cboAPVendorMobile").val(),
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -252,19 +252,19 @@ function BindStatesCodes() {
         success: function (response, data) {
             if (response != null) {
                 //refresh each time
-                $("#cboStateCode").empty();
+                $("#cboAPStateCode").empty();
 
-                $("#cboStateCode").append($("<option value='0'> Select </option>"));
+                $("#cboAPStateCode").append($("<option value='0'> Select </option>"));
                 for (var i = 0; i < response.length; i++) {
 
-                    $("#cboStateCode").append($("<option></option>").val(response[i]["StateCode"]).html(response[i]["StateDesc"]));
+                    $("#cboAPStateCode").append($("<option></option>").val(response[i]["StateCode"]).html(response[i]["StateDesc"]));
                 }
-                $('#cboStateCode').selectpicker('refresh');
+                $('#cboAPStateCode').selectpicker('refresh');
             }
             else {
-                $("#cboStateCode").empty();
-                $("#cboStateCode").append($("<option value='0'> Select </option>"));
-                $('#cboStateCode').selectpicker('refresh');
+                $("#cboAPStateCode").empty();
+                $("#cboAPStateCode").append($("<option value='0'> Select </option>"));
+                $('#cboAPStateCode').selectpicker('refresh');
             }
         },
         async: false,

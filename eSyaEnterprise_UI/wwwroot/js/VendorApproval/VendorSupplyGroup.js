@@ -1,17 +1,17 @@
-﻿function fnLoadSupplyGroupGrid() {
+﻿function fnLoadAPSupplyGroupGrid() {
     
-    $("#jqgSupplyGroup").GridUnload();
+    $("#jqgAPSupplyGroup").GridUnload();
 
-    $("#jqgSupplyGroup").jqGrid(
+    $("#jqgAPSupplyGroup").jqGrid(
 
         {
-            url: getBaseURL() + '/CreateVendor/GetVendorSuuplyGroupParameterList?vendorID=' + $("#txtVendorCode").val(),
+            url: getBaseURL() + '/Approve/GetVendorSuuplyGroupParameterList?vendorID=' + $("#txtAPVendorCode").val(),
             mtype: 'POST',
             datatype: 'json',
             ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
             serializeGridData: function (postdata) {
-                postdata.Vendorcode = $("#txtVendorCode").val();
+                postdata.Vendorcode = $("#txtAPVendorCode").val();
                 return JSON.stringify(postdata.Vendorcode);
             },
             colNames: [localization.ParameterId, localization.ParameterDescription, localization.Active],
@@ -28,7 +28,7 @@
             rowList: [10, 20, 50, 100],
             rownumWidth: 55,
             loadonce: true,
-            pager: "#jqpSupplyGroup",
+            pager: "#jqpAPSupplyGroup",
             viewrecords: true,
             gridview: true,
             rownumbers: true,
@@ -40,36 +40,36 @@
             scroll: false, scrollOffset: 0,
             caption: localization.VendorSupplyGroup,
             loadComplete: function () {
-                fnJqgridSmallScreen("jqgSupplyGroup");
+                fnJqgridSmallScreen("jqgAPSupplyGroup");
             },
             onSelectRow: function (rowid) {
-                ParameterId = $("#jqgSupplyGroup").jqGrid('getCell', rowid, 'ParameterId');
+                ParameterId = $("#jqgAPSupplyGroup").jqGrid('getCell', rowid, 'ParameterId');
 
             },
             loadComplete: function (data) {
-                fnDisableActivecheckboxs();
+                fnDisableAPActivecheckboxs();
                 $(this).find(">tbody>tr.jqgrow:odd").addClass("myAltRowClassEven");
                 $(this).find(">tbody>tr.jqgrow:even").addClass("myAltRowClassOdd");
             },
         })
 
-        .jqGrid('navGrid', '#jqpSupplyGroup', { add: false, edit: false, search: false, del: false, refresh: false })
-        .jqGrid('navButtonAdd', '#jqpSupplyGroup', {
-            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshSupplyGroupGrid
+        .jqGrid('navGrid', '#jqpAPSupplyGroup', { add: false, edit: false, search: false, del: false, refresh: false })
+        .jqGrid('navButtonAdd', '#jqpAPSupplyGroup', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPSupplyGroupGrid
         });
     fnAddGridSerialNoHeading();
 }
 
 function fnSaveSupplyGroup() {
-    if (IsValidSupplyGroup() == false) {
+    if (IsValidAPSupplyGroup() == false) {
         return;
     }
     
     var val = [];
-    var numberOfRecords = $("#jqgSupplyGroup").getGridParam("records");
+    var numberOfRecords = $("#jqgAPSupplyGroup").getGridParam("records");
 
     for (i = 1; i <= numberOfRecords; i++) {
-        var rowData = $('#jqgSupplyGroup').getRowData(i);
+        var rowData = $('#jqgAPSupplyGroup').getRowData(i);
         if (rowData.ActiveStatus == "true") {
             val.push({
                 ParameterID: rowData.ParameterId,
@@ -80,19 +80,19 @@ function fnSaveSupplyGroup() {
     }
 
     var objsupply = {
-        vendorID: $("#txtVendorCode").val(),
+        vendorID: $("#txtAPVendorCode").val(),
         l_SupplyGroupParam: val
     };
 
     $.ajax({
-        url: getBaseURL() + "/CreateVendor/InsertSuuplyGroupforVendor",
+        url: getBaseURL() + "/Approve/InsertSuuplyGroupforVendor",
         type: 'POST',
         datatype: 'json',
         data: { objsupply },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnRefreshSupplyGroupGrid();
+                fnRefreshAPSupplyGroupGrid();
                 return true;
             }
             else {
@@ -105,17 +105,17 @@ function fnSaveSupplyGroup() {
         }
     });
 }
-function IsValidSupplyGroup() {
-    if (IsStringNullorEmpty($("#txtVendorCode").val())) {
+function IsValidAPSupplyGroup() {
+    if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);
         return false;
     }
 } 
-function fnRefreshSupplyGroupGrid() {
-    $("#jqgSupplyGroup").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
+function fnRefreshAPSupplyGroupGrid() {
+    $("#jqgAPSupplyGroup").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
 }
 
-function fnDisableActivecheckboxs() {
+function fnDisableAPActivecheckboxs() {
     if (businesslocation === true) {
         $("input[type=checkbox]").attr('disabled', true);
     }

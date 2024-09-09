@@ -1,18 +1,18 @@
 ﻿
 var isEdit = 0;
-function fnLoadBankDetails() {
+function fnLoadAPBankDetails() {
 
-    fnClearBankDetails();
+    fnClearAPBankDetails();
 
-    $("#jqgVendorBankDetails").GridUnload();
+    $("#jqgAPVendorBankDetails").GridUnload();
 
-    $("#jqgVendorBankDetails").jqGrid({
-        url: getBaseURL() + '/CreateVendor/GetVendorBankdetailsByVendorcode?VendorId=' + $("#txtVendorCode").val(),
+    $("#jqgAPVendorBankDetails").jqGrid({
+        url: getBaseURL() + '/Approve/GetVendorBankdetailsByVendorcode?VendorId=' + $("#txtAPVendorCode").val(),
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         serializeGridData: function (postdata) {
-            postdata.VendorId = $("#txtVendorCode").val();
+            postdata.VendorId = $("#txtAPVendorCode").val();
             return JSON.stringify(postdata.VendorId);
         },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
@@ -50,7 +50,7 @@ function fnLoadBankDetails() {
         forceFit: true,
         caption: localization.VendorBank,
      }).jqGrid('navGrid', '#jqpVendorBankDetails', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpVendorBankDetails', {
-        caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: fnRefreshBankGrid
+        caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: fnRefreshAPBankGrid
     });
     fnAddGridSerialNoHeading();
 }
@@ -58,52 +58,52 @@ function fnLoadBankDetails() {
 function fnEditBankDetails(e) {
     isEdit = 1;
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
-    var rowData = $('#jqgVendorBankDetails').jqGrid('getRowData', rowid);
+    var rowData = $('#jqgAPVendorBankDetails').jqGrid('getRowData', rowid);
     
-    $("#txtbeneficiaryname").val(rowData.BenificiaryName);
-    $("#txtbankname").val(rowData.BenificiaryBankName);
-    $("#txtbankacno").val(rowData.BenificiaryBankAccountNo);
-    $("#txtbankacno").attr('readonly', true);
-    $("#txtswiftcode").val(rowData.BankSwiftcode);
-    $("#txtifsccode").val(rowData.BankIfsccode);
+    $("#txtAPbeneficiaryname").val(rowData.BenificiaryName);
+    $("#txtAPbankname").val(rowData.BenificiaryBankName);
+    $("#txtAPbankacno").val(rowData.BenificiaryBankAccountNo);
+    $("#txtAPbankacno").attr('readonly', true);
+    $("#txtAPswiftcode").val(rowData.BankSwiftcode);
+    $("#txtAPifsccode").val(rowData.BankIfsccode);
     if (rowData.ActiveStatus == 'true') {
-        $("#chkbanktatus").parent().addClass("is-checked");
+        $("#chkAPbanktatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkbanktatus").parent().removeClass("is-checked");
+        $("#chkAPbanktatus").parent().removeClass("is-checked");
     }
-    $("#btnSaveBankDetails").html("<i class='fa fa-sync'></i> " +localization.Update);
+    $("#btnAPSaveBankDetails").html("<i class='fa fa-sync'></i> " +localization.Update);
 }
 
-function fnSaveBankDetails() {
-    if (IsValidBankDetails() == false) {
+function fnSaveAPBankDetails() {
+    if (IsValidAPBankDetails() == false) {
         return;
     }
    
     
     var bankdetails = {
-        VendorId: $("#txtVendorCode").val(),
-        BenificiaryBankAccountNo: $("#txtbankacno").val(),
-        BenificiaryName: $("#txtbeneficiaryname").val(),
-        BenificiaryBankName: $("#txtbankname").val(),
-        BankIfsccode: $("#txtifsccode").val(),
-        BankSwiftcode: $("#txtswiftcode").val(),
-        ActiveStatus: $("#chkbanktatus").parent().hasClass("is-checked"),
+        VendorId: $("#txtAPVendorCode").val(),
+        BenificiaryBankAccountNo: $("#txtAPbankacno").val(),
+        BenificiaryName: $("#txtAPbeneficiaryname").val(),
+        BenificiaryBankName: $("#txtAPbankname").val(),
+        BankIfsccode: $("#txtAPifsccode").val(),
+        BankSwiftcode: $("#txtAPswiftcode").val(),
+        ActiveStatus: $("#chkAPbanktatus").parent().hasClass("is-checked"),
         IsEdit: isEdit
         };
   
    
     $.ajax({
 
-        url: getBaseURL() + '/CreateVendor/InsertOrUpdateVendorBankdetails',
+        url: getBaseURL() + '/Approve/InsertOrUpdateVendorBankdetails',
         type: 'POST',
         datatype: 'json',
         data: { bankdetails },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnRefreshBankGrid();
-                fnClearBankDetails();
+                fnRefreshAPBankGrid();
+                fnClearAPBankDetails();
                 return true;
             }
             else{
@@ -118,47 +118,47 @@ function fnSaveBankDetails() {
         }
     });
 }
-function IsValidBankDetails() {
-    if (IsStringNullorEmpty($("#txtVendorCode").val())) {
+function IsValidAPBankDetails() {
+    if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtbeneficiaryname").val())) {
+    if (IsStringNullorEmpty($("#txtAPbeneficiaryname").val())) {
         fnAlert("w", "EVN_01_00", "UI0218", errorMsg.BeneficiaryName_E6);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtbankname").val())) {
+    if (IsStringNullorEmpty($("#txtAPbankname").val())) {
         fnAlert("w", "EVN_01_00", "UI0219", errorMsg.BankName_E7);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtbankacno").val())) {
+    if (IsStringNullorEmpty($("#txtAPbankacno").val())) {
         fnAlert("w", "EVN_01_00", "UI0220", errorMsg.AccountName_E8);
         return false;
     }
-    if (IsStringNullorEmpty($("#txtswiftcode").val())) {
+    if (IsStringNullorEmpty($("#txtAPswiftcode").val())) {
         fnAlert("w", "EVN_01_00", "UI0221", errorMsg.SwiftCode_E9);
         return false;
     }
 
-    if (IsStringNullorEmpty($("#txtifsccode").val())) {
+    if (IsStringNullorEmpty($("#txtAPifsccode").val())) {
         fnAlert("w", "EVN_01_00", "UI0222", errorMsg.IFSCCode_E10);
         return false;
     }
 }
 
-function fnRefreshBankGrid() {
-    $("#jqgVendorBankDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+function fnRefreshAPBankGrid() {
+    $("#jqgAPVendorBankDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 
-function fnClearBankDetails() {
+function fnClearAPBankDetails() {
     isEdit = 0;
-    $("#txtbeneficiaryname").val('');
-    $("#txtbankname").val('');
-    $("#txtbankacno").val('');
-    $("#txtbankacno").attr('readonly', false);
-    $("#txtswiftcode").val('');
-    $("#txtifsccode").val('');
-    $("#chkbanktatus").parent().addClass("is-checked");
-    $("#btnSaveBankDetails").html("<i class='fa fa-save'></i> " +localization.Save);
+    $("#txtAPbeneficiaryname").val('');
+    $("#txtAPbankname").val('');
+    $("#txtAPbankacno").val('');
+    $("#txtAPbankacno").attr('readonly', false);
+    $("#txtAPswiftcode").val('');
+    $("#txtAPifsccode").val('');
+    $("#chkAPbanktatus").parent().addClass("is-checked");
+    $("#btnAPSaveBankDetails").html("<i class='fa fa-save'></i> " +localization.Save);
     
 }
