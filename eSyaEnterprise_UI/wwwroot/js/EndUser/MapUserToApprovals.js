@@ -1,4 +1,7 @@
-﻿$(function () {
+﻿var _UserID = "0";
+var _FormID = "0";
+
+$(function () {
     $.contextMenu({
         selector: "#btnMapUserToApprovals",
         trigger: 'left',
@@ -70,7 +73,8 @@ function fnLoadGridMapUserToApprovals() {
 function fnEditMapUserToApprovals() {
     var rowid = $("#jqgMapUserToApprovals").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgMapUserToApprovals').jqGrid('getRowData', rowid);
-    GetMappedUserRoleMenulist(rowData.UserID);
+    GetUserApprovalFormlist(rowData.UserID);
+    _UserID = rowData.UserID;
 }
 function fnGridRefreshMapUserToApprovals() {
     $("#jqgMapUserToApprovals").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -85,10 +89,10 @@ function SetGridControlByAction() {
 
 
 
-function GetMappedUserRoleMenulist(_UserID) {
+function GetUserApprovalFormlist(_ID) {
     $('#jstApprovalForms').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/Approval/GetApprovalRequiredFormMenulist?BusinessKey=' + $("#cboBusinesskey").val() + '&UserID=' + _UserID,
+        url: getBaseURL() + '/Approval/GetApprovalRequiredFormMenulist?BusinessKey=' + $("#cboBusinesskey").val() + '&UserID=' + _ID,
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -109,7 +113,7 @@ function GetMappedUserRoleMenulist(_UserID) {
 
             // Listen for node selection
             $('#jstApprovalForms').on('select_node.jstree', function (e, data) {
-                debugger;
+               
 
                 // Get selected node IDs
                 var selectedNodeIds = $('#jstApprovalForms').jstree('get_selected');
@@ -119,9 +123,11 @@ function GetMappedUserRoleMenulist(_UserID) {
                         // Get the value after the '.'
                         var parts = nodeId.split('.');
                         fnGetApprovalLevales(parts[1]);
-                        
-                        
-                    } 
+                        _FormID = parts[1];
+
+                    } else {
+                        _FormID = "";
+                    }
                 });
             //    alert("Selected node IDs: "+ selectedNodeIds);
             });
@@ -137,14 +143,14 @@ function GetMappedUserRoleMenulist(_UserID) {
     });
 }
 function fnGetApprovalLevales(_aplevel) {
-    $("#PopupApprovalLevels").modal('show');
+    $("#PopupUserFormApproval").modal('show');
     fnLoadGridLevelBasedApproval(_aplevel);
 }
 function fnLoadGridLevelBasedApproval(_aplevel) {
    
-    $("#jqgLevelBasedApproval").GridUnload();
+    $("#jqgUserFormApproval").GridUnload();
 
-    $("#jqgLevelBasedApproval").jqGrid({
+    $("#jqgUserFormApproval").jqGrid({
         url: getBaseURL() + '/Approval/GetApprovalLevelsbyFormID?businesskey=' + $("#cboBusinesskey").val()
             + '&formId=' + _aplevel,
         datatype: 'json',
@@ -156,7 +162,7 @@ function fnLoadGridLevelBasedApproval(_aplevel) {
             { name: "ApprovalLevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
             { name: "ActiveStatus", width: 110, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, },
         ],
-        pager: "#jqpLevelBasedApproval",
+        pager: "#jqpUserFormApproval",
         rowNum: 10,
         sortable: false,
         rowList: [10, 20, 50, 100],
@@ -173,14 +179,14 @@ function fnLoadGridLevelBasedApproval(_aplevel) {
         forceFit: true, caption: localization.LevelBasedApproval,
         loadComplete: function (data) {
             SetGridControlByAction();
-            fnJqgridSmallScreen("jqgLevelBasedApproval");
+            fnJqgridSmallScreen("jqgUserFormApproval");
             $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
 
         },
         onSelectRow: function (rowid, status, e) {
 
         },
-    }).jqGrid('navGrid', '#jqpLevelBasedApproval', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpLevelBasedApproval', {
+    }).jqGrid('navGrid', '#jqpUserFormApproval', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpUserFormApproval', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshLevelBasedApproval
     });
 
@@ -188,5 +194,83 @@ function fnLoadGridLevelBasedApproval(_aplevel) {
     fnAddGridSerialNoHeading();
 }
 function fnGridRefreshLevelBasedApproval() {
-    $("#jqgLevelBasedApproval").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#jqgUserFormApproval").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
+
+function fnSaveUserFormApproval() {
+    if ($("#cboBusinesskey").val() <= 0) {
+        fnAlert("w", "EEU_12_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        return;
+    }
+    if (_UserID == "0") {
+        fnAlert("w", "EEU_12_00", "UI0064", "Please select User");
+        return;
+    }
+    if (_FormID == 0) {
+        fnAlert("w", "EEU_12_00", "UI0064", "Please select Form");
+        return;
+    }
+    if (!validateAtLeastOneCheckboxValues('jqgUserFormApproval')) {
+        fnAlert("w", "EEU_12_00", "UI0064", "Please check at least one Approval Level.");
+        return;
+    }
+    var _valuelinks = [];
+    var ids = jQuery("#jqgUserFormApproval").jqGrid('getDataIDs');
+    for (var i = 0; i < ids.length; i++) {
+        var rowId = ids[i];
+        var rowData = jQuery('#jqgUserFormApproval').jqGrid('getRowData', rowId);
+
+
+        _valuelinks.push({
+            BusinessKey: $("#cboBusinesskey").val(),
+            FormID: _FormID,
+            UserID: _UserID,
+            ApprovalLevel: rowData.ApprovalLevel,
+            ActiveStatus: rowData.ActiveStatus
+        });
+    }
+    $("#btnUserFormApproval").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Approval/InsertOrUpdateUserApprovalForm',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: _valuelinks },
+
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnUserFormApproval").attr('disabled', false);
+
+                $("#PopupUserFormApproval").modal('hide');
+                fnGridRefreshLevelBasedApproval();
+                //fnLoadFormsTree();
+                return true;
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnUserFormApproval").attr('disabled', false);
+                return false;
+            }
+
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnSaveApprovalValues").attr('disabled', false);
+        }
+    });
+}
+
+function validateAtLeastOneCheckboxValues(jqgUserFormApproval) {
+
+    let isChecked = false;
+    const rows = $("#" + jqgUserFormApproval).getDataIDs(); // Get all row IDs
+    for (let i = 0; i < rows.length; i++) {
+        const isRowChecked = $("#" + jqgUserFormApproval).jqGrid('getCell', rows[i], 'ActiveStatus');
+        if (isRowChecked == 'true') {
+            isChecked = true;
+            break;
+        }
+    }
+    return isChecked;
+}
+

@@ -6,6 +6,7 @@ using eSyaEnterprise_UI.Models;
 using eSyaEnterprise_UI.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
 {
@@ -192,7 +193,51 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                 throw;
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> InsertOrUpdateUserApprovalForm(List<DO_UserApprovalForm> obj)
+        {
+            try
+            {
+                int activeCount = obj.Where(x=>x.ActiveStatus).Count();
+                if (activeCount > 1)
+                {
+                    // Handle the case where more than one object is active
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Only one Approval leveal has to select" });
+                }
+                obj.All(c =>
+                {
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    return true;
+                });
 
+
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Approval/InsertOrUpdateUserApprovalForm", obj);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Data.Message), "UD:InsertOrUpdateUserApprovalForm:params:" + JsonConvert.SerializeObject(obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Data.Message });
+                    }
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateUserApprovalForm:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateUserApprovalForm:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
         #endregion
     }
 }
