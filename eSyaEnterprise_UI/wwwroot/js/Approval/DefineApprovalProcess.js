@@ -27,7 +27,7 @@ $(function () {
 
 
 function fnOnChangeBusinessKey() {
-    debugger;
+  
     var _businessKey = $("#cboBusinessKey").val();
     if (_businessKey != "0" ||  _businessKey != 0 ) {
 
@@ -42,6 +42,7 @@ function fnOnChangeBusinessKey() {
 
 /* Dropdown change function starts */
 function fnOnChangeApproval() {
+   
     var _approvalType = $("#cboApprovalType").val();
     if (_approvalType == "70001" || _approvalType == 70001) {
         $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
@@ -108,7 +109,8 @@ function fnLoadFormsTree() {
                     FormID = data.node.id;
 
                     $("#cboApprovalType").val('0').selectpicker('refresh');
-                    fnOnChangeApproval();
+                    fnGetExistingApprovalType();
+
                     //fnLoadGridLevelBasedApproval();
                     $("#pnlApprovalProcess").css('display', 'block');
                     $("#chkATActiveStatus").parent().addClass("is-checked");
@@ -372,7 +374,7 @@ function fnAddValueBasedApproval() {
 }
 
 function fnEditValueBasedApproval(actiontype) {
-    debugger;
+   
     var rowid = $("#jqgValueBasedApproval").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgValueBasedApproval').jqGrid('getRowData', rowid);
    
@@ -641,3 +643,33 @@ function validateAtLeastOneCheckboxValues(jqgLevelBasedApproval_popup) {
     return isChecked;
 }
 /*End Save Approval Type*/
+
+function fnGetExistingApprovalType() {
+   
+        $.ajax({
+           
+            url: getBaseURL() + '/Approval/Process/GetApprovalTypebyFormID?businesskey=' + $("#cboBusinessKey").val()
+                + '&formId=' + FormID ,
+            type: 'post',
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result != null) {
+                    $("#cboApprovalType").val(result.ApprovalType).selectpicker('refresh');
+                    $("#cboApprovalType").attr("disabled", true).selectpicker('refresh');
+                    fnOnChangeApproval();
+                }
+                else
+                {
+                   
+                    $("#cboApprovalType").val("0").selectpicker('refresh');
+                    $("#cboApprovalType").attr("disabled", false).selectpicker('refresh');
+                    fnOnChangeApproval();
+                }
+                
+            }
+        });
+    
+
+    //fnGridLoadUserRoleActionLink();
+}

@@ -1,5 +1,4 @@
 ﻿$(function () {
-    fnLoadGridMapUserToApprovals();
     $.contextMenu({
         selector: "#btnMapUserToApprovals",
         trigger: 'left',
@@ -12,27 +11,34 @@
     /*$(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");*/
 });
 
-function fnBusinessKey_OnChange() {
-    //fnLoadGridMapUserToApprovals();
+function fnOnChangeBusinessLocation() {
+    
+    if ($("#cboBusinessKey").val() != "0") {
+        fnLoadGridMapUserToApprovals();
+        $('#jstApprovalForms').jstree("destroy");
+    }
 }
 
 function fnLoadGridMapUserToApprovals() {
     $("#jqgMapUserToApprovals").GridUnload();
 
     $("#jqgMapUserToApprovals").jqGrid({
-        //url: getBaseURL() + '/Approval/GetApproverUserListByBusinesskey?businesskey=' + $("#cboBusinessKey").val(),
-        url: '',
+        url: getBaseURL() + '/Approval/GetApproverUserListbyBusinessKey?BusinessKey=' + $("#cboBusinesskey").val(),
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.BusinessKey, localization.UserId, localization.LoginDescription, localization.Active],
+        colNames: [localization.UserId, localization.LoginDescription,localization.Actions],
         colModel: [
-            { name: "BusinessKey", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "UserId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
-            { name: "UserDesc", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: false },
-            { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "UserID", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "LoginDesc", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: false },
+            {
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnMapUserToApprovals"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
         ],
         pager: "#jqpMapUserToApprovals",
         rowNum: 10,
@@ -64,7 +70,7 @@ function fnLoadGridMapUserToApprovals() {
 function fnEditMapUserToApprovals() {
     var rowid = $("#jqgMapUserToApprovals").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgMapUserToApprovals').jqGrid('getRowData', rowid);
-    GetMappedUserRoleMenulist();
+    GetMappedUserRoleMenulist(rowData.UserID);
 }
 function fnGridRefreshMapUserToApprovals() {
     $("#jqgMapUserToApprovals").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -79,10 +85,10 @@ function SetGridControlByAction() {
 
 
 
-function GetMappedUserRoleMenulist() {
+function GetMappedUserRoleMenulist(_UserID) {
     $('#jstApprovalForms').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/UserCreation/GetMappedUserRoleMenulist?UserGroup=' + $("#txtUserGroup").val() + '&UserRole=' + $("#txtUserRole").val() + '&BusinessKey=' + $("#txtLocationID").val(),
+        url: getBaseURL() + '/Approval/GetApprovalRequiredFormMenulist?BusinessKey=' + $("#cboBusinesskey").val() + '&UserID=' + _UserID,
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -101,6 +107,26 @@ function GetMappedUserRoleMenulist() {
                 fnProcessLoading(false);
             });
 
+            // Listen for node selection
+            $('#jstApprovalForms').on('select_node.jstree', function (e, data) {
+                debugger;
+
+                // Get selected node IDs
+                var selectedNodeIds = $('#jstApprovalForms').jstree('get_selected');
+
+                selectedNodeIds.forEach(function (nodeId) {
+                    if (nodeId.startsWith("FM")) {
+                        // Get the value after the '.'
+                        var parts = nodeId.split('.');
+                        fnGetApprovalLevales(parts[1]);
+                        
+                        
+                    } 
+                });
+            //    alert("Selected node IDs: "+ selectedNodeIds);
+            });
+
+
             $(window).on('resize', function () {
                 fnTreeSize("#jstApprovalForms");
             })
@@ -109,4 +135,58 @@ function GetMappedUserRoleMenulist() {
             fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
+}
+function fnGetApprovalLevales(_aplevel) {
+    $("#PopupApprovalLevels").modal('show');
+    fnLoadGridLevelBasedApproval(_aplevel);
+}
+function fnLoadGridLevelBasedApproval(_aplevel) {
+   
+    $("#jqgLevelBasedApproval").GridUnload();
+
+    $("#jqgLevelBasedApproval").jqGrid({
+        url: getBaseURL() + '/Approval/GetApprovalLevelsbyFormID?businesskey=' + $("#cboBusinesskey").val()
+            + '&formId=' + _aplevel,
+        datatype: 'json',
+        mtype: 'POST',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        colNames: ["LevelId", "Level Description", "Active"],
+        colModel: [
+            { name: "ApprovalLevel", width: 250, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
+            { name: "ApprovalLevelDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
+            { name: "ActiveStatus", width: 110, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, },
+        ],
+        pager: "#jqpLevelBasedApproval",
+        rowNum: 10,
+        sortable: false,
+        rowList: [10, 20, 50, 100],
+        rownumWidth: '55',
+        loadonce: true,
+        viewrecords: true,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        scroll: false,
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true, caption: localization.LevelBasedApproval,
+        loadComplete: function (data) {
+            SetGridControlByAction();
+            fnJqgridSmallScreen("jqgLevelBasedApproval");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
+
+        },
+        onSelectRow: function (rowid, status, e) {
+
+        },
+    }).jqGrid('navGrid', '#jqpLevelBasedApproval', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpLevelBasedApproval', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshLevelBasedApproval
+    });
+
+
+    fnAddGridSerialNoHeading();
+}
+function fnGridRefreshLevelBasedApproval() {
+    $("#jqgLevelBasedApproval").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }

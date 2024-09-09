@@ -148,6 +148,30 @@ namespace eSyaEnterprise_UI.Areas.Approval.Controllers
             }
         }
 
+        [Area("Approval")]
+        [HttpPost]
+        public async Task<JsonResult> GetApprovalTypebyFormID(int businesskey, int formId)
+        {
+            try
+            {
+                var parameter = "?businesskey=" + businesskey +
+                    "&formId=" + formId;
+                var serviceResponse = await _eSyaApprovalProcessAPIServices.HttpClientServices.GetAsync<DO_ApprovalTypes>("Process/GetApprovalTypebyFormID" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApprovalTypebyFormID");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetApprovalTypebyFormID");
+                throw;
+            }
+        }
+
         //<summary>
         //Insert or Update Approval Types
         // </summary>
