@@ -19,6 +19,7 @@
     <Compile Remove="Areas\ManageInventory\Views\Rules\**" />
     <Compile Remove="Areas\ManagePharma\Views\Business\**" />
     <Compile Remove="Areas\ManageServices\**" />
+    <Compile Remove="Areas\NewFolder\**" />
     <Compile Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Compile Remove="Areas\ProductSetup\Views\Connect\**" />
     <Compile Remove="Areas\ProductSetup\Views\License\**" />
@@ -44,6 +45,7 @@
     <Content Remove="Areas\ManageInventory\Views\Rules\**" />
     <Content Remove="Areas\ManagePharma\Views\Business\**" />
     <Content Remove="Areas\ManageServices\**" />
+    <Content Remove="Areas\NewFolder\**" />
     <Content Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <Content Remove="Areas\ProductSetup\Views\Connect\**" />
     <Content Remove="Areas\ProductSetup\Views\License\**" />
@@ -69,6 +71,7 @@
     <EmbeddedResource Remove="Areas\ManageInventory\Views\Rules\**" />
     <EmbeddedResource Remove="Areas\ManagePharma\Views\Business\**" />
     <EmbeddedResource Remove="Areas\ManageServices\**" />
+    <EmbeddedResource Remove="Areas\NewFolder\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\Connect\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\License\**" />
@@ -94,6 +97,7 @@
     <None Remove="Areas\ManageInventory\Views\Rules\**" />
     <None Remove="Areas\ManagePharma\Views\Business\**" />
     <None Remove="Areas\ManageServices\**" />
+    <None Remove="Areas\NewFolder\**" />
     <None Remove="Areas\ProductSetup\Views\BusinessCalendar\**" />
     <None Remove="Areas\ProductSetup\Views\Connect\**" />
     <None Remove="Areas\ProductSetup\Views\License\**" />
@@ -352,6 +356,9 @@
     <Folder Include="Areas\Purchase\Models\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
+    <Folder Include="Areas\ViewAdmin\Controllers\" />
+    <Folder Include="Areas\ViewAdmin\Models\" />
+    <Folder Include="Areas\ViewAdmin\Views\" />
     <Folder Include="Extension\" />
     <Folder Include="ResourcesExtention\" />
     <Folder Include="wwwroot\js\Common\tinymce\" />

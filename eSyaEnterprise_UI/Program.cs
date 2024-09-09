@@ -61,6 +61,7 @@ using eSyaEnterprise_UI.Areas.SAC.Data;
 using eSyaEnterprise_UI.Areas.Egypt.Data;
 using eSyaEnterprise_UI.Areas.Approval.Data;
 using eSyaEnterprise_UI.Areas.ConfigureEmail.Data;
+using eSyaEnterprise_UI.Areas.ViewAdmin.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -443,6 +444,15 @@ builder.Services.AddHttpClient<IeSyaEmailAPIServices, eSyaEmailAPIServices>(p =>
     p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
 
 });
+builder.Services.AddHttpClient<IeSyaViewAdminAPIServices, eSyaViewAdminAPIServices>(p =>
+{
+    p.BaseAddress = new Uri(builder.Configuration.GetValue<string>("eSyaViewAdmin_API"));
+    p.DefaultRequestHeaders.Add("dbContextType", builder.Configuration.GetValue<string>("dbContextType"));
+    p.DefaultRequestHeaders.Add("Apikey", builder.Configuration.GetValue<string>("Apikey"));
+    p.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(Thread.CurrentThread.CurrentUICulture.ToString()));
+
+});
+
 
 builder.Services.AddSingleton<IUserAccountServices, UserAccountServices>();
 builder.Services.AddSingleton<IPasswordPolicy, PasswordPolicy>();
