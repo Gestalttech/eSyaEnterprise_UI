@@ -165,9 +165,21 @@ function fnDisplayCallingToken() {
         //});
          // Calling the function playTheAudio by passing a parameter of 15 seconds
        
-        for (i = 0; i < 3; i++) {
-            playTheAudio();
-        }
+       // for (i = 0; i < 3; i++) {
+        //    playTheAudio();
+       // }
+	const audio = new Audio('/Audio/TokenCalling_audio.mp3');
+	let playCount = 0;
+	audio.addEventListener('ended', () => {
+    		playCount++;
+    		if (playCount < 3) {
+        		audio.currentTime = 0;
+        		audio.play();
+    		}
+	});
+
+	audio.play();
+
     }
 
 }
