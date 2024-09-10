@@ -28,22 +28,12 @@ $(window).on('resize', function () {
 //    }
 //}
 
-function playTheAudio(_noOfSeconds) {
-
-    var _noOftimesToBePlayed = "";
-    var tokenAudio = new Audio('/Audio/TokenCallingaudio.mpeg.ogg');
-    tokenAudio.addEventListener('loadedmetadata', function () {
-
-        _noOftimesToBePlayed = _noOfSeconds / tokenAudio.duration;
-
-    });
-
-
-    for (i = 0; i < Math.ceil(_noOftimesToBePlayed); i++) {
-        console.log("Play: " + Math.ceil(_noOftimesToBePlayed));
-        tokenAudio.loop = false;
-        tokenAudio.play();
-    }
+function playTheAudio() {
+   
+    var tokenAudio = new Audio('/Audio/TokenCalling_audio.mp3');
+    tokenAudio.loop = false;
+    tokenAudio.play();
+    
 }
 
 function fnDynamicHeight() {
@@ -173,9 +163,11 @@ function fnDisplayCallingToken() {
         previousCallingToken = lastCallingToken
         //beep(2600, 3, 0.99, function () {
         //});
-        playTheAudio(15); // Calling the function playTheAudio by passing a parameter of 15 seconds
-
+         // Calling the function playTheAudio by passing a parameter of 15 seconds
        
+        for (i = 0; i < 3; i++) {
+            playTheAudio();
+        }
     }
 
 }
