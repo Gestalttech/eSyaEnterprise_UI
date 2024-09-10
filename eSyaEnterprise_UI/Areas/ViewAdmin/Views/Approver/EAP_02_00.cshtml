@@ -25,6 +25,9 @@
         Delete: '@Localizer["Delete"]',
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
+        UserId: '@Localizer["UserId"]',
+        UserDetailsForApproval: '@Localizer["UserDetailsForApproval"]',
+        ApprovalLevelDesc: '@Localizer["ApprovalLevelDesc"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -61,19 +64,23 @@
         <div id="jstApprovalForms" class=""></div>
     </div>
 
-
-
     <div class="col-lg-6 col-md-6 col-6">
-        <div class="row">
-
-            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                <table id="jqgUserDeatilsForApproval"></table>
-                <div id="jqpUserDeatilsForApproval"></div>
+        <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddForms" style="display:none;">
+            <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
+                <h5 class="mdl-card__title-text"> @Localizer["eSyaForms"]  </h5>
             </div>
-
-
+            <div class="mdl-card__supporting-text fullwidth">
+                <div class="row">
+                   <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <table id="jqgUserDetailsForApproval"></table>
+                        <div id="jqpUserDetailsForApproval"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-card__actions text-center">
+            </div>
         </div>
-        </div>
+    </div>
 
 
 
