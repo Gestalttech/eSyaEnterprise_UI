@@ -18,10 +18,32 @@ $(window).on('resize', function () {
     //fnDynamicHeight_new();
 })
 
-function playTheAudio() {
+//function playTheAudio(_noOfSeconds) {
+//    var _noOftimesToBePlayed = "";
+//    _noOftimesToBePlayed = _noOfSeconds / 5;
+//    for (i = 0; i < _noOftimesToBePlayed; i++) {
+//        var tokenAudio = new Audio('/Audio/TokenCallingaudio.mpeg.ogg');
+//        tokenAudio.loop = false;
+//        tokenAudio.play();
+//    }
+//}
+
+function playTheAudio(_noOfSeconds) {
+
+    var _noOftimesToBePlayed = "";
     var tokenAudio = new Audio('/Audio/TokenCallingaudio.mpeg.ogg');
-    tokenAudio.loop = false;
-    tokenAudio.play();
+    tokenAudio.addEventListener('loadedmetadata', function () {
+
+        _noOftimesToBePlayed = _noOfSeconds / tokenAudio.duration;
+
+    });
+
+
+    for (i = 0; i < Math.ceil(_noOftimesToBePlayed); i++) {
+        console.log("Play: " + Math.ceil(_noOftimesToBePlayed));
+        tokenAudio.loop = false;
+        tokenAudio.play();
+    }
 }
 
 function fnDynamicHeight() {
@@ -151,7 +173,7 @@ function fnDisplayCallingToken() {
         previousCallingToken = lastCallingToken
         //beep(2600, 3, 0.99, function () {
         //});
-        playTheAudio();
+        playTheAudio(15); // Calling the function playTheAudio by passing a parameter of 15 seconds
 
        
     }
