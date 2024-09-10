@@ -1,12 +1,10 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
-
-using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Models;
-using eSyaEnterprise_UI.Utility;
 using eSyaEnterprise_UI.Areas.ViewAdmin.Data;
-
+using eSyaEnterprise_UI.Areas.ViewAdmin.Models;
 using Microsoft.AspNetCore.Mvc;
-using eSyaEnterprise_UI.Areas.Approval.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 
 namespace eSyaEnterprise_UI.Areas.ViewAdmin.Controllers
 {
@@ -25,33 +23,29 @@ namespace eSyaEnterprise_UI.Areas.ViewAdmin.Controllers
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> EAP_02_00()
         {
-            var serviceresponse = await _eSyaViewAdminAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
-            if (serviceresponse.Status)
+            var serviceResponse = await _eSyaViewAdminAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+            if (serviceResponse.Status)
             {
-                if (serviceresponse.Data != null)
+                ViewBag.BusinessKeyList = serviceResponse.Data.Select(b => new SelectListItem
                 {
-                    ViewBag.Businesskeys = serviceresponse.Data;
-                    return View();
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetBusinessKey");
-                    return View();
-                }
+                    Value = b.BusinessKey.ToString(),
+                    Text = b.LocationDescription,
+                }).ToList();
+                return View();
             }
             else
             {
-                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetBusinessKey");
-                    return View();
+                _logger.LogError(new Exception(serviceResponse.Message), "UD:GetBusinessKey");
+                return View();
             }
         }
 
         /// <summary>
         ///Get Form List for Approval
         /// </summary>
-        [Area("Approval")]
+        [Area("ViewAdmin")]
         [HttpPost]
-        public async Task<JsonResult> GetFormsForApproval()
+        public async Task<JsonResult> GetApprovedFormsbyBusinesskey(int Businesskey)
         {
 
             try
@@ -63,13 +57,13 @@ namespace eSyaEnterprise_UI.Areas.ViewAdmin.Controllers
                 {
                     id = "FM",
                     parent = "#",
-                    text = "eSya Forms",
+                    text = "Approver Forms",
                     icon = baseURL + "/images/jsTree/foldergroupicon.png",
                     state = new stateObject { opened = true, selected = false }
                 };
                 treeView.Add(jsObj);
 
-                var serviceResponse = await _eSyaViewAdminAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Process/GetFormsForApproval");
+                var serviceResponse = await _eSyaViewAdminAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("Approver/GetApprovedFormsbyBusinesskey?Businesskey="+ Businesskey);
 
                 if (serviceResponse.Status)
                 {
@@ -88,16 +82,39 @@ namespace eSyaEnterprise_UI.Areas.ViewAdmin.Controllers
                 }
                 else
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetFormsForApproval");
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApprovedFormsbyBusinesskey");
                     return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:GetFormsForApproval");
+                _logger.LogError(ex, "UD:GetApprovedFormsbyBusinesskey");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
 
+        }
+        [Area("ViewAdmin")]
+        [HttpPost]
+        public async Task<JsonResult> GetApproverUsresbyBusinesskey(int Businesskey, int FormID)
+        {
+            try
+            {
+                var parameter = "?Businesskey=" + Businesskey +
+                    "&FormID=" + FormID ;
+                var serviceResponse = await _eSyaViewAdminAPIServices.HttpClientServices.GetAsync<List<DO_Approver>>("Approver/GetApproverUsresbyBusinesskey" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetApproverUsresbyBusinesskey");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetApproverUsresbyBusinesskey");
+                throw;
+            }
         }
     }
 }

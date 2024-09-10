@@ -26,8 +26,8 @@
         Deactivate: '@Localizer["Deactivate"]',
         Activate: '@Localizer["Activate"]',
         UserId: '@Localizer["UserId"]',
-        UserDetailsForApproval: '@Localizer["UserDetailsForApproval"]',
-        ApprovalLevelDesc: '@Localizer["ApprovalLevelDesc"]',
+        ApproverName: '@Localizer["ApproverName"]',
+        ApproverLevels: '@Localizer["ApproverLevels"]',
     }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -48,26 +48,22 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <div class="form-group">
             <label for="cboBusinessKey">@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker" data-live-search="true" id="cboBusinesskey" title="Choose Location" data-size="8" data-container="body" onchange="fnOnChangeBusinessLocation()">
-                <option value="0">@Localizer["Select"] </option>
-                @foreach (var ut in ViewBag.Businesskeys)
-                {
-                    <option value="@ut.BusinessKey">@ut.LocationDescription</option>
-                }
+            <select class="selectpicker" data-live-search="true" id="cboBusinessKey" title="@Localizer["Select"]" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnOnChangeBusinessKey()">
+                <option value="0">Select Location</option>
             </select>
         </div>
 
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-6">
-        <div id="jstApprovalForms" class=""></div>
+    <div class="col-lg-4 col-md-4 col-4">
+        <div id="jstApprovedForms" class=""></div>
     </div>
 
     <div class="col-lg-6 col-md-6 col-6">
-        <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlAddForms" style="display:none;">
+        <div class="demo-card-square mdl-card mdl-shadow--2dp marbot15 fullwidth" id="pnlApprovedForms" style="display:none;">
             <div class="mdl-card__title mdl-card--expand padleft0 padtop0 d-block">
-                <h5 class="mdl-card__title-text"> @Localizer["eSyaForms"]  </h5>
+                <h5 class="mdl-card__title-text"> @Localizer["ApproverUsers"]  </h5>
             </div>
             <div class="mdl-card__supporting-text fullwidth">
                 <div class="row">
@@ -81,12 +77,27 @@
             </div>
         </div>
     </div>
+    <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-6">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
+            </div>
+            <ul class="list-group list-group-flush">
 
+                <li class="list-group-item">
 
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCExpandAll" onclick="fnALExpandAll()">
+                        <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                    </button>
+                </li>
+                <li class="list-group-item">
 
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnCCCollapseAll" onclick="fnALCollapseAll()">
+                        <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                    </button>
+                </li>
+            </ul>
 
-
-
-
-
+        </div>
+    </div>
 </div>
