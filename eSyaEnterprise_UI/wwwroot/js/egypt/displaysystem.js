@@ -168,11 +168,11 @@ function fnDisplayCallingToken() {
        // for (i = 0; i < 3; i++) {
         //    playTheAudio();
        // }
-	const audio = new Audio('/Audio/TokenCalling_audio.mp3');
+        const audio = new Audio(getBaseURL() +'/Audio/TokenCalling_audio.mp3');
 	let playCount = 0;
 	audio.addEventListener('ended', () => {
     		playCount++;
-    		if (playCount < 3) {
+    		if (playCount < 1) {
         		audio.currentTime = 0;
         		audio.play();
     		}
