@@ -119,6 +119,8 @@
         EffectiveFrom: '@Localizer["EffectiveFrom"]',
         EffectiveTill: '@Localizer["EffectiveTill"]',
         ActiveStatus: '@Localizer["ActiveStatus"]',
+        ParameterDescription: '@Localizer["ParameterDescription"]',
+
      }
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -148,39 +150,7 @@
     }
 </script>
 <section id="divAPGrid">
-    <div class="row form-group">
-        <div class="col-lg-12 col-xl-12 col-sm-12">
-            <label>@Localizer["ChooseVendorbyalphabets"]</label>
-            <span class="dot">A</span>
-            <span class="dot">B</span>
-            <span class="dot">C</span>
-            <span class="dot">D</span>
-            <span class="dot">E</span>
-            <span class="dot">F</span>
-            <span class="dot">G</span>
-            <span class="dot">H</span>
-            <span class="dot">I</span>
-            <span class="dot">J</span>
-            <span class="dot">K</span>
-            <span class="dot">L</span>
-            <span class="dot">M</span>
-            <span class="dot">N</span>
-            <span class="dot">O</span>
-            <span class="dot">P</span>
-            <span class="dot">Q</span>
-            <span class="dot">R</span>
-            <span class="dot">S</span>
-            <span class="dot">T</span>
-            <span class="dot">U</span>
-            <span class="dot">V</span>
-            <span class="dot">W</span>
-            <span class="dot">X</span>
-            <span class="dot">Y</span>
-            <span class="dot">Z</span>
-            <span class="dot">All</span>
-        </div>
-    </div>
-
+    
     <div class="row form-group">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <table id="jqgAPVendorRegister"></table>
@@ -210,7 +180,7 @@
                     <button class="nav-link position-relative" id="vendorBusinessLinkAP-tab" data-bs-toggle="pill" data-bs-target="#vendorBusinessLinkAP" type="button" role="tab" aria-controls="pills-vendorBusinessLink" aria-selected="true" onclick="fnLoadAPBusinessLinkGrid()">@Localizer["VendorBusinessLink"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link position-relative" id="statutorydetailsAP-tab" data-bs-toggle="pill" data-bs-target="#statutorydetailsAP" type="button" role="tab" aria-controls="pills-statutorydetails" aria-selected="true" onclick="fnloadAPvendorLocationDetailsGrid()">@Localizer["StatutoryDetails"]</button>
+                    <button class="nav-link position-relative" id="statutorydetailsAP-tab" data-bs-toggle="pill" data-bs-target="#statutorydetailsAP" type="button" role="tab" aria-controls="pills-statutorydetails" aria-selected="true" onclick="LoadAPVendorStatutorydetails()">@Localizer["StatutoryDetails"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link position-relative" id="bankdetailsAP-tab" data-bs-toggle="pill" data-bs-target="#bankdetailsAP" type="button" role="tab" aria-controls="pills-bankdetails" aria-selected="true" onclick="fnLoadAPBankDetails()">@Localizer["BankDetails"]</button>

@@ -129,7 +129,7 @@ function GetVendorStatutoryDetails() {
             { name: "StatutoryShortCode", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "StatutoryDescription", width: 350, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "StatutoryValue", width: 200, align: 'left', editable: true, edittype: "text", editoptions: { maxlength: 25 }, },
-            { name: "ActiveStatus", editable: true, width: 70, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", editable: true, width: 70, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false }, }
 
         ],
         rowNum: 10,

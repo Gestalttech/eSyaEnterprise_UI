@@ -37,7 +37,7 @@ function fnLoadAPBankDetails() {
         rowList: [10, 20, 40],
         rownumWidth:55,
         loadonce: true,
-        pager: "#jqpVendorBankDetails",
+        pager: "#jqpAPVendorBankDetails",
         viewrecords: true,
         gridview: true,
         rownumbers: true,
@@ -49,7 +49,7 @@ function fnLoadAPBankDetails() {
         shrinkToFit: true,
         forceFit: true,
         caption: localization.VendorBank,
-     }).jqGrid('navGrid', '#jqpVendorBankDetails', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpVendorBankDetails', {
+     }).jqGrid('navGrid', '#jqpAPVendorBankDetails', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpAPVendorBankDetails', {
         caption: '<span class="fa fa-sync" data-toggle="modal"></span> Refresh', buttonicon: 'none', id: 'custReload', position: 'first', onClickButton: fnRefreshAPBankGrid
     });
     fnAddGridSerialNoHeading();

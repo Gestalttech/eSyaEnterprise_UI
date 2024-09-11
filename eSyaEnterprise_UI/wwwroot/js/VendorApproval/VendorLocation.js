@@ -3,9 +3,9 @@
         selector: "#btnAPVendorLocation",
         trigger: 'left',
          items: {
-             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPLocation('edit') } },
-             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPLocation('view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor('delete') } },
+             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPLocation(event,'edit') } },
+             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPLocation(event,'view') } },
+             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnDeActivateVendor(event,'delete') } },
         }
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
@@ -14,7 +14,7 @@
 })
 
 
-function fnloadvendorLocationGrid() {
+function fnloadAPvendorLocationGrid() {
    
     fnClearAPLocationfields();
     BindAPStatesCodes();
@@ -46,7 +46,7 @@ function fnloadvendorLocationGrid() {
             {
                 name: 'edit', search: false, align: 'left', width: 80, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditAPLocation()"><i class="fas fa-pen"></i> ' +localization.Edit+' </button>'
+                    return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" onclick="return fnEditAPLocation(event)"><i class="fas fa-pen"></i> ' +localization.Edit+' </button>'
                 }
             },
         ],
@@ -123,7 +123,7 @@ function fnSaveAPLocation() {
 
 }
 
-function fnEditAPLocation(actiontype) {
+function fnEditAPLocation(e) {
     var rowid = $(e.target).parents("tr.jqgrow").attr('id');
     var rowData = $('#jqgAPVendorLocation').jqGrid('getRowData', rowid);
     $("#txtAPlocationId").val(rowData.VendorLocationId);

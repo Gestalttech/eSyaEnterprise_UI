@@ -1,50 +1,37 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-<div class="row padbot10 padtop15">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <p class="subheading">@Localizer["VendorLocation"] </p>
-        <hr class="left" />
-        <table id="jqgAPLocationDetails"></table>
-        <div id="jqpAPLocationDetails"></div>
 
+<div class="row">
+    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group">
+        <label for="cboAPStatutoryISDCode">@Localizer["ISDCode"]</label>
+        <select class="selectpicker" data-container="body" data-live-search="true" id="cboAPStatutoryISDCode" title="" data-size="8" onchange="GetAPVendorStatutoryDetails()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12 form-group">
+        <label for="cboAPVendorAddress">@Localizer["VendorLocationAddress"]</label>
+        <select class="selectpicker" data-container="body" data-live-search="true" id="cboAPVendorAddress" title="" data-size="8" onchange="GetAPVendorStatutoryDetails()">
+            <option value="0">@Localizer["Select"]</option>
+        </select>
+    </div>
+
+
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <table id="jqgAPVendorProfileStatutoryDetails"></table>
+        <div id="jqpAPVendorProfileStatutoryDetails"></div>
     </div>
 </div>
-<div class="row" id="divAPstatutorydetailsform" style="margin-bottom:30px;margin-top:30px ;display:none">
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <div class="form-group">
-            <label for="txtAPstatdetailsDesc">@Localizer["StatutoryDescription"] </label>
-            <input id="txtAPstatdetailsDesc" class="form-control" type="text" autocomplete="off" maxlength="50" />
-
-        </div>
-    </div>
-
-    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-        <div class="default-checkbox padtop20 form-group">
-            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAPstatutorystatus">
-                <input type="checkbox" id="chkAPstatutorystatus" class="mdl-checkbox__input">
-                <span class="mdl-checkbox__label">@Localizer["Active"] </span>
-            </label>
-        </div>
-    </div>
-</div>
-<div class="row martop10">
+<div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
         <hr />
-       
-        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnClearStatutoryDetails()">@Localizer["Clear"]  </button>
-    </div>
-</div>
-
-
-<div class="row padtop20">
-    <div class="col-lg-12">
-        <p class="subheading">@Localizer["Location"]  <span id="lblAPlocationId"></span>@Localizer["StatutoryDetails"]   </p>
-    </div>
-
-    <div class="col-lg-12">
-        <table id="jqgAPStatutoryDetails"></table>
-        <div id="jqpAPStatutoryDetails"></div>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnAPsavestatutory" onclick="fnSaveAPVendorStatutoryDetails()" style="margin-right:10px;">@Localizer["Save"]  </button>
+        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" onclick="fnClearAPStatutoryDetails()">@Localizer["Clear"]  </button>
     </div>
 </div>

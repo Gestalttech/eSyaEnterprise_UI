@@ -1,8 +1,7 @@
 ﻿var businesslocation = false;
 var activeTabName = "";
 $(function () {
-    $("#lblAPDisplayNames").val('');
-     
+    
     $.contextMenu({
         // define which elements trigger this menu
         selector: "#btnAPVendorMaster",
@@ -11,78 +10,31 @@ $(function () {
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPVendor('edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPVendor('view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnAPDeActivateVendor('delete') } },
         }
         // there's more, have a look at the demos and docs...
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    fnloadAPVendorGrid();
 
+    //$(".dot").click(function () {
+    //    $('.dot').removeClass('active');
+    //    var alphabet = $(this).text();
 
-    $(".dot").click(function () {
-        $('.dot').removeClass('active');
-        var alphabet = $(this).text();
-        fnloadAPVendorGrid(alphabet);
-        $(this).addClass('active');
-    });
-    $("#lblAPFormName").text("Vendor Codes");
-    $("#accordion").hide();
-   
-    $("#jqgAPVendorRegister").jqGrid({
-
-      
-        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
-        colModel: [
-            { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
-            { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
-            { name: "PreferredPaymentMode", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "CreditType", width: 50, editable: true, align: 'center' },
-            { name: "CreditPeriod", width: 100, editable: true, align: 'left', resizable: true },
-            { name: "ApprovalStatus", width: 70, editable: true, align: 'left' },
-            { name: "IsBlackListed", width: 70, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
-            { name: "SupplierScore", editable: true, width: 90, align: 'left', },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            {
-                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
-                formatter: function (cellValue, options, rowdata, action) {
-                    return "<a href='javascript:fnDelete_TaxStructure()' class='ui-icon ui-icon-closethick'></a>";
-                }
-            },
-        ],
-        rowNum: 10,
-        rowList: [10, 20, 50, 100],
-        rownumWidth:55,
-        loadonce: true,
-        pager: "#jqpAPVendorRegister",
-        viewrecords: true,
-        gridview: true,
-        rownumbers: true,
-        height: 'auto',
-        align: "left",
-        width: 'auto',
-        autowidth: true,
-        shrinkToFit: true,
-        forceFit: true,
-        caption: localization.VendorRegister,
-        
-    }).jqGrid('navGrid', '#jqpAPVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPVendorGrid
-    }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddAPVendor 
-        });
-    fnAddGridSerialNoHeading();
+    //    $(this).addClass('active');
+    //});
+    //$("#lblAPFormName").text("Vendor Codes");
+    //$("#accordion").hide();
 });
+     
 
-function fnloadAPVendorGrid(alphabet) {
+function fnloadAPVendorGrid() {
 
     $("#jqgAPVendorRegister").GridUnload();
 
     $("#jqgAPVendorRegister").jqGrid({
       
-        url: getBaseURL() + '/Approve/GetVendors?Alphabet=' + alphabet,
+        url: getBaseURL() + '/Approve/GetVendorsForApprovals',
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
@@ -129,9 +81,10 @@ function fnloadAPVendorGrid(alphabet) {
   }).jqGrid('navGrid', '#jqpAPVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
         .jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPVendorGrid
-    }).jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddAPVendor
-        });
+        })
+        //.jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
+        //caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddAPVendor
+        //});
     fnAddGridSerialNoHeading();
 }
 $('#approveVendor-pills-tab button').on('click', function (e) {
@@ -286,7 +239,7 @@ function fnSaveAPVendor() {
 }
 
 function IsValidAPVendor() {
-    
+    debugger;
     if (IsStringNullorEmpty($("#txtAPVendorName").val())) {
         fnAlert("w", "EVN_02_00", "UI0225", errorMsg.VendorName_E15);
         return false;

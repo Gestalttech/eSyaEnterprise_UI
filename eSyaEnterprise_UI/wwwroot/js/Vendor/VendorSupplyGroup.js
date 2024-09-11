@@ -123,3 +123,8 @@ function fnDisableActivecheckboxs() {
         $("input[type=checkbox]").attr('disabled', false);
     }
 }
+
+
+function fnApproveVendor() {
+
+}

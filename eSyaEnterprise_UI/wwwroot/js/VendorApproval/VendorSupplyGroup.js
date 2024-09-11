@@ -60,7 +60,7 @@
     fnAddGridSerialNoHeading();
 }
 
-function fnSaveSupplyGroup() {
+function fnSaveAPSupplyGroup() {
     if (IsValidAPSupplyGroup() == false) {
         return;
     }

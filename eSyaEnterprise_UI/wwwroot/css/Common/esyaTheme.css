@@ -22,6 +22,9 @@
 .bg-primary {
     background-color: var(--primary-color);
 }
+.bg-lightyellow {
+    background-color: var(--light-yellow);
+}
 .c-primary {
     color: var(--primary-color);
 }
