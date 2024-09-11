@@ -16,48 +16,120 @@ function fnCboISDCodes_change() {
     GetVendorStatutoryDetails();
 }
 
+
+function fnGridRefreshVendorProfileStatutoryDetails() {
+    $("#jqgVendorProfileStatutoryDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
+}
+
+function fnClearStatutoryDetails() {
+
+    fnGridRefreshVendorProfileStatutoryDetails();
+}
+
+function LoadVendorStatutorydetails() {
+    fnBindStatutoryISDCodes();
+    fnBindVendorLocationAddress();
+    GetVendorStatutoryDetails();
+}
+function fnBindStatutoryISDCodes() {
+    $("#cboStatutoryISDCode").empty();
+
+    $.ajax({
+        url: getBaseURL() + '/CreateVendor/GetISDCodesbyVendorId?vendorID=' + $("#txtVendorCode").val(),
+        type: 'Post',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        //success: function (response, data) {
+        success: function (data) {
+
+            if (data != null) {
+                //refresh each time
+                $("#cboStatutoryISDCode").empty();
+                $("#cboStatutoryISDCode").append($("<option value='0'>" + localization.Select + "</option>"));
+                var $select = $("#cboStatutoryISDCode");
+
+                data.forEach(function (item) {
+                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
+                    $select.append($('<option></option>')
+                        .val(item["Isdcode"])
+                        .attr('data-content', optionContent)
+                        .text(item["CountryName"] + '  (+' + item["Isdcode"] + ')'));
+                });
+
+                // Refresh the selectpicker to apply changes
+                $select.selectpicker('refresh');
+            }
+            else {
+                $("#cboStatutoryISDCode").empty();
+                $("#cboStatutoryISDCode").append($("<option value='0'>" +localization.Select +"</option>"));
+                $("#cboStatutoryISDCode").val(_cnfISDCode);
+                $("#cboStatutoryISDCode").val('0');
+                $('#cboStatutoryISDCode').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+
+function fnBindVendorLocationAddress() {
+    $("#cboVendorAddress").empty();
+    $.ajax({
+        url: getBaseURL() + '/CreateVendor/GetVendorAddressLocationsByVendorID?vendorID=' + $("#txtVendorCode").val(),
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboVendorAddress").empty();
+
+                $("#cboVendorAddress").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboVendorAddress").append($("<option></option>").val(response[i]["VendorLocationId"]).html(response[i]["VendorLocation"]));
+                }
+                $('#cboVendorAddress').selectpicker('refresh');
+            }
+            else {
+                $("#cboVendorAddress").empty();
+                $("#cboVendorAddress").append($("<option value='0'> Select</option>"));
+                $('#cboVendorAddress').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+
 function GetVendorStatutoryDetails() {
     $("#jqgVendorProfileStatutoryDetails").jqGrid('GridUnload');
     $("#jqgVendorProfileStatutoryDetails").jqGrid({
-        url: getBaseURL() + '/Doctor/GetDoctorStatutoryDetails?doctorId=' + $("#txtDoctorId").val() + '&isdCode=' + $("#cboVendorStatutoryDetailsIsdcode").val(),
+        url: getBaseURL() + '/CreateVendor/GetVendorStatutoryDetails?vendorID=' + $("#txtVendorCode").val() + '&isdCode=' + $("#cboStatutoryISDCode").val()
+            + '&locationId=' + $("#cboVendorAddress").val(),
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: ["Doctor Id", "Isd Code", "Statutory Code", "Statutory Description", "Statutory Value", "Tax Perc", "Effective From", "Effective Till", "Select"],
+        colNames: [localization.VendorId, localization.VendorLocationId, localization.IsdCode, "Statutory Code", "Statutory Short Code", "Statutory Description", "Statutory Value", "ActiveStatus"],
         colModel: [
-            { name: "DoctorId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+            { name: "VendorId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+            { name: "VendorLocationId", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "Isdcode", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "StatutoryCode", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+            { name: "StatutoryShortCode", width: 70, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "StatutoryDescription", width: 350, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "StatutoryValue", width: 315, align: 'left', editable: true, edittype: "text", editoptions: { maxlength: 25 }, },
-            {
-                name: 'TaxPerc', index: 'TaxPerc', editable: true, edittype: "text", width: 150,
-                editoptions: { maxlength: 7, onkeypress: 'return CheckDigits(event)' }
-            },
-
-            {
-                name: 'EffectiveFrom', index: 'EffectiveFrom', width: 150, sorttype: "date", formatter: "date", formatoptions:
-                    { newformat: _cnfjqgDateFormat },
-                editable: true, editoptions: {
-                    size: 20,
-                    dataInit: function (el) {
-                        $(el).datepicker({ dateFormat: _cnfDateFormat });
-                    }
-                }
-            },
-
-            {
-                name: 'EffectiveTill', index: 'EffectiveTill', width: 150, sorttype: "date", formatter: "date", formatoptions:
-                    { newformat: _cnfjqgDateFormat },
-                editable: true, editoptions: {
-                    size: 20,
-                    dataInit: function (el) {
-                        $(el).datepicker({ dateFormat: _cnfDateFormat });
-                    }
-                }
-            },
-
-            { name: "ActiveStatus", editable: true, width: 100, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "StatutoryValue", width: 200, align: 'left', editable: true, edittype: "text", editoptions: { maxlength: 25 }, },
+            { name: "ActiveStatus", editable: true, width: 70, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
         ],
         rowNum: 10,
@@ -79,43 +151,28 @@ function GetVendorStatutoryDetails() {
 
         onSelectRow: function (rowid, iRow, iCol, e) {
 
-            if (iCol === 7) {
-                date = $("#jqgVendorProfileStatutoryDetails").jqGrid('getCell', rowid, "EffectiveFrom");
-                strdate = date;
-                date = moment(date, 'DD-MM-YYYY').toDate();
-
-
-                //$("#dtServiceRateDate").datepicker().datepicker("setDate", date);
-                var row = $("#jqgVendorrProfileStatutoryDetails").closest('tr.jqgrow');
-                $("#" + rowid + "_EffectiveFrom", row[0]).val(date);
-                Selectedrowid = rowid;
-            }
-            if (iCol === 8) {
-                date = $("#jqgVendorProfileStatutoryDetails").jqGrid('getCell', rowid, "EffectiveTill");
-                strdate = date;
-                date = moment(date, 'DD-MM-YYYY').toDate();
-
-
-                //$("#dtServiceRateDate").datepicker().datepicker("setDate", date);
-                var row = $("#jqgVendorProfileStatutoryDetails").closest('tr.jqgrow');
-                $("#" + rowid + "_EffectiveTill", row[0]).val(date);
-                Selectedrowid = rowid;
-            }
         },
-        caption: 'Doctor Statutory Details',
+        caption: 'Vendor Statutory Details',
         loadComplete: function () {
             fnJqgridSmallScreen("jqgVendorProfileStatutoryDetails");
         },
-    }).jqGrid('navGrid', '#jqpVendorProfileStatutoryDetails', { add: false, edit: false, search: false, del: false, refresh: false });
+    
+    }).jqGrid('navGrid', '#jqpVendorProfileStatutoryDetails', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpVendorProfileStatutoryDetails', {
+            caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshVendorProfileStatutoryDetails
+        })
 }
 
 function fnSaveVendorStatutoryDetails() {
-    if ($('#txtDoctorId').val() == '' || $('#txtDoctorId').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0314", "");
+    if ($('#txtVendorCode').val() == '' || $('#txtVendorCode').val() == '0') {
+        fnAlert("w", "EVN_01_00", "UI0314", "Create Vendor");
         return;
     }
-    if ($('#cboVendorStatutoryDetailsIsdcode').val() == '' || $('#cboVendorStatutoryDetailsIsdcode').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0034", "Please Select Statutory Details ISD Code");
+    if ($('#cboStatutoryISDCode').val() == '' || $('#cboStatutoryISDCode').val() == '0') {
+        fnAlert("w", "EVN_01_00", "UI0034", "Please Select ISD Code");
+        return;
+    }
+    if ($('#cboVendorAddress').val() == '' || $('#cboVendorAddress').val() == '0') {
+        fnAlert("w", "EVN_01_00", "UI0034", "Please Select Vendor Location Address");
         return;
     }
     $("#jqgVendorProfileStatutoryDetails").jqGrid('editCell', 0, 0, false);
@@ -123,26 +180,24 @@ function fnSaveVendorStatutoryDetails() {
     var obj = [];
     var gvT = $('#jqgVendorProfileStatutoryDetails').jqGrid('getRowData');
     for (var i = 0; i < gvT.length; ++i) {
-        if (!IsStringNullorEmpty(gvT[i]['StatutoryValue']) && !IsStringNullorEmpty(gvT[i]['TaxPerc'])
-            && !IsStringNullorEmpty(gvT[i]['EffectiveFrom'])) {
+        if (!IsStringNullorEmpty(gvT[i]['StatutoryValue'])) {
             var bu_bd = {
-                DoctorId: $('#txtDoctorId').val(),
-                Isdcode: $('#cboVendorStatutoryDetailsIsdcode').val(),
+                VendorId: $('#txtVendorCode').val(),
+                VendorLocationId: $('#cboVendorAddress').val(),
+                Isdcode: $('#cboStatutoryISDCode').val(),
                 StatutoryCode: gvT[i]['StatutoryCode'],
+                //StatutoryDescription: gvT[i]['StatutoryDescription'],
                 StatutoryValue: gvT[i]['StatutoryValue'],
-                TaxPerc: gvT[i]['TaxPerc'],
-                EffectiveFrom: GetGridDate(gvT[i]['EffectiveFrom']),
-                EffectiveTill: GetGridDate(gvT[i]['EffectiveTill']),
                 ActiveStatus: gvT[i]['ActiveStatus']
             }
             obj.push(bu_bd);
         }
     }
 
-    $("#btnSaveVendorStatutoryDetails").attr('disabled', true);
+    $("#btnsavestatutory").attr('disabled', true);
 
     $.ajax({
-        url: getBaseURL() + '/Doctor/InsertOrUpdateDoctorStatutoryDetails',
+        url: getBaseURL() + '/CreateVendor/InsertOrUpdateVendorStatutoryDetails',
         type: 'POST',
         datatype: 'json',
         data: { obj: obj },
@@ -150,85 +205,25 @@ function fnSaveVendorStatutoryDetails() {
             if (response.Status === true) {
 
                 fnAlert("s", "", response.StatusCode, response.Message);
-                fnGridRefresh();
+                fnGridRefreshVendorProfileStatutoryDetails();
             }
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
             }
+            $("#btnsavestatutory").attr("disabled", false);
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btnSaveVendorStatutoryDetails").attr("disabled", false);
+            $("#btnsavestatutory").attr("disabled", false);
         }
     });
 
-    $("#btnSaveDoctorStatutoryDetails").attr("disabled", false);
+    $("#btnsavestatutory").attr("disabled", false);
 }
-
-function fnGridRefresh() {
-    $("#jqgVendorProfileStatutoryDetails").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid')
-}
-
-function fnClearBusinessStatutory() {
-
-    fnGridRefresh();
-}
-
-function fnBindDoctorStatutoryISDBusinessLink() {
-    $("#cboVendorStatutoryDetailsIsdcode").empty();
-
-    $.ajax({
-        url: getBaseURL() + '/Doctor/GetISDCodesbyDoctorId?doctorId=' + $("#txtDoctorId").val(),
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-        },
-        //success: function (response, data) {
-        success: function (data) {
-
-            if (data != null) {
-                //refresh each time
-                $("#cboVendorStatutoryDetailsIsdcode").empty();
-                $("#cboVendorStatutoryDetailsIsdcode").append($("<option value='0'>" + localization.Select + "</option>"));
-                var $select = $("#cboVendorStatutoryDetailsIsdcode");
-
-                data.forEach(function (item) {
-                    var optionContent = '<img src="' + item["CountryFlag"] + '" style="width: 20px; height: 20px; margin-right: 8px;" />' + item["CountryName"] + ' (+' + item["Isdcode"] + ')';
-                    $select.append($('<option></option>')
-                        .val(item["Isdcode"])
-                        .attr('data-content', optionContent)
-                        .text(item["CountryName"] + '  (+' + item["Isdcode"] + ')'));
-                });
-
-                // Refresh the selectpicker to apply changes
-                $select.selectpicker('refresh');
-
-            }
-            else {
-                $("#cboVendorStatutoryDetailsIsdcode").empty();
-                $("#cboVendorStatutoryDetailsIsdcode").append($("<option value='0'>" +localization.Select +"</option>"));
-                $("#cboVendorStatutoryDetailsIsdcode").val(_cnfISDCode);
-                $("#cboVendorStatutoryDetailsIsdcode").val('0');
-                $('#cboVendorStatutoryDetailsIsdcode').selectpicker('refresh');
-            }
-        },
-        async: false,
-        processData: false
-    });
-
-
-}
-
-
-
-
-
 
 
 //function fnloadvendorLocationDetailsGrid() {
-//    fnClearStatutoryDetails();
+//    //fnClearStatutoryDetails();
 //    $("#jqgLocationDetails").GridUnload();
 
 //    $("#jqgLocationDetails").jqGrid({

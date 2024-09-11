@@ -394,7 +394,7 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
         }
         #endregion Vendor Business Key
 
-        #region Vendor Statutory details
+        #region Vendor Statutory Details need to remove
         /// <summary>
         ///Get Vendor Statutory details by Vendor code and LocationId for Grid
         /// </summary>
@@ -450,6 +450,140 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
             }
         }
         #endregion Vendor Statutory details
+
+        #region Vendor Statutory Details
+        ///Get Vendor Addrress Location dropdown
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetVendorAddressLocationsByVendorID(int vendorID)
+        {
+            try
+            {
+                var parameter = "?vendorID=" + vendorID;
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_VendorLocation>>("Vendor/GetVendorAddressLocationsByVendorID" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetVendorAddressLocationsByVendorID:For VendorId", vendorID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetVendorAddressLocationsByVendorID:For VendorId", vendorID);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        ///Get Vendor Business Linkked Locations ISD Codes dropdown
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetISDCodesbyVendorId(int vendorID)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_CountryISDCodes>>("Vendor/GetISDCodesbyVendorId?vendorID=" + vendorID);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data.Count > 0)
+                    {
+                        foreach (var i in serviceResponse.Data)
+                        {
+
+                            //i.CountryName = "<div  style=\"float: left;\"><img src='" + this.Request.PathBase + '/' + i.CountryFlag + "'/></div>" + '(' + '+' + i.Isdcode + ')' + i.CountryName;
+                            i.CountryFlag = this.Request.PathBase + "/" + i.CountryFlag;
+                            i.CountryName = i.CountryName;
+                            i.Isdcode = i.Isdcode;
+
+                        }
+                        var res = serviceResponse.Data.GroupBy(x => x.Isdcode).Select(y => y.First()).Distinct();
+                        return Json(res);
+
+                    }
+                    else
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetISDCodesbyVendorId:For businessKey ", vendorID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetISDCodesbyVendorId:For isdCode ", vendorID);
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///Get Vendor Statutory details by Vendor code and LocationId for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetVendorStatutoryDetails(int vendorID, int isdCode, int locationId)
+        {
+            try
+            {
+                var parameter = "?vendorID=" + vendorID + "&isdCode="+ isdCode + "&locationId=" + locationId;
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_VendorStatutoryDetails>>("Vendor/GetVendorStatutoryDetails" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetVendorStatutoryDetails:For vendorID {0} with locationId entered {1}", vendorID, locationId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetVendorStatutoryDetails:For vendorID {0} with locationId entered {1}", vendorID, locationId);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+        /// <summary>
+        /// Insert Into Doctor Statutory details
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> InsertOrUpdateVendorStatutoryDetails(List<DO_VendorStatutoryDetails> obj)
+        {
+            try
+            {
+                obj.All(c =>
+                {
+                    c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                    c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                    c.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext).ToString();
+                    return true;
+                });
+
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Vendor/InsertOrUpdateVendorStatutoryDetails", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:InsertOrUpdateVendorStatutoryDetails:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateVendorStatutoryDetails:params:" + JsonConvert.SerializeObject(obj));
+                throw ex;
+            }
+        }
+        #endregion
 
         #region Vendor Bank Details
         /// <summary>

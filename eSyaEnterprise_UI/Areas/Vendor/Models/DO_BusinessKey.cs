@@ -22,4 +22,13 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Models
         public int StateCode { get; set; }
         public string StateDesc { get; set; }
     }
+    public class DO_CountryISDCodes
+    {
+        public int Isdcode { get; set; }
+        public string MobileNumberPattern { get; set; }
+        public string CountryFlag { get; set; }
+        public string CountryName { get; set; }
+        public string CountryCode { get; set; }
+        public string DomainName { get; set; }
+    }
 }
