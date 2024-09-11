@@ -161,7 +161,7 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
                 var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_VendorRegistration>>("Approve/GetVendorsForApprovals");
                 if (serviceResponse.Status)
                 {
-                    return Json(serviceResponse.Data.Where(x=>x.ApprovalStatus == false).ToList());
+                    return Json(serviceResponse.Data);
                 }
                 else
                 {
@@ -777,20 +777,19 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
         }
         #endregion Vendor Supply Group
 
-
+        #region Approve Vendor
         /// <summary>
         /// Insert or Update Vendor.
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> ApproveVendor(DO_VendorRegistration vendor)
+        public async Task<JsonResult> ApproveVendor(DO_VendorApproval obj)
         {
 
             try
             {
-                vendor.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                vendor.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                //vendor.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Approve/ApproveVendor", vendor);
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Approve/ApproveVendor", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -798,9 +797,10 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UD:InsertOrUpdateVendor:params:" + JsonConvert.SerializeObject(vendor));
+                _logger.LogError(ex, "UD:ApproveVendor:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }
+        #endregion
     }
 }

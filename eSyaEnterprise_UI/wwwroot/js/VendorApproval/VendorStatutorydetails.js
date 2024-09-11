@@ -162,7 +162,7 @@ function GetAPVendorStatutoryDetails() {
     })
 }
 
-function fnSaveVendorStatutoryDetails() {
+function fnSaveAPVendorStatutoryDetails() {
     if ($('#txtAPVendorCode').val() == '' || $('#txtAPVendorCode').val() == '0') {
         fnAlert("w", "EVN_01_00", "UI0314", "Create Vendor");
         return;
@@ -182,7 +182,7 @@ function fnSaveVendorStatutoryDetails() {
     for (var i = 0; i < gvT.length; ++i) {
         if (!IsStringNullorEmpty(gvT[i]['StatutoryValue'])) {
             var bu_bd = {
-                VendorId: $('#txtVendorCode').val(),
+                VendorId: $('#txtAPVendorCode').val(),
                 VendorLocationId: $('#cboAPVendorAddress').val(),
                 Isdcode: $('#cboAPStatutoryISDCode').val(),
                 StatutoryCode: gvT[i]['StatutoryCode'],

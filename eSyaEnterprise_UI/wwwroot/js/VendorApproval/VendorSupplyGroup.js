@@ -59,7 +59,6 @@
         });
     fnAddGridSerialNoHeading();
 }
-
 function fnSaveAPSupplyGroup() {
     if (IsValidAPSupplyGroup() == false) {
         return;
@@ -123,3 +122,42 @@ function fnDisableAPActivecheckboxs() {
         $("input[type=checkbox]").attr('disabled', false);
     }
 }
+
+/*Vendor Approval */
+function fnApproveVendor() {
+
+    if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
+        fnAlert("w", "EVM_02_00", "UI0201", "Select Vendor");
+        return;
+    }
+   
+    var obj_ = {
+        VendorId: $("#txtAPVendorCode").val(),
+    };
+
+    $("#btnApproveVendor").attr("disabled", true);
+
+    $.ajax({
+        url: getBaseURL() + '/Approve/ApproveVendor',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj: obj_ },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnApproveVendor").attr("disabled", false);
+                fnRefreshAPVendorGrid();
+                fnCloseVendorDetails();
+            }
+            else {
+                fnAlert("e", "", response.StatusCode, response.Message);
+                $("#btnApproveVendor").attr("disabled", false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnApproveVendor").attr("disabled", false);
+        }
+    });
+}
+
