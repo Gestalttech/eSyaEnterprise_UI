@@ -30,6 +30,8 @@
             LeaveTo: '@Localizer["LeaveTo"]',
             NumberOfDays: '@Localizer["NumberOfDays"]',
             AddLeave: '@Localizer["AddLeave"]',
+        UpdateLeave: '@Localizer["UpdateLeave"]',
+        ViewLeave: '@Localizer["ViewLeave"]',
             Select: '@Localizer["Select"]',
             Active: '@Localizer["Active"]',
            Actions: '@Localizer["Actions"]',
@@ -37,7 +39,9 @@
            View: '@Localizer["View"]',
            Delete: '@Localizer["Delete"]',
            Save: '@Localizer["Save"]',
+        Update: '@Localizer["Update"]',
            Cancel: '@Localizer["Cancel"]',
+        Activate: '@Localizer["Activate"]',
            Deactivate: '@Localizer["Deactivate"]',
       
       
@@ -56,8 +60,8 @@
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorLeaveLocation"> @Localizer["Location"]</label>
-            <select class="selectpicker" data-live-search="true" data-container="body" id="cboDoctorLeaveLocation" title="" data-size="8"
+            <label for="cboBusinesskey"> @Localizer["Location"]</label>
+            <select class="selectpicker" data-live-search="true" data-container="body" id="cboBusinesskey" title="" data-size="8"
                     asp-items="@ViewBag.BusinessKeys"
                     onchange="fnLoadDoctorList()">
                 <option value="0">@Localizer["Select"]</option>
@@ -66,7 +70,7 @@
     </div>
     <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorName">@Localizer["DoctorName"] </label>
+            <label for="cboDoctorName">@Localizer["Doctors"] </label>
             <div>
                 <select class="selectpicker" data-live-search="true" data-container="body" id="cboDoctorName" title="" data-size="8"  onchange="fnDoctorNameChange()">
                     <option value="0">@Localizer["Select"]</option>
@@ -136,9 +140,9 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveDoctorLeave" onclick="fnSaveDoctorLeave();">
                             <i class="fa fa-save"></i> @Localizer["Save"]
                         </button>
-                      
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelDoctorLeave"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveDoctorLeave" onclick="fnDeleteDoctorLeave()"><i class="fa fa-times"></i>@Localizer["Deactivate"]   </button>
+
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelDoctorLeave"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
 
                     </div>
                 </div>

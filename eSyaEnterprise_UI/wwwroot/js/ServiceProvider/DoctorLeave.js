@@ -1,4 +1,4 @@
-﻿
+﻿var _isInsert = false;
 $(function () {
     $("#txtLeaveFrom").datepicker({
         dateFormat: _cnfDateFormat,
@@ -31,14 +31,10 @@ $(function () {
 
 });
 
-
-var _isInsert = true;
-
-
 function fnLoadDoctorList() {
     $("#cboDoctorName").empty();
     $.ajax({
-        url: getBaseURL() + '/Leave/GetDoctorsbyBusinessKey?Businesskey=' + $("#cboDoctorLocation").val(),
+        url: getBaseURL() + '/Leave/GetDoctorsbyBusinessKey?Businesskey=' + $("#cboBusinesskey").val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -77,23 +73,19 @@ function fnDoctorNameChange() {
     fnGridLoadDoctorLeave();
 }
 function  fnGridLoadDoctorLeave() {
-
-    $("#jqgDoctorLeave").GridUnload();
-    var codeType = $("#cboDoctorName").val();
-
+   
+    $("#jqgDoctorLeave").jqGrid('GridUnload');
     $("#jqgDoctorLeave").jqGrid({
 
-        url: getBaseURL() + 'Leave/GetDoctorLeaveListAll?Businesskey=' + $("#cboDoctorLeaveLocation").val() + '&DoctorID=' + $("#cboDoctorName").val(),
-        datatype: 'local',
-        mtype: 'POST',
-        contentType: 'application/json; charset=utf-8',
+        url: getBaseURL() + '/Leave/GetDoctorLeaveListAll?Businesskey=' + $("#cboBusinesskey").val() + '&DoctorID=' + $("#cboDoctorName").val(),
+        mtype: 'GET',
+        datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+        jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
 
-        colNames: [localization.BusinessLocation, localization.DoctorId,localization.LeaveFrom, localization.LeaveTo, localization.Active, localization.Actions],
+        colNames: [localization.LeaveFrom, localization.LeaveTo, localization.NumberOfDays,"", localization.Active, localization.Actions],
 
                 colModel: [
-                    { name: "BusinessKey", width: 50, editable: true, align: 'left', hidden:true },
-                    { name: "DoctorId", width: 50, editable: true, align: 'left', hidden:true },
                     {
                         name: 'OnLeaveFrom', index: 'FromDate', width: 60, sorttype: "date", formatter: "date", formatoptions:
                             { newformat: _cnfjqgDateFormat }
@@ -104,9 +96,9 @@ function  fnGridLoadDoctorLeave() {
                     },
                     
                     { name: "NoOfDays", width: 50, editable: true, align: 'left', hidden: false },
-                    { name: "Comments", width: 250, editable: true, align: 'left', hidden: false },
+                    { name: "Comments", width: 250, editable: true, align: 'left', hidden: true },
                     
-                      { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+                    { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
                     {
                         name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -147,22 +139,21 @@ function  fnGridLoadDoctorLeave() {
 }
 
 function fnAddDoctorLeave() {
-
-
+   
+    _isInsert = true;
     $('#txtLeaveFrom').attr('disabled', false);
     $('#txtLeaveTo').attr('disabled', false);
 
-    if ($("#cboDoctorLeaveLocation").val() == "0" || $("#cboDoctorLeaveLocation").val() == "" || $("#cboDoctorLeaveLocation").val() == null) {
-        fnAlert("w", "ESP_02_00", " ", " Please select the business location ");
+    if ($("#cboBusinesskey").val() == "0" || $("#cboBusinesskey").val() == "" || $("#cboBusinesskey").val() == null) {
+        fnAlert("w", "ESP_02_00", " ", " Please select the Business location ");
         return;
     }
 
-    else if (IsStringNullorEmpty($("#cboDoctorName").val() || $("#cboDoctorName").val() == "0")) {
-        fnAlert("w", "ESP_02_00", " ", " Please select Docter Name ");
+    if (IsStringNullorEmpty($("#cboDoctorName").val()) || $("#cboDoctorName").val() == "0") {
+        fnAlert("w", "ESP_02_00", " ", " Please select Doctor ");
         return;
     }
-    else
-    {
+  
 
      $('#PopupDoctorLeave').modal('show');
      $('#PopupDoctorLeave').modal({ backdrop: 'static', keyboard: false });
@@ -173,7 +164,7 @@ function fnAddDoctorLeave() {
         $('#PopupDoctorLeave').on('hidden.bs.modal', fnClearDoctorLeave());
      $('#PopupDoctorLeave').modal('show');
      
-    }
+    
 }
 
 function fnEditDoctorLeave(e, actiontype) {
@@ -217,7 +208,7 @@ function fnEditDoctorLeave(e, actiontype) {
             return;
         }
         $('#PopupDoctorLeave').modal('show');
-        $('#PopupDoctorLeave').find('.modal-title').text(localization.UpdateActions);
+        $('#PopupDoctorLeave').find('.modal-title').text(localization.UpdateLeave);
         $("#btnSaveDoctorLeave").html('<i class="fa fa-sync"></i>' + localization.Update);
         $("#btndeActiveDoctorLeave").hide();
         $("#chkActiveStatus").prop('disabled', true);
@@ -230,7 +221,7 @@ function fnEditDoctorLeave(e, actiontype) {
             return;
         }
         $('#PopupDoctorLeave').modal('show');
-        $('#PopupDoctorLeave').find('.modal-title').text(localization.ViewActions);
+        $('#PopupDoctorLeave').find('.modal-title').text(localization.ViewLeave);
         $("#btnSaveDoctorLeave").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
@@ -309,13 +300,13 @@ function fnCalculateLeaveDays() {
 
 function fnSaveDoctorLeave() {
 
-    if ($("#cboDoctorLeaveLocation").val() == "0" || $("#cboDoctorLeaveLocation").val() == "" || $("#cboDoctorLeaveLocation").val() == null) {
+    if ($("#cboBusinesskey").val() == "0" || $("#cboBusinesskey").val() == "" || $("#cboBusinesskey").val() == null) {
         fnAlert("w", "ESP_02_00", " ", " Please select the business location ");
         return;
     }
 
-    if (IsStringNullorEmpty($("#cboDoctorName").val() || $("#cboDoctorName").val() == "0") ) {
-        fnAlert("w", "ESP_02_00", " ", " Please select Docter Name ");
+    if (IsStringNullorEmpty($("#cboDoctorName").val()) || $("#cboDoctorName").val() == "0") {
+        fnAlert("w", "ESP_02_00", " ", " Please select Doctor ");
         return;
     }
     if (IsStringNullorEmpty($("#txtLeaveFrom").val()) ) {
@@ -332,7 +323,7 @@ function fnSaveDoctorLeave() {
         return;
     }
     obj_leave = {
-        BusinessKey: $("#cboDoctorLeaveLocation").val(),
+        BusinessKey: $("#cboBusinesskey").val(),
         DoctorId: $("#cboDoctorName").val(),
         OnLeaveFrom: getDate($("#txtLeaveFrom")),
         OnLeaveTill: getDate($("#txtLeaveTo")),
@@ -342,16 +333,11 @@ function fnSaveDoctorLeave() {
     };
     $("#btnSaveDoctorLeave").attr('disabled', true);
 
-    var URL = '';
-    if ($('#hdvDoctorLeaveFromDate').val() == '')
-        URL = getBaseURL() + '/Doctors/InsertIntoDoctorLeave';
-    else
-        URL = getBaseURL() + '/Doctors/UpdateDoctorLeave';
-
+   
     $.ajax({
-        url: URL,
+        url: getBaseURL() + '/Leave/InsertOrUpdateIntoDoctorSchedule',
         type: 'POST',
-        data: { obj_leave },
+        data: {isInsert: _isInsert, obj:obj_leave },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -378,7 +364,7 @@ function fnSaveDoctorLeave() {
 function fnDeleteDoctorLeave() {
     var a_status;
     //Activate or De Activate the status
-    if ($("#chkScheduleActive").parent().hasClass("is-checked") === true) {
+    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
         a_status = false
     }
     else {
@@ -389,12 +375,19 @@ function fnDeleteDoctorLeave() {
     $("#btndeactiveDoctorLeave").attr('disabled', true);
 
     var obj = {
+        BusinessKey: $("#cboBusinesskey").val(),
+        DoctorId: $("#cboDoctorName").val(),
+        OnLeaveFrom: getDate($("#txtLeaveFrom")),
+        OnLeaveTill: getDate($("#txtLeaveTo")),
+        NoOfDays: fnCalculateLeaveDays(),
+        Comments: $("#txtComments").val(),
+        ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
         _status: a_status
     };
 
 
     $.ajax({
-        url: getBaseURL() + '/DoctorLeave/ActivateOrDeActivateDoctorLeave',
+        url: getBaseURL() + '/Leave/ActivateOrDeActivateDoctorLeave',
         type: 'POST',
         datatype: 'json',
         data: { obj },
@@ -432,5 +425,5 @@ function fnClearDoctorLeave() {
     $("#txtComments").val('');
     $('#chkActiveStatus').prop('checked', false);
     $("#btnSaveDoctorLeave").attr("disabled", false);
-
+    $("#btndeactiveDoctorLeave").attr("disabled", false);
 }
