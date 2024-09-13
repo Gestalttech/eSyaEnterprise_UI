@@ -67,12 +67,14 @@
         LanguageKnown: '@Localizer["LanguageKnown"]',
         Experience: '@Localizer["Experience"]',
         DoctorRemarks: '@Localizer["DoctorRemarks"]',
-        DeActivate: '@Localizer["DeActivate"]',
+        Deactivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         TimeSlotInMintues: '@Localizer["TimeSlotInMintues"]',
         AddDoctorSchedule: '@Localizer["AddDoctorSchedule"]',
         UpdateDoctorSchedule: '@Localizer["UpdateDoctorSchedule"]',
         ViewDoctorSchedule: '@Localizer["ViewDoctorSchedule"]',
+        PatientCountPerHour: '@Localizer["PatientCountPerHour"]',
+        TimeSlotInMins: '@Localizer["TimeSlotInMins"]',
     };
 
     var errorMsg = {
@@ -92,35 +94,38 @@
     <input type="hidden" id="hdvDoctorScheduleSerialNo" value="" />
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label class="lable-color"> @Localizer["Location"]</label>
-            @*<select class="selectpicker" data-live-search="true" title="Select" id="cboDoctorLocation" asp-items="@ViewBag.BusinessKeyList" onchange="fnLoadScheduleSpecialty()"></select>*@
-            <select class="selectpicker" data-live-search="true" title="" id="cboDoctorLocation" onchange="fnLoadScheduleSpecialty()"></select>
+            <label for="cboDoctorLocation"> @Localizer["Location"]</label>
+            <select class="selectpicker" data-live-search="true" data-container="body" id="cboDoctorLocation" title="" data-size="8"
+                    asp-items="@ViewBag.BusinessKeys"
+                    onchange="fnLoadScheduleDoctors()">
+                <option value="0">Select</option>
+            </select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
 
-            <label class="lable-color">@Localizer["Doctor"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorScheduleDoctor" onchange=""></select>
+            <label for="cboDoctorScheduleDoctor">@Localizer["Doctor"]</label>
+            <select class="selectpicker input" title="" id="cboDoctorScheduleDoctor" onchange="fnLoadScheduleSpecialties()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
 
-            <label class="lable-color">@Localizer["Specialty"]</label>
+            <label for="cboDoctorScheduleSpecialty">@Localizer["Specialty"]</label>
             <select class="selectpicker input" title="" id="cboDoctorScheduleSpecialty" onchange="fnLoadScheduleClinic()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label class="lable-color"> @Localizer["Clinic"]</label>
+            <label for="cboDoctorClinic"> @Localizer["Clinic"]</label>
             <select class="selectpicker input" title="" id="cboDoctorClinic" onchange="fnLoadScheduleConsultationType()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label class="lable-color"> @Localizer["ConsultationType"]</label>
-            <select class="selectpicker input" title="" id="cboScheduleConsultationType"></select>
+            <label for="cboScheduleConsultationType"> @Localizer["ConsultationType"]</label>
+            <select class="selectpicker input" title="" id="cboScheduleConsultationType" onchange="fnLoadDoctorScheduleGrid()"></select>
         </div>
     </div>
 
@@ -174,7 +179,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                        <label for="txtPatientsPerHr">@Localizer["PatientsPerHr"]</label>
+                        <label for="txtPatientsPerHr">@Localizer["PatientsCountPerHr"]</label>
                         <input id="txtPatientsPerHr" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
@@ -245,6 +250,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorSchedule" onclick="fnSaveDoctorSchedule()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnDeleteDoctorSchedule" onclick="fnDeleteDoctorSchedule()"><i class="far fa-save"></i>  @Localizer["DeActivate"]</button>
                                <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorSchedule" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                         </div>
                     </div>
