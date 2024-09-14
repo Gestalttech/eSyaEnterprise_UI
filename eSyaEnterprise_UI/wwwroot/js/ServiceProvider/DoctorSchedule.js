@@ -131,7 +131,7 @@ function fnLoadScheduleClinic() {
             }
             else {
                 $("#cboDoctorClinic").empty();
-                $("#cboDoctorClinic").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorClinic").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboDoctorClinic').selectpicker('refresh');
             }
         },

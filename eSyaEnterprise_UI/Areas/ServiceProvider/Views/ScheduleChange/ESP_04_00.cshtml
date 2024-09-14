@@ -70,12 +70,13 @@
         LanguageKnown: '@Localizer["LanguageKnown"]',
         Experience: '@Localizer["Experience"]',
         DoctorRemarks: '@Localizer["DoctorRemarks"]',
-        Deactivate: '@Localizer["DeActivate"]',
+        Deactivate: '@Localizer["Deactivate"]',
+        ScheduleChangeDate: '@Localizer["ScheduleChangeDate"]',
         Activate: '@Localizer["Activate"]',
         TimeSlotInMintues: '@Localizer["TimeSlotInMintues"]',
-        AddDoctorSchedule: '@Localizer["AddDoctorSchedule"]',
-        UpdateDoctorSchedule: '@Localizer["UpdateDoctorSchedule"]',
-        ViewDoctorSchedule: '@Localizer["ViewDoctorSchedule"]',
+        AddDoctorScheduleChange: '@Localizer["AddDoctorScheduleChange"]',
+        UpdateDoctorScheduleChange: '@Localizer["UpdateDoctorScheduleChange"]',
+        ViewDoctorScheduleChange: '@Localizer["ViewDoctorScheduleChange"]',
         PatientCountPerHour: '@Localizer["PatientCountPerHour"]',
         TimeSlotInMins: '@Localizer["TimeSlotInMins"]',
     };
@@ -112,36 +113,36 @@
     <input type="hidden" id="hdvDoctorScheduleSerialNo" value="" />
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorLocation"> @Localizer["Location"]</label>
-            <select class="selectpicker" data-live-search="true" data-container="body" id="cboDoctorLocation" title="" data-size="8"
+            <label for="cboScheduleChangeDoctorLocation"> @Localizer["Location"]</label>
+            <select class="selectpicker" data-live-search="true" data-container="body" id="cboScheduleChangeDoctorLocation" title="" data-size="8"
                     asp-items="@ViewBag.BusinessKeys"
-                    onchange="fnLoadScheduleDoctors()">
+                    onchange="fnLoadScheduleChangeDoctors()">
                 <option value="0">@Localizer["Select"]</option>
             </select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorScheduleDoctor">@Localizer["Doctor"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorScheduleDoctor" onchange="fnLoadScheduleSpecialties()"></select>
+            <label for="cboDoctorScheduleChangeDoctor">@Localizer["Doctor"]</label>
+            <select class="selectpicker input" title="" id="cboDoctorScheduleChangeDoctor" onchange="fnLoadScheduleChangeSpecialties()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorScheduleSpecialty">@Localizer["Specialty"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorScheduleSpecialty" onchange="fnLoadScheduleClinic()"></select>
+            <label for="cboDoctorScheduleChangeSpecialty">@Localizer["Specialty"]</label>
+            <select class="selectpicker input" title="" id="cboDoctorScheduleChangeSpecialty" onchange="fnLoadScheduleChangeClinic()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboDoctorClinic"> @Localizer["Clinic"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorClinic" onchange="fnLoadScheduleConsultationType()"></select>
+            <label for="cboScheduleChangeDoctorClinic"> @Localizer["Clinic"]</label>
+            <select class="selectpicker input" title="" id="cboScheduleChangeDoctorClinic" onchange="fnLoadScheduleChangeConsultationType()"></select>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
-            <label for="cboScheduleConsultationType"> @Localizer["ConsultationType"]</label>
-            <select class="selectpicker input" title="" id="cboScheduleConsultationType" onchange="fnLoadDoctorScheduleGrid()"></select>
+            <label for="cboScheduleChangeConsultationType"> @Localizer["ConsultationType"]</label>
+            <select class="selectpicker input" title="" id="cboScheduleChangeConsultationType" onchange="fnLoadDoctorScheduleChangeGrid()"></select>
         </div>
     </div>
 
@@ -154,125 +155,61 @@
 </div>
 <div class=" row form-group">
     <div class="col-lg-12">
-        <table id="jqgDoctorSchedule"></table>
-        <div id="jqpDoctorSchedule"></div>
+        <table id="jqgDoctorScheduleChange"></table>
+        <div id="jqpDoctorScheduleChange"></div>
     </div>
 </div>
-<div class="modal fade in" id="PopupDoctorScheduler" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fade in" id="PopupDoctorScheduleChange" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title">@Localizer["AddDoctorSchedule"]</h4>
+                <h4 class="modal-title">@Localizer["AddDoctorScheduleChange"]</h4>
             </div>
 
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="form-group">
-                                    <label for="cboDoctorScheduleWeekDays" class="">@Localizer["Dayoftheweek"]</label>
-                                    <select class="selectpicker" id="cboDoctorScheduleWeekDays" data-container="body">
-                                        <option value="0">@Localizer["Chooseday"]</option>
-                                        <option value="Sunday">@Localizer["Sunday"]</option>
-                                        <option value="Monday">@Localizer["Monday"]</option>
-                                        <option value="Tuesday">@Localizer["Tuesday"]</option>
-                                        <option value="Wednesday">@Localizer["Wednesday"]</option>
-                                        <option value="Thursday">@Localizer["Thursday"]</option>
-                                        <option value="Friday">@Localizer["Friday"]</option>
-                                        <option value="Saturday">@Localizer["Saturday"]</option>
-                                    </select>
-                                </div>
-                            </div><div class="offset-lg-8 offset-md-8 offset-sm-8"></div>
+                            
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="txtFromTime">  @Localizer["FromTime"]</label>
-                                    <input id="txtFromTime" class="form-control" type="time" autocomplete="off" />
+                            <label for="txtScheduleChangeFromTime">  @Localizer["FromTime"]</label>
+                            <input id="txtScheduleChangeFromTime" class="form-control" type="time" autocomplete="off" />
 
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label for="txtToTime">  @Localizer["ToTime"]</label>
-                                    <input id="txtToTime" class="form-control" type="time" autocomplete="off" />
+                            <label for="txtScheduleChangeToTime">  @Localizer["ToTime"]</label>
+                            <input id="txtScheduleChangeToTime" class="form-control" type="time" autocomplete="off" />
 
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                <label for="txtPatientsPerHr">@Localizer["PatientsCountPerHr"]</label>
-                                <input id="txtPatientsPerHr" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
+                        <label for="txtScheduleChangePatientsPerHr">@Localizer["PatientsCountPerHour"]</label>
+                        <input id="txtScheduleChangePatientsPerHr" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
-                                <label for="txtTimeSlotInMins">@Localizer["TimeSlotInMins"]</label>
-                                <input id="txtTimeSlotInMins" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
+                        <label for="txtScheduleChangeTimeSlotInMins">@Localizer["TimeSlotInMins"]</label>
+                        <input id="txtScheduleChangeTimeSlotInMins" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 form-group">
                                 <div class="">
-                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkScheduleActive">
-                                        <input type="checkbox" id="chkScheduleActive" class="mdl-checkbox__input">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkScheduleChangeActive">
+                                        <input type="checkbox" id="chkScheduleChangeActive" class="mdl-checkbox__input">
                                         <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                        <div class="">
-                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkWeek1">
-                                                <input type="checkbox" id="chkWeek1" class="mdl-checkbox__input">
-                                                <span class="mdl-checkbox__label">@Localizer["Week1"]</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                        <div class="">
-                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkWeek2">
-                                                <input type="checkbox" id="chkWeek2" class="mdl-checkbox__input">
-                                                <span class="mdl-checkbox__label">@Localizer["Week2"]</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                        <div class="">
-                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkWeek3">
-                                                <input type="checkbox" id="chkWeek3" class="mdl-checkbox__input">
-                                                <span class="mdl-checkbox__label">@Localizer["Week3"]</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                        <div class="">
-                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkWeek4">
-                                                <input type="checkbox" id="chkWeek4" class="mdl-checkbox__input">
-                                                <span class="mdl-checkbox__label">@Localizer["Week4"]</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                        <div class="">
-                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkWeek5">
-                                                <input type="checkbox" id="chkWeek5" class="mdl-checkbox__input">
-                                                <span class="mdl-checkbox__label">@Localizer["Week5"]</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    
             </div>
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorSchedule" onclick="fnSaveDoctorSchedule()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnDeleteDoctorSchedule" onclick="fnDeleteDoctorSchedule()"><i class="far fa-save"></i>  @Localizer["DeActivate"]</button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorSchedule" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorScheduleChange" onclick="fnSaveDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnDeleteDoctorScheduleChange" onclick="fnDeleteDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["DeActivate"]</button>
+                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorScheduleChange" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                     </div>
                 </div>
             </div>
@@ -367,21 +304,22 @@
     </div>
 </div> *@
 
-@* <script>
+<script>
     $(function () {
 
-        $("#dtDoctorScheduleChangeDate").datepicker({
+        $("#txtScheduleChangeDate").datepicker({
             dateFormat: _cnfDateFormat,
             minDate: new Date(),
+
             onSelect: function (date) {
                 var startDate = $(this).datepicker('getDate');
                 var minDate = $(this).datepicker('getDate');
                 startDate.setDate(startDate.getDate() + 30);
-
+                fnLoadDoctorScheduleChangeGrid();
             }
-        });
+        }).datepicker("setDate", 'now');
 
     });
-</script> *@
+</script>
 
 

@@ -149,7 +149,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
             {
                 var parameter = "?Businesskey=" + Businesskey + "&DoctorID=" + DoctorID + "&SpecialtyID=" + SpecialtyID 
                     + "&ClinicID=" + ClinicID + "&ConsultationID=" + ConsultationID+ "&ScheduleChangeDate="+ScheduleChangeDate;
-                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorScheduler>>("Scheduler/GetDoctorScheduleChangeList" + parameter);
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorScheduler>>("ScheduleChange/GetDoctorScheduleChangeList" + parameter);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -179,7 +179,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Scheduler/InsertIntoDoctorScheduleChange", obj).Result;
+                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ScheduleChange/InsertIntoDoctorScheduleChange", obj).Result;
                 if (Insertresponse.Status)
                 {
                     return Json(Insertresponse.Data);
@@ -209,7 +209,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Scheduler/UpdateDoctorScheduleChange", obj).Result;
+                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ScheduleChange/UpdateDoctorScheduleChange", obj).Result;
                 if (Insertresponse.Status)
                 {
                     return Json(Insertresponse.Data);
@@ -238,7 +238,7 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
-                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Scheduler/ActivateOrDeActivateDoctorScheduleChange", obj).Result;
+                var Insertresponse = _eSyaServiceProviderAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("ScheduleChange/ActivateOrDeActivateDoctorScheduleChange", obj).Result;
                 if (Insertresponse.Status)
                 {
                     return Json(Insertresponse.Data);
