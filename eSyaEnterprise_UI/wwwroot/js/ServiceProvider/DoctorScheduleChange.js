@@ -64,7 +64,7 @@ function fnLoadScheduleChangeDoctors() {
     fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeSpecialties() {
-    debugger;
+   
     $('#cboDoctorScheduleChangeSpecialty').selectpicker('refresh');
     $('#cboScheduleChangeDoctorClinic').selectpicker('refresh');
     $('#cboScheduleChangeConsultationType').selectpicker('refresh');
@@ -553,6 +553,7 @@ function fnDeleteDoctorScheduleChange() {
 }
 
 function fnClearDoctorScheduleChange() {
+    
     $('#cboDoctorScheduleChangeWeekDays').val('0');
     $('#cboDoctorScheduleChangeWeekDays').selectpicker('refresh');
     $('#txtScheduleChangeFromTime').val('');
