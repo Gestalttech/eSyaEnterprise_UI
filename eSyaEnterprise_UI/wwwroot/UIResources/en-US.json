@@ -390,6 +390,14 @@
   "UI0389": "Please enter subledger group description",
   "UI0390": "Please Enter the Email Variable",
   "UI0391": "Please Enter the Email Component",
+  "UI0392": "Please Select a Day of Week",
+  "UI0393": "Please Select a From Time",
+  "UI0394": "Please Select a To Time",
+  "UI0395": "Please select a valid to time",
+  "UI0396": "Please Select atleast 1 Week",
+  "UI0397": "Please select a Leave From",
+  "UI0398": "Please select a Leave To",
+  "UI0399": "Please enter the comments",
 
 
   "UIC01": "You are not Authorized to Add",

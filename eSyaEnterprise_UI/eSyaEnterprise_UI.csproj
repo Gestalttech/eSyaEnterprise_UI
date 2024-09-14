@@ -24,6 +24,7 @@
     <Compile Remove="Areas\ProductSetup\Views\Connect\**" />
     <Compile Remove="Areas\ProductSetup\Views\License\**" />
     <Compile Remove="Areas\ServiceProvider\Views\ClinicService\**" />
+    <Compile Remove="Areas\ServiceProvider\Views\SchedulerChange\**" />
     <Compile Remove="Areas\Stores\Views\ConfigStores\**" />
     <Compile Remove="Areas\Stores\Views\Rules\**" />
     <Compile Remove="Areas\TokenSystem\Views\Addon\**" />
@@ -50,6 +51,7 @@
     <Content Remove="Areas\ProductSetup\Views\Connect\**" />
     <Content Remove="Areas\ProductSetup\Views\License\**" />
     <Content Remove="Areas\ServiceProvider\Views\ClinicService\**" />
+    <Content Remove="Areas\ServiceProvider\Views\SchedulerChange\**" />
     <Content Remove="Areas\Stores\Views\ConfigStores\**" />
     <Content Remove="Areas\Stores\Views\Rules\**" />
     <Content Remove="Areas\TokenSystem\Views\Addon\**" />
@@ -76,6 +78,7 @@
     <EmbeddedResource Remove="Areas\ProductSetup\Views\Connect\**" />
     <EmbeddedResource Remove="Areas\ProductSetup\Views\License\**" />
     <EmbeddedResource Remove="Areas\ServiceProvider\Views\ClinicService\**" />
+    <EmbeddedResource Remove="Areas\ServiceProvider\Views\SchedulerChange\**" />
     <EmbeddedResource Remove="Areas\Stores\Views\ConfigStores\**" />
     <EmbeddedResource Remove="Areas\Stores\Views\Rules\**" />
     <EmbeddedResource Remove="Areas\TokenSystem\Views\Addon\**" />
@@ -102,6 +105,7 @@
     <None Remove="Areas\ProductSetup\Views\Connect\**" />
     <None Remove="Areas\ProductSetup\Views\License\**" />
     <None Remove="Areas\ServiceProvider\Views\ClinicService\**" />
+    <None Remove="Areas\ServiceProvider\Views\SchedulerChange\**" />
     <None Remove="Areas\Stores\Views\ConfigStores\**" />
     <None Remove="Areas\Stores\Views\Rules\**" />
     <None Remove="Areas\TokenSystem\Views\Addon\**" />
@@ -171,6 +175,7 @@
     <Compile Remove="Areas\ProductSetup\Models\DO_SMSConnect.cs" />
     <Compile Remove="Areas\ProductSetup\Models\DO_UserRoleActionLink.cs" />
     <Compile Remove="Areas\ServiceProvider\Controllers\ClinicServiceController.cs" />
+    <Compile Remove="Areas\ServiceProvider\Controllers\SchedulerChangeController.cs" />
     <Compile Remove="Areas\ServiceProvider\Models\DO_ReturnParameter.cs" />
     <Compile Remove="Areas\Stores\Controllers\ConfigStoresController.cs" />
     <Compile Remove="Areas\Stores\Controllers\RulesController.cs" />

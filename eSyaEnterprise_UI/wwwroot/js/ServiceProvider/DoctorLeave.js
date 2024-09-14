@@ -56,7 +56,7 @@ function fnLoadDoctorList() {
             }
             else {
                 $("#cboDoctorName").empty();
-                $("#cboDoctorName").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorName").append($("<option value='0'>" + localization.Select + "</option>"));
                 $('#cboDoctorName').selectpicker('refresh');
             }
         },
@@ -145,12 +145,12 @@ function fnAddDoctorLeave() {
     $('#txtLeaveTo').attr('disabled', false);
 
     if ($("#cboBusinesskey").val() == "0" || $("#cboBusinesskey").val() == "" || $("#cboBusinesskey").val() == null) {
-        fnAlert("w", "ESP_02_00", " ", " Please select the Business location ");
+        fnAlert("w", "ESP_02_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
 
     if (IsStringNullorEmpty($("#cboDoctorName").val()) || $("#cboDoctorName").val() == "0") {
-        fnAlert("w", "ESP_02_00", " ", " Please select Doctor ");
+        fnAlert("w", "ESP_02_00", "UI0141", errorMsg.SelectDoctor_E7);;
         return;
     }
   
@@ -209,7 +209,7 @@ function fnEditDoctorLeave(e, actiontype) {
         }
         $('#PopupDoctorLeave').modal('show');
         $('#PopupDoctorLeave').find('.modal-title').text(localization.UpdateLeave);
-        $("#btnSaveDoctorLeave").html('<i class="fa fa-sync"></i>' + localization.Update);
+        $("#btnSaveDoctorLeave").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btndeActiveDoctorLeave").hide();
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveDoctorLeave").attr("disabled", false);
@@ -247,10 +247,10 @@ function fnEditDoctorLeave(e, actiontype) {
         $("#btnSaveDoctorLeave").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveDoctorLeave").html(localization.Deactivate);
+            $("#btndeActiveDoctorLeave").html('<i class="fa fa-ban"></i> '+ localization.Deactivate);
         }
         else {
-            $("#btndeActiveDoctorLeave").html(localization.Activate);
+            $("#btndeActiveDoctorLeave").html('<i class="fa fa-check"></i> ' + localization.Activate);
         }
 
         $("#btndeActiveDoctorLeave").show();
@@ -301,25 +301,25 @@ function fnCalculateLeaveDays() {
 function fnSaveDoctorLeave() {
 
     if ($("#cboBusinesskey").val() == "0" || $("#cboBusinesskey").val() == "" || $("#cboBusinesskey").val() == null) {
-        fnAlert("w", "ESP_02_00", " ", " Please select the business location ");
+        fnAlert("w", "ESP_02_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
 
     if (IsStringNullorEmpty($("#cboDoctorName").val()) || $("#cboDoctorName").val() == "0") {
-        fnAlert("w", "ESP_02_00", " ", " Please select Doctor ");
+        fnAlert("w", "ESP_02_00", "UI0141", errorMsg.SelectDoctor_E7);
         return;
     }
     if (IsStringNullorEmpty($("#txtLeaveFrom").val()) ) {
-        fnAlert("w", "ESP_02_00", " ", "Please select LeaveFrom ");
+        fnAlert("w", "ESP_02_00", "UI0397", errorMsg.LeaveFrom_E8);
         return;
     }
    
     if (IsStringNullorEmpty($("#txtLeaveTo").val()) ) {
-        fnAlert("w", "ESP_02_00", " ", "Please select LeaveTo ");
+        fnAlert("w", "ESP_02_00", "UI0397", errorMsg.LeaveTo_E9);
         return;
     }
     if (IsStringNullorEmpty($("#txtComments").val())) {
-        fnAlert("w", "ESP_02_00", " ", "Please enter the comments ");
+        fnAlert("w", "ESP_02_00", "UI0399", errorMsg.Comments_E10);
         return;
     }
     obj_leave = {

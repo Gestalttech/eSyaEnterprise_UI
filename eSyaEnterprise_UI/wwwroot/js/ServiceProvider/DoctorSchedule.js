@@ -6,18 +6,14 @@
         }
     });
     $.contextMenu({
-        // define which elements trigger this menu
         selector: "#btnDoctorSchedule",
         trigger: 'left',
-        // define the elements of the menu
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'view') } },
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
 
-
         }
-        // there's more, have a look at the demos and docs...
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
@@ -47,7 +43,7 @@ function fnLoadScheduleDoctors() {
                 //refresh each time
                 $("#cboDoctorScheduleDoctor").empty();
 
-                $("#cboDoctorScheduleDoctor").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorScheduleDoctor").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboDoctorScheduleDoctor").append($("<option></option>").val(response[i]["DoctorId"]).html(response[i]["DoctorName"]));
@@ -56,7 +52,7 @@ function fnLoadScheduleDoctors() {
             }
             else {
                 $("#cboDoctorScheduleDoctor").empty();
-                $("#cboDoctorScheduleDoctor").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorScheduleDoctor").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboDoctorScheduleDoctor').selectpicker('refresh');
             }
         },
@@ -87,7 +83,7 @@ function fnLoadScheduleSpecialties() {
                 //refresh each time
                 $("#cboDoctorScheduleSpecialty").empty();
 
-                $("#cboDoctorScheduleSpecialty").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorScheduleSpecialty").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboDoctorScheduleSpecialty").append($("<option></option>").val(response[i]["SpecialtyID"]).html(response[i]["SpecialtyDesc"]));
@@ -96,7 +92,7 @@ function fnLoadScheduleSpecialties() {
             }
             else {
                 $("#cboDoctorScheduleSpecialty").empty();
-                $("#cboDoctorScheduleSpecialty").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorScheduleSpecialty").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboDoctorScheduleSpecialty').selectpicker('refresh');
             }
         },
@@ -126,7 +122,7 @@ function fnLoadScheduleClinic() {
                 //refresh each time
                 $("#cboDoctorClinic").empty();
 
-                $("#cboDoctorClinic").append($("<option value='0'> Select </option>"));
+                $("#cboDoctorClinic").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboDoctorClinic").append($("<option></option>").val(response[i]["ClinicId"]).html(response[i]["ClinicDesc"]));
@@ -165,7 +161,7 @@ function fnLoadScheduleConsultationType() {
                 //refresh each time
                 $("#cboScheduleConsultationType").empty();
 
-                $("#cboScheduleConsultationType").append($("<option value='0'> Select </option>"));
+                $("#cboScheduleConsultationType").append($("<option value='0'>"+localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboScheduleConsultationType").append($("<option></option>").val(response[i]["ConsultationId"]).html(response[i]["ConsultationDesc"]));
@@ -174,7 +170,7 @@ function fnLoadScheduleConsultationType() {
             }
             else {
                 $("#cboScheduleConsultationType").empty();
-                $("#cboScheduleConsultationType").append($("<option value='0'> Select </option>"));
+                $("#cboScheduleConsultationType").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboScheduleConsultationType').selectpicker('refresh');
             }
         },
@@ -195,7 +191,7 @@ function fnLoadDoctorScheduleGrid() {
         mtype: 'GET',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
 
-        colNames: ["", "", "", "", "", "", localization.Dayoftheweek, localization.PatientCountPerHour, localization.TimeSlotInMins,"", localization.Week1, localization.Week2, localization.Week3, localization.Week4, localization.Week5, localization.FromTime, localization.ToTime, localization.Active, ""],
+        colNames: ["", "", "", "", "", "", localization.Dayoftheweek, localization.PatientCountPerHour, localization.TimeSlotInMins, "", localization.Week1, localization.Week2, localization.Week3, localization.Week4, localization.Week5, localization.FromTime, localization.ToTime, localization.Active, localization.Actions],
         colModel: [
 
             { name: "DoctorId", width: 70, editable: true, align: 'left', hidden: true },
@@ -260,23 +256,23 @@ function fnRefreshDoctorSchedule() {
 function fnAddDoctorSchedule() {
 
     if (IsStringNullorEmpty($("#cboDoctorLocation").val()) || $('#cboDoctorLocation').val() == '' || $('#cboDoctorLocation').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Location");
+        fnAlert("w", "ESP_03_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleDoctor").val()) || $('#cboDoctorScheduleDoctor').val() == '' || $('#cboDoctorScheduleDoctor').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Doctor");
+        fnAlert("w", "ESP_03_00", "UI0141", errorMsg.SelectDoctor_E7);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleSpecialty").val()) || $('#cboDoctorScheduleSpecialty').val() == '' || $('#cboDoctorScheduleSpecialty').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Specialty");
+        fnAlert("w", "ESP_03_00", "UI0200", errorMsg.SelectSpecialty_E8);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorClinic").val()) || $('#cboDoctorClinic').val() == '' || $('#cboDoctorClinic').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Clinic");
+        fnAlert("w", "ESP_03_00", "UI0194", errorMsg.SelectClinicType_E9);
         return;
     }
     if (IsStringNullorEmpty($("#cboScheduleConsultationType").val()) || $('#cboScheduleConsultationType').val() == '' || $('#cboScheduleConsultationType').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Consultation Type");
+        fnAlert("w", "ESP_03_00", "UI0195", errorMsg.SelectConsultationType_E10);
         return;
     }
     fnClearDoctorSchedule();
@@ -285,53 +281,51 @@ function fnAddDoctorSchedule() {
     $("#PopupDoctorScheduler").modal("show");
     $("#chkActiveStatus").parent().addClass("is-checked");
     $('#PopupDoctorScheduler').find('.modal-title').text(localization.AddDoctorSchedule);
-    $("#btnSaveDoctorSchedule").html('<i class="fa fa-save"></i>' + localization.Save);
+    $("#btnSaveDoctorSchedule").html('<i class="fa fa-save"></i> ' + localization.Save);
     $("#chkActiveStatus").prop('disabled', true);
     $("#btnSaveDoctorSchedule").show();
 }
 function fnSaveDoctorSchedule() {
 
     if (IsStringNullorEmpty($("#cboDoctorLocation").val()) || $('#cboDoctorLocation').val() == '' || $('#cboDoctorLocation').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Location");
+        fnAlert("w", "ESP_03_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleDoctor").val()) || $('#cboDoctorScheduleDoctor').val() == '' || $('#cboDoctorScheduleDoctor').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Doctor");
+        fnAlert("w", "ESP_03_00", "UI0141", errorMsg.SelectDoctor_E7);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleSpecialty").val()) || $('#cboDoctorScheduleSpecialty').val() == '' || $('#cboDoctorScheduleSpecialty').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Specialty");
+        fnAlert("w", "ESP_03_00", "UI0200", errorMsg.SelectSpecialty_E8);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorClinic").val()) || $('#cboDoctorClinic').val() == '' || $('#cboDoctorClinic').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Clinic");
+        fnAlert("w", "ESP_03_00", "UI0194", errorMsg.SelectClinicType_E9);
         return;
     }
     if (IsStringNullorEmpty($("#cboScheduleConsultationType").val()) || $('#cboScheduleConsultationType').val() == '' || $('#cboScheduleConsultationType').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Consultation Type");
+        fnAlert("w", "ESP_03_00", "UI0195", errorMsg.SelectConsultationType_E10);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleWeekDays").val()) || $('#cboDoctorScheduleWeekDays').val() == '' || $('#cboDoctorScheduleWeekDays').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Day of Week");
+        fnAlert("w", "ESP_03_00", "UI0392", errorMsg.SelectDayOfWeek_E11);
         return;
     }
     if ($('#txtFromTime').val() == '') {
-        fnAlert("w", "ESP_03_00", "", "Please Select From Time");
+        fnAlert("w", "ESP_03_00", "UI0393", errorMsg.SelectFromTime_E12);
         return;
     }
     if ($('#txtToTime').val() == '') {
-        fnAlert("w", "ESP_03_00", "", "Please Select To Time");
+        fnAlert("w", "ESP_03_00", "UI0394", errorMsg.SelectToTime_E13);
         return;
     }
     if ($('#txtFromTime').val() >= $('#txtToTime').val()) {
-        fnAlert("w", "ESP_03_00", "", "From Time can't be more than or equal to To Time.");
-       
+        fnAlert("w", "ESP_03_00", "UI0395", errorMsg.FromTimeToTime_E14);
         return;
     }
     if (!$('#chkWeek1').parent().hasClass("is-checked") && !$('#chkWeek2').parent().hasClass("is-checked") && !$('#chkWeek3').parent().hasClass("is-checked")
         && !$('#chkWeek4').parent().hasClass("is-checked") && !$('#chkWeek5').parent().hasClass("is-checked")) {
-        fnAlert("w", "ESP_03_00", "", "Please Select at least 1 Week");
-       
+        fnAlert("w", "ESP_03_00", "UI0396", errorMsg.SelectaWeek_E15);
         return;
     }
 
@@ -460,7 +454,7 @@ function fn_EditDoctorSchedule(e,actiontype) {
         $("#btnDeleteDoctorSchedule").hide();
         $('#PopupDoctorScheduler').modal('show');
         $('#PopupDoctorScheduler').find('.modal-title').text(localization.UpdateDoctorSchedule);
-        $("#btnSaveDoctorSchedule").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveDoctorSchedule").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#chkScheduleActive").prop('disabled', true);
         $("#btnSaveDoctorSchedule").attr("disabled", false);
     }
@@ -491,7 +485,7 @@ function fn_EditDoctorSchedule(e,actiontype) {
             return;
         }
         $('#PopupDoctorScheduler').modal('show');
-        $('#PopupDoctorScheduler').find('.modal-title').text("Activate/D-Activate Doctor Schedule");
+        $('#PopupDoctorScheduler').find('.modal-title').text(localization.ActivateDeactivateDoctorSchedule);
         if (rowData.ActiveStatus == 'true') {
             $("#btnDeleteDoctorSchedule").html(localization.Deactivate);
         }
@@ -515,46 +509,44 @@ function fnDeleteDoctorSchedule() {
         a_status = true;
     }
     if (IsStringNullorEmpty($("#cboDoctorLocation").val()) || $('#cboDoctorLocation').val() == '' || $('#cboDoctorLocation').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Location");
+        fnAlert("w", "ESP_03_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleDoctor").val()) || $('#cboDoctorScheduleDoctor').val() == '' || $('#cboDoctorScheduleDoctor').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Doctor");
+        fnAlert("w", "ESP_03_00", "UI0141", errorMsg.SelectDoctor_E7);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleSpecialty").val()) || $('#cboDoctorScheduleSpecialty').val() == '' || $('#cboDoctorScheduleSpecialty').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Specialty");
+        fnAlert("w", "ESP_03_00", "UI0200", errorMsg.SelectSpecialty_E8);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorClinic").val()) || $('#cboDoctorClinic').val() == '' || $('#cboDoctorClinic').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Clinic");
+        fnAlert("w", "ESP_03_00", "UI0194", errorMsg.SelectClinicType_E9);
         return;
     }
     if (IsStringNullorEmpty($("#cboScheduleConsultationType").val()) || $('#cboScheduleConsultationType').val() == '' || $('#cboScheduleConsultationType').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Consultation Type");
+        fnAlert("w", "ESP_03_00", "UI0195", errorMsg.SelectConsultationType_E10);
         return;
     }
     if (IsStringNullorEmpty($("#cboDoctorScheduleWeekDays").val()) || $('#cboDoctorScheduleWeekDays').val() == '' || $('#cboDoctorScheduleWeekDays').val() == '0') {
-        fnAlert("w", "EPT_03_00", "UI0064", "Please Select Day of Week");
+        fnAlert("w", "ESP_03_00", "UI0392", errorMsg.SelectDayOfWeek_E11);
         return;
     }
     if ($('#txtFromTime').val() == '') {
-        fnAlert("w", "ESP_03_00", "", "Please Select From Time");
+        fnAlert("w", "ESP_03_00", "UI0393", errorMsg.SelectFromTime_E12);
         return;
     }
     if ($('#txtToTime').val() == '') {
-        fnAlert("w", "ESP_03_00", "", "Please Select To Time");
+        fnAlert("w", "ESP_03_00", "UI0394", errorMsg.SelectToTime_E13);
         return;
     }
     if ($('#txtFromTime').val() >= $('#txtToTime').val()) {
-        fnAlert("w", "ESP_03_00", "", "From Time can't be more than or equal to To Time.");
-
+        fnAlert("w", "ESP_03_00", "UI0395", errorMsg.FromTimeToTime_E14);
         return;
     }
     if (!$('#chkWeek1').parent().hasClass("is-checked") && !$('#chkWeek2').parent().hasClass("is-checked") && !$('#chkWeek3').parent().hasClass("is-checked")
         && !$('#chkWeek4').parent().hasClass("is-checked") && !$('#chkWeek5').parent().hasClass("is-checked")) {
-        fnAlert("w", "ESP_03_00", "", "Please Select at least 1 Week");
-
+        fnAlert("w", "ESP_03_00", "UI0396", errorMsg.SelectaWeek_E15);
         return;
     }
 

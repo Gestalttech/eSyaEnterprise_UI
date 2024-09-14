@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
 {
     [SessionTimeout]
-    public class SchedulerChangeController : Controller
+    public class ScheduleChangeController : Controller
     {
         [Area("ServiceProvider")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
