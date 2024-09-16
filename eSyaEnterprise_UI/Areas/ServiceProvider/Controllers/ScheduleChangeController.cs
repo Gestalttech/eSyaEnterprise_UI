@@ -143,6 +143,30 @@ namespace eSyaEnterprise_UI.Areas.ServiceProvider.Controllers
             }
         }
         [HttpGet]
+        public async Task<JsonResult> GetExistingDoctorScheduledList(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleChangeDate)
+        {
+            try
+            {
+                var parameter = "?Businesskey=" + Businesskey + "&DoctorID=" + DoctorID + "&SpecialtyID=" + SpecialtyID
+                    + "&ClinicID=" + ClinicID + "&ConsultationID=" + ConsultationID + "&ScheduleChangeDate=" + ScheduleChangeDate;
+                var serviceResponse = await _eSyaServiceProviderAPIServices.HttpClientServices.GetAsync<List<DO_DoctorScheduler>>("ScheduleChange/GetExistingDoctorScheduledList" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetExistingDoctorScheduledList:For ScheduleChangeDate {0} ", ScheduleChangeDate);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetExistingDoctorScheduledList:For ScheduleChangeDate {0} ", ScheduleChangeDate);
+                throw ex;
+            }
+        }
+        [HttpGet]
         public async Task<JsonResult> GetDoctorScheduleChangeList(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleChangeDate)
         {
             try

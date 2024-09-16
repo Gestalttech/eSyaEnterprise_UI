@@ -12,7 +12,7 @@ $(function () {
         selector: "#btnDoctorExistingSchedule",
         trigger: 'left',
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'edit') } },
+            jqgEdit: { name: "ChangeSchedule", icon: "Change Schedule", callback: function (key, opt) { fn_ChangeDoctorSchedule(event, 'edit') } },
             //jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'view') } },
             //jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
 
@@ -23,15 +23,15 @@ $(function () {
         selector: "#btnDoctorSchedule",
         trigger: 'left',
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'edit') } },
+            //jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
+            //jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
 
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    //$(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    //$(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
 });
 
@@ -74,7 +74,7 @@ function fnLoadScheduleChangeDoctors() {
         processData: false
     });
     fnLoadGridDoctorExistingSchedule();
-    //fnLoadDoctorScheduleChangeGrid();
+    fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeSpecialties() {
    
@@ -115,7 +115,7 @@ function fnLoadScheduleChangeSpecialties() {
         processData: false
     });
     fnLoadGridDoctorExistingSchedule();
-    //fnLoadDoctorScheduleChangeGrid();
+    fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeClinic() {
 
@@ -155,7 +155,7 @@ function fnLoadScheduleChangeClinic() {
         processData: false
     });
     fnLoadGridDoctorExistingSchedule();
-    //fnLoadDoctorScheduleChangeGrid();
+    fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeConsultationType() {
 
@@ -194,15 +194,21 @@ function fnLoadScheduleChangeConsultationType() {
         async: false,
         processData: false
     });
+    fnLoadGridDoctorExistingSchedule();
+    fnLoadDoctorScheduleChangeGrid();
 }
-
+function ConsultationTypeonChange() {
+    fnLoadGridDoctorExistingSchedule();
+    fnLoadDoctorScheduleChangeGrid();
+}
+/*Existing Schedule Change Grid*/
 function fnLoadGridDoctorExistingSchedule() {
 
     $("#jqgDoctorExistingSchedule").GridUnload();
 
     $("#jqgDoctorExistingSchedule").jqGrid({
 
-        url: getBaseURL() + '/ScheduleChange/GetDoctorScheduleChangeList?Businesskey=' + $("#cboScheduleChangeDoctorLocation").val()
+        url: getBaseURL() + '/ScheduleChange/GetExistingDoctorScheduledList?Businesskey=' + $("#cboScheduleChangeDoctorLocation").val()
             + '&DoctorID=' + $("#cboDoctorScheduleChangeDoctor").val() + '&SpecialtyID=' + $("#cboDoctorScheduleChangeSpecialty").val()
             + '&ClinicID=' + $("#cboScheduleChangeDoctorClinic").val() + '&ConsultationID=' + $("#cboScheduleChangeConsultationType").val()
             + '&ScheduleChangeDate=' + getDate($("#txtScheduleChangeDate")),
@@ -219,7 +225,7 @@ function fnLoadGridDoctorExistingSchedule() {
             { name: "SpecialtyID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "SerialNo", width: 70, editable: true, align: 'left', hidden: true },
             { name: "ConsultationID", width: 100, editable: true, align: 'left', hidden: true },
-            { name: "DayOfWeek", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "DayOfWeek", width: 70, editable: true, align: 'left', hidden: false },
             { name: "PatientCountPerHour", width: 40, editable: true, align: 'left', hidden: false },
             { name: "TimeSlotInMins", width: 40, editable: true, align: 'left', hidden: false },
             { name: "RoomNo", width: 40, editable: true, align: 'left', hidden: true },
@@ -259,16 +265,13 @@ function fnLoadGridDoctorExistingSchedule() {
         },
 
     }).jqGrid('navGrid', '#jqpDoctorExistingSchedule', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
-        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorScheduleChange
-    }).jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorExistingScheduleChange
+    })
+        .jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
         caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
     });
     fnAddGridSerialNoHeading();
 }
-
-
-
-
 
 /*Schedule Change Grid*/
 function fnLoadDoctorScheduleChangeGrid() {
@@ -300,7 +303,7 @@ function fnLoadDoctorScheduleChangeGrid() {
             { name: "RoomNo", width: 60, editable: true, align: 'left', hidden: true },
             { name: 'ScheduleFromTime', index: 'Tid', width: 60, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
             { name: 'ScheduleToTime', index: 'Tid', width: 60, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
-            
+
             { name: "ActiveStatus", editable: true, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
             {
@@ -335,15 +338,20 @@ function fnLoadDoctorScheduleChangeGrid() {
 
     }).jqGrid('navGrid', '#jqpDoctorScheduleChange', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorScheduleChange
-    }).jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
-    });
+    })
+    //    .jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
+    //    caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
+    //});
     fnAddGridSerialNoHeading();
 }
-function fnRefreshDoctorScheduleChange() {
+function fnRefreshDoctorScheduleChange()
+{
     $("#jqgDoctorScheduleChange").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
-}
 
+}
+function fnRefreshDoctorExistingScheduleChange() {
+    $("#jqgDoctorExistingSchedule").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
 function fnAddDoctorSchedule() {
     IsInsert = true;
     $('#txtScheduleChangeFromTime').attr('disabled', false);
@@ -378,14 +386,12 @@ function fnAddDoctorSchedule() {
     $("#chkScheduleChangeActive").prop('disabled', true);
     $("#btnSaveDoctorScheduleChange").show();
 }
-
 function fn_EditDoctorSchedule(e, actiontype) {
-    IsInsert = false;
+    //IsInsert = false;
     var rowid = $("#jqgDoctorScheduleChange").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDoctorScheduleChange').jqGrid('getRowData', rowid);
 
-    $('#hdvDoctorScheduleChangeSerialNo').val(rowData.SerialNo);
-    $('#cboDoctorScheduleChangeWeekDays').selectpicker('refresh');
+    //$('#hdvDoctorScheduleChangeSerialNo').val(rowData.SerialNo);
     $('#txtScheduleChangeFromTime').val(rowData.ScheduleFromTime);
     $('#txtScheduleChangeToTime').val(rowData.ScheduleToTime);
     $('#txtScheduleChangePatientsPerHr').val(rowData.PatientCountPerHour);
@@ -410,6 +416,81 @@ function fn_EditDoctorSchedule(e, actiontype) {
         $('#PopupDoctorScheduleChange').modal('show');
         $('#PopupDoctorScheduleChange').find('.modal-title').text(localization.UpdateDoctorScheduleChange);
         $("#btnSaveDoctorScheduleChange").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
+        $("#chkScheduleChangeActive").prop('disabled', true);
+        $("#btnSaveDoctorScheduleChange").attr("disabled", false);
+    }
+
+    if (actiontype.trim() == "view") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "ESP_04_00", "UIC03", errorMsg.vieweauth_E4);
+            return;
+        }
+        $("#btnSaveDoctorScheduleChange").hide();
+        $("#btnDeleteDoctorScheduleChange").hide();
+        $('#PopupDoctorScheduleChange').modal('show');
+        $('#PopupDoctorScheduleChange').find('.modal-title').text(localization.ViewDoctorScheduleChange);
+        $("#btnSaveDoctorScheduleChange").attr("disabled", false);
+        $("input,textarea").attr('readonly', true);
+        $("select").next().attr('disabled', true);
+        $("#btnSaveDoctorScheduleChange").hide();
+        $("#chkScheduleChangeActive").prop('disabled', true);
+        $("#PopupDoctorScheduleChange").on('hidden.bs.modal', function () {
+            $("#btnSaveDoctorScheduleChange").show();
+            $("input,textarea").attr('readonly', false);
+            $("select").next().attr('disabled', false);
+        });
+    }
+    if (actiontype.trim() == "delete") {
+        if (_userFormRole.IsDelete === false) {
+            fnAlert("w", "ESP_04_00", "UIC04", errorMsg.deleteauth_E4);
+            return;
+        }
+        $('#PopupDoctorScheduleChange').modal('show');
+        $('#PopupDoctorScheduleChange').find('.modal-title').text(localization.ActivateDeactivateDoctorSchedule);
+        if (rowData.ActiveStatus == 'true') {
+            $("#btnDeleteDoctorScheduleChange").html(localization.Deactivate);
+        }
+        else {
+            $("#btnDeleteDoctorScheduleChange").html(localization.Activate);
+        }
+        $("#btnSaveDoctorScheduleChange").hide();
+        $("#btnDeleteDoctorScheduleChange").show();
+        $("#chkScheduleChangeActive").prop('disabled', true);
+        $("input,textarea").attr('readonly', true);
+        $("select").next().attr('disabled', true);
+    }
+}
+
+function fn_ChangeDoctorSchedule(e, actiontype) {
+    IsInsert = true;
+    var rowid = $("#jqgDoctorExistingSchedule").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgDoctorExistingSchedule').jqGrid('getRowData', rowid);
+    fnClearDoctorScheduleChange();
+    //$('#hdvDoctorScheduleChangeSerialNo').val(rowData.SerialNo);
+    //$('#txtScheduleChangeFromTime').val(rowData.ScheduleFromTime);
+    //$('#txtScheduleChangeToTime').val(rowData.ScheduleToTime);
+    $('#txtScheduleChangePatientsPerHr').val(rowData.PatientCountPerHour);
+    $('#txtScheduleChangeTimeSlotInMins').val(rowData.TimeSlotInMins);
+
+    if (rowData.ActiveStatus === "true")
+        $('#chkScheduleChangeActive').parent().addClass("is-checked");
+    else
+        $('#chkScheduleChangeActive').parent().removeClass("is-checked");
+
+
+
+    $("#btnSaveDoctorScheduleChange").html('<i class="far fa-save"></i> ' + localization.Update);
+
+    if (actiontype.trim() == "edit") {
+        if (_userFormRole.IsEdit === false) {
+            fnAlert("w", "ESP_04_00", "UIC02", errorMsg.editauth_E3);
+            return;
+        }
+        $("#btnSaveDoctorScheduleChange").show();
+        $("#btnDeleteDoctorScheduleChange").hide();
+        $('#PopupDoctorScheduleChange').modal('show');
+        $('#PopupDoctorScheduleChange').find('.modal-title').text(localization.UpdateDoctorScheduleChange);
+        $("#btnSaveDoctorScheduleChange").html('<i class="fa fa-sync mr-1"></i> ' + localization.Change);
         $("#chkScheduleChangeActive").prop('disabled', true);
         $("#btnSaveDoctorScheduleChange").attr("disabled", false);
     }
@@ -498,7 +579,7 @@ function fnSaveDoctorScheduleChange() {
         ClinicID: $('#cboScheduleChangeDoctorClinic').val(),
         SpecialtyID: $('#cboDoctorScheduleChangeSpecialty').val(),
         DoctorId: $('#cboDoctorScheduleChangeDoctor').val(),
-        SerialNo: $('#hdvDoctorScheduleChangeSerialNo').val(),
+        //SerialNo: $('#hdvDoctorScheduleChangeSerialNo').val(),
         ScheduleFromTime: $('#txtScheduleChangeFromTime').val(),
         ScheduleToTime: $('#txtScheduleChangeToTime').val(),
         PatientCountPerHour: $('#txtScheduleChangePatientsPerHr').val(),
@@ -526,6 +607,7 @@ function fnSaveDoctorScheduleChange() {
                     fnAlert("s", "", response.StatusCode, response.Message);
                     $("#PopupDoctorScheduleChange").modal('hide');
                     fnClearDoctorScheduleChange();
+                    fnRefreshDoctorExistingScheduleChange();
                     fnRefreshDoctorScheduleChange();
 
                     $("#btnSaveDoctorScheduleChange").attr('disabled', false);
@@ -546,8 +628,6 @@ function fnSaveDoctorScheduleChange() {
         }
     });
 }
-
-
 function fnDeleteDoctorScheduleChange() {
     var a_status;
     //Activate or De Activate the status
@@ -642,11 +722,9 @@ function fnDeleteDoctorScheduleChange() {
         }
     });
 }
-
 function fnClearDoctorScheduleChange() {
     
-    $('#cboDoctorScheduleChangeWeekDays').val('0');
-    $('#cboDoctorScheduleChangeWeekDays').selectpicker('refresh');
+   
     $('#txtScheduleChangeFromTime').val('');
     $('#txtScheduleChangeToTime').val('');
     $('#txtScheduleChangePatientsPerHr').val('');

@@ -78,6 +78,7 @@
         ViewDoctorScheduleChange: '@Localizer["ViewDoctorScheduleChange"]',
         PatientCountPerHour: '@Localizer["PatientCountPerHour"]',
         TimeSlotInMins: '@Localizer["TimeSlotInMins"]',
+        Change: '@Localizer["Change"]',
     };
 
     var errorMsg = {
@@ -141,7 +142,7 @@
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
         <div class="form-group">
             <label for="cboScheduleChangeConsultationType"> @Localizer["ConsultationType"]</label>
-            <select class="selectpicker input" title="" id="cboScheduleChangeConsultationType" onchange="fnLoadDoctorScheduleChangeGrid()"></select>
+            <select class="selectpicker input" title="" id="cboScheduleChangeConsultationType" onchange="ConsultationTypeonChange()"></select>
         </div>
     </div>
 
@@ -154,14 +155,14 @@
 </div>
 <div class=" row form-group">
     <div class="col-lg-6 col-6">
-        <p class="subheading m-0">@Localizer["ExitingSchedule"]</p>
+        <p class="subheading m-0">@Localizer["StandardSchedule"]</p>
         <hr class="left" />
         <table id="jqgDoctorExistingSchedule"></table>
         <div id="jqpDoctorExistingSchedule"></div>
     </div>
 
     <div class="col-lg-6 col-6">
-        <p class="subheading m-0">@Localizer["ScheduleChange"]</p>
+        <p class="subheading m-0">@Localizer["ChangedSchedule"]</p>
         <hr class="left" />
         <table id="jqgDoctorScheduleChange"></table>
         <div id="jqpDoctorScheduleChange"></div>
@@ -236,6 +237,7 @@
                 var minDate = $(this).datepicker('getDate');
                 startDate.setDate(startDate.getDate() + 30);
                 fnLoadDoctorScheduleChangeGrid();
+                fnLoadGridDoctorExistingSchedule();
             }
         }).datepicker("setDate", 'now');
      });
