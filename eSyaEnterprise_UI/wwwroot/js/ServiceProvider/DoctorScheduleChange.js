@@ -7,6 +7,18 @@ $(function () {
             fnJqgridSmallScreen('jqgDoctorScheduleChange');
         }
     });
+
+    $.contextMenu({
+        selector: "#btnDoctorExistingSchedule",
+        trigger: 'left',
+        items: {
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'edit') } },
+            //jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'view') } },
+            //jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
+
+        }
+    });
+
     $.contextMenu({
         selector: "#btnDoctorSchedule",
         trigger: 'left',
@@ -61,7 +73,8 @@ function fnLoadScheduleChangeDoctors() {
         async: false,
         processData: false
     });
-    fnLoadDoctorScheduleChangeGrid();
+    fnLoadGridDoctorExistingSchedule();
+    //fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeSpecialties() {
    
@@ -101,7 +114,8 @@ function fnLoadScheduleChangeSpecialties() {
         async: false,
         processData: false
     });
-    fnLoadDoctorScheduleChangeGrid();
+    fnLoadGridDoctorExistingSchedule();
+    //fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeClinic() {
 
@@ -140,7 +154,8 @@ function fnLoadScheduleChangeClinic() {
         async: false,
         processData: false
     });
-    fnLoadDoctorScheduleChangeGrid();
+    fnLoadGridDoctorExistingSchedule();
+    //fnLoadDoctorScheduleChangeGrid();
 }
 function fnLoadScheduleChangeConsultationType() {
 
@@ -180,6 +195,82 @@ function fnLoadScheduleChangeConsultationType() {
         processData: false
     });
 }
+
+function fnLoadGridDoctorExistingSchedule() {
+
+    $("#jqgDoctorExistingSchedule").GridUnload();
+
+    $("#jqgDoctorExistingSchedule").jqGrid({
+
+        url: getBaseURL() + '/ScheduleChange/GetDoctorScheduleChangeList?Businesskey=' + $("#cboScheduleChangeDoctorLocation").val()
+            + '&DoctorID=' + $("#cboDoctorScheduleChangeDoctor").val() + '&SpecialtyID=' + $("#cboDoctorScheduleChangeSpecialty").val()
+            + '&ClinicID=' + $("#cboScheduleChangeDoctorClinic").val() + '&ConsultationID=' + $("#cboScheduleChangeConsultationType").val()
+            + '&ScheduleChangeDate=' + getDate($("#txtScheduleChangeDate")),
+        datatype: 'json',
+        mtype: 'GET',
+        ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
+
+        colNames: ["", "", "", "", "", "", localization.Dayoftheweek, localization.PatientCountPerHour, localization.TimeSlotInMins, "", localization.FromTime, localization.ToTime, localization.Active, localization.Actions],
+        colModel: [
+
+            { name: "DoctorId", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "ClinicID", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "SpecialtyID", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "SerialNo", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "ConsultationID", width: 100, editable: true, align: 'left', hidden: true },
+            { name: "DayOfWeek", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "PatientCountPerHour", width: 40, editable: true, align: 'left', hidden: false },
+            { name: "TimeSlotInMins", width: 40, editable: true, align: 'left', hidden: false },
+            { name: "RoomNo", width: 40, editable: true, align: 'left', hidden: true },
+            { name: 'ScheduleFromTime', index: 'Tid', width: 40, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
+            { name: 'ScheduleToTime', index: 'Tid', width: 40, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
+
+            { name: "ActiveStatus", editable: true, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+
+            {
+                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnDoctorExistingSchedule"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
+        ],
+
+        rowList: [10, 20, 30, 50, 100],
+        rowNum: 10,
+        rownumWidth: 55,
+        loadonce: true,
+        pager: "#jqpDoctorExistingSchedule",
+        viewrecords: true,
+        gridview: true,
+        rownumbers: true,
+        height: 'auto',
+        align: "left",
+        width: 'auto',
+        autowidth: true,
+        shrinkToFit: true,
+        forceFit: true,
+        loadComplete: function () {
+            fnJqgridSmallScreen('jqgDoctorExistingSchedule');
+        },
+
+        onSelectRow: function (rowid, status, e) {
+
+        },
+
+    }).jqGrid('navGrid', '#jqpDoctorExistingSchedule', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
+        caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorScheduleChange
+    }).jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
+    });
+    fnAddGridSerialNoHeading();
+}
+
+
+
+
+
+/*Schedule Change Grid*/
 function fnLoadDoctorScheduleChangeGrid() {
 
     $("#jqgDoctorScheduleChange").GridUnload();
