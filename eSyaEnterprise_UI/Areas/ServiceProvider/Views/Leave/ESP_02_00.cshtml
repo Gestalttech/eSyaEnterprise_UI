@@ -14,38 +14,33 @@
 
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 
-@section scripts {
-    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/ServiceProvider/DoctorLeave.js"></script>
-}
 
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
     var localization = {
-
-            DoctorId: '@Localizer["DoctorId"]',
-            DoctorName: '@Localizer["DoctorName"]',
-            LeaveFrom: '@Localizer["LeaveFrom"]',
-            LeaveTo: '@Localizer["LeaveTo"]',
-            NumberOfDays: '@Localizer["NumberOfDays"]',
-            AddLeave: '@Localizer["AddLeave"]',
+        DoctorId: '@Localizer["DoctorId"]',
+        DoctorName: '@Localizer["DoctorName"]',
+        LeaveFrom: '@Localizer["LeaveFrom"]',
+        LeaveTo: '@Localizer["LeaveTo"]',
+        NumberOfDays: '@Localizer["NumberOfDays"]',
+        AddLeave: '@Localizer["AddLeave"]',
         UpdateLeave: '@Localizer["UpdateLeave"]',
+        ActivateDeactivateActions: '@Localizer["ActivateDeactivateActions"]',
         ViewLeave: '@Localizer["ViewLeave"]',
-            Select: '@Localizer["Select"]',
-            Active: '@Localizer["Active"]',
-           Actions: '@Localizer["Actions"]',
-           Edit: '@Localizer["Edit"]',
-           View: '@Localizer["View"]',
-           Delete: '@Localizer["Delete"]',
-           Save: '@Localizer["Save"]',
+        Select: '@Localizer["Select"]',
+        Active: '@Localizer["Active"]',
+        Actions: '@Localizer["Actions"]',
+        Edit: '@Localizer["Edit"]',
+        View: '@Localizer["View"]',
+        Delete: '@Localizer["Delete"]',
+        Save: '@Localizer["Save"]',
         Update: '@Localizer["Update"]',
-           Cancel: '@Localizer["Cancel"]',
+        Cancel: '@Localizer["Cancel"]',
         Activate: '@Localizer["Activate"]',
-           Deactivate: '@Localizer["Deactivate"]',
-      
-      
-    };
+        Deactivate: '@Localizer["Deactivate"]',
+        DoctorLeave: '@Localizer["DoctorLeave"]',
+        };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
@@ -53,14 +48,18 @@
         deleteauth_E4: '@Localizer["UIC04"]',
         actDeact_E5: '@Localizer["UIC05"]',
         BusinessLocation_E6: '@Localizer["UI0064"]',
-        SelectDoctor_E7: '@Localizer["UI0141"]'
-        LeaveFrom_E8: '@Localizer["UI0397"]'
-        LeaveTo_E9: '@Localizer["UI0398"]'
+        SelectDoctor_E7: '@Localizer["UI0141"]',
+        LeaveFrom_E8: '@Localizer["UI0397"]',
+        LeaveTo_E9: '@Localizer["UI0398"]',
         Comments_E10: '@Localizer["UI0399"]'
     }
 
 </script>
 
+@section scripts {
+    <script src="~/js/Common/jquery.contextMenu.min.js"></script>
+    <script src="~/js/ServiceProvider/DoctorLeave.js"></script>
+}
 
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
