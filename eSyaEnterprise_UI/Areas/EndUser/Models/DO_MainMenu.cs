@@ -19,4 +19,5 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Models
 
         public List<DO_SubMenu> l_SubMenu = new List<DO_SubMenu>();
     }
+    
 }

@@ -33,11 +33,11 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetUnAuthenticatedUsers()
+        public async Task<JsonResult> GetUnAuthenticatedUsers(string authenticate)
         {
             try
             {
-                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_UserMaster>>("Authorize/GetUnAuthenticatedUsers");
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_UserMaster>>("Authorize/GetUnAuthenticatedUsers?authenticate="+ authenticate);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -95,6 +95,175 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:AuthenticateUser:params:" + JsonConvert.SerializeObject(obj));
+                throw;
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> RejectUser(DO_Authorize obj)
+        {
+            try
+            {
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.ModifiedBy = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.IsUserAuthenticated = true;
+
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Authorize/RejectUser", obj);
+
+                if (serviceResponse.Status)
+                {
+                    DO_SmsParameter smsParams = new DO_SmsParameter
+                    {
+                        BusinessKey = 11,//AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                        TEventID = SMSTriggerEventValues.OnSaveClick,
+                        FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                        UserID = obj.UserID,
+                    };
+
+                    var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
+                    if (sr_SMS.Status)
+                    {
+                        return Json(new { Status = true, serviceResponse.Data.StatusCode });
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+
+                    //return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:AuthenticateUser:params:" + JsonConvert.SerializeObject(obj));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:AuthenticateUser:params:" + JsonConvert.SerializeObject(obj));
+                throw;
+            }
+        }
+
+        //for display menu in treeview
+
+
+        [Produces("application/json")]
+        [HttpPost]
+        public async Task<JsonResult> GetUserLinkedFormMenulist(int UserID, int UserGroup, int UserRole)
+        {
+            try
+            {
+                List<jsTreeObject> jsTree = new List<jsTreeObject>();
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "MM",
+                    parent = "#",
+                    text = "eSya Enterprise Menu",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                jsTree.Add(jsObj);
+                var parameter = "?UserID=" + UserID + "&UserGroup=" + UserGroup + "&UserRole=" + UserRole;
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<DO_ConfigureMenu>("Authorize/GetUserLinkedFormMenulist" + parameter);
+
+                if (serviceResponse.Status)
+                {
+                    var configureMenu = serviceResponse.Data;
+
+                    if (configureMenu != null)
+                    {
+                        //Add Main Menu
+                        foreach (var m in configureMenu.l_MainMenu.OrderBy(o => o.MenuIndex))
+                        {
+                            jsObj = new jsTreeObject
+                            {
+                                id = "MM" + m.MainMenuId.ToString(),
+                                text = m.MainMenu,
+                                GroupIndex = m.MenuIndex.ToString(),
+                                parent = "MM",
+                            };
+                            jsTree.Add(jsObj);
+                        }
+
+                        //Add Sub Menu
+                        foreach (var s in configureMenu.l_SubMenu.OrderBy(o => o.MenuIndex))
+                        {
+                            jsObj = new jsTreeObject
+                            {
+                                id = "SM" + s.MenuItemId.ToString(),
+                                text = s.MenuItemName,
+                                GroupIndex = s.MenuIndex.ToString(),
+                                parent = "MM" + s.MainMenuId.ToString()//s.ParentID == 0 ? "MM" + s.MainMenuId.ToString() : "SM" + s.ParentID.ToString()
+                            };
+                            jsTree.Add(jsObj);
+                        }
+
+                        //Add Form
+                        foreach (var f in configureMenu.l_FormMenu.OrderBy(o => o.FormIndex))
+                        {
+                            if (f.ActiveStatus)
+                            {
+                                jsObj = new jsTreeObject
+                                {
+                                    id = "FM" + f.MenuItemId.ToString() + "." + f.FormId.ToString() + ".1",
+                                    text = f.FormNameClient,
+                                    GroupIndex = f.FormIndex.ToString(),
+                                    parent = f.MenuItemId == 0 ? "MM" + f.MainMenuId.ToString() : "SM" + f.MenuItemId.ToString(),
+
+                                    icon = "/images/jsTree/checkedstate.jpg",
+                                    state = new stateObject { opened = true, selected = false }
+                                };
+                                jsTree.Add(jsObj);
+                            }
+                            else
+                            {
+                                jsObj = new jsTreeObject
+                                {
+                                    id = "FM" + f.MenuItemId.ToString() + "." + f.FormId.ToString() + ".0",
+                                    text = f.FormNameClient,
+                                    GroupIndex = f.FormIndex.ToString(),
+                                    parent = f.MenuItemId == 0 ? "MM" + f.MainMenuId.ToString() : "SM" + f.MenuItemId.ToString(),
+                                    state = new stateObject { opened = true, selected = false }
+                                };
+                                jsTree.Add(jsObj);
+                            }
+                        }
+                    }
+
+                    return Json(jsTree);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUserLinkedFormMenulist:For UserGroup {0} UserRole {1} UserID {2} with UserID entered {3}", UserGroup, UserRole, UserID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetUserLinkedFormMenulist:For UserGroup {0} UserRole {1} UserID {2} with UserID entered {3}", UserGroup, UserRole, UserID);
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetActionListByUserRole(int userID, int UserGroup, int UserRole, int formID)
+        {
+            try
+            {
+                var parameter = "?userID=" + userID + "&UserGroup=" + UserGroup + "&UserRole=" + UserRole + "&formID=" + formID;
+                var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.GetAsync<List<DO_UserRoleActionLink>>("Authorize/GetActionListByUserRole" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetActionListByUserRole");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetActionListByUserRole");
                 throw;
             }
         }
