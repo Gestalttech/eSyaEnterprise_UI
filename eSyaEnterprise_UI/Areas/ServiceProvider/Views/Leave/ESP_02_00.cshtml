@@ -163,7 +163,7 @@
         var _cnfDateFormat = "dd/mm/yy"; // Example date format
 
         $("#txtLeaveFrom").datepicker({
-            minDate: 0,
+            // minDate: 0,
             maxDate: '+3M',
             autoclose: true,
             dateFormat: _cnfDateFormat,
@@ -183,7 +183,7 @@
 
         $('#txtLeaveTo').datepicker({
             dateFormat: _cnfDateFormat,
-            minDate: 0,
+            // minDate: 0,
             onSelect: function (date) {
                 // Calculate number of days when txtLeaveTo is selected
                 calculateNumberOfDays();
