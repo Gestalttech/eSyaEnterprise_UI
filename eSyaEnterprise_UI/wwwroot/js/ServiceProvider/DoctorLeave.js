@@ -3,6 +3,7 @@ $(function () {
     $("#txtLeaveFrom").datepicker({
         dateFormat: _cnfDateFormat,
         //minDate: new Date(),
+
         onSelect: function (date) {
             var dpToDate = $('#txtOnLeaveTillDoctor');
             var startDate = $(this).datepicker('getDate');
