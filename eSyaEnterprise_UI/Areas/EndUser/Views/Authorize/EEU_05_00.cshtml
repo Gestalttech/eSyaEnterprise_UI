@@ -32,6 +32,7 @@
         UserGroup: '@Localizer["UserGroup"]',
         UserRole: '@Localizer["UserRole"]',
         Areyousureyouwanttoauthorizethisuser: '@Localizer["Areyousureyouwanttoauthorizethisuser"]',
+        UserActions: '@Localizer["UserActions"]',
 
     };
     var errorMsg = {
@@ -52,9 +53,9 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <label>@Localizer["SelectaUser"]</label>
         <div class="form-group">
-            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicateuser" checked="checked" /><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
-            <input type="radio" name="rduser" id="rdAuthenUser" value="Authenicateuser" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
-            <input type="radio" name="rduser" id="rdRejectedUser" value="Rejecteduser" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["RejectedUsers"] </label>
+            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicate"  /><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdAuthenUser" value="Authentic" checked="checked" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdRejectedUser" value="Rejected" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["RejectedUsers"] </label>
         </div>
     </div>
 
@@ -63,18 +64,18 @@
         <div id="jqpAuthorizeUser"></div>
     </div>
 </div>
-<div class="modal fullscreen fade" id="PopupMapUserToUserGroup" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fullscreen fade" id="PopupAuthorizeUser" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
         <div class="modal-content">
             <div class="modal-header popupHeader">
                 <button type="button" class="close" data-bs-dismiss="modal" onclick="fnCancelUserToUserGroup();"> <i class="fa fa-times"></i></button>
-                <h4 class="modal-title">@Localizer["MapUserToUserGroup"]</h4>
+                <h4 class="modal-title">@Localizer["AuthorizeUser"]</h4>
             </div>
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xl-4" id="divJqtMapUserToUserGroup">
-                        <div id="jqtMapUserToUserGroup" class="bg-light border-dashed">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xl-4" id="divjstAuthorizeUser">
+                        <div id="jstAuthorizeUser" class="bg-light border-dashed">
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-9 col-xl-8">
@@ -120,6 +121,10 @@
                                 </div>
 
                             </div>
+                            <div class='col-lg-6 col-md-6 col-sm-12 form-group'>
+                                <label class="">@Localizer["RejectionReason"]</label>
+                                <textarea rows="4" cols="50" class="form-control" autocomplete="off"></textarea>
+                            </div>
                         </div>
 
 
@@ -132,8 +137,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveUserToUserGroup" onclick="fnSaveUserToUserGroup();">
-                            <i class="fa fa-save"></i> @Localizer["Save"]
+                            <i class="fa fa-save"></i> @Localizer["Approve"]
                         </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id=""><i class="fa fa-times"></i> @Localizer["Reject"] </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelUserToUserGroup" onclick="fnCancelUserToUserGroup();"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
                     </div>
                 </div>
