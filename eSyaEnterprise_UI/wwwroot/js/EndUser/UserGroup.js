@@ -166,4 +166,8 @@ function fnLoadGridRoleActions() {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshActions
     });
     
- }
+}
+function fnGridRefreshActions() {
+
+    $("#jqgActions").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}

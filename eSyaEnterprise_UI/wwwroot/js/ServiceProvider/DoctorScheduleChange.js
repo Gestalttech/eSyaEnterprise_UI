@@ -12,7 +12,7 @@ $(function () {
         selector: "#btnDoctorExistingSchedule",
         trigger: 'left',
         items: {
-            jqgEdit: { name: "ChangeSchedule", icon: "Change Schedule", callback: function (key, opt) { fn_ChangeDoctorSchedule(event, 'edit') } },
+            jqgEdit: { name: "ChangeSchedule", icon: "edit", callback: function (key, opt) { fn_ChangeDoctorSchedule(event, 'edit') } },
             //jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'view') } },
             //jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fn_EditDoctorSchedule(event, 'delete') } },
 
@@ -29,7 +29,7 @@ $(function () {
 
         }
     });
-    //$(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.ChangeSchedule + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     //$(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
@@ -267,9 +267,7 @@ function fnLoadGridDoctorExistingSchedule() {
     }).jqGrid('navGrid', '#jqpDoctorExistingSchedule', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorExistingScheduleChange
     })
-        .jqGrid('navButtonAdd', '#jqpDoctorExistingSchedule', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
-    });
+        
     fnAddGridSerialNoHeading();
 }
 
@@ -339,9 +337,9 @@ function fnLoadDoctorScheduleChangeGrid() {
     }).jqGrid('navGrid', '#jqpDoctorScheduleChange', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctorScheduleChange
     })
-    //    .jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
-    //    caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
-    //});
+        .jqGrid('navButtonAdd', '#jqpDoctorScheduleChange', {
+        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctorSchedule
+    });
     fnAddGridSerialNoHeading();
 }
 function fnRefreshDoctorScheduleChange()
@@ -353,6 +351,7 @@ function fnRefreshDoctorExistingScheduleChange() {
     $("#jqgDoctorExistingSchedule").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
 }
 function fnAddDoctorSchedule() {
+    $("#divCardSelectedSchedule").hide();
     IsInsert = true;
     $('#txtScheduleChangeFromTime').attr('disabled', false);
     $('#txtScheduleChangeToTime').attr('disabled', false);
@@ -391,6 +390,8 @@ function fn_EditDoctorSchedule(e, actiontype) {
     var rowid = $("#jqgDoctorScheduleChange").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgDoctorScheduleChange').jqGrid('getRowData', rowid);
 
+    
+     
     //$('#hdvDoctorScheduleChangeSerialNo').val(rowData.SerialNo);
     $('#txtScheduleChangeFromTime').val(rowData.ScheduleFromTime);
     $('#txtScheduleChangeToTime').val(rowData.ScheduleToTime);
@@ -421,6 +422,7 @@ function fn_EditDoctorSchedule(e, actiontype) {
     }
 
     if (actiontype.trim() == "view") {
+        $("#divCardSelectedSchedule").hide();
         if (_userFormRole.IsView === false) {
             fnAlert("w", "ESP_04_00", "UIC03", errorMsg.vieweauth_E4);
             return;
@@ -469,6 +471,15 @@ function fn_ChangeDoctorSchedule(e, actiontype) {
     //$('#hdvDoctorScheduleChangeSerialNo').val(rowData.SerialNo);
     //$('#txtScheduleChangeFromTime').val(rowData.ScheduleFromTime);
     //$('#txtScheduleChangeToTime').val(rowData.ScheduleToTime);
+
+    $("#lblDayOftheWeek").text(rowData.DayOfWeek);
+    $("#lblPatientCountPerHour").text(rowData.PatientCountPerHour);
+    $("#lblTimeSlotInMins").text(rowData.TimeSlotInMins);
+    $("#lblFromTime").text(rowData.ScheduleFromTime);
+    $("#lblToTime").text(rowData.ScheduleToTime);
+    $("#lblActiveStatus").text(rowData.ActiveStatus);
+    $("#divCardSelectedSchedule").show();
+
     $('#txtScheduleChangePatientsPerHr').val(rowData.PatientCountPerHour);
     $('#txtScheduleChangeTimeSlotInMins').val(rowData.TimeSlotInMins);
 
@@ -723,7 +734,12 @@ function fnDeleteDoctorScheduleChange() {
     });
 }
 function fnClearDoctorScheduleChange() {
-    
+    $("#lblDayOftheWeek").text("");
+    $("#lblPatientCountPerHour").text("");
+    $("#lblTimeSlotInMins").text("");
+    $("#lblFromTime").text("");
+    $("#lblToTime").text("");
+    $("#lblActiveStatus").text("");
    
     $('#txtScheduleChangeFromTime').val('');
     $('#txtScheduleChangeToTime').val('');

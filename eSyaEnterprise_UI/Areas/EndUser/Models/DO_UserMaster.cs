@@ -33,6 +33,10 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Models
 
         public List<DO_eSyaParameter> l_userparameter { get; set; }
 
+        public int UserGroup { get; set; }
+        public int UserRole { get; set; }
+
+
         //public int UserID { get; set; }
         //public string LoginID { get; set; }
         //public string LoginDesc { get; set; }

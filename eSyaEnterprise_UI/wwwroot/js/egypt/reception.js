@@ -947,6 +947,8 @@ function fnTextToSpeech(text) {
     //};
     //speechSynthesis.speak(msg);
 
+
+     
     beep(1000, 2, function () {
     });
 }

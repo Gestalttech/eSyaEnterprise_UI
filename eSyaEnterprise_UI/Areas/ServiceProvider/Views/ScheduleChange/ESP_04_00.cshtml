@@ -79,6 +79,7 @@
         PatientCountPerHour: '@Localizer["PatientCountPerHour"]',
         TimeSlotInMins: '@Localizer["TimeSlotInMins"]',
         Change: '@Localizer["Change"]',
+        ChangeSchedule: '@Localizer["ChangeSchedule"]',
     };
 
     var errorMsg = {
@@ -178,9 +179,54 @@
 
             <div class="modal-body">
                 
-                        <div class="row">
-                            
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="row" id="divCardSelectedSchedule" style="display:none">
+                    <div class="card shadowLite border-0 form-group">
+                        <div class="card-body bg-lightyellow w-100">
+                            <div class="row">
+                                <div class='col-lg-6 col-md-6 col-sm-12 border-bottom'>
+                                <div class='row'>
+                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
+                                    <label class="d-inline">@Localizer["Dayoftheweek"]</label>
+                                            <label id="lblDayOftheWeek" class="bold d-inline"></label>
+                                    
+                                </div>
+                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
+                                            <label class="d-inline">@Localizer["PatientCountPerHour"]</label>
+                                            <label id="lblPatientCountPerHour" class="bold d-inline"></label>
+                                     
+                                </div>
+                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
+                                            <label class="d-inline">@Localizer["TimeSlotInMins"]</label>
+                                            <label id="lblTimeSlotInMins" class="bold d-inline"></label>
+                                    
+                                </div>
+                                </div>
+                                </div>
+                                <div class='col-lg-6 col-md-6 col-sm-12 form-group border-bottom'>
+                                    <div class='row'>
+                                <div class='col-lg-12 col-md-12 col-sm-12  border-bottom'>
+                                            <label class="d-inline">@Localizer["FromTime"]</label>
+                                            <label id="lblFromTime" class="bold d-inline"></label>
+                                   
+                                </div>
+                                <div class='col-lg-12 col-md-12 col-sm-12   border-bottom'>
+                                            <label class="d-inline">@Localizer["ToTime"]</label>
+                                            <label id="lblToTime" class="bold d-inline"></label>
+                                    
+                                </div>
+                                <div class='col-lg-12 col-md-12 col-sm-12   border-bottom'>
+                                            <label class="d-inline">@Localizer["ActiveStatus"]</label>
+                                            <label id="lblActiveStatus" class="bold d-inline"></label>
+                                  
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                             <label for="txtScheduleChangeFromTime">  @Localizer["FromTime"]</label>
                             <input id="txtScheduleChangeFromTime" class="form-control" type="time" autocomplete="off" />

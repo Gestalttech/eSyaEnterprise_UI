@@ -29,6 +29,8 @@
         Actions: '@Localizer["Actions"]',
         BlockSignIn: '@Localizer["BlockSignIn"]',
         Authorize: '@Localizer["Authorize"]',
+        UserGroup: '@Localizer["UserGroup"]',
+        UserRole: '@Localizer["UserRole"]',
         Areyousureyouwanttoauthorizethisuser: '@Localizer["Areyousureyouwanttoauthorizethisuser"]',
 
     };
@@ -47,10 +49,96 @@
 }
 
 <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <label>@Localizer["SelectaUser"]</label>
+        <div class="form-group">
+            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicateuser" checked="checked" /><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdAuthenUser" value="Authenicateuser" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdRejectedUser" value="Rejecteduser" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["RejectedUsers"] </label>
+        </div>
+    </div>
+
     <div class="col-lg-12 col-12 form-group">
         <table id="jqgAuthorizeUser"></table>
         <div id="jqpAuthorizeUser"></div>
     </div>
 </div>
+<div class="modal fullscreen fade" id="PopupMapUserToUserGroup" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header popupHeader">
+                <button type="button" class="close" data-bs-dismiss="modal" onclick="fnCancelUserToUserGroup();"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["MapUserToUserGroup"]</h4>
+            </div>
 
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xl-4" id="divJqtMapUserToUserGroup">
+                        <div id="jqtMapUserToUserGroup" class="bg-light border-dashed">
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-9 col-xl-8">
+                        <input type="text" id="txtLocationID" hidden />
+                        <input type="text" id="txtUserGroup" hidden />
+                        <input type="text" id="txtUserRole" hidden />
+                        <div class="card shadowLite border-0 form-group">
+                            <div class="card-body w-100">
+                                <div class="row">
+                                    <div class='col-lg-6 col-md-6 col-sm-12 form-group border-bottom'>
+                                        <label class="">@Localizer["UserDescription"]</label>
+                                        <label id="lblLocation"></label>
+                                        <hr />
+                                    </div>
+                                    <div class='col-lg-3 col-md-3 col-sm-12 form-group border-bottom'>
+                                        <label class="">@Localizer["UserGroup"]</label>
+                                        <label id="lblUserGroup"></label>
+                                        <hr />
+                                    </div>
+                                    <div class='col-lg-3 col-md-3 col-sm-12 form-group border-bottom'>
+                                        <label class="">@Localizer["UserRole"]</label>
+                                        <label id="lblUserRole"></label>
+                                        <hr />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class='col-lg-12 col-md-12 col-sm-12'>
+                                <table id="jqgUserActions"></table>
+                                <div id="jqpUserActions"></div>
+                            </div>
+                            
+                            <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
+
+                                <div class="form-group">
+                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
+                                        <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
+                                        <span class="mdl-checkbox__label">@Localizer["Active"] </span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                   
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveUserToUserGroup" onclick="fnSaveUserToUserGroup();">
+                            <i class="fa fa-save"></i> @Localizer["Save"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelUserToUserGroup" onclick="fnCancelUserToUserGroup();"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
