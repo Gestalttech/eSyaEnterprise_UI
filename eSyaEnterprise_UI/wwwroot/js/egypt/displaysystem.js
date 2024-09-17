@@ -172,7 +172,7 @@ function fnDisplayCallingToken() {
 	let playCount = 0;
 	audio.addEventListener('ended', () => {
     		playCount++;
-    		if (playCount < 1) {
+    		if (playCount < 2) {
         		audio.currentTime = 0;
         		audio.play();
     		}
