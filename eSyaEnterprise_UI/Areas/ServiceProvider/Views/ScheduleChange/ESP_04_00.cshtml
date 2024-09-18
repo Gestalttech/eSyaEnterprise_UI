@@ -178,104 +178,111 @@
             </div>
 
             <div class="modal-body">
-                
-                        <div class="row" id="divCardSelectedSchedule" style="display:none">
-                    <div class="card shadowLite border-0 form-group">
-                        <div class="card-body bg-lightyellow w-100">
-                            <div class="row">
-                                <div class='col-lg-6 col-md-6 col-sm-12'>
-                                <div class='row'>
-                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
-                                    <label class="d-inline">@Localizer["Dayoftheweek"]</label>
-                                            <label id="lblDayOftheWeek" class="bold d-inline"></label>
-                                    
-                                </div>
-                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
-                                            <label class="d-inline">@Localizer["PatientCountPerHour"]</label>
-                                            <label id="lblPatientCountPerHour" class="bold d-inline"></label>
-                                     
-                                </div>
-                                <div class='col-lg-12 col-md-12 col-sm-12 border-bottom'>
-                                            <label class="d-inline">@Localizer["TimeSlotInMins"]</label>
-                                            <label id="lblTimeSlotInMins" class="bold d-inline"></label>
-                                    
-                                </div>
-                                </div>
-                                </div>
-                                <div class='col-lg-6 col-md-6 col-sm-12 form-group'>
+
+                <div class="row" id="divCardSelectedSchedule" style="display:none">
+                    <div class="card  border-0 form-group">
+                        <div class="card-body py-0 w-100">
+                            <div class="row shadowLite bg-lightyellow py-3">
+                                <div class='col-lg-4 col-md-4 col-sm-12'>
                                     <div class='row'>
-                                <div class='col-lg-12 col-md-12 col-sm-12  border-bottom'>
-                                            <label class="d-inline">@Localizer["FromTime"]</label>
-                                            <label id="lblFromTime" class="bold d-inline"></label>
-                                   
+                                        <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["Dayoftheweek"]</label>
+                                            <label id="lblDayOftheWeek" class="bold d-inline-block"></label>
+
+                                        </div>
+                                        <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["PatientCountPerHour"]</label>
+                                            <label id="lblPatientCountPerHour" class="bold d-inline-block"></label>
+
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class='col-lg-12 col-md-12 col-sm-12   border-bottom'>
-                                            <label class="d-inline">@Localizer["ToTime"]</label>
-                                            <label id="lblToTime" class="bold d-inline"></label>
-                                    
+                                <div class='col-lg-4 col-md-4 col-sm-12'>
+                                    <div class='row'>
+                                        <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["FromTime"]</label>
+                                            <label id="lblFromTime" class="bold d-inline-block"></label>
+
+                                        </div>
+                                        <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["ToTime"]</label>
+                                            <label id="lblToTime" class="bold d-inline-block"></label>
+
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class='col-lg-12 col-md-12 col-sm-12   border-bottom'>
-                                            <label class="d-inline">@Localizer["ActiveStatus"]</label>
-                                            <label id="lblActiveStatus" class="bold d-inline"></label>
-                                  
-                                </div>
-                                </div>
-                                </div>
+                                <div class='col-lg-4 col-md-4 col-sm-12'>
+                                    <div class='row'>
+                                        <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["TimeSlotInMins"]</label>
+                                            <label id="lblTimeSlotInMins" class="bold d-inline-block"></label>
+                                        </div>
+                                        <div class='col-lg-12 col-md-12 col-sm-12  form-group'>
+                                            <label class="d-inline-block w-50">@Localizer["ActiveStatus"]</label>
+                                            <label id="lblActiveStatus" class="bold d-inline-block"></label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
+                        <div class="form-group">
                             <label for="txtScheduleChangeFromTime">  @Localizer["FromTime"]</label>
                             <input id="txtScheduleChangeFromTime" class="form-control" type="time" autocomplete="off" />
 
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group">
                             <label for="txtScheduleChangeToTime">  @Localizer["ToTime"]</label>
                             <input id="txtScheduleChangeToTime" class="form-control" type="time" autocomplete="off" />
 
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                         <label for="txtScheduleChangePatientsPerHr">@Localizer["PatientsCountPerHour"]</label>
                         <input id="txtScheduleChangePatientsPerHr" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 form-group">
                         <label for="txtScheduleChangeTimeSlotInMins">@Localizer["TimeSlotInMins"]</label>
                         <input id="txtScheduleChangeTimeSlotInMins" class="form-control integerFormat numberonly" type="text" maxlength="3" autocomplete="off" />
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 form-group">
-                                <div class="">
-                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkScheduleChangeActive">
-                                        <input type="checkbox" id="chkScheduleChangeActive" class="mdl-checkbox__input">
-                                        <span class="mdl-checkbox__label">@Localizer["Active"]</span>
-                                    </label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 form-group">
+                        <div class="">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkScheduleChangeActive">
+                                <input type="checkbox" id="chkScheduleChangeActive" class="mdl-checkbox__input">
+                                <span class="mdl-checkbox__label">@Localizer["Active"]</span>
+                            </label>
                         </div>
-                    
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorScheduleChange" onclick="fnSaveDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnDeleteDoctorScheduleChange" onclick="fnDeleteDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["DeActivate"]</button>
-                        <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorScheduleChange" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
                     </div>
                 </div>
             </div>
 
+        
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnSaveDoctorScheduleChange" onclick="fnSaveDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["Save"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnDeleteDoctorScheduleChange" onclick="fnDeleteDoctorScheduleChange()"><i class="far fa-save"></i>  @Localizer["DeActivate"]</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button" id="btnClearDoctorScheduleChange" data-bs-dismiss="modal"><i class="fa fa-times"></i> @Localizer["Cancel"]</button>
+                </div>
+            </div>
         </div>
+        </div>
+
     </div>
+        
 </div>
-  
+
+
 <script>
     $(function () {
-         $("#txtScheduleChangeDate").datepicker({
+        $("#txtScheduleChangeDate").datepicker({
             dateFormat: _cnfDateFormat,
             minDate: new Date(),
             onSelect: function (date) {
@@ -286,7 +293,7 @@
                 fnLoadGridDoctorExistingSchedule();
             }
         }).datepicker("setDate", 'now');
-     });
+    });
 </script>
 
 
