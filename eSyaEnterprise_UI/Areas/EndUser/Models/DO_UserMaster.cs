@@ -35,6 +35,9 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Models
 
         public int UserGroup { get; set; }
         public int UserRole { get; set; }
+        public string? UserGroupDesc { get; set; }
+        public string? UserRoleDesc { get; set; }
+        public string? AuthenticStatus { get; set; }
 
 
         //public int UserID { get; set; }

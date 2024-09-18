@@ -76,7 +76,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                     var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
                     if (sr_SMS.Status)
                     {
-                        return Json(new { Status = true, serviceResponse.Data.StatusCode });
+                        return Json(new { Status = true, serviceResponse.Data });
                     }
                     else
                     {
@@ -84,7 +84,6 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                         return Json(new { Status = false, StatusCode = "500" });
                     }
 
-                    //return Json(serviceResponse.Data);
                 }
                 else
                 {
@@ -105,32 +104,32 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
             {
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.ModifiedBy = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.IsUserAuthenticated = true;
+                obj.IsUserAuthenticated = false;
 
                 var serviceResponse = await _eSyaEndUserAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Authorize/RejectUser", obj);
 
                 if (serviceResponse.Status)
                 {
-                    DO_SmsParameter smsParams = new DO_SmsParameter
-                    {
-                        BusinessKey = 11,//AppSessionVariables.GetSessionBusinessKey(HttpContext),
-                        TEventID = SMSTriggerEventValues.OnSaveClick,
-                        FormID = AppSessionVariables.GetSessionFormID(HttpContext),
-                        UserID = obj.UserID,
-                    };
+                    //DO_SmsParameter smsParams = new DO_SmsParameter
+                    //{
+                    //    BusinessKey = 11,//AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                    //    TEventID = SMSTriggerEventValues.OnSaveClick,
+                    //    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                    //    UserID = obj.UserID,
+                    //};
 
-                    var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
-                    if (sr_SMS.Status)
-                    {
-                        return Json(new { Status = true, serviceResponse.Data.StatusCode });
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
-                        return Json(new { Status = false, StatusCode = "500" });
-                    }
+                    //var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
+                    //if (sr_SMS.Status)
+                    //{
+                    //    return Json(new { Status = true, serviceResponse.Data.StatusCode });
+                    //}
+                    //else
+                    //{
+                    //    _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                    //    return Json(new { Status = false, StatusCode = "500" });
+                    //}
 
-                    //return Json(serviceResponse.Data);
+                    return Json(serviceResponse.Data);
                 }
                 else
                 {

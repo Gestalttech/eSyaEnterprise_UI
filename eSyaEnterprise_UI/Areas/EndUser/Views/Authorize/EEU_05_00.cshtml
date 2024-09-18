@@ -10,6 +10,8 @@
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
+<link rel="stylesheet" href="~/css/Common/jsTree.css" />
+
 <script>
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
@@ -33,6 +35,8 @@
         UserRole: '@Localizer["UserRole"]',
         Areyousureyouwanttoauthorizethisuser: '@Localizer["Areyousureyouwanttoauthorizethisuser"]',
         UserActions: '@Localizer["UserActions"]',
+        ActionDesc: '@Localizer["ActionDescription"]',
+        DisplaySequence: '@Localizer["DisplaySequence"]',
 
     };
     var errorMsg = {
@@ -43,32 +47,31 @@
 
 <link href="~/css/Common/jquery.contextMenu.min.css" rel="stylesheet" />
 @section scripts {
-
+    <script src="~/js/Common/jsTree.js"></script>
     <script src="~/js/EndUser/AuthorizeUser.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
-    <script src="~/js/common/bootbox.min.js"></script>
 }
 
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6">
-        <label>@Localizer["SelectaUser"]</label>
+        <label>@Localizer["SelectUserType"]</label>
         <div class="form-group">
-            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicate"  /><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
-            <input type="radio" name="rduser" id="rdAuthenUser" value="Authentic" checked="checked" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicate" checked="checked"/><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
+            <input type="radio" name="rduser" id="rdAuthenUser" value="Authentic" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
             <input type="radio" name="rduser" id="rdRejectedUser" value="Rejected" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["RejectedUsers"] </label>
         </div>
     </div>
 
-    <div class="col-lg-12 col-12 form-group">
+    <div class="col-lg-12 col-12 form-group" id="GridAuthorizeUser">
         <table id="jqgAuthorizeUser"></table>
         <div id="jqpAuthorizeUser"></div>
     </div>
 </div>
 <div class="modal fullscreen fade" id="PopupAuthorizeUser" data-bs-keyboard="false" data-bs-backdrop="static">
-    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;">
+    <div class="modal-dialog modal-lg" role="document" style="box-shadow:none;top:40px;">
         <div class="modal-content">
             <div class="modal-header popupHeader">
-                <button type="button" class="close" data-bs-dismiss="modal" onclick="fnCancelUserToUserGroup();"> <i class="fa fa-times"></i></button>
+                <button type="button" class="close" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
                 <h4 class="modal-title">@Localizer["AuthorizeUser"]</h4>
             </div>
 
@@ -87,7 +90,7 @@
                                 <div class="row">
                                     <div class='col-lg-6 col-md-6 col-sm-12 form-group border-bottom'>
                                         <label class="">@Localizer["UserDescription"]</label>
-                                        <label id="lblLocation"></label>
+                                        <label id="lblUserDescription"></label>
                                         <hr />
                                     </div>
                                     <div class='col-lg-3 col-md-3 col-sm-12 form-group border-bottom'>
@@ -111,20 +114,8 @@
                                 <div id="jqpUserActions"></div>
                             </div>
                             
-                            <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
-
-                                <div class="form-group">
-                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                                        <input type="checkbox" id="chkActiveStatus" class="mdl-checkbox__input">
-                                        <span class="mdl-checkbox__label">@Localizer["Active"] </span>
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div class='col-lg-6 col-md-6 col-sm-12 form-group'>
-                                <label class="">@Localizer["RejectionReason"]</label>
-                                <textarea rows="4" cols="50" class="form-control" autocomplete="off"></textarea>
-                            </div>
+                            
+                           
                         </div>
 
 
@@ -136,11 +127,11 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveUserToUserGroup" onclick="fnSaveUserToUserGroup();">
-                            <i class="fa fa-save"></i> @Localizer["Approve"]
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnAuthenticateUser" onclick="fnSaveAuthenticateUser()">
+                            <i class="fa fa-save"></i> @Localizer["Authenticate"]
                         </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id=""><i class="fa fa-times"></i> @Localizer["Reject"] </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelUserToUserGroup" onclick="fnCancelUserToUserGroup();"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnRejectUser" onclick="fnOpenRejectUser()"><i class="fa fa-ban"></i> @Localizer["Reject"] </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelRejectUser"><i class="fa fa-times"></i> @Localizer["Close"] </button>
                     </div>
                 </div>
             </div>
@@ -148,3 +139,32 @@
     </div>
 </div>
 
+<div class="modal bg-dark bg-opacity-50 fade" id="PopupRejectUser" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-md" role="document" style="box-shadow:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
+                <h4 class="modal-title">@Localizer["RejectUser"]</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class='col-lg-12 col-md-12 col-sm-12 form-group'>
+                        <label class="">@Localizer["RejectionReason"]</label>
+                        <textarea rows="4" cols="50" id="txtRejectionReason" class="form-control" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnRejectUserAuthenticate" onclick="fnRejectUser();">
+                            <i class="fa fa-times"></i> @Localizer["Reject"]
+                        </button>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelRejectUserAuthenticate"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

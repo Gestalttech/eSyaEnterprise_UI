@@ -1,4 +1,7 @@
-﻿
+﻿var _userID = 0;
+var _userGroup = 0;
+var _userRole = 0;
+var _authenticstatus = "Unauthenicate";
 $(document).ready(function () {
     fnGridLoadUnlockAuthorizeUser();
     $("input[name='rduser']").change(function () {
@@ -11,7 +14,7 @@ $(document).ready(function () {
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnAuthenticateUser(event) } },
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnAuthenticateUser() } },
         }
         // there's more, have a look at the demos and docs...
     });
@@ -19,9 +22,10 @@ $(document).ready(function () {
 });
 function RadioLoadUserData() {
     $("input[name='rduser']").each(function () {
+        
         if ($(this).is(":checked")) {
+         
             fnGridLoadUnlockAuthorizeUser($(this).val());
-            
         }
     });
 }
@@ -32,17 +36,20 @@ function fnGridLoadUnlockAuthorizeUser(_typeofuser) {
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.UserId, localization.loginId, localization.UserDesc, localization.UserGroup, localization.UserRole, localization.EmailId, localization.UnsuccessfulAttempts, localization.LoginAttemptDate, localization.BlockSignIn, localization.Active, localization.Actions],
+        colNames: [localization.UserId, localization.loginId, localization.UserDesc, "", localization.UserGroup, "", localization.UserRole, localization.EmailId, localization.UnsuccessfulAttempts, localization.LoginAttemptDate, localization.BlockSignIn,"Authentic Status", localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "LoginID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "LoginDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "UserGroup", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
-            { name: "UserRole", width: 30, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "UserGroup", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+            { name: "UserGroupDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
+            { name: "UserRole", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
+            { name: "UserRoleDesc", width: 100, editable: false, editoptions: { disabled: true }, align: 'left' },
             { name: "EMailId", width: 100, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "UnsuccessfulAttempt", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
-            { name: "LoginAttemptDate", width: 30, editable: false, align: 'left', editrules: { required: true } },
-            { name: "IsUserAuthenticated", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "LoginAttemptDate", width: 30, editable: false, align: 'left', editrules: { required: true }, hidden: true },
+            { name: "IsUserAuthenticated", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true }, hidden: true },
+            { name: "AuthenticStatus", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: false },
             { name: "ActiveStatus", editable: false, width: 25, align: 'center !important', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 40, sortable: false, resizable: false,
@@ -83,67 +90,121 @@ function fnGridLoadUnlockAuthorizeUser(_typeofuser) {
 }
 
 
-
-
-function fnAuthenticateUser(e, actiontype) {
+function fnAuthenticateUser() {
+    debugger;
     var rowid = $("#jqgAuthorizeUser").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgAuthorizeUser').jqGrid('getRowData', rowid);
-    fnSaveAuthenticateUser(rowData.UserID, rowData.LoginDesc);
+
+    _userID = rowData.UserID;
+    _userGroup = rowData.UserGroup;
+    _userRole = rowData.UserRole;
+
+    GetUserLinkedFormMenulist();
+    _authenticstatus = rowData.AuthenticStatus;
+    $("#PopupAuthorizeUser").modal('show');
+    $("#lblUserDescription").text(rowData.LoginDesc);
+    $("#lblUserGroup").text(rowData.UserGroupDesc);
+    $("#lblUserRole").text(rowData.UserRoleDesc);
+
+
+
+
+    if (_authenticstatus == "Authentic" || _authenticstatus == "Rejected") {
+        $("#btnAuthenticateUser").hide();
+        $("#btnRejectUser").hide();
+    } else {
+        $("#btnAuthenticateUser").show();
+        $("#btnRejectUser").show();
+    }
+
+
 }
 
-function fnSaveAuthenticateUser(userId,userName) {
-    if (IsStringNullorEmpty(userId) || userId == '0' || userId == "0") {
+function fnSaveAuthenticateUser() {
+    if (IsStringNullorEmpty(_userID) || _userID == '0' || _userID == "0") {
         fnAlert("w", "EEU_05_00", "UI0208", error.EnterUserID_E2);
-        return false;
+        return;
     }
-    else {
-
-        //bootbox.confirm({
-        //    message: "Are you sure you want to authorize this user " + userName + " ?",
-        //    buttons: {
-        //        confirm: {
-        //            label: 'Yes',
-        //            className: 'btn-success'
-        //        },
-        //        cancel: {
-        //            label: 'No',
-        //            className: 'btn-danger'
-        //        }
-        //    },
-        //    callback: function (result) {
-        //        if (result) {
-        //            objblock = {
-        //                UserID: userId,
-
-        //            };
-
-        //            $.ajax({
-        //                async: false,
-        //                url: getBaseURL() + '/Authorize/AuthenticateUser',
-        //                type: 'POST',
-        //                data: {
-        //                    obj: objblock,
-
-        //                },
-        //                datatype: 'json',
-        //                success: function (response) {
-        //                    if (response.Status) {
-        //                        fnAlert("s", "", response.StatusCode, response.Message);
-        //                        fnRefreshGridAuthorizeUser();
-        //                    }
-        //                    else {
-        //                        fnAlert("e", "", response.StatusCode, response.Message);
-        //                    }
-        //                },
-        //                error: function (error) {
-        //                    fnAlert("e", "", error.StatusCode, error.statusText);
-        //                }
-        //            });
-        //        }
-        //    }
-        //    });
-        $("#PopupAuthorizeUser").modal('show');
+    obj = {
+        UserID: _userID,
+        RejectionReason: null,
+        bool:true,
+        
     }
+    $("#btnAuthenticateUser").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Authorize/AuthenticateUser',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnAuthenticateUser").attr('disabled', false);
+                $('#PopupAuthorizeUser').modal('hide');
+                fnGridLoadUnlockAuthorizeUser("UnAuthentic");
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnAuthenticateUser").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnAuthenticateUser").attr("disabled", false);
+        }
+    });
+    
+}
+function fnOpenRejectUser() {
+    $("#txtRejectionReason").val('');
+    $(".modal.fullscreen").css({ 'top': '0px', 'opacity': '0.4' });
+    $("#PopupRejectUser").modal('show');
+    $("#PopupRejectUser .modal").css({ 'top': '40px' });
+}
+function fnRejectUser() {
+    
+
+    if (IsStringNullorEmpty(_userID) || _userID == '0' || _userID == "0") {
+        fnAlert("w", "EEU_05_00", "", "");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtRejectionReason").val())) {
+        fnAlert("w", "EEU_05_00", "", "Please Enter Reason for Rejection");
+        return;
+    }
+    obj = {
+        UserID: _userID,
+        RejectionReason: $("#txtRejectionReason").val(),
+        bool: false,
+
+    }
+    $("#btnRejectUserAuthenticate").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Authorize/RejectUser',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnRejectUserAuthenticate").attr('disabled', false);
+                $('#PopupRejectUser').modal('hide');
+                $('#PopupAuthorizeUser').modal('hide');
+                
+                fnGridLoadUnlockAuthorizeUser("Rejected");
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnRejectUserAuthenticate").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnRejectUserAuthenticate").attr("disabled", false);
+        }
+    });
+
 }
 function fnRefreshGridAuthorizeUser() {
     $("#jqgAuthorizeUser").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
@@ -160,7 +221,7 @@ $("#PopupAuthorizeUser").on('shown.bs.modal', function () {
     var winH = $(window).height();
     var winW = $(window).width();
     var modalHeaderH = $('.modal-header').outerHeight(true);
-    fnProcessLoading(true);
+    //fnProcessLoading(true);
     if ($(window).height() > '500px') {
         $(".modal-body").css({ 'height': (winH - modalHeaderH), 'overflow-y': 'auto', 'overflow-x': 'hidden' });
 
@@ -168,10 +229,23 @@ $("#PopupAuthorizeUser").on('shown.bs.modal', function () {
     }
 });
 
-function GetMappedUserRoleMenulist() {
+$("#PopupAuthorizeUser").on('hidden.bs.modal', function () {
+    $("#btnRejectUser").hide();
+    $("#lblUserDescription").text('');
+    $("#lblUserGroup").text('');
+    $("#lblUserRole").text('');
+    
+});
+$("#PopupRejectUser").on('hidden.bs.modal', function () {
+    $(".modal.fullscreen").css({ 'top': '0px', 'opacity': '1' });
+});
+$("#PopupRejectUser").on('shown.bs.modal hidden.bs.modal', function () {
+    $("#PopupAuthorizeUser").css('top','0px');
+});
+function GetUserLinkedFormMenulist() {
     $('#jstAuthorizeUser').jstree("destroy");
     $.ajax({
-        url: getBaseURL() + '/Authorize/GetMappedUserRoleMenulist?UserGroup=' + $("#txtUserGroup").val() + '&UserRole=' + $("#txtUserRole").val() + '&BusinessKey=' + $("#txtLocationID").val(),
+        url: getBaseURL() + '/Authorize/GetUserLinkedFormMenulist?UserID=' + _userID + '&UserGroup=' + _userGroup + '&UserRole=' + _userRole,
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -181,13 +255,13 @@ function GetMappedUserRoleMenulist() {
 
 
             });
-            fnProcessLoading(false);
+           // fnProcessLoading(false);
             /*$("#divUserActionsforTree").css('display', 'block');*/
             $("#jstAuthorizeUser").on('loaded.jstree', function () {
                 $("#jstAuthorizeUser").jstree('open_all');
 
                 fnTreeSize("#jstAuthorizeUser");
-                fnProcessLoading(false);
+             //   fnProcessLoading(false);
             });
             $('#jstAuthorizeUser').on('select_node.jstree', function (e, data) {
 
@@ -197,9 +271,10 @@ function GetMappedUserRoleMenulist() {
 
                 selectedNodeIds.forEach(function (nodeId) {
                     if (nodeId.startsWith("FM")) {
+                      
                         // Get the value after the '.'
                         var parts = nodeId.split('.');
-                        fnLoadGridUserActions(parts[1]);
+                        fnLoadGridActionListByUserRole(parts[1]);
                         _FormID = parts[1];
 
                     } else {
@@ -217,21 +292,21 @@ function GetMappedUserRoleMenulist() {
         }
     });
 }
-function fnLoadGridUserActions(_formID) {
-
+function fnLoadGridActionListByUserRole(_formID) {
+  
     $("#jqgUserActions").GridUnload();
 
     $("#jqgUserActions").jqGrid({
-        url: getBaseURL() + '/Authorize/GetAllActions?formId=' + _formID,
+
+        url: getBaseURL() + '/Authorize/GetActionListByUserRole?UserID=' + _userID + '&UserGroup=' + _userGroup + '&UserRole=' + _userRole + '&formID=' + _formID,
         datatype: 'json',
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.ActionId, localization.ActionDesc, localization.DisplaySequence, localization.Active],
+        colNames: [localization.ActionId, localization.ActionDesc, localization.Active],
         colModel: [
             { name: "ActionId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 10 }, resizable: false, hidden: true },
             { name: "ActionDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 150 }, resizable: false },
-            { name: "DisplaySequence", width: 80, align: 'left', editable: true, editoptions: { maxlength: 150 }, hidden: false, resizable: false },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
           ],
 
@@ -251,7 +326,6 @@ function fnLoadGridUserActions(_formID) {
         shrinkToFit: true,
         forceFit: true, caption: localization.UserActions,
         loadComplete: function (data) {
-            SetGridControlByAction();
             fnJqgridSmallScreen("jqgActions");
         },
         onSelectRow: function (rowid, status, e) {
@@ -259,8 +333,7 @@ function fnLoadGridUserActions(_formID) {
         },
     }).jqGrid('navGrid', '#jqpUserActions', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpUserActions', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshActions
-    }).jqGrid('navButtonAdd', '#jqpUserActions', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddActions
+
     });
 
     $(window).on("resize", function () {
@@ -270,3 +343,7 @@ function fnLoadGridUserActions(_formID) {
     });
     fnAddGridSerialNoHeading();
 }
+function fnGridRefreshActions() {
+    $("#jqgUserActions").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+}
+

@@ -302,7 +302,7 @@ footer p
     margin-bottom: 0px !important;
 }
 
-.modal.fullscreen {
+.modal.fullscreen, .modal.fullscreen-sm {
     padding-left: 0px !important;
 }
 
@@ -310,7 +310,10 @@ footer p
         margin: 0px 10px !important;
         max-width: 100% !important;
     }
-
+    .modal.fullscreen-sm .modal-dialog {
+        margin: 0px 10px !important;
+        max-width: unset !important;
+    }
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {
     background: #fbd626 !important;
 }
