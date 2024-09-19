@@ -359,6 +359,8 @@
     <Folder Include="Areas\ProductSetup\Views\Control\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Purchase\Models\" />
+    <Folder Include="Areas\Scheduler\Data\" />
+    <Folder Include="Areas\Scheduler\Models\" />
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />
