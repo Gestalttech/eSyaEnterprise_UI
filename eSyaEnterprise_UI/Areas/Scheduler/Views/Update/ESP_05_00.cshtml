@@ -134,55 +134,25 @@
             <label for="cboDayScheduledBusinessKey"> @Localizer["Location"]</label>
             <select class="selectpicker" data-live-search="true" data-container="body" id="cboDayScheduledBusinessKey" title="" data-size="8"
                     asp-items="@ViewBag.BusinessKeys"
-                    onchange="fnLoadScheduleUpdateDoctors()">
-                <option value="0">@Localizer["Select"]</option>
+                    onchange="fnLoadDoctordayScheduleGrid()">
             </select>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-        <div class="form-group">
-            <label for="cboDoctorScheduleUpdateDoctor">@Localizer["Doctor"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorScheduleUpdateDoctor" onchange="fnLoadScheduleUpdateSpecialties()"></select>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-        <div class="form-group">
-            <label for="cboDoctorScheduleUpdateSpecialty">@Localizer["Specialty"]</label>
-            <select class="selectpicker input" title="" id="cboDoctorScheduleUpdateSpecialty" onchange="fnLoadScheduleUpdateClinic()"></select>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-        <div class="form-group">
-            <label for="cboScheduleUpdateDoctorClinic"> @Localizer["Clinic"]</label>
-            <select class="selectpicker input" title="" id="cboScheduleUpdateDoctorClinic" onchange="fnLoadScheduleUpdateConsultationType()"></select>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-        <div class="form-group">
-            <label for="cboScheduleUpdateConsultationType"> @Localizer["ConsultationType"]</label>
-            <select class="selectpicker input" title="" id="cboScheduleUpdateConsultationType"></select>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+  
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
         <div class="form-group">
             <label for="dtfromdate">@Localizer["ScheduleFromDate"] </label>
-            <input type="text" class="form-control" id="dtfromdate" autocomplete="off" onkeydown="return false" />
+            <input type="text" class="form-control" id="dtfromdate" autocomplete="off" onkeydown="return false"  />
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
         <div class="form-group">
             <label for="dttodate">@Localizer["ScheduleToDate"] </label>
-            <input id="dttodate" class="form-control" type="text" autocomplete="off" onkeydown="return false" />
+            <input id="dttodate" class="form-control" type="text" autocomplete="off" onkeydown="return false"  />
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-        <div class="form-group">
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnExportToExcel" onclick="fnLoadDoctordaySchedulebySearchCriteria()"><i class="fa fa-search"></i>@Localizer["Search"]  </button>
-            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnExportToExcel" onclick="fnClearHeader()"><i class="fas fa-file-export"></i>@Localizer["ClearFields"]  </button>
-        </div>
-    </div>
+ 
     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
         <div class="form-group">
             <label>@Localizer["FileUpload"]</label>
@@ -196,6 +166,7 @@
         <div class="form-group">
             <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button mr-10" id="btnImportExcel" onclick="fnImportExcel()"><i class="fa fa-upload"></i>@Localizer["Import"]  </button>
             <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button " id="btnExportToExcel" onclick="fnExportToExcel()"><i class="fas fa-file-export"></i> @Localizer["ExportToExcel"]  </button>
+
         </div>
     </div>
 </div>
@@ -262,11 +233,8 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveDoctordaySchedule" onclick="fnSaveDoctordaySchedule()">
-                            <i class="fa fa-save"></i> @Localizer["Save"]
-                        </button>
+                      
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelDoctordaySchedule"><i class="fa fa-times"></i> @Localizer["Cancel"]  </button>
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btndeActiveDoctordaySchedule" onclick="fnDeleteDoctordaySchedule()"><i class="fa fa-times"></i>@Localizer["Deactivate"]   </button>
 
                     </div>
                 </div>
@@ -289,11 +257,14 @@
                 var date2 = $('#dtfromdate').datepicker('getDate');
                 //sets minDate to txtTillDate
                 $('#dttodate').datepicker('option', 'minDate', date2);
+                fnLoadDoctordayScheduleGrid();
             }
         });
         $('#dttodate').datepicker({
             dateFormat: _cnfDateFormat,
-
+            onSelect: function (date) {
+            fnLoadDoctordayScheduleGrid();
+            }
         });
     });
 </script>

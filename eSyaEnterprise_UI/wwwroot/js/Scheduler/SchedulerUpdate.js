@@ -3,190 +3,13 @@
         selector: "#btnDoctorScheduleUpdate",
         trigger: 'left',
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditDoctordaySchedule(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditDoctordaySchedule(event, 'view') } },
-            jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditDoctordaySchedule(event, 'delete') } },
 
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 });
-function fnLoadScheduleUpdateDoctors() {
 
-    $('#cboDoctorScheduleUpdateDoctor').selectpicker('refresh');
-    $('#cboDoctorScheduleUpdateSpecialty').selectpicker('refresh');
-    $('#cboScheduleUpdateDoctorClinic').selectpicker('refresh');
-    $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-
-    $("#cboDoctorScheduleUpdateDoctor").empty();
-    $.ajax({
-        url: getBaseURL() + '/Update/GetScheduledDoctorsbyBusinessKey?Businesskey=' + $("#cboDayScheduledBusinessKey").val(),
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
-        },
-        success: function (response) {
-            if (response != null) {
-
-                //refresh each time
-                $("#cboDoctorScheduleUpdateDoctor").empty();
-
-                $("#cboDoctorScheduleUpdateDoctor").append($("<option value='0'>" + localization.Select + "</option>"));
-                for (var i = 0; i < response.length; i++) {
-
-                    $("#cboDoctorScheduleUpdateDoctor").append($("<option></option>").val(response[i]["DoctorId"]).html(response[i]["DoctorName"]));
-                }
-                $('#cboDoctorScheduleUpdateDoctor').selectpicker('refresh');
-            }
-            else {
-                $("#cboDoctorScheduleUpdateDoctor").empty();
-                $("#cboDoctorScheduleUpdateDoctor").append($("<option value='0'>" + localization.Select + "</option>"));
-                $('#cboDoctorScheduleUpdateDoctor').selectpicker('refresh');
-            }
-        },
-        async: false,
-        processData: false
-    });
-    //fnLoadGridDoctorExistingSchedule();
-    
-}
-function fnLoadScheduleUpdateSpecialties() {
-
-    $('#cboDoctorScheduleUpdateSpecialty').selectpicker('refresh');
-    $('#cboScheduleUpdateDoctorClinic').selectpicker('refresh');
-    $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-
-    $("#cboDoctorScheduleUpdateSpecialty").empty();
-    $.ajax({
-        url: getBaseURL() + '/Update/GetScheduledSpecialtiesbyDoctorID?Businesskey=' + $("#cboDayScheduledBusinessKey").val()
-            + '&DoctorID=' + $("#cboDoctorScheduleUpdateDoctor").val(),
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
-        },
-        success: function (response) {
-            if (response != null) {
-
-                //refresh each time
-                $("#cboDoctorScheduleUpdateSpecialty").empty();
-
-                $("#cboDoctorScheduleUpdateSpecialty").append($("<option value='0'>" + localization.Select + "</option>"));
-                for (var i = 0; i < response.length; i++) {
-
-                    $("#cboDoctorScheduleUpdateSpecialty").append($("<option></option>").val(response[i]["SpecialtyID"]).html(response[i]["SpecialtyDesc"]));
-                }
-                $('#cboDoctorScheduleUpdateSpecialty').selectpicker('refresh');
-            }
-            else {
-                $("#cboDoctorScheduleUpdateSpecialty").empty();
-                $("#cboDoctorScheduleUpdateSpecialty").append($("<option value='0'>" + localization.Select + "</option>"));
-                $('#cboDoctorScheduleUpdateSpecialty').selectpicker('refresh');
-            }
-        },
-        async: false,
-        processData: false
-    });
-    //fnLoadGridDoctorExistingSchedule();
-    
-}
-function fnLoadScheduleUpdateClinic() {
-
-    $('#cboScheduleUpdateDoctorClinic').selectpicker('refresh');
-    $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-
-    $("#cboScheduleUpdateDoctorClinic").empty();
-    $.ajax({
-        url: getBaseURL() + '/Update/GetScheduledClinicsbySpecialtyID?Businesskey=' + $("#cboDayScheduledBusinessKey").val()
-            + '&DoctorID=' + $("#cboDoctorScheduleUpdateDoctor").val() + '&SpecialtyID=' + $("#cboDoctorScheduleUpdateSpecialty").val(),
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
-        },
-        success: function (response) {
-            if (response != null) {
-
-                //refresh each time
-                $("#cboScheduleUpdateDoctorClinic").empty();
-
-                $("#cboScheduleUpdateDoctorClinic").append($("<option value='0'>" + localization.Select + "</option>"));
-                for (var i = 0; i < response.length; i++) {
-
-                    $("#cboScheduleUpdateDoctorClinic").append($("<option></option>").val(response[i]["ClinicId"]).html(response[i]["ClinicDesc"]));
-                }
-                $('#cboScheduleUpdateDoctorClinic').selectpicker('refresh');
-            }
-            else {
-                $("#cboScheduleUpdateDoctorClinic").empty();
-                $("#cboScheduleUpdateDoctorClinic").append($("<option value='0'> Select </option>"));
-                $('#cboScheduleUpdateDoctorClinic').selectpicker('refresh');
-            }
-        },
-        async: false,
-        processData: false
-    });
-    //fnLoadGridDoctorExistingSchedule();
-    
-}
-function fnLoadScheduleUpdateConsultationType() {
-
-    $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-
-    $("#cboScheduleUpdateConsultationType").empty();
-    $.ajax({
-        url: getBaseURL() + '/Update/GetScheduledConsultationsbyClinicID?Businesskey=' + $("#cboDayScheduledBusinessKey").val()
-            + '&DoctorID=' + $("#cboDoctorScheduleUpdateDoctor").val() + '&SpecialtyID=' + $("#cboDoctorScheduleUpdateSpecialty").val()
-            + '&ClinicID=' + $("#cboScheduleUpdateDoctorClinic").val(),
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        error: function (xhr) {
-            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
-        },
-        success: function (response) {
-            if (response != null) {
-
-                //refresh each time
-                $("#cboScheduleUpdateConsultationType").empty();
-
-                $("#cboScheduleUpdateConsultationType").append($("<option value='0'>" + localization.Select + "</option>"));
-                for (var i = 0; i < response.length; i++) {
-
-                    $("#cboScheduleUpdateConsultationType").append($("<option></option>").val(response[i]["ConsultationId"]).html(response[i]["ConsultationDesc"]));
-                }
-                $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-            }
-            else {
-                $("#cboScheduleUpdateConsultationType").empty();
-                $("#cboScheduleUpdateConsultationType").append($("<option value='0'>" + localization.Select + "</option>"));
-                $('#cboScheduleUpdateConsultationType').selectpicker('refresh');
-            }
-        },
-        async: false,
-        processData: false
-    });
-    //fnLoadGridDoctorExistingSchedule();
-    
-}
-function fnLoadDoctordaySchedulebySearchCriteria() {
-    if (IsStringNullorEmpty($("#dtfromdate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule From Time");
-        return;
-    }
-    if (IsStringNullorEmpty($("#dttodate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule To Time");
-        return;
-    }
-
-    fnLoadDoctordayScheduleGrid();
-}
 
 //Grid Part and functionality Starts -- -
 function fnLoadDoctordayScheduleGrid() {
@@ -195,12 +18,11 @@ function fnLoadDoctordayScheduleGrid() {
 
     $("#jqgDoctordaySchedule").jqGrid({
 
-        url: getBaseURL() + '/Update/GetDoctordaySchedulebySearchCriteria?Businesskey=' + $('#cboDayScheduledBusinessKey').val() + '&DoctorID=' + $('#cboDoctorScheduleUpdateDoctor').val()
-            + '&SpecialtyID=' + $('#cboDoctorScheduleUpdateSpecialty').val() + '&ClinicID=' + $('#cboScheduleUpdateDoctorClinic').val() + '&ConsultationID=' + $('#cboScheduleUpdateConsultationType').val()
+        url: getBaseURL() + '/Update/GetUploadedDoctordaySchedulebySearchCriteria?Businesskey=' + $('#cboDayScheduledBusinessKey').val()
             + '&ScheduleFromDate=' + getDate($('#dtfromdate')) + '&ScheduleToDate=' + getDate($('#dttodate')),
         datatype: 'json',
         mtype: 'POST',
-        
+
         colNames: ["", "", "", "", "", "", localization.SpecialtyDesc, localization.ClinicDesc, localization.ConsultationType, localization.DoctorName, localization.ScheduleDate, localization.ScheduleFromTime, localization.ScheduleToTime, localization.NoOfPatients, localization.XlsheetReference, localization.Active, ""],
         colModel: [
 
@@ -251,13 +73,11 @@ function fnLoadDoctordayScheduleGrid() {
         },
 
         onSelectRow: function (rowid, status, e) {
-           
+
         },
 
     }).jqGrid('navGrid', '#jqpDoctordaySchedule', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpDoctordaySchedule', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshDoctordaySchedule
-    }).jqGrid('navButtonAdd', '#jqpDoctordaySchedule', {
-        caption: '<span class="fa fa-plus" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddDoctordaySchedule
     });
     fnAddGridSerialNoHeading();
 }
@@ -268,39 +88,7 @@ function fnRefreshDoctordaySchedule() {
 
 var _isInsert = true;
 
-function fnAddDoctordaySchedule() {
-    if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $('#cboDayScheduledBusinessKey').val() == '' || $('#cboDayScheduledBusinessKey').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0064", errorMsg.BusinessLocation_E6);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateDoctor").val()) || $('#cboDoctorScheduleUpdateDoctor').val() == '' || $('#cboDoctorScheduleUpdateDoctor').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0141", errorMsg.SelectDoctor_E7);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateSpecialty").val()) || $('#cboDoctorScheduleUpdateSpecialty').val() == '' || $('#cboDoctorScheduleUpdateSpecialty').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0200", errorMsg.SelectSpecialty_E8);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateDoctorClinic").val()) || $('#cboScheduleUpdateDoctorClinic').val() == '' || $('#cboScheduleUpdateDoctorClinic').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0194", errorMsg.SelectClinicType_E9);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateConsultationType").val()) || $('#cboScheduleUpdateConsultationType').val() == '' || $('#cboScheduleUpdateConsultationType').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0195", errorMsg.SelectConsultationType_E10);
-        return;
-    }
 
-    $("#PopupDoctordaySchedule").modal('show');
-    $('#PopupDoctordaySchedule').modal({ backdrop: 'static', keyboard: false });
-    $('#PopupDoctordaySchedule').find('.modal-title').text(localization.AddDoctordaySchedule);
-    $("#chkActiveStatus").parent().addClass("is-checked");
-    fnClearFields();
-    $("#chkActiveStatus").prop('disabled', true);
-    $("#btnSaveDoctordaySchedule").html('<i class="fa fa-save"></i>  ' + localization.Save);
-    $("#btnSaveDoctordaySchedule").show();
-    $("#btndeActiveDoctordaySchedule").hide();
-    _isInsert = true;
-}
 
 function fnEditDoctordaySchedule(e, actiontype) {
 
@@ -399,183 +187,13 @@ function fnEditDoctordaySchedule(e, actiontype) {
         });
     }
 }
-
-function fnSaveDoctordaySchedule() {
-
-    if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $('#cboDayScheduledBusinessKey').val() == '' || $('#cboDayScheduledBusinessKey').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0064", errorMsg.BusinessLocation_E6);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateDoctor").val()) || $('#cboDoctorScheduleUpdateDoctor').val() == '' || $('#cboDoctorScheduleUpdateDoctor').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0141", errorMsg.SelectDoctor_E7);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateSpecialty").val()) || $('#cboDoctorScheduleUpdateSpecialty').val() == '' || $('#cboDoctorScheduleUpdateSpecialty').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0200", errorMsg.SelectSpecialty_E8);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateDoctorClinic").val()) || $('#cboScheduleUpdateDoctorClinic').val() == '' || $('#cboScheduleUpdateDoctorClinic').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0194", errorMsg.SelectClinicType_E9);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateConsultationType").val()) || $('#cboScheduleUpdateConsultationType').val() == '' || $('#cboScheduleUpdateConsultationType').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0195", errorMsg.SelectConsultationType_E10);
-        return;
-    }
-
-    if (IsStringNullorEmpty($("#dtfromdate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule Date");
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtDoctordayScheduleFromTime").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule From Time");
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtDoctordayScheduleToTime").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule To Time");
-        return;
-    }
-
-    if ($('#txtDoctordayScheduleFromTime').val() >= $('#txtDoctordayScheduleToTime').val()) {
-        fnAlert("w", "ESP_05_00", "UI0194", "From Time can't be more than or equal to To Time.");
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtNoofPatients").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Enter Number of Patients");
-        return;
-    }
-    if (IsStringNullorEmpty($("#txtXlSheetReference").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Xl Sheet Reference");
-        return;
-    }
-
-    $("#btnSaveDoctordaySchedule").attr('disabled', true);
-
-    var obj = {
-
-        BusinessKey: $('#cboDayScheduledBusinessKey').val(),
-        ConsultationId: $('#cboScheduleUpdateConsultationType').val(),
-        ClinicId: $('#cboScheduleUpdateDoctorClinic').val(),
-        SpecialtyId: $('#cboDoctorScheduleUpdateSpecialty').val(),
-        DoctorId: $('#cboDoctorScheduleUpdateDoctor').val(),
-        ScheduleDate: getDate($("#dtfromdate")),
-        SerialNo: $("#txtSerialNumber").val() === '' ? 0 : $("#txtSerialNumber").val(),
-        ScheduleFromTime: $('#txtDoctordayScheduleFromTime').val(),
-        ScheduleToTime: $('#txtDoctordayScheduleToTime').val(),
-        NoOfPatients: $('#txtNoofPatients').val(),
-        XlsheetReference: $('#txtXlSheetReference').val(),
-        ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked")
-    };
-    $.ajax({
-        url: getBaseURL() + '/Update/InsertOrUpdateDoctordaySchedule',
-        type: 'POST',
-        datatype: 'json',
-        data: { isInsert: _isInsert, obj: obj },
-        success: function (response) {
-            if (response != null) {
-                if (response.Status) {
-                    fnAlert("s", "", response.StatusCode, response.Message);
-                    $("#PopupDoctordaySchedule").modal('hide');
-                    //fnLoadDoctordayScheduleGrid();
-
-                    fnRefreshDoctordaySchedule();
-                    fnClearFields();
-
-                    $("#btnSaveDoctordaySchedule").attr('disabled', false);
-                }
-                else {
-                    $("#btnSaveDoctordaySchedule").attr('disabled', false);
-                    fnAlert("e", "", response.StatusCode, response.Message);
-
-                }
-            }
-            else {
-                $("#btnSaveDoctordaySchedule").attr('disabled', false);
-                fnAlert("e", "", response.StatusCode, response.Message);
-
-            }
-        },
-        error: function (error) {
-            $("#btnSaveDoctordaySchedule").attr("disabled", false);
-            fnAlert("e", "", error.StatusCode, error.statusText);
-
-        }
-    });
-}
-
-function fnDeleteDoctordaySchedule() {
-    var a_status;
-    //Activate or De Activate the status
-    if ($("#chkActiveStatus").parent().hasClass("is-checked") === true) {
-        a_status = false
-    }
-    else {
-        a_status = true;
-    }
-
-    var objdel = {
-
-        BusinessKey: $('#cboDayScheduledBusinessKey').val(),
-        ConsultationId: $('#cboScheduleUpdateConsultationType').val(),
-        ClinicId: $('#cboScheduleUpdateDoctorClinic').val(),
-        SpecialtyId: $('#cboDoctorScheduleUpdateSpecialty').val(),
-        DoctorId: $('#cboDoctorScheduleUpdateDoctor').val(),
-        ScheduleDate: getDate($("#dtfromdate")),
-        SerialNo: $("#txtSerialNumber").val() === '' ? 0 : $("#txtSerialNumber").val(),
-        ScheduleFromTime: $('#txtDoctordayScheduleFromTime').val(),
-        ScheduleToTime: $('#txtDoctordayScheduleToTime').val(),
-        NoOfPatients: $('#txtNoofPatients').val(),
-        XlsheetReference: $('#txtXlSheetReference').val(),
-        ActiveStatus: $('#chkActiveStatus').parent().hasClass("is-checked"),
-        status: a_status,
-    };
-
-    $("#btndeActiveDoctordaySchedule").attr("disabled", true);
-    $.ajax({
-        url: getBaseURL() + '/Update/ActiveOrDeActiveDoctordaySchedule',
-        type: 'POST',
-        datatype: 'json',
-        data: { objdel },
-        success: function (response) {
-            if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
-                $("#btndeActiveDoctordaySchedule").html('<i class="fa fa-spinner fa-spin"></i> wait');
-                $("#PopupDoctordaySchedule").modal('hide');
-                fnRefreshDoctordaySchedule();
-                fnClearFields();
-                $("#btndeActiveDoctordaySchedule").attr("disabled", false);
-            }
-            else {
-                fnAlert("e", "", response.StatusCode, response.Message);
-                $("#btndeActiveDoctordaySchedule").attr("disabled", false);
-                $("#btndeActiveDoctordaySchedule").html('De Activate');
-            }
-        },
-        error: function (error) {
-            fnAlert("e", "", error.StatusCode, error.statusText);
-            $("#btndeActiveDoctordaySchedule").attr("disabled", false);
-            $("#btndeActiveDoctordaySchedule").html('De Activate');
-        }
-    });
-}
-
 $("#btnCancelDoctordaySchedule").click(function () {
     $("#jqgDoctordaySchedule").jqGrid('resetSelection');
     $('#PopupDoctordaySchedule').modal('hide');
     fnClearFields();
 });
 
-function fnClearHeader() {
-    $("#cboDayScheduledBusinessKey").val('0').selectpicker('refresh');
-    $("#cboDoctorScheduleUpdateDoctor").val('0').selectpicker('refresh');
-    $("#cboDoctorScheduleUpdateSpecialty").val('0').selectpicker('refresh');
-    $("#cboScheduleUpdateDoctorClinic").val('0').selectpicker('refresh');
-    $("#cboScheduleUpdateConsultationType").val('0').selectpicker('refresh');
 
-    $('#dtfromdate').val('');
-    $('#dttodate').val('');
-    fnRefreshDoctordaySchedule();
-}
 function fnClearFields() {
     
 
@@ -584,12 +202,9 @@ function fnClearFields() {
     $('#txtXlSheetReference').val('');
     $('#txtNoofPatients').val('');
     $('#txtSerialNumber').val('');
-    $("#btnSaveDoctordaySchedule").attr('disabled', false);
     $("input,textarea").attr('readonly', false);
     $("select").next().attr('disabled', false);
-    $("#btnSaveDoctordaySchedule").html('<i class="far fa-save"></i> ' + localization.Save);
 }
-$("#PopupDoctordaySchedule")
 function SetGridControlByAction() {
     $('#jqgAdd').removeClass('ui-state-disabled');
 
@@ -603,37 +218,24 @@ function SetGridControlByAction() {
 //Export To Excel
 
 function fnExportToExcel() {
-    if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $('#cboDayScheduledBusinessKey').val() == '' || $('#cboDayScheduledBusinessKey').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0064", errorMsg.BusinessLocation_E6);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateDoctor").val()) || $('#cboDoctorScheduleUpdateDoctor').val() == '' || $('#cboDoctorScheduleUpdateDoctor').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0141", errorMsg.SelectDoctor_E7);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboDoctorScheduleUpdateSpecialty").val()) || $('#cboDoctorScheduleUpdateSpecialty').val() == '' || $('#cboDoctorScheduleUpdateSpecialty').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0200", errorMsg.SelectSpecialty_E8);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateDoctorClinic").val()) || $('#cboScheduleUpdateDoctorClinic').val() == '' || $('#cboScheduleUpdateDoctorClinic').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0194", errorMsg.SelectClinicType_E9);
-        return;
-    }
-    if (IsStringNullorEmpty($("#cboScheduleUpdateConsultationType").val()) || $('#cboScheduleUpdateConsultationType').val() == '' || $('#cboScheduleUpdateConsultationType').val() == '0') {
-        fnAlert("w", "ESP_05_00", "UI0195", errorMsg.SelectConsultationType_E10);
-        return;
-    }
+    //if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $('#cboDayScheduledBusinessKey').val() == '' || $('#cboDayScheduledBusinessKey').val() == '0') {
+    //    fnAlert("w", "ESP_05_00", "UI0064", errorMsg.BusinessLocation_E6);
+    //    return;
+    //}
+   
 
-    if (IsStringNullorEmpty($("#dtfromdate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule Date");
-        return;
-    }
-    if (IsStringNullorEmpty($("#dttodate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule To Time");
-        return;
-    }
-    window.location.href = getBaseURL() + '/Update/Export?Businesskey=' + $('#cboDayScheduledBusinessKey').val() + '&DoctorID=' + $('#cboDoctorScheduleUpdateDoctor').val()
-        + '&SpecialtyID=' + $('#cboDoctorScheduleUpdateSpecialty').val() + '&ClinicID=' + $('#cboScheduleUpdateDoctorClinic').val() + '&ConsultationID=' + $('#cboScheduleUpdateConsultationType').val()
+    //if (IsStringNullorEmpty($("#dtfromdate").val())) {
+    //    fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule Date");
+    //    return;
+    //}
+    //if (IsStringNullorEmpty($("#dttodate").val())) {
+    //    fnAlert("w", "ESP_05_00", "UI0194", "Please Select Schedule To Time");
+    //    return;
+    //}
+    //window.location.href = getBaseURL() + '/Update/Export?Businesskey=' + $('#cboDayScheduledBusinessKey').val() + '&DoctorID=' + $('#cboDoctorScheduleUpdateDoctor').val()
+    //    + '&SpecialtyID=' + $('#cboDoctorScheduleUpdateSpecialty').val() + '&ClinicID=' + $('#cboScheduleUpdateDoctorClinic').val() + '&ConsultationID=' + $('#cboScheduleUpdateConsultationType').val()
+    //    + '&ScheduleFromDate=' + getDate($('#dtfromdate')) + '&ScheduleToDate=' + getDate($('#dttodate'));
+    window.location.href = getBaseURL() + '/Update/Export?Businesskey=' + $('#cboDayScheduledBusinessKey').val()
         + '&ScheduleFromDate=' + getDate($('#dtfromdate')) + '&ScheduleToDate=' + getDate($('#dttodate'));
 }
 //Export To Excel Ends
@@ -668,6 +270,7 @@ function fnImportExcel() {
                 if (response.Status) {
                     fnAlert("s", "", response.StatusCode, response.Message);
                     $("#btnImportExcel").attr('disabled', false);
+                    fnLoadDoctordayScheduleGrid();
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);

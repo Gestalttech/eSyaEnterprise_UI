@@ -26,7 +26,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
 
         }
 
-        #region Schedule Update
+        #region Schedule Update 
         [Area("Scheduler")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ESP_05_00()
@@ -54,6 +54,296 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
             {
                 _logger.LogError(ex, "UD:GetBusinessKey:{0}");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        
+        [HttpPost]
+        public async Task<JsonResult> Insert_ImpotedDoctorScheduleList(IFormFile postedFile, int BusinessKey)
+        {
+            try
+            {
+                List<DO_DoctorDaySchedule> obj = new List<DO_DoctorDaySchedule>();
+                DO_DoctorDaySchedule ds;
+                var supportedTypes = new[] { ".xls", ".xlsx", "xls", "xlsx" };
+                var fileextension = Path.GetExtension(postedFile.FileName);
+                if (!supportedTypes.Contains(fileextension))
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "File Extension Is In Valid - Only Upload EXCEL File" });
+                }
+                string filename = Path.GetFileName(postedFile.FileName);
+                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Uploads\\ExcelUploads");
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), uploads, filename);
+                //Removing already Exits Excel file
+                if (System.IO.File.Exists(filepath))
+                {
+                    System.IO.File.Delete(filepath);
+                }
+                //Creating New Excel file
+                using (FileStream fs = System.IO.File.Create(filepath))
+                {
+                    postedFile.CopyTo(fs);
+                }
+                int rowno = 1;
+                XLWorkbook workbook = XLWorkbook.OpenFromTemplate(filepath);
+                var sheets = workbook.Worksheets.First();
+                var rows = sheets.Rows().ToList();
+                foreach (var row in rows)
+                {
+                    if (rowno != 1)
+                    {
+                        var checkEmpty = row.Cell(1).Value.ToString();
+                        if (string.IsNullOrWhiteSpace(checkEmpty) || string.IsNullOrEmpty(checkEmpty))
+                        {
+                            break;
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(1).Value.ToString()) || string.IsNullOrEmpty(row.Cell(1).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Specialty should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(2).Value.ToString()) || string.IsNullOrEmpty(row.Cell(2).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Clinic should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(3).Value.ToString()) || string.IsNullOrEmpty(row.Cell(3).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Consultation should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(4).Value.ToString()) || string.IsNullOrEmpty(row.Cell(4).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Doctor should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(5).Value.ToString()) || string.IsNullOrEmpty(row.Cell(5).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule date should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(6).Value.ToString()) || string.IsNullOrEmpty(row.Cell(6).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule from Time should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(7).Value.ToString()) || string.IsNullOrEmpty(row.Cell(7).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule To Time should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(8).Value.ToString()) || string.IsNullOrEmpty(row.Cell(8).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Number of Patients should not be Empty" });
+                        }
+                        if (string.IsNullOrWhiteSpace(row.Cell(9).Value.ToString()) || string.IsNullOrEmpty(row.Cell(9).Value.ToString()))
+                        {
+                            return Json(new DO_ReturnParameter() { Status = false, Message = "Status should not be Empty" });
+                        }
+
+                        ds = new DO_DoctorDaySchedule();
+                        ds.SpecialtyDesc = row.Cell(1).Value.ToString().Trim();
+                        ds.ClinicDesc = row.Cell(2).Value.ToString().Trim();
+                        ds.ConsultationDesc = row.Cell(3).Value.ToString().Trim();
+                        ds.DoctorName = row.Cell(4).Value.ToString().Trim();
+                        ds.ScheduleDate = Convert.ToDateTime(row.Cell(5).Value.ToString().Trim());
+                        var fime = row.Cell(6).Value.ToString().Trim();
+                        var Ttime = row.Cell(7).Value.ToString().Trim();
+                        DateTime Fromtime = DateTime.Parse(fime);
+                        DateTime Totime = DateTime.Parse(Ttime);
+                        var ftime = Fromtime.ToString("HH:mm");
+                        var ttime = Totime.ToString("HH:mm");
+                        //ds.ScheduleFromTime = TimeSpan.Parse(ftime);
+                        //ds.ScheduleToTime = TimeSpan.Parse(ttime);
+                        ds.ScheduleFromTime = TimeSpan.Parse(ftime, System.Globalization.CultureInfo.CurrentCulture);
+                        ds.ScheduleToTime = TimeSpan.Parse(ttime, System.Globalization.CultureInfo.CurrentCulture);
+                        ds.NoOfPatients = Convert.ToInt32(row.Cell(8).Value.ToString().Trim());
+                        ds.ActiveStatus = Convert.ToBoolean(row.Cell(9).Value.ToString().Trim());
+                        ds.XlsheetReference = filepath;
+                        obj.Add(ds);
+                    }
+                    else
+                    {
+                        rowno = 2;
+                    }
+                }
+                if (obj.Count > 0)
+                {
+                    obj.All(x =>
+                    {
+                        x.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                        x.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                        x.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                        x.BusinessKey = BusinessKey;
+                        return true;
+                    });
+
+                    var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorDaySchedule/ImportedDoctorScheduleList", obj);
+                    if (serviceResponse.Status)
+                    {
+                        System.IO.File.Delete(filepath);
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+                else
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "Excel does not contain valid data" });
+
+                }
+
+                //ViewBag.Data = lst;
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message + " or valid Time and Date format should be: MM/DD/YYYY and Time format sholud not be greater than 24 hrs" });
+
+            }
+        }
+        /// Get Doctor day Schedule by Search Criteria
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetUploadedDoctordaySchedulebySearchCriteria(int Businesskey, DateTime? ScheduleFromDate, DateTime? ScheduleToDate)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetUploadedDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey + "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data.ToList());
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetUploadedDoctordaySchedulebySearchCriteria");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetUploadedDoctordaySchedulebySearchCriteria");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
+
+        #region Schedule XL Export
+        [Area("Scheduler")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> ESP_06_00()
+        {
+            try
+            {
+                var serviceresponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+                if (serviceresponse.Status)
+                {
+                    ViewBag.BusinessKeys = serviceresponse.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.LocationDescription,
+                        Value = a.BusinessKey.ToString()
+                    });
+                    return View();
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetBusinessKey: {0}");
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessKey:{0}");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        //[HttpGet]
+        //public async Task<IActionResult> Export(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleFromDate, DateTime ScheduleToDate)
+        //{
+        //    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        //    string fileName = "DoctordaySchedule.xlsx";
+
+        //    string name = "DoctordaySchedule";
+        //    DataTable dt = new DataTable(name);
+        //    dt.Columns.AddRange(new DataColumn[9]
+        //    {
+        //        new DataColumn("Specialty"),
+        //        new DataColumn("Clinic"),
+        //        new DataColumn("Consultation"),
+        //        new DataColumn("Doctor Name"),
+        //        new DataColumn("Schedule Date"),
+        //        new DataColumn("Schedule From Time"),
+        //        new DataColumn("Schedule To Time"),
+        //        new DataColumn("Number of Patients"),
+        //        new DataColumn("Status")
+        //    });
+
+
+        //    var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey + "&DoctorID=" + DoctorID + "&SpecialtyID=" + SpecialtyID + "&ClinicID=" + ClinicID + "&ConsultationID=" + ConsultationID + "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
+
+        //    if (serviceResponse.Data != null)
+        //    {
+        //        foreach (var lang in serviceResponse.Data)
+        //        {
+        //            dt.Rows.Add(lang.SpecialtyDesc, lang.ClinicDesc, lang.ConsultationDesc, lang.DoctorName, lang.ScheduleDate, lang.ScheduleFromTime, lang.ScheduleToTime, lang.NoOfPatients, lang.status);
+        //        }
+
+        //        using (XLWorkbook wb = new XLWorkbook())
+        //        {
+        //            wb.Worksheets.Add(dt);
+        //            using (MemoryStream stream = new MemoryStream())
+        //            {
+        //                wb.SaveAs(stream);
+        //                var content = stream.ToArray();
+        //                return File(content, contentType, fileName);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = "No date Exists" });
+        //    }
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> Export(int Businesskey, DateTime? ScheduleFromDate, DateTime? ScheduleToDate)
+        {
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileName = "DoctordaySchedule.xlsx";
+
+            string name = "DoctordaySchedule";
+            DataTable dt = new DataTable(name);
+            dt.Columns.AddRange(new DataColumn[9]
+            {
+                new DataColumn("Specialty"),
+                new DataColumn("Clinic"),
+                new DataColumn("Consultation"),
+                new DataColumn("Doctor Name"),
+                new DataColumn("Schedule Date"),
+                new DataColumn("Schedule From Time"),
+                new DataColumn("Schedule To Time"),
+                new DataColumn("Number of Patients"),
+                new DataColumn("Status")
+            });
+
+
+            var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetUploadedDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey+ "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
+
+            if (serviceResponse.Data != null)
+            {
+                foreach (var lang in serviceResponse.Data)
+                {
+                    dt.Rows.Add(lang.SpecialtyDesc, lang.ClinicDesc, lang.ConsultationDesc, lang.DoctorName, lang.ScheduleDate, lang.ScheduleFromTime, lang.ScheduleToTime, lang.NoOfPatients, lang.status);
+                }
+
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, contentType, fileName);
+                    }
+                }
+            }
+            else
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = "No date Exists" });
             }
         }
         [HttpGet]
@@ -243,224 +533,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
-        [HttpGet]
-        public async Task<IActionResult> Export(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleFromDate, DateTime ScheduleToDate)
-        {
-            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            string fileName = "DoctordaySchedule.xlsx";
 
-            string name = "DoctordaySchedule";
-            DataTable dt = new DataTable(name);
-            dt.Columns.AddRange(new DataColumn[9]
-            {
-                new DataColumn("Specialty"),
-                new DataColumn("Clinic"),
-                new DataColumn("Consultation"),
-                new DataColumn("Doctor Name"),
-                new DataColumn("Schedule Date"),
-                new DataColumn("Schedule From Time"),
-                new DataColumn("Schedule To Time"),
-                new DataColumn("Number of Patients"),
-                new DataColumn("Status")
-            });
-
-
-            var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey + "&DoctorID=" + DoctorID + "&SpecialtyID=" + SpecialtyID + "&ClinicID=" + ClinicID + "&ConsultationID=" + ConsultationID + "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
-
-            if (serviceResponse.Data != null)
-            {
-                foreach (var lang in serviceResponse.Data)
-                {
-                    dt.Rows.Add(lang.SpecialtyDesc, lang.ClinicDesc, lang.ConsultationDesc, lang.DoctorName, lang.ScheduleDate, lang.ScheduleFromTime, lang.ScheduleToTime, lang.NoOfPatients, lang.status);
-                }
-
-                using (XLWorkbook wb = new XLWorkbook())
-                {
-                    wb.Worksheets.Add(dt);
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        wb.SaveAs(stream);
-                        var content = stream.ToArray();
-                        return File(content, contentType, fileName);
-                    }
-                }
-            }
-            else
-            {
-                return Json(new DO_ReturnParameter() { Status = false, Message = "No date Exists" });
-            }
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> Insert_ImpotedDoctorScheduleList(IFormFile postedFile, int BusinessKey)
-        {
-            try
-            {
-                List<DO_DoctorDaySchedule> obj = new List<DO_DoctorDaySchedule>();
-                DO_DoctorDaySchedule ds;
-                var supportedTypes = new[] { ".xls", ".xlsx", "xls", "xlsx" };
-                var fileextension = Path.GetExtension(postedFile.FileName);
-                if (!supportedTypes.Contains(fileextension))
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "File Extension Is In Valid - Only Upload EXCEL File" });
-                }
-                string filename = Path.GetFileName(postedFile.FileName);
-                var uploads = Path.Combine(_appEnvironment.WebRootPath, "Uploads\\ExcelUploads");
-                var filepath = Path.Combine(Directory.GetCurrentDirectory(), uploads, filename);
-                //Removing already Exits Excel file
-                if (System.IO.File.Exists(filepath))
-                {
-                    System.IO.File.Delete(filepath);
-                }
-                //Creating New Excel file
-                using (FileStream fs = System.IO.File.Create(filepath))
-                {
-                    postedFile.CopyTo(fs);
-                }
-                int rowno = 1;
-                XLWorkbook workbook = XLWorkbook.OpenFromTemplate(filepath);
-                var sheets = workbook.Worksheets.First();
-                var rows = sheets.Rows().ToList();
-                foreach (var row in rows)
-                {
-                    if (rowno != 1)
-                    {
-                        var checkEmpty = row.Cell(1).Value.ToString();
-                        if (string.IsNullOrWhiteSpace(checkEmpty) || string.IsNullOrEmpty(checkEmpty))
-                        {
-                            break;
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(1).Value.ToString()) || string.IsNullOrEmpty(row.Cell(1).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Specialty should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(2).Value.ToString()) || string.IsNullOrEmpty(row.Cell(2).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Clinic should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(3).Value.ToString()) || string.IsNullOrEmpty(row.Cell(3).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Consultation should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(4).Value.ToString()) || string.IsNullOrEmpty(row.Cell(4).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Doctor should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(5).Value.ToString()) || string.IsNullOrEmpty(row.Cell(5).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule date should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(6).Value.ToString()) || string.IsNullOrEmpty(row.Cell(6).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule from Time should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(7).Value.ToString()) || string.IsNullOrEmpty(row.Cell(7).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Schedule To Time should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(8).Value.ToString()) || string.IsNullOrEmpty(row.Cell(8).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Number of Patients should not be Empty" });
-                        }
-                        if (string.IsNullOrWhiteSpace(row.Cell(9).Value.ToString()) || string.IsNullOrEmpty(row.Cell(9).Value.ToString()))
-                        {
-                            return Json(new DO_ReturnParameter() { Status = false, Message = "Status should not be Empty" });
-                        }
-
-                        ds = new DO_DoctorDaySchedule();
-                        ds.SpecialtyDesc = row.Cell(1).Value.ToString().Trim();
-                        ds.ClinicDesc = row.Cell(2).Value.ToString().Trim();
-                        ds.ConsultationDesc = row.Cell(3).Value.ToString().Trim();
-                        ds.DoctorName = row.Cell(4).Value.ToString().Trim();
-                        ds.ScheduleDate = Convert.ToDateTime(row.Cell(5).Value.ToString().Trim());
-                        var fime = row.Cell(6).Value.ToString().Trim();
-                        var Ttime = row.Cell(7).Value.ToString().Trim();
-                        DateTime Fromtime = DateTime.Parse(fime);
-                        DateTime Totime = DateTime.Parse(Ttime);
-                        var ftime = Fromtime.ToString("HH:mm");
-                        var ttime = Totime.ToString("HH:mm");
-                        //ds.ScheduleFromTime = TimeSpan.Parse(ftime);
-                        //ds.ScheduleToTime = TimeSpan.Parse(ttime);
-                        ds.ScheduleFromTime = TimeSpan.Parse(ftime, System.Globalization.CultureInfo.CurrentCulture);
-                        ds.ScheduleToTime = TimeSpan.Parse(ttime, System.Globalization.CultureInfo.CurrentCulture);
-                        ds.NoOfPatients = Convert.ToInt32(row.Cell(8).Value.ToString().Trim());
-                        ds.ActiveStatus = Convert.ToBoolean(row.Cell(9).Value.ToString().Trim());
-                        ds.XlsheetReference = filepath;
-                        obj.Add(ds);
-                    }
-                    else
-                    {
-                        rowno = 2;
-                    }
-                }
-                if (obj.Count > 0)
-                {
-                    obj.All(x =>
-                    {
-                        x.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                        x.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                        x.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                        x.BusinessKey = BusinessKey;
-                        return true;
-                    });
-
-                    var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorDaySchedule/ImportedDoctorScheduleList", obj);
-                    if (serviceResponse.Status)
-                    {
-                        System.IO.File.Delete(filepath);
-                        return Json(serviceResponse.Data);
-                    }
-                    else
-                    {
-                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-                    }
-                }
-                else
-                {
-                    return Json(new DO_ReturnParameter() { Status = false, Message = "Excel does not contain valid data" });
-
-                }
-
-                //ViewBag.Data = lst;
-            }
-            catch (Exception ex)
-            {
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message + " or valid Time and Date format should be: MM/DD/YYYY and Time format sholud not be greater than 24 hrs" });
-
-            }
-        }
-        #endregion
-
-        #region Schedule XL Export
-        [Area("Scheduler")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
-        public async Task<IActionResult> ESP_06_00()
-        {
-            try
-            {
-                var serviceresponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
-                if (serviceresponse.Status)
-                {
-                    ViewBag.BusinessKeys = serviceresponse.Data.Select(a => new SelectListItem
-                    {
-                        Text = a.LocationDescription,
-                        Value = a.BusinessKey.ToString()
-                    });
-                    return View();
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetBusinessKey: {0}");
-                }
-                return View();
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetBusinessKey:{0}");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
         #endregion
     }
 }
