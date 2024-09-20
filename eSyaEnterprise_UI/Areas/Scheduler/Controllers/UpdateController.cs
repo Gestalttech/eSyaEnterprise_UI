@@ -26,7 +26,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
 
         }
 
-        #region Schedule Update 
+        #region Schedule Update Import & Export Excel
         [Area("Scheduler")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public async Task<IActionResult> ESP_05_00()
@@ -151,7 +151,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
                         ds.ScheduleToTime = TimeSpan.Parse(ttime, System.Globalization.CultureInfo.CurrentCulture);
                         ds.NoOfPatients = Convert.ToInt32(row.Cell(8).Value.ToString().Trim());
                         ds.ActiveStatus = Convert.ToBoolean(row.Cell(9).Value.ToString().Trim());
-                        ds.XlsheetReference = filepath;
+                        ds.XlsheetReference ="#";
                         obj.Add(ds);
                     }
                     else
@@ -217,6 +217,53 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
             {
                 _logger.LogError(ex, "UD:GetUploadedDoctordaySchedulebySearchCriteria");
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Export(int Businesskey, DateTime? ScheduleFromDate, DateTime? ScheduleToDate)
+        {
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileName = "DoctordaySchedule.xlsx";
+
+            string name = "DoctordaySchedule";
+            DataTable dt = new DataTable(name);
+            dt.Columns.AddRange(new DataColumn[9]
+            {
+                new DataColumn("Specialty"),
+                new DataColumn("Clinic"),
+                new DataColumn("Consultation"),
+                new DataColumn("Doctor Name"),
+                new DataColumn("Schedule Date"),
+                new DataColumn("Schedule From Time"),
+                new DataColumn("Schedule To Time"),
+                new DataColumn("Number of Patients"),
+                new DataColumn("Status")
+            });
+
+
+            var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetUploadedDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey + "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
+
+            if (serviceResponse.Data != null)
+            {
+                foreach (var lang in serviceResponse.Data)
+                {
+                    dt.Rows.Add(lang.SpecialtyDesc, lang.ClinicDesc, lang.ConsultationDesc, lang.DoctorName, lang.ScheduleDate, lang.ScheduleFromTime, lang.ScheduleToTime, lang.NoOfPatients, lang.status);
+                }
+
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, contentType, fileName);
+                    }
+                }
+            }
+            else
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = "No date Exists" });
             }
         }
         #endregion
@@ -299,53 +346,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
         //    }
         //}
 
-        [HttpGet]
-        public async Task<IActionResult> Export(int Businesskey, DateTime? ScheduleFromDate, DateTime? ScheduleToDate)
-        {
-            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            string fileName = "DoctordaySchedule.xlsx";
-
-            string name = "DoctordaySchedule";
-            DataTable dt = new DataTable(name);
-            dt.Columns.AddRange(new DataColumn[9]
-            {
-                new DataColumn("Specialty"),
-                new DataColumn("Clinic"),
-                new DataColumn("Consultation"),
-                new DataColumn("Doctor Name"),
-                new DataColumn("Schedule Date"),
-                new DataColumn("Schedule From Time"),
-                new DataColumn("Schedule To Time"),
-                new DataColumn("Number of Patients"),
-                new DataColumn("Status")
-            });
-
-
-            var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetUploadedDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey+ "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
-
-            if (serviceResponse.Data != null)
-            {
-                foreach (var lang in serviceResponse.Data)
-                {
-                    dt.Rows.Add(lang.SpecialtyDesc, lang.ClinicDesc, lang.ConsultationDesc, lang.DoctorName, lang.ScheduleDate, lang.ScheduleFromTime, lang.ScheduleToTime, lang.NoOfPatients, lang.status);
-                }
-
-                using (XLWorkbook wb = new XLWorkbook())
-                {
-                    wb.Worksheets.Add(dt);
-                    using (MemoryStream stream = new MemoryStream())
-                    {
-                        wb.SaveAs(stream);
-                        var content = stream.ToArray();
-                        return File(content, contentType, fileName);
-                    }
-                }
-            }
-            else
-            {
-                return Json(new DO_ReturnParameter() { Status = false, Message = "No date Exists" });
-            }
-        }
+       
         [HttpGet]
         public async Task<JsonResult> GetScheduledDoctorsbyBusinessKey(int Businesskey)
         {
@@ -443,8 +444,31 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
         /// <summary>
         /// Get Doctor day Schedule by Search Criteria
         /// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> GetDoctordaySchedulebySearchCriteria(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleFromDate, DateTime ScheduleToDate)
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_DoctorDaySchedule>>("DoctorDaySchedule/GetDoctordaySchedulebySearchCriteria?Businesskey=" + Businesskey + "&DoctorID=" + DoctorID + "&SpecialtyID=" + SpecialtyID + "&ClinicID=" + ClinicID + "&ConsultationID=" + ConsultationID + "&ScheduleFromDate=" + ScheduleFromDate + "&ScheduleToDate=" + ScheduleToDate);
+        //        if (serviceResponse.Status)
+        //        {
+        //            return Json(serviceResponse.Data.ToList());
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDoctordaySchedulebySearchCriteria");
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetDoctordaySchedulebySearchCriteria");
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
+
         [HttpPost]
-        public async Task<JsonResult> GetDoctordaySchedulebySearchCriteria(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime ScheduleFromDate, DateTime ScheduleToDate)
+        public async Task<JsonResult> GetDoctordaySchedulebySearchCriteria(int Businesskey, int DoctorID, int SpecialtyID, int ClinicID, int ConsultationID, DateTime? ScheduleFromDate, DateTime? ScheduleToDate)
         {
             try
             {
@@ -466,7 +490,6 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
             }
         }
 
-
         /// <summary>
         /// Insert Doctor day Schedule
         /// </summary>
@@ -478,7 +501,7 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-
+                obj.XlsheetReference = "#";
                 if (isInsert)
                 {
                     var serviceResponse = await _eSyaSchedulerAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("DoctorDaySchedule/InsertIntoDoctordaySchedule", obj);

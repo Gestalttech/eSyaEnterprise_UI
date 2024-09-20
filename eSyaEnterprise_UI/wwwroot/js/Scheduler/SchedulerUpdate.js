@@ -23,7 +23,7 @@ function fnLoadDoctordayScheduleGrid() {
         datatype: 'json',
         mtype: 'POST',
 
-        colNames: ["", "", "", "", "", "", localization.SpecialtyDesc, localization.ClinicDesc, localization.ConsultationType, localization.DoctorName, localization.ScheduleDate, localization.ScheduleFromTime, localization.ScheduleToTime, localization.NoOfPatients, localization.XlsheetReference, localization.Active, ""],
+        colNames: ["", "", "", "", "", "", localization.ScheduleDate, localization.ScheduleFromTime, localization.ScheduleToTime, localization.DoctorName, localization.SpecialtyDesc, localization.ClinicDesc, localization.ConsultationType,   localization.NoOfPatients, localization.XlsheetReference, localization.Active, ""],
         colModel: [
 
             { name: "BusinessKey", width: 70, editable: true, align: 'left', hidden: true },
@@ -32,16 +32,17 @@ function fnLoadDoctordayScheduleGrid() {
             { name: "ConsultationId", width: 100, editable: true, align: 'left', hidden: true },
             { name: "DoctorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "SerialNo", width: 70, editable: true, align: 'left', hidden: true },
-            { name: "SpecialtyDesc", width: 100, editable: true, align: 'left' },
-            { name: "ClinicDesc", width: 80, editable: true, align: 'left' },
-            { name: "ConsultationDesc", width: 80, editable: true, align: 'left' },
-            { name: "DoctorName", width: 130, editable: true, align: 'left' },
             {
                 name: "ScheduleDate", editable: false, width: 60, align: 'left', formatter: 'date', formatoptions: { newformat: _cnfjqgDateFormat }
 
             },
             { name: 'ScheduleFromTime', index: 'Tid', width: 60, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
             { name: 'ScheduleToTime', index: 'Tid', width: 60, editable: true, formatoptions: { srcformat: 'ISO8601Long', newformat: 'ShortTime' }, editrules: { time: true } },
+            { name: "DoctorName", width: 130, editable: true, align: 'left' },
+            { name: "SpecialtyDesc", width: 100, editable: true, align: 'left' },
+            { name: "ClinicDesc", width: 80, editable: true, align: 'left' },
+            { name: "ConsultationDesc", width: 80, editable: true, align: 'left' },
+            
             { name: "NoOfPatients", width: 60, editable: true, align: 'left', hidden: false },
             { name: "XlsheetReference", width: 80, editable: true, align: 'left', hidden: true },
             { name: "ActiveStatus", editable: true, width: 50, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
@@ -248,6 +249,16 @@ function fnImportExcel() {
         fnAlert("w", "ESP_05_00", "UI0064", "Please Select Excel file");
         return;
         
+    }
+    if (IsStringNullorEmpty($("#dtfromdate").val())) {
+        fnAlert("w", "ESP_05_00", "UI0064", "Please Select From Date");
+        return;
+
+    }
+    if (IsStringNullorEmpty($("#dttodate").val())) {
+        fnAlert("w", "ESP_05_00", "UI0064", "Please Select To Date");
+        return;
+
     }
     if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $("#cboDayScheduledBusinessKey").val() === '0') {
         fnAlert("w", "ESP_05_00", "UI0064", "Please Select Location");
