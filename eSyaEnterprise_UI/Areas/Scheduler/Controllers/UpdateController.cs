@@ -430,5 +430,37 @@ namespace eSyaEnterprise_UI.Areas.Scheduler.Controllers
             }
         }
         #endregion
+
+        #region Schedule XL Export
+        [Area("Scheduler")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public async Task<IActionResult> ESP_06_00()
+        {
+            try
+            {
+                var serviceresponse = await _eSyaSchedulerAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey");
+                if (serviceresponse.Status)
+                {
+                    ViewBag.BusinessKeys = serviceresponse.Data.Select(a => new SelectListItem
+                    {
+                        Text = a.LocationDescription,
+                        Value = a.BusinessKey.ToString()
+                    });
+                    return View();
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceresponse.Message), "UD:GetBusinessKey: {0}");
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetBusinessKey:{0}");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
     }
 }
