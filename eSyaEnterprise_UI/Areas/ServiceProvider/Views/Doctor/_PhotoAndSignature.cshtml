@@ -100,12 +100,12 @@
             var sizeInMb = input.files[0].size;
 
             if (!(input.files[0].type.match(/image.*/))) {
-                fnAlert("w","ESP_01_00","","Invalid format file uploaded");
+                fnAlert("w", "ESP_01_00", "UI0400", errorMsg_ps.UploadValidPhoto_E4);
                 input.value = null;
                 return;
             }
             if (sizeInMb > sizeLimit) {
-                fnAlert("w", "ESP_01_00", "","User Photo file size should be smaller than 50 KB");
+                fnAlert("w", "ESP_01_00", "UI0401", errorMsg_ps.UploadFileSize50KB_E4);
                 
                 input.value = null;
                 return false;

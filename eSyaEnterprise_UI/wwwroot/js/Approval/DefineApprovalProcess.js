@@ -149,7 +149,7 @@ function fnSaveApprovalLevels() {
         return;
     }
     if (!validateAtLeastOneCheckbox('jqgLevelBasedApproval')) {
-        fnAlert("w", "ECS_04_00", "UI0064", "Please check at least one Approval Level.");
+        fnAlert("w", "EAP_01_00", "UI0402", errorMsg.CheckOneApproval_E5);
         return;
     } 
 
@@ -208,16 +208,16 @@ function fnSaveApprovalLevels() {
 function validationApprovalType() {
 
     if ($("#cboBusinessKey").val() <= 0) {
-        fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        fnAlert("w", "EAP_01_00", "UI0064", errorMsg.SelectBusinessLocation_E6);
         return;
     }
 
     if (IsStringNullorEmpty(FormID) || FormID == "0") {
-        fnAlert("w", "ECS_04_00", "UI0181", "Select a form");
+        fnAlert("w", "EAP_01_00", "UI0108", errorMsg.SelectForm_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#cboApprovalType").val()) || $("#cboApprovalType").val() == "0") {
-        fnAlert("w", "ECS_04_00", "UI0302", "Select a Approval type");
+        fnAlert("w", "EAP_01_00", "UI0302", "Select a Approval type");
         return false;
     }
 }
@@ -517,7 +517,7 @@ function fnSaveApprovalValues() {
         return;
     }
     if (!validateAtLeastOneCheckboxValues('jqgLevelBasedApproval_popup')) {
-        fnAlert("w", "ECS_04_00", "UI0064", "Please check at least one Approval Level.");
+        fnAlert("w", "EAP_01_00", "UI0064", "Please check at least one Approval Level.");
         return;
     }
 
@@ -602,29 +602,29 @@ function fnSaveApprovalValues() {
 function validationApprovalValues() {
 
     if ($("#cboBusinessKey").val() <= 0) {
-        fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        fnAlert("w", "EAP_01_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
         return;
     }
 
     if (IsStringNullorEmpty(FormID) || FormID == "0") {
-        fnAlert("w", "ECS_04_00", "UI0181", "Select a form");
+        fnAlert("w", "EAP_01_00", "UI0181", "Select a form");
         return false;
     }
     if (IsStringNullorEmpty($("#cboApprovalType").val()) || $("#cboApprovalType").val() == "0") {
-        fnAlert("w", "ECS_04_00", "UI0302", "Select a Approval type");
+        fnAlert("w", "EAP_01_00", "UI0302", "Select a Approval type");
         return false;
     }
 
     if (IsStringNullorEmpty($("#txtAPValueFrom").val())) {
-        fnAlert("w", "ECS_04_00", "UI0181", "Please Enter Value From");
+        fnAlert("w", "EAP_01_00", "UI0181", "Please Enter Value From");
         return false;
     }
     if (IsStringNullorEmpty($("#txtAPValueTo").val()) || $("#txtAPValueTo").val()=="0") {
-        fnAlert("w", "ECS_04_00", "UI0181", "Please Enter Effective Value To");
+        fnAlert("w", "EAP_01_00", "UI0181", "Please Enter Effective Value To");
         return false;
     }
     if (IsStringNullorEmpty($("#txtAPEffectiveFrom").val())) {
-        fnAlert("w", "ECS_04_00", "UI0181", "Please Select Effective From");
+        fnAlert("w", "EAP_01_00", "UI0181", "Please Select Effective From");
         return false;
     }
 }
