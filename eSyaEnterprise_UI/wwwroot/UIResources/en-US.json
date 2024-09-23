@@ -401,6 +401,9 @@
   "UI0400": "Please upload a valid photo",
   "UI0401": "User Photo file size should be smaller than 50 KB",
   "UI0402": "Please check at least one Approval Level",
+  "UI0403": "Please select a Approval type",
+  "UI0404": "Please enter the value from",
+  "UI0405": "Please enter the Effective Value To",
 
 
   "UIC01": "You are not Authorized to Add",
