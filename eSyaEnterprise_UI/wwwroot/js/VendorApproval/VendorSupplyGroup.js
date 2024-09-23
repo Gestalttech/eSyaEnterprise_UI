@@ -63,7 +63,10 @@ function fnSaveAPSupplyGroup() {
     if (IsValidAPSupplyGroup() == false) {
         return;
     }
-    
+    if (!validateAtLeastOneAPVendorCheckbox('jqgAPSupplyGroup')) {
+        fnAlert("w", "EVN_01_00", "UI0402", errorMsg.CheckOneApproval_E5);
+        return;
+    } 
     var val = [];
     var numberOfRecords = $("#jqgAPSupplyGroup").getGridParam("records");
 
@@ -104,6 +107,20 @@ function fnSaveAPSupplyGroup() {
         }
     });
 }
+function validateAtLeastOneAPVendorCheckbox(jqgAPSupplyGroup) {
+
+    let isChecked = false;
+    const rows = $("#" + jqgAPSupplyGroup).getDataIDs(); // Get all row IDs
+    for (let i = 0; i < rows.length; i++) {
+        const isRowChecked = $("#" + jqgAPSupplyGroup).jqGrid('getCell', rows[i], 'ActiveStatus');
+        if (isRowChecked == 'true') {
+            isChecked = true;
+            break;
+        }
+    }
+    return isChecked;
+}
+
 function IsValidAPSupplyGroup() {
     if (IsStringNullorEmpty($("#txtAPVendorCode").val())) {
         fnAlert("w", "EVN_01_00", "UI0217", errorMsg.CreateVendordetails_E5);

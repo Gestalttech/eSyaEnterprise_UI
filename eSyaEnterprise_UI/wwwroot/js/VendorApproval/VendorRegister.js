@@ -61,10 +61,10 @@ function fnloadAPVendorGrid(_typeofvendor) {
             { name: "VendorName", width: 150, editable: true, align: 'left', hidden: false },
             { name: "PreferredPaymentMode", width: 10, editable: true, align: 'left', hidden: true },
             { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "CreditType", width: 25, editable: true, align: 'center' },
+            { name: "CreditType", width: 25, editable: true, align: 'center', edittype: "select", formatter: 'select', editoptions: { value: "V: Vendor;P: PO" }, },
             { name: "CreditPeriod", width: 30, editable: true, align: 'left', resizable: true },
-            { name: "RejectionReason", width: 50, editable: true, align: 'center',hidden:true },
-            { name: "ApprovalStatus", editable: true, width: 40, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
+            { name: "RejectionReason", width: 50, editable: true, align: 'center', hidden: true },
+            { name: "ApprovalStatus", editable: true, width: 40, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" }, hidden:true },
             { name: "IsBlackListed", editable: true, width: 25, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
             { name: "SupplierScore", editable: true, width: 25, align: 'left',  },
             { name: "ActiveStatus", width: 20, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -156,13 +156,32 @@ function fnEditAPVendor(actiontype) {
 
     _VendorID = rowData.VendorId;
 
-    if (rowData.ApprovalStatus == "true") {
-        $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").hide();
-    }
-    if (rowData.ApprovalStatus == "false" || rowData.ApprovalStatus == "" || rowData.ApprovalStatus == null) {
+    //if (rowData.ApprovalStatus == "true") {
+    //    $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").hide();
+    //}
+    //if (rowData.ApprovalStatus == "false" || rowData.ApprovalStatus == "" || rowData.ApprovalStatus == null) {
+    //    $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").show();
+    //}
+
+    if ($('#rdUnauthvendor').is(':checked')) {
         $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").show();
+        $("#divApproveReject").show();
+
     }
-    
+    if ($('#rdRejectedvendor').is(':checked')) {
+        $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").hide();
+        $("#divApproveReject").hide();
+    }
+    if ($('#rdAuthenvendor').is(':checked')) {
+        $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").hide();
+        $("#divApproveReject").hide();
+
+    }
+     
+
+
+
+
     $("#txtAPVendorCode").val(rowData.VendorId);
     $("#txtAPVendorName").val(rowData.VendorName);
     $('#cboAPCreditType').val(rowData.CreditType);

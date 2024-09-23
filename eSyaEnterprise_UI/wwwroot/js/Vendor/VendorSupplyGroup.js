@@ -64,7 +64,10 @@ function fnSaveSupplyGroup() {
     if (IsValidSupplyGroup() == false) {
         return;
     }
-    
+    if (!validateAtLeastOneVendorCheckbox('jqgSupplyGroup')) {
+        fnAlert("w", "EVN_01_00", "UI0402", errorMsg.CheckOneApproval_E5);
+        return;
+    } 
     var val = [];
     var numberOfRecords = $("#jqgSupplyGroup").getGridParam("records");
 
@@ -104,6 +107,19 @@ function fnSaveSupplyGroup() {
             fnAlert("e", "", error.StatusCode, error.statusText);
         }
     });
+}
+function validateAtLeastOneVendorCheckbox(jqgSupplyGroup) {
+
+    let isChecked = false;
+    const rows = $("#" + jqgSupplyGroup).getDataIDs(); // Get all row IDs
+    for (let i = 0; i < rows.length; i++) {
+        const isRowChecked = $("#" + jqgSupplyGroup).jqGrid('getCell', rows[i], 'ActiveStatus');
+        if (isRowChecked == 'true') {
+            isChecked = true;
+            break;
+        }
+    }
+    return isChecked;
 }
 function IsValidSupplyGroup() {
     if (IsStringNullorEmpty($("#txtVendorCode").val())) {
