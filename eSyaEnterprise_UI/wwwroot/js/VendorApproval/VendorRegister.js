@@ -494,6 +494,7 @@ $("[id*='ParamValue']").on('click', function () {
 });
 function fnOpenRejectVendor() {
     $('#PopupRejectVendor').modal('show');
+    $("#txtVendorRejectionReason").val('');
 }
 function fnRejectVendor() {
     if (IsStringNullorEmpty(_VendorID) || _VendorID == '0' || _VendorID == "0") {
