@@ -1,20 +1,25 @@
 ﻿var businesslocation = false;
 var activeTabName = "";
+var approvalstatus = "";
+var _VendorID = "0";
+var itemsDisabled = {};
 $(function () {
-    
+    $("input[name='rdvendor']").change(function () {
+        //reload dropdownlist
+        RadioLoadVendorData();
+    })
+
     $.contextMenu({
         // define which elements trigger this menu
         selector: "#btnAPVendorMaster",
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPVendor('edit') } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditAPVendor('view') } },
+                       jqgEdit: {name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditAPVendor('edit') }},
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Authorize + " </span>");
     fnloadAPVendorGrid();
 
     //$(".dot").click(function () {
@@ -27,33 +32,45 @@ $(function () {
     //$("#accordion").hide();
 });
      
+function RadioLoadVendorData() {
+    $("input[name='rdvendor']").each(function () {
 
-function fnloadAPVendorGrid() {
+        if ($(this).is(":checked")) {
+
+            fnloadAPVendorGrid($(this).val());
+        }
+
+
+    });
+}
+
+function fnloadAPVendorGrid(_typeofvendor) {
 
     $("#jqgAPVendorRegister").GridUnload();
 
     $("#jqgAPVendorRegister").jqGrid({
       
-        url: getBaseURL() + '/Approve/GetVendorsForApprovals',
+        url: getBaseURL() + '/Approve/GetVendorsForApprovals?approved=' + _typeofvendor,
         mtype: 'POST',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays,"", localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true }, 
-            { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
+            { name: "VendorName", width: 150, editable: true, align: 'left', hidden: false },
             { name: "PreferredPaymentMode", width: 10, editable: true, align: 'left', hidden: true },
             { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
-            { name: "CreditType", width: 50, editable: true, align: 'center' },
-            { name: "CreditPeriod", width: 100, editable: true,  align: 'left', resizable: true },
-            { name: "ApprovalStatus", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
-            { name: "IsBlackListed", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
-            { name: "SupplierScore", editable: true, width: 90, align: 'left',  },
-            { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "CreditType", width: 25, editable: true, align: 'center' },
+            { name: "CreditPeriod", width: 30, editable: true, align: 'left', resizable: true },
+            { name: "RejectionReason", width: 50, editable: true, align: 'center',hidden:true },
+            { name: "ApprovalStatus", editable: true, width: 40, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
+            { name: "IsBlackListed", editable: true, width: 25, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
+            { name: "SupplierScore", editable: true, width: 25, align: 'left',  },
+            { name: "ActiveStatus", width: 20, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             
             {
-                name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
+                name: 'edit', search: false, align: 'left', width: 45, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="mr-1 btn btn-outline" id="btnAPVendorMaster"><i class="fa fa-ellipsis-v"></i></button>'
                 }
@@ -77,7 +94,24 @@ function fnloadAPVendorGrid() {
         loadComplete: function (data) {
             SetGridControlByAction();
             fnJqgridSmallScreen("jqgAPVendorRegister");
+            $('.ui-jqgrid-view,.ui-jqgrid,.ui-jqgrid-hdiv,.ui-jqgrid-htable,.ui-jqgrid-btable,.ui-jqgrid-bdiv,.ui-jqgrid-pager').css('width', 100 + '%');
         },
+        onSelectRow: function (rowid, status, e) {
+            //debugger;
+           // var datas = jQuery('#jqgAPVendorRegister').getRowData(rowid);
+            
+            //if (datas.ApprovalStatus == "true") {
+            //    itemsDisabled["jqgAdd"] = true;
+            //    itemsDisabled["jqgEdit"] = false;
+            //    itemsDisabled["jqgView"] = true;
+            //}
+            //if (datas.ApprovalStatus == "false") {
+            //    itemsDisabled["jqgAdd"] = false;
+            //    itemsDisabled["jqgEdit"] = true;
+            //    itemsDisabled["jqgView"] = true;
+            //}
+         },
+        
   }).jqGrid('navGrid', '#jqpAPVendorRegister', { add: false, edit: false, search: false, del: false, refresh: false })
         .jqGrid('navButtonAdd', '#jqpAPVendorRegister', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnRefreshAPVendorGrid
@@ -87,6 +121,8 @@ function fnloadAPVendorGrid() {
         //});
     fnAddGridSerialNoHeading();
 }
+
+
 $('#approveVendor-pills-tab button').on('click', function (e) {
     
     e.preventDefault()
@@ -117,6 +153,15 @@ function fnEditAPVendor(actiontype) {
     
     var rowid = $("#jqgAPVendorRegister").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgAPVendorRegister').jqGrid('getRowData', rowid);
+
+    _VendorID = rowData.VendorId;
+
+    if (rowData.ApprovalStatus == "true") {
+        $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").hide();
+    }
+    if (rowData.ApprovalStatus == "false" || rowData.ApprovalStatus == "" || rowData.ApprovalStatus == null) {
+        $("#btnSaveAPVendorDetails,#btnAPlocationsave,#btnSaveAPBankDetails,#btnAPsavestatutory,#btnApproveSupplyGroup,#btnSaveAPBusinessLink").show();
+    }
     
     $("#txtAPVendorCode").val(rowData.VendorId);
     $("#txtAPVendorName").val(rowData.VendorName);
@@ -190,12 +235,24 @@ function fnEditAPVendor(actiontype) {
         }
         fnEnableVendorRegister(true);
         businesslocation = true;
+    } 
+
+
+    if (actiontype.trim() == "approve") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "EVN_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            return;
+        }
+        fnEnableVendorRegister(true);
+        businesslocation = true;
     }
+
     $("#PopupUnitofMeasure").on('hidden.bs.modal', function () {
         $("#btnSaveUnitofMeasure").show();
         fnEnableVendorRegister(false);
     });
 }
+
 
 function fnSaveAPVendor() {
     if (IsValidAPVendor() == false) {
@@ -416,3 +473,44 @@ function fnSetSidebar() {
 $("[id*='ParamValue']").on('click', function () {
     $("[id*='ParamValue']").not(this).prop('checked', false);
 });
+function fnOpenRejectVendor() {
+    $('#PopupRejectVendor').modal('show');
+}
+function fnRejectVendor() {
+    if (IsStringNullorEmpty(_VendorID) || _VendorID == '0' || _VendorID == "0") {
+        fnAlert("w", "EVN_02_00", "", "");
+        return;
+    }
+    if (IsStringNullorEmpty($("#txtVendorRejectionReason").val())) {
+        fnAlert("w", "EVN_02_00", "", "Please enter the reason for rejection");
+        return;
+    }
+    obj = {
+        VendorId: _VendorID,
+        RejectionReason: $("#txtVendorRejectionReason").val()
+    }
+    $("#btnRejectVendor").attr('disabled', true);
+    $.ajax({
+        url: getBaseURL() + '/Approve/RejectVendor',
+        type: 'POST',
+        datatype: 'json',
+        data: { obj },
+        success: function (response) {
+            if (response.Status) {
+                fnAlert("s", "", response.StatusCode, response.Message);
+                $("#btnRejectVendor").attr('disabled', false);
+                $('#PopupRejectVendor').modal('hide');
+                fnloadAPVendorGrid("Rejected");
+                fnCloseVendorDetails();
+            }
+            else {
+                fnAlert("w", "", response.StatusCode, response.Message);
+                $("#btnRejectVendor").attr('disabled', false);
+            }
+        },
+        error: function (error) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+            $("#btnRejectVendor").attr("disabled", false);
+        }
+    });
+}

@@ -127,8 +127,8 @@ function fnSaveAuthenticateUser() {
     }
     obj = {
         UserID: _userID,
-        RejectionReason: null,
-        bool:true,
+        RejectionReason: null
+    
         
     }
     $("#btnAuthenticateUser").attr('disabled', true);
@@ -175,8 +175,8 @@ function fnRejectUser() {
     }
     obj = {
         UserID: _userID,
-        RejectionReason: $("#txtRejectionReason").val(),
-        bool: false,
+        RejectionReason: $("#txtRejectionReason").val()
+        
 
     }
     $("#btnRejectUserAuthenticate").attr('disabled', true);

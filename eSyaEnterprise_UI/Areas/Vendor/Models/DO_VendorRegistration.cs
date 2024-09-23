@@ -16,6 +16,8 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Models
         public bool IsBlackListed { get; set; }
         public int ReasonForBlacklist { get; set; }
         public int SupplierScore { get; set; }
+        public string? RejectionReason { get; set; }
+
         public bool ActiveStatus { get; set; }
         public string FormID { get; set; }
         public int UserID { get; set; }

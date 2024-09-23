@@ -154,11 +154,11 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
         ///Get Vendor for Grid
         /// </summary>
         [HttpPost]
-        public async Task<JsonResult> GetVendorsForApprovals()
+        public async Task<JsonResult> GetVendorsForApprovals(string approved)
         {
             try
             {
-                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_VendorRegistration>>("Approve/GetVendorsForApprovals");
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.GetAsync<List<DO_VendorRegistration>>("Approve/GetVendorsForApprovals?approved=" + approved);
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -789,6 +789,7 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
             {
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+
                 var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Approve/ApproveVendor", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
@@ -798,6 +799,30 @@ namespace eSyaEnterprise_UI.Areas.Vendor.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "UD:ApproveVendor:params:" + JsonConvert.SerializeObject(obj));
+                return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Vendor.
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> RejectVendor(DO_VendorApproval obj)
+        {
+
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                var serviceResponse = await _eSyaVendorAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Approve/RejectVendor", obj);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:RejectVendor:params:" + JsonConvert.SerializeObject(obj));
                 return Json(new { Status = false, Message = ex.InnerException == null ? ex.Message.ToString() : ex.InnerException.Message });
             }
         }
