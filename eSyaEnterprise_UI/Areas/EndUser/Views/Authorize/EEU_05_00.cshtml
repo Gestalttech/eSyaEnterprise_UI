@@ -56,9 +56,9 @@
     <div class="col-lg-6 col-md-6 col-sm-6">
         <label>@Localizer["SelectUserType"]</label>
         <div class="form-group">
-            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicate" checked="checked"/><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["UnAuthenticateUser"]</label>
-            <input type="radio" name="rduser" id="rdAuthenUser" value="Authentic" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["AuthenticateUser"]</label>
-            <input type="radio" name="rduser" id="rdRejectedUser" value="Rejected" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["RejectedUsers"] </label>
+            <input type="radio" name="rduser" id="rdUnauthUser" value="Unauthenicate" checked="checked"/><label for="rdUnauthUser" class="d-inline ps-1 pe-3"> @Localizer["Un-Approved"]</label>
+            <input type="radio" name="rduser" id="rdAuthenUser" value="Authentic" /><label for="rdAuthenUser" class="d-inline ps-1 pe-3">@Localizer["Approved"]</label>
+            <input type="radio" name="rduser" id="rdRejectedUser" value="Rejected" /><label for="rdRejectedUser" class="d-inline ps-1">@Localizer["Rejected"] </label>
         </div>
     </div>
 
@@ -128,7 +128,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnAuthenticateUser" onclick="fnSaveAuthenticateUser()">
-                            <i class="fa fa-save"></i> @Localizer["Authenticate"]
+                            <i class="fa fa-save"></i> @Localizer["Approve"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="btnRejectUser" onclick="fnOpenRejectUser()"><i class="fa fa-ban"></i> @Localizer["Reject"] </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelRejectUser"><i class="fa fa-times"></i> @Localizer["Close"] </button>
