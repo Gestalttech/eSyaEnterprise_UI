@@ -600,7 +600,7 @@ function BindCities() {
                 //refresh each time
                 $("#cboCityCode").empty();
 
-                $("#cboCityCode").append($("<option value='0'> Select </option>"));
+                $("#cboCityCode").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboCityCode").append($("<option></option>").val(response[i]["CityCode"]).html(response[i]["CityDesc"]));
@@ -609,7 +609,7 @@ function BindCities() {
             }
             else {
                 $("#cboCityCode").empty();
-                $("#cboCityCode").append($("<option value='0'> Select </option>"));
+                $("#cboCityCode").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboCityCode').selectpicker('refresh');
             }
         },
@@ -636,7 +636,7 @@ function BindTaxIdentification() {
                 //refresh each time
                 $("#cboTaxIdentification").empty();
 
-                $("#cboTaxIdentification").append($("<option value='0'> Select </option>"));
+                $("#cboTaxIdentification").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboTaxIdentification").append($("<option></option>").val(response[i]["TaxIdentificationId"]).html(response[i]["TaxIdentificationDesc"]));
@@ -645,7 +645,7 @@ function BindTaxIdentification() {
             }
             else {
                 $("#cboTaxIdentification").empty();
-                $("#cboTaxIdentification").append($("<option value='0'> Select </option>"));
+                $("#cboTaxIdentification").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboTaxIdentification').selectpicker('refresh');
             }
         },
@@ -672,7 +672,7 @@ function BindCurrrencies() {
                 //refresh each time
                 $("#cboCurrrencyCode").empty();
 
-                $("#cboCurrrencyCode").append($("<option value='0'> Select </option>"));
+                $("#cboCurrrencyCode").append($("<option value='0'>" + localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboCurrrencyCode").append($("<option></option>").val(response[i]["CurrencyCode"]).html(response[i]["CurrencyName"]));
@@ -681,7 +681,7 @@ function BindCurrrencies() {
             }
             else {
                 $("#cboCurrrencyCode").empty();
-                $("#cboCurrrencyCode").append($("<option value='0'> Select </option>"));
+                $("#cboCurrrencyCode").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboCurrrencyCode').selectpicker('refresh');
             }
         },
@@ -708,7 +708,7 @@ function fnBindExistingLocationsasSegments() {
                 //refresh each time
                 $("#cboBusinessSegment").empty();
 
-                $("#cboBusinessSegment").append($("<option value='0'> Select </option>"));
+                $("#cboBusinessSegment").append($("<option value='0'>"+ localization.Select +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboBusinessSegment").append($("<option></option>").val(response[i]["SegmentId"]).html(response[i]["BusinessName"]));
@@ -717,7 +717,7 @@ function fnBindExistingLocationsasSegments() {
             }
             else {
                 $("#cboBusinessSegment").empty();
-                $("#cboBusinessSegment").append($("<option value='0'> Select </option>"));
+                $("#cboBusinessSegment").append($("<option value='0'>" + localization.Select +"</option>"));
                 $('#cboBusinessSegment').selectpicker('refresh');
             }
         },
@@ -831,7 +831,7 @@ function fnGetBusinessUnitType() {
                     $('#rdoIsCostCenter').prop('checked', false);
                     $("#divsegment").hide();
                     $("#cboBusinessSegment").empty();
-                    $("#cboBusinessSegment").append($("<option value='0'> Select </option>"));
+                    $("#cboBusinessSegment").append($("<option value='0'>" + localization.Select +"</option>"));
                     $("#cboBusinessSegment").selectpicker('refresh');
                 }
                 else if (response.BusinessUnitType == "S") {
@@ -840,7 +840,7 @@ function fnGetBusinessUnitType() {
                     $('#lblRdoSegmentLinkAccount').hide();
                     $("#divsegment").hide();
                     $("#cboBusinessSegment").empty();
-                    $("#cboBusinessSegment").append($("<option value='0'> Select </option>"));
+                    $("#cboBusinessSegment").append($("<option value='0'>" + localization.Select +"</option>"));
                     $("#cboBusinessSegment").selectpicker('refresh');
                 }
 
@@ -1051,7 +1051,7 @@ $("#btnCancelFinancialInfo").click(function () {
 function fnSaveTaxInfo() {
 
     if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
-        fnAlert("w", "ECB_02_00", "UI0052", "First Add the Location");
+        fnAlert("w", "ECB_02_00", "UI0064", errorMsg.BusinessLocation_E17);
         return;
     }
     if ($("#cboTaxIdentification").val() === '0' || $("#cboTaxIdentification").val() === "0" || IsStringNullorEmpty($("#cboTaxIdentification").val())) {
@@ -1201,7 +1201,7 @@ function fnGridLoadPaymentMethodInfo() {
 function fnSavePaymentIntefaceInfo() {
 
     if ($("#txtBusinesskey").val() === '0' || $("#txtBusinesskey").val() === "0" || IsStringNullorEmpty($("#txtBusinesskey").val())) {
-        fnAlert("w", "ECB_02_00", "UI0052", "First Add the Location");
+        fnAlert("w", "ECB_02_00", "UI0064", errorMsg.BusinessLocation_E17);
         return;
     }
     if ($("#cbolocISD").val() === '0' || $("#cbolocISD").val() === "0" || IsStringNullorEmpty($("#cbolocISD").val())) {
