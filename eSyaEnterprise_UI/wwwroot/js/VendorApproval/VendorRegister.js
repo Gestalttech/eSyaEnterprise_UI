@@ -503,7 +503,7 @@ function fnRejectVendor() {
         return;
     }
     if (IsStringNullorEmpty($("#txtVendorRejectionReason").val())) {
-        fnAlert("w", "EVN_02_00", "", "Please enter the reason for rejection");
+        fnAlert("w", "EVN_02_00", "UI0413", errorMsg.RejectionReason_E6);
         return;
     }
     obj = {

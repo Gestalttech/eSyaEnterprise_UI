@@ -170,7 +170,7 @@ function fnRejectUser() {
         return;
     }
     if (IsStringNullorEmpty($("#txtRejectionReason").val())) {
-        fnAlert("w", "EEU_05_00", "", "Please Enter Reason for Rejection");
+        fnAlert("w", "EEU_05_00", "UI0413", errorMsg.RejectionReason_E3);
         return;
     }
     obj = {
