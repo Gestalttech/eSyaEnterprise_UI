@@ -404,6 +404,10 @@
   "UI0403": "Please select a Approval type",
   "UI0404": "Please enter the value from",
   "UI0405": "Please enter the Effective Value To",
+  "UI0406": "Active Users Required",
+  "UI0407": "Please select a group",
+  "UI0408": "Please delete child nodes first",
+  "UI0409": "Do you want to delete account group?",
 
 
   "UIC01": "You are not Authorized to Add",

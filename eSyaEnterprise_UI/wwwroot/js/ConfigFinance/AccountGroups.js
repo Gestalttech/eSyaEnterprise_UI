@@ -161,12 +161,12 @@ $(document).ready(function () {
         }
         else {
             if (v_group.val() == '') {
-                v_group.attr('placeholder', "Cannot be Empty").focus();
-                fnAlert("e", "", "", "Please Enter Description");
+                //v_group.attr('placeholder', "Cannot be Empty").focus();
+                fnAlert("w", "EAC_03_00", "UIC11", errorMsg.EnterDescription_E5);
             }
             else {
                 //alertError("Select Group");
-                fnAlert("w", "", "", "Please Select a Group");
+                fnAlert("w", "EAC_03_00", "UI0407", errorMsg.SelectaGroup_E6);
             }
         }
     }
@@ -178,11 +178,11 @@ $(document).ready(function () {
         if (selectedNode != undefined) {
             if (selectedNode.children.length > 0) {
                 //alertError('Please delete child nodes first.');
-                fnAlert("w", "", "", 'Please delete child nodes first.');
+                fnAlert("w", "EAC_03_00", "UI0408", errorMsg.DeleteChildNode_E7);
 
             }
             else {
-                if (confirm('Do you want to delete ' + accountName + ' account group?')) {
+                if (confirm(errorMsg.DoYouWantToDelete_E8 + accountName)) {
                     $.ajax({
                         url: getBaseURL() + '/AccountGroup/DeleteAccountGroup',
                       

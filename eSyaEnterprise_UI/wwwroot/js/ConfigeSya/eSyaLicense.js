@@ -148,7 +148,7 @@ function fnSaveeSyaLicense() {
         return;
     }
     //if ($("#txteActiveUsers").val() == 0 || $("#txteActiveUsers").val() == '0' || IsStringNullorEmpty($("#txteActiveUsers").val())) {
-    //    fnAlert("w", "ECE_01_00", "UI0052", "Active Users Required");
+    //    fnAlert("w", "ECE_01_00", "UI0406", errorMSg.ActiveUsersRequired_E8);
     //    return;
     //}
     if ($("#txteNoofBeds").val() == 0 || $("#txteNoofBeds").val() == '0' || IsStringNullorEmpty($("#txteNoofBeds").val())) {
