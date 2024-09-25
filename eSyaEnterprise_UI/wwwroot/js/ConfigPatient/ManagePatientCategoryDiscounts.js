@@ -564,15 +564,15 @@ function fnSaveServiceClass() {
         return ;
     }
     if ($("#cboDiscountRule").val() === "0" || $("#cboDiscountRule").val() === "") {
-        fnAlert("w", "EPM_07_00", "UI0357", "Select Discount Rule");
+        fnAlert("w", "EPM_07_00", "UI0410", errorMsg.DiscountRule_E5);
         return;
     }
     if ($("#txtDiscountPercentage").val() == "" || $("#txtDiscountPercentage").val() == null || $("#txtDiscountPercentage").val() == undefined) {
-        fnAlert("w", "EPM_07_00", "UI0357", "Please Enter Discount Percentage");
+        fnAlert("w", "EPM_07_00", "UI0411", errorMsg.DiscountPercentage_E6);
         return;
     }
     if ($("#txtServiceChargePercentage").val() === null || $("#txtServiceChargePercentage").val() === "") {
-        fnAlert("w", "EPM_07_00", "UI0357", "Please Enter Service Charge Percentage");
+        fnAlert("w", "EPM_07_00", "UI0412", errorMsg.ServiceChargePercentage_E7);
         return;
     }
     $("#btnSaveServiceClass").attr('disabled', true);

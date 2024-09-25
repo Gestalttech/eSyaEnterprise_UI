@@ -408,6 +408,9 @@
   "UI0407": "Please select a group",
   "UI0408": "Please delete child nodes first",
   "UI0409": "Do you want to delete account group?",
+  "UI0410": "Please Select a Discount Rule",
+  "UI0411": "Please Enter the discount Percentage",
+  "UI0412": "Please Enter the service Charge Percentage",
 
 
   "UIC01": "You are not Authorized to Add",
