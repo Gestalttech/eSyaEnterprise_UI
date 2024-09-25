@@ -33,7 +33,7 @@ $(document).ready(function () {
 
       
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.ApprovalStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
@@ -41,7 +41,8 @@ $(document).ready(function () {
             { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
             { name: "CreditType", width: 50, editable: true, align: 'center', edittype: "select", formatter: 'select', editoptions: { value: "V: Vendor;P: PO" }, },
             { name: "CreditPeriod", width: 100, editable: true, align: 'left', resizable: true },
-            { name: "ApprovalStatus", width: 70, editable: true, align: 'left' },
+            { name: "ApprovalStatus", width: 70, editable: true, align: 'left',hidden:true },
+            { name: "ApprovedStatus", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: false },
             { name: "IsBlackListed", width: 70, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "SupplierScore", editable: true, width: 90, align: 'left', },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -87,7 +88,7 @@ function fnloadVendorGrid(alphabet) {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
+        colNames: [localization.VendorId, localization.VendorName, localization.PreferredPaymentMode, localization.VendorClass, localization.CreditType, localization.CreditPeriodindays, localization.VendorStatus, localization.ApprovalStatus, localization.IsBlackListed, localization.ScoreCard, localization.Active, localization.Actions],
         colModel: [
             { name: "VendorId", width: 70, editable: true, align: 'left', hidden: true }, 
             { name: "VendorName", width: 170, editable: true, align: 'left', hidden: false },
@@ -95,7 +96,8 @@ function fnloadVendorGrid(alphabet) {
             { name: "VendorClass", width: 10, editable: true, align: 'left', hidden: true },
             { name: "CreditType", width: 50, editable: true, align: 'center', edittype: "select", formatter: 'select', editoptions: { value: "V: Vendor;P: PO" }, },
             { name: "CreditPeriod", width: 100, editable: true,  align: 'left', resizable: true },
-            { name: "ApprovalStatus", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" } },
+            { name: "ApprovalStatus", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Approved;false: UnApproved" },hidden:true},
+            { name: "ApprovedStatus", width: 30, editable: false, editoptions: { disabled: true }, align: 'left', hidden: false },
             { name: "IsBlackListed", editable: true, width: 70, align: 'left', resizable: false, edittype: "select", formatter: 'select', editoptions: { value: "true: Yes;false: NO" } },
             { name: "SupplierScore", editable: true, width: 90, align: 'left',  },
             { name: "ActiveStatus", width: 35, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },

@@ -18,7 +18,7 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Authorize + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Approve + " </span>");
 });
 function RadioLoadUserData() {
     $("input[name='rduser']").each(function () {
@@ -36,7 +36,7 @@ function fnGridLoadUnlockAuthorizeUser(_typeofuser) {
         datatype: 'json',
         mtype: 'POST',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.UserId, localization.loginId, localization.UserDesc, "", localization.UserGroup, "", localization.UserRole, localization.EmailId, localization.UnsuccessfulAttempts, localization.LoginAttemptDate, localization.BlockSignIn,"Authentic Status", localization.Active, localization.Actions],
+        colNames: [localization.UserId, localization.loginId, localization.UserDesc, "", localization.UserGroup, "", localization.UserRole, localization.EmailId, localization.UnsuccessfulAttempts, localization.LoginAttemptDate, localization.BlockSignIn, localization.ApproveStatus, localization.Active, localization.Actions],
         colModel: [
             { name: "UserID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
             { name: "LoginID", width: 70, editable: false, editoptions: { disabled: true }, align: 'left', hidden: true },
