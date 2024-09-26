@@ -303,6 +303,40 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
                 throw;
             }
         }
+        /// <summary>
+        ///Get Business Location Parameters by Business Key for Grid
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetLocationParameters(int BusinessKey)
+        {
+            try
+            {
+
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<List<DO_eSyaParameter>>("License/GetLocationParametersbyBusinessKey?BusinessKey=" + BusinessKey);
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0}", BusinessKey);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0}", BusinessKey);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLocationParametersbyBusinessKey:For BusinessKey {0} BusinessKey", BusinessKey);
+                throw;
+            }
+        }
         #endregion
     }
 }

@@ -24,6 +24,9 @@
         public List<DO_BusienssSegmentCurrency> l_BSCurrency { get; set; }
         public List<DO_eSyaParameter>? l_FormParameter { get; set; }
         public List<DO_LocationPreferredLanguage>? l_Preferredlanguage { get; set; }
+        public bool SMSIntegration { get; set; }
+        public bool EmailIntegration { get; set; }
+        public bool SecurityQuestionIntegration { get; set; }
     }
     public class DO_LocationFinancialInfo
     {

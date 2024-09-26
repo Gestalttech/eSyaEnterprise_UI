@@ -48,12 +48,17 @@
 </div>
 <div class="processcontainer">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-7 col-md-8 col-lg-9">
             <table id="gvProcessRule"></table>
             <div id="pgProcessRule"></div>
         </div>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-12">
+            @await Component.InvokeAsync("eSyaParameter", new { parameterType = "2" })
+
+        </div>
     </div>
 </div>
+
 
 
 
@@ -330,6 +335,27 @@
             },
             error: function (error) {
                 fnAlert("e", "", error.StatusCode, error.statusText);
+            }
+        });
+        fnGetLocationParamaters();
+    }
+
+    function fnGetLocationParamaters() {
+        eSyaParams.ClearValue();
+
+        $.ajax({
+            async: false,
+            url: getBaseURL() + "/ApplicationRules/GetLocationParameters?BusinessKey=" + $('#cboBusinesskey').val(),
+            type: 'POST',
+            datatype: 'json',
+            success: function (result) {
+                if (result != null) {
+                    eSyaParams.SetJSONValue(result);
+                }
+            },
+            error: function (error) {
+                fnAlert("e", "", response.StatusCode, response.Message);
+
             }
         });
     }

@@ -182,12 +182,15 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
         mtype: 'GET',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: ["", localization.LocationDescription, localization.ActiveStatus],
+        colNames: ["", localization.LocationDescription, localization.AllowSMSIntegration, localization.AllowEmailIntegration, "Allow Security Question Integration", localization.ActiveStatus],
         colModel: [
 
             { name: "BusinessKey", width: 180, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
-            { name: "LocationDescription", width: 250, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "ActiveStatus", width: 80, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
+            { name: "LocationDescription", width: 200, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "SMSIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "EmailIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "SecurityQuestionIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         pager: "#jqpMapRuleswithLocation",
         rowNum: 10,
@@ -223,3 +226,4 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
     }).jqGrid('navGrid', '#jqpMapRuleswithLocation', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' });
     fnAddGridSerialNoHeading();
 }
+
