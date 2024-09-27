@@ -1375,6 +1375,77 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        public async Task<JsonResult> CheckValidateUserID(string loginID)
+        {
+            try
+            {
+                var parameter = "?loginID=" + loginID;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/CheckValidateUserID" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:CheckValidateUserID:For loginID {0} ", loginID);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:CheckValidateUserID:For UserID {0} ", loginID);
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ChangePasswordfromForgotPassword(int userId, string password, string confirmPassword)
+        {
+            try
+            {
+
+
+                if (password != confirmPassword)
+                {
+                    return Json(new DO_ReturnParameter { Status = false, Message = "Password and Confirm Password should be same" });
+                }
+
+                //
+                var passwordpr = await _applicationRulesServices.GetApplicationRuleStatusByID(4, 1);
+                int GwRuleId = 4;
+                var ruleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("ForgotUserPassword/GetGatewayRuleValuebyRuleID?GwRuleId=" + GwRuleId);
+
+                if (passwordpr && ruleResponse.Status && ruleResponse.Data > 0)
+                {
+
+                    var passswordpolicy = _passwordPolicy.IsValidPasswordPolicy(password);
+                    if (!passswordpolicy.Status)
+                    {
+                        return Json(new { Status = false, passswordpolicy.Message });
+                    }
+
+                }
+
+                var parameter = "?userId=" + userId + "&password=" + password;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("ForgotUserPassword/ChangePasswordfromForgotPassword" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChangePasswordfromForgotPassword:params:" + JsonConvert.SerializeObject(password));
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ChangePasswordfromForgotPassword:params:" + JsonConvert.SerializeObject(password));
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
         #endregion
 
         #region Change Password Expiration Password
