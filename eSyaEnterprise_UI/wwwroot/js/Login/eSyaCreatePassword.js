@@ -389,9 +389,9 @@ function fnBindUserLocations() {
         },
         success: function (response, data) {
          
-            if (response != null) {
+            if (response.lstUserLocation != null) {
                 //refresh each time
-             
+               
                 $("#cboBusinessLocation").empty();
                 $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
                 if (response.lstUserLocation != null) {
@@ -439,6 +439,7 @@ function fnBindUserLocations() {
                
             }
             else {
+                fnAlert("e", "", "", "In Valid User ID");
                 $("#cboBusinessLocation").empty();
                 $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
 

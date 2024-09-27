@@ -153,6 +153,7 @@ function fnFPValidateAnswer() {
         datatype: 'json',
         data: { obj },
         success: function (response) {
+           
             if (response.IsSucceeded) {
                 fnAlert("s", "", response.StatusCode, response.Message + localization.YourPassword + response.Password);
                 fnFPCloseQuestionAnswer();
@@ -187,7 +188,8 @@ function fnForgotPWValidateOTP() {
         async: false,
         success: function (result) {
             if (result.IsSucceeded) {
-                fnAlert("s", "", "UI0386", result.Message + localization.YourPasswordHasbeensent_E16);
+               
+                fnAlert("s", "", "UI0386", result.Message + "Your Password has been sent"+" "+ result.Password);
                 $("#PopupForgotPassword").modal('hide');
 
             } else {
@@ -200,5 +202,4 @@ function fnForgotPWValidateOTP() {
             fnAlert("e", "", "", error.Message);
         }
     });
-    return Status;
 }

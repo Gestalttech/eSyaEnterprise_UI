@@ -187,9 +187,9 @@ function fnFillGridMappedRuleswithLocation(ProcessID, RuleID) {
 
             { name: "BusinessKey", width: 180, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationDescription", width: 200, align: 'left', editable: false, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "SMSIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "EmailIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "SecurityQuestionIntegration", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "SMSIntegration", width: 60, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "EmailIntegration", width: 60, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "SecurityQuestionIntegration", width: 60, editable: false, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", width: 60, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
         ],
         pager: "#jqpMapRuleswithLocation",

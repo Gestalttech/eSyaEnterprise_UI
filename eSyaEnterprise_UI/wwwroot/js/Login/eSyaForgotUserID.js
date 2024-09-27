@@ -183,8 +183,9 @@ function fnForgotUIDValidateOTP() {
         data: { mobileNo: $("#txtForgotUIDOTPMobileNo").val(), otp: $("#txtForgotUIDOTP").val(), expirytime: _TimerDuration/60 },
         async: false,
         success: function (result) {
+            
             if (result.IsSucceeded) {
-                fnAlert("s", "", "UI0377", result.Message + localization.YourPasswordHasbeensent_E16);
+                fnAlert("s", "", "UI0377", result.Message + "Your Login ID has been sent" +" "+ result.LoginID);
                 $("#PopupGetUserID").modal('hide');
 
             } else {
@@ -197,5 +198,5 @@ function fnForgotUIDValidateOTP() {
             fnAlert("e", "", "", error.Message);
         }
     });
-    return Status;
+//    return Status;
 }
