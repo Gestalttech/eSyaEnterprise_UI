@@ -66,6 +66,7 @@
     color: var(--button-forecolor);
     border-color: transparent;
     font-family:helvetica-Bold;
+    border-radius:4px;
 }
     .btn-primary:hover, .mdl-button:hover, .mdl-button:active, .mdl-button:focus:not(:active), .mdl-button--raised.mdl-button--colored:focus:not(:active),
     .mdl-button--raised.mdl-button--colored:hover, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
@@ -107,6 +108,10 @@
     .btn-outline-primary.focus, .btn-outline-primary:focus {
         box-shadow: none !important;
     }
+.btn-outline-dark {
+    font-family: helvetica-Bold;
+    
+}
     button[disabled=disabled]{
         opacity:0.4;
     }

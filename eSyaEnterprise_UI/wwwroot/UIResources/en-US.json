@@ -412,6 +412,8 @@
   "UI0411": "Please Enter the discount Percentage",
   "UI0412": "Please Enter the service Charge Percentage",
   "UI0413": "Please enter the reason for rejection",
+  "UI0414": "Please select a patient type",
+  "UI0415": "Please select a relationship",
 
 
   "UIC01": "You are not Authorized to Add",
