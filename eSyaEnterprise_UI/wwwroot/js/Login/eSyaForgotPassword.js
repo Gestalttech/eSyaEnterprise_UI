@@ -59,6 +59,15 @@ $("#btnForgotPWResendOTP").click(function () {
 
 
 function fnOpenFPWDPopup() {
+ 
+    if (IsStringNullorEmpty($("#txtUserID").val())) {
+
+        fnAlert("w", "", "", "Please Enter User ID");
+        return;
+    }
+    fnValidateUserID();
+}
+function GetForgotPasswordLabels() {
     $.ajax({
         url: getBaseURL() + '/Account/GetLabelNameForgotPasswordbyRule',
         type: 'GET',
@@ -79,7 +88,6 @@ function fnOpenFPWDPopup() {
         }
     });
 }
-
 
 function fnFPGetOTPbyMobileNumber() {
 
@@ -188,11 +196,25 @@ function fnForgotPWValidateOTP() {
         async: false,
         success: function (result) {
             if (result.IsSucceeded) {
-               
-                fnAlert("s", "", "UI0386", result.Message + "Your Password has been sent"+" "+ result.Password);
+                
+                $("#lblFPOTPLogInID").text('');
+                $("#txtFPOTPloginUserId").val('');
                 $("#PopupForgotPassword").modal('hide');
+                fnAlert("s", "", "", result.Message);
+                $("#lblFPOTPLogInID").text("Welcome " + result.LoginDesc);
+                $("#txtFPOTPloginUserId").val(result.UserID);
 
-            } else {
+                setTimeout(function () {
+                    $("#PopupForgotPasswordAfterOTP").modal('show');
+                }, 2000);
+
+
+            }
+
+            else
+            {
+                $("#lblFPOTPLogInID").text("");
+                $("#txtFPOTPloginUserId").val(result.UserID);
                 fnAlert("w", "", "", result.Message);
             }
 
@@ -203,3 +225,154 @@ function fnForgotPWValidateOTP() {
         }
     });
 }
+
+function fnValidateUserID() {
+    var logInId = $("#txtUserID").val();
+   
+    $.ajax({
+        url: getBaseURL() + '/Account/CheckValidateUserID?loginId=' + logInId,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+
+            if (response != null) {
+                //refresh each time
+                if (response.IsSucceeded) {
+                    GetForgotPasswordLabels();
+
+                } else {
+                    fnAlert("e", "", "", response.Message);
+                }
+
+            }
+            else {
+                fnAlert("e", "", "", response.Message);
+               
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
+
+$("#PopupForgotPasswordAfterOTP").on('shown.bs.modal', function () {
+    $("#txtFPOTPpassword").val("");
+    $("#txtFPOTPConfirmPassword").val("");
+    fnCreateFPOTPPasswordPolicy();
+});
+
+function fnCreateFPOTPPasswordPolicy() {
+    var _createPWerrmsg = "";
+    var _createPWlist = "";
+
+    $.ajax({
+        url: getBaseURL() + '/Account/GetPasswordPolicybyRule',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", "", xhr.statusText);
+        },
+        success: function (response) {
+            $(".bgUserTips").removeClass('animate__animated animate__flash animate__repeat-1');
+            $("#divFPOTPCPErrorMsg").css('display', 'none');
+            if (response.Status) {
+
+                if (response.StatusCode == "1" || response.StatusCode == 1) {
+                    $("#txtFPOTPpassword").val("");
+                    $("#txtFPOTPConfirmPassword").val("");
+                    _createPWerrmsg = response.Message.split("\\");
+                    _createPWlist = "";
+                    $("#lblFPOTPCPErrorList").remove();
+                    $("#lblFPOTPCPErrorMessageHeader").html(_createPWerrmsg[0]);
+                    _createPWlist += "<ol id='lblFPOTPCPErrorList'>"
+                    for (i = 1; i < _createPWerrmsg.length; i++) {
+                        _createPWlist += "<li class='animate__animated animate__fadeInDown'>" + _createPWerrmsg[i] + "</li>";
+                    }
+                    _createPWlist += "</ol>"
+                    $("#divFPOTPCPlblErrorList").append(_createPWlist);
+
+                    $(".bgUserTips").removeClass('red');
+                    $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
+                    $("#divFPOTPCPErrorMsg").css('display', 'block');
+                }
+                else {
+                    $("#txtFPOTPpassword").val("");
+                    $("#txtFPOTPConfirmPassword").val("");
+
+                    $("#divFPOTPCPErrorMsg").css('display', 'none');
+                }
+            }
+        }
+    });
+}
+
+function fnSaveFPOTPChangePassword() {
+
+
+    if ($("#txtFPOTPpassword").val().trim().length <= 0) {
+        fnAlert("w", "", "UI0278", "Please Enter Password");
+        return;
+    }
+    
+    if ($("#txtFPOTPConfirmPassword").val().trim().length <= 0) {
+        fnAlert("w", "", "UI0280", "Please Enter Confirm Password");
+        return;
+    }
+
+    if ($("#txtFPOTPpassword").val() !== $("#txtFPOTPConfirmPassword").val()) {
+        fnAlert("w", "", "UI0281", "Password and Confirm Password should be same");
+        return;
+    }
+
+    $("#btnSaveFPOTPChangePassword").attr("disabled", true);
+    $.ajax({
+        url: getBaseURL() + '/Account/ChangePasswordfromForgotPassword?userId=' + $("#txtFPOTPloginUserId").val() + '&password=' + $("#txtFPOTPpassword").val() + '&confirmPassword=' + $("#txtFPOTPConfirmPassword").val(),
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+        success: function (response) {
+
+            if (response.Status) {
+                $("#txtFPOTPloginUserId").val('');
+                $("#txtFPOTPloginUserId").val(response.ID);
+
+                $("#PopupForgotPasswordAfterOTP").modal('hide');
+
+                fnAlert("s", "", "", response.Message);
+
+            }
+            else {
+                $("#txtFPOTPpassword").val("");
+                $("#txtFPOTPConfirmPassword").val("");
+                _createPWerrmsg = response.Message.split("\\");
+                _createPWlist = "";
+                $("#lblFPOTPCPErrorList").remove();
+                $("#lblFPOTPCPErrorMessageHeader").html(_createPWerrmsg[0]);
+                _createPWlist += "<ol id='lblFPOTPCPErrorList'>"
+                for (i = 1; i < _createPWerrmsg.length; i++) {
+                    _createPWlist += "<li class='animate__animated animate__fadeInDown'>" + _createPWerrmsg[i] + "</li>";
+                }
+                _createPWlist += "</ol>"
+                $("#divFPOTPCPlblErrorList").append(_createPWlist);
+
+                $(".bgUserTips").removeClass('red');
+                $(".bgUserTips").addClass('animate__animated animate__flash animate__repeat-1');
+                $("#divFPOTPCPErrorMsg").css('display', 'block');
+            }
+            $("#btnSaveFPOTPChangePassword").attr("disabled", false);
+        },
+        error: function (error) {
+            fnAlert("e", "", "", error.statusText);
+            $("#btnSaveFPOTPChangePassword").attr("disabled", false);
+        }
+    });
+}
+

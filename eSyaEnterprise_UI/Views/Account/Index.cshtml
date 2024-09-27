@@ -626,6 +626,62 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fullscreen fade in" id="PopupForgotPasswordAfterOTP" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-md" role="document" style="box-shadow:none;top:20px">
+            <div class="modal-content ">
+                <div class="modal-header popupHeader">
+                    <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                    <h4 class="modal-title m-0"><i class="fa fa-key"></i>  @Localizer["CreatePassword"]</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row resetPasswordSection">
+                        <div class="col-sm-12">
+                            <div class="form-group fixedText border-bottom">
+                                <label for="" id="lblFPOTPLogInID" class="d-inline font-weight-bold h6"> </label>
+                            </div>
+                            <div>
+
+                                <input type="text" id="txtFPOTPloginUserId" hidden />
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-12  form-group" id="divFPOTPCPErrorMsg" style="display:none">
+                            <div class="bgUserTips">
+                                <p id="lblFPOTPCPErrorMessageHeader" class="m-0 bold animate__animated animate__fadeInDown"></p>
+                                <div id="divFPOTPCPlblErrorList"> </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group pass_show position-relative">
+                                <label for="txtFPOTPpassword">@Localizer["NewPassword"]</label>
+                                <input id="txtFPOTPpassword" class="form-control" maxlength="50" type="password" />
+                                <a href="#" id="viewFPOTPNPPassword"><i class="fa fa-eye-slash"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group pass_show position-relative">
+                                <label for="txtFPOTPConfirmPassword">@Localizer["ConfirmPassword"]</label>
+                                <input id="txtFPOTPConfirmPassword" class="form-control" maxlength="50" type="password" />
+                                <a href="#" id="viewFPOTPCPPassword"><i class="fa fa-eye-slash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveFPOTPChangePassword" onclick="fnSaveFPOTPChangePassword();">
+                                <i class="fa fa-save"></i> @Localizer["Save"]
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <style>
         .errorMessages {
             display: none;
@@ -679,7 +735,14 @@
             $("#viewCPPassword svg").toggleClass("fa-eye-slash fa-eye");
             $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
         })
-
+        $(document).on('click', '#viewFPOTPNPPassword', function () {
+            $("#viewFPOTPNPPassword svg").toggleClass("fa-eye-slash fa-eye");
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+        })
+        $(document).on('click', '#viewFPOTPCPPassword', function () {
+            $("#viewFPOTPCPPassword svg").toggleClass("fa-eye-slash fa-eye");
+            $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+        })
         $(window).on('resize', function () {
            // fnSetTheProductImage();
         });

@@ -439,7 +439,7 @@ function fnBindUserLocations() {
                
             }
             else {
-                fnAlert("e", "", "", "In Valid User ID");
+                fnAlert("e", "", "", "Invalid User ID");
                 $("#cboBusinessLocation").empty();
                 $("#cboBusinessLocation").append($("<option value='0'>" + localization.Select + "</option>"));
 
