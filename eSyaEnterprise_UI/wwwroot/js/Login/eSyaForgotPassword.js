@@ -106,6 +106,7 @@ function fnFPGetOTPbyMobileNumber() {
 
                 //fnAlert("s", "", response.StatusCode, response.Message);
                 if (response.SecurityQuestionId != 0) {
+                    $("#lblFOROTPMessage").html('');
                     $("#divFPSQuestions").css('display', 'block');
                     $("#lblFPSQuestions").text('');
                     $("#txtFPSAnswers").val('');
@@ -119,7 +120,8 @@ function fnFPGetOTPbyMobileNumber() {
                     $("#txtforgotPWUserID").val(response.UserId);
 
                 } else {
-                    debugger;
+                    $("#lblFOROTPMessage").html('');
+                    $("#lblFOROTPMessage").html(response.LoginDesc);
                     $("#btnValidateForgotPWOTP").css('display', 'inline-block');
                     $("#divFPSQuestions").css('display', 'none');
                     $("#divForgotPWOTPSec").css('display', 'flex');
@@ -162,17 +164,42 @@ function fnFPValidateAnswer() {
         data: { obj },
         success: function (response) {
            
+            //if (response.IsSucceeded) {
+            //    fnAlert("s", "", response.StatusCode, response.Message + localization.YourPassword + response.Password);
+            //    fnFPCloseQuestionAnswer();
+            //    $("#PopupForgotPassword").modal('hide');
+
+
+            //}
+            //else {
+            //    fnAlert("w", "", response.StatusCode, response.Message);
+            //    $("#btnValidateForgotPWAnswer").attr('disabled', false);
+            //    $("#divFPSQuestions").css("display", "none");
+            //    fnFPGetOTPbyMobileNumber();
+            //    $("#divFPSQuestions").css("display", "block");
+            //}
             if (response.IsSucceeded) {
-                fnAlert("s", "", response.StatusCode, response.Message + localization.YourPassword + response.Password);
                 fnFPCloseQuestionAnswer();
+                $("#lblFPOTPLogInID").text('');
+                $("#txtFPOTPloginUserId").val('');
                 $("#PopupForgotPassword").modal('hide');
+                fnAlert("s", "", "", response.Message);
+                $("#lblFPOTPLogInID").text("Welcome " + response.LoginDesc);
+                $("#txtFPOTPloginUserId").val(response.UserID);
+
+                setTimeout(function () {
+                    $("#PopupForgotPasswordAfterOTP").modal('show');
+                }, 2000);
             }
-            else {
-                fnAlert("w", "", response.StatusCode, response.Message);
+            else
+            {
                 $("#btnValidateForgotPWAnswer").attr('disabled', false);
                 $("#divFPSQuestions").css("display", "none");
                 fnFPGetOTPbyMobileNumber();
                 $("#divFPSQuestions").css("display", "block");
+                $("#lblFPOTPLogInID").text("");
+                $("#txtFPOTPloginUserId").val(response.UserID);
+                fnAlert("w", "", "", response.Message);
             }
         },
         error: function (error) {

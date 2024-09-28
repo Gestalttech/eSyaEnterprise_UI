@@ -979,7 +979,7 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         if (serviceResponse.Data != null)
                         {
-                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your Mobile Number:<span class='bold'>" + serviceResponse.Data.MobileNumber + "</span>";
+                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your mobile number:<span class='bold'>" + serviceResponse.Data.MobileNumber + "</span>";
                         }
                         return Json(serviceResponse.Data);
                     }
@@ -1002,7 +1002,6 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         if (serviceResponse.Data != null)
                         {
-                            //serviceResponse.Data.LoginDesc = "Please Enter Your OTP which has sent to Your Email ID:<b>" + serviceResponse.Data.Password + "</b>";
                             serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
 
                         }
@@ -1194,6 +1193,11 @@ namespace eSyaEnterprise_UI.Controllers
                     var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + smsparameter);
                     if (serviceResponse.Status)
                     {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your mobile number: <span class='bold'>" + serviceResponse.Data.MobileNumber + "</span>";
+
+                        }
                         return Json(serviceResponse.Data);
                     }
                     else
@@ -1213,9 +1217,13 @@ namespace eSyaEnterprise_UI.Controllers
                     var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + emailparameter);
                     if (serviceResponse.Status)
                     {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                        }
                         return Json(serviceResponse.Data);
-
                     }
+                   
                     else
                     {
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
