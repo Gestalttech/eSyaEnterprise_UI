@@ -95,7 +95,8 @@ function fnGetOTPbyMobileNumber() {
               
                 //fnAlert("s", "", response.StatusCode, response.Message);
                 if (response.SecurityQuestionId != 0)
-                    {
+                {
+                    $("#lblOTPMessage").html('');
                     $("#divFUIDSQuestions").css('display', 'block');
                     $("#lblFUIDSQuestions").text('');
                     $("#txtFUIDAnswers").val('');
@@ -106,9 +107,12 @@ function fnGetOTPbyMobileNumber() {
                     $("#divForgotUIDOTPSec").css('display', 'none');
                     $("#btnValidateForgotUIDOTP").css('display', 'inline-block');
                     $("#btnValidateForgotUIDAnswer").attr('disabled', false);
-                    $("#txtforgotUserId").val(response.UserId); 
-
+                    $("#txtforgotUserId").val(response.UserId);
+                   
                 } else {
+                    $("#lblOTPMessage").html('');
+                    //$("#lblOTPMessage").html(response.LoginDesc);
+                    $("#lblOTPMessage").html(response.LoginDesc);
                     $("#btnValidateForgotUIDOTP").css('display', 'inline-block');
                     $("#divFUIDSQuestions").css('display', 'none');
                     $("#divForgotUIDOTPSec").css('display', 'flex');
