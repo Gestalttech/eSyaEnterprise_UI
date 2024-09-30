@@ -269,6 +269,7 @@
     <Content Remove="wwwroot\js\ConfigStores\MapItemtoBusinessStores.js" />
     <Content Remove="wwwroot\js\DocumentControl\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\jquery.PrintArea.js" />
+    <Content Remove="wwwroot\js\Login\DualAuthentication.css" />
     <Content Remove="wwwroot\js\ManageInventory\UnitofMeasure.js" />
     <Content Remove="wwwroot\js\ProductSetup\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\ProductSetup\BusinessLocation.js" />

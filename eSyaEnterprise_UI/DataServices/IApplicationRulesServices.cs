@@ -11,5 +11,7 @@ namespace eSyaEnterprise_UI.DataServices
         Task<bool> GetApplicationRuleStatusByID(int processID, int ruleID);
 
         Task<List<DO_ApplicationRules>> GetApplicationRuleListByProcesssID(int processID);
+
+        Task<bool> GetBusinessApplicationRuleByBusinessKey(int businesskey, int processID, int ruleID);
     }
 }

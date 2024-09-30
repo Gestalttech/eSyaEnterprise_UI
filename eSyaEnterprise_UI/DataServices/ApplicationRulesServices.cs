@@ -41,5 +41,19 @@ namespace eSyaEnterprise_UI.DataServices
                 return new List<DO_ApplicationRules>();
             }
         }
+        public async Task<bool> GetBusinessApplicationRuleByBusinessKey(int businesskey, int processID, int ruleID)
+        {
+            try
+            {
+                var param = "?businesskey=" + businesskey + "&processID=" + processID + "&ruleID=" + ruleID;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<bool>("ApplicationRules/GetBusinessApplicationRuleByBusinessKey" + param);
+                return serviceResponse.Data;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
     }
 }

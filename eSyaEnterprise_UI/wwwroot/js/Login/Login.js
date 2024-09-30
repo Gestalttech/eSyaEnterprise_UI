@@ -21,7 +21,7 @@
             BusinessKey: $('#cboBusinessLocation').val(),
             FinancialYear: $('#cboFinancialYear').val()
         };
-
+        $("#txtDAReturnUrl").val('');
         $.ajax({
             type: 'POST',
             url: getBaseURL() + '/Account/Index',
@@ -29,9 +29,17 @@
             success: function (response) {
                 // Handle the response
                 if (response.success) {
-                    
-                    window.location.href = getBaseURL() + response.redirectUrl;
-                  //  $('#btnUserSignIn').attr('disabled', false);
+                  
+                    if ((response.ActivatedRule == "Sms") || (response.ActivatedRule == "Email") || (response.ActivatedRule == "Questions")) {
+                        $("#txtDAReturnUrl").val(response.redirectUrl);
+                        $("#PopupDualAuthentication").modal("show");
+                    }
+                    else {
+                        window.location.href = getBaseURL() + response.redirectUrl;
+                    }
+                    //  window.location.href = getBaseURL() + response.redirectUrl;
+
+                /*//  //  $('#btnUserSignIn').attr('disabled', false);*/
                 } else {
 
                     fnAlert("w", "", "", response.errorMessage);

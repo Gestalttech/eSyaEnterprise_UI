@@ -134,8 +134,13 @@ namespace eSyaEnterprise_UI.Controllers
 
             try
             {
+                //GetBusinessApplicationRuleByBusinessKey(int businesskey, int processID, int ruleID)
 
-               
+                var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 1);
+                var emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 2);
+                var squestionpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 3);
+                var passwordpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 4);
+
                 var obj = new DO_UserLogIn()
                 {
                     LoginID = model.UserName,
@@ -207,7 +212,21 @@ namespace eSyaEnterprise_UI.Controllers
 
 
                     LocationConfirmation(model);
-                        return Json(new { success = true, redirectUrl = "/Home/Index" });
+                    if (smspr)
+                    {
+                        return Json(new { success = true,ActivatedRule="Sms", redirectUrl = "/Home/Index" });
+                    }else if (emailpr)
+                    {
+                        return Json(new { success = true, ActivatedRule = "Email", redirectUrl = "/Home/Index" });
+                    }else if(squestionpr)
+                    {
+                        return Json(new { success = true, ActivatedRule = "Questions", redirectUrl = "/Home/Index" });
+                    }
+                    else
+                    {
+                        return Json(new { success = true, ActivatedRule = "", redirectUrl = "/Home/Index" });
+                    }
+
                    // return RedirectToAction("Index", "Home");
                 }
                 else
@@ -1619,7 +1638,223 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
-        
+
+        #endregion
+
+        #region Dual Authentication
+        [HttpGet]
+        public async Task<JsonResult> GetLabelNameForDualAuthenticationbyBusinesskey(int businesskey)
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 1);
+                string otpmsg = "Send OTP by SMS";
+                if (smspr)
+                {
+
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            otpmsg = "एसएमएस द्वारा OTP भेजें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            otpmsg = "إرسال OTP عبر الرسائل القصيرة";
+                        }
+
+                    }
+
+                    return Json(new DO_ReturnParameter { Status = true, Message = otpmsg });
+
+                }
+
+                //EMail Rule is true
+
+                var Emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 2);
+                string emailmsg = "Send OTP by Email";
+                if (Emailpr)
+                {
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            emailmsg = "ईमेल द्वारा OTP भेजें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            emailmsg = "إرسال OTP عبر البريد الإلكتروني";
+                        }
+
+                    }
+                    return Json(new DO_ReturnParameter { Status = true, Message = emailmsg });
+
+                }
+
+                //Question Rule is true
+
+                var Questionpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 3);
+                string quesmsg = "Answer Security Question";
+                if (Questionpr)
+                {
+                    string uiCulture = Thread.CurrentThread.CurrentUICulture.ToString();
+                    if (uiCulture != null)
+                    {
+                        if (uiCulture == "hi-IN")
+                        {
+                            quesmsg = "सुरक्षा प्रश्न का उत्तर दें";
+                        }
+                        else if (uiCulture == "ar-EG")
+                        {
+                            quesmsg = "الإجابة على سؤال الأمان";
+                        }
+                        return Json(new DO_ReturnParameter { Status = true, Message = quesmsg });
+                    }
+                }
+                return Json(new DO_ReturnParameter() { Status = false, Message = otpmsg });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetLabelNameForgotUserIDbyRule:For UserID {0} with mobileNo entered {1}");
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetOTPbyMobileNumberDualAuthentication(string mobileNo,int businesskey)
+        {
+            try
+            {
+                //SMS Rule is true
+
+                var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 1);
+                if (smspr)
+                {
+                    var smsparameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + smsparameter);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your mobile number:<span class='bold'>" + serviceResponse.Data.MobileNumber + "</span>";
+                        }
+                        return Json(serviceResponse.Data);
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+
+                }
+
+
+                //EMail Rule is true
+
+                var Emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 2);
+                if (Emailpr)
+                {
+                    var emailparameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + emailparameter);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
+
+                        }
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+
+                //Question Rule is true
+
+                var Questionpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 7, 3);
+                if (Questionpr)
+                {
+                    var parameter = "?mobileNo=" + mobileNo;
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserSecurityQuestions>("ForgotUserPassword/GetRandomSecurityQuestion" + parameter);
+                    if (serviceResponse.Status)
+                    {
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:GetRandomSecurityQuestion:For UserID {0} with mobileNo entered {1}", mobileNo);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
+                }
+                return Json(new DO_ReturnParameter() { Status = false, Message = "No Rule has been set for Forgot User ID" });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetOTPbyMobileNumber:For UserID {0} with mobileNo entered {1}", mobileNo);
+                throw ex;
+            }
+        }
+
+        //[HttpPost]
+        //public async Task<JsonResult> ValidateUserSecurityQuestion(DO_UserSecurityQuestions obj)
+        //{
+        //    try
+        //    {
+        //        obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //        obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        //        obj.EffectiveFrom = System.DateTime.Now;
+        //        var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserSecurityQuestion", obj);
+        //        if (serviceResponse.Status)
+        //        {
+        //            return Json(serviceResponse.Data);
+
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateUserSecurityQuestion");
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:ValidateUserSecurityQuestion");
+        //        throw ex;
+        //    }
+        //}
+        //[HttpGet]
+        //public async Task<JsonResult> ValidateUserbyOTP(string mobileNo, string otp, int expirytime)
+        //{
+        //    try
+        //    {
+        //        var parameter = "?mobileNo=" + mobileNo + "&otp=" + otp + "&expirytime=" + expirytime;
+        //        var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserbyOTP" + parameter);
+        //        if (serviceResponse.Status)
+        //        {
+        //            return Json(serviceResponse.Data);
+
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+        //        throw ex;
+        //    }
+        //}
         #endregion
     }
 }
