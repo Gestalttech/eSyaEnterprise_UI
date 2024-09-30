@@ -32,7 +32,7 @@ function fnBindPatientCategories() {
                 //refresh each time
                 $("#cboPatientcategory").empty();
 
-                $("#cboPatientcategory").append($("<option value='0'> Select Patient Category </option>"));
+                $("#cboPatientcategory").append($("<option value='0'>" + localization.SelectPatientCategory + "</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboPatientcategory").append($("<option></option>").val(response[i]["ApplicationCode"]).html(response[i]["CodeDesc"]));
@@ -42,7 +42,7 @@ function fnBindPatientCategories() {
             }
             else {
                 $("#cboPatientcategory").empty();
-                $("#cboPatientcategory").append($("<option value='0'> Select Patient Category </option>"));
+                $("#cboPatientcategory").append($("<option value='0'>" + localization.SelectPatientCategory + " </option>"));
                 $('#cboPatientcategory').selectpicker('refresh');
             }
 
@@ -103,12 +103,12 @@ function fnGetPatientType_Success(dataArray) {
                     $("#pnlPatientTypeCategory").hide();
 
                     if (data.node.parent == "MM") {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></span>')
 
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EMP_01_00", "UIC01", errorMsg.addauth_E1);
+                                fnAlert("w", "EPM_01_00", "UIC01", errorMsg.addauth_E1);
                                 return;
                             }
                             $("#pnlPatientTypeCategory").show();
@@ -141,14 +141,14 @@ function fnGetPatientType_Success(dataArray) {
                         NodeID = 0;
                         NodeID = data.node.id.substring(2).split("_")[1];
 
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" aria-hidden="true"></i></span>')
 
                         $('#View').on('click', function () {
 
                             if (_userFormRole.IsView === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EMP_01_00", "UIC03", errorMsg.vieweauth_E3);
+                                fnAlert("w", "EPM_01_00", "UIC03", errorMsg.vieweauth_E3);
                                 return;
                             }
 
@@ -172,7 +172,7 @@ function fnGetPatientType_Success(dataArray) {
 
                             if (_userFormRole.IsEdit === false) {
                                 $('#pnlPatientTypeCategory').hide();
-                                fnAlert("w", "EMP_01_00", "UIC02", errorMsg.editauth_E2);
+                                fnAlert("w", "EPM_01_00", "UIC02", errorMsg.editauth_E2);
                                 return;
                             }
 
@@ -307,11 +307,11 @@ function fnSavePatientCategory() {
 function validationPatientCategory() {
 
     if (IsStringNullorEmpty($("#cboSubledgerType").val()) || $("#cboSubledgerType").val() === "0" || $("#cboSubledgerType").val() === "") {
-        fnAlert("w", "EMP_01_00", "UI0188", "Please select Subledger Type");
+        fnAlert("w", "EPM_01_00", "UI0387", errorMsg.SubledgerType_E7);
         return false;
     }
     if (IsStringNullorEmpty($("#cboPatientcategory").val()) || $("#cboPatientcategory").val() === "0" || $("#cboPatientcategory").val() === "") {
-        fnAlert("w", "EMP_01_00", "UI0188", errorMsg.SelectCategory_E6);
+        fnAlert("w", "EPM_01_00", "UI0188", errorMsg.SelectCategory_E6);
         return false;
     }
     
