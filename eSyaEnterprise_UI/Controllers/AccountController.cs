@@ -802,19 +802,54 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
-                var parameter = "?loginId=" + loginId;
+                //SMS Rule is true
 
-                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
-                if (serviceResponse.Status)
+                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 1);
+                if (smspr)
                 {
-                    return Json(serviceResponse.Data);
+                    var parameter = "?loginId=" + loginId;
 
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.ErrorCode = "Please enter the OTP that has been sent to your mobile number:<span class='bold'>" + serviceResponse.Data.ErrorCode + "</span>";
+                            serviceResponse.Data.Message = string.Empty;
+                        }
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
                 }
-                else
+                var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 2);
+                if (Emailpr)
                 {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
-                    return Json(new { Status = false, StatusCode = "500" });
+                    var parameter = "?loginId=" + loginId;
+
+                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
+                    if (serviceResponse.Status)
+                    {
+                        if (serviceResponse.Data != null)
+                        {
+                            serviceResponse.Data.Message = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + serviceResponse.Data.Message + "</span>";
+                            serviceResponse.Data.ErrorCode = string.Empty;
+                        }
+                        return Json(serviceResponse.Data);
+
+                    }
+                    else
+                    {
+                        _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                        return Json(new { Status = false, StatusCode = "500" });
+                    }
                 }
+                return Json(new DO_ReturnParameter() { Status = false, Message = "No Rule has been set for Send OTP for first login" });
+
             }
             catch (Exception ex)
             {
@@ -990,6 +1025,7 @@ namespace eSyaEnterprise_UI.Controllers
                     }
                    
                 }
+
 
                 //EMail Rule is true
                

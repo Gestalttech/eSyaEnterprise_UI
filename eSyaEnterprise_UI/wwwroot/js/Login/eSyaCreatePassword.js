@@ -139,17 +139,27 @@ function fncheckPasswordWithLoginID() {
             fnAlert("e", "", "", xhr.statusText);
         },
         success: function (response) {
-            if (response.StatusCode === "1") {
-                // $("#lblLogInID").text("Welcome "+response.Key);
-                $("#txtloginUserId").val(response.ID);
-                $("#PopupOTP").modal('show');
+          
+            $("#lblcreatepasswordmessage").html('');
+            if (response.Status) {
+                if (response.StatusCode === "1") {
+                    //$("#lblLogInID").text("Welcome "+response.Key);
+                    $("#txtloginUserId").val(response.ID);
+                    $("#lblcreatepasswordmessage").html(response.ErrorCode + "" + response.Message);
+                    $("#PopupOTP").modal('show');
 
+                }
+                else {
+                    // $("#lblLogInID").text("");
+                    // $("#txtloginUserId").val("");
+                    $("#lblcreatepasswordmessage").html('');
+                    $("#PopupOTP").modal('hide');
+
+                }
             }
-            else {
-                // $("#lblLogInID").text("");
-                // $("#txtloginUserId").val("");
-                $("#PopupOTP").modal('hide');
-
+            else
+            {
+                fnAlert("w", "", "", response.Message)
             }
         },
         //async: false,
