@@ -20,9 +20,9 @@ $(function () {
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditSMSConnect(event, 'delete') } },
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i> " + localization.Delete + " </span>");
 
     $("#cbolocISD").attr('disabled', true);
 
@@ -262,7 +262,7 @@ function fnEditSMSConnect(e, actiontype) {
             return;
         }
         $('#PopupSMSConnect').modal('show');
-        $('#PopupSMSConnect').find('.modal-title').text("Active/De Active SMS Connect");
+        $('#PopupSMSConnect').find('.modal-title').text(localization.ActiveDeactiveSMSConnect);
         if (rowData.ActiveStatus == 'true') {
             $("#btndeActiveSMSConnect").html(localization.DActivate);
         }
