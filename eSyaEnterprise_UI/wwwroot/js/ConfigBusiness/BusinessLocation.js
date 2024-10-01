@@ -32,13 +32,7 @@ $(document).ready(function () {
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
-    //var _txtLocationcode = $("#txtLocationcode").val();
-    //if (_txtLocationcode == 1 || _txtLocationcode == "") {
-    //    $("#lblRdoSegmentLinkAccount").css('display', 'none');
-    //}
-    //else {
-    //    $("#lblRdoSegmentLinkAccount").css('display', 'block');
-    //}
+   
     $("#divTaxIdentification").css('display', 'none');
     $("#divChkActiveStatus").css('display', 'none');
 });
@@ -53,7 +47,7 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, localization.ToLocalCurrency, localization.ToCurrConversion, localization.ToRealCurrency,"Licenses status" ,localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, "Licenses status" ,localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -66,9 +60,6 @@ function fnGridLoadBusinessLocation() {
             { name: "StateCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyName", width: 80, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
-            { name: "TolocalCurrency", hidden: true, width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "TocurrConversion", hidden: true, width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "TorealCurrency", hidden: true, width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "Lstatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, hidden: true },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
@@ -128,6 +119,7 @@ function fnAddBusinessLocation() {
     else {
         _isInsert = true;
         fnClearFields();
+        eSyaParams.ClearValue();
         BindCities();
         BindTaxIdentification();
         BindCurrrencies();
@@ -135,34 +127,25 @@ function fnAddBusinessLocation() {
         fnRdoSegmentLinkEmpty();
         $('#rdoIsBookofAccounts').prop('checked', true);
         $('#chkToRealCurrency').parent().removeClass("is-checked");
-        $('.BSCurrencyContainer').hide();
         LoadCurrencybyBusinessKey();
         $('#PopupBusienssLocation').find('.modal-title').text(localization.AddBusinessLocation);
-
         $("#btnSaveLocationInfo").show();
         $("#btnSaveLocationInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveLocationInfo").attr("disabled", false);
         $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLocinfoActiveStatus").prop('disabled', true);
-
         $("#btnSaveFinancialInfo").show();
         $("#btnSaveFinancialInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveFinancialInfo").attr("disabled", false);
         $("#chkFininfoActiveStatus").parent().addClass("is-checked");
         $("#chkFininfoActiveStatus").prop('disabled', true);
-
-        //$("#btnSaveLicenseInfo").show();
-        //$("#btnSaveLicenseInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
-        //$("#btnSaveLicenseInfo").attr("disabled", false);
         $("#chkLicinfoActiveStatus").parent().addClass("is-checked");
         $("#chkLicinfoActiveStatus").prop('disabled', true);
-
         $("#btnSaveTaxInfo").show();
         $("#btnSaveTaxInfo").html('<i class="fa fa-save"></i> ' + localization.Save);
         $("#btnSaveTaxInfo").attr("disabled", false);
         $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
         $("#chktaxinfoActiveStatus").prop('disabled', true);
-
         $("#btnDeactivateBusinessLocation").hide();
         fnGetBusinessUnitType();
         fnLoadGridPreferredLanguage();
@@ -189,29 +172,7 @@ function fnEditBusinessLocation(e, actiontype) {
     $('#cboCurrrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
 
     fnLoadGridPreferredLanguage();
-
-    if (rowData.TolocalCurrency == 'true') {
-        $("#chkToLocalCurrency").parent().addClass("is-checked");
-    }
-    else {
-        $("#chkToLocalCurrency").parent().removeClass("is-checked");
-    }
-    if (rowData.TocurrConversion == 'true') {
-        $("#chkToCurrCurrency").parent().addClass("is-checked");
-    }
-    else {
-        $("#chkToCurrCurrency").parent().removeClass("is-checked");
-    }
-    if (rowData.TorealCurrency == 'true') {
-        $("#chkToRealCurrency").parent().addClass("is-checked");
-        LoadCurrencybyBusinessKey();
-        $('.BSCurrencyContainer').show();
-    }
-    else {
-        $("#chkToRealCurrency").parent().removeClass("is-checked");
-        LoadCurrencybyBusinessKey();
-        $('.BSCurrencyContainer').hide();
-    }
+    LoadCurrencybyBusinessKey();
     if (rowData.ActiveStatus == 'true') {
         $("#chkLocinfoActiveStatus").parent().addClass("is-checked");
     }
@@ -489,7 +450,9 @@ function fnSaveLocationInfo() {
         if (parseFloat(jqgBSCurrency[i]["CurrencyCode"]) != '') {
             bsCurrency.push({
                 CurrencyCode: jqgBSCurrency[i]["CurrencyCode"],
-                ActiveStatus: jqgBSCurrency[i]["ActiveStatus"]
+                IsTransacting: jqgBSCurrency[i]["IsTransacting"],
+                IsReal: jqgBSCurrency[i]["IsReal"],
+               
             });
         }
     }
@@ -761,19 +724,6 @@ function fnGetStateNamebyTaxCode() {
 }
 
 
-function fnToRealCurrency(elem) {
-
-    if (elem.checked) {
-        $("#chkToRealCurrency").parent().addClass("is-checked");
-        LoadCurrencybyBusinessKey();
-        $('.BSCurrencyContainer').show();
-    }
-    else {
-        $('#chkToRealCurrency').parent().removeClass("is-checked");
-        $('.BSCurrencyContainer').hide();
-    }
-}
-
 function LoadCurrencybyBusinessKey() {
     var URL = getBaseURL() + "/Location/GetCurrencybyBusinessKey?Businesskey=" + $("#txtBusinesskey").val();
 
@@ -786,10 +736,10 @@ function LoadCurrencybyBusinessKey() {
         colNames: [localization.CurrencyCode, localization.Currency, localization.TransactingCurrency, localization.Real, localization.ActiveStatus],
         colModel: [
             { name: "CurrencyCode", width: 120, editable: false, align: 'left', hidden: true },
-            { name: "CurrencyName", editable: false, width: 80, align: 'left', resizable: false },
-            { name: "TransactingCurrency", editable: false, width: 40, align: 'left', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "Real", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            { name: "ActiveStatus", editable: true, width: 70, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } }
+            { name: "CurrencyName", editable: false, width: 60, align: 'left', resizable: false },
+            { name: "IsTransacting", editable: true, width: 30, align: 'left', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "IsReal", editable: true, width: 25, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "ActiveStatus", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" },hidden: true }
 
         ],
 
@@ -804,6 +754,18 @@ function LoadCurrencybyBusinessKey() {
         shrinkToFit: true,
         forceFit: true,
         cellEdit: true,
+        rowattr: function (item) {
+            var _selectedCurrencies = "";
+            _selectedCurrencies = document.getElementById('cboCurrrencyCode').value;
+            if (_selectedCurrencies != 0) {
+                if (_selectedCurrencies == item.CurrencyCode) {
+
+                    return { "class": "ui-state-disabled bg-light" };
+
+                }
+            }
+            
+        },
         onSelectRow: function (id) {
             if (id) { $('#jqgBSCurrency').jqGrid('editRow', id, true); }
         },
@@ -1263,4 +1225,23 @@ $("#btnCancelPaymentInfo").click(function () {
 /* End*/
 
 
+function fnDisableRealCurrency() {
+
+  
+
+    var _currencycode = $("#cboCurrrencyCode").val();
+    var rowDataJqcurrency = $('#jqgBSCurrency').jqGrid('getGridParam').data
+    for (var i = 0; i < rowDataJqcurrency.length; ++i) {
+        if (_currencycode != 0) {
+            $("#jqgBSCurrency").find("tr#" + rowDataJqcurrency[i]._id_).removeClass("ui-state-disabled bg-light");
+
+            if (_currencycode == rowDataJqcurrency[i].CurrencyCode) {
+
+                $("#jqgBSCurrency").find("tr#" + rowDataJqcurrency[i]._id_).addClass("ui-state-disabled bg-light");
+                
+            }
+             
+        }
+    }
+}
 
