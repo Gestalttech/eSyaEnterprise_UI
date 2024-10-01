@@ -414,6 +414,13 @@
   "UI0413": "Please enter the reason for rejection",
   "UI0414": "Please select a patient type",
   "UI0415": "Please select a relationship",
+  "UI0416": "Please select composition from tree view to add formulation",
+  "UI0417": "Please enter the formulation description",
+  "UI0418": "Please select a drug form",
+  "UI0419": "Please select a user",
+  "UI0420": "Please select a form",
+  "UI0421": "Please select a authentication type",
+  "UI0422": "Please select effective till",
 
 
   "UIC01": "You are not Authorized to Add",
