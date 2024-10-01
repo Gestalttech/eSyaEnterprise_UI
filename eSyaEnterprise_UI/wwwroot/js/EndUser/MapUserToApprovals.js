@@ -10,8 +10,8 @@ $(function () {
             /*jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditMapUserToApprovals('view') } }*/
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Select + " </span>");
-    /*$(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");*/
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Select + " </span>");
+    /*$(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");*/
 });
 
 function fnOnChangeBusinessLocation() {
@@ -199,19 +199,19 @@ function fnGridRefreshLevelBasedApproval() {
 
 function fnSaveUserFormApproval() {
     if ($("#cboBusinesskey").val() <= 0) {
-        fnAlert("w", "EEU_12_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
+        fnAlert("w", "EEU_12_00", "UI0064", errorMsg.SelectBusinessLocation_E6);
         return;
     }
     if (_UserID == "0") {
-        fnAlert("w", "EEU_12_00", "UI0064", "Please select User");
+        fnAlert("w", "EEU_12_00", "UI0419", errorMsg.SelectUser_E7);
         return;
     }
     if (_FormID == 0) {
-        fnAlert("w", "EEU_12_00", "UI0064", "Please select Form");
+        fnAlert("w", "EEU_12_00", "UI0420", errorMsg.SelectForm_E8);
         return;
     }
     if (!validateAtLeastOneCheckboxValues('jqgUserFormApproval')) {
-        fnAlert("w", "EEU_12_00", "UI0064", "Please check at least one Approval Level.");
+        fnAlert("w", "EEU_12_00", "UI0402", errorMsg.SelectOneApprovalLevel_E9);
         return;
     }
     var _valuelinks = [];

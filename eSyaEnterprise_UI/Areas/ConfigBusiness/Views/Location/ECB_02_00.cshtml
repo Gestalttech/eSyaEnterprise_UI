@@ -138,6 +138,8 @@
         OnlyAlphaNumeric10Characters: '@Localizer["OnlyAlphaNumeric10Characters"]',
         OnlyAlphaNumeric50Characters: '@Localizer["OnlyAlphaNumeric50Characters"]',
         OnlyAlphaNumeric100Characters: '@Localizer["OnlyAlphaNumeric100Characters"]',
+        TransactingCurrency: '@Localizer["TransactingCurrency"]',
+        Real: '@Localizer["Real"]',
         
     };
     var errorMsg = {
@@ -288,7 +290,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
+                                   @*  <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12" >
                                         <div class="default-checkbox checkbox-group">
                                             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkToLocalCurrency">
                                                 <input type="checkbox" id="chkToLocalCurrency" class="mdl-checkbox__input">
@@ -313,11 +315,19 @@
                                                 <span class="mdl-checkbox__label">@Localizer["ToRealCurrency"]</span>
                                             </label>
                                         </div>
+                                    </div> *@
+                                    <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12 ">
+                                        <div class="default-checkbox checkbox-group">
+                                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkAllowMultiCurrency">
+                                                <input type="checkbox" id="chkAllowMultiCurrency" class="mdl-checkbox__input" onchange="">
+                                                <span class="mdl-checkbox__label">@Localizer["AllowMultiCurrency"]</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
+                                    <div class="col-lg-5 col-md-6 col-sm-5 padbot10">
                                         <div class="BSCurrencyContainer">
                                             <table id="jqgBSCurrency"></table>
                                             <div id="jqpBSCurrency"></div>

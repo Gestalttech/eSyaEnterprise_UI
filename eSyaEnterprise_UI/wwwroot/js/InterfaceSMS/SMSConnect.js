@@ -267,7 +267,6 @@ function fnEditSMSConnect(e, actiontype) {
             $("#btndeActiveSMSConnect").html(localization.DActivate);
         }
         else {
-            $("#btndeActiveSMSConnect").html('Activate');
             $("#btndeActiveSMSConnect").html(localization.Activate);
         }
         $("#btnSaveSMSConnect").hide();
@@ -364,7 +363,7 @@ function fnValidateSMSConnect() {
         return false;
     }
     if (IsStringNullorEmpty($("#txtEffectiveTillDate").val())) {
-        fnAlert("w", "EIF_01_00", "UI0070", "Please Select Effective Till Date");
+        fnAlert("w", "EIF_01_00", "UI0422", errorMsg.Effectivetill_E17);
         return false;
     }
 

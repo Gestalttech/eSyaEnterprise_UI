@@ -1,7 +1,7 @@
 ﻿
 
 /*Tab -1 Start----------------------------------*/
-$(document).ready(function () {
+$(function () {
     fnGridLoadUserCreation();
     
     //fnGridBusinessLocation();
@@ -15,7 +15,7 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
     $("#divBusinessLoc").css('display', 'none');
 });
 
@@ -102,7 +102,7 @@ function fnGridAddUserCreation() {
     $('#Photoimage').val('');
     $('#imgPhotoimageblah').removeAttr('src');
     $('#btnSaveUserMaster').attr('disabled', false);
-    $('#btnSaveUserMaster').html('Save');
+    $('#btnSaveUserMaster').html("<i class='fa fa-save'></i> "+ localization.Save);
     $("#PopupUserCreation").modal('show');
     eSyaParams.ClearValue();
 } 
@@ -115,7 +115,7 @@ function fnEditUserCreation(e) {
     var firstRow = $("tr.ui-widget-content:first").offset();
     $(".ui-jqgrid-bdiv").animate({ scrollTop: _selectedRow.top - firstRow.top }, 700);
     $("#PopupUserCreation").modal('show');
-    $('#btnSaveUserMaster').html('Update');
+    $('#btnSaveUserMaster').html("<i class='fa fa-sync'></i> "+ localization.Update);
     $("#txtUserId").val(rowData.UserID);
     $("#txtLoginId").attr('disabled', true);
 
@@ -293,7 +293,7 @@ function BindPreferredLanguage() {
                 //refresh each time
                 $("#cboPreferredLanguage").empty();
 
-                $("#cboPreferredLanguage").append($("<option value='0'> Select Preferred Language</option>"));
+                $("#cboPreferredLanguage").append($("<option value='0'>"+ localization.SelectPreferredLanguage+"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboPreferredLanguage").append($("<option></option>").val(response[i]["CultureCode"]).html(response[i]["CultureDescription"]));
@@ -302,7 +302,7 @@ function BindPreferredLanguage() {
             }
             else {
                 $("#cboPreferredLanguage").empty();
-                $("#cboPreferredLanguage").append($("<option value='0'> Select Preferred Language </option>"));
+                $("#cboPreferredLanguage").append($("<option value='0'>" + localization.SelectPreferredLanguage +"</option>"));
                 $('#cboPreferredLanguage').selectpicker('refresh');
             }
         },
@@ -356,8 +356,8 @@ function fnGridUserBusinessLocation() {
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditUserBusinessLocation(event, 'view') } },
         }
      });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
    
     $("#jqgUserBusinessLocation").jqGrid('GridUnload');
     $("#jqgUserBusinessLocation").jqGrid({
@@ -542,7 +542,7 @@ function fnUserSaveBusinessLocation() {
         return;
     }
     if (IsStringNullorEmpty($("#cboAuthenticationType").val()) || $("#cboAuthenticationType").val() == '0' || $("#cboAuthenticationType").val() == "0") {
-        fnAlert("w", "EEU_03_00", "UI0244", "Please select Authentication Type");
+        fnAlert("w", "EEU_03_00", "UI0421", errorMsg.SelectaAuthenticationType_E26);
         return;
     }
     $("#btnUserlocationsave").attr('disabled', true);

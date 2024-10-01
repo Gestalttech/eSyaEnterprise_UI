@@ -783,10 +783,12 @@ function LoadCurrencybyBusinessKey() {
         mtype: 'Post',
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.CurrencyCode, localization.Currency, localization.ActiveStatus],
+        colNames: [localization.CurrencyCode, localization.Currency, localization.TransactingCurrency, localization.Real, localization.ActiveStatus],
         colModel: [
             { name: "CurrencyCode", width: 120, editable: false, align: 'left', hidden: true },
-            { name: "CurrencyName", editable: false, width: 180, align: 'left', resizable: false },
+            { name: "CurrencyName", editable: false, width: 80, align: 'left', resizable: false },
+            { name: "TransactingCurrency", editable: false, width: 40, align: 'left', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
+            { name: "Real", editable: true, width: 30, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
             { name: "ActiveStatus", editable: true, width: 70, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } }
 
         ],

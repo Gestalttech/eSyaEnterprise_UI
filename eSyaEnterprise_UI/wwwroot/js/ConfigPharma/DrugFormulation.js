@@ -363,15 +363,15 @@ function fnSaveDrugFormulation() {
 function fnValidateDrugFormulation() {
     
     if (_compositionId === "0" || _compositionId === "" || _compositionId === 0) {
-        fnAlert("w", "EPH_06_00", "UI0283", "Please select Composition from Tree View to add Formulation");
+        fnAlert("w", "EPH_06_00", "UI0416", errorMsg.SelectCompositionFrmTree_E9);
         return false;
     }
     if (IsStringNullorEmpty($("#txtFormulationDesc").val())) {
-        fnAlert("w", "EPH_06_00", "UI0313", "Please Enter Formulation Description");
+        fnAlert("w", "EPH_06_00", "UI0417", errorMsg.EnterFormulationDescription_E10);
         return false;
     }
     if ($("#cboDrugForms").val() === "0" || $("#cboDrugForms").val() === "") {
-        fnAlert("w", "EPH_06_00", "UI0283", "Please Select Drug Form");
+        fnAlert("w", "EPH_06_00", "UI0418", errorMsg.SelectDrugForm_E11);
         return false;
     }
     if ($("#cboMethodOfAdministration").val() === "0" || $("#cboMethodOfAdministration").val() === "") {
