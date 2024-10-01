@@ -17,12 +17,15 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         private readonly IeSyaGatewayServices _eSyaGatewayServices;
         private readonly ILogger<AuthorizeController> _logger;
         private readonly ISmsServices _smsServices;
-        public AuthorizeController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, IeSyaGatewayServices eSyaGatewayServices, ILogger<AuthorizeController> logger, ISmsServices smsServices)
+        private readonly IApplicationRulesServices _applicationRulesServices;
+        public AuthorizeController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, IeSyaGatewayServices eSyaGatewayServices, ILogger<AuthorizeController> logger, ISmsServices smsServices,
+            IApplicationRulesServices applicationRulesServices)
         {
             _eSyaEndUserAPIServices = eSyaEndUserAPIServices;
             _eSyaGatewayServices = eSyaGatewayServices;
             _smsServices = smsServices;
             _logger = logger;
+            _applicationRulesServices = applicationRulesServices;
         }
         #region Authenticate a new user
         [Area("EndUser")]
@@ -72,17 +75,42 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                         FormID = AppSessionVariables.GetSessionFormID(HttpContext),
                         UserID = obj.UserID,
                     };
-
-                    var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
-                    if (sr_SMS.Status)
+                    int businesskey = 11; //AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                    var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 8, 1);
+                    var emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 8, 2);
+                    if (smspr)
                     {
-                        return Json(new { Status = true, serviceResponse.Data });
+                        var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
+                        if (sr_SMS.Status)
+                        {
+                            return Json(new { Status = true, serviceResponse.Data });
+                        }
+                        else 
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                            return Json(new { Status = false, StatusCode = "500" });
+                        }
+
+                    }
+                    //need to implement after Email configured
+                    else if(emailpr)
+                    {
+                        var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("EmailSender/SendeSysEmail", smsParams).Result;
+                        if (sr_SMS.Status)
+                        {
+                            return Json(new { Status = true, serviceResponse.Data });
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
+                            return Json(new { Status = false, StatusCode = "500" });
+                        }
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:Send Welcome Message to UserId {0}", obj.UserID);
-                        return Json(new { Status = false, StatusCode = "500" });
+                        return Json(new { Status = false, Message="No mediumn Activated to send message to this location" });
                     }
+                   
 
                 }
                 else
