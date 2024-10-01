@@ -48,7 +48,7 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
 .m-r-5{margin-right:5px !important;}
 .mb-20{margin-bottom:20px !important;}
 .fw-bold, .bold {
-    font-family: helvetica-bold;
+    font-family: helvetica-bold,arial,sans-serif;
 }
 .bgUserTips {
     background: #fff9dc;
@@ -56,10 +56,10 @@ hr {border-top: 1px solid #f7f7f7 !important;margin: 0px 0px 14px !important;}
     border: 1px dotted #555555;
     border-radius: 10px;
 }
-.custom-tooltip,.tooltip {
+.custom-tooltip, .tooltip {
     --bs-tooltip-bg: var(--color-primary);
     --bs-tooltip-color: var(--color-white);
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif;
 }
 .tooltip{
     font-size:xx-small;
@@ -113,7 +113,9 @@ input[type="radio"]:checked + label {
 .toast-body .fa-circle-check {color: #038f01;}
 .toast-body .fa-circle-exclamation {color: #f39304;}
 .toast-body .fa-circle-xmark {color: #bb3502;}
-.toast-body span {font-family: helvetica;}
+.toast-body span {
+    font-family: helvetica,arial,sans-serif;
+}
 .btn-action {
     width: 100%;
     margin-bottom: 7px;
@@ -169,11 +171,11 @@ hr.left {
     background: linear-gradient(to top,#fff,#fffaf1);
 }
 
-.divAction label {
-    margin-bottom: 10px;
-    font-family: 'helvetica-Bold';
-    font-size: 14px !important;
-}
+    .divAction label {
+        margin-bottom: 10px;
+        font-family: helvetica-bold,arial,sans-serif;
+        font-size: 14px !important;
+    }
 
 .divAction button {
     box-shadow: none;
@@ -210,7 +212,7 @@ p.subheading {
     font-weight: 300;
     color: var(--color-secondary);
     margin: 0px;
-    font-family: 'helvetica-bold';
+    font-family: helvetica-bold,arial,sans-serif;
 }
 .fixedText {
     color: var(--color-primary);
@@ -219,9 +221,9 @@ p.subheading {
     border: 1px dotted #fff3b3;
     padding: 4px 6px;
     letter-spacing: 0.75px;
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif;
     width:auto;
-    display:inline-block;
+    display: inline-block;
 }
 .lblInfo {
     color: rgba(0, 0, 0, 0.33) !important;
@@ -399,11 +401,11 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
     border-bottom: 1px solid var(--color-secondary) !important;
 }
 #tbParameter th {
-    color:gold !important;
-    font-size:12px !important;
-    letter-spacing:0px !important;
-    background:var(--color-primary) !important;
-    font-family:helvetica-Bold;
+    color: gold !important;
+    font-size: 12px !important;
+    letter-spacing: 0px !important;
+    background: var(--color-primary) !important;
+    font-family: helvetica-bold,arial,sans-serif
 }
 .tblParameter{
     cursor:pointer;
@@ -776,7 +778,7 @@ input::placeholder { /* Most modern browsers support this now. */
 }
 .bootbox h5.modal-title {
     margin-top: 0px !important;
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif;
 }
 .bootbox .modal-footer button {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -850,7 +852,7 @@ button.close:hover {
 }
     .modal-header h4 {
         margin: 0px !important;
-        font-family: helvetica-Bold;
+        font-family: helvetica-bold,arial,sans-serif
     }
 .modal-content {
     -webkit-border-radius: 0px !important;
@@ -861,7 +863,7 @@ button.close:hover {
     float: left !important;
     line-height: 32px !important;
     font-size: 20px !important;
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif
     /*color: #1590c0 !important;*/
 }
 .modal-header, .modal-footer {padding: 4px 14px !important;
@@ -886,7 +888,7 @@ button.close:hover {
     line-height: 32px;
     height: 32px;
     font-size: 0.86rem;
-    font-family: 'helvetica-bold';
+    font-family: helvetica-bold,arial,sans-serif;
     letter-spacing: normal;
 }
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {background: gold !important}
@@ -1049,7 +1051,7 @@ button.close:hover {
     color: gold;
     font-size: 14px !important;
     letter-spacing: normal !important;
-    font-family: 'helvetica-bold';
+    font-family: helvetica-bold,arial,sans-serif;
 }
 .mdl-card__title{padding:0px 0px 15px !important;}
 .bootstrap-select .dropdown-menu ul > li > a {padding: 0px 10px !important;line-height: 34px !important}
@@ -1100,7 +1102,7 @@ button.close:hover {
     /*color: var(--color-secondary) !important;*/
     font-weight: 300;
     letter-spacing: normal;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif
 }
 .user-logo {vertical-align: text-bottom;font-size: 22px !important;}
 .modal-footer {
@@ -1297,7 +1299,7 @@ button[id^="btnCall"], button[id^="btnHold"], button[id^="btnConfirm"], button[i
         /*color: var(--color-secondary) !important;*/
         font-size: 14px !important;
         font-weight: 300;
-        font-family: helvetica-Bold;
+        font-family: helvetica-bold,arial,sans-serif
     }
     .repeater-heading {
         font-size: 12px;
@@ -1477,7 +1479,7 @@ label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
     color: var(--color-black); /*#e2b559;*/
     display: flex;
     padding: 0px 5px 0px;
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif
 }
 .container-fluid{padding-left:15px !important;padding-right:15px !important;}
 
@@ -1488,7 +1490,7 @@ label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
     /*color: var(--color-secondary);*/
     letter-spacing: normal;
     font-weight: 300;
-    font-family:helvetica-Bold !important;
+    font-family: helvetica-bold,arial,sans-serif !important;
 }
 .f-18{font-size:18px !important;}
 /*.ui-icon, .ui-widget-content .ui-icon {
@@ -1556,14 +1558,14 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
 .treeaction h5 {
     font-weight: 300;
     margin-bottom: 0px;
-    font-family: 'helvetica-bold';
+    font-family: helvetica-bold,arial,sans-serif;
     letter-spacing: normal;
 }
 .treeaction h6 {
-    font-family: 'helvetica-bold';
+    font-family: helvetica-bold,arial,sans-serif;
     letter-spacing: normal;
     line-height: normal;
-    font-size:14px;
+    font-size: 14px;
 }
 .treeaction .card-header {
     padding: 9px 14px;
@@ -1627,7 +1629,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
         /*color: var(--color-secondary) !important;*/
         font-size: 14px !important;
         font-weight: 300;
-        font-family: helvetica-Bold;
+        font-family: helvetica-bold,arial,sans-serif
     }
     .only-for-smallscreen {
         display: none;
@@ -1800,7 +1802,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
         /*color: var(--color-secondary) !important;*/
         font-size: 14px !important;
         font-weight: 300;
-        font-family: helvetica-Bold;
+        font-family: helvetica-bold,arial,sans-serif
     }
     .only-for-smallscreen{
         display:block;
@@ -2013,7 +2015,7 @@ a.mdl-badge, .message-notification a .svg-inline--fa {color: #8a8a8a !important}
             /*color: var(--color-secondary) !important;*/
             font-weight: 300;
             font-size: 12px !important;
-            font-family: helvetica-Bold;
+            font-family: helvetica-bold,arial,sans-serif
         }
         .mdl-card__title-text {
             border-bottom: 1px double #e6e6e6;
@@ -2528,7 +2530,7 @@ header.blur, .banner.blur {
 
         .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > ul.submenu > li > a {
             padding-left: 43px;
-            font-family: helvetica;
+            font-family: helvetica,arial,sans-serif;
         }
         .jquery-accordion-menu ul ul.submenu > li > ul.submenu > li > a:hover {
             background: var(--menu-hover) !important;
@@ -2749,7 +2751,7 @@ h5 {
     padding-left: 0px;
     margin-bottom: 10px;
     font-size: 16px;
-    font-family:helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif;
 }
 
     #listbox_source_4_wrapper ul li, #listbox_destination_4_wrapper ul li {padding-left: 10px;}
@@ -2854,7 +2856,7 @@ h5 {
         color: var(--color-gold);
         font-size: 14px;
         background: #555;
-        font-family: helvetica-Bold;
+        font-family: helvetica-bold,arial,sans-serif;
         line-height: 32px !important;
     }
 

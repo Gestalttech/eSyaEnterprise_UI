@@ -96,7 +96,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
 /*pager*/
 .ui-widget {
     /*font-family: roboto !important;*/
-    font-family: 'helvetica',sans-serif;
+    font-family: helvetica,arial,sans-serif;
 }
 
 .ui-pg-div .svg-inline--fa {
@@ -135,7 +135,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
 
     .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {
         padding: 7px 7px 7px 3px !important;
-        font-family: 'helvetica-Bold';
+        font-family: helvetica-bold,arial,sans-serif;
         color: #555 !important;
         font-size: 12px;
     }
@@ -165,7 +165,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
                 letter-spacing: 0.2px;
                 color: gold; /*#0065ca;*/
                 font-size: 0.86rem;
-                font-family: 'helvetica-Bold';
+                font-family: helvetica-bold,arial,sans-serif;
             }
 
 .ui-jqgrid-hdiv {
@@ -183,7 +183,7 @@ td:first-child.ui-state-default.jqgrid-rownum {
     margin-right: 4px;
     font-size: 12px;
     line-height: 34px;
-    font-family: 'helvetica-Bold';
+    font-family: helvetica-bold,arial,sans-serif;
     color: #484646;
 }
 
@@ -408,14 +408,14 @@ td .btn-outline {
     font-size: 14px !important;
     font-weight: 300;
     color: gold !important;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold,arial,sans-serif;
     line-height: 30px !important;
 }
 
 .ui-jqdialog-content .CaptionTD {
     line-height: 20px;
     font-size: 12px;
-    font-family: 'helvetica',sans-serif;
+    font-family: helvetica,arial,sans-serif;
     padding: 0px;
 }
 

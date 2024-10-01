@@ -139,7 +139,7 @@ body {
     bottom: 0px;
     background: linear-gradient(to top,#ededed,#fffdfd);
     width: 100%;
-    letter-spacing: 0.75px;
+    letter-spacing: normal;
     border-top: 1px solid #ebebeb;
     padding: 0px 0px 0px 15px;
     margin: 0px 0px 0px -11px;
