@@ -39,6 +39,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
                 List<int> l_ac = new List<int>();
                 l_ac.Add(ApplicationCodeTypeValues.InstrumentType);
+                l_ac.Add(ApplicationCodeTypeValues.PaymentMethod);
                 var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeTypeList", l_ac);
                 if (serviceResponse.Status)
                 {
@@ -57,7 +58,17 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                             }).ToList();
 
                         }
-                       
+                        var Payments = app_codes.Where(w => w.CodeType == ApplicationCodeTypeValues.PaymentMethod);
+                        if (Payments != null)
+                        {
+                            ViewBag.PaymentMethod = Payments.Select(b => new SelectListItem
+                            {
+                                Value = b.ApplicationCode.ToString(),
+                                Text = b.CodeDesc,
+                            }).ToList();
+
+                        }
+
                     }
 
                     return View();
