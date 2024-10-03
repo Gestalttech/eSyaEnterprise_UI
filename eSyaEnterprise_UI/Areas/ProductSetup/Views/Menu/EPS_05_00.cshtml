@@ -174,8 +174,11 @@
 
             </div>
             <div class="mdl-card__actions mdl-card--border text-center">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnEditeSyaMenu" onclick="fnSaveeSyaMenu()">
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnEditeSyaMenu" onclick="fnSaveeSyaMenu()">
                     <i class="fa fa-sync"></i> @Localizer["Update"]
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnCleareSyaMenu" onclick="fnCleareSyaMenu()">
+                    <i class="fa fa-times"></i> @Localizer["Cancel"]
                 </button>
             </div>
         </div>
@@ -212,8 +215,11 @@
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border text-center">
-                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnMainMenuAdd" onclick="fnSaveMainMenu()">
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnMainMenuAdd" onclick="fnSaveMainMenu()">
                     <i class="fa fa-plus"></i> @Localizer["Add"]
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnMainMenuCancel" onclick="fnClearMainMenu()">
+                    <i class="fa fa-times"></i> @Localizer["Cancel"]
                 </button>
             </div>
 
@@ -261,8 +267,11 @@
                     </div>
                 </div>
                 <div class="mdl-card__actions mdl-card--border text-center">
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSubMenuAdd" onclick="fnSaveSubMenu()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnSubMenuAdd" onclick="fnSaveSubMenu()">
                         <i class="fa fa-save"></i> @Localizer["Add"]
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnSubMenuCancel" onclick="fnClearSubMenu()">
+                        <i class="fa fa-times"></i> @Localizer["Cancel"]
                     </button>
                 </div>
             </div>
@@ -278,7 +287,7 @@
 
                         <div class="row form-group">
                             <div class=" col-lg-6 col-md-8 col-sm-12 col-xs-12 padbot2">
-                                <label class="lable-color">@Localizer["InternalFormDetail"] </label>
+                                <label for="cboInternalForm">@Localizer["InternalFormDetail"] </label>
                                 <div>
                                     <select class="selectpicker" data-live-search="true" id="cboInternalForm" title="" data-size="5" onchange="fnInternalForm_onChanged()">
                                         <option value="0">@Localizer["ChooseForm"] </option>
@@ -296,7 +305,7 @@
                         <div class="row">
                             <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group ">
-                                    <label>@Localizer["ClientFormName"] </label>
+                                    <label for="txtFormName">@Localizer["ClientFormName"] </label>
                                     <input id="txtFormName" class="form-control" maxlength="50" type="text" autocomplete="off" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                                 </div>
                                 <div class="addactionbutton" style="display:none">
@@ -323,8 +332,11 @@
                     </div>
                 </div>
                 <div class="mdl-card__actions mdl-card--border text-center">
-                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnFormAdd" onclick="fnSaveForm()">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button me-2" id="btnFormAdd" onclick="fnSaveForm()">
                         <i class="fa fa-plus"></i> @Localizer["Add"]
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button" id="btnFormCancel" onclick="fnClearForm()">
+                        <i class="fa fa-times"></i> @Localizer["Cancel"]
                     </button>
 
                 </div>
@@ -394,6 +406,7 @@
             else if ($('#rdoAddForm').prop('checked')) {
                 $('#pnlSubMenu').hide();
                 $('#pnlForm').show();
+                $('#btnFormAdd').show();
             }
         });
         fnTreeSize("#jstMenuFormList");
@@ -441,9 +454,9 @@
                         if (data.node.parent == "#") {
                             $('#pnlMainMenu').show();
                             $('#pnlMainModuleHeading > h5').text(localization.AddMainMenu);
-                            $('#btnMainMenuAdd').html('<i class="fa fa-plus mr-2"></i>' + localization.Add);
+                            $('#btnMainMenuAdd').html('<i class="fa fa-plus mr-2"></i> ' + localization.Add);
 
-                            $('#MM_anchor').html($('#MM_anchor').html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true" onclick="fneSyaMenuEdit()"></i></span>')
+                            $('#MM_anchor').html($('#MM_anchor').html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true" onclick="fneSyaMenuEdit()"></i></span>')
 
 
                             fnClearControl();
@@ -451,9 +464,9 @@
                         }
                         else if (data.node.id.startsWith("MM")) {
 
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
 
                             $('#View').on('click', function () {
 
@@ -506,9 +519,9 @@
                                 $('#pnlForm').hide();
 
                                 $('#pnlSubMenuHeading > h5').text(localization.SaveSubMenu);
-                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.SaveSubMenu);
+                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i> ' + localization.SaveSubMenu);
                                 $('#pnlFormMenuHeading > h5').text(localization.AddForm);
-                                $('#btnFormAdd').html('<i class="fa fa-save"></i>' + localization.SaveForm);
+                                $('#btnFormAdd').html('<i class="fa fa-save"></i> ' + localization.SaveForm);
 
                                 $("#cboInternalForm").attr('disabled', false);
                                 fnClearControl();
@@ -520,9 +533,9 @@
 
                         else if (data.node.id.startsWith("SM")) {
                             //$('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
 
                             $('#View').on('click', function () {
                                 if (_userFormRole.IsView === false) {
@@ -580,9 +593,9 @@
                                 $('#pnlForm').hide();
 
                                 $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.SaveSubMenu);
+                                $('#btnSubMenuAdd').html('<i class="fa fa-save"></i> ' + localization.SaveSubMenu);
                                 $('#pnlFormMenuHeading > h5').text(localization.AddForm);
-                                $('#btnFormAdd').html('<i class="fa fa-save"></i>' + localization.SaveForm);
+                                $('#btnFormAdd').html('<i class="fa fa-save"></i> ' + localization.SaveForm);
 
                                 $("#cboInternalForm").attr('disabled', false);
                                 fnClearControl();
@@ -592,8 +605,8 @@
                         }
 
                         else if (data.node.id.startsWith("FM")) {
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
+                            $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
 
                             $('#View').on('click', function () {
                                 if (_userFormRole.IsView === false) {
@@ -723,7 +736,10 @@
             }
         });
     }
-
+    function fnCleareSyaMenu(){
+        $("#txteSyaMenuName").val('');
+        $("#txtVersion").val('');
+    }
     function fnFillMainMenu(mainMenuId) {
 
         $.ajax({
@@ -842,7 +858,7 @@
                             $("#rdoAddForm").prop({ 'checked': false });
 
                             $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                            $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.Save);
+                            $('#btnSubMenuAdd').html('<i class="fa fa-save"></i> ' + localization.Save);
                         }
                     }
                     else {
@@ -902,7 +918,7 @@
                         fnGetMenuFormList();
 
                         $('#pnlSubMenuHeading > h5').text(localization.AddSubMenu);
-                        $('#btnSubMenuAdd').html('<i class="fa fa-save"></i>' + localization.Save);
+                        $('#btnSubMenuAdd').html('<i class="fa fa-save"></i> ' + localization.Save);
                     }
                     else {
                         fnAlert("e", "", response.StatusCode, response.Message);
@@ -916,7 +932,11 @@
             });
         }
     }
-
+    function fnClearSubMenu(){
+        $("#txtSubMenuName").val('');
+        $("#txtSubMenuImageURL").val('');
+        $("#chkSubMenuStatus").parent().addClass("is-checked");
+    }
     function fnSaveForm() {
 
         var selectedNode = $('#jstMenuFormList').jstree().get_selected(true);
@@ -985,6 +1005,10 @@
         }
     }
 
+    function fnClearForm(){
+        $("#cboInternalForm").val('0').selectpicker('refresh'); 
+        $("#txtFormName").val('');
+    }
 
     function fnDeleteNode() {
 
@@ -1171,6 +1195,12 @@
     function fnOpenInternalForms() {
         var url = '@Url.Action("EPS_01_00", "FormNames", new { area = "ProductSetup" })';
         window.location.href = url;
+    }
+
+    function fnClearMainMenu() {
+        $("#txtMainMenuName").val("");
+        $("#txtMainMenuImageURL").val("");
+        $("#chkMainMenuStatus").parent().addClass("is-checked");
     }
 </script>
 

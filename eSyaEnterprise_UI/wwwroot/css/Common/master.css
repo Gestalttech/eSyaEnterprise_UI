@@ -360,6 +360,17 @@ div[id$="ActiveStatus"], div[id$="Active"], div[id$="Status"], div[id*="IsA"] {
         border: none;
         margin: 2px 0px 2px;
     }
+#viewEmailPassword, #viewEmailPasskey{
+    position: absolute;
+    bottom: 10px;
+    right: 16px;
+    text-decoration: none;
+    color: grey;
+}
+    #viewEmailPassword .svg-inline--fa.fa-w-20, #viewEmailPasskey .svg-inline--fa.fa-w-20 
+    {
+        color: grey;
+    }
 #lblGridView,#lblTreeView{
    font-size:14px !important;
    padding:7px 14px;

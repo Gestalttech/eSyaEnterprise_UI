@@ -15,6 +15,20 @@
 
     $("#cbolocISD").attr('disabled', true);
 });
+
+$(document).on('click', '#viewEmailPassword', function () {
+    $("#viewEmailPassword svg").toggleClass("fa-eye-slash fa-eye");
+    $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+});
+
+
+$(document).on('click', '#viewEmailPasskey', function () {
+    $("#viewEmailPasskey svg").toggleClass("fa-eye-slash fa-eye");
+    $(this).prev().attr('type', function (index, attr) { return attr == 'password' ? 'text' : 'password'; });
+});
+
+
+
 function fnISDCountryCode_onChange() {
 
 }
@@ -101,7 +115,7 @@ function BindLocationsbyBusinessID() {
                 //refresh each time
                 $("#cboBusinessKey").empty();
 
-                $("#cboBusinessKey").append($("<option value='0'> Choose Business Location </option>"));
+                $("#cboBusinessKey").append($("<option value='0'>"+ localization.ChooseBusinessLocation +"</option>"));
                 for (var i = 0; i < response.length; i++) {
 
                     $("#cboBusinessKey").append($("<option></option>").val(response[i]["BusinessKey"]).html(response[i]["LocationDescription"]));
@@ -110,7 +124,7 @@ function BindLocationsbyBusinessID() {
             }
             else {
                 $("#cboBusinessKey").empty();
-                $("#cboBusinessKey").append($("<option value='0'> Choose Business Location </option>"));
+                $("#cboBusinessKey").append($("<option value='0'>" + localization.ChooseBusinessLocation +"</option>"));
                 $('#cboBusinessKey').selectpicker('refresh');
             }
         },
@@ -145,6 +159,7 @@ function fnGetISDCodeByBusinessKey() {
     });
 }
 function fnAddEmailConnect() {
+    $("#viewEmailPassword, #viewEmailPasskey").show();
     if ($("#cboBusinessEntity").val() === "0" || $("#cboBusinessEntity").val() === "") {
         fnAlert("w", "EIF_02_00", "UI0049", errorMsg.BusinessEntity_E15);
         return false;
@@ -168,7 +183,7 @@ function fnAddEmailConnect() {
 }
 
 function fnEditEmailConnect(e, actiontype) {
-
+    
     var rowid = $("#jqgEmailConnect").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgEmailConnect').jqGrid('getRowData', rowid);
     var _selectedRow = $("#" + rowid).offset();
@@ -201,9 +216,10 @@ function fnEditEmailConnect(e, actiontype) {
             fnAlert("w", "EIF_02_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
+        $("#viewEmailPassword, #viewEmailPasskey").show();
         $('#PopupEmailConnect').modal('show').css({ top: firstRow.top + 31 });
         $('#PopupEmailConnect').find('.modal-title').text(localization.UpdateEmailConnect);
-        $("#btnSaveEmailConnect").html('<i class="fa fa-sync mr-1"></i>' + localization.Update);
+        $("#btnSaveEmailConnect").html('<i class="fa fa-sync mr-1"></i> ' + localization.Update);
         $("#chkActiveStatus").prop('disabled', true);
 
         $("#btndeActiveEmailConnect").hide();
@@ -219,6 +235,7 @@ function fnEditEmailConnect(e, actiontype) {
             fnAlert("w", "EIF_02_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
+        $("#viewEmailPassword, #viewEmailPasskey").hide();
         $('#PopupEmailConnect').modal('show');
         $('#PopupEmailConnect').find('.modal-title').text(localization.ViewEmailConnect);
         $("#btnSaveEmailConnect").attr("disabled", false);
@@ -241,13 +258,12 @@ function fnEditEmailConnect(e, actiontype) {
         }
 
         $('#PopupEmailConnect').modal('show');
-        $('#PopupEmailConnect').find('.modal-title').text("Activate/De Activate Busienss Location");
+        $('#PopupEmailConnect').find('.modal-title').text(localization.ActivateDeactivateBusienssLocation);
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveEmailConnect").html(localization.DActivate);
+            $("#btndeActiveEmailConnect").html('<i class="fa fa-ban mr-1"></i> ' + localization.Deactivate);
         }
         else {
-            $("#btndeActiveEmailConnect").html('Activate');
-            $("#btndeActiveEmailConnect").html(localization.Activate);
+           $("#btndeActiveEmailConnect").html('<i class="fa fa-check mr-1"></i> ' +localization.Activate);
         }
         $("input,textarea").attr('readonly', true);
         $("select").next().attr('disabled', true);
@@ -421,7 +437,7 @@ function fnDeleteEmailConnect() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btndeActiveEmailConnect").attr("disabled", false);
-                $("#btndeActiveEmailConnect").html('De Activate');
+                $("#btndeActiveEmailConnect").html('<i class="fa fa-sync mr-1"></i> ' + localization.Deactivate);
             }
         },
         error: function (error) {

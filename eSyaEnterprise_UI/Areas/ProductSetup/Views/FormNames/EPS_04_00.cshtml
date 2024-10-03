@@ -114,7 +114,8 @@
                 </div>*@
 
                 <div class="mdl-card__actions text-center pad0">
-                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10 mdl-js-ripple-effect" id="btnFMAdd" onclick="fnSaveFormMaster()"><i class="fa fa-plus"></i> @Localizer["Add"] </button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10 mdl-js-ripple-effect me-2" id="btnFMAdd" onclick="fnSaveFormMaster()"><i class="fa fa-plus"></i> @Localizer["Add"] </button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10 mdl-js-ripple-effect" id="btnFMCancel" onclick="fnClearForm()"><i class="fa fa-times"></i> @Localizer["Cancel"] </button>
                     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mr-10" id="btnConfigureMenu" onclick="fnOpenConfigureMenu()" )><i class="fa fa-plus"></i> @Localizer["ConfigureMenu"]</button>
                     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  mdl-js-ripple-effect" id="btnAreaController" onclick="fnOpenAreaControllerMenu()"><i class="fa fa-plus"></i> @Localizer["AreaController"] </button>
                 </div>
@@ -1215,5 +1216,12 @@
 
         var url = '@Url.Action("EPS_02_00", "FormNames", new { area = "ProductSetup" })';
         window.location.href = url;
+    }
+    function fnClearForm(){
+        $("#cboAreaController").val("0");
+        $('#cboAreaController').selectpicker('refresh');
+        $("#txtFormDescription").val('');
+        $("#txtFormCode").val('');
+        $("#txtToolTip").val('');
     }
 </script>
