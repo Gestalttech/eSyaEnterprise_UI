@@ -38,7 +38,7 @@ function fnLoadItemCategoryTree() {
                 var parentNode = $("#jstItemCategoryTree").jstree(true).get_parent(data.node.id);
                 // If Main node is selected
                 if (parentNode == "#") {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
                     $('#Add').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $("#dvItemCategory").hide();
@@ -66,8 +66,8 @@ function fnLoadItemCategoryTree() {
 
                 // Category node is selected
                 else if (parentNode == "IC") {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
                     $('#View').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $("#dvItemCategory").hide();

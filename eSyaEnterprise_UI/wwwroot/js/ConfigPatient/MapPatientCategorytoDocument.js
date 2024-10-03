@@ -86,9 +86,9 @@ function fnGetPatientCategory_Success(dataArray) {
                         $('#Add').remove();
                         NodeID = 0;
                         NodeID = data.node.id.substring(2).split("_")[1];
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" style="padding-left:5px;padding-right:5px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 fnAlert("w", "EPM_03_00", "UIC01", errorMsg.addauth_E1);

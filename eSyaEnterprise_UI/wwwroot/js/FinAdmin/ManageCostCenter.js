@@ -70,7 +70,7 @@ function fnLoadSACCategoryTree() {
                 // If Parent node is selected
                 
                 if (parentNode == "#") {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClass" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClass" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
                      $('#AddClass').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
                             $('#divCostCenterClass').hide();
@@ -96,9 +96,9 @@ function fnLoadSACCategoryTree() {
                 }
                 // If Type node is selected
                 else if (parentNode.substring(0,2) == "HD") {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClassDesc" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="EditClass" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="ViewClass" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="AddClassDesc" style="padding-left:10px;">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="EditClass" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="ViewClass" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
                    
                     $('#AddClassDesc').on('click', function () {
                         if (_userFormRole.IsInsert === false) {
@@ -170,8 +170,8 @@ function fnLoadSACCategoryTree() {
                 }
                 // If Child node is selected
                 else {
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="EditClassDesc" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
-                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="ViewClassDesc" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="EditClassDesc" style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
+                    $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="ViewClassDesc" style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
                     $('#ViewClassDesc').on('click', function () {
                         if (_userFormRole.IsView === false) {
                             $('#divCostCenterClassDesc').hide();

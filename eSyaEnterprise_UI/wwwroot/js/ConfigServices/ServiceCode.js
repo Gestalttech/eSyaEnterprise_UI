@@ -52,7 +52,7 @@ function fnLoadServiceCodeTree() {
                 else if (parentNode.startsWith('G') || parentNode.startsWith('C')) {
 
                     if (data.node.id.startsWith('C')) {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" title=' + localization.Add +' style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Add" title=' + localization.Add +' style="padding-left:10px;padding-right:10px">&nbsp;<i class="fa fa-plus" style="color:#555555"aria-hidden="true"></i></span>')
                         $('#Add').on('click', function () {
                             if (_userFormRole.IsInsert === false) {
                                 $('#dvServiceCode').hide();
@@ -98,8 +98,8 @@ function fnLoadServiceCodeTree() {
                         });
                     }
                     else {
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" title=' + localization.View +' style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#337ab7"aria-hidden="true"></i></span>')
-                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" title=' + localization.Edit +' style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#337ab7"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="View" title=' + localization.View +' style="padding-left:10px">&nbsp;<i class="fa fa-eye" style="color:#555555"aria-hidden="true"></i></span>')
+                        $('#' + data.node.id + "_anchor").html($('#' + data.node.id + "_anchor").html() + '<span id="Edit" title=' + localization.Edit +' style="padding-left:10px">&nbsp;<i class="fa fa-pen" style="color:#555555"aria-hidden="true"></i></span>')
                         $('#View').on('click', function () {
                             if (_userFormRole.IsView === false) {
                                 $('#dvServiceCode').hide();
