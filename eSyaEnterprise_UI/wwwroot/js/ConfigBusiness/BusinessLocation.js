@@ -47,7 +47,7 @@ function fnGridLoadBusinessLocation() {
         mtype: 'POST',
         contentType: 'application/json; charset=utf-8',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
-        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, "Licenses status" ,localization.Active, localization.Actions],
+        colNames: [localization.BusinessId, localization.LocationId, localization.BusinessKey, localization.LocationDescription, localization.BusinessName, localization.ShortDesc, localization.ISDCode, localization.CityCode, localization.StateCode, localization.CurrencyCode, localization.CurrencyName, "Date Format","Short Date Format", "Licenses status" ,localization.Active, localization.Actions],
         colModel: [
             { name: "BusinessId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "LocationId", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
@@ -60,6 +60,8 @@ function fnGridLoadBusinessLocation() {
             { name: "StateCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyCode", width: 50, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false, hidden: true },
             { name: "CurrencyName", width: 80, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "DateFormat", width: 80, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
+            { name: "ShortDateFormat", width: 80, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "Lstatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, hidden: true },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
 
@@ -120,6 +122,7 @@ function fnAddBusinessLocation() {
         _isInsert = true;
         fnClearFields();
         eSyaParams.ClearValue();
+       
         BindCities();
         BindTaxIdentification();
         BindCurrrencies();
@@ -147,6 +150,8 @@ function fnAddBusinessLocation() {
         $("#chktaxinfoActiveStatus").parent().addClass("is-checked");
         $("#chktaxinfoActiveStatus").prop('disabled', true);
         $("#btnDeactivateBusinessLocation").hide();
+        $("#txtDateFormat").val('');
+        $("#txtShortDateFormat").val('');
         fnGetBusinessUnitType();
         fnLoadGridPreferredLanguage();
         fnGridLoadPaymentMethodInfo();
@@ -162,8 +167,11 @@ function fnEditBusinessLocation(e, actiontype) {
     $('#txtBusinessName').val(rowData.BusinessName);
     $('#txtShortDescription').val(rowData.ShortDesc);
     $('#txtBusinesskey').val(rowData.BusinessKey);
-    $("#txtlocationId").val(rowData.LocationId)
+    $("#txtlocationId").val(rowData.LocationId);
     $('#cbolocISD').val(rowData.Isdcode).selectpicker('refresh');
+    $("#txtDateFormat").val(rowData.DateFormat); 
+    $("#txtShortDateFormat").val(rowData.ShortDateFormat);
+    
     BindCities();
     BindTaxIdentification();
     BindCurrrencies();
@@ -424,7 +432,16 @@ function fnSaveLocationInfo() {
         fnAlert("w", "ECB_02_00", "UI0058", errorMsg.CurrencyCode_E13);
         return;
     }
+    if (IsStringNullorEmpty($("#txtDateFormat").val())) {
+        fnAlert("w", "ECB_02_00", "UI0269", errorMsg.DateFormat_E18);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtShortDateFormat").val())) {
+        fnAlert("w", "ECB_02_00", "UI0270", errorMsg.ShortDateFormat_E19);
+        return false;
+    }
 
+   
     objloc = {
         BusinessId: $("#cboBusinessEntity").val(),
         LocationId: $("#txtlocationId").val() === '' ? 0 : $("#txtlocationId").val(),
@@ -439,7 +456,9 @@ function fnSaveLocationInfo() {
         TolocalCurrency: $("#chkToLocalCurrency").parent().hasClass("is-checked"),
         TocurrConversion: $("#chkToCurrCurrency").parent().hasClass("is-checked"),
         TorealCurrency: $("#chkToRealCurrency").parent().hasClass("is-checked"),
-        ActiveStatus: $("#chkLocinfoActiveStatus").parent().hasClass("is-checked")
+        ActiveStatus: $("#chkLocinfoActiveStatus").parent().hasClass("is-checked"),
+        DateFormat: $("#txtDateFormat").val(),
+        ShortDateFormat: $("#txtShortDateFormat").val(),
     };
 
     //
@@ -545,6 +564,34 @@ function fnDeleteLocationInfo() {
             $("#btnDeactivateBusinessLocation").html('De Activate');
         }
     });
+}
+
+function BindDateFormat() {
+
+     $.ajax({
+        url: getBaseURL() + '/Location/GetDateFormatbyISDCode?isdCode=' + $("#cbolocISD").val(),
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+         success: function (response, data) {
+           
+             if (response != null) {
+                $("#txtDateFormat").val(response.DateFormat);
+                $("#txtShortDateFormat").val(response.ShortDateFormat);
+            } else {
+                 $("#txtDateFormat").val('');
+                 $("#txtShortDateFormat").val('');
+            }
+            
+        },
+        async: false,
+        processData: false
+    });
+
+
 }
 
 function BindCities() {
@@ -881,6 +928,7 @@ function fnISDCountryCode_onChange() {
     BindTaxIdentification();
     BindCurrrencies();
     fnGridLoadPaymentMethodInfo();
+    BindDateFormat();
 }
 
 
@@ -1172,14 +1220,7 @@ function fnSavePaymentIntefaceInfo() {
         fnAlert("w", "ECB_02_00", "UI0056", errorMsg.ISDCode_E11);
         return;
     }
-    if (IsStringNullorEmpty($("#txtDateFormat").val())) {
-        fnAlert("w", "ECB_02_00", "UI0269", errorMsg.DateFormat_E18);
-        return false;
-    }
-    if (IsStringNullorEmpty($("#txtShortDateFormat").val())) {
-        fnAlert("w", "ECB_02_00", "UI0270", errorMsg.ShortDateFormat_E19);
-        return false;
-    }
+   
     var paymentinfo = [];
     var jqgpaymentinfo = jQuery("#jqgPaymentInfo").jqGrid('getRowData');
     

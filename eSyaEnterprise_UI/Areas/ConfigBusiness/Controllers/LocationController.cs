@@ -178,6 +178,34 @@ namespace eSyaEnterprise_UI.Areas.ConfigBusiness.Controllers
         }
 
         /// <summary>
+        ///Get default Date format from country Master
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> GetDateFormatbyISDCode(int isdCode)
+        {
+
+            try
+            {
+                var serviceResponse = await _eSyaConfigBusinessAPIServices.HttpClientServices.GetAsync<DO_BusinessLocation>("License/GetDateFormatbyISDCode?isdCode=" + isdCode);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetDateFormatbyISDCode");
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetDateFormatbyISDCode");
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+
+        }
+
+        /// <summary>
         ///Get Business Locations  for Grid
         /// </summary>
         [HttpPost]
