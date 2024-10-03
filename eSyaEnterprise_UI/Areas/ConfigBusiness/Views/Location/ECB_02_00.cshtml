@@ -158,6 +158,8 @@
         UserLicenses_E16: '@Localizer["UI0061"]',
         ShortDesc_E16: '@Localizer["UI0206"]',
         BusinessLocation_E17: '@Localizer["UI0064"]',
+        DateFormat_E18: '@Localizer["UI0269"]',
+        ShortDateFormat_E19: '@Localizer["UI0270"]',
     }
 </script>
 <div class="row">
@@ -213,13 +215,13 @@
                                     <input type="text" id="txtlocationId" style="display:none" />
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="lable-color" for="txtShortDescription">@Localizer["ShortDescription"]</label>
+                                            <label for="txtShortDescription">@Localizer["ShortDescription"]</label>
                                             <input id="txtShortDescription" class="form-control" type="text" autocomplete="off" maxlength="10" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric10Characters"]' />
                                         </div>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="lable-color" for="txtLocationDescription">@Localizer["LocationDescription"]</label>
+                                            <label for="txtLocationDescription">@Localizer["LocationDescription"]</label>
                                             <input id="txtLocationDescription" class="form-control" type="text" autocomplete="off" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric50Characters"]' />
                                         </div>
                                     </div>
@@ -228,7 +230,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="lable-color" for="txtBusinessName">@Localizer["BusinessName"]</label>
+                                            <label for="txtBusinessName">@Localizer["BusinessName"]</label>
                                             <input id="txtBusinessName" class="form-control" maxlength="100" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphaNumeric100Characters"]' />
                                         </div>
                                     </div>
@@ -236,7 +238,7 @@
                                 <div class="row">
                                     <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label> @Localizer["ISDCode"] </label>
+                                            <label for="cbolocISD"> @Localizer["ISDCode"] </label>
                                             @await Component.InvokeAsync("IsdCountryInput", new { id = "locISD" })
                                           
                                         </div>
@@ -244,7 +246,7 @@
 
                                     <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label> @Localizer["City"] </label>
+                                            <label for="cboCityCode"> @Localizer["City"] </label>
                                                <select class="selectpicker" data-live-search="true" data-container="body" id="cboCityCode" title="Select">
                                                     <option value="0">@Localizer["Select"]</option>
                                                 </select>
@@ -253,13 +255,26 @@
 
                                     <div class="col-lg-2  col-md-4 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label> @Localizer["Currrency"] </label>
+                                            <label for="cboCurrrencyCode"> @Localizer["Currrency"] </label>
                                             <select class="selectpicker" data-live-search="true" data-container="body" id="cboCurrrencyCode" title="Select" onchange="fnDisableRealCurrency()">
                                                     <option value="0">@Localizer["Select"]</option>
                                             </select>
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-2 col-md-3 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="txtDateFormat">@Localizer["DateFormat"]</label>
+                                            <input id="txtDateFormat" class="form-control" maxlength="25" type="text" />
+                                            <span class="text-muted">(eg. YYYY-MM-DDThh:mm:ssZ)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="txtShortDateFormat">@Localizer["ShortDateFormat"]</label>
+                                            <input id="txtShortDateFormat" class="form-control" maxlength="15" type="text" />
+                                            <span class="text-muted">(eg. YYYY-MM-DD)</span>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12  d-flex align-items-center">
 
                                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkLocinfoActiveStatus">
@@ -383,13 +398,13 @@
                                     </div>
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="lable-color" for="txtTin">@Localizer["Tin"]</label>
+                                            <label  for="txtTin">@Localizer["Tin"]</label>
                                             <input id="txtTin" class="form-control" maxlength="2" type="text" />
                                         </div>
                                     </div>
                                     <div class="col-lg-3  col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="lable-color" for="txtStateCode">@Localizer["StateCode"]</label>
+                                            <label  for="txtStateCode">@Localizer["StateCode"]</label>
                                             <input id="txtStateCode" class="form-control" maxlength="2" type="text" />
                                         </div>
                                     </div>

@@ -1172,7 +1172,14 @@ function fnSavePaymentIntefaceInfo() {
         fnAlert("w", "ECB_02_00", "UI0056", errorMsg.ISDCode_E11);
         return;
     }
-
+    if (IsStringNullorEmpty($("#txtDateFormat").val())) {
+        fnAlert("w", "ECB_02_00", "UI0269", errorMsg.DateFormat_E18);
+        return false;
+    }
+    if (IsStringNullorEmpty($("#txtShortDateFormat").val())) {
+        fnAlert("w", "ECB_02_00", "UI0270", errorMsg.ShortDateFormat_E19);
+        return false;
+    }
     var paymentinfo = [];
     var jqgpaymentinfo = jQuery("#jqgPaymentInfo").jqGrid('getRowData');
     

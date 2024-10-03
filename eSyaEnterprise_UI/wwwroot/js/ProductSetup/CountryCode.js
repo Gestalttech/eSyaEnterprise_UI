@@ -201,7 +201,7 @@ function fnEditCountryCode(e,actiontype) {
     var IMGname = IMGurl.split('/').pop().split('?')[0].split('#')[0];
 
     $("#btnSaveCountryCode").html('<i class="fa fa-sync"></i>' + localization.Update);
-    $("#btnCancelCountryCode").html('<i class="fa fa-times"></i>'+localization.Cancel);
+    $("#btnCancelCountryCode").html('<i class="fa fa-times"></i> '+localization.Cancel);
     $('#cboflagImage').val(IMGname).trigger('change');
     $('#cboflagImage').selectpicker('refresh');
     $('#txtCountryName').val(rowData.CountryName);
@@ -266,7 +266,7 @@ function fnEditCountryCode(e,actiontype) {
        
         $("#chkActiveStatus").prop('disabled', true);
         $('#PopupCountryCode').find('.modal-title').text(localization.UpdateCountry);
-        $("#btnSaveCountryCode").html('<i class="fa fa-sync"></i>' + localization.Update);
+        $("#btnSaveCountryCode").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnDeactivateCountryCode").hide();
         $("#btnSaveCountryCode").show();
     }
