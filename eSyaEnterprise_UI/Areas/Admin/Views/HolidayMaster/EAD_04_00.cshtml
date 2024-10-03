@@ -74,7 +74,7 @@
     </div>*@
     <div class="col-lg-3  col-md-3 col-sm-12 col-xs-12">
         <div class="form-group">
-            <label class="lable-color"> @Localizer["BusinessLocation"]</label>
+            <label for="cboBusinessLocation" class=""> @Localizer["BusinessLocation"]</label>
             <div>
                 <select class="selectpicker" data-live-search="true" id="cboBusinessLocation" title="" data-size="8" asp-items="@ViewBag.BusinessKeyList" onchange="fnBusinessKeyChange()">
                     <option value="0">@Localizer["Select"]</option>
@@ -108,7 +108,7 @@
                         <input type="text" class="form-control numberonly" id="txtYear" maxlength="4" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                     </div>
                     <div class="col-lg-3 col-md-3 col-6 form-group" id="divHolidayDate">
-                        <label class="lable-color" for="dtHolidayDate">@Localizer["HolidayDate"] </label>
+                        <label for="dtHolidayDate">@Localizer["HolidayDate"] </label>
                         <input type="text" class="form-control datepicker" id="dtHolidayDate" autocomplete="off" onkeydown="return false" />
                     </div>
 

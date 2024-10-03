@@ -68,13 +68,13 @@
                 <div class="row" style="margin:0px">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["SpecialtyDescription"]</label>
+                            <label for="txtSpecialtyDesc">@Localizer["SpecialtyDescription"]</label>
                             <input type="text" name="description" value="" class="form-control" id="txtSpecialtyDesc" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["Gender"]</label>
+                            <label for="cboGender">@Localizer["Gender"]</label>
                             <select class="selectpicker" data-live-search="false" id="cboGender" title="Select">
                                 <option value="A">All</option>
                                 <option value="M">Male</option>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["SpecialtyType"]</label>
+                            <label for="cboSpecialtyType">@Localizer["SpecialtyType"]</label>
                             <select class="selectpicker" data-live-search="false" id="cboSpecialtyType" title="Select">
                                 <option value="G">General</option>
                                 <option value="S">Super Specialty</option>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="lable-color">@Localizer["SpecialtyGroup"] </label>
+                            <label for="cboSpecialtyGroup">@Localizer["SpecialtyGroup"] </label>
                             <select class="selectpicker" data-live-search="false" id="cboSpecialtyGroup" title="">
                                 <option value="0">Select Specialty Group</option>
                                 <option value="M">Medicine</option>
@@ -124,13 +124,7 @@
                                 <span class="mdl-checkbox__label">@Localizer["Active"]</span>
                             </label>
                         </div>
-                        @*<div class="form-group">
-                        <label class="lable-color">Active status</label>
-                        <select class="selectpicker" data-live-search="false" id="cboActiveStatus" title="Select">
-                        <option value="true">Active</option>
-                        <option value="false">Inactive</option>
-                        </select>
-                        </div>*@
+                        
                     </div>
                 </div>
             </div>
