@@ -76,7 +76,29 @@ $(document).ready(function () {
     $("#btnCloseMenu").click(function (e) {
         toggleTheMenu(e);
     });
+    $("[data-node=first]").click(function () {
 
+        if ($(this).find('svg ').attr('data-icon') == 'circle-plus') {
+            $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
+            $(this).find('svg ').attr('data-icon', 'circle-minus')
+        }
+        else {
+            $(this).find('svg ').attr('data-icon', 'circle-plus');
+        }
+
+    });
+
+    $("[data-node=second] li a").click(function (e) {
+        $("[data-node=second] li a").not(this).find('svg').attr('data-icon', 'caret-right');
+        $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines', 'data-prefix': 'far' });
+        // $(this).find('svg').attr('data-icon', 'caret-down');
+        if ($(this).find('svg').attr('data-icon') == 'caret-down') {
+            $(this).find('svg').attr('data-icon', 'caret-right');
+        }
+        else {
+            $(this).find('svg').attr('data-icon', 'caret-down');
+        }
+    });
 });
 
 // Error Notification Popup with error code
@@ -240,29 +262,7 @@ function fnSetGridwidth(id) {
 
 // }
 
-$("[data-node=first]").click(function () {
 
-    if ($(this).find('svg ').attr('data-icon') == 'circle-plus') {
-        $("[data-node=first]").find('svg').attr('data-icon', 'circle-plus');
-        $(this).find('svg ').attr('data-icon', 'circle-minus')
-    }
-    else {
-        $(this).find('svg ').attr('data-icon', 'circle-plus');
-    }
-
-});
-
-$("[data-node=second] li a").click(function (e) {
-    $("[data-node=second] li a").not(this).find('svg').attr('data-icon', 'caret-right');
-    $("[data-node=form] a").find('svg').attr({ 'data-icon': 'file-lines', 'data-prefix': 'far' });
-    // $(this).find('svg').attr('data-icon', 'caret-down');
-    if ($(this).find('svg').attr('data-icon') == 'caret-down') {
-        $(this).find('svg').attr('data-icon', 'caret-right');
-    }
-    else {
-        $(this).find('svg').attr('data-icon', 'caret-down');
-    }
-});
 
 function toggleTheMenu(e) {
     e.stopPropagation();
