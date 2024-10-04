@@ -260,6 +260,7 @@
     <Content Remove="wwwroot\images\ui-icons_ffffff_256x240.png" />
     <Content Remove="wwwroot\images\ui-icons_gold_256x240.png" />
     <Content Remove="wwwroot\js\CalDoc\CalendarControl.js" />
+    <Content Remove="wwwroot\js\Common\layout.js" />
     <Content Remove="wwwroot\js\ConfigBusiness\BusinessCalendar.js" />
     <Content Remove="wwwroot\js\ConfigBusiness\CalendarDetails.js" />
     <Content Remove="wwwroot\js\ConfigFacilities\MapSpecialtiesToBusiness.js" />
@@ -292,6 +293,10 @@
     <Content Remove="wwwroot\js\Stores\StoreMaster.js" />
     <Content Remove="wwwroot\js\TokenSystem\CounterAddon.js" />
     <Content Remove="wwwroot\js\TokenSystem\TokenManagement.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Common\layout.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -384,6 +389,7 @@
     <None Include="Views\Shared\Components\Menu\_UserMenu.cshtml" />
     <None Include="Views\Shared\Components\UserBusinessLocation\_UserBusinessLocation.cshtml" />
     <None Include="wwwroot\Audio\TokenCallingaudio.mpeg.ogg" />
+    <None Include="wwwroot\js\Common\layout.js" />
     <None Include="wwwroot\js\jquery.inputmask\bindings\inputmask.binding.js" />
     <None Include="wwwroot\js\jquery.inputmask\inputmask-userdefined.js" />
     <None Include="wwwroot\js\jquery.inputmask\inputmask.js" />
