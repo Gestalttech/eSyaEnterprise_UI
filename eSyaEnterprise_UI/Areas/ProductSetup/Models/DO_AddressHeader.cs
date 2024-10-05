@@ -42,6 +42,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Models
     {
         public int Isdcode { get; set; }
         public int StateCode { get; set; }
+        public int Stdcode { get; set; }
+        //public string? StdcodeFormat { get; set; }
         public int CityCode { get; set; }
         public string CityDesc { get; set; }
         public bool ActiveStatus { get; set; }

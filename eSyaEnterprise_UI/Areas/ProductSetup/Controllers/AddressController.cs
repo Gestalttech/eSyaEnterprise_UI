@@ -173,6 +173,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
 
             try
             {
+                //obj.Stdcode = obj.StdcodeFormat != null ? Convert.ToInt32(obj.StdcodeFormat) : obj.Stdcode;
+
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
