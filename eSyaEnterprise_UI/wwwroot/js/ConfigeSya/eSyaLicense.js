@@ -1,5 +1,5 @@
 ﻿
-$(document).ready(function () {
+$(function () {
     fnLoadGrideSyaLicense();
 
     $.contextMenu({
@@ -13,8 +13,8 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.AddEdit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.AddEdit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
 });
 var actiontype = "";
 
@@ -107,7 +107,7 @@ function fnEditeSyaLicense(e, actiontype) {
         }
         $('#PopupeSyaLicense').modal('show');
         $('#PopupeSyaLicense').find('.modal-title').text(localization.UpdateeSyaLicense);
-        $("#btnSaveeSyaLicense").html('<i class="fa fa-sync"></i>' + localization.Save);
+        $("#btnSaveeSyaLicense").html('<i class="fa fa-sync"></i> ' + localization.Save);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveeSyaLicense").attr("disabled", false);        
     }

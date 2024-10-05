@@ -14,9 +14,9 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i> " + localization.Delete + " </span>");
 });
 var actiontype = "";
 var _isInsert = true;
@@ -64,31 +64,7 @@ function fnLoadGridPortfolios() {
             fnJqgridSmallScreen("jqgPortfolio");
         },
         onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        },
+           },
     }).jqGrid('navGrid', '#jqpPortfolio', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpPortfolio', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshActions
     }).jqGrid('navButtonAdd', '#jqpPortfolio', {
@@ -138,7 +114,7 @@ function fnEditPortfolio(e, actiontype) {
         }
         $('#PopupPortfolio').modal('show');
         $('#PopupPortfolio').find('.modal-title').text(localization.UpdatePortfolio);
-        $("#btnSavePortfolio").html('<i class="fa fa-sync"></i>' + localization.Update);
+        $("#btnSavePortfolio").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btndeActivePortfolio").hide();
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSavePortfolio").attr("disabled", false);
@@ -176,10 +152,10 @@ function fnEditPortfolio(e, actiontype) {
         $("#btnSavePortfolio").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActivePortfolio").html(localization.Deactivate);
+            $("#btndeActivePortfolio").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
         }
         else {
-            $("#btndeActivePortfolio").html(localization.Activate);
+            $("#btndeActivePortfolio").html("<i class='fa fa-check'></i> " + localization.Activate);
         }
 
         $("#btndeActivePortfolio").show();
@@ -285,13 +261,13 @@ function fnDeletePortfolio() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btndeActivePortfolio").attr("disabled", false);
-                $("#btndeActivePortfolio").html('De Activate');
+                $("#btndeActivePortfolio").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btndeActivePortfolio").attr("disabled", false);
-            $("#btndeActivePortfolio").html('De Activate');
+            $("#btndeActivePortfolio").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
         }
     });
 }

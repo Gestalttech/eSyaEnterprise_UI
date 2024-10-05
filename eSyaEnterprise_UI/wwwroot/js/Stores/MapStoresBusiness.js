@@ -1,7 +1,7 @@
 ﻿var storeID;
 var prevSelectedID;
 
-$(document).ready(function () {
+$(function () {
     fnFormaction();
 });
 function fnBusinessKey_onChange() {
@@ -38,7 +38,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
             "show_only_matches_children": true
         }
     });
-
+    fnTreeSize("#jstStoreBusinessLink");
     $("#jstStoreBusinessLink").on('loaded.jstree', function () {
         $("#jstStoreBusinessLink").jstree('open_all');
         $("#jstStoreBusinessLink").jstree()._open_to(prevSelectedID);

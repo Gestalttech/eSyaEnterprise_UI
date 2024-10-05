@@ -1,5 +1,5 @@
 ﻿
-$(document).ready(function () {
+$(function () {
     fnGridLoadTherapeuticClass();
     $.contextMenu({
         selector: "#btnTherapeuticClass",
@@ -10,9 +10,9 @@ $(document).ready(function () {
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditTherapeuticClass(event, 'delete') } },
         }
     });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i> " + localization.Delete + " </span>");
 });
 var actiontype = "";
 var _isInsert = true;
@@ -68,7 +68,7 @@ function fnAddTherapeuticClass() {
     $('#PopupTherapeuticClass').modal('show');
     $("#txtTherapeutic").val("");
     $("#btnSaveTherapeuticClass").show();
-    $("#btnSaveTherapeuticClass").html(localization.Save);
+    $("#btnSaveTherapeuticClass").html("<i class='fa fa-save'></i> "+ localization.Save);
     $("#btnDeactivateTherapeuticClass").hide();
     $('#PopupTherapeuticClass').modal({ backdrop: 'static', keyboard: false });
     $('#PopupTherapeuticClass').find('.modal-title').text(localization.AddTherapeuticClass);
@@ -128,11 +128,10 @@ function fnEditTherapeuticClass(e, actiontype) {
         $('#PopupTherapeuticClass').modal('show');
         $('#PopupTherapeuticClass').find('.modal-title').text(localization.ActiveDeactiveTherapeuticClass);
         if (rowData.ActiveStatus == 'true') {
-            $("#btnDeactivateTherapeuticClass").html(localization.Deactivate);
+            $("#btnDeactivateTherapeuticClass").html("<i class='fa fa-ban'></i> " +localization.Deactivate);
         }
         else {
-            $("#btnDeactivateTherapeuticClass").html('Activate');
-            $("#btnDeactivateTherapeuticClass").html(localization.Activate);
+            $("#btnDeactivateTherapeuticClass").html("<i class='fa fa-check'></i> " +localization.Activate);
         }
         $("#btnSaveTherapeuticClass").hide();
         $("#btnDeactivateTherapeuticClass").show();
@@ -238,13 +237,13 @@ function fnDeleteTherapeuticClass() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btnDeactivateTherapeuticClass").attr("disabled", false);
-                $("#btnDeactivateTherapeuticClass").html('De Activate');
+                $("#btnDeactivateTherapeuticClass").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btnDeactivateTherapeuticClass").attr("disabled", false);
-            $("#btnDeactivateTherapeuticClass").html('De Activate');
+            $("#btnDeactivateTherapeuticClass").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
         }
     });
 }

@@ -1,5 +1,5 @@
 ﻿
-$(document).ready(function () {
+$(function () {
     fnGridLoadCodeTypes();
     $.contextMenu({
        selector: "#btnCodeType",
@@ -10,10 +10,9 @@ $(document).ready(function () {
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditCodeTypes(event, 'delete') } },
         }
      });
-    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i>" + localization.Edit + " </span>");
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
-    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
-   
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+    $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i> " + localization.Delete + " </span>");
 });
 var actiontype = "";
 function fnGridLoadCodeTypes() {
@@ -32,19 +31,10 @@ function fnGridLoadCodeTypes() {
             { name: "CodeTypeDesc", width: 180, align: 'left', editable: true, editoptions: { maxlength: 50 }, resizable: false },
             { name: "CodeTypeControl", editable: true, align: 'left', width: 120, edittype: "select", resizable: false, formatter: 'select', editoptions: { value: "S: System Defined;U: User Defined" } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', formatoptions: { disabled: true }, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" } },
-            //{
-            //    name: 'edit', search: false, align: 'left', width:88 , sortable: false, resizable: false,
-            //    formatter: function (cellValue, options, rowdata, action) {
-            //        return '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Edit" id="jqgEdit" onclick="return fnEditCodeTypes(event,\'edit\');"><i class="fas fa-pen"></i></button>' +
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="View" id="jqgView" onclick="return fnEditCodeTypes(event,\'view\');"><i class="far fa-eye"></i></button>'+
-            //            '<button class="btn-xs ui-button ui-widget ui-corner-all btn-jqgrid" title="Delete" id="jqgDelete" onclick="return fnEditCodeTypes(event,\'delete\');"><i class="fas fa-trash"></i></button>'
-            //    }
-            //},
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
                     return '<button class="mr-1 btn btn-outline" id="btnCodeType"><i class="fa fa-ellipsis-v"></i></button>'
-                   // return `<button class="mr-1 btn btn-outline" id="btnCodeType"><span class="material-symbols-outlined">more_vert</span ></button>`
                 }
             },
         ],
@@ -71,30 +61,6 @@ function fnGridLoadCodeTypes() {
             $("[id*='_edit']").css('text-align', 'center');
         },
         onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
         },
     }).jqGrid('navGrid', '#jqpCodeType', { add: false, edit: false, search: false, del: false, refresh: false, refreshtext: 'Reload' }).jqGrid('navButtonAdd', '#jqpCodeType', {
         caption: '<span class="fa fa-sync"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefreshCodeTypes
@@ -116,7 +82,7 @@ function fnAddCodeTypes() {
     $('#PopupCodeTypes').modal('show');
     $("#chkActiveStatus").parent().addClass("is-checked");
     $('#PopupCodeTypes').find('.modal-title').text(localization.AddCodeType);
-    $("#btnSaveCodeType").html('<i class="fa fa-save"></i>' + localization.Save);
+    $("#btnSaveCodeType").html('<i class="fa fa-save"></i> ' + localization.Save);
     $("#chkActiveStatus").prop('disabled', true);
     $("#btnSaveCodeType").show();
     $("#btndeActiveCodeType").hide();
@@ -187,10 +153,10 @@ function fnEditCodeTypes(e, actiontype) {
         $("#btnSaveCodeType").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveCodeType").html(localization.DeActivate);
+            $("#btndeActiveCodeType").html("<i class='fa fa-ban'></i> "+ localization.Deactivate);
         }
         else {
-            $("#btndeActiveCodeType").html(localization.Activate);
+            $("#btndeActiveCodeType").html("<i class='fa fa-check'></i> " +localization.Activate);
         }
 
         $("#btndeActiveCodeType").show();
@@ -206,11 +172,11 @@ function fnEditCodeTypes(e, actiontype) {
 var _isInsert = true;
 function fnSaveCodeType() {
     if (IsStringNullorEmpty($("#txtCodeType").val())) {
-        fnAlert("w", "EPS_06_00", "UI0001", errorMsg.codeType_E1);
+        fnAlert("w", "EPS_06_00", "UI0423", errorMsg.codeType_E1);
         return;
     }
     if (IsStringNullorEmpty($("#txtCodeDescription").val())) {
-        fnAlert("w", "EPS_06_00", "UI0002", errorMsg.codedesc_E2);
+        fnAlert("w", "EPS_06_00", "UI0424", errorMsg.codedesc_E2);
         return;
     }
     ct_type = {
@@ -305,13 +271,13 @@ function fnDeleteCodeType() {
             else {
                 fnAlert("e", "", response.StatusCode, response.Message);
                 $("#btndeActiveCodeType").attr("disabled", false);
-                $("#btndeActiveCodeType").html('Deactivate');
+                $("#btndeActiveCodeType").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
             }
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btndeActiveCodeType").attr("disabled", false);
-            $("#btndeActiveCodeType").html('Deactivate');
+            $("#btndeActiveCodeType").html("<i class='fa fa-ban'></i> " + localization.Deactivate);
         }
     });
 }
