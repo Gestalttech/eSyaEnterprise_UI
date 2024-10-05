@@ -27,11 +27,12 @@ function fnGridLoadCityList() {
         datatype: 'json',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.ISDCode, localization.StateCode, localization.CityCode, localization.StateDesc, localization.CityDesc, localization.Active, localization.Actions],
+        colNames: [localization.ISDCode, localization.StateCode, localization.CityCode, localization.Stdcode, localization.StateDesc, localization.CityDesc, localization.Active, localization.Actions],
         colModel: [
             { name: "Isdcode", width: 50, editable: true, align: 'left', hidden: true },
             { name: "StateCode", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "CityCode", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "Stdcode", width: 70, editable: false, hidden: true, align: 'left', resizable: true },
             { name: "StateDesc", width: 120, editable: true, align: 'left', resizable: false, hidden: true, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "CityDesc", width: 120, editable: true, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 50 } },
             { name: "ActiveStatus", width: 35, editable: true, align: 'center', edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
@@ -100,6 +101,7 @@ function fnEditCityCodes(e, actiontype) {
     var rowData = $('#jqgCityCode').jqGrid('getRowData', rowid);
 
     $("#txtCityCode").val(rowData.CityCode);
+    $("#txtSTDCode").val(rowData.Stdcode);
     $("#txtCityDescription").val(rowData.CityDesc);
     if (rowData.ActiveStatus == 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
@@ -142,6 +144,7 @@ function fnGridRefreshCityCodes() {
 
 function fnClearFields() {
     $("#txtCityCode").val("");
+    $("#txtSTDCode").val("");
     $("#txtCityDescription").val("");
     $("#btnSaveCityCode").attr('disabled', false);
     $("input,textarea").attr('readonly', false);
@@ -172,6 +175,12 @@ function fnSaveCityCodes() {
         fnAlert("w", "EPS_16_00", "UI0044", errorMsg.StateSelect_E7);
         return;
     }
+    if (IsStringNullorEmpty($("#txtSTDCode").val()) || $("#txtSTDCode").val() == "0" ) {
+        fnAlert("w", "EPS_16_00", "UI0425", errorMsg.StdCode_E10);
+        return;
+    }
+     
+
     if (IsStringNullorEmpty($("#txtCityDescription").val())) {
         fnAlert("w", "EPS_16_00", "UI0045", errorMsg.CityDesc_E9);
         return;
@@ -182,6 +191,7 @@ function fnSaveCityCodes() {
 
         Isdcode: $("#cboCityCountry").val(),
         CityCode: $("#txtCityCode").val() === '' ? 0 : $("#txtCityCode").val(),
+        Stdcode: $("#txtSTDCode").val(),
         StateCode: $("#cboStateCode").val(),
         CityDesc: $("#txtCityDescription").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")

@@ -42,6 +42,7 @@
         Update: '@Localizer["Update"]',
         CityList: '@Localizer["CityList"]',
         OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
+        OnlyNumeric: '@Localizer["OnlyNumeric"]',
     }
     var errorMsg = {
         editauth_E2: '@Localizer["UIC02"]',
@@ -49,6 +50,7 @@
         CountrySelect_E6: '@Localizer["UI0041"]',
         StateSelect_E7: '@Localizer["UI0044"]',
         CityDesc_E9: '@Localizer["UI0045"]',
+        StdCode_E10: '@Localizer["UI0425"]',
     }
 </script>
 <div class="row">
@@ -88,6 +90,12 @@
                         <div class="form-group">
                             <label for="txtCityDescription"> @Localizer["CityDescription"]</label>
                             <input id="txtCityDescription" class="form-control" autocomplete="off" type="text" maxlength="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
+                        </div>
+                    </div> 
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                        <div class="form-group">
+                            <label for="txtSTDCode"> @Localizer["STDCode"]</label>
+                            <input id="txtSTDCode" class="form-control numberonly" autocomplete="off" type="text" maxlength="15" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                         </div>
                     </div>
 
