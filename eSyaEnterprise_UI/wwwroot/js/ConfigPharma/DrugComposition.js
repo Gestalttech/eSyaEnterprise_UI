@@ -116,15 +116,15 @@ function fnGridLoadDrugCompositions(dcnamePrefix) {
         colNames: [localization.CompositionId, localization.IsCombination, localization.DrugCompositionDescription, "", localization.DrugClass, "", localization.TheraupaticCode, "", localization.PharmacyGroup, localization.Active, localization.Actions],
         colModel: [
             { name: "CompositionId", width: 35, editable: true, align: 'left', hidden: true },
-            { name: "IsCombination", editable: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
-            { name: "DrugCompDesc", width: 70, editable: true, align: 'left', hidden: false },
+            { name: "IsCombination", editable: true, width: 25, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "DrugCompDesc", width: 80, editable: true, align: 'left', hidden: false },
             { name: "DrugClass", width: 45, editable: true, align: 'left', hidden: true },
-            { name: "DrugClassDesc", width: 45, editable: true, align: 'left', hidden: false },
+            { name: "DrugClassDesc", width: 85, editable: true, align: 'left', hidden: false },
             { name: "TherapueticClass", width: 45, editable: true, align: 'left', hidden: true },
             { name: "TherapueticClassDesc", width: 45, editable: true, align: 'left', hidden: false },
             { name: "PharmacyGroup", width: 45, editable: true, align: 'left', hidden: true },
             { name: "PharmacyGroupDesc", width: 45, editable: true, align: 'left', hidden: false },
-            { name: "ActiveStatus", editable: true, width: 45, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "ActiveStatus", editable: true, width: 25, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'Action', search: false, align: 'left', width: 45, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {

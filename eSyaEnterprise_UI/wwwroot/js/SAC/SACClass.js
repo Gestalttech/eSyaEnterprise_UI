@@ -159,15 +159,15 @@ function fnFillSACClassDetail(SACClassID) {
 }
 function fnAddOrUpdateServiceClass() {
     if ($("#cboSACIsdcode").val() == 0 || $("#cboSACIsdcode").val() == '0' || IsStringNullorEmpty($("#cboSACIsdcode").val())) {
-        fnAlert("w", "ECS_05_00", "UI0119", "Please Select ISD Code");
+        fnAlert("w", "ECS_05_00", "UI0056", errorMsg.SelectISD_E9);
         return;
     }
     if (IsStringNullorEmpty($("#txtSACClass").val())) {
-        fnAlert("w", "ECS_05_00", "UI0119", "Please Enter SAC Class Code");
+        fnAlert("w", "ECS_05_00", "UI0428", errorMsg.SelectSACClass_E10);
         return;
     }
     if (IsStringNullorEmpty($("#txtSACClassDesc").val())) {
-        fnAlert("w", "ECS_05_00", "UI0119", "Please Enter SAC Class Description");
+        fnAlert("w", "ECS_05_00", "UI0119", errorMsg.SACCategoryDescription_E11);
         return;
     }
  
@@ -212,13 +212,13 @@ function fnDeleteNode() {
         return;
     }
      if ($("#cboSACIsdcode").val() == 0 || $("#cboSACIsdcode").val() == '0' || IsStringNullorEmpty($("#cboSACIsdcode").val())) {
-         fnAlert("w", "ECS_05_00", "UI0119", "Please Select ISD Code");
+         fnAlert("w", "ECS_05_00", "UI0056", errorMsg.SelectISD_E9);
          return;
      }
     var selectedNode = $('#jstServiceClassTree').jstree().get_selected(true);
     selectedNode = selectedNode[0];
     if (selectedNode.id == "ST") {
-        fnAlert("w", "ECS_05_00", "UI0114", "Please Select SAC Class to delete");
+        fnAlert("w", "ECS_05_00", "UI0430", errorMsg.SACClassToDelete_E12);
         return;
     }
     

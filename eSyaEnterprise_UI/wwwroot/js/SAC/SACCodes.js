@@ -7,7 +7,7 @@ var SACClassID = "0";
 var SACCategoryID = "0";    
 var _isInsert = false;
 var ClassParentID = "0";
-$(document).ready(function () {
+$(function () {
  
     $('#chkSACCodesActiveStatus').parent().addClass("is-checked");
     $("#btnSCAdd").attr("disabled", _userFormRole.IsInsert === false);
@@ -80,7 +80,7 @@ function fnLoadSACCodesTree() {
                             return;
                         }
                       
-                        $("#pnlAddSACCodes .mdl-card__title-text").text("Add SAC Codes");
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.AddSACCodes);
                         $("#txtServiceClassDesc").val('');
                         /*  $('#chkBaseRateApplicable').parent().removeClass("is-checked");*/
                         $('#chkSACCodesActiveStatus').parent().addClass("is-checked");
@@ -120,7 +120,7 @@ function fnLoadSACCodesTree() {
                         $("#txtSACCodes").attr("disabled", false);
                         $("#txtSACCodesDesc").attr("disabled", false);
                         $("#chkSACCodesActiveStatus").prop("disabled", true);
-                        $("#pnlAddSACCodes .mdl-card__title-text").text("Add SAC Codes");
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.AddSACCodes);
                         $('#chkSACCodesActiveStatus').parent().addClass("is-checked");
                         $("#btnSCAdd").html("<i class='fa fa-save'></i> " + localization.Save);
                         $("#btnSCAdd").show();
@@ -153,7 +153,7 @@ function fnLoadSACCodesTree() {
                         $("#txtSACCodes").attr("disabled", true);
                         $("#txtSACCodesDesc").attr("disabled", true);
                         $("#chkSACCodesActiveStatus").prop("disabled", true);
-                        $("#pnlAddSACCodes .mdl-card__title-text").text("View SAC Codes");
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.ViewSACCodes);
                         $("#btnSCAdd").hide();
                         $("#dvSACCodes").show();
                         //ServiceClassID = data.node.id;
@@ -176,7 +176,7 @@ function fnLoadSACCodesTree() {
                         $("#txtSACCodesDesc").attr("disabled", false);
                         $("#txtServiceClassDesc").prop("disabled", false);
                         $("#chkSACCodesActiveStatus").prop("disabled", true);
-                        $("#pnlAddSACCodes .mdl-card__title-text").text("Edit SAC Codes");
+                        $("#pnlAddSACCodes .mdl-card__title-text").text(localization.EditSACCodes);
                         $("#btnSCAdd").html("<i class='fa fa-sync'></i> " + localization.Update);
                         $("#btnSCAdd").show();
                         $("#dvSACCodes").show();
@@ -226,19 +226,21 @@ function fnAddOrUpdateSACCodes() {
     var txtSACCodes = $("#txtSACCodes").val()
     var txtSACCodesDesc = $("#txtSACCodesDesc").val()
     if ($("#txtSACClass").val() == "" || $("#txtSACClass").val() == null || $("#txtSACClass").val() == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", "SAC Class has not Selected");
+        //fnAlert("w", "ECS_06_00", "UI0366", "SAC Class has not Selected");
+        fnAlert("w", "ECS_07_00", "UI0428", errorMsg.SelectSACClass_E10);
+
         return;
     }
     if ($("#txtSACCategory").val() == "" || $("#txtSACCategory").val() == null || $("#txtSACCategory").val() == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", "SAC Category has not Selected");
+        fnAlert("w", "ECS_07_00", "UI0431", errorMsg.SelectSACCategory_E11);
         return;
     }
     if (txtSACCodes == "" || txtSACCodes == null || txtSACCodes == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", "Please enter SAC Code");
+        fnAlert("w", "ECS_07_00", "UI0432", errorMsg.SACCode_E12);
         return;
     }
     if (txtSACCodesDesc == "" || txtSACCodesDesc == null || txtSACCodesDesc == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", "Please enter SAC Codes description");
+        fnAlert("w", "ECS_07_00", "UI0433", errorMsg.SACCodesc_E13);
         return;
     }
 
@@ -305,14 +307,14 @@ function fnDeleteNode() {
     var selectedNode = $('#jstSACCodesTree').jstree().get_selected(true);
 
     if (selectedNode.length != 1) {
-        fnAlert("w", "ECS_07_00", "UI0121", "Select SAC Codes to delete");
+        fnAlert("w", "ECS_07_00", "UI0435", errorMsg.SACCodeDelete_E15);
     }
     else {
 
         selectedNode = selectedNode[0];
 
         if (!selectedNode.id.startsWith("C")) {
-            fnAlert("w", "ECS_07_00", "UI0121", "Delete first node");
+            fnAlert("w", "ECS_07_00", "UI0434", errorMsg.SACCodeDelete_E14);
         }
         else {
            

@@ -2,7 +2,7 @@
 var _SACClassID = "0";
 var prevSelectedID = '';
 var _isInsert = false;
-$(document).ready(function () {
+$(function () {
    
     $('#chkSACCategoryActiveStatus').parent().addClass("is-checked");
     $("#btnSGAdd").attr("disabled", _userFormRole.IsInsert === false);
@@ -152,11 +152,11 @@ function fnAddOrUpdateSACCategory() {
     var txtSACCategoryDescription = $("#txtSACCategoryDescription").val()
 
     if (txtSACCategory == "" || txtSACCategory == null || txtSACCategory == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366","Please enter SAC category");
+        fnAlert("w", "ECS_06_00", "UI0426", errorMsg.SACCategory_E10);
         return false;
     }
     if (txtSACCategoryDescription == "" || txtSACCategoryDescription == null || txtSACCategoryDescription == undefined) {
-        fnAlert("w", "ECS_06_00", "UI0366", "Please enter SAC category description");
+        fnAlert("w", "ECS_06_00", "UI0427", errorMsg.SACCategoryDescription_E11);
         return false;
     }
 

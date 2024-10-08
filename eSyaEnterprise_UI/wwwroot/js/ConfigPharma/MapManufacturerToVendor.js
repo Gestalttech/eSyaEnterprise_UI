@@ -95,7 +95,7 @@ function fnLoadVendorGrid(_manufId) {
             fnJqgridSmallScreen("jqpManufacturerToVendorLink");
          },
     })
-
+    fnAddGridSerialNoHeading();
 }
 
 function fnSaveManufacturerVendorLink() {
