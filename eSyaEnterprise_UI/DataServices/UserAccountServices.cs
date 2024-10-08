@@ -1,5 +1,7 @@
 ﻿using eSyaEnterprise_UI.GestaltUserDataServices;
 using eSyaEnterprise_UI.Models;
+using eSyaEnterprise_UI.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,12 @@ namespace eSyaEnterprise_UI.DataServices
     {
         private readonly IeSyaGatewayServices _eSyaGatewayServices;
         private readonly IeSyaGestaltUserSetUpGatewayServices _esyaGestaltSetUpGateway;
-        public UserAccountServices(IeSyaGatewayServices eSyaGatewayServices, IeSyaGestaltUserSetUpGatewayServices esyaGestaltSetUpGateway)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserAccountServices(IeSyaGatewayServices eSyaGatewayServices, IeSyaGestaltUserSetUpGatewayServices esyaGestaltSetUpGateway, IHttpContextAccessor httpContextAccessor)
         {
             _eSyaGatewayServices = eSyaGatewayServices;
             _esyaGestaltSetUpGateway = esyaGestaltSetUpGateway;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<DO_MainMenu>> GeteSyaMenulist()
@@ -144,6 +148,28 @@ namespace eSyaEnterprise_UI.DataServices
             catch (Exception ex)
             {
                 return new DO_UserAccount();
+            }
+        }
+        public async Task<List<FormControlProperty>> GetFormControlPropertybyUserRole()
+        {
+            try
+            {
+                string FormId = string.Empty;
+                var httpContext = _httpContextAccessor.HttpContext;
+                if (httpContext != null)
+                {
+                    FormId = AppSessionVariables.GetSessionFormInternalID(httpContext).ToString();
+
+
+                }
+                var param = "?userRole=" + 20002;
+                param += "&forminternalID=" + FormId;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<FormControlProperty>>("LocalizationResource/GetFormControlPropertybyUserRole" + param);
+                return serviceResponse.Data;
+            }
+            catch (Exception ex)
+            {
+                return new List<FormControlProperty>();
             }
         }
 

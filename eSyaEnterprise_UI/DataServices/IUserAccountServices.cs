@@ -20,5 +20,6 @@ namespace eSyaEnterprise_UI.DataServices
         Task<DO_UserAccount> GetUserBusinessLocation(int userID);
 
         Task<DO_UserAccount> GetUserNameById(int userId);
+        Task<List<FormControlProperty>> GetFormControlPropertybyUserRole();
     }
 }

@@ -24,4 +24,12 @@ namespace eSyaEnterprise_UI.Models
         public bool IsSurgeon { get; set; }
         public bool IsNutrition { get; set; }
     }
+    public class FormControlProperty
+    {
+        public int ControlKey { get; set; }
+        public string? InternalControlId { get; set; }
+        public string? ControlType { get; set; }
+        public string? Property { get; set; }
+        public bool ActiveStatus { get; set; }
+    }
 }

@@ -518,14 +518,14 @@ builder.Services.AddAuthentication(options =>
 AddCookie(options => { options.LoginPath = "/Login"; });
 
 builder.Services.AddSingleton<ViewBagActionFilter>();
+builder.Services.AddSingleton<ResourceMaskAttribute>();
+
 
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
 builder.Services.AddSingleton<IStringLocalizer, JsonDbContextStringLocalizer>();
 
 //builder.Services.AddSingleton<IStringLocalizer, JsonStringUILocalizer>();
-
-
 
 builder.Services.AddMvc()
                .AddSessionStateTempDataProvider();
@@ -537,6 +537,7 @@ builder.Services.AddMvc()
                AddNewtonsoftJson(options =>options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 
+//builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

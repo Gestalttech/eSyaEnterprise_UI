@@ -197,6 +197,7 @@
     <Compile Remove="DataServices\IeSyaGestaltUserSetUpGatewayServices.cs" />
     <Compile Remove="DataServices\IeSyaSetUpGatewayServices.cs" />
     <Compile Remove="DataServices\IPasswordPolicy.cs" />
+    <Compile Remove="ResourcesExtention\FormControlPropertyDbContextString.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -368,7 +369,6 @@
     <Folder Include="Areas\TokenSystem\Data\" />
     <Folder Include="Areas\TokenSystem\Models\" />
     <Folder Include="Extension\" />
-    <Folder Include="ResourcesExtention\" />
     <Folder Include="wwwroot\js\Common\tinymce\" />
     <Folder Include="wwwroot\js\Vendor\" />
     <Folder Include="wwwroot\Uploads\ExcelUploads\" />

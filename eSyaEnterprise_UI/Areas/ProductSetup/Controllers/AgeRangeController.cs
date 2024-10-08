@@ -23,6 +23,8 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         #region Age Range
         [Area("ProductSetup")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
+        [ServiceFilter(typeof(ResourceMaskAttribute))]
+
         public async Task<IActionResult> EPS_10_00()
         {
             var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCodes>>("ConfigMasterData/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.RangePeriod);

@@ -75,6 +75,9 @@ namespace eSyaEnterprise_UI.ResourcesExtention
                 //var serviceResponse = _esyaGestaltSetUpGateway.HttpClientServices.GetAsync<List<DO_LocalizationResource>>("eSyaUserAccount/GetLocalizationResourceString" + param).Result;
 
                 localization = serviceResponse.Data;
+
+
+
             }
             catch
             {
