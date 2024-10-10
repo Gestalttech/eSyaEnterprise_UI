@@ -1,5 +1,11 @@
 ﻿var actiontype = "";
 var isUpdate = 0;
+var insert = true;
+
+function fnCountryCodeOnChange() {
+    fnGridLoadExRates();
+    fnBindExchangeCurrencyCodes();
+}
 $(function () {
     $("#txtDateOfExchangeRate").datepicker({
         minDate: 0,
@@ -39,16 +45,19 @@ $(function () {
 function fnGridLoadExRates() {
     $('#jqgExRates').jqGrid('GridUnload');
     $("#jqgExRates").jqGrid({
-        url: getBaseURL() + '/ExRates/FillExchangeRate',
+        url: getBaseURL() + '/ExRates/FillExchangeRate?Countrycode=' + $("#cboCountrycodes").val(),
         datatype: 'json',
         mtype: 'Get',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
         ignoreCase: true,
-        colNames: [localization.CurrencyCode, localization.Description, localization.DateOfExchange, localization.StandardRate, localization.SellingDate, localization.SellingRate, localization.BuyingDate, localization.BuyingRate, localization.ActiveStatus, localization.Actions],
+        colNames: ["", localization.CurrencyCode, "Currency", "","Country", localization.DateOfExchange, localization.StandardRate, localization.SellingDate, localization.SellingRate, localization.BuyingDate, localization.BuyingRate, localization.ActiveStatus, localization.Actions],
         colModel: [
+            { name: "CurrencyKey", width: 50, editable: true, hidden: true },
             { name: "CurrencyCode", width: 50, editable: true, hidden: true },
             { name: "CurrencyDesc", width: 50, editable: true },
+            { name: "CountryCode", width: 50, editable: true, hidden: true },
+            { name: "CountryDesc", width: 50, editable: true },
             {
                 name: "DateOfExchangeRate", width: 50, editable: true,  align: 'right', formatter: "date", formatoptions:
                     { newformat: _cnfjqgDateFormat },
@@ -121,6 +130,13 @@ function SetGridControlByAction() {
 
 function fnAddExRates() {
     fnClearExRates();
+    if ($("#cboCountrycodes").val() === 0 || $("#cboCountrycodes").val() === "0") {
+        fnAlert("w", "EFA_02_00", "UI0371", "Please select Country Code to add Exchange Rate");
+        return;
+    }
+    insert = true;
+    $('#txtDateOfExchangeRate').attr('disabled', false);
+    $("#cboExRatesCurrencyCode").attr('disabled', false).selectpicker('refresh');
     $("#PopupExRates").modal('show');
     $('#PopupExRates').find('.modal-title').text(localization.AddExchangeRates);
     $("#btnSaveExRates").html("<i class='fa fa-save'></i> " + localization.Save);
@@ -130,18 +146,55 @@ function fnAddExRates() {
     $("#txtDateOfExchangeRate,#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', false);
 }
 
+function fnBindExchangeCurrencyCodes() {
+    $("#cboExRatesCurrencyCode").empty();
+    $.ajax({
+        url: getBaseURL() + '/ExRates/GetActiveExchangeCurrencyCodes?Countrycode=' + $("#cboCountrycodes").val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", xhr.StatusCode, xhr.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboExRatesCurrencyCode").empty();
 
+                $("#cboExRatesCurrencyCode").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboExRatesCurrencyCode").append($("<option></option>").val(response[i]["CurrencyCode"]).html(response[i]["CurrencyName"]));
+                }
+                $('#cboExRatesCurrencyCode').selectpicker('refresh');
+            }
+            else {
+                $("#cboExRatesCurrencyCode").empty();
+                $("#cboExRatesCurrencyCode").append($("<option value='0'> Select </option>"));
+                $('#cboExRatesCurrencyCode').selectpicker('refresh');
+            }
+        },
+        async: false,
+        processData: false
+    });
+
+
+}
 function fnEditExRates(actiontype) {
     
     var rowid = $("#jqgExRates").jqGrid('getGridParam', 'selrow');
     var rowData = $('#jqgExRates').jqGrid('getRowData', rowid);
+    insert = false;
+    $('#txtCountryKey').val(rowData.CurrencyKey);
+    $('#cboCountrycodes').val(rowData.CountryCode).selectpicker('refresh');
+    fnBindExchangeCurrencyCodes();
 
     $('#cboExRatesCurrencyCode').val(rowData.CurrencyCode).selectpicker('refresh');
-    $("#cboExRatesCurrencyCode").next().attr('disabled', true);
+    $("#cboExRatesCurrencyCode").attr('disabled', true).selectpicker('refresh');
 
     $('#txtStandardRate').val(rowData.StandardRate);
+    $('#txtDateOfExchangeRate').attr('disabled',true);
 
-    $("#txtDateOfExchangeRate").attr('readonly', true);
 
     if (rowData.DateOfExchangeRate !== null) {
         setDate($('#txtDateOfExchangeRate'), fnGetDateFormat(rowData.DateOfExchangeRate));
@@ -185,13 +238,14 @@ function fnEditExRates(actiontype) {
             fnAlert("w", "EFA_02_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
+
         $('#PopupExRates').modal('show');
         $('#PopupExRates').find('.modal-title').text(localization.UpdateExchangeRates);
         $("#chkExRatesActiveStatus").prop('disabled', true);
         $("#btnSaveExRates").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnDeactivateExRates").hide();
         $("input,textarea").attr('readonly', false);
-        $("#txtDateOfExchangeRate,#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', false);
+        $("#txtSellingLastVoucherDate,#txtBuyingLastVoucherDate").attr('disabled', false);
         $("select").next().attr('disabled', false);
         $("#btnSaveExRates").show();
     }
@@ -234,7 +288,10 @@ function fnEditExRates(actiontype) {
 }
 
 function fnSaveExRates() {
-
+    if ($("#cboCountrycodes").val() === 0 || $("#cboCountrycodes").val() === "0") {
+        fnAlert("w", "EFA_02_00", "UI0371", "Please select Country Code");
+        return;
+    }
     if ($("#cboExRatesCurrencyCode").val() === 0 || $("#cboExRatesCurrencyCode").val() === "0") {
         fnAlert("w", "EFA_02_00", "UI0371", errorMsg.CurrencyCode_E4);
         return;
@@ -257,6 +314,8 @@ function fnSaveExRates() {
     }
 
     var obj = {
+        CurrencyKey: $("#txtCountryKey").val(),
+        CountryCode: $("#cboCountrycodes").val(),
         CurrencyCode: $("#cboExRatesCurrencyCode").val(),
         CurrencyDesc: $("#cboExRatesCurrencyCode").val(),
         StandardRate: $("#txtStandardRate").val(),
@@ -274,7 +333,7 @@ function fnSaveExRates() {
         url: getBaseURL() + '/ExRates/InsertUpdateExchangeRate',
         type: 'POST',
         datatype: 'json',
-        data: { obj },
+        data: { insert: insert, obj: obj },
         success: function (response) {
             if (response.Status) {
                 fnAlert("s", "", response.StatusCode, response.Message);
@@ -302,7 +361,9 @@ function fnRefreshGridExRates() {
 }
 
 function fnClearExRates() {
-    $("#cboExRatesCurrencyCode").val('0');
+    
+    $("#txtCountryKey").val('');
+    $("#cboExRatesCurrencyCode").val('0').selectpicker('refresh');
     $("#txtExRatesDescription").val('');
     $("#txtDateOfExchangeRate").val('');
     $("#txtStandardRate").val('');

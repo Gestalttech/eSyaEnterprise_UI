@@ -8,8 +8,11 @@ namespace eSya.Finance.DO
 {
     public class DO_CurrencyExchangeRate
     {
+        public int CurrencyKey { get; set; }
         public string CurrencyCode { get; set; }
-        public string CurrencyDesc { get; set; }
+        public string? CurrencyDesc { get; set; }
+        public string CountryCode { get; set; }
+        public string? CountryDesc { get; set; }
         public DateTime DateOfExchangeRate { get; set; }
         public decimal StandardRate { get; set; }
         public decimal SellingRate { get; set; }
