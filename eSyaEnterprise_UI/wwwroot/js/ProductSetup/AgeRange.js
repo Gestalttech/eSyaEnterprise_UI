@@ -13,6 +13,63 @@
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
+    console.log(_resourceMaskList);
+    debugger;
+    if (_resourceMaskList.length > 0) {
+        $.each(_resourceMaskList, function (i, l) {
+            if (l.ControlType == "text") {
+                if (l.Property == 'disable') {
+                    $("#" + l.InternalControlId).attr('disabled', true);
+                }
+                else {
+                    $("#" + l.InternalControlId).attr('disabled', false);
+                }
+                if (l.Property == 'mask') {
+                    $("#" + l.InternalControlId).attr('type','password');
+                    
+                }
+                else {
+                    $("#" + l.InternalControlId).attr('type', 'text');
+                   
+                }
+            }
+
+            if (l.ControlType == "select") {
+                if (l.Property == 'disable') {
+                    $("#" + l.InternalControlId).attr('disabled', true);
+                }
+                else {
+                    $("#" + l.InternalControlId).attr('disabled', false);
+                }
+            }
+
+            if (l.ControlType == "checkbox") {
+                if (l.Property == 'hidden') {
+                    if ($("#" + l.InternalControlId).hasClass('mdl-checkbox__input')) {
+                        $("#" + l.InternalControlId).parent().hide();
+                    }
+                    else {
+                        $("#" + l.InternalControlId).parent().show();
+                    }
+                }
+                else {
+                    $("#" + l.InternalControlId).show();
+                }
+            }
+
+
+
+            if (l.ControlType == "button") {
+                if (l.Property == 'disable') {
+                    $("#" + l.InternalControlId).attr('disabled', true);
+                }
+                else {
+                    $("#" + l.InternalControlId).attr('disabled', false);
+                }
+            }
+
+        });
+    }
 
 });
 var actiontype = "";
@@ -113,7 +170,7 @@ function fnEditAgeRange(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_10_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EPS_10_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupAgeRange').modal('show');
@@ -126,7 +183,7 @@ function fnEditAgeRange(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_10_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EPS_10_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupAgeRange').modal('show');
@@ -145,7 +202,7 @@ function fnEditAgeRange(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "EPS_10_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+            fnAlert("w", "EPS_10_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupAgeRange').modal('show');
