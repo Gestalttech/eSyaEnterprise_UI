@@ -896,7 +896,17 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
+                //Ternary conditions
+                //int businesskey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+                //businesskey = (businesskey == 0) ? 11 : businesskey;
 
+                //int businesskey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+
+                //// Multiple conditions using ternary operator
+                //businesskey = (businesskey == 0) ? 11
+                //            : (businesskey == 1) ? 22
+                //            : (businesskey == 2) ? 33
+                //            : businesskey;  // Default case if none of the above match
 
                 if (password != confirmPassword)
                 {
