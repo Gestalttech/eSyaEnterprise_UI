@@ -155,14 +155,15 @@ namespace eSyaEnterprise_UI.DataServices
             try
             {
                 string FormId = string.Empty;
+                int userRole = 0;
                 var httpContext = _httpContextAccessor.HttpContext;
                 if (httpContext != null)
                 {
                     FormId = AppSessionVariables.GetSessionFormInternalID(httpContext).ToString();
-
+                    userRole=AppSessionVariables.GetSessionUserRole(httpContext);
 
                 }
-                var param = "?userRole=" + 20002;
+                var param = "?userRole=" + userRole;
                 param += "&forminternalID=" + FormId;
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<FormControlProperty>>("LocalizationResource/GetFormControlPropertybyUserRole" + param);
                 return serviceResponse.Data;

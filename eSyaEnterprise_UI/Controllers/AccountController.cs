@@ -1,4 +1,5 @@
-﻿using eSyaEnterprise_UI.ApplicationCodeTypes;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
@@ -208,10 +209,23 @@ namespace eSyaEnterprise_UI.Controllers
 
                     AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
                     AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, serviceResponse.Data.l_BusinessKey);
+
+                    int userId= AppSessionVariables.GetSessionUserID(HttpContext);
+                    int businesskey= AppSessionVariables.GetSessionBusinessKey(HttpContext);
+
+                    var roleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("UserAccount/GetUserRolebyUserID?userID="+ userId + "&businbessKey="+ businesskey);
+                    if (roleResponse.Status)
+                    {
+                        AppSessionVariables.SetSessionUserRole(HttpContext, roleResponse.Data);
+                    }
+
+                   
                     //
 
 
                     LocationConfirmation(model);
+
+                   
                     if (smspr)
                     {
                         return Json(new { success = true,ActivatedRule="Sms", redirectUrl = "/Home/Index" });

@@ -98,7 +98,16 @@ namespace eSyaEnterprise_UI.Utility
             return (short)(key == null ? 0 : key);
         }
 
+        public static void SetSessionUserRole(HttpContext httpContext, int userRole)
+        {
+            httpContext.Session.SetInt32("UserRole", userRole);
+        }
 
+        public static int GetSessionUserRole(HttpContext httpContext)
+        {
+            var key = httpContext.Session.GetInt32("UserRole");
+            return (short)(key == null ? 0 : key);
+        }
         public static void SetSessionFormID(HttpContext httpContext, int formID)
         {
             httpContext.Session.SetInt32("FormID", formID);
