@@ -13,7 +13,7 @@
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
     $(".context-menu-icon-delete").html("<span class='icon-contextMenu'><i class='fa fa-trash'></i>" + localization.Delete + " </span>");
 
-   
+    console.log(_resourceMaskList);
     if (_resourceMaskList.length > 0) {
         $.each(_resourceMaskList, function (i, l) {
             if (l.ControlType == "text") {
@@ -23,13 +23,13 @@
                 else {
                     $("#" + l.InternalControlId).attr('disabled', false);
                 }
-                if (l.Property == 'mask') {
-                    $("#" + l.InternalControlId).attr('type','password');
-                    
-                }
+                if (l.Property == 'mask' && l.Property != 'disable') {
+                    $("#" + l.InternalControlId).attr('type', 'password');
+                    $("#" + l.InternalControlId).addClass("masked");
+                 }
                 else {
                     $("#" + l.InternalControlId).attr('type', 'text');
-                   
+                    $("#" + l.InternalControlId).removeClass("masked");
                 }
             }
 

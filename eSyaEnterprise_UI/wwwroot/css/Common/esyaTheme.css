@@ -9,8 +9,9 @@
     --menu-hover: #FFF4BF;
     --white: #ffffff;
     --lightgrey: #efefef;
-    --black:#000000;
-    --action-button:#7c7c7c;
+    --black: #000000;
+    --action-button: #7c7c7c;
+    --masked--text: #f0e08e;
 }
 .header nav, #navbarSupportedContent{
     background-color: var(--primary-color);
@@ -120,6 +121,10 @@
         color: red;
         font-size: 22px;
     }
+.form-control.masked {
+    background: linear-gradient(to left, var(--white), var(--masked--text));
+    color: transparent;
+}
 .ui-pg-table{
     color:var(--primary-color) !important;
 }
