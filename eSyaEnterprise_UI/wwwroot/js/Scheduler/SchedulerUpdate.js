@@ -7,7 +7,7 @@
 
         }
     });
-    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + localization.View + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
 });
 
 
@@ -128,12 +128,12 @@ function fnEditDoctordaySchedule(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w","","","your Not Authorized to Edit");
+            fnAlert("w", "ESP_05_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
         $('#PopupDoctordaySchedule').find('.modal-title').text(localization.EditDoctordaySchedule);
-        $("#btnSaveDoctordaySchedule").html('<i class="fa fa-sync"></i>' + localization.Update);
+        $("#btnSaveDoctordaySchedule").html('<i class="fa fa-sync"></i> ' + localization.Update);
         $("#btnSaveDoctordaySchedule").show();
         $("#btndeActiveDoctordaySchedule").hide();
         $("#chkActiveStatus").prop('disabled', true);
@@ -142,7 +142,7 @@ function fnEditDoctordaySchedule(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "", "your Not Authorized to View");
+            fnAlert("w", "ESP_05_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
@@ -161,11 +161,11 @@ function fnEditDoctordaySchedule(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "", "", "your Not Authorized to Delete");
+            fnAlert("w", "ESP_05_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
-        $('#PopupDoctordaySchedule').find('.modal-title').text("Activate/De Activate Doctor Day Schedule");
+        $('#PopupDoctordaySchedule').find('.modal-title').text(localization.ActivateDeactivateDoctorDaySchedule);
         $("#btndeActiveDoctordaySchedule").show();
         $("#btndeActiveDoctordaySchedule").attr("disabled", false);
         $("input,textarea").attr('readonly', true);
@@ -173,10 +173,10 @@ function fnEditDoctordaySchedule(e, actiontype) {
         $("#btnSaveDoctordaySchedule").hide();
 
         if (rowData.ActiveStatus == 'true') {
-            $("#btndeActiveDoctordaySchedule").html(localization.DActivate);
+            $("#btndeActiveDoctordaySchedule").html('<i class="fa fa-ban"></i> ' + localization.Deactivate);
         }
         else {
-            $("#btndeActiveDoctordaySchedule").html(localization.Activate);
+            $("#btndeActiveDoctordaySchedule").html('<i class="fa fa-check"></i> ' + localization.Activate);
         }
 
         $("#chkActiveStatus").prop('disabled', true);
@@ -246,22 +246,22 @@ function fnImportExcel() {
 
 
     if (IsStringNullorEmpty($("#postedFile").val())) {
-        fnAlert("w", "ESP_05_00", "UI0064", "Please Select Excel file");
+        fnAlert("w", "ESP_05_00", "UI0091", errorMsg.SelectExcel_E16);
         return;
         
     }
     if (IsStringNullorEmpty($("#dtfromdate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0064", "Please Select From Date");
+        fnAlert("w", "ESP_05_00", "UI0436", errorMsg.SelectFromDate_E17);
         return;
 
     }
     if (IsStringNullorEmpty($("#dttodate").val())) {
-        fnAlert("w", "ESP_05_00", "UI0064", "Please Select To Date");
+        fnAlert("w", "ESP_05_00", "UI0437", errorMsg.SelectToDate_E18);
         return;
 
     }
     if (IsStringNullorEmpty($("#cboDayScheduledBusinessKey").val()) || $("#cboDayScheduledBusinessKey").val() === '0') {
-        fnAlert("w", "ESP_05_00", "UI0064", "Please Select Location");
+        fnAlert("w", "ESP_05_00", "UI0064", errorMsg.BusinessLocation_E6);
         return;
     }
     $("#btnImportExcel").attr('disabled', true);
