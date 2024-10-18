@@ -9,6 +9,7 @@ using eSyaEnterprise_UI.ApplicationCodeTypes;
 using eSyaEnterprise_UI.Areas.ManageRates.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using eSyaEssentials_UI;
+using Newtonsoft.Json;
 
 namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
 {
@@ -279,6 +280,245 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
                 return Json(new { Status = false, Message = ex.ToString() });
             }
         }
+        #endregion
+
+        #region Manage Email Location-wise
+        [Area("ConfigureEmail")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult EME_03_00()
+        {
+            try
+            {
+                var serviceBusinessResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKeyByEmailIntegration").Result;
+                ViewBag.BusinessKey = serviceBusinessResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.BusinessKey.ToString(),
+                    Text = b.LocationDescription,
+                }).ToList();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        ///Get Form Email Link
+        /// </summary>
+        public JsonResult GetFormForEmaillinking()
+        {
+            try
+            {
+                List<jsTreeObject> treeView = new List<jsTreeObject>();
+
+                string baseURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+
+                jsTreeObject jsObj = new jsTreeObject
+                {
+                    id = "FM",
+                    parent = "#",
+                    text = "eSya Forms",
+                    icon = baseURL + "/images/jsTree/foldergroupicon.png",
+                    state = new stateObject { opened = true, selected = false }
+                };
+                treeView.Add(jsObj);
+
+                var serviceResponse1 = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("CommonData/GetFormDetails").Result;
+                if (serviceResponse1.Status)
+                {
+                    foreach (var fm in serviceResponse1.Data)
+                    {
+                        jsObj = new jsTreeObject
+                        {
+                            id = fm.FormID.ToString(),
+                            text = fm.FormCode.ToString() + '.' + fm.FormName,
+                            icon = baseURL + "/images/jsTree/openfolder.png",
+                            parent = "FM"
+                        };
+                        treeView.Add(jsObj);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse1.Message), "UD:GetFormList");
+                }
+
+                return Json(treeView);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:GetFormList");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///Get Email Information by BusinessKey And FormId
+        /// </summary>
+        public JsonResult GetEmailInformationFormLocationWise(int formId, int businessKey)
+        {
+            try
+            {
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailHeader>>("EmailEngine/GetEmailInformationFormLocationWise?businessKey=" + businessKey + "&formId=" + formId).Result;
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert or Update Email Information Form Location Wise
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertOrUpdateEmailInformationFLW(List<DO_BusinessFormEmailLink> l_obj)
+        {
+            try
+            {
+                if (l_obj.Count == 0)
+                {
+                    return Json(new DO_ReturnParameter() { Status = false, Message = "No Record" });
+                }
+                else
+                {
+                    l_obj.All(c =>
+                    {
+                        c.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                        c.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                        c.FormId1 = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                        return true;
+                    });
+
+                    var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/InsertOrUpdateEmailInformationFLW", l_obj).Result;
+                    if (serviceResponse.Status)
+                        return Json(serviceResponse.Data);
+                    else
+                    {
+                        _logger.LogError(serviceResponse.Message, "UD:InsertOrUpdateEmailInformationFormLocationWise:Params:" + JsonConvert.SerializeObject(l_obj));
+                        return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:InsertOrUpdateEmailInformationFormLocationWise:Params:" + JsonConvert.SerializeObject(l_obj));
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+        #endregion
+
+        #region Email To Whom
+
+        [Area("ConfigureEmail")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult EME_04_00()
+        {
+            try
+            {
+                var serviceFormResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("CommonData/GetFormDetails").Result;
+                ViewBag.FormList = serviceFormResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.FormID.ToString(),
+                    Text = b.FormName,
+                }).ToList();
+
+                var serviceBusinessResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_BusinessLocation>>("CommonData/GetBusinessKey").Result;
+                ViewBag.BusinessLocationList = serviceBusinessResponse.Data.Select(b => new SelectListItem
+                {
+                    Value = b.BusinessKey.ToString(),
+                    Text = b.LocationDescription,
+                }).ToList();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        ///Get Email Header Information by Form Id && Parameter Id
+        /// </summary>
+        public JsonResult GetEmailHeaderForRecipientByFormIdandParamId(int formId, int parameterId)
+        {
+            try
+            {
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailHeader>>("EmailEngine/GetEmailHeaderForRecipientByFormIdandParamId?formId=" + formId + "&parameterId=" + parameterId).Result;
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        ///Get Email Recipient Information by BusinessKey And SMSId
+        /// </summary>
+        public JsonResult GetEmailRecipientByBusinessKeyAndSMSId(int businessKey, string emailTempId)
+        {
+            try
+            {
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailRecipient>>("EmailEngine/GetEmailRecipientByBusinessKeyAndEmailTempId?businessKey=" + businessKey + "&emailTempId=" + emailTempId).Result;
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert Into Email Recipient
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertIntoEmailRecipient(DO_EmailRecipient obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId1 = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/InsertIntoEmailRecipient", obj).Result;
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        /// Update Email Recipient
+        /// </summary>
+        [HttpPost]
+        public JsonResult UpdateEmailRecipient(DO_EmailRecipient obj)
+        {
+            try
+            {
+                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                obj.FormId1 = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/UpdateEmailRecipient", obj).Result;
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+
         #endregion
     }
 }
