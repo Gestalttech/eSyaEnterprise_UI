@@ -6,17 +6,29 @@ $(document).ready(function () {
     fnGridLoadEmptyGridEmailToWhom();
     $.contextMenu({
         // define which elements trigger this menu
-        selector: "#btnSMSToWhom",
+        selector: "#btnEmailToWhom",
         trigger: 'left',
         // define the elements of the menu
         items: {
-            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditSMSRecipient(event, 'edit') } },
-            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditSMSRecipient(event, 'view') } },
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditEmailRecipient(event, 'edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditEmailRecipient(event, 'view') } },
         }
         // there's more, have a look at the demos and docs...
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+
+    $.contextMenu({
+        selector: "#btnEmailRecipient",
+        trigger: 'left',
+         items: {
+             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditEmailRecipient_popup(event, 'edit') } },
+             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditEmailRecipient_popup(event, 'view') } },
+        }
+     });
+    $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
+    $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
+
 });
 function fnOnFormIdChange() {
     fnGridLoadEmailToWhom();
@@ -36,7 +48,7 @@ function fnGridLoadEmptyGridEmailToWhom() {
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline" id="btnSMSToWhom"><i class="fa fa-ellipsis-v"></i></button>'
+                    return '<button class="mr-1 btn btn-outline" id="btnEmailToWhom"><i class="fa fa-ellipsis-v"></i></button>'
                 }
             },
         ],
@@ -55,44 +67,20 @@ function fnGridLoadEmptyGridEmailToWhom() {
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
-        caption: localization.SMSToWhom,
+        caption: localization.EmailToWhom,
         loadComplete: function (data) {
             SetGridControlByAction();
             fnAddGridSerialNoHeading();
             fnJqgridSmallScreen("jqgEmailToWhom");
         },
 
-        onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        },
+       
     }).jqGrid('navGrid', '#jqpEmailToWhom', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpEmailToWhom', {
         caption: '<span class="fa fa-sync btn-pager"></span> Refresh', buttonicon: "none", position: "first", onClickButton: fnGridRefresh
     }).jqGrid('navButtonAdd', '#jqpEmailToWhom', {
-        caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', position: 'first', onClickButton: fnAddSMSRecipient
+        caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', position: 'first', onClickButton: fnAddEmailRecipient
     });
+    fnAddGridSerialNoHeading();
 }
 
 function fnGridLoadEmailToWhom() {
@@ -103,7 +91,7 @@ function fnGridLoadEmailToWhom() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: ["EmailTemp ID","Email Type", "Email Template Description",  localization.Active, localization.Actions], 
+        colNames: [localization.EmailTempID, localization.EmailType, localization.EmailTemplateDescription,  localization.Active, localization.Actions], 
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left' },
             { name: "EmailType", width: 270, editable: false, align: 'left', resizable: true,hidden:true },
@@ -113,7 +101,7 @@ function fnGridLoadEmailToWhom() {
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
                 formatter: function (cellValue, options, rowdata, action) {
-                    return '<button class="mr-1 btn btn-outline" id="btnSMSToWhom"><i class="fa fa-ellipsis-v"></i></button>'
+                    return '<button class="mr-1 btn btn-outline" id="btnEmailToWhom"><i class="fa fa-ellipsis-v"></i></button>'
                 }
             },
         ],
@@ -132,42 +120,17 @@ function fnGridLoadEmailToWhom() {
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
-        caption: localization.SMSToWhom,
+        caption: localization.EmailToWhom,
         loadComplete: function (data) {
             SetGridControlByAction();
             fnAddGridSerialNoHeading(); fnJqgridSmallScreen("jqgEmailToWhom");
         },
-        onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-        },
     }).jqGrid('navGrid', '#jqpEmailToWhom', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpEmailToWhom', {
         caption: '<span class="fa fa-sync btn-pager"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefresh
     }).jqGrid('navButtonAdd', '#jqpEmailToWhom', {
-        caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddSMSRecipient
+        caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddEmailRecipient
     });
+   
 }
 
 function SetGridControlByAction() {
@@ -203,13 +166,20 @@ function fnGridLoadEmailRecipient() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.RecipientName, "Email Tempid", "Email ID", localization.Remarks, localization.Active],
+        colNames: [localization.RecipientName, localization.EmailTempID, localization.EmailID, localization.Remarks, localization.Active, localization.Actions],
         colModel: [
             { name: "RecipientName", width: 165, editable: true, align: 'left' },
             { name: "EmailTempid", width: 150, editable: false, align: 'left', resizable: true },
             { name: "Emailid", width: 150, editable: false, align: 'left', resizable: true },
             { name: "Remarks", width: 195, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 } },
             { name: "ActiveStatus", editable: true, width: 148, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+
+            {
+                name: 'edit', search: false, align: 'left', width: 55, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnEmailRecipient"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
         ],
         pager: "#jqpEmailRecipient",
         rowNum: 10,
@@ -225,37 +195,40 @@ function fnGridLoadEmailRecipient() {
         autowidth: true,
         shrinkToFit: true,
         forceFit: true,
-        scrollOffset: 0, caption: localization.SMSRecipient,
+        scrollOffset: 0, caption: localization.EmailRecipient,
         loadComplete: function (data) {
             fnJqgridSmallScreen("jqgEmailRecipient");
         },
         onSelectRow: function (rowid) {
-            var rRecipientName = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'RecipientName');
-            //var rIsdcode = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Isdcode');
-            var rEmailid = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Emailid');
-            var rRemarks = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Remarks');
-            var rActiveStatus = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'ActiveStatus');
-            if (isUpdate == 1) {
+            //var rRecipientName = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'RecipientName');
+            ////var rIsdcode = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Isdcode');
+            //var rEmailid = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Emailid');
+            //var rRemarks = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Remarks');
+            //var rActiveStatus = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'ActiveStatus');
+            //if (isUpdate == 1) {
 
-                $('#txtRecipientName').val(rRecipientName);
-                $('#txtEmailId').val(rEmailid);
-                $('#txtRemarks').val(rRemarks);
-                if (rActiveStatus === 'true') {
-                    $("#chkActiveStatus").parent().addClass("is-checked");
-                }
-                else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
-            }
+            //    $('#txtRecipientName').val(rRecipientName);
+            //    $('#txtEmailId').val(rEmailid);
+            //    $('#txtRemarks').val(rRemarks);
+            //    if (rActiveStatus === 'true') {
+            //        $("#chkActiveStatus").parent().addClass("is-checked");
+            //    }
+            //    else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
+            //}
         },
-    }).jqGrid('navGrid', '#jqpEmailRecipient', { add: false, edit: false, search: false, del: false, refresh: false });
+    }).jqGrid('navGrid', '#jqpEmailRecipient', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpEmailRecipient', {
+        caption: '<span class="fa fa-plus"></span> Add', buttonicon: "none", id: "custAdd", position: "first", onClickButton: fnAddEmailRecipient_popup
+    });
+    fnAddGridSerialNoHeading();
 }
 
-function fnAddSMSRecipient() {
+function fnAddEmailRecipient() {
     if (IsStringNullorEmpty($("#cboBusinessLocation").val())) {
-        fnAlert("w", "ESE_05_00", "UI0106", errorMsg.BusinessLocationRecipient_E6);
+        fnAlert("w", "EME_04_00", "UI0106", errorMsg.BusinessLocationRecipient_E6);
         return;
     }
     if (IsStringNullorEmpty($("#cboFormId").val())) {
-        fnAlert("w", "ESE_05_00", "UI0108", errorMsg.FormName_E7);
+        fnAlert("w", "EME_04_00", "UI0108", errorMsg.FormName_E7);
         return;
     }
     $('#PopupEmailToWhom').find('.modal-title').text(localization.AddRecipient);
@@ -266,31 +239,78 @@ function fnAddSMSRecipient() {
     isUpdate = 0;
     $('#txtRecipientName').attr('disabled', false);
     $('#txtRemarks').attr('disabled', false);
+    $("#secEmailRecipient").hide();
 }
+
+function fnAddEmailRecipient_popup() {
+    $("#secEmailRecipient").show();
+    $("input,textarea").attr('disabled', false);
+    $("select").next().attr('disabled', false);
+    $("#btnSaveRecipient").show();
+    $("#chkActiveStatus").prop('disabled', false);
+}
+function fnEditEmailRecipient_popup(e, actiontype) {
+    var rowid = $("#jqgEmailRecipient").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgEmailRecipient').jqGrid('getRowData', rowid);
+    $('#txtRecipientName').val(rowData.RecipientName);
+    $('#txtEmailId').val(rowData.Emailid).attr('disabled',true);
+    $('#txtRemarks').val(rowData.Remarks);
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkActiveStatus").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkActiveStatus").parent().removeClass("is-checked");
+    }
+    $("#secEmailRecipient").show();
+
+    if (actiontype.trim() == "edit") {
+        if (_userFormRole.IsEdit === false) {
+            fnAlert("w", "EME_04_00", "UIC02", errorMsg.editauth_E2);
+            return;
+        }
+        $("input,textarea").attr('disabled', false);
+        $("select").next().attr('disabled', false);
+        $("#btnSaveRecipient").show();
+        $("#chkActiveStatus").prop('disabled', false);
+        $('#txtEmailId').attr('disabled', true);
+    }
+
+    if (actiontype.trim() == "view") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "EME_04_00", "UIC03", errorMsg.vieweauth_E3);
+            return;
+        }
+        $("input,textarea").attr('disabled', true);
+        $("select").next().attr('disabled', true);
+        $("#btnSaveRecipient").hide();
+        $("#chkActiveStatus").prop('disabled', true); 
+    }
+}
+
 
 function fnSaveEmailRecipient() {
     if (IsStringNullorEmpty($("#cboBusinessLocation").val())) {
-        fnAlert("w", "ESE_05_00", "UI0106", errorMsg.BusinessLocation_E8);
+        fnAlert("w", "EME_04_00", "UI0106", errorMsg.BusinessLocation_E8);
         return ;
     }
     if (IsStringNullorEmpty($("#cboFormId").val())) {
-        fnAlert("w", "ESE_05_00", "UI0108", errorMsg.FormName_E9);
+        fnAlert("w", "EME_04_00", "UI0108", errorMsg.FormName_E9);
         return ;
     }
     if (IsStringNullorEmpty($("#txtEmailId").val())) {
-        fnAlert("w", "ESE_05_00", "UI0111", "Enter Email ID");
+        fnAlert("w", "EME_04_00", "UI0111", "Enter Email ID");
         return;
     }
     if (IsStringNullorEmpty($("#cboEmailDescription").val())) {
-        fnAlert("w", "ESE_05_00", "UI0109", "Select Email template");
+        fnAlert("w", "EME_04_00", "UI0109", "Select Email template");
         return ;
     }
     if (IsStringNullorEmpty($("#txtRecipientName").val())) {
-        fnAlert("w", "ESE_05_00", "UI0110", errorMsg.RecipientName_E11);
+        fnAlert("w", "EME_04_00", "UI0110", errorMsg.RecipientName_E11);
         return ;
     }
     if (IsStringNullorEmpty($("#txtRemarks").val())) {
-        fnAlert("w", "ESE_05_00", "UI0110", "PLease Enter Remarks");
+        fnAlert("w", "EME_04_00", "UI0110", "PLease Enter Remarks");
         return;
     }
    
@@ -320,6 +340,7 @@ function fnSaveEmailRecipient() {
                     fnGridRefreshEmailRecipient();
                     fnClearFields();
                     isUpdate = 0;
+                    $("#secEmailRecipient").hide();
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
@@ -335,7 +356,7 @@ function fnSaveEmailRecipient() {
     
 }
 
-function fnEditSMSRecipient(e, actiontype) {
+function fnEditEmailRecipient(e, actiontype) {
     //var rowid = $(e.target).parents("tr.jqgrow").attr('id');
     //var rowData = $('#jqgEmailToWhom').jqGrid('getRowData', rowid);
     var rowid = $("#jqgEmailToWhom").jqGrid('getGridParam', 'selrow');

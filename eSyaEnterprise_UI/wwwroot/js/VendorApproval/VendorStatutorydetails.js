@@ -164,15 +164,15 @@ function GetAPVendorStatutoryDetails() {
 
 function fnSaveAPVendorStatutoryDetails() {
     if ($('#txtAPVendorCode').val() == '' || $('#txtAPVendorCode').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0314", "Create Vendor");
+        fnAlert("w", "EVN_02_00", "UI0440", errorMsg.CreateVendor_E7);
         return;
     }
     if ($('#cboAPStatutoryISDCode').val() == '' || $('#cboAPStatutoryISDCode').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0034", "Please Select ISD Code");
+        fnAlert("w", "EVN_02_00", "UI0056", errorMsg.SelectIsdCode_E8);
         return;
     }
     if ($('#cboAPVendorAddress').val() == '' || $('#cboAPVendorAddress').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0034", "Please Select Vendor Location Address");
+        fnAlert("w", "EVN_02_00", "UI0441", errorMsg.VendorAddress_E9);
         return;
     }
     $("#jqgAPVendorProfileStatutoryDetails").jqGrid('editCell', 0, 0, false);

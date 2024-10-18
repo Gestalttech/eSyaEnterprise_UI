@@ -164,15 +164,15 @@ function GetVendorStatutoryDetails() {
 
 function fnSaveVendorStatutoryDetails() {
     if ($('#txtVendorCode').val() == '' || $('#txtVendorCode').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0314", "Create Vendor");
+        fnAlert("w", "EVN_01_00", "UI0440", errorMsg.CreateVendor_E7);
         return;
     }
     if ($('#cboStatutoryISDCode').val() == '' || $('#cboStatutoryISDCode').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0034", "Please Select ISD Code");
+        fnAlert("w", "EVN_01_00", "UI0056", errorMsg.SelectIsdCode_E8);
         return;
     }
     if ($('#cboVendorAddress').val() == '' || $('#cboVendorAddress').val() == '0') {
-        fnAlert("w", "EVN_01_00", "UI0034", "Please Select Vendor Location Address");
+        fnAlert("w", "EVN_01_00", "UI0441", errorMsg.VendorAddress_E9);
         return;
     }
     $("#jqgVendorProfileStatutoryDetails").jqGrid('editCell', 0, 0, false);

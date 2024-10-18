@@ -346,7 +346,7 @@ function fnEditDoctordaySchedule(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "", "your Not Authorized to Edit");
+            fnAlert("w", "ESP_06_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
@@ -360,7 +360,7 @@ function fnEditDoctordaySchedule(e, actiontype) {
 
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "", "your Not Authorized to View");
+            fnAlert("w", "ESP_06_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
@@ -379,7 +379,7 @@ function fnEditDoctordaySchedule(e, actiontype) {
     }
     if (actiontype.trim() == "delete") {
         if (_userFormRole.IsDelete === false) {
-            fnAlert("w", "", "", "your Not Authorized to Delete");
+            fnAlert("w", "ESP_06_00", "UIC04", errorMsg.deleteauth_E4);
             return;
         }
         $('#PopupDoctordaySchedule').modal('show');
@@ -431,24 +431,24 @@ function fnSaveDoctordaySchedule() {
     }
 
     if (IsStringNullorEmpty($("#dtfromdate").val())) {
-        fnAlert("w", "ESP_06_00", "UI0194", "Please Select Schedule Date");
+        fnAlert("w", "ESP_06_00", "UI0436", errorMsg.SelectScheduleFromDate_E16);
         return;
     }
     if (IsStringNullorEmpty($("#txtDoctordayScheduleFromTime").val())) {
-        fnAlert("w", "ESP_06_00", "UI0194", "Please Select Schedule From Time");
+        fnAlert("w", "ESP_06_00", "UI0393", errorMsg.SelectFromTime_E17);
         return;
     }
     if (IsStringNullorEmpty($("#txtDoctordayScheduleToTime").val())) {
-        fnAlert("w", "ESP_06_00", "UI0194", "Please Select Schedule To Time");
+        fnAlert("w", "ESP_06_00", "UI0394", errorMsg.SelectToTime_E18);
         return;
     }
 
     if ($('#txtDoctordayScheduleFromTime').val() >= $('#txtDoctordayScheduleToTime').val()) {
-        fnAlert("w", "ESP_06_00", "UI0194", "From Time can't be more than or equal to To Time.");
+        fnAlert("w", "ESP_06_00", "UI0438", errorMsg.FromTime_E19);
         return;
     }
     if (IsStringNullorEmpty($("#txtNoofPatients").val())) {
-        fnAlert("w", "ESP_06_00", "UI0194", "Please Enter Number of Patients");
+        fnAlert("w", "ESP_06_00", "UI0439", errorMsg.NoOfPatients_E20);
         return;
     }
     //if (IsStringNullorEmpty($("#txtXlSheetReference").val())) {
@@ -561,7 +561,7 @@ function fnDeleteDoctordaySchedule() {
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);
             $("#btndeActiveDoctordaySchedule").attr("disabled", false);
-            $("#btndeActiveDoctordaySchedule").html('De Activate');
+            $("#btndeActiveDoctordaySchedule").html(localization.Deactivate);
         }
     });
 }

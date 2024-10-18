@@ -1,7 +1,7 @@
 ﻿var businesslocation = false;
 var activeTabName = "";
 var IsEdit = '';
-$(document).ready(function () {
+$(function () {
     $("#lblDisplayNames").val('');
     
     $.contextMenu({
@@ -259,7 +259,7 @@ function fnEditVendor(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "EPS_02_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
+            fnAlert("w", "EVN_01_00", "UIC02", errorMsg.UnAuthorised_edit_E1);
             return;
         }
         $("#btnSaveUnitofMeasure").show();
@@ -271,7 +271,7 @@ function fnEditVendor(e, actiontype) {
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "EPS_02_00", "UIC03", errorMsg.UnAuthorised_view_E2);
+            fnAlert("w", "EVN_01_00", "UIC03", errorMsg.UnAuthorised_view_E2);
             return;
         }
         $("#btnSaveUnitofMeasure").hide();
@@ -343,12 +343,12 @@ function IsValidVendor() {
         return false;
     }
     if ($("#cboPayMode").val() == 0 || $("#cboPayMode").val() == "0" || IsStringNullorEmpty($("#cboPayMode").val())) {
-        fnAlert("w", "EVN_01_00", "", "Select Payment Preferred Mode");
+        fnAlert("w", "EVN_01_00", "UI0442", errorMsg.PreferredPaymentMode_E30);
         return false;
     }
 
     if ($("#cboVendorClass").val() == 0 || $("#cboVendorClass").val() == "0" || IsStringNullorEmpty($("#cboVendorClass").val())) {
-        fnAlert("w", "EVN_01_00", " ", "Select Vendor Class");
+        fnAlert("w", "EVN_01_00", "UI0443", errorMsg.SelectVendorClass_E31);
         return false;
     }
 
@@ -424,7 +424,7 @@ function fnEnableVendorRegister(val) {
 function fnDeActivateVendor(e) {
     fnSetSidebar();
     if (_userFormRole.IsDelete === false) {
-        fnAlert("w", "EPS_02_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
+        fnAlert("w", "EVN_01_00", "UIC04", errorMsg.UnAuthorised_delete_E3);
         return;
     }
 

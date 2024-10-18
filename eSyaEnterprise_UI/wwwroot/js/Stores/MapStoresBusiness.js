@@ -70,7 +70,7 @@ function fnGetUserMenuList_Success(dataArray, BusinessKey) {
                     else if (data.node.id.startsWith("ST")) {
 
                         if ($("#cboBusinessLocation").val() <= 0 || $("#cboBusinessLocation").val() === "") {
-                            fnAlert("w", "ECS_04_00", "UI0064", "Please select Location");
+                            fnAlert("w", "ECS_04_00", "UI0064", errorMsg.SelectBusinessLocation_E4);
                             return;
                         }
                         storeID = 0;
