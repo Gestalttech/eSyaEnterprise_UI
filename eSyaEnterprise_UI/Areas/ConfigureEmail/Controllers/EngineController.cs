@@ -459,7 +459,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// <summary>
         ///Get Email Recipient Information by BusinessKey And SMSId
         /// </summary>
-        public JsonResult GetEmailRecipientByBusinessKeyAndSMSId(int businessKey, string emailTempId)
+        public JsonResult GetEmailRecipientByBusinessKeyAndEmailTempId(int businessKey, string emailTempId)
         {
             try
             {

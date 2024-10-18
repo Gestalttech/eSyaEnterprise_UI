@@ -3,9 +3,10 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "ESE_05_00";
+    ViewData["Title"] = "EME_04_00";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @{
     var userFormRole = (eSyaEnterprise_UI.Models.DO_UserFormRole)ViewBag.UserFormRole;
 }
@@ -39,7 +40,7 @@
         SMSRecipient: '@Localizer["SMSRecipient"]',
         OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
         OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
-  };
+    };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
         editauth_E2: '@Localizer["UIC02"]',
@@ -56,8 +57,8 @@
         ISDCode_E13: '@Localizer["UI0056"]',
     }
 </script>
-@section scripts{
-    <script src="~/js/ConfigureSMS/SMSRecipient.js"></script>
+@section scripts {
+    <script src="~/js/ConfigureEmail/EmailRecipient.js"></script>
     <script src="~/js/Common/jquery.contextMenu.min.js"></script>
 }
 
@@ -78,11 +79,11 @@
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 padbot10">
-        <table id="jqgSMSToWhom"></table>
-        <div id="jqpSMSToWhom"></div>
+        <table id="jqgEmailToWhom"></table>
+        <div id="jqpEmailToWhom"></div>
     </div>
 </div>
-<div class="modal fullscreen fade in" id="PopupSMSToWhom" data-bs-keyboard="false" data-bs-backdrop="static">
+<div class="modal fullscreen fade in" id="PopupEmailToWhom" data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg  " role="document" style="box-shadow:none;">
         <div class="modal-content ">
             <div class="modal-header popupHeader">
@@ -99,12 +100,12 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
                             <label>@Localizer["SMSDescription"] </label>
-                            <select class="selectpicker form-control" title="Select" data-live-search="true" id="cboSMSDescription" onchange="fnGridLoadSMSRecipient()"></select>
+                            <select class="selectpicker form-control" title="Select" data-live-search="true" id="cboEmailDescription" onchange="fnGridLoadEmailRecipient()"></select>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                        <table id="jqgSMSRecipient"></table>
-                        <div id="jqpSMSRecipient"></div>
+                        <table id="jqgEmailRecipient"></table>
+                        <div id="jqpEmailRecipient"></div>
                     </div>
 
                 </div>
@@ -112,15 +113,18 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group">
+                                <label for="txtEmailId">@Localizer["EmailID"] </label>
+                                <input id="txtEmailId" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
                                 <label for="txtRecipientName">@Localizer["RecipientName"] </label>
                                 <input id="txtRecipientName" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                             </div>
                         </div>
+
                       
-                        <div class="col-lg-5 col-md-5 col-sm-9 col-12 form-group">
-                            <label>@Localizer["MobileNumber"]</label>
-                            @await Component.InvokeAsync("IsdMobileInput", new { id = "MobileNumber" })
-                        </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label for="txtRemarks">@Localizer["Remarks"] </label>
@@ -143,7 +147,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-lg-12">
-                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveRecipient" onclick="fnSaveSMSRecipient();">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent primary-button" id="btnSaveRecipient" onclick="fnSaveEmailRecipient();">
                             <i class="fa fa-save"></i>@Localizer["Save"]
                         </button>
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  cancel-button cancel-button" data-bs-dismiss="modal" id="btnCancelRecipient" onclick="fnClearFields()"><i class="fa fa-times"></i>@Localizer["Cancel"] </button>
@@ -153,6 +157,7 @@
         </div>
     </div>
 </div>
+
 
 
 
