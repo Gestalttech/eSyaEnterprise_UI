@@ -39,7 +39,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         {
             try
             {
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_SMSTEvent>>("SMSEngine/GetAllSMSTriggerEvents");
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_SMSTEvent>>("Notification/GetAllSMSTriggerEvents");
                 if (serviceResponse.Status)
                 {
                     return Json(serviceResponse.Data);
@@ -70,7 +70,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertIntoSMSTriggerEvent", obj);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Notification/InsertIntoSMSTriggerEvent", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -94,7 +94,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
                 obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/UpdateSMSTriggerEvent", obj);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Notification/UpdateSMSTriggerEvent", obj);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -116,7 +116,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             try
             {
                 var parameter = "?TeventId=" + TeventId;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/DeleteSMSTriggerEvent" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Notification/DeleteSMSTriggerEvent" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else
@@ -139,7 +139,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             {
 
                 var parameter = "?status=" + status + "&TriggerEventId=" + TriggerEventId;
-                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/ActiveOrDeActiveSMSTriggerEvent" + parameter);
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Notification/ActiveOrDeActiveSMSTriggerEvent" + parameter);
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
                 else

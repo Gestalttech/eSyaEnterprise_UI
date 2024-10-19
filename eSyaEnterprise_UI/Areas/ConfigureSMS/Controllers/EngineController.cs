@@ -1,7 +1,7 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
 using eSyaEnterprise_UI.Areas.ConfigureSMS.Data;
 using eSyaEnterprise_UI.Areas.ConfigureSMS.Models;
-using eSyaEnterprise_UI.Areas.ProductSetup.Models;
+//using eSyaEnterprise_UI.Areas.ProductSetup.Models;
 using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
@@ -129,136 +129,136 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         }
         #endregion
 
-        #region SMS Trigger Event
-        [Area("ConfigureSMS")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult ESE_02_00()
-        {
-            return View();
-        }
+        //#region SMS Trigger Event shifted to Product setup
+        //[Area("ConfigureSMS")]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        //public IActionResult ESE_02_00()
+        //{
+        //    return View();
+        //}
 
-        /// <summary>
-        ///Get All SMS Trigger Events
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> GetAllSMSTriggerEvents()
-        {
-            try
-            {
-                var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSTEvent>>("SMSEngine/GetAllSMSTriggerEvents");
-                if (serviceResponse.Status)
-                {
-                    return Json(serviceResponse.Data);
+        ///// <summary>
+        /////Get All SMS Trigger Events
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> GetAllSMSTriggerEvents()
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSTEvent>>("SMSEngine/GetAllSMSTriggerEvents");
+        //        if (serviceResponse.Status)
+        //        {
+        //            return Json(serviceResponse.Data);
 
-                }
-                else
-                {
-                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetAllSMSTriggerEvents");
-                    return Json(new { Status = false, StatusCode = "500" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:GetAllSMSTriggerEvents");
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError(new Exception(serviceResponse.Message), "UD:GetAllSMSTriggerEvents");
+        //            return Json(new { Status = false, StatusCode = "500" });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:GetAllSMSTriggerEvents");
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
 
-        /// <summary>
-        /// Insert Into SMS Trigger Event
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> InsertIntoSMSTriggerEvent(DO_SMSTEvent obj)
-        {
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertIntoSMSTriggerEvent", obj);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:InsertIntoSMSTriggerEvent:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        ///// <summary>
+        ///// Insert Into SMS Trigger Event
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> InsertIntoSMSTriggerEvent(DO_SMSTEvent obj)
+        //{
+        //    try
+        //    {
+        //        obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //        obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //        obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        //        var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertIntoSMSTriggerEvent", obj);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:InsertIntoSMSTriggerEvent:params:" + JsonConvert.SerializeObject(obj));
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
-        /// <summary>
-        /// Update SMS Trigger Event
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> UpdateSMSTriggerEvent(DO_SMSTEvent obj)
-        {
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
-                var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/UpdateSMSTriggerEvent", obj);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:UpdateSMSTriggerEvent:params:" + JsonConvert.SerializeObject(obj));
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        ///// <summary>
+        ///// Update SMS Trigger Event
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> UpdateSMSTriggerEvent(DO_SMSTEvent obj)
+        //{
+        //    try
+        //    {
+        //        obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //        obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //        obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        //        var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/UpdateSMSTriggerEvent", obj);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:UpdateSMSTriggerEvent:params:" + JsonConvert.SerializeObject(obj));
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
-        /// <summary>
-        ///Delete SMS Trigger Event by Trigger Event Id
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> DeleteSMSTriggerEvent(int TeventId)
-        {
-            try
-            {
-                var parameter = "?TeventId=" + TeventId;
-                var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/DeleteSMSTriggerEvent" + parameter);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:DeleteSMSTriggerEvent:For TeventId {0}", TeventId);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-        /// <summary>
-        /// Activate or De Activate SMS Trigger Event
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveSMSTriggerEvent(bool status, int TriggerEventId)
-        {
+        ///// <summary>
+        /////Delete SMS Trigger Event by Trigger Event Id
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> DeleteSMSTriggerEvent(int TeventId)
+        //{
+        //    try
+        //    {
+        //        var parameter = "?TeventId=" + TeventId;
+        //        var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/DeleteSMSTriggerEvent" + parameter);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:DeleteSMSTriggerEvent:For TeventId {0}", TeventId);
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
+        ///// <summary>
+        ///// Activate or De Activate SMS Trigger Event
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> ActiveOrDeActiveSMSTriggerEvent(bool status, int TriggerEventId)
+        //{
 
-            try
-            {
+        //    try
+        //    {
 
-                var parameter = "?status=" + status + "&TriggerEventId=" + TriggerEventId;
-                var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/ActiveOrDeActiveSMSTriggerEvent" + parameter);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //        var parameter = "?status=" + status + "&TriggerEventId=" + TriggerEventId;
+        //        var serviceResponse = await _eSyaSMSAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/ActiveOrDeActiveSMSTriggerEvent" + parameter);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:ActiveOrDeActiveSMSTriggerEvent:For TriggerEventId {0} ", TriggerEventId);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-        #endregion Trigger Event
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:ActiveOrDeActiveSMSTriggerEvent:For TriggerEventId {0} ", TriggerEventId);
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
+        //#endregion Trigger Event
 
         #region SMS Information
         [Area("ConfigureSMS")]
