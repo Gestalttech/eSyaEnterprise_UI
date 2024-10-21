@@ -144,7 +144,8 @@ function SetGridControlByAction() {
 
 function fnFillEmailDescription() {
 
-    if ($('#cboFormId').val() != '' && $('#cboFormId').val() != null) {
+   
+    if ($('#cboFormId').val() != '' || $('#cboFormId').val() != null || $('#cboFormId').val() != '0') {
         $.getJSON(getBaseURL() + '/Engine/GetEmailHeaderForRecipientByFormIdandParamId?formId=' + $('#cboFormId').val() + '&parameterId=5', function (result) {
             var options = $("#cboEmailDescription");
             $("#cboEmailDescription").empty();
@@ -248,6 +249,7 @@ function fnAddEmailRecipient_popup() {
     $("select").next().attr('disabled', false);
     $("#btnSaveRecipient").show();
     $("#chkActiveStatus").prop('disabled', false);
+    isUpdate = 0;
 }
 function fnEditEmailRecipient_popup(e, actiontype) {
     var rowid = $("#jqgEmailRecipient").jqGrid('getGridParam', 'selrow');
@@ -285,6 +287,7 @@ function fnEditEmailRecipient_popup(e, actiontype) {
         $("#btnSaveRecipient").hide();
         $("#chkActiveStatus").prop('disabled', true); 
     }
+    isUpdate = 1;
 }
 
 

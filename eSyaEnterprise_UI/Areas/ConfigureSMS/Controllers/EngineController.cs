@@ -394,7 +394,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
                 sm_sh.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 sm_sh.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
                 sm_sh.Smsid = string.IsNullOrEmpty(sm_sh.Smsid) ? string.Empty : sm_sh.Smsid;
-
+                sm_sh.FormId1= AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 var serviceResponse = _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/InsertIntoSMSHeader", sm_sh).Result;
                 if (serviceResponse.Status)
                     return Json(serviceResponse.Data);
@@ -417,6 +417,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
             {
                 sm_sh.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
                 sm_sh.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                sm_sh.FormId1 = AppSessionVariables.GetSessionFormInternalID(HttpContext);
 
                 var serviceResponse = _eSyaSMSAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("SMSEngine/UpdateSMSHeader", sm_sh).Result;
                 if (serviceResponse.Status)
@@ -457,7 +458,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         /// <summary>
         ///Get Form SMS Link
         /// </summary>
-        public JsonResult GetFormForSMSlinking()
+        public JsonResult GetFormForSMSlinking(int businesskey)
         {
             try
             {
@@ -474,8 +475,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
                     state = new stateObject { opened = true, selected = false }
                 };
                 treeView.Add(jsObj);
-
-                var serviceResponse1 = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormForSMSlinking").Result;
+              
+                var serviceResponse1 = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormDetailsbyBusinessKey?businesskey="+ businesskey).Result;
                 if (serviceResponse1.Status)
                 {
                     foreach (var fm in serviceResponse1.Data)
@@ -568,6 +569,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         {
             try
             {
+                //int businesskey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+                //businesskey = (businesskey == 0) ? 11 : businesskey;
                 var serviceFormResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormDetails").Result;
                 ViewBag.FormList = serviceFormResponse.Data.Select(b => new SelectListItem
                 {

@@ -1,18 +1,23 @@
 ﻿$(function () {
-    fnLoadFormsTree();
+//    fnLoadFormsTree();
 });
 var prevSelectedID = "";
 var FormID = "";
 function fnLoadFormsTree() {
+    $("#pnlLinkedEmail").css('display', 'none');
+
+    $('#jstManageEmailLocation').jstree('destroy');
+
     $.ajax({
         
-        url: getBaseURL() + '/Engine/GetFormForEmaillinking',
+        url: getBaseURL() + '/Engine/GetFormForEmaillinking?businesskey=' + $("#cboBusinessLocation").val(),
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
         async: false,
         success: function (result) {
             $("#jstManageEmailLocation").jstree({ core: { data: result, multiple: false } });
+            fnTreeSize("#jstManageEmailLocation");
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);

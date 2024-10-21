@@ -58,10 +58,11 @@ function fnGridLoadEmailEmptyParameter() {
         datatype: 'local',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.EmailTempID, localization.FormID, localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody,localization.IsAttachmentReqd, localization.Active, localization.Actions],
+        colNames: [localization.EmailTempID, localization.FormID,"TEventID", localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody,localization.IsAttachmentReqd, localization.Active, localization.Actions],
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormId", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "TEventID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "EmailTempDesc", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailSubject", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailBody", width: 170, editable: false, align: 'left', resizable: true },
@@ -110,10 +111,11 @@ function fnGridLoadEmailParameter() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.EmailTempID, localization.FormID, localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody, localization.IsAttachmentReqd, localization.Active, localization.Actions],
+        colNames: [localization.EmailTempID, localization.FormID,"TEventID", localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody, localization.IsAttachmentReqd, localization.Active, localization.Actions],
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormId", width: 70, editable: true, align: 'left', hidden: true },
+            { name: "TeventId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "EmailTempDesc", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailSubject", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailBody", width: 170, editable: false, align: 'left', resizable: true },
@@ -235,9 +237,10 @@ function fnFillEmailInformation() {
 
             if (result != null) {
                 $("#txtEmailTempDesc").val(result.EmailTempDesc);
-
                 $("#cboEmailType").val(result.EmailType);
                 $("#cboEmailType").selectpicker('refresh');
+                $("#cboTriggeringEvent").val(result.TeventId);
+                $("#cboTriggeringEvent").selectpicker('refresh');
 
                 $("#txtEmailSubject").val(result.EmailSubject);
                 //$("#txtEmailBody").val(result.Smsstatement);
@@ -327,6 +330,10 @@ function fnSaveEmailTemplate() {
         fnAlert("w", "EME_02_00", "UI0343", errorMsg.EmailType_E20);
         return false;
     }
+    if ($("#cboTriggeringEvent").val() === 0 || $("#cboTriggeringEvent").val() === "0" || $("#cboTriggeringEvent").val() === null) {
+        fnAlert("w", "EME_02_00", "UI0343", "Please select Trigger Event");
+        return false;
+    }
     if (IsStringNullorEmpty($("#txtEmailSubject").val())) {
         fnAlert("w", "EME_02_00", "UI0103", errorMsg.SMSDesc_E7);
         return false;
@@ -356,6 +363,7 @@ function fnSaveEmailTemplate() {
                 EmailSubject: $("#txtEmailSubject").val(),
                 EmailBody: tinyMCE.get('txtEmailBody').getContent(),//$("#txtEmailBody").val(),
                 IsVariable: $("#chkIsVariable").parent().hasClass("is-checked"),
+                TeventId: $("#cboTriggeringEvent").val(),
                 IsAttachmentReqd: $("#chkIsAttachmentReqd").parent().hasClass("is-checked"),
                 ActiveStatus: $("#chkEMTActiveStatus").parent().hasClass("is-checked"),
                 l_EmailParameter: emailParams
@@ -404,6 +412,7 @@ function fnClearEmailTemplate() {
     $('#chkIsVariable').parent().removeClass("is-checked");
     $('#chkEMTActiveStatus').parent().addClass("is-checked");
     $("#cboEmailType").val('0').selectpicker('refresh');
+    $("#cboTriggeringEvent").val('0').selectpicker('refresh');
     $("#btnSaveEmailTemplate").attr('disabled', false);
 }
 
@@ -417,6 +426,7 @@ function fnEnableTemplateDetail(val) {
     $("input,textarea").attr('readonly', val);
     $("#chkIsVariable").attr('disabled', val);
     $("#chkEMTActiveStatus").attr('disabled', val);
+    $("#cboTriggeringEvent").attr('disabled', val);
 }
 
 

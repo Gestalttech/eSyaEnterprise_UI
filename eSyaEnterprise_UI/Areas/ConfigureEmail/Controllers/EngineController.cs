@@ -128,8 +128,10 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         {
             try
             {
+                var serviceResponse_event = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EMailTEvent>>("EmailEngine/GetTriggerEvent").Result;
+                
                 var serviceResponse = await _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_ApplicationCode>>("CommonData/GetApplicationCodesByCodeType?codetype=" + ApplicationCodeTypeValues.EMailType);
-                if (serviceResponse.Status)
+                if (serviceResponse.Status && serviceResponse_event.Status)
                 {
                     if (serviceResponse.Data != null)
                     {
@@ -139,6 +141,15 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
                             Text = r.CodeDesc,
                         }).ToList();
                     }
+                    if(serviceResponse_event.Data != null)
+                    {
+                        ViewBag.TEvent = serviceResponse_event.Data.Select(b => new SelectListItem
+                        {
+                            Value = b.TEventID.ToString(),
+                            Text = b.TEventDesc,
+                        }).ToList();
+                    }
+                   
                 }
                 else
                 {
@@ -307,7 +318,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         /// <summary>
         ///Get Form Email Link
         /// </summary>
-        public JsonResult GetFormForEmaillinking()
+        public JsonResult GetFormForEmaillinking(int businesskey)
         {
             try
             {
@@ -324,8 +335,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
                     state = new stateObject { opened = true, selected = false }
                 };
                 treeView.Add(jsObj);
-
-                var serviceResponse1 = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("CommonData/GetFormDetails").Result;
+                
+                var serviceResponse1 = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("CommonData/GetFormDetailsbyBusinessKey?businesskey=" + businesskey).Result;
                 if (serviceResponse1.Status)
                 {
                     foreach (var fm in serviceResponse1.Data)
@@ -418,6 +429,9 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
         {
             try
             {
+                //int businesskey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+                //businesskey = (businesskey == 0) ? 11 : businesskey;
+                
                 var serviceFormResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("CommonData/GetFormDetails").Result;
                 ViewBag.FormList = serviceFormResponse.Data.Select(b => new SelectListItem
                 {

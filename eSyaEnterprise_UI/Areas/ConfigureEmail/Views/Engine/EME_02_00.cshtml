@@ -105,8 +105,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label>@Localizer["TriggerEvent"]</label>
-                        <select class="selectpicker" data-live-search="true" id="cboTriggerEvent" title="ChooseTriggerEvent" data-size="8" asp-items="@ViewBag.EmailType_list">
-                            <option value="0">@Localizer["Select"]</option>
+                        <select class="selectpicker" data-live-search="true" id="cboTriggeringEvent" 
+                                asp-items="@ViewBag.TEvent" data-size="8">
+                            <option value="0">Select</option>
                         </select>
                     </div>
                 </div>

@@ -1,18 +1,23 @@
 ﻿$(function () {
-    fnLoadFormsTree();
+//    fnLoadFormsTree();
 });
 var prevSelectedID = "";
 var FormID = "";
 function fnLoadFormsTree() {
+
+    $("#pnlLinkedSMS").css('display', 'none');
+
+    $("#jstManageSMSLocation").jstree('destroy');
+
     $.ajax({
-        
-        url: getBaseURL() + '/Engine/GetFormForSMSlinking',
+        url: getBaseURL() + '/Engine/GetFormForSMSlinking?businesskey=' + $("#cboBusinessLocation").val(),
         type: 'POST',
         datatype: 'json',
         contentType: 'application/json; charset=utf-8',
-        async: false,
-        success: function (result) {
-            $("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
+         success: function (result) {
+           
+             $("#jstManageSMSLocation").jstree({ core: { data: result, multiple: false } });
+             fnTreeSize("#jstManageSMSLocation");
         },
         error: function (error) {
             fnAlert("e", "", error.StatusCode, error.statusText);

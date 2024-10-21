@@ -11,4 +11,11 @@ namespace eSyaEnterprise_UI.Areas.ManageRates.Models
         public int CodeType { get; set; }
         public string CodeDesc { get; set; }
     }
+    public class DO_EMailTEvent
+    {
+        public int TEventID { get; set; }
+        public string TEventDesc { get; set; }
+        public bool ActiveStatus { get; set; }
+
+    }
 }

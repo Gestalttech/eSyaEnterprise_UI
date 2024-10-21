@@ -45,7 +45,7 @@
     <div class="col-lg-4 col-md-4 col-sm-6">
         <div class="form-group">
             <label>@Localizer["BusinessLocation"]</label>
-            <select class="selectpicker form-control" data-live-search="true" id="cboBusinessLocation" data-size="8" title="@Localizer["Select"]" asp-items="@ViewBag.BusinessKey"></select>
+            <select class="selectpicker form-control" data-live-search="true" id="cboBusinessLocation" data-size="8" title="@Localizer["Select"]" asp-items="@ViewBag.BusinessKey" onchange="fnLoadFormsTree()"></select>
         </div>
     </div>
 </div>

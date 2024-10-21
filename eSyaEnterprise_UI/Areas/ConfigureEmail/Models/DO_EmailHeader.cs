@@ -13,6 +13,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Models
         public string EmailSubject { get; set; }
         public string EmailBody { get; set; }
         public bool IsVariable { get; set; }
+        public int TeventId { get; set; }
         public bool IsAttachmentReqd { get; set; }
         public bool ActiveStatus { get; set; }
         public int UserID { get; set; }
