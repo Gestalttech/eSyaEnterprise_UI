@@ -140,7 +140,7 @@ function fnEditUserToUserGroup(e, actiontype) {
         $("#btnSaveUserToUserGroup").show();
         fnEnableInformationDetail(false);
         $("#chkActiveStatus").attr('disabled', false);
-        $("#btnSaveUserToUserGroup").html("<i class='fa fa-sync'></i> " + localization.Save);
+        $("#btnSaveUserToUserGroup").html("<i class='fa fa-sync'></i> " + localization.Update);
     }
     if (actiontype.trim() == "view") {
         if (_userFormRole.IsView === false) {
