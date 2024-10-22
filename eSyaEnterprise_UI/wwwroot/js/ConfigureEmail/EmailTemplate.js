@@ -18,7 +18,7 @@
 });
 
 function fnRadioLoadFormData() {
-    debugger;
+   
     $('#cboEMFormId').selectpicker('refresh');
     var selectedRadio = $("input[name='rdEMform']:checked");
     if (selectedRadio.length > 0) {
@@ -31,7 +31,7 @@ function fnRadioLoadFormData() {
                 success: function (data) {
 
                     $('#cboEMFormId').empty();
-                    $("#cboEMFormId").append($("<option value='0'>Select Form</option>"));
+                    $("#cboEMFormId").append($("<option value='-1'>Select Form</option>"));
 
                     for (var i = 0; i < data.length; i++) {
 
@@ -163,7 +163,7 @@ function SetGridControlByAction() {
 }
 
 function fnAddEmailTemplate() {
-    if ($("#cboEMFormId").val() === "" || $("#cboEMFormId").val() === '' || $("#cboEMFormId").val() === '0') {
+    if ($("#cboEMFormId").val() === "" || $("#cboEMFormId").val() === '' || $("#cboEMFormId").val() === '-1') {
         fnAlert("w", "EME_02_00", "UI0108", errorMsg.FormSelect_E10);
         return;
     }

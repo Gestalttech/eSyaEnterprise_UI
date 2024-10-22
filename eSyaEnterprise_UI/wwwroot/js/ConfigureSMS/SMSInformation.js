@@ -35,7 +35,7 @@ function RadioLoadFormData() {
                 success: function (data) {
 
                     $('#cboFormId').empty();
-                    $("#cboFormId").append($("<option value='0'>Select Form</option>"));
+                    $("#cboFormId").append($("<option value='-1'>Select Form</option>"));
 
                     for (var i = 0; i < data.length; i++) {
 
@@ -181,7 +181,7 @@ function fnIsVariableRequired(elem) {
 }
 
 function fnAddSMSInformation() {
-    if ($("#cboFormId").val() === "" || $("#cboFormId").val() === '' || $("#cboFormId").val() === '0') {
+    if ($("#cboFormId").val() === "" || $("#cboFormId").val() === '' || $("#cboFormId").val() =="-1" ) {
         fnAlert("w", "ESE_03_00", "UI0108", errorMsg.FormSelect_E10);
         return;
     }

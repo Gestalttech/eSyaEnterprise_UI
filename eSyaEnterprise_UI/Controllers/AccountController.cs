@@ -59,6 +59,7 @@ namespace eSyaEnterprise_UI.Controllers
             _passwordStrength = passwordStrength.Value;
             _configuration= configuration;
         }
+        #region common validate user password & getting location
         public async Task<IActionResult> Index()
         {
             try
@@ -695,6 +696,7 @@ namespace eSyaEnterprise_UI.Controllers
         {
             return View();
         }
+        #endregion
 
         #region Getting  and setting the User Location List
         [HttpGet]
