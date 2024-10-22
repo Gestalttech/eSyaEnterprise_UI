@@ -90,7 +90,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                         var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
                         if (sr_SMS.Status)
                         {
-                            return Json(new { Status = true,Message= "Email has sent sucessfully to User" });
+                            return Json(new { Status = true,Message= "SMS has sent sucessfully to User" });
                         }
                         else 
                         {
@@ -114,7 +114,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                         var sr_SMS = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
                         if (sr_SMS.Status)
                         {
-                            return Json(new { Status = true, serviceResponse.Data });
+                            return Json(new { Status = true,  Message = "Email has sent sucessfully to User" });
                         }
                         else
                         {
