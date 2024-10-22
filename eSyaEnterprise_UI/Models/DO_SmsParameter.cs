@@ -50,4 +50,17 @@ namespace eSyaEnterprise_UI.Models
         public string? OTP { get; set; }
         public bool IsUserPasswordInclude { get; set; }
     }
+    
+    public class DO_EmailParameter
+    {
+        public int BusinessKey { get; set; }
+        public int UserID { get; set; }
+        public string? UserName { get; set; }
+        public string? LoginID { get; set; }
+        public int EmailType { get; set; }
+        public int FormID { get; set; }
+        public string? Emailid { get; set; }
+        public int TEventID { get; set; }
+        public string? OTP { get; set; }
+    }
 }

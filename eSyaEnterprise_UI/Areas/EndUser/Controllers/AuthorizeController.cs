@@ -1,4 +1,5 @@
 ﻿using eSyaEnterprise_UI.ActionFilter;
+using eSyaEnterprise_UI.Areas.ConfigureEmail.Data;
 using eSyaEnterprise_UI.Areas.EndUser.Data;
 using eSyaEnterprise_UI.Areas.EndUser.Models;
 using eSyaEnterprise_UI.DataServices;
@@ -18,14 +19,16 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
         private readonly ILogger<AuthorizeController> _logger;
         private readonly ISmsServices _smsServices;
         private readonly IApplicationRulesServices _applicationRulesServices;
+        private readonly IeSyaEmailAPIServices _eSyaEmailAPIServices;
         public AuthorizeController(IeSyaEndUserAPIServices eSyaEndUserAPIServices, IeSyaGatewayServices eSyaGatewayServices, ILogger<AuthorizeController> logger, ISmsServices smsServices,
-            IApplicationRulesServices applicationRulesServices)
+            IeSyaEmailAPIServices eSyaEmailAPIServices, IApplicationRulesServices applicationRulesServices)
         {
             _eSyaEndUserAPIServices = eSyaEndUserAPIServices;
             _eSyaGatewayServices = eSyaGatewayServices;
             _smsServices = smsServices;
             _logger = logger;
             _applicationRulesServices = applicationRulesServices;
+            _eSyaEmailAPIServices = eSyaEmailAPIServices;
         }
         #region Authenticate a new user
         [Area("EndUser")]
@@ -68,22 +71,26 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
 
                 if (serviceResponse.Status)
                 {
-                    DO_SmsParameter smsParams = new DO_SmsParameter
-                    {
-                        BusinessKey = 11,//AppSessionVariables.GetSessionBusinessKey(HttpContext),
-                        TEventID = SMSTriggerEventValues.OnSaveClick,
-                        FormID = AppSessionVariables.GetSessionFormID(HttpContext),
-                        UserID = obj.UserID,
-                    };
-                    int businesskey = 11; //AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                    int BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+                        BusinessKey = (BusinessKey == 0) ? 11 : BusinessKey;
+
+                    int businesskey = BusinessKey; 
                     var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 8, 1);
                     var emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(businesskey, 8, 2);
                     if (smspr)
                     {
+                        DO_SmsParameter smsParams = new DO_SmsParameter
+                        {
+                            BusinessKey = BusinessKey,
+                            TEventID = SMSTriggerEventValues.OnSaveClick,
+                            FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                            UserID = obj.UserID,
+                        };
+
                         var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
                         if (sr_SMS.Status)
                         {
-                            return Json(new { Status = true, serviceResponse.Data });
+                            return Json(new { Status = true,Message= "Email has sent sucessfully to User" });
                         }
                         else 
                         {
@@ -95,7 +102,16 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                     //need to implement after Email configured
                     else if(emailpr)
                     {
-                        var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("EmailSender/SendeSysEmail", smsParams).Result;
+                        DO_EmailParameter emailParams = new DO_EmailParameter
+                        {
+                            BusinessKey = BusinessKey,
+                            TEventID = SMSTriggerEventValues.OnSaveClick,
+                            FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                            UserID = obj.UserID,
+                            EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                        };
+
+                        var sr_SMS = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
                         if (sr_SMS.Status)
                         {
                             return Json(new { Status = true, serviceResponse.Data });

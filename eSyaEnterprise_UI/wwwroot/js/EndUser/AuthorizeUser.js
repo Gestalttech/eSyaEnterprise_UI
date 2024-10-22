@@ -139,7 +139,8 @@ function fnSaveAuthenticateUser() {
         data: { obj },
         success: function (response) {
             if (response.Status) {
-                fnAlert("s", "", response.StatusCode, response.Message);
+                
+                fnAlert("s", "", "", response.Message);
                 $("#btnAuthenticateUser").attr('disabled', false);
                 $('#PopupAuthorizeUser').modal('hide');
                 fnGridLoadUnlockAuthorizeUser("UnAuthentic");
