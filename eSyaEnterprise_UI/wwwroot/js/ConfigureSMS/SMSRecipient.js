@@ -15,6 +15,15 @@ $(document).ready(function () {
         }
         // there's more, have a look at the demos and docs...
     });
+    $.contextMenu({
+        selector: "#btnSMSRecipient",
+        trigger: 'left',
+        items: {
+            jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditSMSRecipient_popup(event, 'edit') } },
+            jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditSMSRecipient_popup(event, 'view') } },
+        }
+    });
+   
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
 });
@@ -70,36 +79,14 @@ function fnGridLoadEmptyGridSMSToWhom() {
         },
 
         onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+          
         },
     }).jqGrid('navGrid', '#jqpSMSToWhom', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpSMSToWhom', {
         caption: '<span class="fa fa-sync btn-pager"></span> Refresh', buttonicon: "none", position: "first", onClickButton: fnGridRefresh
     }).jqGrid('navButtonAdd', '#jqpSMSToWhom', {
         caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', position: 'first', onClickButton: fnAddSMSRecipient
     });
+    fnAddGridSerialNoHeading();
 }
 
 function fnGridLoadSMSToWhom() {
@@ -155,36 +142,14 @@ function fnGridLoadSMSToWhom() {
             fnAddGridSerialNoHeading(); fnJqgridSmallScreen("jqgSMSToWhom");
         },
         onSelectRow: function (rowid, status, e) {
-            var $self = $(this), $target = $(e.target),
-                p = $self.jqGrid("getGridParam"),
-                rowData = $self.jqGrid("getLocalRow", rowid),
-                $td = $target.closest("tr.jqgrow>td"),
-                iCol = $td.length > 0 ? $td[0].cellIndex : -1,
-                cmName = iCol >= 0 ? p.colModel[iCol].name : "";
-
-            switch (cmName) {
-                case "id":
-                    if ($target.hasClass("myedit")) {
-                        alert("edit icon is clicked in the row with rowid=" + rowid);
-                    } else if ($target.hasClass("mydelete")) {
-                        alert("delete icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                case "serial":
-                    if ($target.hasClass("mylink")) {
-                        alert("link icon is clicked in the row with rowid=" + rowid);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+           
         },
     }).jqGrid('navGrid', '#jqpSMSToWhom', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpSMSToWhom', {
         caption: '<span class="fa fa-sync btn-pager"></span> Refresh', buttonicon: "none", id: "custRefresh", position: "first", onClickButton: fnGridRefresh
     }).jqGrid('navButtonAdd', '#jqpSMSToWhom', {
         caption: '<span class="fa fa-plus btn-pager" data-toggle="modal"></span> Add', buttonicon: 'none', id: 'jqgAdd', position: 'first', onClickButton: fnAddSMSRecipient
     });
+    fnAddGridSerialNoHeading();
 }
 
 function SetGridControlByAction() {
@@ -202,7 +167,7 @@ function fnFillSMSDescription() {
         $.getJSON(getBaseURL() + '/Engine/GetSMSHeaderForRecipientByFormIdandParamId?formId=' + $('#cboFormId').val() + '&parameterId=5', function (result) {
             var options = $("#cboSMSDescription");
             $("#cboSMSDescription").empty();
-
+            options.append($("<option />").val('0').text('Select'));
             $.each(result, function () {
                 options.append($("<option />").val(this.Smsid).text(this.Smsdescription));
             });
@@ -219,13 +184,19 @@ function fnGridLoadSMSRecipient() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.RecipientName, localization.ISDCode, localization.MobileNumber, localization.Remarks, localization.Active],
+        colNames: [localization.RecipientName, localization.ISDCode, localization.MobileNumber, localization.Remarks, localization.Active, localization.Actions],
         colModel: [
             { name: "RecipientName", width: 165, editable: true, align: 'left' },
             { name: "Isdcode", width: 150, editable: false, align: 'left', resizable: true },
             { name: "MobileNumber", width: 150, editable: false, align: 'left', resizable: true },
-            { name: "Remarks", width: 195, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 } },
+            { name: "Remarks", width: 195, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 } },
             { name: "ActiveStatus", editable: true, width: 148, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            {
+                name: 'edit', search: false, align: 'left', width: 55, sortable: false, resizable: false,
+                formatter: function (cellValue, options, rowdata, action) {
+                    return '<button class="mr-1 btn btn-outline" id="btnSMSRecipient"><i class="fa fa-ellipsis-v"></i></button>'
+                }
+            },
         ],
         pager: "#jqpSMSRecipient",
         rowNum: 10,
@@ -246,26 +217,12 @@ function fnGridLoadSMSRecipient() {
             fnJqgridSmallScreen("jqgSMSRecipient");
         },
         onSelectRow: function (rowid) {
-            var rRecipientName = $("#jqgSMSRecipient").jqGrid('getCell', rowid, 'RecipientName');
-            var rIsdcode = $("#jqgSMSRecipient").jqGrid('getCell', rowid, 'Isdcode');
-            var rMobileNumber = $("#jqgSMSRecipient").jqGrid('getCell', rowid, 'MobileNumber');
-            var rRemarks = $("#jqgSMSRecipient").jqGrid('getCell', rowid, 'Remarks');
-            var rActiveStatus = $("#jqgSMSRecipient").jqGrid('getCell', rowid, 'ActiveStatus');
-            if (isUpdate == 1) {
-
-                $('#txtRecipientName').val(rRecipientName);
-                $('#cboMobileNumber').val(rIsdcode).selectpicker('refresh');
-                $('#txtMobileNumber').val(rMobileNumber);
-                $('#cboMobileNumber').attr('disabled', true).selectpicker('refresh');
-                $('#txtMobileNumber').attr('disabled', true);
-                $('#txtRemarks').val(rRemarks);
-                if (rActiveStatus === 'true') {
-                    $("#chkActiveStatus").parent().addClass("is-checked");
-                }
-                else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
-            }
+           
         },
-    }).jqGrid('navGrid', '#jqpSMSRecipient', { add: false, edit: false, search: false, del: false, refresh: false });
+    }).jqGrid('navGrid', '#jqpSMSRecipient', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpSMSRecipient', {
+        caption: '<span class="fa fa-plus"></span> Add', buttonicon: "none", id: "custAdd", position: "first", onClickButton: fnAddSMSRecipient_popup
+    });
+    fnAddGridSerialNoHeading();
 }
 
 function fnAddSMSRecipient() {
@@ -278,16 +235,85 @@ function fnAddSMSRecipient() {
         return;
     }
     $('#PopupSMSToWhom').find('.modal-title').text(localization.AddRecipient);
+    $("#secSMSRecipient").hide();
     $("#PopupSMSToWhom").modal("show");
     $('#cboMobileNumber').attr('disabled', false).selectpicker('refresh');
     $('#txtMobileNumber').attr('disabled', false);
-    $("#btnSaveRecipient").show();
+    $("#btnSMSSaveRecipient").show();
     fnGridLoadSMSRecipient();
     isUpdate = 0;
     $('#cboMobileNumber').attr('disabled', false).selectpicker('refresh');
     $('#txtMobileNumber').attr('disabled', false);
 }
 
+
+function fnAddSMSRecipient_popup() {
+    if (IsStringNullorEmpty($("#cboSMSDescription").val()) || $("#cboSMSDescription").val() == "0") {
+        fnAlert("w", "ESE_05_00", "UI0109", errorMsg.SMSDesc_E10);
+        return false;
+    }
+    $('#txtRecipientName').val('');
+    $('#txtMobileNumber').val('');
+    $('#txtRemarks').val('');
+    $("#chkSMSRecActiveStatus").parent().removeClass("is-checked");
+    $("#secSMSRecipient").show();
+    $("input,textarea").attr('disabled', false);
+    $("select").next().attr('disabled', false);
+    $("#btnSMSSaveRecipient").show();
+    $("#chkSMSRecActiveStatus").prop('disabled', false);
+    isUpdate = 0;
+    fnGridRefreshSMSRecipient();
+}
+function fnEditSMSRecipient_popup(e, actiontype) {
+    var rowid = $("#jqgSMSRecipient").jqGrid('getGridParam', 'selrow');
+    var rowData = $('#jqgSMSRecipient').jqGrid('getRowData', rowid);
+
+    $('#txtRecipientName').val(rowData.RecipientName);
+    $('#cboMobileNumber').val(rowData.Isdcode).selectpicker('refresh');
+    $('#txtMobileNumber').val(rowData.MobileNumber);
+    $('#cboMobileNumber').attr('disabled', true).selectpicker('refresh');
+    $('#txtRemarks').val(rowData.Remarks);
+
+    if (rowData.ActiveStatus == 'true') {
+        $("#chkSMSRecActiveStatus").parent().addClass("is-checked");
+    }
+    else {
+        $("#chkSMSRecActiveStatus").parent().removeClass("is-checked");
+    }
+    $("#secSMSRecipient").show();
+
+    if (actiontype.trim() == "edit") {
+        if (_userFormRole.IsEdit === false) {
+            fnAlert("w", "ESE_05_00", "UIC02", errorMsg.editauth_E2);
+            return;
+        }
+        $('#txtRecipientName,#txtRemarks').attr('disabled', false);
+        $("#btnSMSSaveRecipient").show();
+        $("#chkSMSRecActiveStatus").prop('disabled', false);
+        $('#txtMobileNumber').attr('disabled', true);
+    }
+
+    if (actiontype.trim() == "view") {
+        if (_userFormRole.IsView === false) {
+            fnAlert("w", "ESE_05_00", "UIC03", errorMsg.vieweauth_E3);
+            return;
+        }
+        $('#txtRecipientName,#txtRemarks,#txtMobileNumber').attr('disabled', true);
+         $("#btnSMSSaveRecipient").hide();
+        $("#chkSMSRecActiveStatus").prop('disabled', true);
+    }
+    isUpdate = 1;
+}
+$("#PopupSMSToWhom").on('hidden.bs.modal', function () {
+    $("#secSMSRecipient").hide();
+    fnGridRefresh();
+    $('#txtRecipientName').attr('disabled', false);
+    $('#txtEmailId').attr('disabled', false);
+    $('#txtMobileNumber').attr('disabled', false);
+    $("#jqgSMSToWhom").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#cboSMSDescription").val('0').selectpicker('refresh');
+    $("#jqgSMSRecipient").jqGrid('GridUnload');
+});
 function fnSaveSMSRecipient() {
     if (IsStringNullorEmpty($("#cboBusinessLocation").val())) {
         fnAlert("w", "ESE_05_00", "UI0106", errorMsg.BusinessLocation_E8);
@@ -298,7 +324,7 @@ function fnSaveSMSRecipient() {
         return false;
     }
 
-    if (IsStringNullorEmpty($("#cboSMSDescription").val())) {
+    if (IsStringNullorEmpty($("#cboSMSDescription").val()) || $("#cboSMSDescription").val() == "0") {
         fnAlert("w", "ESE_05_00", "UI0109", errorMsg.SMSDesc_E10);
         return false;
     }
@@ -316,7 +342,7 @@ function fnSaveSMSRecipient() {
     }
     else {
 
-        $("#btnSaveRecipient").attr("disabled", true);
+        $("#btnSMSSaveRecipient").attr("disabled", true);
        
         var sm_sr = {
             BusinessKey: $("#cboBusinessLocation").val(),
@@ -325,7 +351,7 @@ function fnSaveSMSRecipient() {
             MobileNumber: $("#txtMobileNumber").val(),
             RecipientName: $("#txtRecipientName").val(),
             Remarks: $("#txtRemarks").val(),
-            ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+            ActiveStatus: $("#chkSMSRecActiveStatus").parent().hasClass("is-checked")
         }
 
         var URL = getBaseURL() + '/Engine/InsertIntoSMSRecipient';
@@ -340,6 +366,7 @@ function fnSaveSMSRecipient() {
             success: function (response) {
                 if (response.Status) {
                     fnAlert("s", "", response.StatusCode, response.Message);
+                    $("#PopupSMSToWhom").modal("hide");
                     fnGridRefreshSMSRecipient();
                     fnClearFields();
                     $('#cboMobileNumber').attr('disabled', false).selectpicker('refresh');
@@ -348,13 +375,13 @@ function fnSaveSMSRecipient() {
                 }
                 else {
                     fnAlert("e", "", response.StatusCode, response.Message);
-                    $("#btnSaveRecipient").attr('disabled', false);
+                    $("#btnSMSSaveRecipient").attr('disabled', false);
                 }
 
             },
             error: function (error) {
                 fnAlert("e", "", error.StatusCode, error.statusText);
-                $("#btnSaveRecipient").attr("disabled", false);
+                $("#btnSMSSaveRecipient").attr("disabled", false);
             }
         });
     }
@@ -372,11 +399,11 @@ function fnEditSMSRecipient(e, actiontype) {
    
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "ESE_05_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $("#PopupSMSToWhom").modal("show");
-        $("#btnSaveRecipient").show();
+        $("#btnSMSSaveRecipient").show();
         $('#PopupSMSToWhom').find('.modal-title').text(localization.EditRecipient);
         fnEnableRecipientDetail(false);
         isUpdate = 1;
@@ -384,12 +411,12 @@ function fnEditSMSRecipient(e, actiontype) {
     if (actiontype.trim() == "view") {
 
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "ESE_05_00", "UIC03", errorMsg.vieweauth_E3);
            
             return;
         }
         $("#PopupSMSToWhom").modal("show");
-        $("#btnSaveRecipient").hide();
+        $("#btnSMSSaveRecipient").hide();
         $('#PopupSMSToWhom').find('.modal-title').text(localization.ViewRecipient);
         fnEnableRecipientDetail(true);
         isUpdate = 1;
@@ -408,8 +435,8 @@ function fnClearFields() {
     $("#txtRecipientName").val('');
     $("#txtMobileNumber").val('');
     $("#txtRemarks").val('');
-    $('#chkActiveStatus').parent().addClass("is-checked");
-    $("#btnSaveRecipient").attr('disabled', false);
+    $('#chkSMSRecActiveStatus').parent().addClass("is-checked");
+    $("#btnSMSSaveRecipient").attr('disabled', false);
     $("#cboSMSDescription").attr('disabled', false);
     $('#cboSMSDescription').selectpicker('refresh');
     fnEnableRecipientDetail(false);
@@ -421,5 +448,5 @@ function fnEnableRecipientDetail(val) {
     $("#txtRecipientName").attr('readonly', val);
     $("#txtMobileNumber").attr('readonly', val);
     $("#txtRemarks").attr('readonly', val);
-    $("#chkActiveStatus").attr('disabled', val);
+    $("#chkSMSRecActiveStatus").attr('disabled', val);
 }

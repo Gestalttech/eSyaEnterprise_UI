@@ -175,7 +175,7 @@
                                                     <div id="dvOTPError"></div>
                                                 </div>
                                                 <div class="form-group animated fadeIn hide" id="divMobileNumber">
-                                                    <label class="lable-color">@Localizer["MobileNumber"]</label>
+                                                    <label>@Localizer["MobileNumber"]</label>
 
                                                     @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobile" })
 
@@ -192,7 +192,7 @@
                                                     <div class="form-group">
                                                         <p class="OTPStatement">@Localizer["OTPGeneratedStatement"]</p>
                                                     </div>
-                                                    <label class="lable-color" style="">@Localizer["OTP"]</label>
+                                                    <label>@Localizer["OTP"]</label>
                                                     <div id="divOuter">
                                                         <div id="divInner">
                                                             <input id="txtOTP" type="text" asp-for="@Model.OTP" autocomplete="off" autoCompleteType="disable" maxlength="6" />
@@ -261,14 +261,14 @@
                         <div class="col-lg-12">
                             <div class="form-group pass_show position-relative">
                                 <label for="txtpassword">@Localizer["NewPassword"]</label>
-                                <input id="txtpassword" class="form-control" maxlength="50" type="password" />
+                                <input id="txtpassword" autocomplete="off" class="form-control" maxlength="50" type="password" />
                                 <a href="#" id="viewNPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group pass_show position-relative">
                                 <label for="txtConfirmPassword">@Localizer["ConfirmPassword"]</label>
-                                <input id="txtConfirmPassword" class="form-control" maxlength="50" type="password" />
+                                <input id="txtConfirmPassword" autocomplete="off" class="form-control" maxlength="50" type="password" />
                                 <a href="#" id="viewCPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
                         </div>
@@ -367,7 +367,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 form-group pass_show position-relative">
                                 <label>@Localizer["EnterYourAnswer"]</label>
-                                <input type="password" id="txtAnswerId_@q" class="form-control seqPassword" maxlength="250" />
+                                <input type="password" autocomplete="off" id="txtAnswerId_@q" class="form-control seqPassword" maxlength="250" />
                                 <a href="#" id="viewAnswer"><i class="fa fa-eye-slash"></i></a>
                             </div>
                             </div>
@@ -422,7 +422,7 @@
                             <p class="small text-muted bgUserTips" id="">@Localizer["Pleaseanswerthefollowingquestionasperyourenrollmentprofiletoresetyourpassword"] </p>
                            
                             <label id="lblFUIDSQuestions">@Localizer["SecurityQuestion"]</label>
-                            <input type="text" id="txtFUIDAnswers" class="form-control" maxlength="50" />
+                            <input type="password" autocomplete="off" id="txtFUIDAnswers" class="form-control" maxlength="50" />
                         </div>
                         
                 </div>
@@ -660,14 +660,14 @@
                         <div class="col-lg-12">
                             <div class="form-group pass_show position-relative">
                                 <label for="txtFPOTPpassword">@Localizer["NewPassword"]</label>
-                                <input id="txtFPOTPpassword" class="form-control" maxlength="50" type="password" />
+                                <input id="txtFPOTPpassword" autocomplete="off" class="form-control" maxlength="50" type="password" />
                                 <a href="#" id="viewFPOTPNPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group pass_show position-relative">
                                 <label for="txtFPOTPConfirmPassword">@Localizer["ConfirmPassword"]</label>
-                                <input id="txtFPOTPConfirmPassword" class="form-control" maxlength="50" type="password" />
+                                <input id="txtFPOTPConfirmPassword" autocomplete="off" class="form-control" maxlength="50" type="password" />
                                 <a href="#" id="viewFPOTPCPPassword"><i class="fa fa-eye-slash"></i></a>
                             </div>
                         </div>
@@ -717,7 +717,7 @@
                             <p class="small text-muted bgUserTips" id="">@Localizer["Pleaseanswerthefollowingquestionasperyourenrollmentprofiletoresetyourpassword"] </p>
 
                             <label id="lblDASQuestions">@Localizer["SecurityQuestion"]</label>
-                            <input type="text" id="txtDAAnswers" class="form-control" maxlength="50" />
+                            <input type="password" autocomplete="off" id="txtDAAnswers" class="form-control" maxlength="50" />
                         </div>
 
                     </div>

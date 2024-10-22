@@ -365,7 +365,7 @@ function fnSaveUserQuestionAnswer() {
                             fnAlert("s", "", "", response.Message);
                             $("#PopupSecretQuestion").modal('hide');
                             fnClearChangePasswordfromLogin();
-
+                            
                         }
                         else {
                             fnAlert("e", "", "", response.Message);

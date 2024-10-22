@@ -222,19 +222,19 @@ function fnGridRefreshHealthCardDetails() {
 
 function fnAddHealthCardDetails() {
     if ($("#cboBusinessKey").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Location");
+        fnAlert("w", "EPM_06_00", "UI0064", errorMsg.BusinessLocation_E11);
         return;
     }
     if ($("#cboPatientTypes").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Type");
+        fnAlert("w", "EPM_06_00", "UI0274", errorMsg.PatientType_E12);
         return;
     }
     if ($("#cboPatientCategory").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Patient Category");
+        fnAlert("w", "EPM_06_00", "UI0275", errorMsg.PatientCategory_E13);
         return;
     }
     if ($("#cboHealthCard").val() == "0") {
-        fnAlert("w", "EPM_05_00", "UIC01", "Please select Health Card");
+        fnAlert("w", "EPM_06_00", "UI0444", errorMsg.HealthCard_E14);
         return;
     }
     fnClearHealthCardDetails();
@@ -419,15 +419,15 @@ function fnSaveHealthCardDetails() {
 
 
     if (IsStringNullorEmpty($("#txtOfferStartDate").val())) {
-        fnAlert("w", "EPM_06_00", "", "Please enter the Offer Start Date");
+        fnAlert("w", "EPM_06_00", "UI0445", errorMsg.Offerstartdate_E15);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCardValidityInMonths").val())) {
-        fnAlert("w", "EPM_06_00", "", "Please enter the Card Validity In Months");
+        fnAlert("w", "EPM_06_00", "UI0446", errorMsg.CardValidityinMonths_E16);
         return false;
     }
     if (IsStringNullorEmpty($("#txtCareCardNoInPatterns").val())) {
-        fnAlert("w", "EPM_06_00", "", "Please enter the  Care CardNo In Patterns");
+        fnAlert("w", "EPM_06_00", "UI0447", errorMsg.CardCardRates_E17);
         return false;
     }
     $("#jqgSpecialtyLink").jqGrid('editCell', 0, 0, false);
@@ -643,16 +643,16 @@ function fnGridRefreshHealthCardRates() {
 function fnSaveCareCardRates() {
 
     if (IsStringNullorEmpty($("#cboCurrencyCode").val()) || $("#cboCurrencyCode").val() == "0") {
-        fnAlert("w", "EAD_04_00", "UI0175", "Please select currency code");
+        fnAlert("w", "EPM_06_00", "UI0022", errorMsg.CurrencyCode_E18);
         return;
     }
     if (IsStringNullorEmpty($("#txtHCREffectiveFrom").val()) || $("#txtHCREffectiveFrom").val() === "0") {
-        fnAlert("w", "EAD_04_00", "UI0068", "Please select Effective From Date");
+        fnAlert("w", "EPM_06_00", "UI0033", errorMsg.EffectiveFromDate_E19);
         return;
     }
     
     if (IsStringNullorEmpty($("#txtCardCharges").val())) {
-        fnAlert("w", "EAD_04_00", "UI0177", "Please Enter Card Charges");
+        fnAlert("w", "EPM_06_00", "UI0448", errorMsg.CareCardRates_E20);
         return;
     }
     

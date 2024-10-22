@@ -372,9 +372,8 @@ function fnSaveFPOTPChangePassword() {
                 $("#txtFPOTPloginUserId").val(response.ID);
 
                 $("#PopupForgotPasswordAfterOTP").modal('hide');
-
                 fnAlert("s", "", "", response.Message);
-
+                window.location.href = getBaseURL() + '/Account/Index';
             }
             else {
                 $("#txtFPOTPpassword").val("");

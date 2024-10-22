@@ -28,6 +28,7 @@
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
         Active: '@Localizer["Active"]',
+        Select: '@Localizer["Select"]',
         Actions: '@Localizer["Actions"]',
         Edit: '@Localizer["Edit"]',
         View: '@Localizer["View"]',
@@ -38,7 +39,7 @@
         Remarks: '@Localizer["Remarks"]',
         ISDCode: '@Localizer["ISDCode"]',
         EmailToWhom: '@Localizer["EmailToWhom"]',
-        SMSRecipient: '@Localizer["SMSRecipient"]',
+        EmailRecipient: '@Localizer["EmailRecipient"]',
         OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
         OnlyAlphanumeric25Characters: '@Localizer["OnlyAlphanumeric25Characters"]',
     };
@@ -56,6 +57,10 @@
         RecipientName_E11: '@Localizer["UI0110"]',
         MobileNumber_E12: '@Localizer["UI0111"]',
         ISDCode_E13: '@Localizer["UI0056"]',
+        EmailID_E14: '@Localizer["UI0139"]',
+        ValidEmailID_E14: '@Localizer["UI0140"]',
+        Emailtemplate_E15: '@Localizer["UI0449"]',
+        EmailRemarks_E16: '@Localizer["UI0450"]',
     }
 </script>
 @section scripts {
@@ -100,7 +105,7 @@
                 <div class="row padbot4">
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="form-group">
-                            <label>@Localizer["SMSDescription"] </label>
+                            <label>@Localizer["EmailDescription"] </label>
                             <select class="selectpicker form-control" title="Select" data-live-search="true" id="cboEmailDescription" onchange="fnGridLoadEmailRecipient()"></select>
                         </div>
                     </div>
@@ -135,8 +140,8 @@
                         <div class="col-lg-2  col-md-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <div class="default-checkbox padbot15">
-                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkActiveStatus">
-                                        <input type="checkbox" id="chkActiveStatus" checked="checked" class="mdl-checkbox__input">
+                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="chkEmailRecActiveStatus">
+                                        <input type="checkbox" id="chkEmailRecActiveStatus" checked="checked" class="mdl-checkbox__input">
                                         <span class="mdl-checkbox__label">@Localizer["Active"] </span>
                                     </label>
                                 </div>

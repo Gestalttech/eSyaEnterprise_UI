@@ -157,6 +157,7 @@ function fnValidateAnswer() {
                 fnAlert("s", "", response.StatusCode, response.Message + localization.YourUserID + response.LoginID);
                 fnCloseQuestionAnswer();
                 $("#PopupGetUserID").modal('hide');
+                window.location.reload();
             }
             else {
                 fnAlert("w", "", response.StatusCode, response.Message);
@@ -190,7 +191,7 @@ function fnForgotUIDValidateOTP() {
             if (result.IsSucceeded) {
                 fnAlert("s", "", "UI0377", result.Message + "Your Login ID has been sent" +" "+ result.LoginID);
                 $("#PopupGetUserID").modal('hide');
-
+               
             } else {
                 fnAlert("w", "", "", result.Message);
             }

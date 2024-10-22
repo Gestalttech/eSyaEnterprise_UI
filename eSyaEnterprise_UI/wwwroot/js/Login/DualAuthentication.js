@@ -183,7 +183,6 @@ function fnDAValidateOTP() {
             if (result.IsSucceeded) {
                 fnAlert("s", "", "UI0377", result.Message);
                 $("#PopupDualAuthentication").modal('hide');
-
                 window.location.href = getBaseURL() + $("#txtDAReturnUrl").val();
 
             } else {

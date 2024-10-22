@@ -149,7 +149,7 @@ function fnFillEmailDescription() {
         $.getJSON(getBaseURL() + '/Engine/GetEmailHeaderForRecipientByFormIdandParamId?formId=' + $('#cboFormId').val() + '&parameterId=5', function (result) {
             var options = $("#cboEmailDescription");
             $("#cboEmailDescription").empty();
-           
+            options.append($("<option />").val('0').text(localization.Select));
             $.each(result, function () {
                 options.append($("<option />").val(this.EmailTempid).text(this.EmailTempDesc));
             });
@@ -172,7 +172,7 @@ function fnGridLoadEmailRecipient() {
             { name: "RecipientName", width: 165, editable: true, align: 'left' },
             { name: "EmailTempid", width: 150, editable: false, align: 'left', resizable: true },
             { name: "Emailid", width: 150, editable: false, align: 'left', resizable: true },
-            { name: "Remarks", width: 195, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 } },
+            { name: "Remarks", width: 195, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 } },
             { name: "ActiveStatus", editable: true, width: 148, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
 
             {
@@ -201,21 +201,7 @@ function fnGridLoadEmailRecipient() {
             fnJqgridSmallScreen("jqgEmailRecipient");
         },
         onSelectRow: function (rowid) {
-            //var rRecipientName = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'RecipientName');
-            ////var rIsdcode = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Isdcode');
-            //var rEmailid = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Emailid');
-            //var rRemarks = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'Remarks');
-            //var rActiveStatus = $("#jqgEmailRecipient").jqGrid('getCell', rowid, 'ActiveStatus');
-            //if (isUpdate == 1) {
-
-            //    $('#txtRecipientName').val(rRecipientName);
-            //    $('#txtEmailId').val(rEmailid);
-            //    $('#txtRemarks').val(rRemarks);
-            //    if (rActiveStatus === 'true') {
-            //        $("#chkActiveStatus").parent().addClass("is-checked");
-            //    }
-            //    else { $("#chkActiveStatus").parent().removeClass("is-checked"); }
-            //}
+           
         },
     }).jqGrid('navGrid', '#jqpEmailRecipient', { add: false, edit: false, search: false, del: false, refresh: false }).jqGrid('navButtonAdd', '#jqpEmailRecipient', {
         caption: '<span class="fa fa-plus"></span> Add', buttonicon: "none", id: "custAdd", position: "first", onClickButton: fnAddEmailRecipient_popup
@@ -242,14 +228,31 @@ function fnAddEmailRecipient() {
     $('#txtRemarks').attr('disabled', false);
     $("#secEmailRecipient").hide();
 }
-
+$("#PopupEmailToWhom").on('hidden.bs.modal', function () {
+    $("#secEmailRecipient").hide();
+    $('#txtRecipientName').attr('disabled', false);
+    $('#txtEmailId').attr('disabled', false);
+    $('#txtRemarks').attr('disabled', false);
+    $("#jqgEmailToWhom").setGridParam({ datatype: 'json', page: 1 }).trigger('reloadGrid');
+    $("#cboEmailDescription").val('0').selectpicker('refresh');
+    $("#jqgEmailRecipient").jqGrid('GridUnload');
+});
 function fnAddEmailRecipient_popup() {
+    if (IsStringNullorEmpty($("#cboEmailDescription").val()) || $("#cboEmailDescription").val() == "0") {
+        fnAlert("w", "EME_04_00", "UI0449", errorMsg.Emailtemplate_E15);
+        return;
+    }
+    $('#txtRecipientName').val('');
+    $('#txtEmailId').val('');
+    $('#txtRemarks').val('');
+    $("#chkEmailRecActiveStatus").parent().removeClass("is-checked");
     $("#secEmailRecipient").show();
     $("input,textarea").attr('disabled', false);
     $("select").next().attr('disabled', false);
     $("#btnSaveRecipient").show();
-    $("#chkActiveStatus").prop('disabled', false);
+    $("#chkEmailRecActiveStatus").prop('disabled', false);
     isUpdate = 0;
+    fnGridRefreshEmailRecipient();
 }
 function fnEditEmailRecipient_popup(e, actiontype) {
     var rowid = $("#jqgEmailRecipient").jqGrid('getGridParam', 'selrow');
@@ -258,10 +261,10 @@ function fnEditEmailRecipient_popup(e, actiontype) {
     $('#txtEmailId').val(rowData.Emailid).attr('disabled',true);
     $('#txtRemarks').val(rowData.Remarks);
     if (rowData.ActiveStatus == 'true') {
-        $("#chkActiveStatus").parent().addClass("is-checked");
+        $("#chkEmailRecActiveStatus").parent().addClass("is-checked");
     }
     else {
-        $("#chkActiveStatus").parent().removeClass("is-checked");
+        $("#chkEmailRecActiveStatus").parent().removeClass("is-checked");
     }
     $("#secEmailRecipient").show();
 
@@ -270,10 +273,9 @@ function fnEditEmailRecipient_popup(e, actiontype) {
             fnAlert("w", "EME_04_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
-        $("input,textarea").attr('disabled', false);
-        $("select").next().attr('disabled', false);
+         
         $("#btnSaveRecipient").show();
-        $("#chkActiveStatus").prop('disabled', false);
+        $("#chkEmailRecActiveStatus").prop('disabled', false);
         $('#txtEmailId').attr('disabled', true);
     }
 
@@ -282,10 +284,12 @@ function fnEditEmailRecipient_popup(e, actiontype) {
             fnAlert("w", "EME_04_00", "UIC03", errorMsg.vieweauth_E3);
             return;
         }
-        $("input,textarea").attr('disabled', true);
-        $("select").next().attr('disabled', true);
+        $('#txtRecipientName').attr('disabled', true);
+        $('#txtEmailId').attr('disabled', true);
+        $('#txtRemarks').attr('disabled', true);
+
         $("#btnSaveRecipient").hide();
-        $("#chkActiveStatus").prop('disabled', true); 
+        $("#chkEmailRecActiveStatus").prop('disabled', true); 
     }
     isUpdate = 1;
 }
@@ -301,11 +305,15 @@ function fnSaveEmailRecipient() {
         return ;
     }
     if (IsStringNullorEmpty($("#txtEmailId").val())) {
-        fnAlert("w", "EME_04_00", "UI0111", "Enter Email ID");
+        fnAlert("w", "EME_04_00", "UI0139", errorMsg.EmailID_E14);
         return;
     }
-    if (IsStringNullorEmpty($("#cboEmailDescription").val())) {
-        fnAlert("w", "EME_04_00", "UI0109", "Select Email template");
+    if (!IsValidateEmail($("#txtEmailId").val())) {
+        fnAlert("w", "EME_04_00", "UI0140", errorMsg.ValidEmailID_E14);
+        return;
+    }
+    if (IsStringNullorEmpty($("#cboEmailDescription").val()) || $("#cboEmailDescription").val() == "0") {
+        fnAlert("w", "EME_04_00", "UI0449", errorMsg.Emailtemplate_E15);
         return ;
     }
     if (IsStringNullorEmpty($("#txtRecipientName").val())) {
@@ -313,7 +321,7 @@ function fnSaveEmailRecipient() {
         return ;
     }
     if (IsStringNullorEmpty($("#txtRemarks").val())) {
-        fnAlert("w", "EME_04_00", "UI0110", "PLease Enter Remarks");
+        fnAlert("w", "EME_04_00", "UI0450", errorMsg.EmailRemarks_E16);
         return;
     }
    
@@ -325,7 +333,7 @@ function fnSaveEmailRecipient() {
             Emailid: $("#txtEmailId").val(),
             RecipientName: $("#txtRecipientName").val(),
             Remarks: $("#txtRemarks").val(),
-            ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
+            ActiveStatus: $("#chkEmailRecActiveStatus").parent().hasClass("is-checked")
         }
 
           var URL = getBaseURL() + '/Engine/InsertIntoEmailRecipient';
@@ -371,7 +379,7 @@ function fnEditEmailRecipient(e, actiontype) {
 
     if (actiontype.trim() == "edit") {
         if (_userFormRole.IsEdit === false) {
-            fnAlert("w", "", "UIC02", errorMsg.editauth_E2);
+            fnAlert("w", "EME_04_00", "UIC02", errorMsg.editauth_E2);
             return;
         }
         $("#PopupEmailToWhom").modal("show");
@@ -383,7 +391,7 @@ function fnEditEmailRecipient(e, actiontype) {
     if (actiontype.trim() == "view") {
 
         if (_userFormRole.IsView === false) {
-            fnAlert("w", "", "UIC03", errorMsg.vieweauth_E3);
+            fnAlert("w", "EME_04_00", "UIC03", errorMsg.vieweauth_E3);
 
             return;
         }
@@ -407,7 +415,7 @@ function fnClearFields() {
     $("#txtRecipientName").val('');
     $("#txtEmailId").val('');
     $("#txtRemarks").val('');
-    $('#chkActiveStatus').parent().addClass("is-checked");
+    $('#chkEmailRecActiveStatus').parent().addClass("is-checked");
     $("#btnSaveRecipient").attr('disabled', false);
     $("#cboEmailDescription").attr('disabled', false);
     $('#cboEmailDescription').selectpicker('refresh');
@@ -418,5 +426,5 @@ function fnEnableRecipientDetail(val) {
     $("#txtRecipientName").attr('readonly', val);
     $("#txtEmailId").attr('readonly', val);
     $("#txtRemarks").attr('readonly', val);
-    $("#chkActiveStatus").attr('disabled', val);
+    $("#chkEmailRecActiveStatus").attr('disabled', val);
 }

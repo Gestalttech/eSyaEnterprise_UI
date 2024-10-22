@@ -323,7 +323,7 @@ function fnSaveEmailTemplate() {
     }
 
     if (IsStringNullorEmpty($("#txtEmailTempDesc").val())) {
-        fnAlert("w", "EME_02_00", "UI0103", errorMsg.SMSDesc_E7);
+        fnAlert("w", "EME_02_00", "UI0452", errorMsg.EmailTempDescType_E20);
         return false;
     }
     if ($("#cboEmailType").val() === 0 || $("#cboEmailType").val() === "0" || $("#cboEmailType").val() === null) {
@@ -331,15 +331,15 @@ function fnSaveEmailTemplate() {
         return false;
     }
     if ($("#cboTriggeringEvent").val() === 0 || $("#cboTriggeringEvent").val() === "0" || $("#cboTriggeringEvent").val() === null) {
-        fnAlert("w", "EME_02_00", "UI0343", "Please select Trigger Event");
+        fnAlert("w", "EME_02_00", "UI0451", errorMsg.TriggerEvent_E11);
         return false;
     }
     if (IsStringNullorEmpty($("#txtEmailSubject").val())) {
-        fnAlert("w", "EME_02_00", "UI0103", errorMsg.SMSDesc_E7);
+        fnAlert("w", "EME_02_00", "UI0453", errorMsg.EmailSubject_E21);
         return false;
     }
     if (IsStringNullorEmpty(tinyMCE.get('txtEmailBody').getContent())) {
-        fnAlert("w", "EME_02_00", "UI0103", errorMsg_ad.SMSDesc_E7);
+        fnAlert("w", "EME_02_00", "UI0454", errorMsg.EmailBody_E22);
         return;
     }
     else {
