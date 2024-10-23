@@ -153,5 +153,14 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             }
         }
         #endregion Trigger Event
+
+        #region Define Notification variables
+        [Area("ProductSetup")]
+        [ServiceFilter(typeof(ViewBagActionFilter))]
+        public IActionResult EPS_23_00()
+        {
+            return View();
+        }
+        #endregion
     }
 }
