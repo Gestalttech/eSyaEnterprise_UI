@@ -14,14 +14,13 @@
     var _userFormRole = JSON.parse('@Html.Raw(Json.Serialize(userFormRole))');
 
     var localization = {
-        AddSMSVariable: '@Localizer["AddSMSVariable"]',
-        SMSVariable: '@Localizer["SMSVariable"]',
-        SMSComponent: '@Localizer["SMSComponent"]',
+        AddNotificationVariable: '@Localizer["AddNotificationVariable"]',
+        NotificationVariable: '@Localizer["NotificationVariable"]',
+        NotificationComponent: '@Localizer["NotificationComponent"]',
         Actions: '@Localizer["Actions"]',
-        AddSMSVariable: '@Localizer["AddSMSVariable"]',
         Save: '@Localizer["Save"]',
         Cancel: '@Localizer["Cancel"]',
-        EditSMSVariable: '@Localizer["EditSMSVariable"]',
+        EditNotificationVariable: '@Localizer["EditNotificationVariable"]',
         Update: '@Localizer["Update"]',
         ViewSMSVariable: '@Localizer["ViewSMSVariable"]',
         Active: '@Localizer["Active"]',
@@ -30,9 +29,10 @@
         Delete: '@Localizer["Delete"]',
         DeActivate: '@Localizer["DeActivate"]',
         Activate: '@Localizer["Activate"]',
-        SMSVariable: '@Localizer["SMSVariable"]',
+        NotificationVariable: '@Localizer["NotificationVariable"]',
         OnlyAlphanumeric50Characters: '@Localizer["OnlyAlphanumeric50Characters"]',
         OnlyAlphanumeric6Characters: '@Localizer["OnlyAlphanumeric6Characters"]',
+        ActiveDeactivateNotificationVariable: '@Localizer["ActiveDeactivateNotificationVariable"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -63,7 +63,7 @@
         <div class="modal-content ">
             <!-- Modal Header -->
             <div class="modal-header popupHeader">
-                <h4 class="modal-title">@Localizer["AddSMSVariable"]</h4>
+                <h4 class="modal-title">@Localizer["AddNotificationVariable"]</h4>
                 <button type="button" class="close ml-auto" data-bs-dismiss="modal"> <i class="fa fa-times"></i></button>
             </div>
 
@@ -71,13 +71,13 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label for="txtSMSVariable">@Localizer["SMSVariable"]</label>
+                            <label for="txtSMSVariable">@Localizer["NotificationVariable"]</label>
                             <input id="txtSMSVariable" class="form-control" maxlength="6" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric6Characters"]' />
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-6 col-sm-6">
                         <div class="form-group">
-                            <label for="txtSMSComponent">@Localizer["SMSComponent"]</label>
+                            <label for="txtSMSComponent">@Localizer["NotificationComponent"]</label>
                             <input id="txtSMSComponent" class="form-control" maxlength="50" type="text" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric50Characters"]' />
                         </div>
                     </div>

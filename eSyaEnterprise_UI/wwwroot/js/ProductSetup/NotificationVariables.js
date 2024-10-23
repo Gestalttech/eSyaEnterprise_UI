@@ -3,16 +3,13 @@ var isUpdate = 0;
 $(function () {
     fnGridLoadSMSVariable();
     $.contextMenu({
-        // define which elements trigger this menu
-        selector: "#btnSMSVariable",
+       selector: "#btnSMSVariable",
         trigger: 'left',
-        // define the elements of the menu
         items: {
             jqgEdit: { name: localization.Edit, icon: "edit", callback: function (key, opt) { fnEditSMSVariable(event, 'edit') } },
             jqgView: { name: localization.View, icon: "view", callback: function (key, opt) { fnEditSMSVariable(event, 'view') } },
             jqgDelete: { name: localization.Delete, icon: "delete", callback: function (key, opt) { fnEditSMSVariable(event, 'delete') } },
         }
-        // there's more, have a look at the demos and docs...
     });
     $(".context-menu-icon-edit").html("<span class='icon-contextMenu'><i class='fa fa-pen'></i> " + localization.Edit + " </span>");
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i> " + localization.View + " </span>");
@@ -27,7 +24,7 @@ function fnGridLoadSMSVariable() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.SMSVariable, localization.SMSComponent, localization.Active, localization.Actions],
+        colNames: [localization.NotificationVariable, localization.NotificationComponent, localization.Active, localization.Actions],
         colModel: [
             { name: "Smsvariable", width: 45, editable: true, align: 'left', editoptions: { maxlength: 4 } },
             { name: "Smscomponent", width: 108, editable: true, align: 'left', editoptions: { maxlength: 4 } },
@@ -54,7 +51,7 @@ function fnGridLoadSMSVariable() {
         shrinkToFit: true,
         forceFit: true,
         scrollOffset: 0,
-        caption: localization.SMSVariable,
+        caption: localization.NotificationVariable,
         loadComplete: function (data) {
             SetGridControlByAction(); fnJqgridSmallScreen("jqgSMSVariable");
         },
@@ -86,7 +83,7 @@ function fnClearFields() {
 function fnAddSMSVariable() {
     fnClearFields();
     $("#PopupSMSVariable").modal('show');
-    $('#PopupSMSVariable').find('.modal-title').text(localization.AddSMSVariable);
+    $('#PopupSMSVariable').find('.modal-title').text(localization.AddNotificationVariable);
     $("#btnCancelSMSVariable").html('<i class="fa fa-times"></i> ' + localization.Cancel);
     $("#txtSMSVariable").attr('readonly', false);
     $("#chkActiveStatus").parent().addClass("is-checked");
@@ -121,7 +118,7 @@ function fnEditSMSVariable(e, actiontype) {
             return;
         }
         $("#PopupSMSVariable").modal('show');
-        $('#PopupSMSVariable').find('.modal-title').text(localization.EditSMSVariable);
+        $('#PopupSMSVariable').find('.modal-title').text(localization.EditNotificationVariable);
         $("#btnCancelSMSVariable").html('<i class="fa fa-times"></i> ' + localization.Cancel);
         $("#chkActiveStatus").prop('disabled', true);
         $("#btnSaveSMSVariable").html('<i class="fa fa-sync"></i>  ' + localization.Update);
@@ -135,7 +132,7 @@ function fnEditSMSVariable(e, actiontype) {
             return;
         }
         $("#PopupSMSVariable").modal('show');
-        $('#PopupSMSVariable').find('.modal-title').text(localization.ViewSMSVariable);
+        $('#PopupSMSVariable').find('.modal-title').text(localization.ViewNotificationVariable);
         $("#btnSaveSMSVariable,#btnDeactivateSMSVariable").hide();
         $("input,textarea").attr('readonly', true);
         $("#chkActiveStatus").attr('disabled', true);
@@ -152,7 +149,7 @@ function fnEditSMSVariable(e, actiontype) {
             return;
         }
         $("#PopupSMSVariable").modal('show');
-        $('#PopupSMSVariable').find('.modal-title').text("Active / De Active SMS Variable");
+        $('#PopupSMSVariable').find('.modal-title').text(localization.ActiveDeactivateNotificationVariable);
         $("#btnSaveSMSVariable").hide();
         $("#btnDeactivateSMSVariable").show();
         $("input,textarea").attr('readonly', true);
