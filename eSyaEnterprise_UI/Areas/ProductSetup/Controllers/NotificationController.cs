@@ -18,6 +18,7 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
             _eSyaProductSetupAPIServices = eSyaProductSetupAPIServices;
             _logger = logger;
         }
+
         #region Notification Trigger Event
         /// <summary>
         /// Notification Trigger Event
@@ -160,6 +161,93 @@ namespace eSyaEnterprise_UI.Areas.ProductSetup.Controllers
         public IActionResult EPS_23_00()
         {
             return View();
+        }
+
+        /// <summary>
+        ///Get SMS Variable Information
+        /// </summary>
+        [HttpPost]
+        public JsonResult GetSMSVariableInformation()
+        {
+            try
+            {
+                var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<List<DO_SMSVariable>>("Notification/GetSMSVariableInformation").Result;
+                return Json(serviceResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Insert Into SMS Variable
+        /// </summary>
+        [HttpPost]
+        public JsonResult InsertIntoSMSVariable(DO_SMSVariable sm_sv)
+        {
+            try
+            {
+                sm_sv.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                sm_sv.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                sm_sv.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Notification/InsertIntoSMSVariable", sm_sv).Result;
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        /// Update SMS Variable
+        /// </summary>
+        [HttpPost]
+        public JsonResult UpdateSMSVariable(DO_SMSVariable sm_sv)
+        {
+            try
+            {
+                sm_sv.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+                sm_sv.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+                sm_sv.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+                var serviceResponse = _eSyaProductSetupAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("Notification/UpdateSMSVariable", sm_sv).Result;
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Status = false, Message = ex.ToString() });
+            }
+        }
+        /// <summary>
+        /// Activate or De Activate SMS Variable
+        /// </summary>
+        [HttpPost]
+        public async Task<JsonResult> ActiveOrDeActiveSMSVariable(bool status, string smsvariable)
+        {
+
+            try
+            {
+
+                var parameter = "?status=" + status + "&smsvariable=" + smsvariable;
+                var serviceResponse = await _eSyaProductSetupAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("Notification/ActiveOrDeActiveSMSVariable" + parameter);
+                if (serviceResponse.Status)
+                    return Json(serviceResponse.Data);
+                else
+                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ActiveOrDeActiveSMSVariable:For smsvariable {0} ", smsvariable);
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
         }
         #endregion
     }
