@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using eSyaEnterprise_UI.ApplicationCodeTypes;
+using eSyaEnterprise_UI.Areas.ConfigureEmail.Data;
 using eSyaEnterprise_UI.DataServices;
 using eSyaEnterprise_UI.Extension;
 using eSyaEnterprise_UI.Models;
@@ -41,6 +42,7 @@ namespace eSyaEnterprise_UI.Controllers
         private readonly IPasswordPolicy _passwordPolicy;
         private readonly DO_PasswordPolicy _passwordStrength;
         private readonly IConfiguration _configuration;
+        private readonly IeSyaEmailAPIServices _eSyaEmailAPIServices;
         public AccountController(SignInManager<ApplicationUser> signinMgr,
              IeSyaGatewayServices eSyaGatewayServices,
              IApplicationRulesServices applicationRulesServices,
@@ -48,7 +50,8 @@ namespace eSyaEnterprise_UI.Controllers
              ILogger<AccountController> logger,
              IPasswordPolicy passwordPolicy,
               IOptions<DO_PasswordPolicy> passwordStrength,
-              IConfiguration configuration)
+              IConfiguration configuration,
+              IeSyaEmailAPIServices eSyaEmailAPIServices)
         {
             signInManager = signinMgr;
             _eSyaGatewayServices = eSyaGatewayServices;
@@ -58,6 +61,7 @@ namespace eSyaEnterprise_UI.Controllers
             _passwordPolicy = passwordPolicy;
             _passwordStrength = passwordStrength.Value;
             _configuration= configuration;
+            _eSyaEmailAPIServices = eSyaEmailAPIServices;
         }
         #region common validate user password & getting location
         public async Task<IActionResult> Index()
@@ -1790,11 +1794,28 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         if (serviceResponse.Data != null)
                         {
-                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                            DO_EmailParameter emailParams = new DO_EmailParameter
+                            {
+                                BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                                TEventID = SMSTriggerEventValues.DualAuthenticationOTP,
+                                FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                UserID = AppSessionVariables.GetSessionUserID(HttpContext),
+                                OTP = serviceResponse.Data.OTP,
+                                EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                            };
 
+                            var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                            if (sr_email.Status)
+                            {
+                                serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                                return Json(serviceResponse.Data);
+                            }
+                            else
+                            {
+                                _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumberDualAuthentication {0}");
+                                return Json(new { Status = false, StatusCode = "500" });
+                            }
                         }
-                        return Json(serviceResponse.Data);
-
                     }
                     else
                     {

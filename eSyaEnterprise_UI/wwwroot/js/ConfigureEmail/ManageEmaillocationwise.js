@@ -68,7 +68,7 @@ function fnGridLoadEmailLocationWise(_FormID) {
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left' },
             { name: "EmailTempDesc", width: 70, editable: false, hidden: false, align: 'left', resizable: true },
-            { name: "FormId", width: 45, editable: true, align: 'center', hidden: false, resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
+            { name: "FormId", width: 45, editable: true, align: 'center', hidden: true, resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: false } },
             ],
         pager: "#jqpEmailLocationWise",
@@ -101,13 +101,14 @@ function fnGridLoadEmailLocationWise(_FormID) {
 }
 
 function fnSaveLinkedEmail() {
+    debugger;
     if ($("#cboBusinessLocation").val().trim().length <= 0) {
         fnAlert("w", "ESE_04_00", "UI0064", errorMsg.SelectBusinessLocation_E5);
         return;
     }
-    if (IsStringNullorEmpty(FormID) || FormID == '0') {
+    if (IsStringNullorEmpty(FormID)) {
 
-        fnAlert("w", "ESE_04_00", "UI0102", errorMsg.SelectForm_E6);
+        fnAlert("w", "ESE_04_00", "UI0102", "Please select form");
         return;
     }
 

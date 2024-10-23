@@ -27,5 +27,6 @@ namespace eSyaEnterprise_UI.Utility
         public const int PreSelfRegistrationOTP = 8;
         public const int TokenKIOSKOTP = 9;
         public const int KIOSKTokenNumbertoPatient = 10;
+        public const int DualAuthenticationOTP = 11;
     }
 }

@@ -290,7 +290,7 @@
                                 <label for="cboInternalForm">@Localizer["InternalFormDetail"] </label>
                                 <div>
                                     <select class="selectpicker" data-live-search="true" id="cboInternalForm" title="" data-size="5" onchange="fnInternalForm_onChanged()">
-                                        <option value="0">@Localizer["ChooseForm"] </option>
+                                        <option value="-1">@Localizer["ChooseForm"] </option>
                                         @if (ViewBag.FormList != null)
                                         {
                                             foreach (var code in ViewBag.FormList)
@@ -944,7 +944,7 @@
             fnAlert("w", "EPS_05_00", "UIC06", errorMsg.SelectOneNode_E7);
         }
         else {
-            if (IsStringNullorEmpty($("#cboInternalForm").val()) || $("#cboInternalForm").val() == '0') {
+            if (IsStringNullorEmpty($("#cboInternalForm").val()) || $("#cboInternalForm").val() == '-1') {
                 fnAlert("w", "EPS_05_00", "UI0009", errorMsg.InternalForm_E10);
                 return false;
             }
@@ -1006,7 +1006,7 @@
     }
 
     function fnClearForm(){
-        $("#cboInternalForm").val('0').selectpicker('refresh'); 
+        $("#cboInternalForm").val('-1').selectpicker('refresh'); 
         $("#txtFormName").val('');
     }
 
@@ -1185,7 +1185,7 @@
         $("#txtSubMenuImageURL").val("");
         $("#chkSubMenuStatus").parent().addClass("is-checked");
 
-        $("#cboInternalForm").val(0);
+        $("#cboInternalForm").val('-1');
         $("#txtFormName").val("");
         $("#chkFormStatus").parent().addClass("is-checked");
 

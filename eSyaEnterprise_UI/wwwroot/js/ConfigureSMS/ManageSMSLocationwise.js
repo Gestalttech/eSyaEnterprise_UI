@@ -108,9 +108,9 @@ function fnSaveLinkedSMS() {
         fnAlert("w", "ESE_04_00", "UI0064", errorMsg.SelectBusinessLocation_E5);
         return;
     }
-    if (IsStringNullorEmpty(FormID) || FormID == '0') {
+    if (IsStringNullorEmpty(FormID)) {
 
-        fnAlert("w", "ESE_04_00", "UI0102", errorMsg.SelectForm_E6);
+        fnAlert("w", "ESE_04_00", "UI0102", "Please select form");
         return;
     }
 
