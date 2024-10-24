@@ -15,6 +15,8 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Models
         public string? TEventDesc { get; set; }
         public string? Tevent { get; set; }
         public string Smsstatement { get; set; }
+        public int SequenceNumber { get; set; }
+        public int MaxSequenceNumber { get; set; }
         public bool ActiveStatus { get; set; }
         public int UserID { get; set; }
         public string FormId1 { get; set; }

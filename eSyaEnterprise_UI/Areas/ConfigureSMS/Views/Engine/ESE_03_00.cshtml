@@ -29,6 +29,7 @@
         Component: '@Localizer["Component"]',
         SMSParameter: '@Localizer["SMSParameter"]',
         SMSVariable: '@Localizer["SMSVariable"]',
+        SequenceNumber: '@Localizer["SequenceNumber"]',
         OnlyAlphanumeric100Characters: '@Localizer["OnlyAlphanumeric100Characters"]',
         OnlyAlphanumeric500Characters: '@Localizer["OnlyAlphanumeric500Characters"]',
     };
@@ -96,7 +97,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="form-group">
                         <label for="txtTriggeringEvent">@Localizer["TriggeringEvent"]</label>
                         @*<input id="txtTriggeringEvent" class="form-control" maxlength="25" type="text" />*@
@@ -104,6 +105,15 @@
                                 asp-items="@ViewBag.TEvent" data-size="8">
                             <option value="0">Select</option>
                         </select>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                    <div class="form-group">
+                        <label>@Localizer["SequenceNumber"]</label>
+
+                        <select class="selectpicker form-control" data-live-search="true" id="cboSMSSequenceNumber"
+                                data-size="8" onchange="" title="Select"></select>
+
                     </div>
                 </div>
                 <div class="col-lg-12">

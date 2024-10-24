@@ -32,6 +32,7 @@
         EmailStatement: '@Localizer["EmailStatement"]',
         IsAttachmentReqd: '@Localizer["IsAttachmentReqd"]',
         TEventID: '@Localizer["TEventID"]',
+        SequenceNumber: '@Localizer["SequenceNumber"]',
     }
 
     var errorMsg = {
@@ -101,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>@Localizer["EmailType"]</label>
                         <select class="selectpicker" data-live-search="true" id="cboEmailType" title="ChooseEmailType" data-size="8" asp-items="@ViewBag.EmailType_list">
@@ -109,7 +110,7 @@
                         </select>
                      </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="form-group">
                         <label>@Localizer["TriggerEvent"]</label>
                         <select class="selectpicker" data-live-search="true" id="cboTriggeringEvent" 
@@ -118,7 +119,15 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="form-group">
+                        <label>@Localizer["SequenceNumber"]</label>
 
+                        <select class="selectpicker form-control" data-live-search="true" id="cboEmailSequenceNumber"
+                                data-size="8" onchange=""></select>
+
+                    </div>
+                </div>
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label for="txtEmailSubject">@Localizer["EmailSubject"] </label>

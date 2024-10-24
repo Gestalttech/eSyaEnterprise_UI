@@ -58,14 +58,16 @@ function fnGridLoadEmailEmptyParameter() {
         datatype: 'local',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.EmailTempID, localization.FormID, localization.TEventID, localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody,localization.IsAttachmentReqd, localization.Active, localization.Actions],
+        colNames: [localization.EmailTempID, localization.FormID, localization.TEventID, localization.EmailTempDescription, localization.EmailSubject,localization.EmailBody, localization.SequenceNumber, localization.IsAttachmentReqd, localization.Active, localization.Actions],
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "TEventID", width: 70, editable: true, align: 'left', hidden: true },
             { name: "EmailTempDesc", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailSubject", width: 70, editable: false, align: 'left', resizable: true },
-            { name: "EmailBody", width: 170, editable: false, align: 'left',hidden:true, resizable: true },
+           
+            { name: "EmailBody", width: 170, editable: false, align: 'left', hidden: true, resizable: true },
+            { name: "SequenceNumber", width: 30, align: 'center', resizable: false, hidden: false },
             { name: "IsAttachmentReqd", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
@@ -111,14 +113,15 @@ function fnGridLoadEmailParameter() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.EmailTempID, localization.FormID, localization.TEventID,  localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody, localization.IsAttachmentReqd, localization.Active, localization.Actions],
+        colNames: [localization.EmailTempID, localization.FormID, localization.TEventID, localization.EmailTempDescription, localization.EmailSubject, localization.EmailBody, localization.SequenceNumber, localization.IsAttachmentReqd, localization.Active, localization.Actions],
         colModel: [
             { name: "EmailTempid", width: 70, editable: true, align: 'left', hidden: true },
             { name: "FormId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "TeventId", width: 70, editable: true, align: 'left', hidden: true },
             { name: "EmailTempDesc", width: 70, editable: false, align: 'left', resizable: true },
             { name: "EmailSubject", width: 70, editable: false, align: 'left', resizable: true },
-            { name: "EmailBody", width: 170, editable: false, hidden:true, align: 'left', resizable: true },
+            { name: "EmailBody", width: 170, editable: false, hidden: true, align: 'left', resizable: true },
+            { name: "SequenceNumber", width: 30, align: 'center', resizable: false, hidden: false },
             { name: "IsAttachmentReqd", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {

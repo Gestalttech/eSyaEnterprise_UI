@@ -61,13 +61,14 @@ function fnGridLoadSMSEmptyParameter() {
         datatype: 'local',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.SMSID, localization.SMSDescription, localization.IsVariable, localization.TriggeringEvent, localization.TriggeringEvent, localization.SMSStatement, localization.Active, localization.Actions],
+        colNames: [localization.SMSID, localization.SMSDescription, localization.IsVariable, localization.TriggeringEvent, localization.TriggeringEvent, localization.SequenceNumber, localization.SMSStatement, localization.Active, localization.Actions],
         colModel: [
             { name: "Smsid", width: 70, editable: true, align: 'left' },
             { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true },
             { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
             { name: "TEventDesc", width: 70, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
+            { name: "SequenceNumber", width: 30, align: 'center', resizable: false, hidden: false },
             { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 }, hidden: true },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
@@ -117,13 +118,14 @@ function fnGridLoadSMSParameter() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.SMSID, localization.SMSDescription, localization.IsVariable, localization.TriggeringEvent, localization.TriggeringEvent, localization.SMSStatement, localization.Active, localization.Actions],
+        colNames: [localization.SMSID, localization.SMSDescription, localization.IsVariable, localization.TriggeringEvent, localization.TriggeringEvent, localization.SequenceNumber, localization.SMSStatement, localization.Active, localization.Actions],
         colModel: [
             { name: "Smsid", width: 70, editable: true, align: 'left' },
             { name: "Smsdescription", width: 70, editable: false, align: 'left', resizable: true },
             { name: "IsVariable", width: 35, editable: true, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             { name: "Tevent", width: 70, align: 'center', resizable: false, editoption: { 'text-align': 'left', maxlength: 25 }, hidden: true },
             { name: "TEventDesc", width: 70, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 } },
+            { name: "SequenceNumber", width: 30, align: 'center', resizable: false, hidden: false },
             { name: "Smsstatement", width: 150, align: 'left', resizable: false, editoption: { 'text-align': 'left', maxlength: 250 }, hidden: true },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
            {
