@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function () {
     $('#cboFormId').selectpicker('refresh');
     RadioLoadFormData();
     $("input[name='rdform']").change(function () {
@@ -339,7 +339,7 @@ function fnSaveSMSinformation() {
         return false;
     }
     if ($("#cboSMSSequenceNumber").val() === "" || $("#cboSMSSequenceNumber").val() === '' || $("#cboSMSSequenceNumber").val() === '0') {
-        fnAlert("w", "ESE_03_00", "UI0104", "Please select Sequence Number");
+        fnAlert("w", "ESE_03_00", "UI0456", errorMsg.SequenceNumber_E11);
         return false;
     }
     else if (IsStringNullorEmpty(($("#txtSMSStatement").val()))) {

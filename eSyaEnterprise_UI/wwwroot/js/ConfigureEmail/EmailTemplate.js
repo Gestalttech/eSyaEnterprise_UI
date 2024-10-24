@@ -339,7 +339,7 @@ function fnSaveEmailTemplate() {
         return false;
     }
     if ($("#cboEmailSequenceNumber").val() === 0 || $("#cboEmailSequenceNumber").val() === "0" || $("#cboEmailSequenceNumber").val() === null) {
-        fnAlert("w", "EME_02_00", "UI0451", "Please select Sequence Number");
+        fnAlert("w", "EME_02_00", "UI0456", errorMsg.SequenceNumber_E23);
         return false;
     }
     if (IsStringNullorEmpty($("#txtEmailSubject").val())) {

@@ -1,6 +1,6 @@
 ﻿var actiontype = "";
 var isUpdate = 0;
-$(document).ready(function () {
+$(function () {
     fnGridLoadSMSVariable();
     $.contextMenu({
         // define which elements trigger this menu
