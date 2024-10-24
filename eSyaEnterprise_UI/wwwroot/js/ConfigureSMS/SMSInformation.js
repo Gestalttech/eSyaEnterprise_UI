@@ -23,6 +23,9 @@
     $(".context-menu-icon-view").html("<span class='icon-contextMenu'><i class='fa fa-eye'></i>" + "View" + " </span>");
 });
 
+
+
+
 function RadioLoadFormData() {
     $('#cboFormId').selectpicker('refresh');
     $("input[name='rdform']").each(function () {
@@ -262,8 +265,9 @@ function fnFillSMSInformation() {
             if (result != null) {
                 $("#txtSMSDescription").val(result.Smsdescription);
                 $("#cboTriggeringEvent").val(result.TEventID).selectpicker('refresh');
+                fnBindSequenceNumber();
+                $("#cboSMSSequenceNumber").val(result.SequenceNumber).selectpicker('refresh');
                 $("#txtSMSStatement").val(result.Smsstatement);
-
                 $('#dvSMSVariable').hide();
                 if (result.IsVariable == true) {
                     $('#chkIsVariable').parent().addClass("is-checked");
@@ -334,6 +338,10 @@ function fnSaveSMSinformation() {
          fnAlert("w", "ESE_03_00", "UI0104", errorMsg.TriggeringEvent_E8);
         return false;
     }
+    if ($("#cboSMSSequenceNumber").val() === "" || $("#cboSMSSequenceNumber").val() === '' || $("#cboSMSSequenceNumber").val() === '0') {
+        fnAlert("w", "ESE_03_00", "UI0104", "Please select Sequence Number");
+        return false;
+    }
     else if (IsStringNullorEmpty(($("#txtSMSStatement").val()))) {
         fnAlert("w", "ESE_03_00", "UI0105", errorMsg.SMSStatement_E9);
         return false;
@@ -358,6 +366,7 @@ function fnSaveSMSinformation() {
                 IsVariable: $("#chkIsVariable").parent().hasClass("is-checked"),
                 TEventID: $("#cboTriggeringEvent").val(),
                 Smsstatement: $("#txtSMSStatement").val(),
+                SequenceNumber: $("#cboSMSSequenceNumber").val(),
                 ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked"),
                 l_SMSParameter: smsParams
             },
@@ -399,6 +408,8 @@ function fnClearFields() {
     $('#hdvSMSId').val('');
     $("#txtSMSDescription").val('');
     $("#cboTriggeringEvent").val(0).selectpicker('refresh');
+    fnBindSequenceNumber();
+    $("#cboSMSSequenceNumber").val(0).selectpicker('refresh');
     $("#txtSMSStatement").val('');
     $('#chkIsVariable').parent().removeClass("is-checked");
     $('#chkActiveStatus').parent().addClass("is-checked");
@@ -415,4 +426,42 @@ function fnEnableInformationDetail(val) {
     $("input,textarea").attr('readonly', val);
     $("#chkIsVariable").attr('disabled', val);
     $("#chkActiveStatus").attr('disabled', val);
+}
+
+function fnBindSequenceNumber() {
+    var triggerevevtId = $("#cboTriggeringEvent").val();
+    $("#cboSMSSequenceNumber").empty();
+    $.ajax({
+        url: getBaseURL() + '/Engine/GetMaxSequenceNumberbyTriggerEventID?TeventID=' + triggerevevtId,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboSMSSequenceNumber").empty();
+
+                $("#cboSMSSequenceNumber").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboSMSSequenceNumber").append($("<option></option>").val(response[i]).html(response[i]));
+                }
+                $('#cboSMSSequenceNumber').selectpicker('refresh');
+
+            }
+            else {
+                $("#cboSMSSequenceNumber").empty();
+                $("#cboSMSSequenceNumber").append($("<option value='0'> Select </option>"));
+                $('#cboSMSSequenceNumber').selectpicker('refresh');
+            }
+
+        },
+        async: false,
+        processData: false
+    });
+
+   
 }

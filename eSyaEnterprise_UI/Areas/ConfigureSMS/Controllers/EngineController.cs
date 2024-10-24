@@ -32,7 +32,7 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
             _logger = logger;
         }
 
-        #region SMS Configure
+        #region SMS Configure need to remove shited to product setup
 
         [Area("ConfigureSMS")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
@@ -260,20 +260,14 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
         //}
         //#endregion Trigger Event
 
-        #region SMS Information
+        #region SMS Template
         [Area("ConfigureSMS")]
         [ServiceFilter(typeof(ViewBagActionFilter))]
         public IActionResult ESE_03_00()
         {
             try
             {
-                //var serviceResponse = _smsAPIServices.HttpClientServices.GetAsync<List<DO_Forms>>("ConfigMasterData/GetFormDetails").Result;
-                //ViewBag.FormList = serviceResponse.Data.Select(b => new SelectListItem
-                //{
-                //    Value = b.FormID.ToString(),
-                //    Text = b.FormName,
-                //}).ToList();
-
+                
                 var serviceResponse_event = _eSyaSMSAPIServices.HttpClientServices.GetAsync<List<DO_SMSTEvent>>("SMSEngine/GetSMSTriggerEvent").Result;
                 ViewBag.TEvent = serviceResponse_event.Data.Select(b => new SelectListItem
                 {
@@ -331,7 +325,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigureSMS.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+        /// <summary>
+        ///Get SMS Header Information
+        /// </summary>
+        [HttpPost]
+        public JsonResult GetMaxSequenceNumberbyTriggerEventID(int TeventID)
+        {
+            try
+            {
+                var serviceResponse = _eSyaSMSAPIServices.HttpClientServices.GetAsync<int>("SMSEngine/GetMaxSequenceNumberbyTriggerEventID?TeventID=" + TeventID).Result;
 
+                int maxSequenceNumber = serviceResponse.Data;
+                List<int> sequenceNumbers = new List<int>();
+
+                for (int i = 1; i <= maxSequenceNumber; i++)
+                {
+                    sequenceNumbers.Add(i);
+                }
+
+                return Json(sequenceNumbers);
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
         /// <summary>
         ///Get SMS Trigger Event
         /// </summary>
