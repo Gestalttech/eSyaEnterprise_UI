@@ -244,7 +244,8 @@ function fnFillEmailInformation() {
                 $("#cboEmailType").selectpicker('refresh');
                 $("#cboTriggeringEvent").val(result.TeventId);
                 $("#cboTriggeringEvent").selectpicker('refresh');
-
+                fnBindEmailSequenceNumber();
+                $("#cboEmailSequenceNumber").val(result.SequenceNumber).selectpicker('refresh');
                 $("#txtEmailSubject").val(result.EmailSubject);
                 //$("#txtEmailBody").val(result.Smsstatement);
 
@@ -337,6 +338,10 @@ function fnSaveEmailTemplate() {
         fnAlert("w", "EME_02_00", "UI0451", errorMsg.TriggerEvent_E11);
         return false;
     }
+    if ($("#cboEmailSequenceNumber").val() === 0 || $("#cboEmailSequenceNumber").val() === "0" || $("#cboEmailSequenceNumber").val() === null) {
+        fnAlert("w", "EME_02_00", "UI0451", "Please select Sequence Number");
+        return false;
+    }
     if (IsStringNullorEmpty($("#txtEmailSubject").val())) {
         fnAlert("w", "EME_02_00", "UI0453", errorMsg.EmailSubject_E21);
         return false;
@@ -368,6 +373,7 @@ function fnSaveEmailTemplate() {
                 IsVariable: $("#chkIsVariable").parent().hasClass("is-checked"),
                 TeventId: $("#cboTriggeringEvent").val(),
                 IsAttachmentReqd: $("#chkIsAttachmentReqd").parent().hasClass("is-checked"),
+                SequenceNumber: $("#cboEmailSequenceNumber").val(),
                 ActiveStatus: $("#chkEMTActiveStatus").parent().hasClass("is-checked"),
                 l_EmailParameter: emailParams
             },
@@ -416,6 +422,8 @@ function fnClearEmailTemplate() {
     $('#chkEMTActiveStatus').parent().addClass("is-checked");
     $("#cboEmailType").val('0').selectpicker('refresh');
     $("#cboTriggeringEvent").val('0').selectpicker('refresh');
+    fnBindEmailSequenceNumber();
+    $("#cboEmailSequenceNumber").val('0').selectpicker('refresh'); 
     $("#btnSaveEmailTemplate").attr('disabled', false);
 }
 
@@ -430,6 +438,7 @@ function fnEnableTemplateDetail(val) {
     $("#chkIsVariable").attr('disabled', val);
     $("#chkEMTActiveStatus").attr('disabled', val);
     $("#cboTriggeringEvent").attr('disabled', val);
+    $("#cboEmailSequenceNumber").attr('disabled', val).selectpicker('refresh');
 }
 
 
@@ -440,4 +449,42 @@ function fnIsVariableRequired(elem) {
     else {
         $('#dvEmailVariable').hide();
     }
+}
+
+function fnBindEmailSequenceNumber() {
+    var triggerevevtId = $("#cboTriggeringEvent").val();
+    $("#cboEmailSequenceNumber").empty();
+    $.ajax({
+        url: getBaseURL() + '/Engine/GetMaxSequenceNumberforEmailbyTriggerEventID?TeventID=' + triggerevevtId,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        error: function (xhr) {
+            fnAlert("e", "", error.StatusCode, error.statusText);
+        },
+        success: function (response, data) {
+            if (response != null) {
+                //refresh each time
+                $("#cboEmailSequenceNumber").empty();
+
+                $("#cboEmailSequenceNumber").append($("<option value='0'> Select </option>"));
+                for (var i = 0; i < response.length; i++) {
+
+                    $("#cboEmailSequenceNumber").append($("<option></option>").val(response[i]).html(response[i]));
+                }
+                $('#cboEmailSequenceNumber').selectpicker('refresh');
+
+            }
+            else {
+                $("#cboEmailSequenceNumber").empty();
+                $("#cboEmailSequenceNumber").append($("<option value='0'> Select </option>"));
+                $('#cboEmailSequenceNumber').selectpicker('refresh');
+            }
+
+        },
+        async: false,
+        processData: false
+    });
+
+
 }

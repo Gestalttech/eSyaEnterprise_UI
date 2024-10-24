@@ -24,102 +24,102 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
             _logger = logger;
         }
 
-        #region Define Email Variable Component
-        [Area("ConfigureEmail")]
-        [ServiceFilter(typeof(ViewBagActionFilter))]
-        public IActionResult EME_01_00()
-        {
-            return View();
-        }
+        //#region Define Email Variable need to remove shifted to product setup
+        //[Area("ConfigureEmail")]
+        //[ServiceFilter(typeof(ViewBagActionFilter))]
+        //public IActionResult EME_01_00()
+        //{
+        //    return View();
+        //}
 
-        /// <summary>
-        ///Get Email Variable Information
-        /// </summary>
-        [HttpPost]
-        public JsonResult GetEmailVariableInformation()
-        {
-            try
-            {
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailVariable>>("EmailEngine/GetEmailVariableInformation").Result;
-                return Json(serviceResponse.Data);
-            }
-            catch (Exception ex)
-            {
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
+        ///// <summary>
+        /////Get Email Variable Information
+        ///// </summary>
+        //[HttpPost]
+        //public JsonResult GetEmailVariableInformation()
+        //{
+        //    try
+        //    {
+        //        var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<List<DO_EmailVariable>>("EmailEngine/GetEmailVariableInformation").Result;
+        //        return Json(serviceResponse.Data);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
 
-        /// <summary>
-        /// Insert Into Email Variable
-        /// </summary>
-        [HttpPost]
-        public JsonResult InsertIntoEmailVariable(DO_EmailVariable obj)
-        {
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        ///// <summary>
+        ///// Insert Into Email Variable
+        ///// </summary>
+        //[HttpPost]
+        //public JsonResult InsertIntoEmailVariable(DO_EmailVariable obj)
+        //{
+        //    try
+        //    {
+        //        obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //        obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //        obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/InsertIntoEmailVariable", obj).Result;
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
+        //        var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/InsertIntoEmailVariable", obj).Result;
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { Status = false, Message = ex.ToString() });
+        //    }
+        //}
 
-        /// <summary>
-        /// Update Email Variable
-        /// </summary>
-        [HttpPost]
-        public JsonResult UpdateEmailVariable(DO_EmailVariable obj)
-        {
-            try
-            {
-                obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
-                obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
-                obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
+        ///// <summary>
+        ///// Update Email Variable
+        ///// </summary>
+        //[HttpPost]
+        //public JsonResult UpdateEmailVariable(DO_EmailVariable obj)
+        //{
+        //    try
+        //    {
+        //        obj.UserID = AppSessionVariables.GetSessionUserID(HttpContext);
+        //        obj.TerminalID = AppSessionVariables.GetIPAddress(HttpContext);
+        //        obj.FormID = AppSessionVariables.GetSessionFormInternalID(HttpContext);
                 
-                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/UpdateEmailVariable", obj).Result;
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { Status = false, Message = ex.ToString() });
-            }
-        }
-        /// <summary>
-        /// Activate or De Activate Email Variable
-        /// </summary>
-        [HttpPost]
-        public async Task<JsonResult> ActiveOrDeActiveEmailVariable(bool status, string Emavariable)
-        {
-            try
-            {
-                var parameter = "?status=" + status + "&smsvariable=" + Emavariable;
+        //        var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_ReturnParameter>("EmailEngine/UpdateEmailVariable", obj).Result;
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { Status = false, Message = ex.ToString() });
+        //    }
+        //}
+        ///// <summary>
+        ///// Activate or De Activate Email Variable
+        ///// </summary>
+        //[HttpPost]
+        //public async Task<JsonResult> ActiveOrDeActiveEmailVariable(bool status, string Emavariable)
+        //{
+        //    try
+        //    {
+        //        var parameter = "?status=" + status + "&smsvariable=" + Emavariable;
                 
-                var serviceResponse = await _eSyaEmailAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/ActiveOrDeActiveEmailVariable" + parameter);
-                if (serviceResponse.Status)
-                    return Json(serviceResponse.Data);
-                else
-                    return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
+        //        var serviceResponse = await _eSyaEmailAPIServices.HttpClientServices.GetAsync<DO_ReturnParameter>("SMSEngine/ActiveOrDeActiveEmailVariable" + parameter);
+        //        if (serviceResponse.Status)
+        //            return Json(serviceResponse.Data);
+        //        else
+        //            return Json(new DO_ReturnParameter() { Status = false, Message = serviceResponse.Message });
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:ActiveOrDeActiveEmailVariable:For smsvariable {0} ", Emavariable);
-                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
-            }
-        }
-        #endregion
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "UD:ActiveOrDeActiveEmailVariable:For smsvariable {0} ", Emavariable);
+        //        return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+        //    }
+        //}
+        //#endregion
 
         #region Define Email Template
         [Area("ConfigureEmail")]
@@ -226,7 +226,33 @@ namespace eSyaEnterprise_UI.Areas.ConfigureEmail.Controllers
                 return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
             }
         }
+        /// <summary>
+        ///Get SMS Header Information
+        /// </summary>
+        [HttpPost]
+        public JsonResult GetMaxSequenceNumberforEmailbyTriggerEventID(int TeventID)
+        {
+            try
+            {
+                var serviceResponse = _eSyaEmailAPIServices.HttpClientServices.GetAsync<int>("EmailEngine/GetMaxSequenceNumberforEmailbyTriggerEventID?TeventID=" + TeventID).Result;
 
+                int maxSequenceNumber = serviceResponse.Data;
+                List<int> sequenceNumbers = new List<int>();
+
+                for (int i = 1; i <= maxSequenceNumber; i++)
+                {
+                    sequenceNumbers.Add(i);
+                }
+
+                return Json(sequenceNumbers);
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new DO_ReturnParameter() { Status = false, Message = (ex.InnerException != null) ? ex.InnerException.Message : ex.Message });
+            }
+        }
         /// <summary>
         ///Get Active Email Variable Information
         /// </summary>

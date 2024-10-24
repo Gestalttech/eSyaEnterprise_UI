@@ -426,6 +426,8 @@ function fnEnableInformationDetail(val) {
     $("input,textarea").attr('readonly', val);
     $("#chkIsVariable").attr('disabled', val);
     $("#chkActiveStatus").attr('disabled', val);
+    $("#cboSMSSequenceNumber").attr('disabled', val).selectpicker('refresh');
+    
 }
 
 function fnBindSequenceNumber() {
