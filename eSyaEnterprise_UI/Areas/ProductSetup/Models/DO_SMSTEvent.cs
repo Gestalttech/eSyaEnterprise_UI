@@ -4,6 +4,8 @@
     {
         public int TEventID { get; set; }
         public string TEventDesc { get; set; }
+        public int MaxSequenceNumber { get; set; }
+
         public bool ActiveStatus { get; set; }
         public int UserID { get; set; }
         public string TerminalID { get; set; }

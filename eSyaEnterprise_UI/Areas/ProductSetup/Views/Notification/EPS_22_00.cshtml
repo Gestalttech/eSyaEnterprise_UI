@@ -35,6 +35,7 @@
         SMSTriggerEvent: '@Localizer["SMSTriggerEvent"]',
         OnlyAlphanumeric150Characters: '@Localizer["OnlyAlphanumeric150Characters"]',
         OnlyNumeric: '@Localizer["OnlyNumeric"]',
+        MaxSequenceNumber: '@Localizer["MaxSequenceNumber"]',
     };
     var errorMsg = {
         addauth_E1: '@Localizer["UIC01"]',
@@ -44,6 +45,7 @@
         actDeact_E5: '@Localizer["UIC05"]',
         TriggerEvent_E6: '@Localizer["UI0100"]',
         TriggerEventDesc_E7: '@Localizer["UI0101"]',
+        MaxSequenceNumber_E8: '@Localizer["UI0455"]',
     }
 </script>
 @section scripts {
@@ -83,6 +85,10 @@
                             <label for="txtTriggerEventdesc">@Localizer["TriggerEventDescription"]</label>
                             <textarea id="txtTriggerEventdesc" class="form-control" maxlength="150" rows="4" cols="50" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyAlphanumeric150Characters"]'></textarea>
                         </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                        <label for="txtMaxSequenceNumber">@Localizer["MaxSequenceNumber"]</label>
+                        <input id="txtMaxSequenceNumber" class="form-control numberonly" type="text" oninput="fnAllowNumbersOnly(this)" maxlength="3" data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title='@Localizer["OnlyNumeric"]' />
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">

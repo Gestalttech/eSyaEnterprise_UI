@@ -25,10 +25,11 @@ function fnGridLoadTriggerEvent() {
         mtype: 'Post',
         ajaxGridOptions: { contentType: 'application/json; charset=utf-8' },
         jsonReader: { repeatitems: false, root: "rows", page: "page", total: "total", records: "records" },
-        colNames: [localization.TriggerEventId, localization.TriggerEventDescription, localization.Active, localization.Actions],
+        colNames: [localization.TriggerEventId, localization.TriggerEventDescription, localization.MaxSequenceNumber, localization.Active, localization.Actions],
         colModel: [
             { name: "TEventID", width: 45, editable: true, align: 'left', editoptions: { maxlength: 8 } },
             { name: "TEventDesc", width: 108, editable: true, align: 'left', editoptions: { maxlength: 150 } },
+            { name: "MaxSequenceNumber", width: 48, editable: true, align: 'left', editoptions: { maxlength: 150 } },
             { name: "ActiveStatus", editable: true, width: 48, align: 'center', resizable: false, edittype: "checkbox", formatter: 'checkbox', editoptions: { value: "true:false" }, formatoptions: { disabled: true } },
             {
                 name: 'edit', search: false, align: 'left', width: 35, sortable: false, resizable: false,
@@ -77,6 +78,7 @@ function fnGridRefreshTriggerEvent() {
 
 function fnClearFields() {
     $("#txtTriggerEventId").val('');
+    $("#txtMaxSequenceNumber").val('');
     $("#txtTriggerEventdesc").val('');
     $('#chkActiveStatus').parent().addClass("is-checked");
     $("#btnSaveTriggerEvent").attr('disabled', false);
@@ -89,6 +91,7 @@ function fnAddTriggerEvent() {
     $("#btnSaveTriggerEvent").html('<i class="fa fa-save"></i> ' + localization.Save);
     $("#btnCancelTriggerEvent").html('<i class="fa fa-times"></i> ' + localization.Cancel);
     $("#txtTriggerEventId").attr('readonly', false);
+    $("#txtMaxSequenceNumber").attr('readonly', false);
     isUpdate = 0;
     $("#chkActiveStatus").parent().addClass("is-checked");
     $("#chkActiveStatus").attr('disabled', true);
@@ -104,6 +107,7 @@ function fnEditTriggerEvent(e, actiontype) {
     var rowData = $('#jqgSMSTriggerEvent').jqGrid('getRowData', rowid);
     $('#txtTriggerEventId').val(rowData.TEventID).attr('readonly', true);
     $('#txtTriggerEventdesc').val(rowData.TEventDesc);
+    $('#txtMaxSequenceNumber').val(rowData.MaxSequenceNumber);
     if (rowData.ActiveStatus === 'true') {
         $("#chkActiveStatus").parent().addClass("is-checked");
         $("#btnDeactivateTriggerEvent").html(localization.DeActivate);
@@ -173,10 +177,14 @@ function fnSaveTriggerEvent() {
         fnAlert("w", "ESE_02_00", "UI0101", errorMsg.TriggerEventDesc_E7);
         return false;
     }
-
+    if (IsStringNullorEmpty($("#txtMaxSequenceNumber").val())) {
+        fnAlert("w", "ESE_02_00", "UI0455", errorMsg.MaxSequenceNumber_E8);
+        return false;
+    }
     var obj = {
         TEventID: $("#txtTriggerEventId").val(),
         TEventDesc: $("#txtTriggerEventdesc").val(),
+        MaxSequenceNumber: $("#txtMaxSequenceNumber").val(),
         ActiveStatus: $("#chkActiveStatus").parent().hasClass("is-checked")
     }
 

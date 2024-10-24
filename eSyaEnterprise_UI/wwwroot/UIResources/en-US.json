@@ -453,6 +453,7 @@
   "UI0452": "Please enter the email template description",
   "UI0453": "Please enter the email subject",
   "UI0454": "Please enter the email body",
+  "UI0455": "Please enter the max sequence number",
 
 
   "UIC01": "You are not Authorized to Add",
