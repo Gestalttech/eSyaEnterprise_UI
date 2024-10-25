@@ -34,7 +34,8 @@ function fnAlert(_messageType, _messageTitle, _messageCode, _messageContent) {
         (_msgtype = "w") ? _msgtypecapitalize = "Warning" : ((_msgtype = "e") ? _msgtypecapitalize = "Error" : _msgtypecapitalize = "Success");
      }
         _msgtype = (_messageType == "w") ? "warning" : (_messageType == "e") ? "error" : "success";
-  
+
+     _msgtypecapitalize = (_msgtype[0].toUpperCase() + _msgtype.slice(1));
     
     var _msgtitle = (_messageTitle == "") ? "" : " - " + _messageTitle;
     var _msgcode = (_messageCode == "") ? "" : _messageCode;
