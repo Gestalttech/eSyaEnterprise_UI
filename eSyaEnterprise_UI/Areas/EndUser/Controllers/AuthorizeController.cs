@@ -109,6 +109,7 @@ namespace eSyaEnterprise_UI.Areas.EndUser.Controllers
                             FormID = AppSessionVariables.GetSessionFormID(HttpContext),
                             UserID = obj.UserID,
                             EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                            SequenceNumber = CommonVariables.StandardSequenceNumber,
                         };
 
                         var sr_SMS = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;

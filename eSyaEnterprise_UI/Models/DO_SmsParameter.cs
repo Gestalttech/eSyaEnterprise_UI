@@ -62,5 +62,6 @@ namespace eSyaEnterprise_UI.Models
         public string? Emailid { get; set; }
         public int TEventID { get; set; }
         public string? OTP { get; set; }
+        public int SequenceNumber { get; set; }
     }
 }

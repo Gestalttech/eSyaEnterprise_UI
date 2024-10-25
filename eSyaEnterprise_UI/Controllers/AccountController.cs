@@ -1802,6 +1802,7 @@ namespace eSyaEnterprise_UI.Controllers
                                 UserID = AppSessionVariables.GetSessionUserID(HttpContext),
                                 OTP = serviceResponse.Data.OTP,
                                 EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                SequenceNumber= CommonVariables.StandardSequenceNumber,
                             };
 
                             var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
