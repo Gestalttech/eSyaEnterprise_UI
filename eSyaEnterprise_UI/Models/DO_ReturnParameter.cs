@@ -15,5 +15,6 @@ namespace eSyaEnterprise_UI.Models
         public string ErrorCode { get; set; }
         public decimal ID { get; set; }
         public string Key { get; set; }
+        public int BusinessKey { get; set; }
     }
 }

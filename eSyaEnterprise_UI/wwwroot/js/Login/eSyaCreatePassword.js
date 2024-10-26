@@ -142,7 +142,9 @@ function fncheckPasswordWithLoginID() {
           
             $("#lblcreatepasswordmessage").html('');
             if (response.Status) {
+                debugger;
                 if (response.StatusCode === "1") {
+                   
                     //$("#lblLogInID").text("Welcome "+response.Key);
                     $("#txtloginUserId").val(response.ID);
                     $("#lblcreatepasswordmessage").html(response.ErrorCode + "" + response.Message);

@@ -181,7 +181,8 @@ function fnCloseQuestionAnswer() {
 
 function fnForgotUIDValidateOTP() {
     $.ajax({
-        url: getBaseURL() + '/Account/ValidateUserbyOTP',
+        //url: getBaseURL() + '/Account/ValidateUserbyOTP',
+        url: getBaseURL() + '/Account/ValidateForgotUserIDbyOTP',
         type: 'GET',
         datatype: 'json',
         data: { mobileNo: $("#txtForgotUIDOTPMobileNo").val(), otp: $("#txtForgotUIDOTP").val(), expirytime: _TimerDuration/60 },
@@ -189,7 +190,7 @@ function fnForgotUIDValidateOTP() {
         success: function (result) {
             
             if (result.IsSucceeded) {
-                fnAlert("s", "", "UI0377", result.Message + "Your Login ID has been sent" +" "+ result.LoginID);
+                fnAlert("s", "", "UI0377", result.Message + "Your Login ID has been sent" + " " + result.Password);
                 $("#PopupGetUserID").modal('hide');
                
             } else {

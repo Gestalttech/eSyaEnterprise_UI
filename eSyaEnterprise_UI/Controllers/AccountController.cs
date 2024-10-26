@@ -841,52 +841,95 @@ namespace eSyaEnterprise_UI.Controllers
         {
             try
             {
-                //SMS Rule is true
 
-                var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 1);
-                if (smspr)
+                var parameter = "?loginId=" + loginId;
+
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
+                if (serviceResponse.Status)
                 {
-                    var parameter = "?loginId=" + loginId;
-
-                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
-                    if (serviceResponse.Status)
+                    if (serviceResponse.Data.StatusCode == "0")
                     {
-                        if (serviceResponse.Data != null)
-                        {
-                            serviceResponse.Data.ErrorCode = "Please enter the OTP that has been sent to your mobile number:<span class='bold'>" + serviceResponse.Data.ErrorCode + "</span>";
-                            serviceResponse.Data.Message = string.Empty;
-                        }
                         return Json(serviceResponse.Data);
-
                     }
                     else
                     {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
-                        return Json(new { Status = false, StatusCode = "500" });
-                    }
-                }
-                var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 2);
-                if (Emailpr)
-                {
-                    var parameter = "?loginId=" + loginId;
-
-                    var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/ChkIsCreatePasswordInNextSignIn" + parameter);
-                    if (serviceResponse.Status)
-                    {
-                        if (serviceResponse.Data != null)
+                        //SMS Rule is true
+                        var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 1);
+                        if (smspr)
                         {
-                            serviceResponse.Data.Message = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + serviceResponse.Data.Message + "</span>";
-                            serviceResponse.Data.ErrorCode = string.Empty;
-                        }
-                        return Json(serviceResponse.Data);
+                            var para = "?loginId=" + loginId;
 
-                    }
-                    else
-                    {
-                        _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
-                        return Json(new { Status = false, StatusCode = "500" });
+                            var smsserviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/OTPCreatePasswordInNextSignIn" + para);
+                            if (smsserviceResponse.Status)
+                            {
+                                if (smsserviceResponse.Data != null)
+                                {
+                                    smsserviceResponse.Data.ErrorCode = "Please enter the OTP that has been sent to your mobile number:<span class='bold'>" + smsserviceResponse.Data.ErrorCode + "</span>";
+                                    smsserviceResponse.Data.Message = string.Empty;
+                                }
+                                return Json(smsserviceResponse.Data);
+
+                            }
+                            else
+                            {
+                                _logger.LogError(new Exception(smsserviceResponse.Message), "UD:OTPCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                                return Json(new { Status = false, StatusCode = "500" });
+                            }
+                        }
+                        //Email Rule is true
+
+                        var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(1, 2);
+                        if (Emailpr)
+                        {
+                            var param = "?loginId=" + loginId;
+
+                            var emailserviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_ReturnParameter>("UserAccount/OTPCreatePasswordInNextSignIn" + param);
+                            if (emailserviceResponse.Status)
+                            {
+                                if (emailserviceResponse.Data != null)
+                                {
+
+                                    DO_EmailParameter emailParams = new DO_EmailParameter
+                                    {
+                                        BusinessKey = emailserviceResponse.Data.BusinessKey,
+                                        TEventID = SMSTriggerEventValues.FirstTimeLoginOTP,
+                                        FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                        UserID = Convert.ToInt32(emailserviceResponse.Data.ID),
+                                        OTP = emailserviceResponse.Data.Key,
+                                        EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                        SequenceNumber = CommonVariables.StandardSequenceNumber,
+                                    };
+                                    var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                                    if (sr_email.Status)
+                                    {
+                                        emailserviceResponse.Data.Message = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + emailserviceResponse.Data.Message + "</span>";
+                                        emailserviceResponse.Data.ErrorCode = string.Empty;
+                                        return Json(emailserviceResponse.Data);
+                                    }
+                                    else
+                                    {
+                                        _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysEmail {0}");
+                                        return Json(new { Status = false, StatusCode = "500" });
+                                    }
+                                }
+
+
+                            }
+                            else
+                            {
+                                _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                                return Json(new { Status = false, StatusCode = "500" });
+                            }
+                        }
                     }
                 }
+
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ChkIsCreatePasswordInNextSignIn:For UserID {0} with loginID entered {1}", loginId);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+               
                 return Json(new DO_ReturnParameter() { Status = false, Message = "No Rule has been set for Send OTP for first login" });
 
             }
@@ -1085,10 +1128,33 @@ namespace eSyaEnterprise_UI.Controllers
                     var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/GetOTPbyMobileNumber" + emailparameter);
                     if (serviceResponse.Status)
                     {
+                       
                         if (serviceResponse.Data != null)
                         {
-                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
-
+                            if (serviceResponse.Data.UserID != 0)
+                            {
+                                DO_EmailParameter emailParams = new DO_EmailParameter
+                                {
+                                    BusinessKey = serviceResponse.Data.SelectedBusinessKey,
+                                    TEventID = SMSTriggerEventValues.ForgetUserIDOTP,
+                                    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                    UserID = Convert.ToInt32(serviceResponse.Data.UserID),
+                                    OTP = serviceResponse.Data.OTP,
+                                    EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                    SequenceNumber = CommonVariables.StandardSequenceNumber,
+                                };
+                                var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                                if (sr_email.Status)
+                                {
+                                    serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                                    return Json(serviceResponse.Data);
+                                }
+                                else
+                                {
+                                    _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysEmail {0}");
+                                    return Json(new { Status = false, StatusCode = "500" });
+                                }
+                            }
                         }
                         return Json(serviceResponse.Data);
 
@@ -1129,7 +1195,7 @@ namespace eSyaEnterprise_UI.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ValidateUserbyOTP(string mobileNo, string otp, int expirytime)
+        public async Task<JsonResult> ValidateForgotUserIDbyOTP(string mobileNo, string otp, int expirytime)
         {
             try
             {
@@ -1137,6 +1203,32 @@ namespace eSyaEnterprise_UI.Controllers
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserbyOTP" + parameter);
                 if (serviceResponse.Status)
                 {
+                    //
+                    if (serviceResponse.Data.UserID != 0)
+                    {
+                        DO_EmailParameter emailParams = new DO_EmailParameter
+                        {
+                            BusinessKey = serviceResponse.Data.SelectedBusinessKey,
+                            TEventID = SMSTriggerEventValues.ForgetUserIDOTP,
+                            FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                            UserID = Convert.ToInt32(serviceResponse.Data.UserID),
+                            OTP = serviceResponse.Data.OTP,
+                            EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                            SequenceNumber = CommonVariables.ForgotUserIDSequenceNumber,
+                        };
+                        var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                        if (sr_email.Status)
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                        else
+                        {
+                            _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysEmail {0}");
+                            return Json(new { Status = false, StatusCode = "500" });
+                        }
+                    }
+                    //
+
                     return Json(serviceResponse.Data);
 
                 }
@@ -1304,7 +1396,30 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         if (serviceResponse.Data != null)
                         {
-                            serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                            if (serviceResponse.Data.UserID != 0)
+                            {
+                                DO_EmailParameter emailParams = new DO_EmailParameter
+                                {
+                                    BusinessKey = serviceResponse.Data.SelectedBusinessKey,
+                                    TEventID = SMSTriggerEventValues.ForgetPasswordOTP,
+                                    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                    UserID = Convert.ToInt32(serviceResponse.Data.UserID),
+                                    OTP = serviceResponse.Data.OTP,
+                                    EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                    SequenceNumber = CommonVariables.StandardSequenceNumber,
+                                };
+                                var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                                if (sr_email.Status)
+                                {
+                                    serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID:<span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                                    return Json(serviceResponse.Data);
+                                }
+                                else
+                                {
+                                    _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysEmail {0}");
+                                    return Json(new { Status = false, StatusCode = "500" });
+                                }
+                            }
                         }
                         return Json(serviceResponse.Data);
                     }
@@ -1794,29 +1909,35 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         if (serviceResponse.Data != null)
                         {
-                            DO_EmailParameter emailParams = new DO_EmailParameter
+                            if (serviceResponse.Data.UserID != 0)
                             {
-                                BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext),
-                                TEventID = SMSTriggerEventValues.DualAuthenticationOTP,
-                                FormID = AppSessionVariables.GetSessionFormID(HttpContext),
-                                UserID = AppSessionVariables.GetSessionUserID(HttpContext),
-                                OTP = serviceResponse.Data.OTP,
-                                EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
-                                SequenceNumber= CommonVariables.StandardSequenceNumber,
-                            };
 
-                            var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
-                            if (sr_email.Status)
-                            {
-                                serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
-                                return Json(serviceResponse.Data);
-                            }
-                            else
-                            {
-                                _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumberDualAuthentication {0}");
-                                return Json(new { Status = false, StatusCode = "500" });
+
+                                DO_EmailParameter emailParams = new DO_EmailParameter
+                                {
+                                    BusinessKey = AppSessionVariables.GetSessionBusinessKey(HttpContext),
+                                    TEventID = SMSTriggerEventValues.DualAuthenticationOTP,
+                                    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                    UserID = AppSessionVariables.GetSessionUserID(HttpContext),
+                                    OTP = serviceResponse.Data.OTP,
+                                    EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                    SequenceNumber = CommonVariables.StandardSequenceNumber,
+                                };
+
+                                var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                                if (sr_email.Status)
+                                {
+                                    serviceResponse.Data.LoginDesc = "Please enter the OTP that has been sent to your email ID: <span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                                    return Json(serviceResponse.Data);
+                                }
+                                else
+                                {
+                                    _logger.LogError(new Exception(serviceResponse.Message), "UD:GetOTPbyMobileNumberDualAuthentication {0}");
+                                    return Json(new { Status = false, StatusCode = "500" });
+                                }
                             }
                         }
+                        return Json(serviceResponse.Data);
                     }
                     else
                     {
@@ -1852,7 +1973,30 @@ namespace eSyaEnterprise_UI.Controllers
                 throw ex;
             }
         }
+        [HttpGet]
+        public async Task<JsonResult> ValidateUserbyOTP(string mobileNo, string otp, int expirytime)
+        {
+            try
+            {
+                var parameter = "?mobileNo=" + mobileNo + "&otp=" + otp + "&expirytime=" + expirytime;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("ForgotUserPassword/ValidateUserbyOTP" + parameter);
+                if (serviceResponse.Status)
+                {
+                    return Json(serviceResponse.Data);
 
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+                    return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateUserbyOTP:For UserID {0} with OTP entered {1}", otp);
+                throw ex;
+            }
+        }
         //[HttpPost]
         //public async Task<JsonResult> ValidateUserSecurityQuestion(DO_UserSecurityQuestions obj)
         //{
