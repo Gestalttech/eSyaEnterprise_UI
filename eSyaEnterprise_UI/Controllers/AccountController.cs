@@ -114,7 +114,7 @@ namespace eSyaEnterprise_UI.Controllers
         }
         public async void SetLoginApplicationRuleInViewBag()
         {
-            ViewBag.IsMobileLogin = false;
+            ViewBag.IsMobileLogin = true;
             ViewBag.IsGetUser = false;
             ViewBag.IsGetPassword = false;
             ViewBag.IsHideMobileLogin = false;

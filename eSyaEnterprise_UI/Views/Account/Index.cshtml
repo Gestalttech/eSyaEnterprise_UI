@@ -163,8 +163,8 @@
                                         </form>
                                     </div>
                                 </section>
-                                @if (ViewBag.IsHideMobileLogin != null)
-                                {
+                                @* @if (ViewBag.IsHideMobileLogin != null)
+                                { *@
                                     <section class="mdl-layout__tab-panel" id="scroll-tab-2">
                                         <div class="page-content">
                                             <div id="dvMobileLoginUnavailable"></div>
@@ -212,7 +212,7 @@
                                             </form>
                                         </div>
                                     </section>
-                                }
+                                @* } *@
                             </main>
 
                         </div>
@@ -959,12 +959,12 @@
 
         function fnShowMobileDiv() {
 
-            if (_IsMobileLogin === 'False') {
-                $("#dvMobileLoginUnavailable").html("<ul><li style='color:red;padding-top:20px'>@Localizer["MobileLoginOptionIsNotAvailed"]</li></ul>");
-                return;
-            }
+            // if (_IsMobileLogin === 'False' || _IsMobileLogin === false) {
+            //     $("#dvMobileLoginUnavailable").html("<ul><li style='color:red;padding-top:20px'>@Localizer["MobileLoginOptionIsNotAvailed"]</li></ul>");
+            //     return;
+            // }
 
-            $("#divMobileNumber").removeClass('hide');
+              $("#divMobileNumber").removeClass('hide');
         }
 
         function fnHideMobileDiv() {
