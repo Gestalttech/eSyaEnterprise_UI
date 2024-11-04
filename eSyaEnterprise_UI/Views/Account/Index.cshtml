@@ -104,7 +104,7 @@
                                     <a href="#scroll-tab-1" class="mdl-layout__tab is-active" onclick="fnHideMobileDiv()">
                                         <i class="fas fa-key f-18"></i> @Localizer["LoginWithUserID"]
                                     </a>
-                                    @if (ViewBag.IsHideMobileLogin != null)
+                                    @if (ViewBag.IsHideMobileLogin == false)
                                     {
                                         <a href="#scroll-tab-2" class="mdl-layout__tab" id="LoginWithMobile" onclick="fnShowMobileDiv()">
                                             <i class="fas fa-mobile-alt f-18"></i> @Localizer["LoginwithMobileNumber"]
@@ -133,7 +133,7 @@
                                             <div class="">
                                                 <label>@Localizer["Password"]</label>
                                                 <input class="form-control" readonly onclick="this.removeAttribute('readonly');" type="password" asp-for="@Model.Password" id="txtLoginPassword" autocomplete="off" maxlength="50" tabindex="2" required>
-                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                               @*  <span asp-validation-for="Password" class="text-danger"></span> *@
                                             </div>
                                             <div class="form-group">
                                                 @* <a href="@Url.Action("GetPassword", "Account")" class="getUserId" tabindex="8">@Localizer["ForgotPassword"]</a> *@
@@ -169,10 +169,12 @@
                                         <div class="page-content">
                                             <div id="dvMobileLoginUnavailable"></div>
                                             <!-- Your content goes here -->
-                                            <form id="LoginWithForMobile" method="post" asp-controller="Account" asp-action="MobileLogin"
-                                                  style="padding:16px 15px 15px">
+                                           @* <form id="LoginWithForMobile" method="post" asp-controller="Account" asp-action="MobileLogin" *@
+
+                                        <form id="LoginWithForMobile" autocomplete="off"
+                                            style="padding:16px 15px 15px">
                                                 <div class="text-danger validation-summary-errors" data-valmsg-summary="true">
-                                                    <div id="dvOTPError"></div>
+                                                    @* <div id="dvOTPError"></div> *@
                                                 </div>
                                                 <div class="form-group animated fadeIn hide" id="divMobileNumber">
                                                     <label>@Localizer["MobileNumber"]</label>
@@ -180,17 +182,17 @@
                                                     @await Component.InvokeAsync("IsdMobileInput", new { id = "UserMobile" })
 
                                                     <input id="txtPhoneNumber" type="text" asp-for="@Model.PhoneNumber" autocomplete="off" hidden />
-
-                                                    <p class="OTPStatement">@Localizer["lblOTPStatement"]</p>
-                                                    <div>
+                                                    <input id="txtMobUserID" type="text" hidden />
+                                                   <input id="txtMobUserName" type="text" hidden />
+                                                <div>
                                                         <div class="animated fadeIn">
-                                                            <button type="button" id="btnSendOTP" onclick="fnSendLoginOTP()" class="mdl-button loginButton f-right" tabindex="3"> @Localizer["Authenticate"]  <i class="fas fa-chevron-right"></i></button>
+                                                        <button type="button" id="btnSendOTP" onclick="fnValidateUserMobileNumberGetOTP()" class="mdl-button loginButton f-right" tabindex="3"> @Localizer["GetOTP"]  <i class="fas fa-chevron-right"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group animated fadeIn" id="divOTP" style="display:none">
                                                     <div class="form-group">
-                                                        <p class="OTPStatement">@Localizer["OTPGeneratedStatement"]</p>
+                                                    <p class="OTPStatement" id="potpstatement"></p>
                                                     </div>
                                                     <label>@Localizer["OTP"]</label>
                                                     <div id="divOuter">
@@ -199,16 +201,38 @@
                                                         </div>
                                                     </div>
                                                     <span id="timer" class="text-left"></span>
-                                                    <a href="#" class="resendotp text-right" onclick="fnSendLoginOTP()">@Localizer["ResendOTP"]</a>
+                                                <a href="#" class="resendotp text-right" onclick="fnValidateUserMobileNumberGetOTP()">@Localizer["ResendOTP"]</a>
                                                     <div class="row padtop20 m-0">
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0">
                                                             <button type="button" class="mdl-button loginButton" tabindex="3" id="btnBackToMobileNo"><i class="fa fa-chevron-left c-grey"></i> Back</button>
                                                         </div>
                                                         <div class="col-lg-6 col-md-6 col-sm-6 col-6 p-0">
-                                                            <button type="submit" id="btnAuthenticateOTP" onclick="fnSwitchDiv()" class="mdl-button loginButton f-right" tabindex="3"> @Localizer["SignIn"] <i class="fas fa-chevron-right"></i></button>
+                                                        <button type="button" id="btnAuthenticateOTP" onclick="fnSwitchDiv()" class="mdl-button loginButton f-right" tabindex="3"> @Localizer["ValidateOTP"] <i class="fas fa-chevron-right"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                              @*   // *@
+
+                                            <div class="form-group">
+                                                <label class="">@Localizer["BusinessLocation"]</label>
+                                                <select class="select form-control" id="cboMobBusinessLocation" onchange="fnEnableMobSignInButton()">
+                                                    <option value="0">@Localizer["Select"]</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="">@Localizer["FinancialYear"]</label>
+                                                <select class="select form-control" id="cboMobFinancialYear" onchange="fnEnableMobSignInButton()">
+                                                    <option value="0">@Localizer["Select"]</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button id="btnMobSignIn" type="button" class="mdl-button loginButton  f-right" tabindex="3">
+                                                    @Localizer["Signin"]  <i class="fas fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                              @*   // *@
                                             </form>
                                         </div>
                                     </section>
@@ -768,6 +792,10 @@
         </div>
     </div>
 
+    @* Mobile Login functionality start *@
+
+
+    @* Mobile Login functionality End *@
 
     <style>
         .errorMessages {
@@ -792,23 +820,31 @@
         var _IsMobileLogin = '@ViewBag.IsMobileLogin';
         var _cnfISDCode = @Configuration.GetSection("cnf").GetSection("ISDCode").Value;
 
-
+     
 
         $(document).ready(function () {
             $("#txtUserID").val('');
-            $('#LoginWithForMobile').submit(function () {
-                if ($('#txtOTP').val() == "") {
-                    $("#dvOTPError").html("<ul><li>please enter OTP</li></ul>");
-                    alert(1, 'warning', '0100', 'warning')
-                    return false;
+            // $("#dvOTPError").html("");
+            $('#btnAuthenticateOTP').click(function (e) {
+                e.preventDefault();
+                if ($('#txtOTP').val() == "" || $('#txtOTP').val().length < 6) {
+                    // $("#dvOTPError").html("<ul><li>Please Enter OTP</li></ul>");
+                    fnAlert("w", "", "UI0375", "Please Enter OTP");
+                    return;
                 }
-                return fnValidateOTP();
+                else
+                {
+                    fnValidateOTP();
+                    return;
+                }
+               
             });
             $("#btnBackToMobileNo").click(function () {
+                // $("#dvOTPError").html("");
                 $('#divOTP').css('display', 'none');
                 $('#divMobileNumber').css('display', 'block');
             });
-           // fnSetTheProductImage();
+           //fnSetTheProductImage();
 
         });
         $(document).on('click', '#viewAnswer', function () {
@@ -842,12 +878,7 @@
             return baseUrl;
         }
 
-        function fnSwitchDiv() {
-            $("#divMobileNumber").hide(500);
-            $("#divOTP").show(500);
-            var waitMinutes = 60 * 5;
-            startTimer(waitMinutes, timerElem);
-        }
+        
         // Tab device
         function fnSetTheProductImage() {
             if ($(window).width() > 767 && $(window).width() < 992) {
@@ -893,87 +924,10 @@
             myTimer = setInterval(timer, 1000);
         }
 
-        function fnSendLoginOTP() {
-            $.ajax({
-                url: getBaseURL() + '/Account/SendLoginOTP?mobileNumber=' + $("#txtUserMobile").val(),
-                type: 'POST',
-                datatype: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) {
-
-                    $("#dvOTPError").html("");
-                    if (result.Status) {
-                        $("#txtPhoneNumber").val($("#txtUserMobile").val());
-                        $("#divMobileNumber").hide(500);
-                        $("#divOTP").show(500);
-                        $('#txtOTP').val("");
-                        $('#btnAuthenticateOTP').prop('disabled', false);
-                        var waitMinutes = 60 * 5;
-                        //startTimer(waitMinutes, timerElem);
-                        startTimer(waitMinutes, '#timer', '#btnAuthenticateOTP');
-                        $('#divOTP').css('display', 'block');
-                        $('#divMobileNumber').css('display', 'none');
-                    }
-                    else {
-                        document.getElementById("txtUserMobile").style.color = "red"
-                        if (result.StatusCode === "404") {
-                            $("#dvOTPError").html("<ul><li>Mobile Number does not exists in user credentials</li></ul>");
-                        }
-                        if (result.StatusCode === "100") {
-                            $("#dvOTPError").html("<ul><li>Mobile Number does not have Login with Mobile option</li></ul>");
-                        }
-                        if (result.StatusCode === "500") {
-                            $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
-                        }
-                    }
-                },
-                error: function (error) {
-                    $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
-                }
-            });
-
-        }
-
-        function fnValidateOTP() {
-            $("#dvOTPError").html("");
-            var Status = false;
-            $.ajax({
-                url: getBaseURL() + '/Account/ValidateOTP',
-                type: 'POST',
-                datatype: 'json',
-                data: { mobileNumber: $("#txtUserMobile").val(), OTP: $("#txtOTP").val() },
-                async: false,
-                success: function (result) {
-                    if (result.Status === false) {
-                        $("#dvOTPError").html("<ul><li>" + result.Message + "</li></ul>");
-                    }
-                    Status = result.Status;
-                },
-                error: function (error) {
-                    $("#dvOTPError").html("<ul><li>Internal Error</li></ul>");
-                    Status = false;
-                }
-            });
-            return Status;
-        }
-
-        function fnShowMobileDiv() {
-
-            // if (_IsMobileLogin === 'False' || _IsMobileLogin === false) {
-            //     $("#dvMobileLoginUnavailable").html("<ul><li style='color:red;padding-top:20px'>@Localizer["MobileLoginOptionIsNotAvailed"]</li></ul>");
-            //     return;
-            // }
-
-              $("#divMobileNumber").removeClass('hide');
-        }
-
-        function fnHideMobileDiv() {
-            $("#divMobileNumber").addClass('hide');
-            $("#txtUserMobile").val('');
-        }
+     
         
         function fneSyaOTP(noOfDigits,divID,txtID,btnID) {
-            debugger;
+           
             $(".otp-field").val('');
 
             $(divID +".otp-form *:input[type!=hidden]:first").focus();
@@ -1029,6 +983,7 @@
     <script src="~/js/login/eSyaSecretQuestions.js"></script>
     <script src="~/js/login/eSyaChangePassword.js"></script>
     <script src="~/js/login/DualAuthentication.js"></script>
+    <script src="~/js/login/MobileLogin.js"></script>
 </body>
 </html>
 

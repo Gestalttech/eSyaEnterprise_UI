@@ -27,7 +27,20 @@ namespace eSyaEnterprise_UI.DataServices
                 return false;
             }
         }
-
+        public async Task<bool> GetMobileLoginApplicationRuleStatusByID(int processID)
+        {
+            try
+            {
+                var param = "?processID=" + processID;
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<bool>("ApplicationRules/GetMobileLoginApplicationRuleStatusByID" + param);
+                return serviceResponse.Data;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        //need to delete
         public async Task<List<DO_ApplicationRules>> GetApplicationRuleListByProcesssID(int processID)
         {
             try

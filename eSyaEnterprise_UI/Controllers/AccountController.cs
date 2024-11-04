@@ -63,7 +63,7 @@ namespace eSyaEnterprise_UI.Controllers
             _configuration= configuration;
             _eSyaEmailAPIServices = eSyaEmailAPIServices;
         }
-        #region common validate user password & getting location
+        #region common User Login functionality validate user password & getting location
         public async Task<IActionResult> Index()
         {
             try
@@ -71,7 +71,8 @@ namespace eSyaEnterprise_UI.Controllers
                int GwRuleId = 5;
                 HttpContext.Session.Set("AppConfig", appConfig);
 
-                SetLoginApplicationRuleInViewBag();
+              SetLoginApplicationRuleInViewBag(); 
+
                 var cultureResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_eSyaLoginCulture>>("ApplicationRules/GetActiveCultures");
                 var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<List<DO_AppCodes>>("Common/GetApplicationCodesByCodeType?codeType="+ ApplicationCodeTypeValues.SecurityQuestions);
                 var QuestionResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("UserAccount/GetNumberofQuestion?GwRuleId=" + GwRuleId);
@@ -114,24 +115,31 @@ namespace eSyaEnterprise_UI.Controllers
         }
         public async void SetLoginApplicationRuleInViewBag()
         {
-            ViewBag.IsMobileLogin = true;
-            ViewBag.IsGetUser = false;
-            ViewBag.IsGetPassword = false;
-            ViewBag.IsHideMobileLogin = false;
+            ViewBag.IsMobileLogin = false;
+            //ViewBag.IsGetUser = false;
+            //ViewBag.IsGetPassword = false;
+            ViewBag.IsHideMobileLogin = true;
+            var mobpr = await _applicationRulesServices.GetMobileLoginApplicationRuleStatusByID(6);
+            if (mobpr)
+            {
+                ViewBag.IsMobileLogin=true;
+                ViewBag.IsHideMobileLogin=false;
+            }
 
-            var pr = await _applicationRulesServices.GetApplicationRuleListByProcesssID(1);
-            if (pr != null)
-            {
-                ViewBag.IsMobileLogin = pr.Where(w => w.RuleID == 1 && w.RuleStatus).Count() > 0;
-                ViewBag.IsGetUser = pr.Where(w => w.RuleID == 2 && w.RuleStatus).Count() > 0;
-                ViewBag.IsGetPassword = pr.Where(w => w.RuleID == 3 && w.RuleStatus).Count() > 0;
-                ViewBag.IsHideMobileLogin = pr.Where(w => w.RuleID == 4 && w.RuleStatus).Count() > 0;
-                ViewBag.IsAPIConnected = true;
-            }
-            else
-            {
-                ViewBag.IsAPIConnected = false;
-            }
+            //need to delete
+            //var pr = await _applicationRulesServices.GetApplicationRuleListByProcesssID(6);
+            //if (pr != null)
+            //{
+                //ViewBag.IsMobileLogin = pr.Where(w => w.RuleID == 1 && w.RuleStatus).Count() > 0;
+               // ViewBag.IsGetUser = pr.Where(w => w.RuleID == 2 && w.RuleStatus).Count() > 0;
+               // ViewBag.IsGetPassword = pr.Where(w => w.RuleID == 3 && w.RuleStatus).Count() > 0;
+                //ViewBag.IsHideMobileLogin = pr.Where(w => w.RuleID == 4 && w.RuleStatus).Count() > 0;
+               // ViewBag.IsAPIConnected = true;
+            //}
+            //else
+            //{
+            //    ViewBag.IsAPIConnected = false;
+            //}
         }
 
         [HttpPost]
@@ -165,7 +173,7 @@ namespace eSyaEnterprise_UI.Controllers
                         {
                             //ModelState.AddModelError("", serviceResponse.Data.Message);
                            // ViewBag.InvaidUser = serviceResponse.Data.Message;
-                            SetLoginApplicationRuleInViewBag();
+                           SetLoginApplicationRuleInViewBag(); 
                             return Json(new { success = false, errorMessage = serviceResponse.Data.Message });
                         //return View("Index");
                     }
@@ -252,8 +260,8 @@ namespace eSyaEnterprise_UI.Controllers
                     {
                         ModelState.AddModelError("", "Internal error");
                         _logger.LogError(new Exception(serviceResponse.Message), "UD:Login:params:" + JsonConvert.SerializeObject(model));
-                        SetLoginApplicationRuleInViewBag();
-                        return Json(new { success = false, errorMessage = "Internal Error" });
+                     SetLoginApplicationRuleInViewBag(); 
+                    return Json(new { success = false, errorMessage = "Internal Error" });
                 }
         }
             catch (Exception ex)
@@ -311,35 +319,6 @@ namespace eSyaEnterprise_UI.Controllers
             }
         }
 
-        public async Task<JsonResult> ValidateOTP(string mobileNumber, string OTP)
-        {
-            try
-            {
-                var obj = new { mobileNumber, otp = OTP };
-                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_UserAccount>("UserAccount/ValidateUserOTP", obj);
-                if (serviceResponse.Status)
-                {
-                    if (!serviceResponse.Data.IsSucceeded)
-                    {
-                        return Json(new { Status = false, serviceResponse.Data.Message });
-                    }
-                    else
-                    {
-                        return Json(new { Status = true, serviceResponse.Data.UserID });
-                    }
-                }
-                else
-                {
-                    return Json(new { Status = false, Message = "Internal Error" });
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "UD:ValidateOTP:For MobileNumber {0} with OTP entered {1}", mobileNumber, OTP);
-                throw;
-            }
-        }
-
         //[HttpPost]
         public async Task<IActionResult> MobileLogin(LoginViewModel model)
         {
@@ -354,7 +333,7 @@ namespace eSyaEnterprise_UI.Controllers
                         if (!serviceResponse.Data.IsSucceeded)
                         {
                             ModelState.AddModelError("", serviceResponse.Data.Message);
-                            SetLoginApplicationRuleInViewBag();
+                            SetLoginApplicationRuleInViewBag(); 
                             return View("Index");
                         }
                         model.UserName = serviceResponse.Data.LoginID;
@@ -394,14 +373,14 @@ namespace eSyaEnterprise_UI.Controllers
                     else
                     {
                         ModelState.AddModelError("", "Internal error");
-                        SetLoginApplicationRuleInViewBag();
+                       SetLoginApplicationRuleInViewBag(); 
                         return View("Index");
                     }
                 }
                 else
                 {
                     ModelState.AddModelError("", "Internal error");
-                    SetLoginApplicationRuleInViewBag();
+                 SetLoginApplicationRuleInViewBag(); 
                     return View("Index");
                 }
             }
@@ -468,7 +447,7 @@ namespace eSyaEnterprise_UI.Controllers
             await HttpContext.SignOutAsync();
 
             HttpContext.Session.Set("AppConfig", appConfig);
-            SetLoginApplicationRuleInViewBag();
+          SetLoginApplicationRuleInViewBag(); 
             //clearing Culture cookie
             Response.Cookies.Delete(CookieRequestCultureProvider.DefaultCookieName);
             return View();
@@ -2047,6 +2026,242 @@ namespace eSyaEnterprise_UI.Controllers
         //        throw ex;
         //    }
         //}
+        #endregion
+
+        #region Mobile Login
+        public async Task<JsonResult> ValidateUserMobileNumberGetOTP(string mobileNumber)
+        {
+            try
+            {
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("UserAccount/ValidateUserMobileNumberGetOTP?mobileNo=" + mobileNumber);
+
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data != null)
+                    {
+                        if (serviceResponse.Data.IsSucceeded)
+                        {
+                            //return Json(serviceResponse.Data);
+                            //SMS Rule is true
+                            var smspr = await _applicationRulesServices.GetApplicationRuleStatusByID(6, 1);
+                            if (smspr)
+                            {
+                                DO_SmsParameter smsParams = new DO_SmsParameter
+                                {
+                                    BusinessKey = serviceResponse.Data.SelectedBusinessKey,
+                                    TEventID = SMSTriggerEventValues.OnSaveClick,
+                                    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                    UserID = serviceResponse.Data.UserID,
+                                    MobileNumber= serviceResponse.Data.MobileNumber,
+                                    OTP= serviceResponse.Data.OTP
+                                };
+
+                                var sr_SMS = _eSyaGatewayServices.HttpClientServices.PostAsJsonAsync<DO_SmsParameter>("SmsSender/SendeSysSms", smsParams).Result;
+                                if (sr_SMS.Status)
+                                {
+                                    serviceResponse.Data.Message = "Please enter the OTP that has been sent to your Mobile Number:<span class='bold'>" + serviceResponse.Data.MobileNumber + "</span>";
+                                    return Json(serviceResponse.Data);
+
+                              
+                                }
+                                else
+                                {
+                                    _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysSms");
+                                    return Json(new { Status = false, StatusCode = "500" });
+                                }
+                            }
+                            //Email Rule is true
+
+                            var Emailpr = await _applicationRulesServices.GetApplicationRuleStatusByID(6, 2);
+                            if (Emailpr)
+                            {
+                                DO_EmailParameter emailParams = new DO_EmailParameter
+                                {
+                                    BusinessKey = serviceResponse.Data.SelectedBusinessKey,
+                                    TEventID = SMSTriggerEventValues.FirstTimeLoginOTP,
+                                    FormID = AppSessionVariables.GetSessionFormID(HttpContext),
+                                    UserID = serviceResponse.Data.UserID,
+                                    OTP = serviceResponse.Data.OTP,
+                                    EmailType = ApplicationCodesVariables.EmailType_ApplicationUser,
+                                    SequenceNumber = CommonVariables.StandardSequenceNumber,
+                                };
+                                var sr_email = _eSyaEmailAPIServices.HttpClientServices.PostAsJsonAsync<DO_EmailParameter>("EmailSender/SendeSysEmail", emailParams).Result;
+                                if (sr_email.Status)
+                                {
+                                    serviceResponse.Data.Message = "Please enter the OTP that has been sent to your Email ID:<span class='bold'>" + serviceResponse.Data.Password + "</span>";
+                                    return Json(serviceResponse.Data);
+                                }
+                                else
+                                {
+                                    _logger.LogError(new Exception(serviceResponse.Message), "UD:SendeSysEmail {0}");
+                                    return Json(new { Status = false, StatusCode = "500" });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            return Json(serviceResponse.Data);
+                        }
+                    }
+
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    _logger.LogError(new Exception(serviceResponse.Message), "UD:SendOTP:For MobileNumber {0}", mobileNumber);
+                     return Json(new { Status = false, StatusCode = "500" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateUserMobileNumberGetOTP:For MobileNumber {0}", mobileNumber);
+                throw;
+            }
+        }
+        public async Task<JsonResult> ValidateOTP(string mobileNumber, string OTP,int expirytime)
+        {
+            try
+            {
+                var parameter = "?mobileNo=" + mobileNumber + "&otp=" + OTP + "&expirytime=" + expirytime;
+                
+                var serviceResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserAccount>("UserAccount/ValidateUserMobileNumberbyOTP" + parameter);
+                DO_UserAccount obj = new DO_UserAccount();
+                if (serviceResponse.Status)
+                {
+                    if (serviceResponse.Data.IsSucceeded)
+                    {
+                       
+
+                        var para = "?loginID=" + serviceResponse.Data.LoginID;
+
+                        var serviceResponse1 = await _eSyaGatewayServices.HttpClientServices.GetAsync<DO_UserFinBusinessLocation>("UserAccount/GetUserLocationsbyUserID" + para);
+                       
+                        if (serviceResponse1.Data.lstUserLocation.Count > 0 && serviceResponse1.Data.lstFinancialYear.Count > 0)
+                        {
+
+
+                          
+                            // Populate us.l_BusinessKey
+                            obj.l_BusinessKey = serviceResponse1.Data.lstUserLocation
+                                .Select(x => new KeyValuePair<int, string>(x.BusinessKey, x.BusinessLocation))
+                                .ToDictionary(x => x.Key, x => x.Value);
+
+                            // Generate the SelectListItem list
+                            var l_b = obj.l_BusinessKey
+                                .Select(b => new SelectListItem
+                                {
+                                    Value = b.Key.ToString(),
+                                    Text = b.Value,
+                                    Selected = obj.l_BusinessKey.Count == 1
+                                }).ToList();
+
+                            var l_f = serviceResponse1.Data.lstFinancialYear
+                                                           .Select(b => new SelectListItem
+                                                           {
+                                                               Value = b.ToString(),
+                                                               Text = b.ToString(),
+                                                               Selected = b == serviceResponse1.Data.lstFinancialYear.FirstOrDefault()
+                                                           }).ToList();
+
+                            TempData.Set("l_BusinessKey", l_b);
+                            TempData.Set("l_FinancialYear", l_f);
+
+                            AppSessionVariables.SetSessionUserID(HttpContext, serviceResponse.Data.UserID);
+                            AppSessionVariables.SetSessionUserBusinessKeyLink(HttpContext, obj.l_BusinessKey);
+                            obj.IsSucceeded = serviceResponse.Data.IsSucceeded;
+                            obj.UserID = serviceResponse.Data.UserID;
+                            obj.LoginID = serviceResponse.Data.LoginID;
+                            obj.LoginDesc= serviceResponse.Data.LoginDesc;
+                            obj.Message= serviceResponse.Data.Message;
+                            obj.l_FinancialYear = serviceResponse1.Data.lstFinancialYear;
+                            
+
+
+                            if (l_b.Count == 1)
+                            {
+
+                                AppSessionVariables.SetSessionBusinessKey(HttpContext, Convert.ToInt32(value: l_b.FirstOrDefault().Value));
+                                AppSessionVariables.SetSessionFinancialYear(HttpContext, Convert.ToInt32(l_f.FirstOrDefault().Value));
+                                AppSessionVariables.SetSessionBusinessLocationName(HttpContext, l_b.FirstOrDefault().Text);
+
+
+                            }
+                            
+                        }
+                        return Json(obj);
+                    }
+                    return Json(serviceResponse.Data);
+                }
+                else
+                {
+                    return Json(new { Status = false, Message = "Internal Error" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "UD:ValidateOTP:For MobileNumber {0} with OTP entered {1}", mobileNumber, OTP);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWithMobileNumber(LoginViewModel model)
+        {
+
+            try
+            {
+
+               // var smspr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 1);
+               // var emailpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 2);
+               // var squestionpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 3);
+               // var passwordpr = await _applicationRulesServices.GetBusinessApplicationRuleByBusinessKey(model.BusinessKey, 7, 4);
+
+                
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                    LocationConfirmation(model);
+                    int userId = AppSessionVariables.GetSessionUserID(HttpContext);
+                    int businesskey = AppSessionVariables.GetSessionBusinessKey(HttpContext);
+
+                    var roleResponse = await _eSyaGatewayServices.HttpClientServices.GetAsync<int>("UserAccount/GetUserRolebyUserID?userID=" + userId + "&businbessKey=" + businesskey);
+                    if (roleResponse.Status)
+                    {
+                        AppSessionVariables.SetSessionUserRole(HttpContext, roleResponse.Data);
+                    }
+
+                //
+
+                //if (smspr)
+                //{
+                //    return Json(new { success = true, ActivatedRule = "Sms", redirectUrl = "/Home/Index" });
+                //}
+                //else if (emailpr)
+                //{
+                //    return Json(new { success = true, ActivatedRule = "Email", redirectUrl = "/Home/Index" });
+                //}
+                //else if (squestionpr)
+                //{
+                //    return Json(new { success = true, ActivatedRule = "Questions", redirectUrl = "/Home/Index" });
+                //}
+                //else
+                //{
+                //    return Json(new { success = true, ActivatedRule = "", redirectUrl = "/Home/Index" });
+                //}
+
+                
+                return Json(new { success = true, ActivatedRule = "", redirectUrl = "/Home/Index" });
+
+            }
+            catch (Exception ex)
+            {
+                SetLoginApplicationRuleInViewBag();
+                _logger.LogError(ex, "UD:Login:params:" + JsonConvert.SerializeObject(model));
+                return Json(new { success = false, errorMessage = "Internal Error" });
+            }
+        }
         #endregion
     }
 }
