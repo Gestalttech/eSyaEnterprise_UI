@@ -158,9 +158,7 @@ body {
 .modal-body {
     background: #fff;
 }
-.modal-header{
- flex-direction:row-reverse;
-}
+ 
 .modal-header, .modal-footer {
     padding: 4px 14px !important;
     -webkit-border-radius: 0px !important;
@@ -174,19 +172,23 @@ body {
         border: none;
     }
     .modal-title {
-    float: left !important;
-    line-height: 32px !important;
+     line-height: 32px !important;
     /* color: var(--color-secondary) !important; */
     font-size: 14px !important;
     font-weight: 300;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
 }
 .bold {
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
 }
-.modal-header h4 {
+.modal-header .modal-title {
     margin: 0px !important;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
+}
+button.close:hover {
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    transform: scale(1.35);
 }
 .innerSection {
     background: #fff;
@@ -219,7 +221,7 @@ section.mdl-layout__tab-panel{
     height: 36px !important;
     font-size: 0.86rem !important;
     border-color: transparent;
-    font-family:helvetica-Bold;
+    font-family:helvetica-bold;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 h3 {font-size: 28px !important;font-weight: 600;text-transform: uppercase;text-align: center;margin: 0px;}
@@ -284,7 +286,7 @@ input[name="UserID"]:focus .btn-clear > .svg-inline--fa {
     /* height: 100%; */
     display: flex;
     justify-content: center;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
     border: 1px solid #ccc;
     margin: 0px;
     padding: 5px;
@@ -415,7 +417,7 @@ label span.mdl-checkbox__label {font-weight: 300 !important;font-size: 14px !imp
     background: linear-gradient(to bottom,var(--color-white),#ffecaa);
     border: 1px dotted #ccc;
     padding: 4px 6px;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
     width: auto;
     display: block;
 }
@@ -674,7 +676,7 @@ padding:0px !important;font-size:0.82rem;}
     font-size: 0.86rem;
     letter-spacing: normal;
     text-transform: capitalize !important;
-    font-family:helvetica-Bold;
+    font-family:helvetica-bold;
 }
     .mdl-layout__tab svg {
         position: absolute;
@@ -709,9 +711,8 @@ a.mdl-layout__tab:hover {
     display: flex;
     align-items: center;
     padding-left: 15px !important;
-
     justify-content: center;
-    font-family: helvetica-Bold;
+    font-family: helvetica-bold;
     font-size: 1.2rem;
 }
     #lblUserWelcome span {
