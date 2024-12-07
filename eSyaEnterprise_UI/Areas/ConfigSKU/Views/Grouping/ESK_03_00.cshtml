@@ -91,12 +91,11 @@
 
 <div class="row row-bottom-pad">
     <div class="col-sm-4 col-md-4 col-lg-4">
-
-        <div id="jstItemCategoryTree">
+         <div id="jstItemSubCategoryTree">
         </div>
     </div>
-    <div class="col-sm-1 col-md-1 col-lg-1"></div>
-    <div class="col-lg-7 col-md-7 col-sm-7 f-right">
+     
+    <div class="col-lg-6 col-md-6 col-sm-6 f-right">
 
 
         <div id="dvItemSubCategory" style="display:none;">
@@ -141,7 +140,27 @@
         </div>
     </div>
 
+    <div class="col-sm-3 col-md-2 col-lg-2">
+        <div class="card treeaction">
+            <div class="card-header">
+                <h6 class="m-0 p-0 c-secondary"> @Localizer["Action"]</h6>
+            </div>
 
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnISCExpandAll" onclick="fnISCExpandAll()">
+                        <i class="fas fa-expand"></i>   @Localizer["ExpandAll"]
+                    </button>
+                </li>
+                <li class="list-group-item">
+                    <button class="mdl-button mdl-js-button mdl-button--raised primary-button btn_wdth" id="btnISCCollapseAll" onclick="fnISCCollapseAll()">
+                        <i class="fas fa-compress"></i>   @Localizer["CollapseAll"]
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 
